@@ -105,6 +105,12 @@
     "category": "HTTP"
   },
   {
+    "permalink": "assets-bundling-vite",
+    "title": "Assets Bundling (Vite)",
+    "contentPath": "./http/assets_bundling_vite.md",
+    "category": "HTTP"
+  },
+  {
     "permalink": "security/hashing",
     "title": "Hash",
     "contentPath": "./security/hash.md",

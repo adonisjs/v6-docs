@@ -1,8 +1,298 @@
 [
   {
-    "permalink": "introduction",
+    "permalink": "installation",
+    "title": "Installation",
+    "contentPath": "./guides/installation.md",
+    "category": "Getting started"
+  },
+  {
+    "permalink": "folder-structure",
+    "title": "Folder structure",
+    "contentPath": "./guides/folder_structure.md",
+    "category": "Getting started"
+  },
+  {
+    "permalink": "config",
+    "title": "Config",
+    "contentPath": "./guides/config.md",
+    "category": "Getting started"
+  },
+  {
+    "permalink": "environment-variables",
+    "title": "Environment variables",
+    "contentPath": "./guides/env.md",
+    "category": "Getting started"
+  },
+  {
+    "permalink": "faqs",
+    "title": "FAQs",
+    "contentPath": "./guides/faqs.md",
+    "category": "Getting started"
+  },
+  {
+    "permalink": "http-context",
+    "redirects": ["context"],
+    "title": "HTTP context",
+    "contentPath": "./http/http_context.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "routing",
+    "title": "Routing",
+    "contentPath": "./http/routing.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "controllers",
+    "title": "Controllers",
+    "contentPath": "./http/controllers.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "request",
+    "title": "Request",
+    "contentPath": "./http/request.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "response",
+    "title": "Response",
+    "contentPath": "./http/response.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "middleware",
+    "title": "Middleware",
+    "contentPath": "./http/middleware.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "cookies",
+    "title": "Cookies",
+    "contentPath": "./http/cookies.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "bodyparser-middleware",
+    "title": "Bodyparser middleware",
+    "contentPath": "./http/bodyparser_middleware.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "file-uploads",
+    "title": "File uploads",
+    "contentPath": "./http/file_uploads.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "url-builder",
+    "redirects": ["guides/security/signed-urls"],
+    "title": "URL builder",
+    "contentPath": "./http/url_builder.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "exception-handling",
+    "title": "Exception handling",
+    "contentPath": "./http/exception_handling.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "static-file-server",
+    "redirects": ["guides/static-assets"],
+    "title": "Static file server",
+    "contentPath": "./http/static_file_server.md",
+    "category": "HTTP"
+  },
+  {
+    "permalink": "security/hashing",
+    "title": "Hash",
+    "contentPath": "./security/hash.md",
+    "category": "Security"
+  },
+  {
+    "permalink": "security/encryption",
+    "title": "Encryption",
+    "contentPath": "./security/encryption.md",
+    "category": "Security"
+  },
+  {
+    "permalink": "security/cors",
+    "title": "CORS",
+    "contentPath": "./security/cors.md",
+    "category": "Security"
+  },
+  {
+    "permalink": "fundamentals/application",
+    "redirects": ["guides/application"],
+    "title": "Application",
+    "contentPath": "./fundamentals/application.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/application_lifecycle",
+    "title": "Application lifecycle",
+    "contentPath": "./fundamentals/application_lifecycle.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/adonisrc-file",
+    "redirects": ["guides/adonis-rcfile"],
+    "title": "AdonisRC file",
+    "contentPath": "./fundamentals/adonisrc_file.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/ioc-container",
+    "title": "IoC container",
+    "contentPath": "./fundamentals/ioc_container.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/container-services",
+    "title": "Container services",
+    "contentPath": "./fundamentals/container_services.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/service-providers",
+    "title": "Service providers",
+    "contentPath": "./fundamentals/service_providers.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/async-local-storage",
+    "title": "Async local storage",
+    "contentPath": "./fundamentals/async_local_storage.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/typescript-build-process",
+    "redirects": ["guides/typescript-build-process"],
+    "title": "TypeScript build process",
+    "contentPath": "./fundamentals/typescript_build_process.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/extend",
+    "title": "Extending the framework",
+    "contentPath": "./fundamentals/extending_the_framework.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "fundamentals/package-development",
+    "title": "Package development",
+    "contentPath": "./fundamentals/package_development.md",
+    "category": "Fundamentals"
+  },
+  {
+    "permalink": "emitter",
+    "redirects": ["guides/events"],
+    "title": "Emitter",
+    "contentPath": "./digging_deeper/emitter.md",
+    "category": "Digging Deeper"
+  },
+  {
+    "permalink": "helpers",
+    "title": "Helpers",
+    "contentPath": "./digging_deeper/helpers.md",
+    "category": "Digging Deeper"
+  },
+  {
+    "permalink": "logger",
+    "title": "Logger",
+    "contentPath": "./digging_deeper/logger.md",
+    "category": "Digging Deeper"
+  },
+  {
+    "permalink": "scaffolding",
+    "title": "Scaffolding",
+    "contentPath": "./digging_deeper/scaffolding.md",
+    "category": "Digging Deeper"
+  },
+  {
+    "permalink": "testing/introduction",
     "title": "Introduction",
-    "contentPath": "./introduction.md",
-    "category": "Guides"
+    "contentPath": "./testing/introduction.md",
+    "category": "Testing"
+  },
+  {
+    "permalink": "testing/http-tests",
+    "title": "HTTP tests",
+    "contentPath": "./testing/http_tests.md",
+    "category": "Testing"
+  },
+  {
+    "permalink": "testing/browser-tests",
+    "title": "Browser tests",
+    "contentPath": "./testing/browser_tests.md",
+    "category": "Testing"
+  },
+  {
+    "permalink": "testing/commandline_tests",
+    "title": "Command-line tests",
+    "contentPath": "./testing/commandline_tests.md",
+    "category": "Testing"
+  },
+  {
+    "permalink": "testing/mocks-and-fakes",
+    "redirects": ["guides/testing/fakes"],
+    "title": "Mocks and fakes",
+    "contentPath": "./testing/mocks_and_fakes.md",
+    "category": "Testing"
+  },
+  {
+    "permalink": "ace/introduction",
+    "title": "Introduction",
+    "contentPath": "./ace/introduction.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "ace/creating_commands",
+    "title": "Creating commands",
+    "contentPath": "./ace/creating_commands.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "ace/arguments",
+    "title": "Command arguments",
+    "contentPath": "./ace/args.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "ace/flags",
+    "title": "Command flags",
+    "contentPath": "./ace/flags.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "ace/prompts",
+    "title": "Prompts",
+    "contentPath": "./ace/prompts.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "ace/terminal-ui",
+    "title": "Terminal UI",
+    "contentPath": "./ace/tui.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "deployment/cleavr",
+    "title": "Cleavr",
+    "contentPath": "./deployment/cleavr.md",
+    "category": "Deployment"
+  },
+  {
+    "permalink": "deployment/digital-ocean",
+    "title": "Digital Ocean",
+    "contentPath": "./deployment/digital_ocean.md",
+    "category": "Deployment"
+  },
+  {
+    "permalink": "deployment/fly-io",
+    "title": "Fly.io",
+    "contentPath": "./deployment/fly_io.md",
+    "category": "Deployment"
   }
 ]

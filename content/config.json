@@ -1,14 +1,14 @@
 {
   "links": {
     "home": {
-      "title": "Your project name",
+      "title": "AdonisJS",
       "href": "/"
     },
     "github": {
-      "title": "Your project on Github",
-      "href": "https://github.com/dimerapp"
+      "title": "AdonisJS on Github",
+      "href": "https://github.com/adonisjs/core"
     }
   },
-  "fileEditBaseUrl": "https://github.com/dimerapp/docs-boilerplate/blob/develop",
-  "copyright": "Your project legal name"
+  "fileEditBaseUrl": "https://github.com/adonisjs/v6-docs/blob/main",
+  "copyright": "AdonisJS"
 }

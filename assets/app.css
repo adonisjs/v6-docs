@@ -1,3 +1,7 @@
 @import 'unpoly';
 @import '@docsearch/css';
 @import '@dimerapp/docs-theme/styles';
+
+:root {
+  --logo-width: 100px;
+}

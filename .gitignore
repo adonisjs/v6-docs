@@ -1,0 +1,25 @@
+# Dependencies and AdonisJS build
+node_modules
+build
+
+# Secrets
+.env
+.env.local
+.env.production.local
+.env.development.local
+
+# Frontend assets compiled code
+public/hot
+public/build
+
+# Build tools specific
+npm-debug.log
+yarn-error.log
+
+# Editors specific
+.fleet
+.idea
+.vscode
+
+# Static export
+dist

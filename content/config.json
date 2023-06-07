@@ -1,0 +1,14 @@
+{
+  "links": {
+    "home": {
+      "title": "Your project name",
+      "href": "/"
+    },
+    "github": {
+      "title": "Your project on Github",
+      "href": "https://github.com/dimerapp"
+    }
+  },
+  "fileEditBaseUrl": "https://github.com/dimerapp/docs-boilerplate/blob/develop",
+  "copyright": "Your project legal name"
+}

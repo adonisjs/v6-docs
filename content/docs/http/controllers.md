@@ -46,9 +46,13 @@ As you might have noticed, we do not create an instance of the controller class 
 - Create a fresh instance of the controller for each request.
 - And also construct the class using the [IoC container](../fundamentals/ioc_container.md), which allows you to leverage automatic dependency injection.
 
+:::caption{for="error"}
+
 #### Not recommended
 
 If you want, you can manually create an instance of the controller and execute the method. However, it is not recommended because you will write more boilerplate code and lose the IoC container benefits.
+
+:::
 
 ```ts
 // 🫤 Naah

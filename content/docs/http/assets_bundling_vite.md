@@ -203,11 +203,11 @@ In development, ( when [hotfile](#hotfile) is present ), the tags will also incl
 @vite(['resources/js/app.tsx'])
 ```
 
-### vite.assetPath helper
+### `asset` helper
 
 For invalidating browser cache, Vite is appending a hash to the file name of the assets in production. This means that the file name of the assets will change on every build.
 
-Hence, you should never hardcode the asset path in your code and always use the `vite.assetPath` helper for referencing assets.
+Hence, you should never hardcode the asset path in your code and always use the `asset` helper for referencing assets.
 
 ```edge
 // delete-start
@@ -215,7 +215,7 @@ Hence, you should never hardcode the asset path in your code and always use the 
 // delete-end
 
 // insert-start
-<img src="{{ vite.assetPath('resources/images/logo.png') }}" />
+<img src="{{ asset('resources/images/logo.png') }}" />
 // insert-end
 ```
 

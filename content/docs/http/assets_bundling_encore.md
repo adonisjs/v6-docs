@@ -69,7 +69,7 @@ Similarly, the `node ace build --production` command will also run the `encore p
 
 By default, the compiled assets are written to the `./public/assets` directory so that AdonisJS static file server can serve them.
 
-However, you can customize and define any output directory by updating the `webpack.config.js` file.
+However, you can customize and define any output directory by updating the `webpack.config.cjs` file.
 
 The `setOutputPath` method accepts a path relative to the project root. Also, make sure to update the public URL prefix using the `setPublicPath` method.
 
@@ -98,7 +98,7 @@ Webpack dev server runs on `localhost:8080` by default. If the port is in use, A
 node ace serve --watch --assets-args="--port 5000"
 ```
 
-As of now, you cannot define the port for the Webpack dev server inside the `webpack.config.js` file. This is the limitation enforced by the [Symfony Encore package](https://github.com/symfony/webpack-encore/issues/941#issuecomment-787568811).
+As of now, you cannot define the port for the Webpack dev server inside the `webpack.config.cjs` file. This is the limitation enforced by the [Symfony Encore package](https://github.com/symfony/webpack-encore/issues/941#issuecomment-787568811).
 
 ## Assets view helpers
 
@@ -169,7 +169,7 @@ import "normalize.css";
 import "alpinejs";
 ```
 
-You can define these entry points inside the `webpack.config.js` file using the `Encore.addEntry` method. The first argument is the entry point name, and 2nd is the path to the entry point file.
+You can define these entry points inside the `webpack.config.cjs` file using the `Encore.addEntry` method. The first argument is the entry point name, and 2nd is the path to the entry point file.
 
 ```ts
 Encore.addEntry("app", "./resources/js/app.js");
@@ -216,7 +216,7 @@ module.exports = {
 };
 ```
 
-And finally, enable the PostCSS loader inside the `webpack.config.js` file.
+And finally, enable the PostCSS loader inside the `webpack.config.cjs` file.
 
 ```ts
 Encore.enablePostCssLoader();
@@ -231,7 +231,7 @@ Encore.enablePostCssLoader((options) => {
 
 ## Setup SASS, Less, and Stylus
 
-To configure the CSS pre-processors, you must uncomment the following lines of code inside the `webpack.config.js`
+To configure the CSS pre-processors, you must uncomment the following lines of code inside the `webpack.config.cjs`
 
 ```ts
 // Enables SASS
@@ -287,7 +287,7 @@ Babel is pre-configured for all files with `.js` and `.jsx` extensions using [ba
 You can further configure Babel using the `Encore.configureBabel` method.
 
 ```ts
-// title: webpack.config.js
+// title: webpack.config.cjs
 Encore.configureBabel(
   (babelConfig) => {
     babelConfig.plugins.push("styled-jsx/babel");
@@ -321,7 +321,7 @@ You can configure React by installing React preset for Babel from the npm regist
 npm i -D @babel/preset-react
 ```
 
-Next, enable the React preset inside the `webpack.config.js` file.
+Next, enable the React preset inside the `webpack.config.cjs` file.
 
 ```ts
 Encore.enableReactPreset();
@@ -335,7 +335,7 @@ If you are using the `.babelrc` file, you must enable the React preset inside it
 
 ## Configuring Vue
 
-You can configure Vue by first enabling the Vue loader inside the `webpack.config.js` file.
+You can configure Vue by first enabling the Vue loader inside the `webpack.config.cjs` file.
 
 :::codegroup
 

@@ -306,5 +306,11 @@
     "title": "Fly.io",
     "contentPath": "./deployment/fly_io.md",
     "category": "Deployment"
+  },
+  {
+    "permalink": "cookbooks/migrate-to-vite",
+    "title": "Migrate to Vite",
+    "contentPath": "./cookbooks/migrate_to_vite.md",
+    "category": "Cookbooks"
   }
 ]

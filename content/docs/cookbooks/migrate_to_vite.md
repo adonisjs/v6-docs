@@ -46,13 +46,13 @@ import Adonis from "@adonisjs/vite-plugin-adonis";
 export default defineConfig({
   plugins: [
     Adonis({
-      entryPoints: ["resources/js/app.ts", "resources/css/app.css"],
+      entrypoints: ["resources/js/app.ts", "resources/css/app.css"],
     }),
   ],
 });
 ```
 
-Similar to Webpack Encore, you can define multiple entry points by passing an array of strings to the `entryPoints` option.
+Similar to Webpack Encore, you can define multiple entry points by passing an array of strings to the `entrypoints` option.
 So make sure to add all your `Encore.addEntry()` calls to your new Vite configuration.
 
 ## Vite compatible imports
@@ -122,7 +122,7 @@ import Vue from "@vitejs/plugin-vue";
 export default defineConfig({
   plugins: [
     Adonis({
-      entryPoints: {
+      entrypoints: {
         app: ["resources/js/app.ts", "resources/css/app.css"],
       },
     }),
@@ -146,7 +146,7 @@ import React from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [
     Adonis({
-      entryPoints: {
+      entrypoints: {
         app: ["resources/js/app.ts", "resources/css/app.css"],
       },
     }),
@@ -236,8 +236,28 @@ export default class AppProvider {
 You can now uninstall webpack from your project by removing the following packages and deleting the `webpack.config.cjs` file :
 
 ```bash
-npm rm @babel/core @babel/preset-env @symfony/webpack-encore webpack webpack-cli file-loader
+npm rm @adonisjs/encore @babel/core @babel/preset-env @symfony/webpack-encore webpack webpack-cli file-loader
 rm webpack.config.cjs
+```
+
+Also remove the Encore service provider from your RC file :
+
+```ts
+// title: .adonisrc.json
+
+"providers": [
+  "@adonisjs/core/providers/app_provider",
+  "@adonisjs/core/providers/http_provider",
+  "@adonisjs/core/providers/hash_provider",
+  "@adonisjs/view/providers/views_provider",
+  "@adonisjs/static/static_provider",
+  "./providers/emitter_provider.js",
+  "./providers/app_provider.js",
+  // delete-start
+  "@adonisjs/encore/providers/encore_provider",
+  // delete-end
+  "@adonisjs/vite/providers/vite_provider"
+],
 ```
 
 ## Conclusion

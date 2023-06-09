@@ -217,6 +217,12 @@
     "category": "Digging Deeper"
   },
   {
+    "permalink": "mailer",
+    "title": "Mailer",
+    "contentPath": "./digging_deeper/mailer.md",
+    "category": "Digging Deeper"
+  },
+  {
     "permalink": "scaffolding",
     "title": "Scaffolding",
     "contentPath": "./digging_deeper/scaffolding.md",

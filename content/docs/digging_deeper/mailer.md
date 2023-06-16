@@ -41,7 +41,7 @@ export default await Env.create(new URL("../", import.meta.url), {
 
 :::div{class="features"}
 
-- Support for multiple drivers. **SparkPost**, **SES**, **Mailgun** and **Smtp**
+- Support for multiple drivers. **SparkPost**, **SES**, **Mailgun**, **Brevo (ex-Sendinblue)** and **Smtp**
 - Ability to trap emails during tests
 - Use Edge templates to define the email markup
 - Preview emails on a dummy SMTP server
@@ -151,6 +151,29 @@ await mail.use("sparkpost").send(
 );
 ```
 
+#### Brevo options
+
+The brevo driver optionally accepts the following options when calling `mail.send`:
+
+| Config option    | Brevo variant  |
+| ---------------- | -------------- |
+| `scheduledAt`    | scheduledAt    |
+| `tags`           | tags           |
+| `templateId`     | templateId     |
+| `templateParams` | templateParams |
+
+```ts
+await mail.use("brevo").send(
+  (message) => {
+    message.subject("Welcome Onboard!");
+  },
+  {
+    scheduledAt: new Date(),
+    tags: ["signup"],
+  }
+);
+```
+
 ---
 
 #### Smtp auth options
@@ -195,7 +218,7 @@ In the following example, the `htmlView` method accepts the path to an Edge temp
 
 ```ts
 // highlight-start
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 // highlight-end
 
 class UsersController {
@@ -287,7 +310,7 @@ Here's a screencast showing how to use [MJML](https://mjml.io/) as your markup l
 You can send attachments using the `message.attach` method. It takes an absolute path to the file to attach.
 
 ```ts
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 import app from "@adonisjs/core/services/app";
 
 await mail.sendLater((message) => {
@@ -661,7 +684,7 @@ The mailer classes use the default mailer configured inside the `config/mail.ts`
 ```ts
 // highlight-start
 import { BaseMailer, Message } from "@adonisjs/mail";
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 // highlight-end
 
 export default class VerifyEmail extends BaseMailer {
@@ -715,7 +738,7 @@ You can write the following code inside a [preload file](../fundamentals/adonisr
 
 ```ts
 // title: start/mail.ts
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 
 mail.monitorQueue((error, result) => {
   if (error) {
@@ -755,7 +778,7 @@ The mail module expose a `alwaysTo` method to bypass the Message `to` and send a
 ```ts
 // title: providers/app_provider.ts
 
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 import { ApplicationService } from "@adonisjs/core/types";
 
 export default AppProvider {
@@ -807,7 +830,7 @@ You can use the `mail.prettyPrint` method to print the outgoing email on the ter
 // title: start/events.ts
 
 import emitter from "@adonisjs/core/services/emitter";
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 
 emitter.on("mail:sent", mail.prettyPrint);
 ```
@@ -971,7 +994,7 @@ Alright, we are now ready to use the postmark driver. Let's start by defining th
 And use it as follows:
 
 ```ts
-import mail from "@adonisjs/mail/services/mail";
+import mail from "@adonisjs/mail/services/main";
 
 mail.use("transactionalMailer").send((message) => {});
 ```

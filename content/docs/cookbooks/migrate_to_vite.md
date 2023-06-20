@@ -41,7 +41,7 @@ You should have a new `vite.config.ts` file at the root of your project with the
 ```ts
 // title: vite.config.ts
 import { defineConfig } from "vite";
-import Adonis from "@adonisjs/vite-plugin-adonis";
+import Adonis from "@adonisjs/vite/plugin";
 
 export default defineConfig({
   plugins: [
@@ -116,7 +116,7 @@ Nothing special except that you need to install the `@vitejs/plugin-vue` plugin 
 ```ts
 // title: vite.config.ts
 import { defineConfig } from "vite";
-import Adonis from "@adonisjs/vite-plugin-adonis";
+import Adonis from "@adonisjs/vite/plugin";
 import Vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
@@ -140,7 +140,7 @@ You will need to install the `@vitejs/plugin-react` plugin.
 ```ts
 // title: vite.config.ts
 import { defineConfig } from "vite";
-import Adonis from "@adonisjs/vite-plugin-adonis";
+import Adonis from "@adonisjs/vite/plugin";
 import React from "@vitejs/plugin-react";
 
 export default defineConfig({
@@ -197,7 +197,7 @@ With Vite, you can do the same thing as follows :
 // title: vite.config.ts
 
 import { defineConfig } from 'vite'
-import Adonis from '@adonisjs/vite-plugin-adonis'
+import Adonis from '@adonisjs/vite/plugin'
 
 export default defineConfig(({ command }) => ({
   plugins: [

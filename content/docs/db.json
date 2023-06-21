@@ -198,6 +198,12 @@
     "category": "Fundamentals"
   },
   {
+    "permalink": "fundamentals/tooling-config",
+    "title": "Tooling config",
+    "contentPath": "./fundamentals/tooling_config.md",
+    "category": "Fundamentals"
+  },
+  {
     "permalink": "emitter",
     "redirects": ["guides/events"],
     "title": "Emitter",

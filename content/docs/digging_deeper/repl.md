@@ -85,14 +85,39 @@ import repl from '@adonisjs/repl/services/main'
 
 repl.addMethod(
   'sayHi',
-  (instance) => {
-    console.log(instance.colors.green('hi'))
+  () => {
+    console.log(repl.colors.green('hi'))
   },
   { description: 'A test method that prints "hi"' }
 )
 ```
 
-Finally, start the REPL session and type `sayHi()` to execute the method. Currently, we are writing to the console, however, you can perform any action inside this function.
+Finally, start the REPL session and type `sayHi()` to execute the method. Currently, we are writing to the console, however, you can perform any action inside this function. 
+
+Let's take another example that will cover more use cases. We want to have a method to load a given user from the database with all his posts relationship preloaded.
+
+```ts
+// title: start/repl.ts
+import User from '#models/user'
+
+repl.addMethod(
+  'loadUser',
+  // The second argument will be passed when calling this function through the REPL session
+  async function (_, userId: number) {
+    // Load the user with lucid
+    const user = await User.query().preload('posts').where('id', userId).firstOrFail()
+
+    // inject the user to the repl session so we can access it later using the `user` variable
+    repl.server.context.user = user
+
+    // return the user
+    return user
+  }, {
+    description: 'Load a user with all his posts relationship preloaded',
+    usage: `loadUser ${repl.colors.gray('userId')}`
+  }
+)
+```
 
 ## History file
 

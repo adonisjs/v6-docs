@@ -29,9 +29,7 @@ Extend from the `tsconfig.app.json` file when creating an AdonisJS application. 
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build"
-  },
-  "include": ["**/*"],
-  "exclude": ["./build", "./node_modules"]
+  }
 }
 ```
 
@@ -43,9 +41,7 @@ Extend from the `tsconfig.package.json` file when creating a package for the Ado
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build"
-  },
-  "include": ["**/*"],
-  "exclude": ["./build", "./node_modules"]
+  }
 }
 ```
 
@@ -114,16 +110,5 @@ Extend from the `eslint-config/package` file when creating a package for the Ado
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/package"
   }
-}
-```
-
-Also, define the `eslintIgnore` property inside the `package.json` file to ignore specific files and directories.
-
-```json
-// title: package.json
-{
-  "eslintIgnore": [
-    "build"
-  ]
 }
 ```

@@ -34,6 +34,14 @@ view.global(
 )
 
 /**
+ * Globally loads the sponsors file
+ */
+view.global(
+  'getSponsors',
+  async () => JSON.parse(await readFile(new URL('../content/sponsors.json', import.meta.url), 'utf-8'))
+)
+
+/**
  * Returns sections for a collection
  */
 view.global('getSections', function (collection: Collection, entry: CollectionEntry) {
@@ -70,7 +78,7 @@ pipeline.use(docsHook).use((node) => {
  * Configuring renderer
  */
 export const renderer = new Renderer(view, pipeline)
-  .codeBlocksTheme('material-theme-palenight')
+  .codeBlocksTheme('material-theme-darker')
   .useTemplate('docs')
 
 /**

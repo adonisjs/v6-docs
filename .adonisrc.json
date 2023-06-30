@@ -8,6 +8,7 @@
     "@adonisjs/core/providers/app_provider",
     "@adonisjs/core/providers/http_provider",
     "@adonisjs/view/providers/views_provider",
-    "@adonisjs/vite/providers/vite_provider"
+    "@adonisjs/vite/providers/vite_provider",
+    "@adonisjs/static/static_provider"
   ]
 }

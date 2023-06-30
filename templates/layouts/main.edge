@@ -15,13 +15,13 @@
     @end
 
     <meta property="og:type" content="website">
-    {{-- <meta property="og:url" content="https://japa.dev"> --}}
+    <meta property="og:url" content="{{ app.config.get('appUrl') }}">
     <meta property="og:title" content="{{ file.frontmatter.title }}">
     @if(file.frontmatter.summary)
       <meta name="og:description" content="{{ file.frontmatter.summary }}">
     @end
 
-    {{-- <meta property="twitter:url" content="https://japa.dev"> --}}
+    <meta property="twitter:url" content="{{ app.config.get('appUrl') }}">
     <meta property="twitter:title" content="{{ file.frontmatter.title }}">
     @if(file.frontmatter.summary)
       <meta name="twitter:description" content="{{ file.frontmatter.summary }}">
@@ -29,7 +29,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    >
 
     @vite('assets/app.css')
     @vite('assets/app.js')

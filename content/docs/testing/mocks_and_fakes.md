@@ -1,15 +1,79 @@
 # Mocks and fakes
 
-When testing your applications, you might want to mock or fake certain classes in order to prevent actual implementations to run. For example, you do not want to send emails to your customers when running tests and neither call third party services like a payment gateway.
+When testing your applications, you might want to mock or fake specific dependencies to prevent actual implementations from running. For example, you wish to refrain from emailing your customers when running tests and neither call third-party services like a payment gateway.
 
-In this guide, we will cover the following topics.
+AdonisJS offers a few different APIs and recommendations using which you can fake, mock, or stub a dependency.
 
-- Use [sinon]() for mocking service classes and injecting them to the controllers.
-- Use [nock]() for intercepting network requests and mocking responses.
-- Use the fakes API of AdonisJS container services.
+## Using the fakes API
 
-## Dependency injection and mocks
+Fakes are objects with working implementations explicitly created for testing. For example, The mailer module of AdonisJS has a fake implementation that you can use during testing to collect outgoing emails in memory and write assertions for them.
+
+We provide fake implementations for the following container services. The fakes API is documented alongside the module documentation.
+
+- [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
+- [Hash fake](../security/hash.md#faking-hash-service-during-tests)
+- [Mailer fake]()
+
+## Dependency injection and fakes
+
+If you use dependency injection in your application or use the [container to create class instances](../fundamentals/ioc_container.md), you can provide a fake implementation for a class using the `container.swap` method.
+
+In the following example, we inject `UserService` to the `UsersController`.
+
+```ts
+import UserService from '#services/user_service'
+import { inject } from '@adonisjs/core'
+
+export default class UsersController {
+  @inject()
+  index(, service: UserService) {}
+}
+```
+
+During testing, we can provide an alternate/fake implementation of the `UserService` class as follows.
+
+```ts
+import UserService from '#services/user_service'
+import app from '@adonisjs/core/services/app'
+
+test('get all users', async () => {
+  // highlight-start
+  class FakeService extends UserService {
+    all() {
+      return [{ id: 1, username: 'virk' }]
+    }
+  }
+  
+  /**
+   * Swap `UserService` with an instance of
+   * `FakeService`
+   */  
+  app.container.swap(UserService, () => {
+    return new FakeService()
+  })
+  
+  /**
+   * Test logic goes here
+   */
+  // highlight-end
+})
+```
+
+Once the test has been completed, you must restore the fake using the `container.restore` method.
+
+```ts
+app.container.restore(UserService)
+
+// Restore all
+app.container.restore()
+```
+
+## Mocks and stubs using Sinon.js
+
+[Sinon](https://sinonjs.org/#get-started) is a mature, time-tested mocking library in the Node.js ecosystem. If you use mocks and stubs regularly, we recommend using Sinon, as it works great with TypeScript.
 
 ## Mocking network requests
 
-## Using the fakes API
+If your application makes outgoing HTTP requests to third-party services, you can use [nock](https://github.com/nock/nock) during testing to mock the network requests.
+
+Since nock intercepts all outgoing requests from the [Node.js HTTP module](https://nodejs.org/dist/latest-v20.x/docs/api/http.html#class-httpclientrequest), it works with almost every third-party library like `got`, `axios` and so on.

@@ -90,7 +90,7 @@ if (invalidDocuments.length) {
 
 ### Using validator
 
-Instead of validating files manually (as seen in the previous section), you may use the [validator](../validator/schema_types.md#file) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
+Instead of validating files manually (as seen in the previous section), you may use the [validator](./validation.md) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
 
 ```ts
 import { schema } from '@adonisjs/core/legacy/validator'

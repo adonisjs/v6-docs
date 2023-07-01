@@ -7,15 +7,15 @@ You may install Node.js using either the [official installers](https://nodejs.or
 ```sh
 // title: Verify Node.js version
 node -v
-# v18.12.0
+# v18.16.0
 ```
 
 
 ## Creating a new application
 
-You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init), [yarn create](https://classic.yarnpkg.com/en/docs/cli/create) or [pnpm create](https://pnpm.io/tr/next/cli/create). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begins the installation process.
+You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init), [yarn create](https://classic.yarnpkg.com/en/docs/cli/create) or [pnpm create](https://pnpm.io/tr/next/cli/create). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
 
-During installation, you will have to select a [starter kit](#starter-kits) for the initial project structure. Optionally, you may also [configure ESLint and Prettier](#configuring-the-development-environment)
+During installation, you must select a [starter kit](#starter-kits) for the initial project structure. Optionally, you may also [configure ESLint and Prettier](#configuring-the-development-environment)
 
 :::codegroup
 
@@ -51,11 +51,11 @@ The official starter kits use ES modules and TypeScript. This combination allows
 
 ### Web starter kit
 
-The Web starter kit is tailored for creating traditional server renderer web apps. Do not let the keyword **"traditional"** discourage you. We recommend this starter kit if you are creating a web app with limited frontend interactivity.
+The Web starter kit is tailored for creating traditional server renderer web apps. Do not let the keyword **"traditional"** discourage you. We recommend this starter kit if you make a web app with limited frontend interactivity.
 
-The simplicity of rendering HTML on the server using [Edge.js]() will sky rocket your productivity as you do not have to deal with complex build systems just to render some HTML.
+The simplicity of rendering HTML on the server using [Edge.js](https://edge.adonisjs.com) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
 
-Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like an SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
+Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
 The web starter kit comes with the following packages.
 
@@ -98,13 +98,13 @@ You can drop specific packages using the following command-line flags.
 npm init adonisjs -- --no-auth --no-orm --no-assets
 ```
 
-- `--no-auth`: Removes the `@adonisjs/auth` package along with its config files.
+- `--no-auth`: Removes the `@adonisjs/auth` package and config files.
 - `--no-orm`: Removes both the `@adonisjs/lucid` and the `@adonisjs/auth` package. The authentication layer needs the ORM to find users.
 - `--no-assets`: Removes the Vite assets bundler.
 
 ### API starter kit
 
-The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit 
+The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit. 
 
 In this starter kit:
 
@@ -129,7 +129,7 @@ Ace is a command line framework bundled inside the framework's core. The `--watc
 node ace serve --watch
 ```
 
-Once the development server is running, you may visit [http://localhost:3333](http://localhost:3333) to view your application in a browser.
+Once the development server runs, you may visit [http://localhost:3333](http://localhost:3333) to view your application in a browser.
 
 ## Building for production
 
@@ -139,32 +139,49 @@ You may create the JavaScript output using the `node ace build` command. The Jav
 
 When Vite is configured, this command also compiles the frontend assets using Vite and writes the output to the `build/public` folder.
 
+See also: [TypeScript build process](../fundamentals/typescript_build_process.md).
+
 ```sh
 node ace build --production
 ```
 
-See also: [TypeScript build process](../fundamentals/typescript_build_process.md) and the [Deployment guides](../deployment/digital_ocean.md).
-
 ## Configuring the development environment
 
-While AdonisJS takes care of building the end-user applications, you might need additional tools to enjoy the development process and have consistency in your coding style.
+While AdonisJS takes care of building the end-user applications, you might need additional tools to enjoy the development process and have consistency in your coding style. 
 
-Following are some of the recommendations for you.
+We strongly recommend you to **use [ESLint](https://eslint.org/)** to lint your code **and [Prettier](https://prettier.io)** to re-format your code for consistency.
 
-### ESLint
+During the installation process, AdonisJS will prompt you to configure both ESLint and Prettier. We will set up these tools and their related dependencies if you accept the prompt.
 
-When creating a new application, you will be prompted to configure [ESLint](https://eslint.org/). If you accept the prompt, we will define an [opinionated set](https://github.com/adonisjs-community/eslint-plugin-adonis/blob/develop/lib/ts-app.json) of ESLint rules inside the `package.json` file.
+The default configuration uses opinionated presets from the AdonisJS core team. You can learn more about them in the [Tooling config](../fundamentals/tooling_config.md) section of the docs.
 
-### Prettier
+Finally, we recommend you install ESLint and Prettier plugins for your code editor so that you have a tighter feedback loop during the application development. Also, you can use the following commands to `lint` and `format` your code from the command line.
 
-Next, you will be prompted to configure [prettier](https://prettier.io). We will define the prettier rules inside the `package.json` file if you accept the prompt.
+```sh
+# Runs ESLint
+npm run lint
 
-You can format source files using the `npm run format` command or configure your code editor with the prettier extension. 
+# Run ESLint and auto-fix issues
+npm run lint -- --fix
 
-### AdonisJS VSCode extension
+# Runs prettier
+npm run format
+```
 
-If you are a VSCode user, we recommend installing the official [VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) to supercharge your development environment. 
+## VSCode extensions
+You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
 
-### Japa VSCode extension
+### AdonisJS Extension
+You can download the [AdonisJS extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) from the VSCode marketplace. Following are some of the highlighted features of the extension.
 
-Japa is the testing framework used by AdonisJS. The [Japa VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) allows you to run tests within VSCode either using keyboard shortcuts or code lenses.
+- Syntax highlighting, autocomplete, and jump to file support for Edge templates.
+- Run [Ace](../ace/introduction.md) commands from the VSCode activity bar.
+- View application routes in the sidebar.
+- And some snippets.
+
+### Japa Extension
+Japa is the [testing framework](../testing/introduction.md) used by AdonisJS, and the [Japa extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) allows you to run your tests without leaving your code editor.
+
+- You can click on the code lens to run a specific or all the tests inside a file. The same action can be triggered using keyboard shortcuts.
+- Go to the snapshots file from the test (If using snapshot testing).
+- And some snippets.

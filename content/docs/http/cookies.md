@@ -7,7 +7,9 @@ The request cookies are parsed automatically during an HTTP request. You can rea
 import router from '@adonisjs/core/services/router'
 
 router.get('cart', async ({ request }) => {
+  // highlight-start
   const cartItems = request.cookie('cart_items', [])
+  // highlight-end
   console.log(cartItems)
 })
 ```
@@ -18,7 +20,9 @@ import router from '@adonisjs/core/services/router'
 
 router.post('cart', async ({ request, response }) => {
   const id = request.input('product_id')
+  // highlight-start
   response.cookie('cart_items', [{ id }])
+  // highlight-end
 })
 ```
 
@@ -27,7 +31,9 @@ router.post('cart', async ({ request, response }) => {
 import router from '@adonisjs/core/services/router'
 
 router.delete('cart', async ({ request, response }) => {
+  // highlight-start
   response.clearCookie('cart_items')
+  // highlight-end
 })
 ```
 

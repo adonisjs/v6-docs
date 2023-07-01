@@ -110,7 +110,7 @@ router.post('comments', async ({ request }) => {
 
 The `request.all`, `request.body`, or the cherry-picking methods are not type-safe because there is no direct way for AdonisJS to know the expected data types of the request body.
 
-However, you may use the [validator](../validator/introduction.md) to validate the request body and have static type-safety.
+However, you may use the [validator](./validation.md) to validate the request body and have static type-safety.
 
 ## Request URL
 

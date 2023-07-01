@@ -85,6 +85,12 @@
     "category": "HTTP"
   },
   {
+    "permalink": "validation",
+    "title": "Validation",
+    "contentPath": "./http/validation.md",
+    "category": "HTTP"
+  },
+  {
     "permalink": "url-builder",
     "redirects": ["guides/security/signed-urls"],
     "title": "URL builder",

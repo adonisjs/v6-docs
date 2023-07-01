@@ -6,8 +6,8 @@ HTTP Context holds all the information you may need related to an HTTP request. 
 
 - You can access the request body, headers, and query params using the [ctx.request](./request.md) property.
 - You can respond to the HTTP request using the [ctx.response](./response.md) property.
-- Access the logged-in user using the [ctx.auth]() property.
-- Or, authorize user actions using the [ctx.bouncer]() property.
+<!-- - Access the logged-in user using the [ctx.auth]() property. -->
+<!-- - Or, authorize user actions using the [ctx.bouncer]() property. -->
 
 In a nutshell, the context is a request-specific store holding all the information for the ongoing request.
 
@@ -23,7 +23,9 @@ The [router handler](./routing.md) receives the HTTP context as the first parame
 Route.get('/', (ctx) => {
   console.log(ctx.inspect())
 })
+```
 
+```ts
 // Destructure properties
 Route.get('/', ({ request, response }) => {
   console.log(request.url())
@@ -73,11 +75,11 @@ import {
 } from '@adonisjs/core/http'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
-  async handle(error: any, ctx: HttpContext) {
+  async handle(error: unknown, ctx: HttpContext) {
     return super.handle(error, ctx)
   }
 
-  async report(error: any, ctx: HttpContext) {
+  async report(error: unknown, ctx: HttpContext) {
     return super.report(error, ctx)
   }
 }
@@ -241,7 +243,7 @@ An object of route subdomains. Only exists when the route is part of a dynamic s
 
 </dd>
 
-<dt>
+<!-- <dt>
 
 ctx.session
 
@@ -251,9 +253,9 @@ ctx.session
 
 Reference to an instance of the [Session class](). The property is condtibuted by the `@adonisjs/session` package.
 
-</dd>
+</dd> -->
 
-<dt>
+<!-- <dt>
 
 ctx.auth
 
@@ -263,9 +265,9 @@ ctx.auth
 
 Reference to an instance of the [Auth class](). The property is condtibuted by the `@adonisjs/auth` package.
 
-</dd>
+</dd> -->
 
-<dt>
+<!-- <dt>
 
 ctx.view
 
@@ -275,9 +277,9 @@ ctx.view
 
 Reference to an instance of the [View class](). The property is condtibuted by the `@adonisjs/view` package.
 
-</dd>
+</dd> -->
 
-<dt>
+<!-- <dt>
 
 ctx\.ally
 
@@ -287,9 +289,9 @@ ctx\.ally
 
 Reference to an instance of the [SocialAuth class](). The property is condtibuted by the `@adonisjs/ally` package.
 
-</dd>
+</dd> -->
 
-<dt>
+<!-- <dt>
 
 ctx.bouncer
 
@@ -299,9 +301,9 @@ ctx.bouncer
 
 Reference to an instance of the [Bouncer class](). The property is condtibuted by the `@adonisjs/bouncer` package.
 
-</dd>
+</dd> -->
 
-<dt>
+<!-- <dt>
 
 ctx.i18n
 
@@ -311,7 +313,8 @@ ctx.i18n
 
 Reference to an instance of the [I18n class](). The property is condtibuted by the `@adonisjs/i18n` package.
 
-</dd>
+</dd> -->
+
 </dl>
 
 
@@ -335,7 +338,7 @@ Since the macros and getters are added at runtime, you must inform TypeScript ab
 ```ts
 declare module '@adonisjs/core/http' {
   export interface HttpContext {
-    property: valueType
+    property: ValueType
   }
 }
 ```

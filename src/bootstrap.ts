@@ -51,13 +51,18 @@ view.global('getSections', function (collection: Collection, entry: CollectionEn
     return {
       title: key,
       isActive: entry.meta.category === key,
-      items: items.map((item: CollectionEntry) => {
-        return {
-          href: item.permalink,
-          title: item.title,
-          isActive: item.permalink === entry.permalink
-        }
-      }).all()
+      items: items
+        .filter((item: CollectionEntry & { draft?: boolean }) => {
+          return !item.meta.draft
+        })
+        .map((item: CollectionEntry) => {
+          return {
+            href: item.permalink,
+            title: item.title,
+            isActive: item.permalink === entry.permalink,
+          }
+        })
+        .all(),
     }
   }).all()
 })

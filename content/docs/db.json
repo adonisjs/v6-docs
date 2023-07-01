@@ -101,18 +101,21 @@
     "permalink": "static-file-server",
     "redirects": ["guides/static-assets"],
     "title": "Static file server",
+    "draft": true,
     "contentPath": "./http/static_file_server.md",
     "category": "HTTP"
   },
   {
     "permalink": "assets-bundling-vite",
     "title": "Assets Bundling (Vite)",
+    "draft": true,
     "contentPath": "./http/assets_bundling_vite.md",
     "category": "HTTP"
   },
   {
     "permalink": "assets-bundling-encore",
     "title": "Assets Bundling (Encore)",
+    "draft": true,
     "contentPath": "./http/assets_bundling_encore.md",
     "category": "HTTP"
   },
@@ -225,12 +228,14 @@
   {
     "permalink": "mailer",
     "title": "Mailer",
+    "draft": true,
     "contentPath": "./digging_deeper/mailer.md",
     "category": "Digging Deeper"
   },
   {
     "permalink": "repl",
     "title": "REPL",
+    "draft": true,
     "contentPath": "./digging_deeper/repl.md",
     "category": "Digging Deeper"
   },
@@ -306,29 +311,5 @@
     "title": "Terminal UI",
     "contentPath": "./ace/tui.md",
     "category": "Ace command line"
-  },
-  {
-    "permalink": "deployment/cleavr",
-    "title": "Cleavr",
-    "contentPath": "./deployment/cleavr.md",
-    "category": "Deployment"
-  },
-  {
-    "permalink": "deployment/digital-ocean",
-    "title": "Digital Ocean",
-    "contentPath": "./deployment/digital_ocean.md",
-    "category": "Deployment"
-  },
-  {
-    "permalink": "deployment/fly-io",
-    "title": "Fly.io",
-    "contentPath": "./deployment/fly_io.md",
-    "category": "Deployment"
-  },
-  {
-    "permalink": "cookbooks/migrate-to-vite",
-    "title": "Migrate to Vite",
-    "contentPath": "./cookbooks/migrate_to_vite.md",
-    "category": "Cookbooks"
   }
 ]

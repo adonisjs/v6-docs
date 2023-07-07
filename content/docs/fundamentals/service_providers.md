@@ -12,7 +12,7 @@ The providers are registered inside the `.adonisrc.json` file under the `provide
 {
   "providers": [
     "@adonisjs/core/providers/app_provider",
-    "#providers/app_provider"
+    "./providers/app_provider.js"
   ]
 }
 ```
@@ -24,7 +24,7 @@ By default, a provider is loaded in all the runtime environments. However, you c
   "providers": [
     "@adonisjs/core/providers/app_provider",
     {
-      "file": "#providers/app_provider",
+      "file": "./providers/app_provider.js",
       "environments": ["web", "repl"]
     }
   ]
@@ -168,5 +168,3 @@ export default class AppProvider {
   }
 }
 ```
-
-## FAQs

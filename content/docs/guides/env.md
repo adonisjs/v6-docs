@@ -36,6 +36,18 @@ env.get('HOST')
 env.get('PORT')
 ```
 
+### Sharing env module with Edge templates
+If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
+
+You can create `view.ts` as a [preload file](../fundamentals/adonisrc_file.md#preloads) inside the `start` directory and write following lines of code inside it.
+
+```ts
+import env from '#start/env'
+import view from '@adonisjs/view/services/main'
+
+view.global('env', env)
+```
+
 ## Validating environment variables
 
 The validation rules are defined using the `Env.create` method called inside the `start/env.ts` file. A validation schema is an object of key-value pair.

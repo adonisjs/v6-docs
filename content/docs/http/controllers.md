@@ -178,35 +178,59 @@ For conventional [RESTful](https://en.wikipedia.org/wiki/Representational_state_
 
 Let's take the example of a Post resource and define the endpoints to handle its CRUD operations. We will start by creating a controller first.
 
-You can create a controller for a resource using the `make:controller` ace command.
+You can create a controller for a resource using the `make:controller` ace command. The `--resource` flag scaffolds the controller with all the methods.
 
 ```sh
 node ace make:controller posts --resource
 ```
 
-The `--resource` flag scaffolds the controller with the following methods.
-
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class PostsController {
+  /**
+   * Return list of all posts or paginate through
+   * them
+   */
   async index({}: HttpContext) {}
 
+  /**
+   * Render the form to create a new post.
+   * 
+   * Not needed if you are creating an API server.
+   */
   async create({}: HttpContext) {}
 
+  /**
+   * Handle form submission to create a new post
+   */
   async store({ request }: HttpContext) {}
 
+  /**
+   * Display a single post by id.
+   */
   async show({ params }: HttpContext) {}
 
+  /**
+   * Render the form to edit an existing post by its id.
+   * 
+   * Not needed if you are creating an API server.
+   */
   async edit({ params }: HttpContext) {}
 
+  /**
+   * Handle the form submission to update a specific post by id
+   */
   async update({ params, request }: HttpContext) {}
 
+  /**
+   * Handle the form submission to delete a specific post by id.
+   */
   async destroy({ params }: HttpContext) {}
 }
-``` 
+```
 
-Next, let's create a route resource and bind `PostsController` to it. The `router.resource` method accepts the resource name as the first argument and the controller reference as the second argument.
+Next, let's bind the `PostsController` to a resourceful route using the `router.resource` method. The method accepts the resource name as the first argument and the controller reference as the second argument.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -215,54 +239,10 @@ const PostsController = () => import('#controllers/posts_controller')
 router.resource('posts', PostsController)
 ```
 
-The `router.resource` method creates the following set of routes.
+Following is the list of routes registered by the `resource` method. You can view this list by running `node ace list:routes` command.
 
-<table>
-  <thead>
-    <tr>
-      <th width="180px">Route</th>
-      <th width="100px">Controller method</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>GET <code>/posts</code></td>
-      <td>index</td>
-      <td>Display a collection of posts.</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/create</code></td>
-      <td>create</td>
-      <td>Render the form to create a new post. If you are creating an API server, you might not need this action, as the front-end client handles the form rendering.</td>
-    </tr>
-    <tr>
-      <td>POST <code>/posts</code></td>
-      <td>store</td>
-      <td>Handle form submission to create a new post</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/:id</code></td>
-      <td>show</td>
-      <td>Display a single post by id.</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/:id/edit</code></td>
-      <td>edit</td>
-      <td>Render the form to edit an existing post by its id. If you are creating an API server, you might not need this action, as the front-end client handles the form rendering.</td>
-    </tr>
-    <tr>
-      <td>PUT <code>/posts/:id</code></td>
-      <td>update</td>
-      <td>Handle the form submission to update a specific post by id</td>
-    </tr>
-    <tr>
-      <td>DELETE <code>/posts/:id</code></td>
-      <td>destroy</td>
-      <td>Handle the form submission to delete a specific post by id.</td>
-    </tr>
-  </tbody>
-</table>
+![](./post_resource_routes_list.png)
+
 
 ### Nested resources
 
@@ -274,44 +254,7 @@ In the following example, we create routes for the `comments` resource nested un
 router.resource('posts.comments', CommentsController)
 ```
 
-<table>
-  <thead>
-    <tr>
-      <th>Route</th>
-      <th width="100px">Controller method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>GET <code>/posts/:post_id/comments</code></td>
-      <td>index</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/:post_id/comments/create</code></td>
-      <td>create</td>
-    </tr>
-    <tr>
-      <td>POST <code>‌/posts/:post_id/comments</code></td>
-      <td>store</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/:post_id/comments/:id</code></td>
-      <td>show</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/:post_id/comments/:id/edit</code></td>
-      <td>edit</td>
-    </tr>
-    <tr>
-      <td>PUT <code>/posts/:post_id/comments/:id</code></td>
-      <td>update</td>
-    </tr>
-    <tr>
-      <td>DELETE <code>/posts/:post_id/comments/:id</code></td>
-      <td>destroy</td>
-    </tr>
-  </tbody>
-</table>
+![](./post_comments_resource_routes_list.png)
 
 ### Shallow resources
 
@@ -322,50 +265,13 @@ When using nested resources, the routes for the child resource are always prefix
 
 The existence of `/posts/:post_id` in the second route is irrelevant, as you can look up the comment by its id.
 
-A shallow resource registers its routes by keeping the URL structure flat (wherever possible). This time, let's continue with the `posts.comments` resource and register routes using a shallow resource.
+A shallow resource registers its routes by keeping the URL structure flat (wherever possible). This time, let's register the `posts.comments` as a shallow resource.
 
 ```ts
 router.shallowResource('posts.comments', CommentsController)
 ```
 
-<table>
-  <thead>
-    <tr>
-      <th>Route</th>
-      <th width="100px">Controller method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>GET <code>/posts/:post_id/comments</code></td>
-      <td>index</td>
-    </tr>
-    <tr>
-      <td>GET <code>/posts/:post_id/comments/create</code></td>
-      <td>create</td>
-    </tr>
-    <tr>
-      <td>POST <code>‌/posts/:post_id/comments</code></td>
-      <td>store</td>
-    </tr>
-    <tr>
-      <td>GET <code>/comments/:id</code></td>
-      <td>show</td>
-    </tr>
-    <tr>
-      <td>GET <code>/comments/:id/edit</code></td>
-      <td>edit</td>
-    </tr>
-    <tr>
-      <td>PUT <code>/comments/:id</code></td>
-      <td>update</td>
-    </tr>
-    <tr>
-      <td>DELETE <code>/comments/:id</code></td>
-      <td>destroy</td>
-    </tr>
-  </tbody>
-</table>
+![](./shallow_routes_list.png)
 
 ### Naming resource routes
 

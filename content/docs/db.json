@@ -139,6 +139,7 @@
   },
   {
     "permalink": "security/cors",
+    "draft": true,
     "title": "CORS",
     "contentPath": "./security/cors.md",
     "category": "Security"
@@ -239,13 +240,6 @@
     "category": "Digging Deeper"
   },
   {
-    "permalink": "repl",
-    "title": "REPL",
-    "draft": true,
-    "contentPath": "./digging_deeper/repl.md",
-    "category": "Digging Deeper"
-  },
-  {
     "permalink": "scaffolding",
     "title": "Scaffolding",
     "contentPath": "./digging_deeper/scaffolding.md",
@@ -316,6 +310,12 @@
     "permalink": "ace/terminal-ui",
     "title": "Terminal UI",
     "contentPath": "./ace/tui.md",
+    "category": "Ace command line"
+  },
+  {
+    "permalink": "repl",
+    "title": "REPL",
+    "contentPath": "./ace/repl.md",
     "category": "Ace command line"
   }
 ]

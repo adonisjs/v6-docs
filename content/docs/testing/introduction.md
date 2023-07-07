@@ -1,8 +1,8 @@
-# Introduction
+# Testing
 
 AdonisJS has in-built support for writing tests. You do not have to install additional packages or wire up your application to be ready for testing - All the hard work has already been done.
 
-In fact, AdonisJS comes with an example functional test you can run using the `test` command.
+You can run the application tests using the following ace command.
 
 ```sh
 node ace test
@@ -46,7 +46,7 @@ You can configure a suite at runtime using the `configureSuite` hook defined ins
 
 ```ts
 export const configureSuite: Config['configureSuite'] = (suite) => {
-  if (['browser', 'functional'].includes(suite.name)) {
+  if (['browser', 'functional', 'e2e'].includes(suite.name)) {
     return suite.setup(() => testUtils.httpServer().start())
   }
 }
@@ -80,7 +80,6 @@ See also: [Creating Japa plugins](https://japa.dev/docs/creating-plugins)
 ```ts
 export const plugins: Config['plugins'] = [
   assert(),
-  apiClient(),
   pluginAdonisJS(app)
 ]
 ```
@@ -92,9 +91,9 @@ Reporters are used for reporting/displaying the progress of tests as they run. T
 See also: [Creating Japa reporters](https://japa.dev/docs/creating-reporters)
 
 ```ts
-export const reporters: Config['reporters'] = [
-  specReporter()
-]
+export const reporters: Config['reporters'] = {
+  activated: ['spec']
+}
 ```
 
 ## Creating tests
@@ -230,27 +229,23 @@ node ace test --watch
 
 ### Filtering tests
 
-
-:::important
-
-We recommend VSCode users use the [Japa extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) to run selected tests directly inside your code editor.
-
-
-:::
-
-
 You can apply filters using the command-line flags when running the tests. Following is the list of available options.
 
 See also: [Japa filtering tests guide](https://japa.dev/docs/filtering-tests)
 
+:::tip
+
+**Using VSCode?** Use the [Japa extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) to run selected tests within your code editor using keyboard shortcuts or the activity sidebar.
+
+:::
 
 | Flag | Description |
 |------|-----------|
-| `--tests` | Find one or more tests by their title. The flag value should be the same as the test title. |
-| `--files` | Find one or more tests by their base filename. You can specify file names without the `.spec.ts` suffix. |
-| `--groups` | Find one or more groups by their name. The flag value should be the same as the group name. |
-| `--tags` | Find tests matching one of the mentioned tags. |
-| `--ignore-tags` | Ignore tests matching one of the mentioned tags. |
+| `--tests` | Filter test by the test title. This filter matches against the exact test title. |
+| `--files` | Filter tests by subset of test file name. The match is performed against the end of the filename without `.spec.ts`. You can run tests for a complete folder using the wildcard expression. `folder/*` |
+| `--groups` | Filter test by group name. This filter matches against the exact group name. |
+| `--tags` | Filter tests by tags. You can prefix the tag name with tilde `~` to ignore tests with the given tag |
+| `--matchAll` | By default, Japa will run tests that matches any of the mentioned tags. If you want all tags to match, then use the `--matchAll` flag |
 
 ### Force exiting tests
 
@@ -262,6 +257,39 @@ If needed, you can force Japa to exit the process and not wait for a graceful sh
 node ace test --force-exit
 ```
 
+### Retrying tests
+You can retry failing tests for multiple times using the `--retries` flag. The flag will be applied to all the tests without an explicit retries count defined at the test level.
+
+```sh
+# Retry failing tests 2 times
+node ace test --retries=2
+```
+
+### Running failed tests from the last run
+You can re-run tests failed from the last run using the `--failed` commandline flag.
+
+```sh
+node ace test --failed
+```
+
+### Switching between reporters
+Japa allows you register multiple test reporters inside the config file, but does not activate them by default. You can activate reporters either inside the config file, or using the `--reporter` commandline flag.
+
+```sh
+# Activate spec reporter
+node ace test --reporter=spec
+
+# Activate spec and json reporters
+node ace test --reporter=spec,json
+```
+
+You may also activate reporters inside the config file.
+
+```ts
+export const reporters: Config['reporters'] = {
+  activated: ['spec', 'json']
+}
+```
 
 ## Environment variables
 

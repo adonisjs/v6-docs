@@ -6,7 +6,7 @@ You can add custom rules to the validator using the `validator.rule` method. Rul
 Throughout this guide, we will keep them inside the `start/validator.ts` file. You can create this file by running the following Ace command and select the environment as **"During HTTP server"**.
 
 ```sh
-node ace make:prldfile validator
+node ace make:preload validator
 ```
 
 ![](https://res.cloudinary.com/adonis-js/image/upload/q_auto,f_auto/v1632118234/v5/validator-prldfile_wipxtd.png)

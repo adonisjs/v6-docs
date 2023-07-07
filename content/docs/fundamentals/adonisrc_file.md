@@ -65,7 +65,7 @@ You can define the environment in which to import the file. The valid options ar
 
 :::note
 
-You can create and register a preload file using the `node ace make:prldfile` command.
+You can create and register a preload file using the `node ace make:preload` command.
 
 
 :::
@@ -119,6 +119,8 @@ These are non-TypeScript/JavaScript files that must exist in the production buil
 ## commands
 An array of paths to import ace commands. You can define a relative path like `./commands/main.js` or a path to an installed package.
 
+See also: [Creating ace commands](../ace/creating_commands.md)
+
 ```json
 {
   "commands": [
@@ -131,6 +133,8 @@ An array of paths to import ace commands. You can define a relative path like `.
 
 ## commandsAliases
 A key-value pair of command aliases. This is usually to help you create memorable aliases for the commands that are harder to type or remember.
+
+See also: [Creating command aliases](../ace/introduction.md#creating-command-aliases)
 
 ```json
 {
@@ -154,6 +158,8 @@ You can also define multiple aliases by adding multiple entries.
 ## tests
 
 The `tests` object registers the test suites and some of the global settings for the test runner.
+
+See also: [Introduction to testing](../testing/introduction.md)
 
 ```json
 {
@@ -191,13 +197,11 @@ By default, the providers are loaded in all the environments. However, you can a
 - `repl` environment refers to the process started using the `node ace repl` command.
 - Finally, the `test` environment refers to the process started for running the tests.
 
-
 :::note
-
 Providers are loaded in the same order as registered inside the `providers` array.
-
-
 :::
+
+See also: [Service providers](../fundamentals/service_providers.md)
 
 ```json
 {
@@ -249,12 +253,18 @@ However, if you use a different assets bundler, you can configure it inside the 
 {
   "assetsBundler": {
     "name": "vite",
-    "devServerCommand": "vite",
-    "buildCommand": "vite build"
+    "devServer": {
+      "command": "vite",
+      "args": []
+    },
+    "build": {
+      "command": "vite",
+      "args": ["build"]
+    },
   }
 }
 ```
 
 - `name` - The name of the asset bundler you use. It is required for display purposes.
-- `devServerCommand` - The command to start the development server.
-- `buildCommand` - The command to run for creating the production build.
+- `devServer.*` - The command and its arguments to start the development server.
+- `build.*` - The command and its arguments to to create the production build.

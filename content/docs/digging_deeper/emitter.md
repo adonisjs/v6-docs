@@ -10,10 +10,10 @@ AdonisJS further enhances emittery with additional features.
 
 ## Basic usage
 
-The event listeners are defined inside the `start/events.ts` file. You may create this file using the `make:prldfile` ace command.
+The event listeners are defined inside the `start/events.ts` file. You may create this file using the `make:preload` ace command.
 
 ```sh
-node ace make:prldfile events
+node ace make:preload events
 ```
 
 You must use the `emitter.on` to listen to an event. The method accepts the event's name as the first argument and the listener as the second argument.

@@ -4,7 +4,7 @@ AdonisJS has first-class support for processing user-uploaded files sent using t
 
 Later, inside your controllers, you may access the files, validate them and move them to a persistent location or a cloud storage service like S3.
 
-## Storing user-uploaded files
+## Working with user-uploaded files
 
 You may access the user-uploaded files using the `request.file` method. The method accepts the field name and returns an instance of [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts).
 
@@ -93,48 +93,55 @@ if (invalidDocuments.length) {
 Instead of validating files manually (as seen in the previous section), you may use the [validator](./validation.md) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
 
 ```ts
-import { schema } from '@adonisjs/core/legacy/validator'
+// app/validators/user_validator.ts
+import vine from '@vinejs/vine'
+
+export const updateAvatarValidator = vine.compile(
+  vine.object({
+    // highlight-start
+    avatar: vine.file({
+      size: '2mb',
+      extnames: ['jpg', 'png', 'pdf']
+    })
+    // highlight-end
+  })
+)
+```
+
+```ts
 import { HttpContext } from '@adonisjs/core/http'
+import { updateAvatarValidator } from '#validators/user_validator'
 
 export default class UserAvatarsController {
   update({ request }: HttpContext) {
     // highlight-start
-    const { avatar } = await request.validate({
-      schema: schema.create({
-        avatar: schema.file({
-          size: '2mb',
-          extnames: ['jpg', 'png', 'pdf']
-        })
-      })
-    })
+    const { avatar } = await request.validateUsing(
+      updateAvatarValidator
+    )
     // highlight-end
   }
 }
 ```
 
-An array of files can be validated using the `schema.array` type. For example:
+### Using validator to validate multiple files
+An array of files can be validated using the `vine.array` type. For example:
 
 ```ts
-import { HttpContext } from '@adonisjs/core/http'
+import vine from '@vinejs/vine'
 
-export default class InvoicesController {
-  update({ request }: HttpContext) {
+export const createInvoiceValidator = vine.compile(
+  vine.object({
     // highlight-start
-    const { documents } = await request.validate({
-      schema: schema.create({
-        documents: schema.array().members(
-          schema.file({
-            size: '2mb',
-            extnames: ['jpg', 'png', 'pdf']
-          })
-        )
+    documents: vine.array(
+      vine.file({
+        size: '2mb',
+        extnames: ['jpg', 'png', 'pdf']
       })
-    })
+    )
     // highlight-end
-  }
-}
+  })
+)
 ```
-
 
 ### Moving files to a persistent location
 
@@ -153,7 +160,7 @@ const avatar = request.file('avatar', {
 await avatar.move(app.makePath('uploads'))
 ```
 
-Also, it is recommended to provide a unique unguessable name to the moved file. For this, you may use the `cuid` helper.
+Also, it is recommended to provide a unique random name to the moved file. For this, you may use the `cuid` helper.
 
 ```ts
 import { cuid } from '@adonisjs/core/helpers'

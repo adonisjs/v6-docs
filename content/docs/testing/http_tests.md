@@ -1,14 +1,41 @@
 # HTTP tests
 
-AdonisJS starter kits are pre-configured to use the [Japa API client plugin](https://japa.dev/docs/plugins/api-client). The API client is used to make HTTP requests to your AdonisJS server and test the response.
+HTTP tests refers to testing your application endpoints by making a real HTTP request against them and asserting the response body, headers, cookies, session, etc.
 
-Mainly, you will be using the API client to test JSON API responses and use the [Browser client](./browser_tests.md) for testing server-rendered applications in a real browser.
+HTTP tests are performed using the [API client plugin](https://japa.dev/docs/plugins/api-client) of Japa. The API client plugin is a stateless request library similar to `axios` or `fetch`, but more suited for testing.
 
-## Configuration
+If you want to test your web-apps inside a real browser and interact with it programmatically, we recommend using the [Browser client](./browser_tests.md) that uses Playwright for testing.
 
-Before moving forward, make sure the `apiClient` plugin is registered under the `plugins` array inside the `tests/bootstrap.ts` file.
+## Setup
+The first step is to install the following packages from the npm packages registry.
+
+:::codegroup
+
+```sh
+// title: npm
+npm i -D playwright @japa/api-client
+```
+
+```sh
+// title: yarn
+yarn add -D playwright @japa/api-client
+```
+
+```sh
+// title: pnpm
+pnpm add -D playwright @japa/api-client
+```
+
+:::
+
+### Registering the plugin
+
+Before moving forward, make sure to register the plugin inside the `tests/bootstrap.ts` file.
 
 ```ts
+// title: tests/bootstrap.ts
+import { apiClient } from '@japa/api-client'
+
 export const plugins: Config['plugins'] = [
   assert(),
   // highlight-start
@@ -18,19 +45,27 @@ export const plugins: Config['plugins'] = [
 ]
 ```
 
-The `apiClient` plugin optionally accepts the `baseUrl` for the server. It will use the `HOST` and the `PORT` environment variables if not provided.
+The `apiClient` method optionally accepts the `baseUrl` for the server. It will use the `HOST` and the `PORT` environment variables if not provided.
 
 ```ts
 import env from '#start/env'
 
-apiClient({
-  baseUrl: `http://${env.get('HOST')}:${env.get('PORT')}`
-})
+export const plugins: Config['plugins'] = [
+  apiClient({
+    baseUrl: `http://${env.get('HOST')}:${env.get('PORT')}`
+  })
+]
 ```
 
 ## Basic example
 
-Once the `apiClient` plugin is registered, you may access the `client` object from [TestContext](https://japa.dev/docs/test-context) to make an HTTP request. For example:
+Once the `apiClient` plugin is registered, you may access the `client` object from [TestContext](https://japa.dev/docs/test-context) to make an HTTP request.
+
+The HTTP tests musts be written inside the folder configured for the `functional` tests suite. You may use the following command to create a new test file.
+
+```sh
+node ace make:test users/list --suite=functional
+```
 
 ```ts
 import { test } from '@japa/runner'
@@ -116,7 +151,7 @@ await client
   .withCookie('user_preferences', { limit: 10 })
 ```
 
-The `withCookie` defines a [singed cookie](../http/cookies.md#signed-cookies). In addition, you may use the `withEncryptedCookie` or `withPlainCookie` methods to send other types of cookies to the server.
+The `withCookie` method defines a [singed cookie](../http/cookies.md#signed-cookies). In addition, you may use the `withEncryptedCookie` or `withPlainCookie` methods to send other types of cookies to the server.
 
 ```ts
 await client
@@ -151,7 +186,7 @@ response.assertCookie('user_preferences')
 ## The route helper
 You may use the `route` helper from the TestContext to create a URL for a route. Using the route helper ensures that whenever you update your routes, you do not have to come back and fix all the URLs inside your tests.
 
-The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#route).
+The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#generating-urls-inside-templates).
 
 ```ts
 test('get a list of users', ({ client, route }) => {

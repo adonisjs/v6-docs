@@ -110,7 +110,7 @@ version
 
 <dd>
 
-The argon version to use. The available options are `0x10 (1.0)` and `0x13 (1.3)`, and the latest version should be used by default.
+The argon version to use. The available options are `0x10 (1.0)` and `0x13 (1.3)`. The latest version should be used by default.
 
 </dd>
 
@@ -285,7 +285,7 @@ The scrypt driver uses the Node.js crypto module for computing the password hash
 
 ## Using model hooks to hash password
 
-Since you will be using the `hash` service to hash user passwords, you may find it helpful to place the logic inside the `beforeSave` model hook.
+Since you will be using the `hash` service to hash user passwords, you may find placing the logic inside the `beforeSave` model hook helpful.
 
 ```ts
 import { BaseModel, beforeSave } from '@adonisjs/lucid'
@@ -322,9 +322,9 @@ await hash.use('argon').make('secret')
 
 ## Checking if a password needs to be rehashed
 
-Using the latest configuration options is recommended to keep passwords secure, especially when a vulnerability is reported with an older version of the hashing algorithm.
+The latest configuration options are recommended to keep passwords secure, especially when a vulnerability is reported with an older version of the hashing algorithm.
 
-After you update the config with the latest options, you can use the `hash.needsReHash` method to check if a password hash is using old options and perform a re-hash.
+After you update the config with the latest options, you can use the `hash.needsReHash` method to check if a password hash uses old options and perform a re-hash.
 
 The check must be performed during user login because that is the only time you can access the plain text password.
 
@@ -351,7 +351,7 @@ if (await hash.needsReHash(user.password)) {
 
 Hashing a value is usually a slow process, and it will make your tests slow. Therefore, you might consider faking the hash service using the `hash.fake` method to disable password hashing.
 
-In the following example, we create 20 users using the `UserFactory`. Given that you are using a model hook to hash passwords, it might take 5-7 seconds (depending upon the configuration) to hash passwords.
+We create 20 users using the `UserFactory` in the following example. Since you are using a model hook to hash passwords, it might take 5-7 seconds (depending on the configuration).
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
@@ -362,7 +362,7 @@ test('get users list', async ({ client }) => {
 })
 ```
 
-However, once you fake the hash service, the same test will run order of magnitude faster.
+However, once you fake the hash service, the same test will run in order of magnitude faster.
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
@@ -382,5 +382,118 @@ test('get users list', async ({ client }) => {
 ```
 
 ## Creating a custom hash driver
+AdonisJS allows the application developers to reference hash drivers using a string-based name, like, `argon2`, `bcrypt`, `scrypt`, and so on. Behind the scenes, we map these unique names to their implementation and use them for hashing passwords.
 
-Learn how to [add custom hash drivers](../fundamentals/extending_the_framework.md#creating-a-hash-driver).
+The implementation for the hash drivers is stored in a singleton collection called `driversList`. Therefore, if you create a custom driver, you must register it with this collection.
+
+The code for registering a driver must be written inside a service provider so that you can use the IoC container to look up dependencies the hash driver might need.
+
+```ts
+import { ApplicationService } from '@adonisjs/core/types'
+// highlight-start
+import { Pbkdf2Driver } from './pbkdf2_driver.js'
+import { driversList } from '@adonisjs/core/hash'
+// highlight-end
+
+export default class AppProvider {
+  constructor(protected app: ApplicationService) {
+  }
+
+  async boot() {
+    // highlight-start
+    driversList.extend('pbkdf2', (config) => {
+      return new Pbkdf2Driver(config)
+    })
+    // highlight-end
+  }
+}
+```
+
+The `driversList.extend` method accepts a unique name for the driver and a callback method to create an instance of the driver. The callback method receives a user-defined config as the only argument.
+
+If your driver needs additional dependencies, you can resolve them from the container as follows.
+
+```ts
+async boot() {
+  const router = await this.app.container.make('router')
+
+  driversList.extend('pbkdf2', (config) => {
+    return new Pbkdf2Driver(config, router)
+  })
+}
+```
+
+### Registering driver types
+You must notify the TypeScript compiler about the newly added driver and its types. The types must be registered with the `HashDriversList` interface.
+
+You can write the following code at the top of the service provider file.
+
+```ts
+import { Pbkdf2Driver, PbkdfConfig } from './pbkdf2_driver.js'
+
+declare module '@adonisjs/core/types' {
+  interface HashDriversList {
+    pbkdf2: (config: PbkdfConfig) => Pbkdf2Driver
+  }
+}
+```
+
+### Driver implementation
+A hash driver must implement the `HashDriverContract` interface. Also, the official Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize a hash for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/next/src/drivers/bcrypt.ts) to make and verify hashes.
+
+```ts
+import { HashDriverContract } from '@adonisjs/core/types/hash'
+
+export type PbkdfConfig = {
+
+}
+
+export class Pbkdf2Driver implements HashDriverContract {
+  constructor(public config: PbkdfConfig) {
+  }
+
+  /**
+   * Check if the hash value is formatted as per
+   * the hashing algorithm.
+   */
+  isValidHash(value: string): boolean {
+  }
+
+  /**
+   * Convert raw value to Hash
+   */
+  async make(value: string): Promise<string> {
+  }
+
+  /**
+   * Verify if the plain value matches the provided
+   * hash
+   */
+  async verify(
+    hashedValue: string,
+    plainValue: string
+  ): Promise<boolean> {
+  }
+
+  /**
+   * Check if the hash needs to be re-hashed because
+   * the config parameters have changed
+   */
+  needsReHash(value: string): boolean {
+  }
+}
+```
+
+### Using the driver
+Once the driver has been registered with the `driversList` collection, you can use its name within the config file as follows.
+
+```ts
+export default defineConfig({
+  list: {
+    newHasher: {
+      driver: 'pbkdf2',
+      // ...rest of the config goes here
+    },
+  }
+})
+```

@@ -46,7 +46,6 @@ Starter kits serve as a starting point for creating applications using AdonisJS.
 
 The official starter kits use ES modules and TypeScript. This combination allows you to use modern JavaScript constructs and leverage static-type safety.
 
-
 :::
 
 ### Web starter kit
@@ -92,19 +91,9 @@ The web starter kit comes with the following packages.
 </tr>
 </tbody></table>
 
-You can drop specific packages using the following command-line flags.
-
-```sh
-npm init adonisjs -- --no-auth --no-orm --no-assets
-```
-
-- `--no-auth`: Removes the `@adonisjs/auth` package and config files.
-- `--no-orm`: Removes both the `@adonisjs/lucid` and the `@adonisjs/auth` package. The authentication layer needs the ORM to find users.
-- `--no-assets`: Removes the Vite assets bundler.
-
 ### API starter kit
 
-The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit. 
+The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
 
 In this starter kit:
 
@@ -119,8 +108,39 @@ The API starter kit is configured with session-based authentication. However, if
 npm init adonisjs -- --tokens-auth
 ```
 
-## Starting the dev server
+### Slim starter kits
+For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
 
+### Bring your starter kits
+Starter kits are pre-built projects hosted with a Git repository provider like Github, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
+
+```sh
+npm init adonisjs -- -K="github_user/repo"
+
+# Download from GitLab
+npm init adonisjs -- -K="gitlab:user/repo"
+
+# Download from BitBucket
+npm init adonisjs -- -K="bitbucket:user/repo"
+```
+
+You can download private repos using Git+SSH authentication using the `git` mode.
+
+```sh
+npm init adonisjs -- -K="user/repo" --mode=git
+```
+
+Finally, you can specify a tag, branch, or commit.
+
+```sh
+# Branch
+npm init adonisjs -- -K="user/repo#develop"
+
+# Tag
+npm init adonisjs -- -K="user/repo#v2.1.0"
+```
+
+## Starting the development server
 You may start the development server by running the `node ace serve` command.
 
 Ace is a command line framework bundled inside the framework's core. The `--watch` flag monitors the file system and restarts the development server on file change.

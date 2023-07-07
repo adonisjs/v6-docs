@@ -74,21 +74,6 @@ router
   .make('posts.show')
 ```
 
-## Disabling route lookup
-
-The URL builder performs a route lookup with the route identifier given to the `make` and the `makeSigned` methods.
-
-If you want to create a URL for routes defined outside of your AdonisJS application, you may disable the route lookup and give the route pattern to the `make` and the `makeSigned` methods.
-
-```ts
-router
-  .builder()
-  .prefixUrl('https://your-app.com')
-  .disableRouteLookup()
-  .params({ token: 'foobar' })
-  .make('/email/verify/:token') // /email/verify/foobar
-```
-
 ## Generating signed URLs
 
 Signed URLs are URLs with a signature query string appended to them. The signature is used to verify if the URL has been tampered after it was generated.
@@ -139,58 +124,53 @@ router
   // highlight-end
 ```
 
+## Disabling route lookup
+
+The URL builder performs a route lookup with the route identifier given to the `make` and the `makeSigned` methods.
+
+If you want to create a URL for routes defined outside of your AdonisJS application, you may disable the route lookup and give the route pattern to the `make` and the `makeSigned` methods.
+
+```ts
+router
+  .builder()
+  .prefixUrl('https://your-app.com')
+  .disableRouteLookup()
+  .params({ token: 'foobar' })
+  .make('/email/verify/:token') // /email/verify/foobar
+```
+
+## Making URL for routes under a domain
+You can make URLs for routes registered under a specific domain using the `router.builderForDomain` method. The method accepts the route pattern you used at the time of defining the routes.
+
+```ts
+import router from '@adonisjs/core/services/router'
+const PostsController = () => import('#controllers/posts_controller')
+
+router.group(() => {
+  router
+    .get('/posts/:id', [PostsController, 'show'])
+    .as('posts.show')
+}).domain('blog.adonisjs.com')
+```
+
+You can create URL for the `posts.show` route under `blog.adonisjs.com` domain as follows.
+
+```ts
+router
+  .builderForDomain('blog.adonisjs.com')
+  .params({ id: 1 })
+  .make('posts.show')
+```
+
 ## Generating URLs inside templates
 
-You may use the `route`, `signedRoute`, `url`, and the `signedUrl` methods inside templates to generate a URL using the URL builder.
-
-The view helpers do not have a fluent API and instead accept multiple parameters.
-
-- The first parameter is the route identifier or the route pattern.
-- The 2nd parameter is the route params defined as an array or an object.
-- The 3rd parameter is the options object. The options may have the `prefixUrl` and the `qs` properties.
-
-### route
+You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">
   View post
 </a>
 ```
-
-The query string is defined using the `qs` option.
-
-```edge
-<a href="{{
-  route('posts.index', [], {
-    qs: {
-      sort: 'asc',
-      page: 1
-    }
-  })
-}}">
-  Posts
-</a>
-```
-
-The prefix URL is defined using the `prefixUrl` option.
-
-```edge
-<a href="{{
-  route('posts.index', [], {
-    qs: {
-      sort: 'asc',
-      page: 1
-    },
-    prefixUrl: 'https://blog.adonisjs.com'
-  })
-}}">
-  Posts
-</a>
-```
-
-### signedRoute
-
-The `signedRoute` helper generates a signed URL. It accepts the same set of parameters as the `route` helper.
 
 ```edge
 <a href="{{
@@ -203,29 +183,12 @@ The `signedRoute` helper generates a signed URL. It accepts the same set of para
 </a>
 ```
 
-### url
+The view helpers do not have a fluent API and instead accepts the following parameters.
 
-The `url` helper generates a URL for a route pattern [without performing a route lookup](#disabling-route-lookup). The method can be used to create URLs to routes outside of your application.
-
-```edge
-<a href="{{
-  url('/email/verify/:token', ['token-value'], {
-    prefixUrl: 'https://yourapp.com'
-  })
-}}">
-  Click here to verify your email address
-</a>
-```
-
-### signedUrl
-The `signedUrl` works similar to the `url` method. Instead, it generates a signed URL.
-
-```edge
-<a href="{{
-  signedUrl('/email/verify/:token', ['token-value'], {
-    prefixUrl: 'https://yourapp.com'
-  })
-}}">
-  Click here to verify your email address
-</a>
-```
+- **First parameter**: The route identifier or the route pattern.
+- **Second parameter**: Route params defined as an array or an object.
+- **Third parameter**: The options object with following properties.
+  - `qs`: Define query string parameters as an object.
+  - `domain`: Search for routes under a specific domain.
+  - `prefixUrl`: Prefix a URL to the output.
+  - `disableRouteLookup`: Enable/disable routes lookup.

@@ -12,13 +12,17 @@ The boot phase remains the same for all the environments except the `console` en
 
 You can only use the container bindings and services once the application is booted.
 
-![](./boot_phase_flow_chart.jpeg)
+![](./boot_phase_flow_chart.png)
 
 ## The start phase
 
-The start phase varies between the `web`, `console`, and the `test` environment.
+The start phase varies between all the environments. Also, the execution flow is further divided into the following sub-phases
 
-![](./start_phase_flow_chart.jpeg)
+- The `pre-start` phase refers to the actions performed before starting the app. 
+
+- The `post-start` phase refers to the actions performed after starting the app. In the case of an HTTP server, the actions will be executed after the HTTP server is ready to accept new connections.
+
+![](./start_phase_flow_chart.png)
 
 ### During the web environment
 
@@ -26,7 +30,7 @@ In the web environment, a long-lived HTTP connection is created to listen for in
 
 ### During the test environment
 
-In the test environment, the **pre-start** and the **post-start** actions are executed together. Post that, we import the test files and execute the tests.
+The **pre-start** and the **post-start** actions are executed in the test environment. Post that, we import the test files and execute the tests.
 
 ### During the console environment
 
@@ -56,7 +60,7 @@ A short-lived command or the test process begins the termination after the main 
 
 A long-lived HTTP server process waits for exit signals like `SIGTERM` to begin the termination process.
 
-![](./termination_phase_flow_chart.jpeg)
+![](./termination_phase_flow_chart.png)
 
 ### Responding to process signals
 
@@ -127,9 +131,17 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
   })
 ```
 
-- `booted`: The booted hook is invoked after all the service providers have been registered and booted.
-- `ready`: The ready hook is invoked after the application is ready.
-- `terminating`: The terminating hook is invoked once the graceful exit process begins. For example, this hook can close database connections or end open streams.
+- `initiating`: The hook actions are called before the application moves to the initiated state. The `.adonisrc.json` file is parsed after executing the `initiating` hooks.
+
+- `booting`: The hook actions are called before booting the app. The config files are imported after executing `booting` hooks.
+
+- `booted`: The hook actions are invoked after all the service providers have been registered and booted.
+
+- `starting`: The hook actions are invoked before importing the preload files.
+
+- `ready`: The hook actions are invoked after the application is ready.
+
+- `terminating`: The hook actions are invoked once the graceful exit process begins. For example, this hook can close database connections or end open streams.
 
 ### Using service providers
 
@@ -161,7 +173,11 @@ export default class AppProvider {
 ```
 
 - `register`: The register method registers bindings within the container. This method is synchronous by design.
+
 - `boot`: The boot method is used to boot or initialize the bindings you have registered inside the container.
+
 - `start`: The start method runs just before the `ready` method. It allows you to perform actions that the `ready` hook actions might need.
+
 - `ready`: The ready method runs after the application is considered ready.
-- `shutdown`: The shutdown method is invoked when the application begins the graceful shutdown. You can use this method to close database connections, or end opened streams.
+
+- `shutdown`: The shutdown method is invoked when the application begins the graceful shutdown. You can use this method to close database connections or end opened streams.

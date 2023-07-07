@@ -231,7 +231,7 @@ vine.withMeta<{ userId: number }>((meta) => {
 You may create a [preload file](../fundamentals/adonisrc_file.md#preloads) inside the `start` directory to configure VineJS with custom error messages or a custom error reporter.
 
 ```sh
-node ace make:prldfile validator
+node ace make:preload validator
 ```
 
 In the following example, we [define custom error messages](https://vinejs.dev/docs/custom_error_messages).

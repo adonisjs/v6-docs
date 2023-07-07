@@ -39,18 +39,43 @@ AdonisJS uses the [sub-path imports](https://nodejs.org/dist/latest-v19.x/docs/a
 The following import aliases are pre-configured within the `package.json` file. Feel free to add new aliases or edit the existing ones.
 
 ```json
+// title: package.json
 {
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
+    "#middleware/*": "./app/middleware/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
     "#models/*": "./app/models/*.js",
     "#services/*": "./app/services/*.js",
     "#listeners/*": "./app/listeners/*.js",
     "#events/*": "./app/events/*.js",
-    "#middleware/*": "./app/middleware/*.js",
     "#validators/*": "./app/validators/*.js",
     "#start/*": "./start/*.js",
-    "#config/*": "./config/*.js"
+    "#config/*": "./config/*.js",
+    "#commands/*": "./commands/*.js",
+  }
+}
+```
+
+In order for code editors to autocomplete imports using import aliases, you will have to re-define the same aliases inside `tsconfig.json` file as well. We hope, the editors will soon catchup and rely on `package.json` as the single source of truth for aliases.
+
+```json
+// title: tsconfig.json
+{
+  "compilerOptions": {
+    "paths": {
+      "#controllers/*": ["./app/controllers/*.js"],
+      "#middleware/*": ["./app/middleware/*.js"],
+      "#exceptions/*": ["./app/exceptions/*.js"],
+      "#models/*": ["./app/models/*.js"],
+      "#services/*": ["./app/services/*.js"],
+      "#listeners/*": ["./app/listeners/*.js"],
+      "#events/*": ["./app/events/*.js"],
+      "#validators/*": ["./app/validators/*.js"],
+      "#start/*": ["./start/*.js"],
+      "#config/*": ["./config/*.js"],
+      "#commands/*": ["./commands/*.js"]
+    }
   }
 }
 ```
@@ -60,7 +85,8 @@ The following import aliases are pre-configured within the `package.json` file. 
 The `bin` directory has the entry point files to load your application in a specific environment. For example:
 
 - The `bin/server.ts` file boots the application in the web environment to listen for HTTP requests. 
-- Whereas the `bin/test.ts` file boots the application to run tests.
+- The `bin/console.ts` file boots the Ace commandline and executes commands.
+- The `bin/test.ts` file boots the application to run tests.
 
 ## The `ace.js` file
 

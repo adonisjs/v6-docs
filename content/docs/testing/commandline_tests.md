@@ -36,7 +36,7 @@ node ace make:test commands/greet --suite=unit
 # DONE:    create tests/unit/commands/greet.spec.ts
 ```
 
-Let's open the newly created file and write the following test. We will use the `ace` service to create an instance of the `Greet` command and assert it exists successfully.
+Let's open the newly created file and write the following test. We will use the `ace` service to create an instance of the `Greet` command and assert it exits successfully.
 
 ```ts
 import { test } from '@japa/runner'
@@ -146,6 +146,7 @@ command.assertTableRows([
   ['Harminder Virk', 'virk@adonisjs.com'],
   ['Romain Lanz', 'romain@adonisjs.com'],
   ['Julien-R44', 'julien@adonisjs.com'],
+  ['Michaël Zasso', 'targos@adonisjs.com'],
 ])
 ```
 

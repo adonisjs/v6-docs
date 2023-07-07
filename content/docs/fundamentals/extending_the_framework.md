@@ -92,62 +92,8 @@ Following is the list of classes that can be extended using Macros and getters.
 | [MultipartFile](https://github.com/adonisjs/bodyparser/blob/next/src/multipart/file.ts) | `@adonisjs/core/bodyparser` |
 
 ## Creating drivers
+AdonisJS uses driver based implementation with many of its modules and offers an extensible API to register custom drivers as well. 
 
-You can create drivers for modules that support using multiple drivers, like the Hash, Drive, and Mailer modules.
+Following is the list of modules with documentation to create custom drivers.
 
-### Creating a Hash driver
-
-You can register a hash driver using the `driversList.extend` method. The code for registering a driver must be placed inside a service provider's `boot` method.
-
-```ts
-import { ApplicationService } from '@adonisjs/core/types'
-import { driversList } from '@adonisjs/core/hash'
-
-export default class AppProvider {
-  constructor(protected app: ApplicationService) {
-  }
-
-  async boot() {
-    driversList.extend('pbkdf2', (config) => {
-      return new Pbkdf2Driver(config)
-    })
-  }
-}
-```
-
-You need to notify the TypeScript compiler about your driver and its types. The types must be registered with the `HashDriversList` interface.
-
-You can write the following code within the service provider file.
-
-```ts
-declare module '@adonisjs/core/types' {
-  interface HashDriversList {
-    pbkdf2: (config: PbkdfConfig) => Pbkdf2Driver
-  }
-}
-```
-
-Finally, your driver implementation must adhere to the `HashDriverContract` interface.
-
-```ts
-import { HashDriverContract } from '@adonisjs/core/types/hash'
-
-export class Pbkdf2Driver implements HashDriverContract {
-  constructor(public config: PbkdfConfig) {
-  }
-  
-  isValidHash(value: string): boolean {
-  }
-
-  async make(value: string): Promise<string> {}
-
-  async verify(
-    hashedValue: string,
-    plainValue: string
-  ): Promise<boolean> {}
-
-  needsReHash(value: string): boolean {}
-}
-```
-
-AdonisJS Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize a hash for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/next/src/drivers/bcrypt.ts) to make and verify hashes.
+- [Creating Hash driver](../security/hash.md#creating-a-custom-hash-driver)

@@ -8,14 +8,25 @@ You can also create custom middleware to perform additional tasks during an HTTP
 
 ## Middleware stacks
 
-To give you better control over the execution of the middleware pipeline, AdonisJS split the middleware stack into three groups. They are called **Server middleware**, **Router/Global middleware**, and **Named middleware**.
+To give you better control over the execution of the middleware pipeline, AdonisJS split the middleware stack into following three groups.
 
 ### Server middleware stack
 
-Server middleware runs on every HTTP request, even if you have not defined any route for the current request's URL. 
+Server middleware runs on every HTTP request, even if you have not defined any route for the current request's URL.
 
 They are great for adding additional functionality to your app that does not rely on the routing system of the framework. For example, the Static assets middleware is registered as server middleware.
 
+You can register server middleware using the `serve.use` method inside the `start/kernel.ts` file.
+
+```ts
+import server from '@adonisjs/core/services/server'
+
+server.use([
+  () => import('@adonisjs/static/static_middleware')
+])
+```
+
+---
 
 ### Router middleware stack
 
@@ -23,17 +34,39 @@ Router middleware are also known as global middleware. They are executed on ever
 
 The Bodyparser, auth, and session middleware are registered under the router middleware stack.
 
+You can register router middleware using the `router.use` method inside the `start/kernel.ts` file.
+
+```ts
+import router from '@adonisjs/core/services/router'
+
+router.use([
+  () => import('@adonisjs/core/bodyparser_middleware')
+])
+```
+
+---
+
 ### Named middleware collection
 
 Named middleware is a collection of middleware that are not executed unless explicitly assigned to a route or a group.
 
 Instead of defining middleware as an inline callback within the routes file, we recommend you create dedicated middleware classes, store them inside the named middleware collection and then assign them to the routes.
 
+You can define named middleware using the `router.named` method inside the `start/kernel.ts` file. Make sure to export the named collection to be able to use it [inside the routes file](#assigning-middleware-to-routes-and-route-groups).
+
+```ts
+import router from '@adonisjs/core/services/router'
+
+router.named({
+  auth: () => import('#middleware/auth_middleware')
+})
+```
+
 ## Creating middleware
 
 Middleware are stored inside the `./app/middleware` directory, and you can create a new middleware file by running the `make:middleware` ace command.
 
-See also: [Make middleware scaffolding command](../digging_deeper/scaffolding.md#make-middleware)
+See also: [Make middleware scaffolding command](../digging_deeper/scaffolding.md#makemiddleware)
 
 ```sh
 node ace make:middleware user_location
@@ -98,38 +131,6 @@ export default class UserLocationMiddleware {
     ctx.response.send('Ending request')
   }
 }
-```
-
-## Assigning middleware to middleware stacks
-
-The middleware stacks are defined inside the `start/kernel.ts` file. Depending upon the nature of the middleware, you can assign it either to the [server middleware stack](#server-middleware-stack), [router middleware stack](#router-middleware-collection), or add it to the [named middleware collection](#named-middleware-collection).
-
-The middleware are imported lazily using dynamic imports. For demonstration, we register the `UserLocationMiddleware` in all the stacks.
-
-```ts
-import router from '@adonisjs/core/services/router'
-import server from '@adonisjs/core/services/server'
-
-/**
- * Server middleware stack
- */
-server.use([
-  () => import('#middleware/user_location_middleware')
-])
-
-/**
- * Router middleware stack
- */
-router.use([
-  () => import('#middleware/user_location_middleware')
-])
-
-/**
- * Named middleware collection
- */
-export const middleware = router.named({
-  userLocation: () => import('#middleware/user_location_middleware')
-})
 ```
 
 ## Assigning middleware to routes and route groups

@@ -17,4 +17,9 @@ export default [
     scopeName: 'source.env',
     id: 'dotenv',
   },
+  {
+    path: fileURLToPath(new URL('./edge.tmLanguage.json', import.meta.url)),
+    scopeName: 'text.html.edge',
+    id: 'edge',
+  },
 ] satisfies ILanguageRegistration[]

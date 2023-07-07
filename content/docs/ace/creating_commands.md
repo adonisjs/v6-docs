@@ -5,10 +5,10 @@ Alongside using Ace commands, you may also create custom commands as part of you
 See also: [Naming conventions for the `make:command`](../digging_deeper/scaffolding.md)
 
 ```sh
-tnode bin/ace make:command greet
+node ace make:command greet
 ```
 
-The above command will create a `greet_command.ts` file inside the `commands` directory. Ace commands are represented by a class and must implement the `run` method to execute the command instructions.
+The above command will create a `greet.ts` file inside the `commands` directory. Ace commands are represented by a class and must implement the `run` method to execute the command instructions.
 
 ## Command metadata
 

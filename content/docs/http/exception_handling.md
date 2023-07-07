@@ -10,14 +10,14 @@ import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   protected debug = !app.inProduction
-  protected renderStatusPages = true
-
-  async report(error: unknown, ctx: HttpContext) {
-    return super.report(error, ctx)
-  }
+  protected renderStatusPages = app.inProduction
 
   async handle(error: unknown, ctx: HttpContext) {
     return super.handle(error, ctx)
+  }
+
+  async report(error: unknown, ctx: HttpContext) {
+    return super.report(error, ctx)
   }
 }
 ```
@@ -64,8 +64,8 @@ If you are creating a JSON server, you may not need status pages.
 ```ts
 export default class HttpExceptionHandler extends ExceptionHandler {
   protected statusPages = {
-    '404': ({ view }) => view.render('errors/not-found'),
-    '500..599': ({ view }) => view.render('errors/server-error')
+    '404': (_, { view }) => view.render('errors/not-found'),
+    '500..599': (_, { view }) => view.render('errors/server-error')
   }
 }
 ```
@@ -157,7 +157,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Custom `shouldReport` method
+### Custom shouldReport method
 
 The logic to ignore status codes or exceptions is written inside the [`shouldReport` method](https://github.com/adonisjs/http-server/blob/next/src/exception_handler.ts#L218). If needed, you can override this method and define your custom logic for ignoring exceptions.
 

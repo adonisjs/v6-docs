@@ -11,7 +11,7 @@ Let's start with injecting dependencies into a class.
 
 ## Basic example
 
-The automatic dependency injection relies on the [TypeScript decorators implementation](https://www.typescriptlang.org/docs/handbook/decorators.html) and the [Reflection metadata](https://www.npmjs.com/package/reflect-metadata) API.
+The automatic dependency injection relies on the [TypeScript legacy decorators implementation](https://www.typescriptlang.org/docs/handbook/decorators.html) and the [Reflection metadata](https://www.npmjs.com/package/reflect-metadata) API.
 
 In the following example, we create an `EchoService` class and inject an instance of it into the `HomeController` class. You can follow along by copy-pasting the code examples.
 
@@ -485,9 +485,9 @@ export default class DatabaseProvider {
 The container emits the `container:resolve` event that you can listen for to observe the bindings as they resolve.
 
 ```ts
-import event from '@adonisjs/core/services/event'
+import emitter from '@adonisjs/core/services/emitter'
 
-event.on('container:resolved', ({ binding, value }) => {
+emitter.on('container:resolved', ({ binding, value }) => {
   console.log({ binding, value })
 })
 ```

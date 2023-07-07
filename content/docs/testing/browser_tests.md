@@ -10,7 +10,6 @@ The first step is to install the following packages from the npm packages regist
 
 :::codegroup
 
-
 ```sh
 // title: npm
 npm i -D playwright @japa/browser-client
@@ -98,7 +97,9 @@ node ace test browser
 ![](./browser_tests_output.jpeg)
 
 ## Reading/writing cookies
-When testing inside a real browser, the cookies are persisted throughout the lifecycle of a [browser context](https://playwright.dev/docs/api/class-browsercontext). Japa creates a fresh browser context for each test; therefore, the cookies are shared with all the pages you visit using the `visit` helper.
+When testing inside a real browser, the cookies are persisted throughout the lifecycle of a [browser context](https://playwright.dev/docs/api/class-browsercontext). 
+
+Japa creates a fresh browser context for each test, therefore the cookies from one test will not leak onto other tests. However, multiple page visits inside a single test will share the cookies, because they are using the same `browserContext`.
 
 ```ts
 test.group('Home page', () => {

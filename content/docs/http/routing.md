@@ -22,6 +22,17 @@ router.get('/posts/:id', ({ params }) => {
 
 The last route in the above example uses a dynamic URI pattern. The `:id` is a way to tell the router to accept any value for the id. We call them **route params**.
 
+## View list of registered routes
+You can run the `list:routes` command to view the list of routes registered by your application.
+
+```sh
+node ace list:routes
+```
+
+Also, you can see the routes list from the VSCode activity bar, if you are using our [official VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension).
+
+![](./vscode_routes_list.png)
+
 ## Route params
 
 Route params allow you to define URIs that can accept dynamic values. Each param captures the value of a URI segment, and you can access this value within the route handler.
@@ -51,8 +62,6 @@ router.get('/posts/:id/comments/:commentId', ({ params }) => {
   console.log(params.id)
   console.log(params.commentId)
 })
-
-// URL: /posts/1/comments/4 (params.commentId = 4)
 ```
 
 | URL                           | Id        | Comment Id |

@@ -106,7 +106,60 @@ export default class MyPackageProvider {
 }
 ```
 
+You can repeat this process for any class that is constructed using the container. Be it the middleware, controllers, event listeners and so on.
+
 ### Registering singleton services
+If your package has certain classes that should have only one instance throughout the lifecycle of the application, you can bind them to the container and export them as [container services](./container_services.md).
+
+A great example of the same is the HTTP router shipped with the framework core. Since, a typical AdonisJS application needs a single instance of the [Router class](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts), we [register it as a singleton](https://github.com/adonisjs/core/blob/next/providers/http_provider.ts#L39-L44) inside the container.
+
+Let's take example of dummy `Cache` class and register it as a singleton inside the container.
+
+```ts
+// title: src/cache.ts
+export class DummyCache {
+  constructor(config: any) {}
+}
+```
+
+```ts
+// title: providers/cache_provider.ts
+import type { ApplicationService } from '@adonisjs/core/types'
+import { DummyCache } from '../src/cache.js'
+
+export default class CacheProvider {
+  constructor(protected app: ApplicationService) {}
+
+  register() {
+    this.app.container.singleton(DummyCache, () => {
+      const config = this.app.config.get<any>('cache', {})
+      return new DummyCache(config)
+    })
+  }
+}
+```
+
+Finally, let's create a container service module that will make an instance of the `DummyCache` class and export it.
+
+```ts
+// title: services/cache.ts
+import app from '@adonisjs/core/services/app'
+import { DummyCache } from '../src/cache.js'
+
+let cache: DummyCache
+
+await app.booted(async () => {
+  cache = await app.container.make(DummyCache)
+})
+
+export { cache as default }
+```
+
+The user of the package can now import a singleton instance of the `DummyCache` class from the `cache` service as follows.
+
+```ts
+import cache from 'my-package/services/cache'
+```
 
 ## Exporting middleware
 You must export [HTTP middleware](../http/middleware.md) classes using `export default`. This will allow the package consumers to drop the import path inside the middleware collection array.
@@ -184,7 +237,6 @@ router.post('invoices', [InvoicesController, 'store'])
 You may ship [Ace commands](../ace/introduction.md) as part of your package by creating them inside the `commands` directory. If you are using the [package starter kit](https://github.com/adonisjs/pkg-starter-kit), we will create a manifest file (containing commands meta-data) for your commands automatically during the build process. The manifest file is used to improve the initial load time of Ace.
 
 ## Defining routes
-You may use the 
 
 ## Using stubs
 

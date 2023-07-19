@@ -56,6 +56,11 @@
   font-weight: 500;
 }
 
+html.dark .login_message .button.primary {
+  background-color: var(--violet6);
+  color: var(--violet12);
+}
+
 .login_message .document_errors_item {
   line-height: 1.4;
 }

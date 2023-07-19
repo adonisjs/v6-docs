@@ -1,0 +1,64 @@
+@set('siteConfig', await getConfig())
+<!DOCTYPE html>
+  <html
+    lang="en"
+    x-data
+    :class="{ dark: $store.darkMode.enabled, light: !$store.darkMode.enabled }"
+  >
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    >
+
+    @vite('assets/app.css')
+    @vite('assets/app.js')
+    @include('partials/detect_color_mode')
+
+  </head>
+  <body>
+    <div class="login_wrapper">
+      <div class="login_strip">
+      </div>
+      <div class="login_message">
+        <div>
+          <div class="logo_wrapper">
+            @include('partials/logo_mobile')
+          </div>
+
+          @if(flashMessages && flashMessages.error)
+            <ul class="document_errors">
+              <li class="document_errors_item">
+                <p>
+                  {{ flashMessages.error }}. <a href="mailto:virk@adonisjs.com"> Contact support </a>
+                </p>
+              </li>
+            </ul>
+          @end
+
+          <div class="login_header">
+            <h2> Join the road to v6 </h2>
+            <p>
+              Welcome to the official documentation for AdonisJS v6. The documentation is currently available to Github sponsors.
+            </p>
+            <p>
+              If you are sponsoring me on Github, please login with your Github account.
+            </p>
+          </div>
+
+          <form method="POST" action="/authenticate">
+            <button class="button primary"> Login with Github </button>
+          </form>
+        </div>
+      </div>
+      <div class="login_strip">
+      </div>
+    </div>
+  </body>
+</html>

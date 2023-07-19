@@ -66,6 +66,8 @@ const errorMessages = {
   notASponsor: 'Not authorized. The documentation is available for sponsors only',
 }
 
+const cache: Map<string, string> = new Map()
+
 /**
  * Defining routes for development server
  */
@@ -165,11 +167,22 @@ async function defineRoutes() {
       return response.redirect('/authenticate')
     }
 
+    /**
+     * Serve from cache when running in production
+     */
+    if (process.env.FLY_APP_NAME && cache.has(request.url())) {
+      return cache.get(request.url())
+    }
+
     for (let collection of collections) {
-      await collection.refresh()
       const entry = collection.findByPermalink(request.url())
       if (entry) {
-        return entry.render({ collection, entry })
+        const html = await entry.render({ collection, entry })
+        if (process.env.FLY_APP_NAME) {
+          cache.set(request.url(), html)
+        }
+
+        return html
       }
     }
 

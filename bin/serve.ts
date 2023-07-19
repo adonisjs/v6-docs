@@ -163,6 +163,10 @@ async function defineRoutes() {
   })
 
   router.get('*', async ({ request, response, logger }) => {
+    if (request.url() === '/') {
+      return response.redirect('/docs/installation')
+    }
+
     if (process.env.FLY_APP_NAME) {
       if (!request.encryptedCookie('oauth_token')) {
         return response.redirect('/authenticate')

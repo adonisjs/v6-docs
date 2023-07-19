@@ -1,11 +1,23 @@
 import type { Logger } from '@adonisjs/core/logger'
 import { GraphQLClient, gql } from 'graphql-request'
 
+const ALLOWED_USERNAMES = [
+  'thetutlage',
+  'julien-r44',
+  'mcsneaky',
+  'targos',
+  'romainlanz',
+]
+
 /**
  * Returns true when the user is sponsoring with amount greater than
  * 19 dollars
  */
 export async function isSponsoring(username: string, logger: Logger) {
+  if (ALLOWED_USERNAMES.includes(username.toLowerCase())) {
+    return true
+  }
+
   const query = gql`query {
     user(login: "${username}") {
       sponsorshipForViewerAsSponsorable(activeOnly: true) {

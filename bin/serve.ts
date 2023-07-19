@@ -13,7 +13,9 @@ import 'reflect-metadata'
 import { Ignitor } from '@adonisjs/core'
 import { Env } from '@adonisjs/core/env'
 import { defineConfig } from '@adonisjs/ally'
+import app from '@adonisjs/core/services/app'
 import { defineConfig as httpConfig } from '@adonisjs/core/http'
+
 import { isSponsoring } from '../src/sponsorable.js'
 
 /**
@@ -65,8 +67,6 @@ const errorMessages = {
   loginFatalError: 'Github authentication failed. Please try again',
   notASponsor: 'Not authorized. The documentation is available for sponsors only',
 }
-
-const cache: Map<string, string> = new Map()
 
 /**
  * Defining routes for development server
@@ -162,7 +162,7 @@ async function defineRoutes() {
     response.redirect('/docs/installation')
   })
 
-  router.get('*', async ({ request, response }) => {
+  router.get('*', async ({ request, response, logger }) => {
     if (!request.encryptedCookie('oauth_token')) {
       return response.redirect('/authenticate')
     }
@@ -170,19 +170,15 @@ async function defineRoutes() {
     /**
      * Serve from cache when running in production
      */
-    if (process.env.FLY_APP_NAME && cache.has(request.url())) {
-      return cache.get(request.url())
+    if (process.env.FLY_APP_NAME) {
+      logger.info('streaming doc %s', `dist${request.url()}.html`)
+      return response.download(app.makePath(`dist${request.url()}.html`))
     }
 
     for (let collection of collections) {
       const entry = collection.findByPermalink(request.url())
       if (entry) {
-        const html = await entry.render({ collection, entry })
-        if (process.env.FLY_APP_NAME) {
-          cache.set(request.url(), html)
-        }
-
-        return html
+        return entry.render({ collection, entry })
       }
     }
 

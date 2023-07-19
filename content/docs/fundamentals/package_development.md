@@ -25,7 +25,7 @@ When creating a package, ensure your package's source code is not tightly couple
 To conclude, the source code of a package should be application agnostic, and you must use service providers to act as a bridge between the package source code and the user application.
 
 ## Creating a new package
-You may create a new package by running the following command. The [create-adonisjs]() initializer will download the [Package starter kit](https://github.com/adonisjs/pkg-starter-kit) that comes with everything you need to develop and test AdonisJS applications.
+You may create a new package by running the following command. The [create-adonisjs](http://npmjs.com/create-adonisjs) initializer will download the [Package starter kit](https://github.com/adonisjs/pkg-starter-kit) that comes with everything you need to develop and test AdonisJS applications.
 
 :::codegroup
 

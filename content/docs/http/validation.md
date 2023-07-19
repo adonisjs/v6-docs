@@ -157,7 +157,7 @@ The `request.validateUsing` method has the following benefits over the `validato
 
 - If you have configured the `@adonisjs/i18n` package, the `request.validateUsing` method will look up the error messages from the translation files.
 
-- Finally, it will switch the error reporters using content negotiation. [Learn more]()
+- Finally, it will switch the error reporters using content negotiation. [Learn more](#choosing-error-reporters-via-content-negotiation)
 
 ## Passing request data to validators
 Since validators are defined outside the request lifecycle, they do not have direct access to the request data. This is usually good because it makes validators reusable outside an HTTP request lifecycle.
@@ -200,12 +200,12 @@ async update({ request, auth }: HttpContext) {
 ### Making metadata type-safe
 In the previous example, we must remember to pass the `meta.userId` during the validation. It would be great if we could make TypeScript remind us of the same.
 
-In the following example, we use the `vine.withMeta` function to define the static type of the metadata we expect to use in our schema.
+In the following example, we use the `vine.withMetaData` function to define the static type of the metadata we expect to use in our schema.
 
 ```ts
 export const updateUserValidator = vine
   // insert-start
-  .withMeta<{ userId: number }>()
+  .withMetaData<{ userId: number }>()
   // insert-end
   .compile(
     vine.object({
@@ -219,10 +219,10 @@ export const updateUserValidator = vine
   )
 ```
 
-Do note, VineJS does not validate the metadata at runtime. However, if you want to do that, you can pass a callback to the `withMeta` method and perform the validation manually.
+Do note, VineJS does not validate the metadata at runtime. However, if you want to do that, you can pass a callback to the `withMetaData` method and perform the validation manually.
 
 ```ts
-vine.withMeta<{ userId: number }>((meta) => {
+vine.withMetaData<{ userId: number }>((meta) => {
   // validate metadata
 })
 ```

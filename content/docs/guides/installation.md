@@ -10,7 +10,6 @@ node -v
 # v18.16.0
 ```
 
-
 ## Creating a new application
 
 You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init), [yarn create](https://classic.yarnpkg.com/en/docs/cli/create) or [pnpm create](https://pnpm.io/tr/next/cli/create). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
@@ -48,7 +47,7 @@ The official starter kits use ES modules and TypeScript. This combination allows
 
 :::
 
-### Web starter kit
+### Web starter kit :span[Not ready yet]{class="badge"}
 
 The Web starter kit is tailored for creating traditional server renderer web apps. Do not let the keyword **"traditional"** discourage you. We recommend this starter kit if you make a web app with limited frontend interactivity.
 
@@ -91,7 +90,7 @@ The web starter kit comes with the following packages.
 </tr>
 </tbody></table>
 
-### API starter kit
+### API starter kit :span[Not ready yet]{class="badge"}
 
 The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
 
@@ -100,7 +99,7 @@ In this starter kit:
 - We remove support for serving static files.
 - Do not configure the views layer and vite.
 - Turn off XSS and CSRF protection, and enable CORS protection.
-- Use the [ContentNegotiation]() middleware to send HTTP responses in JSON.
+- Use the ContentNegotiation middleware to send HTTP responses in JSON.
 
 The API starter kit is configured with session-based authentication. However, if you wish to use tokens-based authentication, you can use the `--tokens-auth` flag.
 

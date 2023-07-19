@@ -203,6 +203,7 @@
   },
   {
     "permalink": "fundamentals/package-development",
+    "draft": true,
     "title": "Package development",
     "contentPath": "./fundamentals/package_development.md",
     "category": "Fundamentals"

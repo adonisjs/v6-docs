@@ -163,14 +163,14 @@ async function defineRoutes() {
   })
 
   router.get('*', async ({ request, response, logger }) => {
-    if (!request.encryptedCookie('oauth_token')) {
-      return response.redirect('/authenticate')
-    }
-
-    /**
-     * Serve from cache when running in production
-     */
     if (process.env.FLY_APP_NAME) {
+      if (!request.encryptedCookie('oauth_token')) {
+        return response.redirect('/authenticate')
+      }
+
+      /**
+       * Serve from cache when running in production
+       */
       logger.info('streaming doc %s', `dist${request.url()}.html`)
       return response.download(app.makePath(`dist${request.url()}.html`))
     }

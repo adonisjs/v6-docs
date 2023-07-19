@@ -68,3 +68,23 @@ html.dark .login_message .button.primary {
 .login_message .document_errors_item a {
   text-decoration: underline;
 }
+
+.markdown .badge {
+  background-color: var(--violet6);
+  color: var(--violet11);
+  border-radius: 10px;
+  font-size: 12px;
+  top: -2px;
+  padding: 3px 8px;
+  position: relative;
+  margin-left: 7px;
+}
+
+.toc_container .badge {
+  display: none;
+}
+
+.markdown h1 .badge {
+  top: -6px;
+  font-size: 14px;
+}

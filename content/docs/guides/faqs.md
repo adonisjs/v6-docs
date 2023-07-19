@@ -33,4 +33,4 @@ However, we look closer at the performance metrics and fine-tune the framework p
 
 ## Do you offer paid support?
 
-Yes. [Click here](https://adonisjs.com/support) to learn more about our paid support program.
+The support program will be launched soon.

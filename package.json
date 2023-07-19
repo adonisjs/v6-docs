@@ -6,7 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "export": "vite build && node --loader=ts-node/esm bin/build.ts",
-    "start": "node bin/test.js",
+    "start": "node --loader=ts-node/esm bin/serve.ts",
+    "build": "vite build",
     "serve": "node --loader=ts-node/esm bin/serve.ts",
     "dev": "concurrently \"vite\" \"npm run serve\"",
     "test": "node ace test"

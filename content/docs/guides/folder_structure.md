@@ -189,17 +189,15 @@ Learn more about [configuration management](./config.md).
 
 ## The `types` directory
 
-The `types` directory is the house for the TypeScript interfaces or types used within your application. We created a few files required by the framework and installed packages inside this directory (make sure you do not delete existing files).
+The `types` directory is the house for the TypeScript interfaces or types used within your application. 
+We created a few files required by the framework and installed packages inside this directory (make sure you do not delete existing files).
 
 You can create additional files in this directory to store the interfaces or types needed by your application.
 
 ```
 ├── types
-│  ├── drive.ts
 │  ├── events.ts
-│  ├── hash.ts
-│  ├── logger.ts
-│  ├── tests.ts
+│  ├── container.ts
 ```
 
 ## The `providers` directory

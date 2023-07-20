@@ -73,6 +73,15 @@ Run the following command to eject the event stub.
 node ace eject make/event
 ```
 
+## make\:validator
+
+Create a new VineJS validator file.
+
+- Form: `singular`
+- Suffix: `validator`
+- File name example: `post_validator.ts`
+- Recommendation: You must name the validator after the entity you want to validate. For example: `post_validator`, `user_validator`, or `invoice_validator`.
+
 ## make\:listener
 
 Create a new listener class.

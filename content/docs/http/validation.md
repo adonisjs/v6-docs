@@ -17,10 +17,10 @@ The AdonisJS core team has created a framework agnostic data validation library 
 
 However, AdonisJS does not technically force you to use VineJS. You can use any validation library that fits great for you or your team. Just uninstall the `@vinejs/vine` package and install the package you want to use.
 
-## Basic example
+## Using VineJS
 VineJS uses the concept of validators. You create one validator for each action your application can perform. For example: Define a validator for **creating a new post**, another for **updating the post**, and maybe a validator for **deleting a post**.
 
-We will use a blog as an example and create validators to create and update a blog post. Let's start by defining a couple of routes and their controllers.
+We will use a blog as an example and create validators to create and update a blog post. Let's start by defining a couple of routes and the `PostsController`.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -46,7 +46,7 @@ export default class PostsController {
 Once you have created the `PostsController` and defined the routes, you may use the following ace command to create a validator.
 
 ```sh
-node ace make:validator posts
+node ace make:validator post
 ```
 
 The validators are created inside the `app/validators` directory. The validator file is empty by default, and you can use it to export multiple validators from it. Each validator is a `const` variable holding the result of [`vine.compile`](https://vinejs.dev/docs/getting_started#pre-compiling-schema) method.
@@ -60,14 +60,14 @@ Do not worry too much about the duplication within the validator schemas. We rec
 :::
 
 ```ts
-// title: app/validators/posts_validator.ts
+// title: app/validators/post_validator.ts
 import vine from '@vinejs/vine'
 
 /**
  * Validates the post's creation action
  */
 export const createPostValidator = vine.compile(
-  vine.schema({
+  vine.object({
     title: vine.string().trim().minLength(6),
     slug: vine.string().trim(),
     description: vine.string().trim().escape()
@@ -78,7 +78,7 @@ export const createPostValidator = vine.compile(
  * Validates the post's update action
  */
 export const updatePostValidator = vine.compile(
-  vine.schema({
+  vine.object({
     title: vine.string().trim().minLength(6),
     description: vine.string().trim().escape()
   })
@@ -94,7 +94,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import {
   createPostValidator,
   updatePostValidator
-} from '#validators/posts_validator'
+} from '#validators/post_validator'
 // highlight-end
 
 export default class PostsController {
@@ -102,6 +102,7 @@ export default class PostsController {
     // highlight-start
     const data = request.all()
     const payload = await createPostValidator.validate(data)
+    return payload
     // highlight-end
   }
 
@@ -109,6 +110,7 @@ export default class PostsController {
     // highlight-start
     const data = request.all()
     const payload = await updatePostValidator.validate(data)
+    return payload
     // highlight-end
   }
 }
@@ -118,8 +120,17 @@ That is all! Validating the user input is two lines of code inside your controll
 
 Also, you do not have to wrap the `validate` method call inside a `try/catch`. Because in the case of an error, AdonisJS will automatically convert the error to an HTTP response.
 
+## Error handling
+The [HttpExceptionHandler](./exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
+
+- HTTP requests with `Accept=appliction/json` will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
+
+- HTTP requests with `Accept=application/vnd.api+json` will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+
+- All other requests will receive errors back as text.
+
 ## The request.validateUsing method
-The recommended way to perform validations inside controllers is to use the `request.validateUsing` method.
+The recommended way to perform validations inside controllers is to use the `request.validateUsing` method. When using `request.validateUsing` method, you do not have do define the validation data explicitly; the request body and files are passed as data to the validator.
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -151,15 +162,34 @@ export default class PostsController {
 }
 ```
 
-The `request.validateUsing` method has the following benefits over the `validator.validate` method.
+### Validating cookies, headers and route params
+When using the `request.validateUsing` method you can validate cookies, headers and route params as follows.
 
-- There is no need to define the validation data explicitly.
+```ts
+const validator = vine.compile(
+  vine.object({
+    // Fields in request body
+    username: vine.string(),
+    password: vine.string(),
 
-- If you have configured the `@adonisjs/i18n` package, the `request.validateUsing` method will look up the error messages from the translation files.
+    // Validate cookies
+    cookies: vine.object({
+    }),
 
-- Finally, it will switch the error reporters using content negotiation. [Learn more](#choosing-error-reporters-via-content-negotiation)
+    // Validate headers
+    headers: vine.object({
+    }),
 
-## Passing request data to validators
+    // Validate route params
+    params: vine.object({
+    }),
+  })
+)
+
+await request.validateUsing(validator)
+```
+
+## Passing metadata to validators
 Since validators are defined outside the request lifecycle, they do not have direct access to the request data. This is usually good because it makes validators reusable outside an HTTP request lifecycle.
 
 However, if a validator needs access to some runtime data, you must pass it as metadata during the `validate` method call.
@@ -228,7 +258,7 @@ vine.withMetaData<{ userId: number }>((meta) => {
 ```
 
 ## Configuring VineJS
-You may create a [preload file](../fundamentals/adonisrc_file.md#preloads) inside the `start` directory to configure VineJS with custom error messages or a custom error reporter.
+You may create a [preload file](../fundamentals/adonisrc_file.md#preloads) inside the `start` directory to configure VineJS with custom error messages or use a custom error reporter.
 
 ```sh
 node ace make:preload validator
@@ -259,24 +289,6 @@ import vine, { SimpleMessagesProvider } from '@vinejs/vine'
 import { JSONAPIErrorReporter } from '../app/validation_reporters.js'
 
 vine.errorReporter = () => new JSONAPIErrorReporter()
-```
-
-## Choosing error reporters via content negotiation
-The `request.validateUsing` method uses content negotiation to switch between the error reporters based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
-
-- A web application using AdonisJS server-side rendering will receive the errors via session flash messages. During validation error, the user will be redirected back to the form.
-- An API endpoint with `Accept=appliction/json` will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
-- An API endpoint with `Accept=application/vnd.api+json` will receive an array of error messages created using the [JsonAPIErrorReporter]().
-
-You can customize this behavior using the `http.validationReporter` property inside the `config/app.ts` file.
-
-```ts
-// title: config/app.ts
-export const http = {
-  validationReporter: async (ctx) => {
-    return new MyCustomErrorReporter()
-  }
-}
 ```
 
 ## What's next?

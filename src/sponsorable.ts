@@ -7,6 +7,7 @@ const ALLOWED_USERNAMES = [
   'mcsneaky',
   'targos',
   'romainlanz',
+  'roonie007',
 ]
 
 /**

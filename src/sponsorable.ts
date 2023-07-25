@@ -12,6 +12,7 @@ const ALLOWED_USERNAMES = [
   'armgitaar',
   'ashokgelal',
   'anishghimire862',
+  'janl'
 ]
 
 /**

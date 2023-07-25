@@ -8,6 +8,10 @@ const ALLOWED_USERNAMES = [
   'targos',
   'romainlanz',
   'roonie007',
+  'baekilda',
+  'armgitaar',
+  'ashokgelal',
+  'anishghimire862',
 ]
 
 /**

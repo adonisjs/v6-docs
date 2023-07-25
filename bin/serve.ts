@@ -162,7 +162,7 @@ async function defineRoutes() {
     response.redirect('/docs/installation')
   })
 
-  router.get('*', async ({ request, response, logger }) => {
+  router.get('*', async ({ request, response }) => {
     if (request.url() === '/') {
       return response.redirect('/docs/installation')
     }
@@ -175,7 +175,6 @@ async function defineRoutes() {
       /**
        * Serve from cache when running in production
        */
-      logger.info('streaming doc %s', `dist${request.url()}.html`)
       return response.download(app.makePath(`dist${request.url()}.html`))
     }
 

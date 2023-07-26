@@ -107,7 +107,6 @@
     "permalink": "static-file-server",
     "redirects": ["guides/static-assets"],
     "title": "Static file server",
-    "draft": true,
     "contentPath": "./http/static_file_server.md",
     "category": "HTTP"
   },

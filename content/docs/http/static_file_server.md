@@ -46,7 +46,21 @@ server.use([
 
 Once the middleware is registered, you may create files inside the `public` directory and access them in the browser using the file path. For example, the `./public/css/style.css` file can be accessed using the `http://localhost:3333/css/style.css` URL.
 
-The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](./assets_bundler.md).
+<!-- The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](./assets_bundler.md). -->
+
+## Copy static files to production build
+In order to copy static files to the production build folder, you must register the `public` directory under the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `.adonisrc.json` file.
+
+```json
+{
+  "metaFiles": [
+    {
+      "pattern": "public/**",
+      "reloadServer": false
+    }
+  ]
+}
+```
 
 ## Configuration
 

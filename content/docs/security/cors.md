@@ -16,17 +16,17 @@ You can install the package from the npm packages registry.
 
 ```sh
 // title: npm
-npm i @adonisjs/cors
+npm i @adonisjs/cors@next
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/cors
+yarn add @adonisjs/cors@next
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/cors
+pnpm add @adonisjs/cors@next
 ```
 
 :::
@@ -37,7 +37,7 @@ After installing the package, run the following command to configure the package
 node ace configure @adonisjs/cors
 ```
 
-Finally, let's register the `cors_middleware` to the [server middleware list](../http/middleware.md#server-middleware). The CORS middleware should be the first middleware in the stack.
+Finally, register the `cors_middleware` to the [server middleware list](../http/middleware.md#server-middleware). The CORS middleware **should be the first middleware in the stack**.
 
 ```ts
 // title: start/kernel.ts
@@ -74,7 +74,7 @@ enabled
 
 <dd>
 
-Enable or disable the middleware temporarily without removing it from the middleware stack.
+Turn the middleware on or off temporarily without removing it from the middleware stack.
 
 </dd>
 
@@ -106,13 +106,15 @@ You may specify a list of hardcoded origins to allow an array of domain names.
 
 Use the wildcard expression `*` to allow all the origins. Read the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) to understand how the wildcard expression works.
 
+When the `credentials` property is set to `true`, we will automatically make the wildcard expression behave like a `boolean (true)`. 
+
 ```ts
 {
   origin: '*'
 }
 ```
 
-Using a function, you can compute the `origin` value during the HTTP request. For example:
+You can compute the `origin` value during the HTTP request using a function. For example:
 
 ```ts
 {
@@ -172,7 +174,7 @@ You can specify a list of headers to allow by defining them as an array of strin
 }
 ```
 
-Using a function, you can compute the `headers` config value during the HTTP request. For example:
+You can compute the `headers` config value using a function during the HTTP request. For example:
 
 ```ts
 {
@@ -249,3 +251,12 @@ The `maxAge` property controls the [Access-Control-Max-Age](https://developer.mo
 </dd>
 
 </dl>
+
+## Debugging CORS errors
+Debugging CORS issues is a challenging experience. However, there are no shortcuts other than understanding the rules of CORS and debugging the response headers to ensure everything is in place.
+
+Following are some links to the articles you may read to better understand how CORS works.
+
+- [How to Debug Any CORS Error?](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
+- [Will it CORS?](https://httptoolkit.com/will-it-cors/)
+- [MDN in-depth explanation of CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)

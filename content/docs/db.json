@@ -138,7 +138,6 @@
   },
   {
     "permalink": "security/cors",
-    "draft": true,
     "title": "CORS",
     "contentPath": "./security/cors.md",
     "category": "Security"

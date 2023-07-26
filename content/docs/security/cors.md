@@ -255,8 +255,8 @@ The `maxAge` property controls the [Access-Control-Max-Age](https://developer.mo
 ## Debugging CORS errors
 Debugging CORS issues is a challenging experience. However, there are no shortcuts other than understanding the rules of CORS and debugging the response headers to ensure everything is in place.
 
-Following are some links to the articles you may read to better understand how CORS works.
+Following are some links to the articles you may read to understand better how CORS works.
 
-- [How to Debug Any CORS Error?](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
+- [How to Debug Any CORS Error](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
 - [Will it CORS?](https://httptoolkit.com/will-it-cors/)
 - [MDN in-depth explanation of CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)

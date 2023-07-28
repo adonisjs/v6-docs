@@ -125,6 +125,12 @@
     "category": "HTTP"
   },
   {
+    "permalink": "database/redis",
+    "title": "Redis",
+    "contentPath": "./database/redis.md",
+    "category": "Database"
+  },
+  {
     "permalink": "security/hashing",
     "title": "Hash",
     "contentPath": "./security/hash.md",

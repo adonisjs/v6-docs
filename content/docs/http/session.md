@@ -21,17 +21,17 @@ Install the package from the npm packages registry using one of the following co
 
 ```sh
 // title: npm
-npm i @adonisjs/session
+npm i @adonisjs/session@next
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/session
+yarn add @adonisjs/session@next
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/session
+pnpm add @adonisjs/session@next
 ```
 
 :::

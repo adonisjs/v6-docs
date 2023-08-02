@@ -10,17 +10,17 @@ Install the package from the npm packages registry using one of the following co
 
 ```sh
 // title: npm
-npm i @adonisjs/redis
+npm i @adonisjs/redis@next
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/redis
+yarn add @adonisjs/redis@next
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/redis
+pnpm add @adonisjs/redis@next
 ```
 
 :::

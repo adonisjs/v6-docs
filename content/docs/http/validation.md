@@ -20,9 +20,10 @@ However, AdonisJS does not technically force you to use VineJS. You can use any 
 ## Using VineJS
 VineJS uses the concept of validators. You create one validator for each action your application can perform. For example: Define a validator for **creating a new post**, another for **updating the post**, and maybe a validator for **deleting a post**.
 
-We will use a blog as an example and create validators to create and update a blog post. Let's start by defining a couple of routes and the `PostsController`.
+We will use a blog as an example and define validators to create/update a post. Let's start by registering a couple of routes and the `PostsController`.
 
 ```ts
+// title: Define routes
 import router from '@adonisjs/core/services/router'
 
 const PostsController = () => import('#controllers/posts_controller')
@@ -31,7 +32,13 @@ router.post('posts', [PostsController, 'store'])
 router.put('posts/:id', [PostsController, 'update'])
 ```
 
+```sh
+// title: Create controller
+node ace make:controller post
+```
+
 ```ts
+// title: Scaffold controller
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class PostsController {
@@ -120,12 +127,28 @@ That is all! Validating the user input is two lines of code inside your controll
 
 Also, you do not have to wrap the `validate` method call inside a `try/catch`. Because in the case of an error, AdonisJS will automatically convert the error to an HTTP response.
 
+## VineJS extension
+AdonisJS registers additional validation rules and schema types with VineJS. Before you can use those rules, you must write the following import statement inside the `providers/app_provider.ts` file.
+
+```ts
+export default class AppProvider {
+  async boot() {
+    await this.makeEventsDispatchable()
+    // highlight-start
+    await import('@adonisjs/core/vinejs/extensions')
+    // highlight-end
+  }
+}
+```
+
 ## Error handling
 The [HttpExceptionHandler](./exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
 
 - HTTP requests with `Accept=appliction/json` will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
 
 - HTTP requests with `Accept=application/vnd.api+json` will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+
+- Server rendered forms using the [session package](./session.md) will receive the errors via [session flash messages](./session.md#validation-errors-and-flash-messages).
 
 - All other requests will receive errors back as text.
 

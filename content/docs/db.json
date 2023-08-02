@@ -91,6 +91,12 @@
     "category": "HTTP"
   },
   {
+    "permalink": "session",
+    "title": "Session",
+    "contentPath": "./http/session.md",
+    "category": "HTTP"
+  },
+  {
     "permalink": "url-builder",
     "redirects": ["guides/security/signed-urls"],
     "title": "URL builder",

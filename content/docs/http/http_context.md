@@ -243,7 +243,7 @@ An object of route subdomains. Only exists when the route is part of a dynamic s
 
 </dd>
 
-<!-- <dt>
+<dt>
 
 ctx.session
 
@@ -251,9 +251,9 @@ ctx.session
 
 <dd>
 
-Reference to an instance of the [Session class](). The property is condtibuted by the `@adonisjs/session` package.
+Reference to an instance of [Session](./session.md) created for the current HTTP request.
 
-</dd> -->
+</dd>
 
 <!-- <dt>
 

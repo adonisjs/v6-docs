@@ -360,6 +360,41 @@ emitter.on('container:resolved', (event) => {
 })
 ```
 
+### session\:initiated
+The event is emitted when the session store is initiated during an HTTP request. 
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session:initiated', ({ session }) => {
+  console.log(`Initiated store for ${session.sessionId}`)
+})
+```
+
+### session\:committed
+The event is emitted when the session data is written to the session store during an HTTP request.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session:committed', ({ session }) => {
+  console.log(`Persisted data for ${session.sessionId}`)
+})
+```
+
+### session\:migrated
+The event is emitted when a new session id is generated using the `.regenerate()` method.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session:migrated', ({ session, fromSessionId, toSessionId }) => {
+  console.log(`Migrating data to ${toSessionId}`)
+  console.log(`Destroying session ${fromSessionId}`)
+})
+```
+
+
 ## Faking events during tests
 
 Event listeners are often used for performing side effects after a given action. For example: Send an email to a newly registered user, or send a notification after an order status update.

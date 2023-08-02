@@ -13,7 +13,8 @@ const ALLOWED_USERNAMES = [
   'ashokgelal',
   'anishghimire862',
   'janl',
-  'a21y'
+  'a21y',
+  'adamcikado',
 ]
 
 /**

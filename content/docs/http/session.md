@@ -665,7 +665,7 @@ export class MongoDBDriver implements SessionDriverContract {
 }
 ```
 
-The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder]() helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session drivers](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).
+The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../digging_deeper/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session drivers](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).
 
 
 ## Using the driver

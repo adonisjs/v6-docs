@@ -104,7 +104,7 @@ string.truncate(
 
 ## excerpt
 
-The `excerpt` method is the same as the `truncate` method. However, it strips the HTML tags from the string.
+The `excerpt` method is identical to the `truncate` method. However, it strips the HTML tags from the string.
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -758,6 +758,50 @@ const value = string.create('userController')
   .suffix('_controller') // users_controller
   .ext('ts') // users_controller.ts
   .toString()
+```
+
+## Message builder
+The `MessageBuilder` class offers an API to serialize JavaScript data types with an expiry and purpose. You can either store the serialized output in safe storage like your application database or encrypt it (to avoid tampering) and share it publicly.
+
+In the following example, we serialize an object with the `token` property and set its expiry to be `1 hour`.
+
+```ts
+import { MessageBuilder } from '@adonisjs/core/helpers'
+
+const builder = new MessageBuilder()
+const encoded = builder.build(
+  {
+    token: string.random(32),
+  },
+  '1 hour',
+  'email_verification'
+)
+
+/**
+ * {
+ *   "message": {
+ *    "token":"GZhbeG5TvgA-7JCg5y4wOBB1qHIRtX6q"
+ *   },
+ *   "purpose":"email_verification",
+ *   "expiryDate":"2022-10-03T04:07:13.860Z"
+ * }
+ */
+```
+
+Once you have the JSON string with the expiry and the purpose, you can encrypt it (to prevent tampering) and share it with the client.
+
+During the token verification, you can decrypt the previously encrypted value and use the `MessageBuilder` to verify the payload and convert it to a JavaScript object.
+
+```ts
+import { MessageBuilder } from '@adonisjs/core/helpers'
+
+const builder = new MessageBuilder()
+const decoded = builder.verify(value, 'email_verification')
+if (!decoded) {
+  return 'Invalid payload'
+}
+
+console.log(decoded.token)
 ```
 
 ## Types detection

@@ -15,6 +15,7 @@ const ALLOWED_USERNAMES = [
   'janl',
   'a21y',
   'adamcikado',
+  'zlpkhr',
 ]
 
 /**
@@ -40,8 +41,8 @@ export async function isSponsoring(username: string, logger: Logger) {
   try {
     const response: any = await new GraphQLClient('https://api.github.com/graphql', {
       headers: {
-        authorization: `bearer ${process.env.GITHUB_API_SECRET!}`
-      }
+        authorization: `bearer ${process.env.GITHUB_API_SECRET!}`,
+      },
     }).request(query)
 
     const sponsorship = response.user.sponsorshipForViewerAsSponsorable

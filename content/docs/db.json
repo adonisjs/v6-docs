@@ -257,6 +257,12 @@
     "category": "Digging Deeper"
   },
   {
+    "permalink": "social_auth",
+    "title": "Social authentication",
+    "contentPath": "./digging_deeper/social_auth.md",
+    "category": "Digging Deeper"
+  },
+  {
     "permalink": "testing/introduction",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",

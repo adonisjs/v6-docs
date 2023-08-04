@@ -7,6 +7,10 @@
   --font-mono: 'Roboto Mono';
 }
 
+.markdown pre span[style="color: #545454;"] {
+  color: var(--code-comment-color) !important;
+}
+
 .login_wrapper {
   height: 100vh;
   display: flex;

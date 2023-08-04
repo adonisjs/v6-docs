@@ -47,11 +47,11 @@ const IMPORTER = (filePath: string) => {
  */
 const allyConfig = defineConfig({
   github: {
-    driver: "github",
+    driver: 'github',
     clientId: env.get('GITHUB_CLIENT_ID'),
     clientSecret: env.get('GITHUB_CLIENT_SECRET'),
     callbackUrl: env.get('GITHUB_CALLBACK_URL'),
-    scopes: ['read:user']
+    scopes: ['read:user'],
   },
 })
 declare module '@adonisjs/ally/types' {
@@ -63,7 +63,8 @@ declare module '@adonisjs/ally/types' {
  */
 const errorMessages = {
   accessDenied: 'Access denied. You have cancelled the login process',
-  stateMisMatch: 'We are unable to verify the request. Please refresh this page and try login again',
+  stateMisMatch:
+    'We are unable to verify the request. Please refresh this page and try login again',
   loginFatalError: 'Github authentication failed. Please try again',
   notASponsor: 'Not authorized. The documentation is available for sponsors only',
 }
@@ -89,7 +90,7 @@ async function defineRoutes() {
     } catch (error) {
       logger.error({ err: error }, 'Github redirect request failed')
       response.cookie('flash_messages', {
-        error: 'Unable to redirect to Github'
+        error: 'Unable to redirect to Github',
       })
       response.redirect('/authenticate')
     }
@@ -190,10 +191,10 @@ async function defineRoutes() {
 }
 
 new Ignitor(APP_ROOT, { importer: IMPORTER })
-  .tap(app => {
+  .tap(() => {
     app.initiating(() => {
       app.useConfig({
-        appUrl: process.env.APP_URL || "",
+        appUrl: process.env.APP_URL || '',
         app: {
           appKey: env.get('APP_KEY'),
           http: httpConfig({}),
@@ -202,10 +203,10 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
           enabled: true,
           etag: true,
           lastModified: true,
-          dotFiles: "ignore",
+          dotFiles: 'ignore',
         },
         logger: {
-          default: "app",
+          default: 'app',
           loggers: {
             app: {
               enabled: true,
@@ -216,7 +217,7 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
           cache: false,
         },
         ally: allyConfig,
-      });
+      })
     })
 
     app.starting(defineRoutes)

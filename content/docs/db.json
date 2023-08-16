@@ -117,10 +117,9 @@
     "category": "HTTP"
   },
   {
-    "permalink": "assets-bundling-vite",
-    "title": "Assets Bundling (Vite)",
-    "draft": true,
-    "contentPath": "./http/assets_bundling_vite.md",
+    "permalink": "assets-bundling",
+    "title": "Assets bundling",
+    "contentPath": "./http/assets_bundling.md",
     "category": "HTTP"
   },
   {

@@ -20,19 +20,19 @@ AdonisJS uses [Japa](https://japa.dev/docs) for writing and running tests. There
 
 ### Suites
 
-The test suites are defined inside the `.adonisrc.json` file. By default, we register the `functional` and the `unit` test suites. If needed, you can remove the existing suites and start from scratch.
+The test suites are defined inside the `adonisrc.ts` file. By default, we register the `functional` and the `unit` test suites. If needed, you can remove the existing suites and start from scratch.
 
-```json
+```ts
 {
-  "tests": {
-    "suites": [
+  tests: {
+    suites: [
       {
-        "name": "functional",
-        "files": ["tests/functional/**/*.spec.(js|ts)"]
+        name: 'functional',
+        files: ['tests/functional/**/*.spec.(js|ts)']
       },
       {
-        "name": "unit",
-        "files": ["tests/unit/**/*.spec.(js|ts)"]
+        name: 'unit',
+        files: ['tests/unit/**/*.spec.(js|ts)']
       }
     ]
   }

@@ -162,7 +162,7 @@ node ace eject make/command
 
 ## make\:provider
 
-Create a service provider. The provider will automatically be registered with the `.adonisrc.json` file. 
+Create a service provider. The provider will automatically be registered with the `adonisrc.ts` file.
 
 - Form: `singular`
 - Suffix: `provider`

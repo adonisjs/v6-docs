@@ -1,6 +1,12 @@
 # AdonisRC file
 
-The `.adonisrc.json` file is used to configure the workspace settings of your application. In this file, you can [register providers](#providers), define [command aliases](#commandsaliases), specify the [files to copy](#metafiles) to the production build, and much more.
+The `adonisrc.ts` file is used to configure the workspace settings of your application. In this file, you can [register providers](#providers), define [command aliases](#commandsaliases), specify the [files to copy](#metafiles) to the production build, and much more.
+
+:::warning
+
+The `adonisrc.ts` file is imported by tools other than your AdonisJS application. Therefore, you must not write any application specific code or environment specific conditionals in this file.
+
+:::
 
 The file contains the minimum required configuration to run your application. However, you can view the complete file contents by running the `node ace inspect:rcfile` command.
 
@@ -24,30 +30,30 @@ The `typescript` property informs the framework and the Ace commands that your a
 
 A set of directories and their paths used by the [scaffolding commands](../digging_deeper/scaffolding.md). If you decide to rename specific directories, update their new path inside the `directories` object to notify scaffolding commands.
 
-```json
+```ts
 {
-  "directories": {
-    "config": "config",
-    "commands": "commands",
-    "contracts": "contracts",
-    "public": "public",
-    "providers": "providers",
-    "languageFiles": "resources/lang",
-    "migrations": "database/migrations",
-    "seeders": "database/seeders",
-    "factories": "database/factories",
-    "views": "resources/views",
-    "start": "start",
-    "tmp": "tmp",
-    "tests": "tests",
-    "httpControllers": "app/controllers",
-    "models": "app/models",
-    "services": "app/services",
-    "exceptions": "app/exceptions",
-    "mailers": "app/mailers",
-    "middleware": "app/middleware",
-    "policies": "app/policies",
-    "validators": "app/validators"
+  directories: {
+    config: 'config',
+    commands: 'commands',
+    contracts: 'contracts',
+    public: 'public',
+    providers: 'providers',
+    languageFiles: 'resources/lang',
+    migrations: 'database/migrations',
+    seeders: 'database/seeders',
+    factories: 'database/factories',
+    views: 'resources/views',
+    start: 'start',
+    tmp: 'tmp',
+    tests: 'tests',
+    httpControllers: 'app/controllers',
+    models: 'app/models',
+    services: 'app/services',
+    exceptions: 'app/exceptions',
+    mailers: 'app/mailers',
+    middleware: 'app/middleware',
+    policies: 'app/policies',
+    validators: 'app/validators'
   }
 }
 ```
@@ -71,21 +77,23 @@ You can create and register a preload file using the `node ace make:preload` com
 :::
 
 
-```json
+```ts
 {
-  "preloads": ["./start/view.js"]
+  preloads: [
+    () => import('./start/view.js')
+  ]
 }
 ```
 
-```json
+```ts
 {
-  "preloads": [
+  preloads: [
     {
-      "file": "./start/routes.js",
-      "environment": [
-        "web",
-        "console",
-        "test"
+      file: () => import('./start/view.js'),
+      environment: [
+        'web',
+        'console',
+        'test'
       ]
     },
   ]
@@ -101,32 +109,31 @@ These are non-TypeScript/JavaScript files that must exist in the production buil
 - `pattern`: The [glob pattern](https://github.com/sindresorhus/globby#globbing-patterns) to find matching files. 
 - `reloadServer`: Reload the development server when matching files change.
 
-```json
+```ts
 {
-  "metaFiles": [
+  metaFiles: [
     {
-      "pattern": "public/**",
-      "reloadServer": false
+      pattern: 'public/**',
+      reloadServer: false
     },
     {
-      "pattern": "resources/views/**/*.edge",
-      "reloadServer": false
+      pattern: 'resources/views/**/*.edge',
+      reloadServer: false
     }
   ]
 }
 ```
 
 ## commands
-An array of paths to import ace commands. You can define a relative path like `./commands/main.js` or a path to an installed package.
+An array of functions to lazy import ace commands from installed packages. Your applications commands will be imported automatically and hence you do not have to register them explicitly.
 
 See also: [Creating ace commands](../ace/creating_commands.md)
 
-```json
+```ts
 {
-  "commands": [
-    "./commands/main.js",
-    "@adonisjs/core/commands",
-    "@adonisjs/lucid/commands"
+  commands: [
+    () => import('@adonisjs/core/commands'),
+    () => import('@adonisjs/lucid/commands')
   ]
 }
 ```
@@ -136,21 +143,21 @@ A key-value pair of command aliases. This is usually to help you create memorabl
 
 See also: [Creating command aliases](../ace/introduction.md#creating-command-aliases)
 
-```json
+```ts
 {
-  "commandsAliases": {
-    "migrate": "migration:run"
+  commandsAliases: {
+    migrate: 'migration:run'
   }
 }
 ```
 
-You can also define multiple aliases by adding multiple entries.
+You can also define multiple aliases for the same command.
 
-```json
+```ts
 {
-  "commandsAliases": {
-    "migrate": "migration:run",
-    "up": "migration:run"
+  commandsAliases: {
+    migrate: 'migration:run',
+    up: 'migration:run'
   }
 }
 ```
@@ -161,25 +168,23 @@ The `tests` object registers the test suites and some of the global settings for
 
 See also: [Introduction to testing](../testing/introduction.md)
 
-```json
+```ts
 {
- "tests": {
-    "timeout": 2000,
-    "forceExit": false,
-    "suites": [
+  tests: {
+    timeout: 2000,
+    forceExit: false,
+    suites: [
       {
-        "name": "functional",
-        "files": [
-          "tests/functional/**/*.spec.ts"
+        name: 'functional',
+        files: [
+          'tests/functional/**/*.spec.ts'
         ],
-        "timeout": 30000
+        timeout: 30000
       }
     ]
   }
 }
 ```
-
-
 
 - `timeout`: Define the default timeout for all the tests.
 - `forceExit`:  Forcefully exit the application process as soon as the tests are complete. Usually, it is good practice to perform a graceful exit.
@@ -203,40 +208,36 @@ Providers are loaded in the same order as registered inside the `providers` arra
 
 See also: [Service providers](../fundamentals/service_providers.md)
 
-```json
+```ts
 {
-  "providers": [
-    "./providers/app_provider.js",
-    "@adonisjs/core/providers/app_provider",
-    "@adonisjs/core/providers/http_provider",
-    "@adonisjs/core/providers/hash_provider"
+  providers: [
+    () => import('@adonisjs/core/providers/app_provider'),
+    () => import('@adonisjs/core/providers/http_provider'),
+    () => import('@adonisjs/core/providers/hash_provider'),
+    () => import('./providers/app_provider.js'),
   ]
 }
 ```
 
-```json
+```ts
 {
-  "providers": [
+  providers: [
     {
-      "file": "./providers/app_provider.js",
-      "environment": [
-        "web",
-        "console",
-        "test"
+      file: () => import('./providers/app_provider.js'),
+      environment: [
+        'web',
+        'console',
+        'test'
       ]
     },
     {
-      "file": "@adonisjs/core/providers/app_provider"
-    },
-    {
-      "file": "@adonisjs/core/providers/http_provider",
-      "environment": [
-        "web"
+      file: () => import('@adonisjs/core/providers/http_provider'),
+      environment: [
+        'web'
       ]
     },
-    {
-      "file": "@adonisjs/core/providers/hash_provider"
-    }
+    () => import('@adonisjs/core/providers/hash_provider'),
+    () => import('@adonisjs/core/providers/app_provider')
   ]
 }
 ```
@@ -247,19 +248,19 @@ The `serve` and `build` command attempts to detect the assets used by your appli
 
 The detection is performed for [vite](https://vitejs.dev) by searching for the `vite.config.js` file and [Webpack encore](https://github.com/symfony/webpack-encore) by searching for the `webpack.config.js` file.
 
-However, if you use a different assets bundler, you can configure it inside the `.adonisrc.json` file as follows.
+However, if you use a different assets bundler, you can configure it inside the `adonisrc.ts` file as follows.
 
-```json
+```ts
 {
-  "assetsBundler": {
-    "name": "vite",
-    "devServer": {
-      "command": "vite",
-      "args": []
+  assetsBundler: {
+    name: 'vite',
+    devServer: {
+      command: 'vite',
+      args: []
     },
-    "build": {
-      "command": "vite",
-      "args": ["build"]
+    build: {
+      command: 'vite',
+      args: ["build"]
     },
   }
 }

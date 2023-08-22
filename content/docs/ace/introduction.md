@@ -50,12 +50,12 @@ node ace list --ansi
 
 ## Creating command aliases
 
-Command aliases provide a convenience layer to define aliases for commonly used commands. For example, if you often create singular resourceful controllers, you may create an alias for it inside the `.adonisrc.json` file.
+Command aliases provide a convenience layer to define aliases for commonly used commands. For example, if you often create singular resourceful controllers, you may create an alias for it inside the `adonisrc.ts` file.
 
-```json
+```ts
 {
-  "commandsAliases": {
-    "resource": "make:controller --resource --singular"
+  commandsAliases: {
+    resource: 'make:controller --resource --singular'
   }
 }
 ```

@@ -77,11 +77,11 @@ You can use the `config.has` method to check if a configuration value exists for
 
 ## Changing the config location
 
-You can update the location for the config directory by modifying the `.adonisrc.json` file. After the change, the config files will be imported from the new location.
+You can update the location for the config directory by modifying the `adonisrc.ts` file. After the change, the config files will be imported from the new location.
 
-```json
-"directories": {
-  "config": "./configurations"
+```ts
+directories: {
+  config: './configurations'
 }
 ```
 

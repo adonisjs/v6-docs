@@ -6,26 +6,26 @@ A service provider can register [bindings into the container](./ioc_container.md
 
 Service providers are the entry point to an AdonisJS application with the ability to modify the application state before it is considered ready.
 
-The providers are registered inside the `.adonisrc.json` file under the `providers` array. The value is a path to a module that can be resolved using the `import.meta.resolve` method.
+The providers are registered inside the `adonisrc.ts` file under the `providers` array. The value is a function to lazily import the service provider
 
-```json
+```ts
 {
-  "providers": [
-    "@adonisjs/core/providers/app_provider",
-    "./providers/app_provider.js"
+  providers: [
+    () => import('@adonisjs/core/providers/app_provider'),
+    () => import('./providers/app_provider.js'),
   ]
 }
 ```
 
 By default, a provider is loaded in all the runtime environments. However, you can limit the provider to run in specific environments.
 
-```json
+```ts
 {
-  "providers": [
-    "@adonisjs/core/providers/app_provider",
+  providers: [
+    () => import('@adonisjs/core/providers/app_provider'),
     {
-      "file": "./providers/app_provider.js",
-      "environments": ["web", "repl"]
+      file: import('./providers/app_provider.js'),
+      environments: ['web', 'repl']
     }
   ]
 }

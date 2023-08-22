@@ -49,14 +49,14 @@ Once the middleware is registered, you may create files inside the `public` dire
 <!-- The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](./assets_bundler.md). -->
 
 ## Copy static files to production build
-In order to copy static files to the production build folder, you must register the `public` directory under the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `.adonisrc.json` file.
+In order to copy static files to the production build folder, you must register the `public` directory under the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `adonisrc.ts` file.
 
-```json
+```ts
 {
-  "metaFiles": [
+  metaFiles: [
     {
-      "pattern": "public/**",
-      "reloadServer": false
+      pattern: 'public/**',
+      reloadServer: false
     }
   ]
 }

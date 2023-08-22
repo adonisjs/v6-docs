@@ -110,6 +110,12 @@
     "category": "HTTP"
   },
   {
+    "permalink": "views-and-templates",
+    "title": "Views and Templates",
+    "contentPath": "./http/views_and_templates.md",
+    "category": "HTTP"
+  },
+  {
     "permalink": "static-file-server",
     "redirects": ["guides/static-assets"],
     "title": "Static file server",

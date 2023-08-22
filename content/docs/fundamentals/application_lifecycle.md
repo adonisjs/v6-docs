@@ -131,7 +131,7 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
   })
 ```
 
-- `initiating`: The hook actions are called before the application moves to the initiated state. The `.adonisrc.json` file is parsed after executing the `initiating` hooks.
+- `initiating`: The hook actions are called before the application moves to the initiated state. The `adonisrc.ts` file is parsed after executing the `initiating` hooks.
 
 - `booting`: The hook actions are called before booting the app. The config files are imported after executing `booting` hooks.
 

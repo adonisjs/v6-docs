@@ -78,7 +78,7 @@ The state refers to the current state of the application. The framework features
 The application is always in one of the following known states.
 
 - `created`: It is the default state of the application.
-- `initiated`: In this state, we parse/validate the environment variables and process the `.adonisrc.json` file.
+- `initiated`: In this state, we parse/validate the environment variables and process the `adonisrc.ts` file.
 - `booted`: The application service providers are registered and booted at this state.
 - `ready`: The ready state varies between different environments. For example, in the `web` environment, the ready state means the application is ready to accept new HTTP requests.
 - `terminated`: The application has been terminated, and the process will exit shortly. The application will not accept new HTTP requests in the `web` environment.

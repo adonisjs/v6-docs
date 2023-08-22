@@ -18,6 +18,41 @@ The AdonisJS core team has created a framework agnostic data validation library 
 However, AdonisJS does not technically force you to use VineJS. You can use any validation library that fits great for you or your team. Just uninstall the `@vinejs/vine` package and install the package you want to use.
 
 ## Using VineJS
+Install VineJS from the npm packages registry using one of the following commands.
+
+See also: [VineJS documentation](https://vinejs.dev)
+
+:::codegroup
+
+```sh
+// title: npm
+npm i @vinejs/vine
+```
+
+```sh
+// title: yarn
+yarn add @vinejs/vine
+```
+
+```sh
+// title: pnpm
+pnpm add @vinejs/vine
+```
+
+:::
+
+Once done, you must run the following command to configure VineJS within an AdonisJS application.
+
+```sh
+node ace configure vinejs
+```
+
+The `configure` command will register the `@adonisjs/core/providers/vinejs_provider` provider within the `adonisrc.ts` file. The VineJS service provider will perform the following tasks.
+
+- Add `validateUsing` method to the [Request](./request.md) class.
+- Add file validation rule to VineJS.
+
+## Using VineJS validators
 VineJS uses the concept of validators. You create one validator for each action your application can perform. For example: Define a validator for **creating a new post**, another for **updating the post**, and maybe a validator for **deleting a post**.
 
 We will use a blog as an example and define validators to create/update a post. Let's start by registering a couple of routes and the `PostsController`.
@@ -126,20 +161,6 @@ export default class PostsController {
 That is all! Validating the user input is two lines of code inside your controllers. The validated output has static-type information inferred from the schema.
 
 Also, you do not have to wrap the `validate` method call inside a `try/catch`. Because in the case of an error, AdonisJS will automatically convert the error to an HTTP response.
-
-## VineJS extension
-AdonisJS registers additional validation rules and schema types with VineJS. Before you can use those rules, you must write the following import statement inside the `providers/app_provider.ts` file.
-
-```ts
-export default class AppProvider {
-  async boot() {
-    await this.makeEventsDispatchable()
-    // highlight-start
-    await import('@adonisjs/core/vinejs/extensions')
-    // highlight-end
-  }
-}
-```
 
 ## Error handling
 The [HttpExceptionHandler](./exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.

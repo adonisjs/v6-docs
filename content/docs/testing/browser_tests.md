@@ -28,19 +28,19 @@ pnpm add -D playwright @japa/browser-client
 :::
 
 ### Registering browser suite
-Let's start by creating a new test suite for browser tests inside the `.adonisrc.json` file. The test files for the browser suite will be stored inside the `tests/browser` directory.
+Let's start by creating a new test suite for browser tests inside the `adonisrc.ts` file. The test files for the browser suite will be stored inside the `tests/browser` directory.
 
-```json
+```ts
 {
-  "tests": {
-    "suites": [
+  tests: {
+    suites: [
       // highlight-start
       {
-        "files": [
-          "tests/browser/**/*.spec(.ts|.js)"
+        files: [
+          'tests/browser/**/*.spec(.ts|.js)'
         ],
-        "name": "browser",
-        "timeout": 300000
+        name: 'browser',
+        timeout: 300000
       }
       // highlight-end
     ]

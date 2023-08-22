@@ -4,9 +4,9 @@ In this guide, we will take a tour of the important files and folders created by
 
 We ship with a thoughtful default folder structure that helps you keep your projects tidy and easy to refactor. However, you have all the freedom to diverge and have a folder structure that works great for your team and project.
 
-## The `.adonisrc.json` file
+## The `adonisrc.ts` file
 
-The `.adonisrc.json` file is used to configure the workspace and some of the runtime settings of your application.
+The `adonisrc.ts` file is used to configure the workspace and some of the runtime settings of your application.
 
 In this file, you can register providers, define command aliases, or specify the files to copy to the production build.
 

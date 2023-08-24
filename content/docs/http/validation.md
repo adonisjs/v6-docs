@@ -47,10 +47,20 @@ Once done, you must run the following command to configure VineJS within an Adon
 node ace configure vinejs
 ```
 
-The `configure` command will register the `@adonisjs/core/providers/vinejs_provider` provider within the `adonisrc.ts` file. The VineJS service provider will perform the following tasks.
+:::disclosure{title="See steps performed by the configure command"}
 
-- Add `validateUsing` method to the [Request](./request.md) class.
-- Add file validation rule to VineJS.
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/core/providers/vinejs_provider')
+      ]
+    }
+    ```
+
+:::
 
 ## Using VineJS validators
 VineJS uses the concept of validators. You create one validator for each action your application can perform. For example: Define a validator for **creating a new post**, another for **updating the post**, and maybe a validator for **deleting a post**.

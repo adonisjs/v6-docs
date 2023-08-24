@@ -1,7 +1,6 @@
-@layout('layouts/main')
-@set('siteConfig', await getConfig())
+@component('layouts/main', { file })
+  @let(siteConfig = await getConfig())
 
-@section('body')
   @component('docs::header', siteConfig)
     @slot('logo')
       @include('partials/logo')

@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
-import Adonis from '@adonisjs/vite/plugin'
+import adonisjs from '@adonisjs/vite/client'
 
 export default defineConfig({
-  plugins: [Adonis({
+  plugins: [adonisjs({
     entrypoints: ['./assets/app.js', './assets/app.css'],
     reload: ['content/**/*', 'templates/**/*.edge'],
     publicDirectory: 'dist'

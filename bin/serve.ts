@@ -14,6 +14,7 @@ import { Ignitor } from '@adonisjs/core'
 import { Env } from '@adonisjs/core/env'
 import { defineConfig } from '@adonisjs/ally'
 import app from '@adonisjs/core/services/app'
+import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
 import { defineConfig as httpConfig } from '@adonisjs/core/http'
 
 import { isSponsoring } from '../src/sponsorable.js'
@@ -213,9 +214,7 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
             },
           },
         },
-        views: {
-          cache: false,
-        },
+        vite: viteDefineConfig({}),
         ally: allyConfig,
       })
     })

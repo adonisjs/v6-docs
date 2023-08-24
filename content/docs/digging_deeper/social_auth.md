@@ -43,6 +43,25 @@ Once the package is installed, you must configure it using the `node ace configu
 node ace configure @adonisjs/ally
 ```
 
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/ally/ally_provider')
+      ]
+    }
+    ```
+
+2. Creates the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
+
+3. Defines the environment variables to store `CLIENT_ID` and `CLIENT_SECRET` for selected OAuth providers. 
+
+:::
+
 ## Configuration
 The `@adonisjs/ally` package configuration is stored inside the `config/ally.ts` file. You can define config for multiple services within a single config file.
 
@@ -65,20 +84,6 @@ defineConfig({
     callbackUrl: '',
   },
 })
-```
-
-### Validating environment variables
-You must store the client id and secret as environment variables and validate them to avoid runtime errors due to missing or incorrect values.
-
-The [environment variables are validated](../guides/env.md#validating-environment-variables) inside the `start/env.ts` file.
-
-```ts
-{
-  GITHUB_CLIENT_ID: Env.schema.string(),
-  GITHUB_CLIENT_SECRET: Env.schema.string(),
-  TWITTER_CLIENT_ID: Env.schema.string(),
-  TWITTER_CLIENT_SECRET: Env.schema.string(),
-}
 ```
 
 ### Configuring the callback URL

@@ -8,11 +8,11 @@
 |
 */
 
+import edge from 'edge.js'
 import uiKit from 'edge-uikit'
 import collect from 'collect.js'
 import { dimer } from '@dimerapp/edge'
 import { readFile } from 'node:fs/promises'
-import view from '@adonisjs/view/services/main'
 import { RenderingPipeline } from '@dimerapp/edge'
 import { Collection, Renderer } from '@dimerapp/content'
 import { docsHook, docsTheme } from '@dimerapp/docs-theme'
@@ -21,50 +21,51 @@ import grammars from '../vscode_grammars/main.js'
 
 type CollectionEntry = Exclude<ReturnType<Collection['findByPermalink']>, undefined>
 
-view.use(dimer)
-view.use(docsTheme)
-view.use(uiKit.default)
+edge.use(dimer)
+edge.use(docsTheme)
+edge.use(uiKit)
 
 /**
  * Globally loads the config file
  */
-view.global(
-  'getConfig',
-  async () => JSON.parse(await readFile(new URL('../content/config.json', import.meta.url), 'utf-8'))
+edge.global('getConfig', async () =>
+  JSON.parse(await readFile(new URL('../content/config.json', import.meta.url), 'utf-8'))
 )
 
 /**
  * Globally loads the sponsors file
  */
-view.global(
-  'getSponsors',
-  async () => JSON.parse(await readFile(new URL('../content/sponsors.json', import.meta.url), 'utf-8'))
+edge.global('getSponsors', async () =>
+  JSON.parse(await readFile(new URL('../content/sponsors.json', import.meta.url), 'utf-8'))
 )
 
 /**
  * Returns sections for a collection
  */
-view.global('getSections', function (collection: Collection, entry: CollectionEntry) {
+edge.global('getSections', function (collection: Collection, entry: CollectionEntry) {
   const entries = collection.all()
 
-  return collect(entries).groupBy<any, string>('meta.category').map((items, key) => {
-    return {
-      title: key,
-      isActive: entry.meta.category === key,
-      items: items
-        .filter((item: CollectionEntry & { draft?: boolean }) => {
-          return !item.meta.draft
-        })
-        .map((item: CollectionEntry) => {
-          return {
-            href: item.permalink,
-            title: item.title,
-            isActive: item.permalink === entry.permalink,
-          }
-        })
-        .all(),
-    }
-  }).all()
+  return collect(entries)
+    .groupBy<any, string>('meta.category')
+    .map((items, key) => {
+      return {
+        title: key,
+        isActive: entry.meta.category === key,
+        items: items
+          .filter((item: CollectionEntry & { draft?: boolean }) => {
+            return !item.meta.draft
+          })
+          .map((item: CollectionEntry) => {
+            return {
+              href: item.permalink,
+              title: item.title,
+              isActive: item.permalink === entry.permalink,
+            }
+          })
+          .all(),
+      }
+    })
+    .all()
 })
 
 /**
@@ -82,7 +83,7 @@ pipeline.use(docsHook).use((node) => {
 /**
  * Configuring renderer
  */
-export const renderer = new Renderer(view, pipeline)
+export const renderer = new Renderer(edge, pipeline)
   .codeBlocksTheme('material-theme-darker')
   .useTemplate('docs')
 

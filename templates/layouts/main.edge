@@ -34,12 +34,11 @@
       rel="stylesheet"
     >
 
-    @vite('assets/app.css')
-    @vite('assets/app.js')
+    @vite(['assets/app.css', 'assets/app.js'])
     @include('partials/detect_color_mode')
 
   </head>
   <body>
-    @!section('body')
+    {{{ await $slots.main() }}}
   </body>
 </html>

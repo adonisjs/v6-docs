@@ -1,4 +1,5 @@
-@set('siteConfig', await getConfig())
+@let(siteConfig = await getConfig())
+
 <!DOCTYPE html>
   <html
     lang="en"
@@ -17,8 +18,7 @@
       rel="stylesheet"
     >
 
-    @vite('assets/app.css')
-    @vite('assets/app.js')
+    @vite(['assets/app.css', 'assets/app.js'])
     @include('partials/detect_color_mode')
 
   </head>

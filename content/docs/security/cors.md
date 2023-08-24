@@ -37,14 +37,30 @@ After installing the package, run the following command to configure the package
 node ace configure @adonisjs/cors
 ```
 
-Finally, register the `cors_middleware` to the [server middleware list](../http/middleware.md#server-middleware). The CORS middleware **should be the first middleware in the stack**.
+:::disclosure{title="See steps performed by the configure command"}
 
-```ts
-// title: start/kernel.ts
-server.use([
-  () => import('@adonisjs/cors/cors_middleware')
-])
-```
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/cors/cors_provider')
+      ]
+    }
+    ```
+
+2. Creates the `config/cors.ts` file. This file contains the configuration settings for CORS.
+
+3. Registers the following middleware inside the `start/kernel.ts` file.
+
+    ```ts
+    server.use([
+      () => import('@adonisjs/cors/cors_middleware')
+    ])
+    ```
+
+:::
 
 ## Configuration
 

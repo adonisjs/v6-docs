@@ -4,6 +4,8 @@ import mediumZoom from 'medium-zoom'
 import docsearch from '@docsearch/js'
 import { tabs } from 'edge-uikit/tabs'
 import Persist from '@alpinejs/persist'
+import collapse from '@alpinejs/collapse'
+
 import {
   initZoomComponent,
   initBaseComponents,
@@ -14,6 +16,7 @@ import.meta.glob(['../content/**/*.png', '../content/**/*.jpeg', '../content/**/
 
 Alpine.plugin(tabs)
 Alpine.plugin(Persist)
+Alpine.plugin(collapse)
 Alpine.plugin(initBaseComponents)
 Alpine.plugin(initSearchComponent(docsearch))
 Alpine.plugin(initZoomComponent(mediumZoom))

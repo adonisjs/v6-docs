@@ -48,13 +48,20 @@ Once done, you must run the following command to configure Edge within an Adonis
 node ace configure edge
 ```
 
-The `configure` command will register the `@adonisjs/core/providers/edge_provider` provider within the `adonisrc.ts` file. The Edge service provider will perform the following tasks.
+:::disclosure{title="See steps performed by the configure command"}
 
-- Mount `./resources/views` as the base directory for Edge templates.
-- Enable templates cache when the application is running in production.
-- Add [AdonisJS specific global helpers](#global-helpers) with Edge.
-- Add [HttpContext.view](./http_context.md) property. You can use the `ctx.view` property to render templates during an HTTP request.
-- Add [Router.render](./routing.md#render-view-from-a-route) method to render a template without defining an explicit route handler.
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/core/providers/edge_provider')
+      ]
+    }
+    ```
+
+:::
 
 ## Rendering your first template
 Once the configuration is completed, you can use Edge to render templates. Let's create a `welcome.edge` file inside the `resources/views` directory.

@@ -31,6 +31,32 @@ Once the package is installed, you must configure it using the `node ace configu
 node ace configure @adonisjs/redis
 ```
 
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/redis/redis_provider')
+      ]
+    }
+    ```
+
+2. Create `config/redis.ts` file. This file contains the connection configuration for your redis server.
+
+3. Define following environment variables and their validation rules.
+
+    ```dotenv
+    REDIS_HOST=127.0.0.1
+    REDIS_PORT=6379
+    REDIS_PASSWORD=
+    ```
+
+:::
+
+
 ## Configuration
 
 The configuration for the Redis package is stored inside the `config/redis.ts` file.
@@ -110,25 +136,6 @@ const redisConfig = defineConfig({
     },
   },
 })
-```
-
-### Environment variables usage
-
-The `config/redis.ts` file internally relies on the following environment variables.
-
-```dotenv
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
-REDIS_PASSWORD=
-```
-
-Also, we recommend you to [validate the environment variables](../guides/env.md#validating-environment-variables) inside the `start/env.ts` file.
-
-```ts
-{
-  REDIS_HOST: Env.schema.string({ format: 'host' }),
-  REDIS_PORT: Env.schema.number(),
-}
 ```
 
 ## Usage

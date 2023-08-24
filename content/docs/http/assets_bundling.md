@@ -36,6 +36,26 @@ Once the package is installed, you must configure it using the `node ace configu
 node ace configure @adonisjs/vite
 ```
 
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/vite/vite_provider')
+      ]
+    }
+    ```
+
+2. Create `vite.config.js` and `config/vite.ts` configuration files.
+
+3. Create the frontend entrypoint file, ie. `resources/js/app.js`.
+
+:::
+
+
 ## Configuration
 The setup process creates two configuration files. The `vite.config.js` file is used to configure the Vite bundler, and `config/vite.ts` is used by AdonisJS on the backend.
 

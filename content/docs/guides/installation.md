@@ -33,7 +33,6 @@ yarn create adonisjs@latest hello-world
 pnpm create adonisjs@latest hello-world
 ```
 
-
 :::
 
 ## Starter kits

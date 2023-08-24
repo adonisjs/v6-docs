@@ -36,25 +36,42 @@ pnpm add @adonisjs/session@next
 
 :::
 
-Once the package is installed, you must configure it using the `node ace configure` command.
+Once done, you must run the following command to configure the session package.
 
 ```sh
 node ace configure @adonisjs/session
 ```
 
-Finally, you must register the session middleware inside the [router middleware stack](./middleware.md#router-middleware-stack).
+:::disclosure{title="See steps performed by the configure command"}
 
-```ts
-// title: start/kernel.ts
-import router from '@adonisjs/core/services/router'
+1. Registers the following service provider inside the `adonisrc.ts` file.
 
-router.use([
-  () => import('@adonisjs/core/bodyparser_middleware'),
-  // highlight-start
-  () => import('@adonisjs/session/session_middleware'),
-  // highlight-end
-])
-```
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/session/session_provider')
+      ]
+    }
+    ```
+
+2. Creates the `config/session.ts` file.
+
+3. Defines the following environment variables and their validations. 
+
+    ```dotenv
+    SESSION_DRIVER=cookie
+    ```
+
+4. Registers the following middleware inside the `start/kernel.ts` file.
+
+    ```ts
+    router.use([
+      () => import('@adonisjs/session/session_middleware')
+    ])
+    ```
+
+:::
 
 ## Configuration
 The configuration for the session package is stored inside the `config/session.ts` file.
@@ -196,22 +213,6 @@ Make sure to first install and configure the [@adonisjs/redis](../database/redis
 </dd>
 
 </dl>
-
----
-
-### Validating environment variables
-The session config file relies on the `SESSION_DRIVER` environment variable to pick a session driver. We recommend you validate this environment variable to avoid runtime errors due to missing or incorrect values.
-
-The [environment variables are validated](../guides/env.md#validating-environment-variables) inside the `start/env.ts` file.
-
-```ts
-// title: start/env.ts
-{
-  SESSION_DRIVER: Env.schema.enum(
-    ['redis', 'memory', 'cookie', 'file'] as const
-  ),
-}
-```
 
 ## Basic example
 Once you have registered the session middleware, you can access the `session` property from the [HTTP Context](./http_context.md). The session property exposes the API for reading and writing data to the session store.

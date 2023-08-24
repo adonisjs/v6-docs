@@ -27,20 +27,36 @@ pnpm add @adonisjs/static
 
 :::
 
-Once the package is installed, you must configure it using the `node ace configure` command.
+Once done, you must run the following command to configure the `@adonisjs/static` package.
 
 ```sh
 node ace configure @adonisjs/static
 ```
 
-Finally, register the middleware in the `start/kernel.ts` file.
+:::disclosure{title="See steps performed by the configure command"}
 
-```ts
-// title: start/kernel.ts
-server.use([
-  () => import('@adonisjs/static/static_middleware')
-])
-```
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/static/static_provider')
+      ]
+    }
+    ```
+
+2. Create the `config/static.ts` file.
+
+3. Registers the following middleware inside the `start/kernel.ts` file.
+
+    ```ts
+    server.use([
+      () => import('@adonisjs/static/static_middleware')
+    ])
+    ```
+
+:::
 
 ## Serving static files
 
@@ -49,7 +65,7 @@ Once the middleware is registered, you may create files inside the `public` dire
 <!-- The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](./assets_bundler.md). -->
 
 ## Copy static files to production build
-In order to copy static files to the production build folder, you must register the `public` directory under the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `adonisrc.ts` file.
+To copy static files to the production build folder, you must register the `public` directory under the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `adonisrc.ts` file.
 
 ```ts
 {

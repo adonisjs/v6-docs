@@ -13,17 +13,17 @@ The first step is to install the following packages from the npm packages regist
 
 ```sh
 // title: npm
-npm i -D playwright @japa/api-client
+npm i -D @japa/api-client
 ```
 
 ```sh
 // title: yarn
-yarn add -D playwright @japa/api-client
+yarn add -D @japa/api-client
 ```
 
 ```sh
 // title: pnpm
-pnpm add -D playwright @japa/api-client
+pnpm add -D @japa/api-client
 ```
 
 :::

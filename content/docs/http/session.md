@@ -454,7 +454,9 @@ In the following example:
     />
 
     @error('title')
-      {{ message }}
+      @each(message in messages)
+        <p> {{ message }} </p>
+      @end
     @end
   </div>
 </form>
@@ -511,7 +513,7 @@ Finally, you can access a specific flash message or a validation error using the
 @end
 
 @error('key')
-  {{ inspect(message) }}
+  {{ inspect(messages) }}
 @end
 ```
 

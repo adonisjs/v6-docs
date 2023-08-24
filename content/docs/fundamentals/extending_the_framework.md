@@ -97,3 +97,6 @@ AdonisJS uses driver based implementation with many of its modules and offers an
 Following is the list of modules with documentation to create custom drivers.
 
 - [Creating Hash driver](../security/hash.md#creating-a-custom-hash-driver)
+- [Creating Session driver](../http/session.md#creating-a-custom-session-driver)
+- [Creating Social auth driver](../digging_deeper/social_auth.md#creating-a-custom-social-driver)
+- [Extending REPL](../ace/repl.md#adding-custom-methods-to-repl)

@@ -160,9 +160,27 @@ Run the following command to eject the command stub.
 node ace eject make/command
 ```
 
+## make\:view
+Create a new Edge template file. The file will be created inside the [views directory](../fundamentals/adonisrc_file.md#directories).
+
+- Form: `NA`
+- Suffix: `NA`
+- File name example: `view_posts.edge`
+
+```sh
+node ace make:view view_posts
+```
+
+Run the following command to eject the template stub.
+
+```sh
+node ace eject make/view
+```
+
+
 ## make\:provider
 
-Create a service provider. The provider will automatically be registered with the `adonisrc.ts` file.
+Create a service provider. The provider will automatically be registered within the `adonisrc.ts` file.
 
 - Form: `singular`
 - Suffix: `provider`
@@ -178,6 +196,24 @@ Run the following command to eject the provider stub.
 ```sh
 node ace eject make/provider
 ```
+
+## make\:preload
+Create a [preload file](../fundamentals/adonisrc_file.md#preloads). The file will automatically be registered within the `adonisrc.ts` file.
+
+- Form: `NA`
+- Suffix: `NA`
+- File name example: `view.ts`
+
+```sh
+node ace make:preload view
+```
+
+Run the following command to eject the preload file stub.
+
+```sh
+node ace eject make/preload_file
+```
+
 
 ## make\:test
 

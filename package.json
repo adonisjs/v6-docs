@@ -33,7 +33,6 @@
     "alpinejs": "^3.12.3",
     "collect.js": "^4.36.1",
     "concurrently": "^8.2.1",
-    "edge-uikit": "^1.0.0-0",
     "eslint": "^8.47.0",
     "medium-zoom": "^1.0.8",
     "pino-pretty": "^10.2.0",
@@ -48,6 +47,7 @@
     "@adonisjs/ally": "^5.0.0-4",
     "@adonisjs/core": "^6.1.5-24",
     "@adonisjs/static": "^1.0.2",
+    "edge-uikit": "^1.0.0-1",
     "edge.js": "^6.0.0-10",
     "graphql-request": "^6.1.0"
   },

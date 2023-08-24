@@ -207,7 +207,9 @@ For a better developer experience, we recommend using the following tags to read
 @end
 
 @error('title')
-  {{ message }}
+  @each(message in messages)
+    <p>{{ message }}</p>
+  @end
 @end
 ```
 

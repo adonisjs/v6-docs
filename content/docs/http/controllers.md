@@ -69,6 +69,12 @@ Since controllers handle HTTP requests, they often import other modules like mod
 
 Lazy loading is as simple as moving the import statement behind a function and using dynamic imports.
 
+:::tip
+
+You can use our [ESLint plugin](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin) to enforce and automatically convert standard controller imports to lazy dynamic imports.
+
+:::
+
 ```ts
 import router from '@adonisjs/core/services/router'
 // delete-start

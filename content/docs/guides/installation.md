@@ -50,7 +50,7 @@ The official starter kits use ES modules and TypeScript. This combination allows
 
 The Web starter kit is tailored for creating traditional server renderer web apps. Do not let the keyword **"traditional"** discourage you. We recommend this starter kit if you make a web app with limited frontend interactivity.
 
-The simplicity of rendering HTML on the server using [Edge.js](https://edge.adonisjs.com) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
+The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.dev) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
 
 Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
@@ -68,8 +68,8 @@ The web starter kit comes with the following packages.
 <td>The framework&#39;s core has the baseline features you might reach for when creating backend applications.</td>
 </tr>
 <tr>
-<td><code>@adonisjs/view</code></td>
-<td>The view layer uses the <a href="https://edge.adonisjs.com">edge</a> template engine for composing HTML pages.</td>
+<td><code>edge.js</code></td>
+<td>The <a href="https://edge.adonisjs.com">edge</a> template engine for composing HTML pages.</td>
 </tr>
 <tr>
 <td><code>@adonisjs/lucid</code></td>

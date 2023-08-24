@@ -142,14 +142,18 @@ const redisConfig = defineConfig({
 
 You can run redis commands using the `redis` service exported by the package. The redis service is a singleton object configured using the configuration you have defined inside the `config/redis.ts` file.
 
+:::note
+
+Consult the [ioredis](https://redis.github.io/ioredis/classes/Redis.html) documentation to view the list of available methods. Since we are a wrapper on top of IORedis, the commands API is identical.
+
+:::
+
 ```ts
 import redis from '@adonisjs/redis/services/main'
 
 await redis.set('username', 'virk')
 const username = await redis.get('username')
 ```
-
-Consult the [ioredis](https://redis.github.io/ioredis/classes/Redis.html) documentation to view the list of available methods. Since we are a wrapper on top of IORedis, the commands API is identical.
 
 ### Switching between connections
 Commands executed using the `redis` service are invoked against the **default connection** defined inside the config file. However, you can execute commands on a specific connection by first getting an instance of it.

@@ -267,7 +267,7 @@ Reference to an instance of the [Auth class](). The property is condtibuted by t
 
 </dd> -->
 
-<!-- <dt>
+<dt>
 
 ctx.view
 
@@ -275,11 +275,11 @@ ctx.view
 
 <dd>
 
-Reference to an instance of the [View class](). The property is condtibuted by the `@adonisjs/view` package.
+Reference to an instance of Edge renderer. Learn more about Edge in [View and templates guide](./views_and_templates.md#using-edge)
 
-</dd> -->
+</dd>
 
-<!-- <dt>
+<dt>
 
 ctx\.ally
 
@@ -287,9 +287,9 @@ ctx\.ally
 
 <dd>
 
-Reference to an instance of the [SocialAuth class](). The property is condtibuted by the `@adonisjs/ally` package.
+Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/next/src/ally_manager.ts) to implement social login in your apps. [Learn more about Ally](../digging_deeper/social_auth.md)
 
-</dd> -->
+</dd>
 
 <!-- <dt>
 

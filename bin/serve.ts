@@ -214,7 +214,10 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
             },
           },
         },
-        vite: viteDefineConfig({}),
+        vite: viteDefineConfig({
+          assetsUrl: '/assets',
+          buildDirectory: 'dist/assets',
+        }),
         ally: allyConfig,
       })
     })

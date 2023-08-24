@@ -4,6 +4,7 @@ export default defineConfig({
   typescript: true,
   directories: {
     views: 'templates',
+    public: 'dist',
   } as any,
   providers: [
     () => import('@adonisjs/core/providers/app_provider'),

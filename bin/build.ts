@@ -11,8 +11,6 @@
 
 import 'reflect-metadata'
 import { Ignitor } from '@adonisjs/core'
-import { Env } from '@adonisjs/core/env'
-import { defineConfig } from '@adonisjs/ally'
 import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
 import { defineConfig as httpConfig } from '@adonisjs/core/http'
 
@@ -21,26 +19,6 @@ import { defineConfig as httpConfig } from '@adonisjs/core/http'
  * paths to file and directories for scaffolding commands
  */
 const APP_ROOT = new URL('../', import.meta.url)
-const env = await Env.create(APP_ROOT, {
-  APP_KEY: Env.schema.string(),
-  GITHUB_API_SECRET: Env.schema.string(),
-  GITHUB_CLIENT_ID: Env.schema.string(),
-  GITHUB_CLIENT_SECRET: Env.schema.string(),
-  GITHUB_CALLBACK_URL: Env.schema.string({ format: 'url', tld: false }),
-})
-
-/**
- * Ally configuration
- */
-const allyConfig = defineConfig({
-  github: {
-    driver: 'github',
-    clientId: env.get('GITHUB_CLIENT_ID'),
-    clientSecret: env.get('GITHUB_CLIENT_SECRET'),
-    callbackUrl: env.get('GITHUB_CALLBACK_URL'),
-    scopes: ['read:user'],
-  },
-})
 
 /**
  * The importer is used to import files in context of the
@@ -90,8 +68,14 @@ const ignitor = new Ignitor(APP_ROOT, { importer: IMPORTER })
             },
           },
         },
-        ally: allyConfig,
-        vite: viteDefineConfig({}),
+        ally: {
+          services: {},
+          driversInUse: new Set(),
+        },
+        vite: viteDefineConfig({
+          assetsUrl: '/assets',
+          buildDirectory: 'dist/assets',
+        }),
       })
     })
   })

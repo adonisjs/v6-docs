@@ -11,13 +11,36 @@
 
 import 'reflect-metadata'
 import { Ignitor } from '@adonisjs/core'
-import { defineConfig } from '@adonisjs/vite'
+import { Env } from '@adonisjs/core/env'
+import { defineConfig } from '@adonisjs/ally'
+import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
+import { defineConfig as httpConfig } from '@adonisjs/core/http'
 
 /**
  * URL to the application root. AdonisJS need it to resolve
  * paths to file and directories for scaffolding commands
  */
 const APP_ROOT = new URL('../', import.meta.url)
+const env = await Env.create(APP_ROOT, {
+  APP_KEY: Env.schema.string(),
+  GITHUB_API_SECRET: Env.schema.string(),
+  GITHUB_CLIENT_ID: Env.schema.string(),
+  GITHUB_CLIENT_SECRET: Env.schema.string(),
+  GITHUB_CALLBACK_URL: Env.schema.string({ format: 'url', tld: false }),
+})
+
+/**
+ * Ally configuration
+ */
+const allyConfig = defineConfig({
+  github: {
+    driver: 'github',
+    clientId: env.get('GITHUB_CLIENT_ID'),
+    clientSecret: env.get('GITHUB_CLIENT_SECRET'),
+    callbackUrl: env.get('GITHUB_CALLBACK_URL'),
+    scopes: ['read:user'],
+  },
+})
 
 /**
  * The importer is used to import files in context of the
@@ -50,14 +73,14 @@ async function exportHTML() {
   }
 }
 
-const app = new Ignitor(APP_ROOT, { importer: IMPORTER })
+const ignitor = new Ignitor(APP_ROOT, { importer: IMPORTER })
   .tap((app) => {
     app.initiating(() => {
       app.useConfig({
         appUrl: process.env.APP_URL || '',
         app: {
           appKey: 'zKXHe-Ahdb7aPK1ylAJlRgTefktEaACi',
-          http: {},
+          http: httpConfig({}),
         },
         logger: {
           default: 'app',
@@ -67,12 +90,13 @@ const app = new Ignitor(APP_ROOT, { importer: IMPORTER })
             },
           },
         },
-        vite: defineConfig({}),
+        ally: allyConfig,
+        vite: viteDefineConfig({}),
       })
     })
   })
   .createApp('console')
 
-await app.init()
-await app.boot()
-await app.start(exportHTML)
+await ignitor.init()
+await ignitor.boot()
+await ignitor.start(exportHTML)

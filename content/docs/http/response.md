@@ -7,7 +7,7 @@ An instance of the [response class](https://github.com/adonisjs/http-server/blob
 The simplest way to send a response is to return a value from the route handler.
 
 ```ts
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/', async () => {
   /** Plain string */
@@ -27,7 +27,7 @@ route.get('/', async () => {
 Along with returning a value from the route handler, you can use the `response.send` method to explicitly set the response body. However, calling the `response.send` method multiple times will overwrite the old body and only keeps the latest one.
 
 ```ts
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/', async ({ response }) => {
   /** Plain string */
@@ -60,7 +60,7 @@ The `response.stream` method allows piping a stream to the response. The method 
 The `response.stream` method does not set the `content-type` and the `content-length` headers; you must set them explicitly before streaming the content.
 
 ```ts
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/', async ({ response }) => {
   const image = fs.createReadStream('./some-file.jpg')
@@ -76,7 +76,7 @@ const image = fs.createReadStream('./some-file.jpg')
 response.stream(image, () => {
   const message = 'Unable to serve file. Try again'
   const status = 400
-  
+
   return [message, status]
 })
 ```
@@ -87,7 +87,7 @@ We recommend using the `response.download` method over the `response.stream` met
 
 ```ts
 import app from '@adonisjs/core/services/app'
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/uploads/:file', async ({ response, params }) => {
   const filePath = app.makePath(`uploads/${params.file}`)
@@ -126,7 +126,7 @@ The `response.attachment` method is similar to the `response.download` method, b
 
 ```ts
 import app from '@adonisjs/core/services/app'
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/uploads/:file', async ({ response, params }) => {
   const filePath = app.makePath(`uploads/${params.file}`)
@@ -142,7 +142,7 @@ route.get('/uploads/:file', async ({ response, params }) => {
 You may set the response status using the `response.status` method. Calling this method will override the existing response status (if any). However, you may use the `response.safeStatus` method to set the status only when it is `undefined`.
 
 ```ts
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/', async ({ response }) => {
   response.status(200)
@@ -155,7 +155,7 @@ route.get('/', async ({ response }) => {
 You may set the response headers using the `response.header` method. This method overrides the existing header value (if it already exists). However, you can may the `response.safeHeader` method to set the header only when it is `undefined`.
 
 ```ts
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/', async ({ response }) => {
   response.header('Content-type', 'text/html')
@@ -183,7 +183,7 @@ The simplest way to perform a redirect is to call the `redirect.toPath` method w
 
 ```ts
 import app from '@adonisjs/core/services/app'
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
 route.get('/posts', async ({ response }) => {
   response.redirect().toPath('/articles')
@@ -194,17 +194,12 @@ The redirect class also allows constructing a URL from a pre-registered route. T
 
 ```ts
 import app from '@adonisjs/core/services/app'
-import route from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 
-route
-  .get('/articles/:id', async () => {
-  })
-  .as('articles.show')
+route.get('/articles/:id', async () => {}).as('articles.show')
 
 route.get('/posts/:id', async ({ response, params }) => {
-  response
-    .redirect()
-    .toRoute('articles.show', { id: params.id })
+  response.redirect().toRoute('articles.show', { id: params.id })
 })
 ```
 
@@ -221,10 +216,7 @@ response.redirect().back()
 The default status for redirect responses is `302`; you can change it by calling the `redirect.status` method.
 
 ```ts
-  response
-    .redirect()
-    .status(301)
-    .toRoute('articles.show', { id: params.id })
+response.redirect().status(301).toRoute('articles.show', { id: params.id })
 ```
 
 ### Redirect with query string
@@ -232,30 +224,21 @@ The default status for redirect responses is `302`; you can change it by calling
 You can use the `withQs` method to append a query string to the redirect URL. The method accepts an object of key-value pair and converts it to a string.
 
 ```ts
-response
-    .redirect()
-    .withQs({ page: 1, limit: 20 })
-    .toRoute('articles.index')
+response.redirect().withQs({ page: 1, limit: 20 }).toRoute('articles.index')
 ```
 
 To forward the query string from the current request URL, call the `withQs` method without any parameters.
 
 ```ts
 // Forward current URL query string
-response
-  .redirect()
-  .withQs()
-  .toRoute('articles.index')
+response.redirect().withQs().toRoute('articles.index')
 ```
 
 When redirecting back to the previous page, the `withQs` method will forward the query string of the previous page.
 
 ```ts
 // Forward current URL query string
-response
-  .redirect()
-  .withQs()
-  .back()
+response.redirect().withQs().back()
 ```
 
 ## Aborting request with an error
@@ -269,7 +252,7 @@ router.get('posts/:id/edit', ({ response, auth, params }) => {
   if (!auth.user.canEditPost(post)) {
     response.abort({ message: 'Cannot edit post' })
   }
-  
+
   // continue with the rest of the logic
 })
 ```
@@ -286,12 +269,8 @@ The `response.abortIf` and the `response.abortUnless` methods can be used to abo
 router.get('posts/:id/edit', ({ response, auth, params }) => {
   const post = await Post.findByOrFail(params.id)
 
-  response.abortIf(
-    !auth.user.canEditPost(post),
-    { message: 'Cannot edit post' },
-    403
-  ) 
- 
+  response.abortIf(!auth.user.canEditPost(post), { message: 'Cannot edit post' }, 403)
+
   // continue with the rest of the logic
 })
 ```
@@ -300,12 +279,8 @@ router.get('posts/:id/edit', ({ response, auth, params }) => {
 router.get('posts/:id/edit', ({ response, auth, params }) => {
   const post = await Post.findByOrFail(params.id)
 
-  response.abortUnless(
-    auth.user.canEditPost(post),
-    { message: 'Cannot edit post' },
-    403
-  ) 
- 
+  response.abortUnless(auth.user.canEditPost(post), { message: 'Cannot edit post' }, 403)
+
   // continue with the rest of the logic
 })
 ```

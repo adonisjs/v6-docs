@@ -20,11 +20,11 @@ export default class UsersController {
     return [
       {
         id: 1,
-        username: 'virk'
+        username: 'virk',
       },
       {
         id: 2,
-        username: 'romain'
+        username: 'romain',
       },
     ]
   }
@@ -105,7 +105,7 @@ On the upside, magic strings can clean up all the visual clutter inside your rou
 
 Using magic strings is subjective, and you can decide if you want to use them personally or as a team.
 
-## Dependency injection 
+## Dependency injection
 
 The controller classes are instantiated using the [IoC container](../fundamentals/ioc_container.md); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
 
@@ -128,7 +128,7 @@ import UserService from '#services/user_service'
 @inject()
 export default class UsersController {
   constructor(protected userService: UserService) {}
-  
+
   index() {
     return this.userService.all()
   }
@@ -145,7 +145,7 @@ The first parameter passed to the controller method is always the HttpContext. T
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-impprt UserService from '#services/user_service'
+import UserService from '#services/user_service'
 
 export default class UsersController {
   @inject()
@@ -153,9 +153,9 @@ export default class UsersController {
     return userService.all()
   }
 }
-``` 
+```
 
-### Tree of dependencies 
+### Tree of dependencies
 
 Automatic resolution of dependencies is not only limited to the controller. Any class injected inside the controller can also type-hint dependencies, and the IoC container will construct the tree of dependencies for you.
 
@@ -202,7 +202,7 @@ export default class PostsController {
 
   /**
    * Render the form to create a new post.
-   * 
+   *
    * Not needed if you are creating an API server.
    */
   async create({}: HttpContext) {}
@@ -219,7 +219,7 @@ export default class PostsController {
 
   /**
    * Render the form to edit an existing post by its id.
-   * 
+   *
    * Not needed if you are creating an API server.
    */
   async edit({ params }: HttpContext) {}
@@ -248,7 +248,6 @@ router.resource('posts', PostsController)
 Following is the list of routes registered by the `resource` method. You can view this list by running `node ace list:routes` command.
 
 ![](./post_resource_routes_list.png)
-
 
 ### Nested resources
 
@@ -283,40 +282,32 @@ router.shallowResource('posts.comments', CommentsController)
 
 The routes created using the `router.resource` method are named after the resource name and the controller action. First, we convert the resource name to snake case and concatenate the action name using the dot `.` separator.
 
-| Resource | Action name | Route name |
-|--------|--------------------|------------|
-| posts | index | `posts.index` |
-| userPhotos | index | `user_photos.index` |
-| group-attributes | show | `group_attributes.index` |
-
+| Resource         | Action name | Route name               |
+| ---------------- | ----------- | ------------------------ |
+| posts            | index       | `posts.index`            |
+| userPhotos       | index       | `user_photos.index`      |
+| group-attributes | show        | `group_attributes.index` |
 
 You can rename the prefix for all the routes using the `resource.as` method. In the following example, we rename the `group_attributes.index` route name to `attributes.index`.
 
 ```ts
-router
-  .resource('group-attributes', GroupAttributesController)
-  .as('attributes')
+router.resource('group-attributes', GroupAttributesController).as('attributes')
 ```
 
-The prefix given to the `resource.as` method is transformed to snake_ case. If you want, you can turn off the transformation, as shown below.
+The prefix given to the `resource.as` method is transformed to snake\_ case. If you want, you can turn off the transformation, as shown below.
 
 ```ts
-router
-  .resource('group-attributes', GroupAttributesController)
-  .as('groupAttributes', false)
+router.resource('group-attributes', GroupAttributesController).as('groupAttributes', false)
 ```
-
 
 ### Registering API only routes
 
 When creating an API server, the forms to create and update a resource are rendered by a front-end client or a mobile app. Therefore, creating routes for these endpoints is redundant.
 
-You can use the `resource.apiOnly` method to remove the `create` and the `edit` routes. As a result, only five routes will be created. 
+You can use the `resource.apiOnly` method to remove the `create` and the `edit` routes. As a result, only five routes will be created.
 
 ```ts
-router
-  .resource('posts', PostsController)
-  .apiOnly()
+router.resource('posts', PostsController).apiOnly()
 ```
 
 ### Registering only specific routes
@@ -326,17 +317,13 @@ To remove to register only specific routes, you can use the `resource.only` or t
 The `resource.only` method accepts an array of action names and removes all other routes except those mentioned. In the following example, only the routes for the `index`, `store`, and `destroy` actions will be registered.
 
 ```ts
-router
-  .resource('posts', PostsController)
-  .only(['index', 'store', 'destroy'])
+router.resource('posts', PostsController).only(['index', 'store', 'destroy'])
 ```
 
 The `resource.except` method is the opposite of the `only` method, removing the routes for the mentioned action names.
 
 ```ts
-router
-  .resource('posts', PostsController)
-  .except(['destroy'])
+router.resource('posts', PostsController).except(['destroy'])
 ```
 
 ### Renaming resource params
@@ -346,31 +333,27 @@ The routes generated by the `router.resource` method use `id` for the param name
 You can rename the param from `id` to something else using the `resource.params` method.
 
 ```ts
-router
-  .resource('posts', PostsController)
-  .params({
-    posts: 'post'
-  })
+router.resource('posts', PostsController).params({
+  posts: 'post',
+})
 ```
 
-The above change will generate the following routes *(showing partial list)*.
+The above change will generate the following routes _(showing partial list)_.
 
-| HTTP method | Route | Controller method |
-|--------|--------------------|------------|
-| GET | `/posts/:post` | show |
-| GET | `/posts/:post/edit` | edit |
-| PUT | `/posts/:post` | update |
-| DELETE | `/posts/:post` | destroy |
+| HTTP method | Route               | Controller method |
+| ----------- | ------------------- | ----------------- |
+| GET         | `/posts/:post`      | show              |
+| GET         | `/posts/:post/edit` | edit              |
+| PUT         | `/posts/:post`      | update            |
+| DELETE      | `/posts/:post`      | destroy           |
 
 You can also rename params when using nested resources.
 
 ```ts
-router
-  .resource('posts.comments', PostsController)
-  .params({
-    posts: 'post',
-    comments: 'comment'
-  })
+router.resource('posts.comments', PostsController).params({
+  posts: 'post',
+  comments: 'comment',
+})
 ```
 
 ### Assigning middleware to resource routes
@@ -383,11 +366,9 @@ In the following example, we register the auth middleware to all the post resour
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
-router
-  .resource('posts', PostsController)
-  .tap((route) => {
-    route.use(middleware.auth())
-  })
+router.resource('posts', PostsController).tap((route) => {
+  route.use(middleware.auth())
+})
 ```
 
 You can tap into specific routes by defining an array of action names as the first argument.
@@ -398,9 +379,7 @@ In the following example, we assign the `auth` middleware to the `store`, `updat
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
-router
-  .resource('posts', PostsController)
-  .tap(['store', 'update', 'destroy'], (route) => {
-    route.use(middleware.auth())
-  })
+router.resource('posts', PostsController).tap(['store', 'update', 'destroy'], (route) => {
+  route.use(middleware.auth())
+})
 ```

@@ -24,7 +24,7 @@
     "@alpinejs/collapse": "^3.13.0",
     "@alpinejs/persist": "^3.13.0",
     "@dimerapp/content": "^4.1.0",
-    "@dimerapp/docs-theme": "^2.1.0",
+    "@dimerapp/docs-theme": "^2.1.1",
     "@dimerapp/edge": "^4.0.0",
     "@docsearch/css": "^3.5.2",
     "@docsearch/js": "^3.5.2",

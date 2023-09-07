@@ -154,6 +154,12 @@
     "category": "Security"
   },
   {
+    "permalink": "security/web-security",
+    "title": "Securing SSR apps",
+    "contentPath": "./security/web-security.md",
+    "category": "Security"
+  },
+  {
     "permalink": "security/cors",
     "title": "CORS",
     "contentPath": "./security/cors.md",

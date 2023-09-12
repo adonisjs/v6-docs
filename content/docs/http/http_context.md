@@ -303,7 +303,7 @@ Reference to an instance of the [Bouncer class](). The property is condtibuted b
 
 </dd> -->
 
-<!-- <dt>
+<dt>
 
 ctx.i18n
 
@@ -311,9 +311,9 @@ ctx.i18n
 
 <dd>
 
-Reference to an instance of the [I18n class](). The property is condtibuted by the `@adonisjs/i18n` package.
+Reference to an instance of the [I18n class](https://github.com/adonisjs/i18n/blob/next/src/i18n.ts). Learn more about `i18n` in [Internationalization](../digging_deeper/i18n.md) guide.
 
-</dd> -->
+</dd>
 
 </dl>
 

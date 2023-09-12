@@ -274,6 +274,12 @@
     "category": "Digging Deeper"
   },
   {
+    "permalink": "i18n",
+    "title": "Internationalization",
+    "contentPath": "./digging_deeper/i18n.md",
+    "category": "Digging Deeper"
+  },
+  {
     "permalink": "testing/introduction",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",

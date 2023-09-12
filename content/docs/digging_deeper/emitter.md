@@ -394,6 +394,18 @@ emitter.on('session:migrated', ({ session, fromSessionId, toSessionId }) => {
 })
 ```
 
+### i18n\:missing\:translation
+The event is emitted when a translation for a specific key and locale is missing.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('i18n:missing:translation', function (event) {
+  console.log(event.identifier)
+  console.log(event.hasFallback)
+  console.log(event.locale)
+})
+```
 
 ## Faking events during tests
 

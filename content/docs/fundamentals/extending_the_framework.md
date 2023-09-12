@@ -6,7 +6,7 @@ In this guide, we will explore different APIs you can use to extend the framewor
 
 ## Macros and getters
 
-Macros and getters offer an API to add properties to the prototype of a class. You can think of them as Syntactic sugar for `Object.defineProperty`. Under the hood, we use [macroable](https://github.com/poppinss/macroable) package and you can refer its README for an in-depth technical explanation.
+Macros and getters offer an API to add properties to the prototype of a class. You can think of them as Syntactic sugar for `Object.defineProperty`. Under the hood, we use [macroable](https://github.com/poppinss/macroable) package, and you can refer to its README for an in-depth technical explanation.
 
 Since macros and getters are added at runtime, you will have to inform TypeScript about the type information for the added property using [declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html).
 
@@ -91,12 +91,12 @@ Following is the list of classes that can be extended using Macros and getters.
 | [BriskRoute](https://github.com/adonisjs/http-server/blob/next/src/router/brisk.ts) | `@adonisjs/core/http` |
 | [MultipartFile](https://github.com/adonisjs/bodyparser/blob/next/src/multipart/file.ts) | `@adonisjs/core/bodyparser` |
 
-## Creating drivers
-AdonisJS uses driver based implementation with many of its modules and offers an extensible API to register custom drivers as well. 
-
-Following is the list of modules with documentation to create custom drivers.
+## Extending modules
+Most of the AdonisJS modules provide extensible APIs to register custom implementations. Following is an aggregated list of the same.
 
 - [Creating Hash driver](../security/hash.md#creating-a-custom-hash-driver)
 - [Creating Session driver](../http/session.md#creating-a-custom-session-driver)
 - [Creating Social auth driver](../digging_deeper/social_auth.md#creating-a-custom-social-driver)
 - [Extending REPL](../ace/repl.md#adding-custom-methods-to-repl)
+- [Creating i18n translations loader](../digging_deeper/i18n.md#creating-a-custom-translation-loader)
+- [Creating i18n translations formatter](../digging_deeper/i18n.md#creating-a-custom-translation-formatter)

@@ -92,3 +92,16 @@ html.dark .login_message .button.primary {
   top: -6px;
   font-size: 14px;
 }
+
+.table_container + blockquote {
+  border: 1px solid var(--prose-table-border-color);
+  margin-top: -25px;
+  text-align: center;
+  font-size: 13px;
+  padding: 2px 0;
+  background-color: var(--mauve4);
+}
+
+.table_container + blockquote *:last-child {
+  margin: 0;
+}

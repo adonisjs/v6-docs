@@ -18,6 +18,7 @@ const ALLOWED_USERNAMES = [
   'zlpkhr',
   'eidellev',
   'joshmanders',
+  'pieterletsdial',
 ]
 
 /**

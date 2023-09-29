@@ -336,6 +336,7 @@ HttpContext.getter('property', function (this: HttpContext) {
 Since the macros and getters are added at runtime, you must inform TypeScript about their types.
 
 ```ts
+// title: types/http_context.ts
 declare module '@adonisjs/core/http' {
   export interface HttpContext {
     property: ValueType

@@ -19,6 +19,7 @@ const ALLOWED_USERNAMES = [
   'eidellev',
   'joshmanders',
   'pieterletsdial',
+  'cloleb', // via "AlekStudioIntellisoft"
 ]
 
 /**

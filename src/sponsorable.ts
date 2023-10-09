@@ -20,6 +20,9 @@ const ALLOWED_USERNAMES = [
   'joshmanders',
   'pieterletsdial',
   'cloleb', // via "AlekStudioIntellisoft"
+  'shiny', // via "KeqinHQ"
+  'JASON-SHQ', // via "KeqinHQ"
+  'redeyesovo', // via "KeqinHQ"
 ]
 
 /**

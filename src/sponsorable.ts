@@ -23,6 +23,7 @@ const ALLOWED_USERNAMES = [
   'shiny', // via "KeqinHQ"
   'JASON-SHQ', // via "KeqinHQ"
   'redeyesovo', // via "KeqinHQ"
+  'tpoisseau', // via "Zakodium"
 ]
 
 /**

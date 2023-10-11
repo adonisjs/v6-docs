@@ -21,7 +21,7 @@ const ALLOWED_USERNAMES = [
   'pieterletsdial',
   'cloleb', // via "AlekStudioIntellisoft"
   'shiny', // via "KeqinHQ"
-  'JASON-SHQ', // via "KeqinHQ"
+  'jason-shq', // via "KeqinHQ"
   'redeyesovo', // via "KeqinHQ"
   'tpoisseau', // via "Zakodium"
 ]

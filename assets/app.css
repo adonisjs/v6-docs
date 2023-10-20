@@ -1,10 +1,56 @@
 @import 'unpoly';
 @import '@docsearch/css';
+
+/* Gray colors */
+@import '@radix-ui/colors/mauve.css';
+@import '@radix-ui/colors/mauve-alpha.css';
+@import '@radix-ui/colors/mauve-dark.css';
+@import '@radix-ui/colors/mauve-dark-alpha.css';
+
+/* Accent colors */
+@import '@radix-ui/colors/violet.css';
+@import '@radix-ui/colors/violet-alpha.css';
+@import '@radix-ui/colors/violet-dark.css';
+@import '@radix-ui/colors/violet-dark-alpha.css';
+
+/* Interface colors */
+@import '@radix-ui/colors/orange-alpha.css';
+@import '@radix-ui/colors/iris-alpha.css';
+@import '@radix-ui/colors/orange-dark-alpha.css';
+@import '@radix-ui/colors/iris-dark-alpha.css';
+
 @import '@dimerapp/docs-theme/styles';
 
 :root {
   --logo-width: 100px;
   --font-mono: 'Roboto Mono';
+
+  --note-icon-color: var(--violet-11);
+  --code-bg-color: var(--violet-a3);
+  --code-text-color: var(--violet-a12);
+  --sidebar-active-link-bg-color: var(--violet-a6);
+  --sidebar-active-link-text-color: var(--violet-12);
+  --sidebar-loading-link-bg-color: var(--violet-a3);
+  --aside-active-link-text-color: var(--violet-11);
+  --pre-tabs-active-border-color: var(--violet-10);
+
+  --disclosure-wrapper-bg-color: var(--mauve-a3);
+  --disclosure-wrapper-border-color: var(--mauve-6);
+}
+
+html.dark {
+  --note-icon-color: var(--violet-11);
+  --code-bg-color: var(--violet-a3);
+  --code-text-color: var(--violet-a12);
+  --pre-title-border-color: var(--mauve-a3);
+  --sidebar-active-link-text-color: var(--violet-12);
+  --sidebar-active-link-bg-color: var(--violet-a5);
+  --sidebar-loading-link-bg-color: var(--violet-a7);
+  --aside-active-link-text-color: var(--violet-11);
+  --pre-tabs-active-border-color: var(--violet-a10);
+
+  --disclosure-wrapper-bg-color: var(--mauve-3);
+  --disclosure-wrapper-border-color: var(--mauve-5);
 }
 
 .markdown pre span[style="color: #545454;"] {
@@ -18,7 +64,7 @@
 }
 
 .login_strip {
-  background: var(--mauve4);
+  background: var(--mauve-4);
   flex: 1;
 }
 
@@ -52,7 +98,7 @@
 .login_message .button.primary {
   display: block;
   margin-top: 30px;
-  background-color: var(--violet10);
+  background-color: var(--violet-10);
   color: var(--violet1);
   padding: 14px 18px;
   font-size: 16px;
@@ -61,8 +107,8 @@
 }
 
 html.dark .login_message .button.primary {
-  background-color: var(--violet6);
-  color: var(--violet12);
+  background-color: var(--violet-6);
+  color: var(--violet-12);
 }
 
 .login_message .document_errors_item {
@@ -74,8 +120,8 @@ html.dark .login_message .button.primary {
 }
 
 .markdown .badge {
-  background-color: var(--violet6);
-  color: var(--violet11);
+  background-color: var(--violet-5);
+  color: var(--violet-11);
   border-radius: 10px;
   font-size: 12px;
   top: -2px;
@@ -99,7 +145,7 @@ html.dark .login_message .button.primary {
   text-align: center;
   font-size: 13px;
   padding: 2px 0;
-  background-color: var(--mauve4);
+  background-color: var(--mauve-4);
 }
 
 .table_container + blockquote *:last-child {

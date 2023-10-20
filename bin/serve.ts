@@ -12,8 +12,8 @@
 import 'reflect-metadata'
 import { Ignitor } from '@adonisjs/core'
 import { Env } from '@adonisjs/core/env'
-import { defineConfig } from '@adonisjs/ally'
 import app from '@adonisjs/core/services/app'
+import { defineConfig, services } from '@adonisjs/ally'
 import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
 import { defineConfig as httpConfig } from '@adonisjs/core/http'
 
@@ -47,13 +47,12 @@ const IMPORTER = (filePath: string) => {
  * Ally configuration
  */
 const allyConfig = defineConfig({
-  github: {
-    driver: 'github',
+  github: services.github({
     clientId: env.get('GITHUB_CLIENT_ID'),
     clientSecret: env.get('GITHUB_CLIENT_SECRET'),
     callbackUrl: env.get('GITHUB_CALLBACK_URL'),
     scopes: ['read:user'],
-  },
+  }),
 })
 declare module '@adonisjs/ally/types' {
   interface SocialProviders extends InferSocialProviders<typeof allyConfig> {}

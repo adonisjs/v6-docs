@@ -13,6 +13,7 @@ import 'reflect-metadata'
 import { Ignitor } from '@adonisjs/core'
 import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
 import { defineConfig as httpConfig } from '@adonisjs/core/http'
+import { defineConfig, services } from '@adonisjs/ally'
 
 /**
  * URL to the application root. AdonisJS need it to resolve
@@ -29,6 +30,18 @@ const IMPORTER = (filePath: string) => {
     return import(new URL(filePath, APP_ROOT).href)
   }
   return import(filePath)
+}
+
+const allyConfig = defineConfig({
+  github: services.github({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+    scopes: ['read:user'],
+  }),
+})
+declare module '@adonisjs/ally/types' {
+  interface SocialProviders extends InferSocialProviders<typeof allyConfig> {}
 }
 
 /**
@@ -68,10 +81,7 @@ const ignitor = new Ignitor(APP_ROOT, { importer: IMPORTER })
             },
           },
         },
-        ally: {
-          services: {},
-          driversInUse: new Set(),
-        },
+        ally: allyConfig,
         vite: viteDefineConfig({
           assetsUrl: '/assets',
           buildDirectory: 'dist/assets',

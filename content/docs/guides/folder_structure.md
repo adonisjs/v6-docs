@@ -23,6 +23,7 @@ The following configuration options are required for AdonisJS internals to work 
   "compilerOptions": {
     "module": "NodeNext",
     "isolatedModules": true,
+    "declaration": false,
     "outDir": "./build",
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -46,6 +47,7 @@ The following import aliases are pre-configured within the `package.json` file. 
     "#middleware/*": "./app/middleware/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
     "#models/*": "./app/models/*.js",
+    "#factories/*": "./database/factories/*.js",
     "#services/*": "./app/services/*.js",
     "#listeners/*": "./app/listeners/*.js",
     "#events/*": "./app/events/*.js",
@@ -68,6 +70,7 @@ In order for code editors to autocomplete imports using import aliases, you will
       "#middleware/*": ["./app/middleware/*.js"],
       "#exceptions/*": ["./app/exceptions/*.js"],
       "#models/*": ["./app/models/*.js"],
+      "#factories/*": ["./database/factories/*.js"],
       "#services/*": ["./app/services/*.js"],
       "#listeners/*": ["./app/listeners/*.js"],
       "#events/*": ["./app/events/*.js"],
@@ -190,9 +193,8 @@ Learn more about [configuration management](./config.md).
 ## The `types` directory
 
 The `types` directory is the house for the TypeScript interfaces or types used within your application. 
-We created a few files required by the framework and installed packages inside this directory (make sure you do not delete existing files).
 
-You can create additional files in this directory to store the interfaces or types needed by your application.
+The directory is empty by default, however, you can create files and folders within the `types` directory to define custom types and interfaces.
 
 ```
 ├── types
@@ -221,6 +223,8 @@ The `tmp` directory must be ignored by the `.gitignore` rules, and you should no
 ## The `tests` directory
 
 The `tests` directory organizes your application tests. Further, sub-directories are created for `unit` and `functional` tests.
+
+See also: [Testing](../testing/introduction.md)
 
 ```
 ├── tests

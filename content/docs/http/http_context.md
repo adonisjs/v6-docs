@@ -168,7 +168,7 @@ export default class UsersController {
 
 ## HTTP Context properties
 
-Following is the list of properties may can access through the HTTP context. As you install new packages, they may add additional properties to the context.
+Following is the list of properties you can access through the HTTP context. As you install new packages, they may add additional properties to the context.
 
 <dl>
 <dt>
@@ -263,7 +263,7 @@ ctx.auth
 
 <dd>
 
-Reference to an instance of the [Auth class](). The property is condtibuted by the `@adonisjs/auth` package.
+Reference to an instance of the [Auth class](). The property is contributed by the `@adonisjs/auth` package.
 
 </dd> -->
 
@@ -299,7 +299,7 @@ ctx.bouncer
 
 <dd>
 
-Reference to an instance of the [Bouncer class](). The property is condtibuted by the `@adonisjs/bouncer` package.
+Reference to an instance of the [Bouncer class](). The property is contributed by the `@adonisjs/bouncer` package.
 
 </dd> -->
 
@@ -333,15 +333,26 @@ HttpContext.getter('property', function (this: HttpContext) {
 })
 ```
 
-Since the macros and getters are added at runtime, you must inform TypeScript about their types.
+Since the macros and getters are added at runtime, you must inform TypeScript about their types using module augmentation.
 
 ```ts
-// title: types/http_context.ts
+import { HttpContext } from '@adonisjs/core/http'
+
+// insert-start
 declare module '@adonisjs/core/http' {
   export interface HttpContext {
-    property: ValueType
+    aMethod: () => ValueType
+    aProperty: ValueType
   }
 }
+// insert-end
+
+HttpContext.macro('aMethod', function (this: HttpContext) {
+  return value
+}
+HttpContext.getter('aProperty', function (this: HttpContext) {
+  return value
+})
 ```
 
 ## Creating dummy context during tests
@@ -365,4 +376,12 @@ import testUtils from '@adonisjs/core/services/test_utils'
 createServer((req, res) => {
   const ctx = testUtils.createHttpContext({ req, res })
 })
+```
+
+### Using the HttpContext factory
+The `testUtils` service is only available inside an AdonisJS application; therefore, if you are building a package and need access to a fake HTTP context, you may use the [HttpContextFactory](https://github.com/adonisjs/http-server/blob/next/factories/http_context.ts#L30) class.
+
+```ts
+import { HttpContextFactory } from '@adonisjs/core/factories/http'
+const ctx = new HttpContextFactory().create()
 ```

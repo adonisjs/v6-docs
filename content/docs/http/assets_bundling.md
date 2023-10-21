@@ -15,17 +15,17 @@ Vite comes pre-configured with the [web starter kit](../guides/installation.md#w
 
 ```sh
 // title: npm
-npm i @adonisjs/vite@next
+npm i @adonisjs/vite
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/vite@next
+yarn add @adonisjs/vite
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/vite@next
+pnpm add @adonisjs/vite
 ```
 
 :::

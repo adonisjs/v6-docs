@@ -68,21 +68,19 @@ The `@adonisjs/ally` package configuration is stored inside the `config/ally.ts`
 See also: [Config stub](https://github.com/adonisjs/ally/blob/next/stubs/config.stub)
 
 ```ts
-import { defineConfig } from '@adonisjs/ally'
+import { defineConfig, services } from '@adonisjs/ally'
 
 defineConfig({
-  github: {
-    driver: 'github',
+  github: services.github({
     clientId: env.get('GITHUB_CLIENT_ID')!,
     clientSecret: env.get('GITHUB_CLIENT_SECRET')!,
     callbackUrl: '',
-  },
-  twitter: {
-    driver: 'twitter',
+  }),
+  twitter: services.twitter({
     clientId: env.get('TWITTER_CLIENT_ID')!,
     clientSecret: env.get('TWITTER_CLIENT_SECRET')!,
     callbackUrl: '',
-  },
+  }),
 })
 ```
 

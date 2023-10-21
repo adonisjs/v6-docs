@@ -435,6 +435,12 @@ You may use the `router.on.render` method if you have a route handler that only 
 
 The render method accepts the name of the edge template to render. Optionally, you can pass the template data as the second argument.
 
+:::warning
+
+The `route.on.render` method only exists when you have configured the [Edge service provider](./views_and_templates.md#using-edge)
+
+:::
+
 ```ts
 import router from '@adonisjs/core/services/router'
 

@@ -181,7 +181,7 @@ The [HttpExceptionHandler](./exception_handling.md) will convert the validation 
 
 - Server rendered forms using the [session package](./session.md) will receive the errors via [session flash messages](./session.md#validation-errors-and-flash-messages).
 
-- All other requests will receive errors back as text.
+- All other requests will receive errors back as plain text.
 
 ## The request.validateUsing method
 The recommended way to perform validations inside controllers is to use the `request.validateUsing` method. When using `request.validateUsing` method, you do not have do define the validation data explicitly; the request body and files are passed as data to the validator.
@@ -350,3 +350,4 @@ vine.errorReporter = () => new JSONAPIErrorReporter()
 - Learn more about using [custom messages](https://vinejs.dev/docs/custom_error_messages) in VineJS.
 - Learn more about using [error reporters](https://vinejs.dev/docs/error_reporter) in VineJS.
 - Read the VineJS [schema API](https://vinejs.dev/docs/schema_101) documentation.
+- Use [i18n translations](../digging_deeper/i18n.md#translating-validation-messages) to define validation error messages.

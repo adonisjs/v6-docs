@@ -34,20 +34,23 @@ The configuration for hashing is stored inside the `config/hash.ts` file. The de
 
 ```ts
 // title: config/hash.ts
-import { defineConfig } from '@adonisjs/core/hash'
+import { defineConfig, drivers } from '@adonisjs/core/hash'
 
 export default defineConfig({
   default: 'scrypt',
-  
+
   list: {
-    scrypt: {      
-    },
-    
-    argon: {
-    },
-    
-    bcrypt: {
-    },
+    scrypt: drivers.scrypt(),
+
+    /**
+     * Uncomment when using argon2
+       argon: drivers.argon2(),
+     */
+
+    /**
+     * Uncomment when using bcrypt
+       bcrypt: drivers.bcrypt(),
+     */
   }
 })
 ```
@@ -63,15 +66,14 @@ npm i argon2
 We configure the argon driver with secure defaults but feel free to tweak the configuration options per your application requirements. Following is the list of available options.
 
 ```ts
-{
+export default defineConfig({
   // highlight-start
   // Make sure to update the default driver to argon
   default: 'argon',
   // highlight-end
 
   list: {
-    argon: {
-      driver: 'argon2',
+    argon: drivers.argon2({
       version: 0x13, // hex code for 19
       variant: 'id',
       iterations: 3,
@@ -79,9 +81,9 @@ We configure the argon driver with secure defaults but feel free to tweak the co
       parallelism: 4,
       saltSize: 16,
       hashLength: 32,
-    }
+    })
   }
-}
+})
 ```
 
 <dl>
@@ -197,21 +199,20 @@ npm i bcrypt
 Following is the list of available configuration options.
 
 ```ts
-{
+export default defineConfig({
   // highlight-start
   // Make sure to update the default driver to bcrypt
   default: 'bcrypt',
   // highlight-end
 
   list: {
-    bcrypt: {
-      driver: 'bcrypt',
+    bcrypt: drivers.bcrypt({
       rounds: 10,
       saltSize: 16,
       version: '2b'
-    }
+    })
   }
-}
+})
 ```
 
 <dl>
@@ -263,24 +264,23 @@ The version for the hashing algorithm. The supported values are `2a` and `2b`. U
 The scrypt driver uses the Node.js crypto module for computing the password hash. The configuration options are the same as those accepted by the [Node.js `scrypt` method](https://nodejs.org/dist/latest-v19.x/docs/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback).
 
 ```ts
-{
+export default defineConfig({
   // highlight-start
   // Make sure to update the default driver to scrypt
   default: 'scrypt',
   // highlight-end
 
   list: {
-    scrypt: {
-      driver: 'scrypt',
+    scrypt: drivers.scrypt({
       cost: 16384,
       blockSize: 8,
       parallelization: 1,
       saltSize: 16,
       maxMemory: 33554432,
       keyLength: 64
-    }
+    })
   }
-}
+})
 ```
 
 ## Using model hooks to hash password
@@ -382,72 +382,23 @@ test('get users list', async ({ client }) => {
 ```
 
 ## Creating a custom hash driver
-AdonisJS allows the application developers to reference hash drivers using a string-based name, like, `argon2`, `bcrypt`, `scrypt`, and so on. Behind the scenes, we map these unique names to their implementation and use them for hashing passwords.
-
-The implementation for the hash drivers is stored in a singleton collection called `driversList`. Therefore, if you create a custom driver, you must register it with this collection.
-
-The code for registering a driver must be written inside a service provider so that you can use the IoC container to look up dependencies the hash driver might need.
+A hash driver must implement the [HashDriverContract](https://github.com/adonisjs/hash/blob/next/src/types.ts#L13) interface. Also, the official Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize the hash output for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/next/src/drivers/bcrypt.ts) to make and verify hashes.
 
 ```ts
-import { ApplicationService } from '@adonisjs/core/types'
-// highlight-start
-import { Pbkdf2Driver } from './pbkdf2_driver.js'
-import { driversList } from '@adonisjs/core/hash'
-// highlight-end
+import {
+  HashDriverContract,
+  ManagerDriverFactory
+} from '@adonisjs/core/types/hash'
 
-export default class AppProvider {
-  constructor(protected app: ApplicationService) {
-  }
-
-  async boot() {
-    // highlight-start
-    driversList.extend('pbkdf2', (config) => {
-      return new Pbkdf2Driver(config)
-    })
-    // highlight-end
-  }
-}
-```
-
-The `driversList.extend` method accepts a unique name for the driver and a callback method to create an instance of the driver. The callback method receives a user-defined config as the only argument.
-
-If your driver needs additional dependencies, you can resolve them from the container as follows.
-
-```ts
-async boot() {
-  const router = await this.app.container.make('router')
-
-  driversList.extend('pbkdf2', (config) => {
-    return new Pbkdf2Driver(config, router)
-  })
-}
-```
-
-### Registering driver types
-You must notify the TypeScript compiler about the newly added driver and its types. The types must be registered with the `HashDriversList` interface.
-
-You can write the following code at the top of the service provider file.
-
-```ts
-import { Pbkdf2Driver, PbkdfConfig } from './pbkdf2_driver.js'
-
-declare module '@adonisjs/core/types' {
-  interface HashDriversList {
-    pbkdf2: (config: PbkdfConfig) => Pbkdf2Driver
-  }
-}
-```
-
-### Driver implementation
-A hash driver must implement the `HashDriverContract` interface. Also, the official Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize a hash for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/next/src/drivers/bcrypt.ts) to make and verify hashes.
-
-```ts
-import { HashDriverContract } from '@adonisjs/core/types/hash'
-
+/**
+ * Config accepted by the hash driver
+ */
 export type PbkdfConfig = {
-
 }
 
+/**
+ * Driver implementation
+ */
 export class Pbkdf2Driver implements HashDriverContract {
   constructor(public config: PbkdfConfig) {
   }
@@ -482,18 +433,40 @@ export class Pbkdf2Driver implements HashDriverContract {
   needsReHash(value: string): boolean {
   }
 }
+
+/**
+ * Factory function to reference the driver
+ * inside the config file.
+ */
+export function pbkdf2Driver (config: PbkdfConfig): ManagerDriverFactory {
+  return () => {
+    return new Pbkdf2Driver(config)
+  }
+}
 ```
 
+In the above code example, we export the following values.
+
+- `PbkdfConfig`: TypeScript type for the configuration you want to accept.
+
+- `Pbkdf2Driver`: Driver's implementation. It must adhere to the `HashDriverContract` interface.
+
+- `pbkdf2Driver`: Finally, a factory function to lazily create an instance of the driver.
+
 ### Using the driver
-Once the driver has been registered with the `driversList` collection, you can use its name within the config file as follows.
+
+Once the implementation is completed, you can reference the driver inside the config file using the `pbkdf2Driver` factory function.
 
 ```ts
+// title: config/hash.ts
+import { defineConfig } from '@adonisjs/core/hash'
+import { pbkdf2Driver } from 'my-custom-package'
+
 export default defineConfig({
   list: {
-    newHasher: {
-      driver: 'pbkdf2',
-      // ...rest of the config goes here
-    },
+    pbkdf2: pbkdf2Driver({
+      // config goes here
+    }),
   }
 })
 ```

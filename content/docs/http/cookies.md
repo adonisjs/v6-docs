@@ -39,7 +39,7 @@ router.delete('cart', async ({ request, response }) => {
 
 ## Configuration
 
-The default configuration for setting cookies is defined inside the `config/app.ts` file. Feel free to tweak the options as per your application requirement.
+The default configuration for setting cookies is defined inside the `config/app.ts` file. Feel free to tweak the options as per your application requirements.
 
 ```ts
 http: {
@@ -106,7 +106,7 @@ response.cookie('visits', new Date())
 
 ## Signed cookies
 
-The cookies set using the `response.cookie` method are signed. A signed cookie is tamper-proof, meaning changing the cookie contents will invalidate its signature, and the cookie will be ignored.
+The cookies set using the `response.cookie` method are signed. A signed cookie is tamper-proof, meaning changing its contents will invalidate its signature, and the cookie will be ignored.
 
 The cookies are signed using the `appKey` defined inside the `config/app.ts` file.
 
@@ -184,3 +184,10 @@ request.plainCookie('token', {
   encoded: false
 })
 ```
+
+## Setting cookies during tests
+The following guides cover the usage of cookies when writing tests.
+
+- Defining cookies with [Japa API client](../testing/http_tests.md#defining-cookies).
+- Defining cookie with [Japa browser client](../testing/browser_tests.md#readingwriting-cookies).
+- Creating cookie header using the [CookieClient]().

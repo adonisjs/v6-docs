@@ -5,7 +5,9 @@ Using the encryption service, you may encrypt and decrypt values in your applica
 The `encryption` service uses the `appKey` stored inside the `config/app.ts` file as the secret to encrypt the values.
 
 - It is recommended to keep the `appKey` secure and inject it into your application using [environment variables](../guides/env.md). Anyone with access to this key can decrypt values.
+
 - The key should be at least 16 characters long and have a cryptographically secure random value. You may generate the key using the `node ace generate:key` command.
+
 - If you decide to change the key later, you will not be able to decrypt existing values. This will result in invalidating existing cookies and user sessions. 
 
 ## Encrypting values

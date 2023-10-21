@@ -2,17 +2,17 @@
 
 You can manage user sessions inside your AdonisJS application using the `@adonisjs/session` package. The session package provides a unified API for storing session data across different storage providers. 
 
-**Following is the list of the bundled storage drivers.**
+**Following is the list of the bundled stores.**
 
-- `cookie`: The session data is stored inside an encrypted cookie. The cookie driver works great with multi-server deployments since the data is stored with the client.
+- `cookie`: The session data is stored inside an encrypted cookie. The cookie store works great with multi-server deployments since the data is stored with the client.
 
-- `file`: The session data is saved inside a file on the server. The file driver cannot scale to multi-server deployments unless you implement sticky sessions with the load balancer.
+- `file`: The session data is saved inside a file on the server. The file store can only scale to multi-server deployments if you implement sticky sessions with the load balancer.
 
-- `redis`: The session data is stored inside a Redis database. The redis driver is recommended for apps working with large volumes of session data and can scale to multi-server deployments.
+- `redis`: The session data is stored inside a Redis database. The redis store is recommended for apps with large volumes of session data and can scale to multi-server deployments.
 
-- `memory`: The session data is stored within a global memory store. The memory driver is used during testing.
+- `memory`: The session data is stored within a global memory store. The memory store is used during testing.
 
-Alongside the inbuilt storage drivers, you can also create and [register custom session drivers](#creating-a-custom-session-driver).
+Alongside the inbuilt backend stores, you can also create and [register custom session stores](#creating-a-custom-session-store).
 
 ## Installation
 Install the package from the npm packages registry using one of the following commands.
@@ -55,9 +55,9 @@ node ace configure @adonisjs/session
     }
     ```
 
-2. Creates the `config/session.ts` file.
+2. Create the `config/session.ts` file.
 
-3. Defines the following environment variables and their validations. 
+3. Define the following environment variables and their validations. 
 
     ```dotenv
     SESSION_DRIVER=cookie
@@ -79,34 +79,39 @@ The configuration for the session package is stored inside the `config/session.t
 ```ts
 import env from '#start/env'
 import app from '@adonisjs/core/services/app'
-import { defineConfig } from '@adonisjs/session'
+import { defineConfig, stores } from '@adonisjs/session'
 
 export default defineConfig({
+  age: '2h',
   enabled: true,
   cookieName: 'adonis-session',
   clearWithBrowser: false,
-  age: '2h',
-  driver: env.get('SESSION_DRIVER'),
-
-  /**
-   * Cookie driver and session id cookie
-   * settings
-   */
   cookie: {
     path: '/',
     httpOnly: true,
     sameSite: false,
   },
 
-  // File driver settings
-  file: {
-    location: app.tmpPath('sessions'),
-  },
+  store: env.get('SESSION_DRIVER'),
+  stores: {
+    cookie: stores.cookie(),
 
-  // Redis driver settings
-  redis: {
-    connection: 'main'
-  },
+    /**
+     * Enable when using file store
+     *
+      file: stores.file({
+        location: app.tmpPath('sessions')
+      }),
+     */
+
+    /**
+     * Enable when using the redis store
+     *
+      redis: stores.redis({
+        connection: 'main'
+      })
+     */
+  }
 })
 ```
 
@@ -133,7 +138,7 @@ Enable or disable the middleware temporarily without removing it from the middle
 
 <dd>
 
-The cookie name for storing the session id. Feel free to rename it.
+The cookie name for storing the session ID. Feel free to rename it.
 
 </dd>
 
@@ -145,7 +150,7 @@ The cookie name for storing the session id. Feel free to rename it.
 
 <dd>
 
-When set to true, the session id cookie will be removed after the user closes the browser window. This cookie is technically known as [session cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#define_the_lifetime_of_a_cookie).
+When set to true, the session ID cookie will be removed after the user closes the browser window. This cookie is technically known as [session cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#define_the_lifetime_of_a_cookie).
 
 </dd>
 
@@ -163,59 +168,116 @@ The `age` property controls the validity of session data without any user activi
 
 <dt>
 
-  driver
-
-</dt>
-
-<dd>
-
-Define the driver you want to use for storing the session data. It can be a fixed value or read from the environment variables.
-
-</dd>
-
-<dt>
-
   cookie
 
 </dt>
 
 <dd>
 
-Control session id cookie attributes. See also [cookie configuration](./cookies.md#configuration).
+Control session ID cookie attributes. See also [cookie configuration](./cookies.md#configuration).
 
 </dd>
 
 <dt>
 
-  file
+store
 
 </dt>
 
 <dd>
 
-Define the configuration for the `file` driver. The object accepts the `location` path for storing the session files.
+Define the store you want to use for storing the session data. It can be a fixed value or read from the environment variables.
+
+</dd>
+
+<dt>
+
+  stores
+
+</dt>
+
+<dd>
+
+The `stores` object is used to configure one or multiple backend stores. 
+
+Most applications will use a single store. However, you can configure multiple stores and switch between them based on the environment in which your application is running.
+
+</dd>
+
+</dl>
+
+---
+
+### Stores configuration
+Following is the list of the backend stores bundled with the `@adonisjs/session` package.
+
+```ts
+import app from '@adonisjs/core/services/app'
+import { defineConfig, stores } from '@adonisjs/session'
+
+export default defineConfig({
+  // highlight-start
+  stores: {
+    cookie: stores.cookie(),
+
+    file: stores.file({
+      location: app.tmpPath('sessions')
+    }),
+
+    redis: stores.redis({
+      connection: 'main'
+    })
+  }
+  // highlight-end
+})
+```
+
+<dl>
+
+<dt>
+
+  stores.cookie
+
+</dt>
+
+<dd>
+
+The `cookie` store encrypts and stores the session data inside a cookie.
 
 </dd>
 
 
 <dt>
 
-  redis
+  stores.file
 
 </dt>
 
 <dd>
 
-Define the configuration for the `redis` driver. The object accepts the `connection` to use for storing the session data.
+Define the configuration for the `file` store. The method accepts the `location` path for storing the session files.
 
-Make sure to first install and configure the [@adonisjs/redis](../database/redis.md) package before using the `redis` driver.
+</dd>
+
+
+<dt>
+
+  stores.redis
+
+</dt>
+
+<dd>
+
+Define the configuration for the `redis` store. The method accepts the `connection` name for storing the session data.
+
+Make sure to first install and configure the [@adonisjs/redis](../database/redis.md) package before using the `redis` store.
 
 </dd>
 
 </dl>
 
 ## Basic example
-Once you have registered the session middleware, you can access the `session` property from the [HTTP Context](./http_context.md). The session property exposes the API for reading and writing data to the session store.
+Once the session package has been registered, you can access the `session` property from the [HTTP Context](./http_context.md). The session property exposes the API for reading and writing data to the session store.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -359,24 +421,24 @@ session.clear()
 ```
 
 ## Session lifecycle
-AdonisJS creates an empty session store and assigns it to a unique session id on the first HTTP request, even if the request/response lifecycle doesn't interact with sessions.
+AdonisJS creates an empty session store and assigns it to a unique session ID on the first HTTP request, even if the request/response lifecycle doesn't interact with sessions.
 
-On every subsequent request, we update the `maxAge` property of the session id cookie to ensure it doesn't expire. Also, the session driver is notified about the changes (if any) to update and persist the changes.
+On every subsequent request, we update the `maxAge` property of the session ID cookie to ensure it doesn't expire. Also, the session store is notified about the changes (if any) to update and persist the changes.
 
-You can access the unique session id using the `sessionId` property. The session id for a visitor remains the same until it expires.
+You can access the unique session ID using the `sessionId` property. The session ID for a visitor remains the same until it expires.
 
 ```ts
 console.log(session.sessionId)
 ```
 
 ### Re-generating session id
-Re-generating session id helps prevent a [session fixation](https://owasp.org/www-community/attacks/Session_fixation) attack in your application. You must re-generate the session id when associating an anonymous session with a logged-in user.
+Re-generating session ID helps prevent a [session fixation](https://owasp.org/www-community/attacks/Session_fixation) attack in your application. You must re-generate the session ID when associating an anonymous session with a logged-in user.
 
-The `@adonisjs/auth` package re-generates the session id automatically; therefore, you do not have to do it manually.
+The `@adonisjs/auth` package re-generates the session ID automatically; therefore, you do not have to do it manually.
 
 ```ts
 /**
- * New session id will be assigned at
+ * New session ID will be assigned at
  * the end of the request
  */
 session.regenerate()
@@ -543,7 +605,7 @@ emitter.on('session:committed', ({ session }) => {
 ```
 
 ### session\:migrated
-The event is emitted when a new session id is generated using the `.regenerate()` method.
+The event is emitted when a new session ID is generated using the `.regenerate()` method.
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -554,108 +616,43 @@ emitter.on('session:migrated', ({ session, fromSessionId, toSessionId }) => {
 })
 ```
 
-## Creating a custom session driver
-AdonisJS allows application developers to reference session drivers using a string-based name, like `file`, `cookie`, `redis`, and so on. Behind the scenes, we map these unique names to their implementation and use them for storing session data.
-
-The implementation for the session drivers is stored in a singleton collection called `driversList`. Therefore, if you create a custom driver, you must register it with this collection.
-
-The code for registering a driver must be written inside a service provider so you can use the IoC container to look up dependencies the session driver might need.
-
-```ts
-import { ApplicationService } from '@adonisjs/core/types'
-import { driversList } from '@adonisjs/session'
-
-export default class AppProvider {
-  constructor(protected app: ApplicationService) {
-  }
-
-  async boot() {
-    const sessionConfig = this.app.config.get<any>('session')
-
-    /**
-     * Register the driver only when the app is using it
-     */
-    if (sessionConfig.driver === 'mongodb') {
-      const { MongoDBDriver } = await import('./mongodb_driver.js')
-      driversList.extend('mongodb', (config, ctx) => {
-        return new MongoDBDriver(config.mongodb)
-      })
-    }
-  }
-}
-```
-
-The `driversList.extend` accepts a unique name for the driver and a callback method that returns an instance of the driver class. The callback method receives the following two parameters.
-
-- `config`: Reference to the session config stored inside the `config/session.ts` file.
-- `ctx`: Reference to the [HTTP context](./http_context.md).
-
-If your driver needs additional dependencies, you can resolve them from the container as follows.
-
-```ts
-async boot() {
-  const encryption = await this.app.container.make('encryption')
-
-  driversList.extend('mongodb', (config, ctx) => {
-    return new MongoDBDriver(config.mongodb, encryption)
-  })
-}
-```
-
-### Registering driver types
-You must notify the TypeScript compiler about the newly added driver and its types. The types must be registered with the `SessionDriversList` interface.
-
-You can write the following code at the top of the service provider file.
-
-```ts
-import type { HttpContext } from '@adonisjs/core/http'
-import type { MongoDBDriver, MongoDBConfig } from './mongodb_driver.js'
-
-declare module '@adonisjs/session/types' {
-  interface SessionDriversList {
-    mongodb: (config: SessionConfig, ctx: HttpContext) => MongoDBDriver
-  }
-
-  /**
-   * Update SessionConfig type to also accept the config for
-   * the mongodb driver.
-   */
-  interface SessionConfig {
-    mongodb?: MongoDBConfig
-  }
-}
-```
-
-### Driver implementation
-A session driver must implement the `SessionDriverContract` interface.
+## Creating a custom session store
+Session stores must implement the [SessionStoreContract](https://github.com/adonisjs/session/blob/next/src/types.ts#L23C18-L23C38) interface and define the following methods.
 
 ```ts
 import {
   SessionData,
-  SessionDriverContract,
+  SessionStoreFactory,
+  SessionStoreContract,
 } from '@adonisjs/session/types'
 
+/**
+ * The config you want to accept
+ */
 export type MongoDBConfig = {}
 
-export class MongoDBDriver implements SessionDriverContract {
+/**
+ * Driver implementation
+ */
+export class MongoDBStore implements SessionStoreContract {
   constructor(public config: MongoDBConfig) {
   }
 
   /**
-   * Returns the session data for a session id. The method
-   * must return null or an object of key-value pair
+   * Returns the session data for a session ID. The method
+   * must return null or an object of a key-value pair
    */
   async read(sessionId: string): Promise<SessionData | null> {
   }
 
   /**
-   * Save the session data against the provided session id
+   * Save the session data against the provided session ID
    */
   async write(sessionId: string, data: SessionData): Promise<void> {
   }
 
   /**
-   * Delete session data for the given session id
+   * Delete session data for the given session ID
    */
   async destroy(sessionId: string): Promise<void> {
   }
@@ -666,19 +663,44 @@ export class MongoDBDriver implements SessionDriverContract {
   async touch(sessionId: string): Promise<void> {
   }
 }
+
+/**
+ * Factory function to reference the store
+ * inside the config file.
+ */
+export function mongoDbStore (config: MongoDbConfig): SessionStoreFactory {
+  return (ctx, sessionConfig) => {
+    return new MongoDBStore(config)
+  }
+}
 ```
 
-The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../digging_deeper/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session drivers](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).
+In the above code example, we export the following values.
 
+- `MongoDBConfig`: TypeScript type for the configuration you want to accept.
 
-## Using the driver
-Once the driver has been registered with the `driversList` collection, you can use its name within the config file as follows.
+- `MongoDBStore`: The store's implementation as a class. It must adhere to the `SessionStoreContract` interface.
+
+- `mongoDbStore`: Finally, a factory function to create an instance of the store for every HTTP request.
+
+### Using the store
+
+Once the store has been created, you can reference it inside the config file using the `mongoDbStore` factory function.
 
 ```ts
 // title: config/session.ts
+import { defineConfig } from '@adonisjs/session'
+import { mongDbStore } from 'my-custom-package'
+
 export default defineConfig({
-  mongodb: {
-    // config goes here
+  stores: {
+    mongodb: mongoDbStore({
+      // config goes here
+    })
   }
 })
 ```
+
+### A note on serializing data
+
+The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../digging_deeper/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session store](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).

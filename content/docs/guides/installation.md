@@ -1,13 +1,13 @@
 # Installation
 
-Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. AdonisJS needs `Node.js >= 18`.
+Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. AdonisJS needs `Node.js >= 20`.
 
 You may install Node.js using either the [official installers](https://nodejs.org/en/download/) or [Volta](https://docs.volta.sh/guide/getting-started). Volta is a cross-platform package manager to install and run multiple Node.js versions on your computer.
 
 ```sh
 // title: Verify Node.js version
 node -v
-# v18.16.0
+# v21.0.0
 ```
 
 ## Creating a new application
@@ -52,7 +52,7 @@ The Web starter kit is tailored for creating traditional server renderer web app
 
 The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.dev) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
 
-Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
+Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like an SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
 The web starter kit comes with the following packages.
 
@@ -69,7 +69,7 @@ The web starter kit comes with the following packages.
 </tr>
 <tr>
 <td><code>edge.js</code></td>
-<td>The <a href="https://edge.adonisjs.com">edge</a> template engine for composing HTML pages.</td>
+<td>The <a href="https://edgejs.dev">edge</a> template engine for composing HTML pages.</td>
 </tr>
 <tr>
 <td><code>@adonisjs/lucid</code></td>

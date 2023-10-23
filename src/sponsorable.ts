@@ -24,6 +24,7 @@ const ALLOWED_USERNAMES = [
   'jason-shq', // via "KeqinHQ"
   'redeyesovo', // via "KeqinHQ"
   'tpoisseau', // via "Zakodium"
+  'tomgobich',
 ]
 
 /**

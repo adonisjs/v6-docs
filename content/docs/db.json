@@ -166,6 +166,36 @@
     "category": "Security"
   },
   {
+    "permalink": "auth/introduction",
+    "title": "Introduction",
+    "contentPath": "./auth/introduction.md",
+    "category": "Auth"
+  },
+  {
+    "permalink": "auth/lucid_user_provider",
+    "title": "Lucid user provider",
+    "contentPath": "./auth/lucid_user_provider.md",
+    "category": "Auth"
+  },
+  {
+    "permalink": "auth/database_user_provider",
+    "title": "Database user provider",
+    "contentPath": "./auth/database_user_provider.md",
+    "category": "Auth"
+  },
+  {
+    "permalink": "auth/session_guard",
+    "title": "Session guard",
+    "contentPath": "./auth/session_guard.md",
+    "category": "Auth"
+  },
+  {
+    "permalink": "auth/custom_auth_guards",
+    "title": "Custom auth guards",
+    "contentPath": "./auth/custom_auth_guards.md",
+    "category": "Auth"
+  },
+  {
     "permalink": "fundamentals/application",
     "redirects": ["guides/application"],
     "title": "Application",

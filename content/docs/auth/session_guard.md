@@ -15,16 +15,14 @@ import { defineConfig, providers } from '@adonisjs/auth'
 import { sessionGuard } from '@adonisjs/auth/session'
 import { InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
 
-const userProvider = providers.lucid({
-  model: () => import('#models/user'),
-  uids: ['email'],
-})
-
 const authConfig = defineConfig({
   default: 'web',
   guards: {
     web: sessionGuard({
-      provider: userProvider,
+      provider: providers.lucid({
+        model: () => import('#models/user'),
+        uids: ['email'],
+      }),
     }),
   },
 })
@@ -54,18 +52,16 @@ import { defineConfig, providers } from '@adonisjs/auth'
 import { sessionGuard } from '@adonisjs/auth/session'
 import { InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
 
-const userProvider = providers.db({
-  table: 'users',
-  id: 'id',
-  passwordColumnName: 'password',
-  uids: ['email']
-})
-
 const authConfig = defineConfig({
   default: 'web',
   guards: {
     web: sessionGuard({
-      provider: userProvider,
+      provider: providers.db({
+        table: 'users',
+        id: 'id',
+        passwordColumnName: 'password',
+        uids: ['email']
+      }),
     }),
   },
 })

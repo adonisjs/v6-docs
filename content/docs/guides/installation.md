@@ -46,7 +46,7 @@ The official starter kits use ES modules and TypeScript. This combination allows
 
 :::
 
-### Web starter kit :span[Not ready yet]{class="badge"}
+### Web starter kit
 
 The Web starter kit is tailored for creating traditional server renderer web apps. Do not let the keyword **"traditional"** discourage you. We recommend this starter kit if you make a web app with limited frontend interactivity.
 

@@ -25,6 +25,7 @@ const ALLOWED_USERNAMES = [
   'redeyesovo', // via "KeqinHQ"
   'tpoisseau', // via "Zakodium"
   'tomgobich',
+  'devoresyah', // via CloudGakkai
 ]
 
 /**

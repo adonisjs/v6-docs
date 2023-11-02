@@ -26,6 +26,7 @@ const ALLOWED_USERNAMES = [
   'tpoisseau', // via "Zakodium"
   'tomgobich',
   'devoresyah', // via CloudGakkai
+  'sinanusluer' // until 1st of December, 2023
 ]
 
 /**

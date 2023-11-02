@@ -20,6 +20,9 @@
 @import '@radix-ui/colors/iris-dark-alpha.css';
 
 @import '@dimerapp/docs-theme/styles';
+@import './cards.css';
+@import './login.css';
+@import './updates.css';
 
 :root {
   --logo-width: 100px;
@@ -55,68 +58,6 @@ html.dark {
 
 .markdown pre span[style="color: #545454;"] {
   color: var(--code-comment-color) !important;
-}
-
-.login_wrapper {
-  height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.login_strip {
-  background: var(--mauve-4);
-  flex: 1;
-}
-
-.login_message {
-  height: 100%;
-  max-width: 680px;
-  display: flex;
-  justify-content: center;
-  padding: 128px 64px;
-}
-
-.login_message .logo_wrapper {
-  margin-bottom: 30px;
-}
-
-.login_message .logo_wrapper svg {
-  height: 50px;
-}
-
-.login_message .login_header h2 {
-  font-size: 42px;
-  font-weight: 600;
-}
-
-.login_message .login_header p {
-  line-height: 1.6;
-  font-size: 18px;
-  margin-top: 20px;
-}
-
-.login_message .button.primary {
-  display: block;
-  margin-top: 30px;
-  background-color: var(--violet-10);
-  color: var(--violet1);
-  padding: 14px 18px;
-  font-size: 16px;
-  border-radius: 6px;
-  font-weight: 500;
-}
-
-html.dark .login_message .button.primary {
-  background-color: var(--violet-6);
-  color: var(--violet-12);
-}
-
-.login_message .document_errors_item {
-  line-height: 1.4;
-}
-
-.login_message .document_errors_item a {
-  text-decoration: underline;
 }
 
 .markdown .badge {

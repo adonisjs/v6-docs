@@ -10,6 +10,7 @@
 */
 
 import 'reflect-metadata'
+import '@adonisjs/ally/types'
 import { Ignitor } from '@adonisjs/core'
 import { Env } from '@adonisjs/core/env'
 import app from '@adonisjs/core/services/app'
@@ -54,9 +55,6 @@ const allyConfig = defineConfig({
     scopes: ['read:user'],
   }),
 })
-declare module '@adonisjs/ally/types' {
-  interface SocialProviders extends InferSocialProviders<typeof allyConfig> {}
-}
 
 /**
  * Error messages to display during Github OAuth process

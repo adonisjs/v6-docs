@@ -20,9 +20,6 @@ const ALLOWED_USERNAMES = [
   'joshmanders',
   'pieterletsdial',
   'cloleb', // via "AlekStudioIntellisoft"
-  'shiny', // via "KeqinHQ"
-  'jason-shq', // via "KeqinHQ"
-  'redeyesovo', // via "KeqinHQ"
   'tpoisseau', // via "Zakodium"
   'tomgobich',
   'devoresyah', // via CloudGakkai

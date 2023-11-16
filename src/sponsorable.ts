@@ -25,6 +25,9 @@ const ALLOWED_USERNAMES = [
   'devoresyah', // via CloudGakkai
   'sinanusluer', // until 1st of December, 2023
   'melchyore',
+  'bjarkebech', // via good-tape
+  'ymir95', // via good-tape
+  'jstoone', // via good-tape
 ]
 
 /**

@@ -151,3 +151,39 @@ html.dark .login_message .button.primary {
 .table_container + blockquote *:last-child {
   margin: 0;
 }
+
+.markdown .table_container {
+  margin: var(--prose-elements-margin) 0;
+}
+
+.markdown table {
+  margin: 0;
+  --code-font-size: var(--prose-table-font-size);
+}
+
+.disclosure_wrapper {
+  border-radius: var(--rounded-md);
+  margin: var(--prose-elements-margin) 0;
+  background-color: var(--disclosure-wrapper-bg-color);
+  border: 1px solid var(--disclosure-wrapper-border-color);
+}
+
+.disclosure_wrapper .disclosure {
+  border-radius: 0;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid var(--disclosure-wrapper-border-color);
+  background: transparent;
+}
+
+.disclosure_wrapper .disclosure_panel {
+  border-radius: 0;
+}
+
+.disclosure_wrapper .disclosure:last-child {
+  border-bottom: none;
+}
+
+.disclosure_wrapper .disclosure:last-child .disclosure_panel {
+  border-radius: 0 0 7px 7px;
+}

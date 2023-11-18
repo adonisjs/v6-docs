@@ -196,6 +196,36 @@
     "category": "Auth"
   },
   {
+    "permalink": "mail/introduction",
+    "title": "Introduction",
+    "contentPath": "./mail/introduction.md",
+    "category": "Mail"
+  },
+  {
+    "permalink": "mail/message",
+    "title": "Configuring message",
+    "contentPath": "./mail/message.md",
+    "category": "Mail"
+  },
+  {
+    "permalink": "mail/classes",
+    "title": "Class-based mails",
+    "contentPath": "./mail/class_based_mails.md",
+    "category": "Mail"
+  },
+  {
+    "permalink": "mail/fake_mailer",
+    "title": "Fake mailer",
+    "contentPath": "./mail/fake_mailer.md",
+    "category": "Mail"
+  },
+  {
+    "permalink": "mail/custom_transports",
+    "title": "Creating custom transports",
+    "contentPath": "./mail/custom_transports.md",
+    "category": "Mail"
+  },
+  {
     "permalink": "fundamentals/application",
     "redirects": ["guides/application"],
     "title": "Application",
@@ -282,13 +312,6 @@
     "permalink": "logger",
     "title": "Logger",
     "contentPath": "./digging_deeper/logger.md",
-    "category": "Digging Deeper"
-  },
-  {
-    "permalink": "mailer",
-    "title": "Mailer",
-    "draft": true,
-    "contentPath": "./digging_deeper/mailer.md",
     "category": "Digging Deeper"
   },
   {

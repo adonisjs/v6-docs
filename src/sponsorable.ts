@@ -28,6 +28,10 @@ const ALLOWED_USERNAMES = [
   'bjarkebech', // via good-tape
   'ymir95', // via good-tape
   'jstoone', // via good-tape
+  'muqg', // via coddess
+  'petya-', // via coddess
+  'valllentinnaa', // via coddess
+  'kovachevx', // via coddess
 ]
 
 /**

@@ -461,43 +461,33 @@ emitter.fake([UserRegistered, OrderUpdated])
 Calling the `emitter.fake` method multiple times will remove the old fakes.
 
 ### Events assertions
+You may use `assertEmitted`, `assertNotEmitted`, `assertNoneEmitted` and the `assertEmittedCount` methods to write assertions for faked events.
 
-You may use one of the following methods for writing assertions. The `assertEmitted` and `assertNotEmitted` methods accept one of the following values as the first argument.
-
-- The event name. It may be a string value or Symbol.
-- The event class (if you are using class-based events).
-- Or, a callback function that returns `true` if it can find an event.
+The `assertEmitted` and `assertNotEmitted` methods accepts either the event name or the class constructor as the first argument and an optional finder function that must return a boolean to mark the event as emitted.
 
 ```ts
 const events = emitter.fake()
 
 events.assertEmitted('user:registered')
 events.assertNotEmitted(OrderUpdated)
+```
 
-// Assert no events were emitted during the test
+```ts
+// title: With a callback
+events.assertEmitted(OrderUpdated, ({ data }) => {
+  /**
+   * Only consider the event as emitted, if
+   * the orderId matches
+   */
+  return data.order.id === orderId
+})
+```
+
+```ts
+// title: Asserting events count
+// Assert count of a specific event
+events.assertEmittedCount(OrderUpdated, 1)
+
+// Assert no events were emitted
 events.assertNoneEmitted()
-```
-
-### Finding emitted events
-
-Alongside assertions, you may also use the `EventsBuffer` to find or filter events and run manual assertions for the event data. For example:
-
-```ts
-const events = emitter.fake()
-const userRegistered = events.find(({ event }) => {
-  return event === UserRegistered
-})
-
-assert.exists(userRegistered)
-assets.equal(userRegistered.data.email, 'foo@bar.com')
-```
-
-You may use the `events.filter` method to find multiple events. The method returns an array of emitted events.
-
-```ts
-const events = events.find(({ event }) => {
-  return event === UserRegistered || event === OrderUpdated
-})
-
-assert.lengthOf(events, 2)
 ```

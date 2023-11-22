@@ -420,9 +420,12 @@ import emitter from '@adonisjs/core/services/emitter'
 import UserRegistered from '#events/user_registered'
 
 test.group('User signup', () => {
-  test('create a user account', async ({ client }) => {
+  test('create a user account', async ({ client, cleanup }) => {
     // highlight-start
     const events = emitter.fake()
+    cleanup(() => {
+      emitter.restore()
+    })
     // highlight-end
   
     await client
@@ -436,9 +439,6 @@ test.group('User signup', () => {
   // highlight-start
   // Assert the event was emitted
   events.assertEmitted(UserRegistered)
-
-  // Restore fake
-  emitter.restore()
   // highlight-end
 })
 ```

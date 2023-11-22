@@ -362,16 +362,16 @@ app.exceptionsPath()
 // /project_root/app/exceptions
 ```
 
-### mailersPath
+### mailsPath
 
-Returns path to a file inside the mailers directory.
+Returns path to a file inside the mails directory.
 
 ```ts
-app.mailersPath('verify_email.ts')
-// /project_root/app/mailers/verify_email.ts
+app.mailsPath('verify_email.ts')
+// /project_root/app/mails/verify_email.ts
 
-app.mailersPath()
-// /project_root/app/mailers
+app.mailsPath()
+// /project_root/app/mails
 ```
 
 ### middlewarePath

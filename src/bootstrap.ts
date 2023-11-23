@@ -8,12 +8,16 @@
 |
 */
 
+import dayjs from 'dayjs'
 import edge from 'edge.js'
 import uiKit from 'edge-uikit'
 import collect from 'collect.js'
 import { dimer } from '@dimerapp/edge'
 import { readFile } from 'node:fs/promises'
+import { MarkdownFile } from '@dimerapp/markdown'
+import { toHtml } from '@dimerapp/markdown/utils'
 import { RenderingPipeline } from '@dimerapp/edge'
+import relativeTime from 'dayjs/plugin/relativeTime.js'
 import { Collection, Renderer } from '@dimerapp/content'
 import { docsHook, docsTheme } from '@dimerapp/docs-theme'
 
@@ -31,6 +35,9 @@ edge.use(uiKit)
 edge.global('getConfig', async () =>
   JSON.parse(await readFile(new URL('../content/config.json', import.meta.url), 'utf-8'))
 )
+
+dayjs.extend(relativeTime)
+edge.global('dayjs', dayjs)
 
 /**
  * Globally loads the sponsors file
@@ -66,6 +73,25 @@ edge.global('getSections', function (collection: Collection, entry: CollectionEn
       }
     })
     .all()
+})
+
+edge.global('getUpdates', async function (limit?: number) {
+  const dbFileURL = new URL('../content/updates/db.json', import.meta.url)
+  let updates = JSON.parse(await readFile(dbFileURL, 'utf-8'))
+  updates = limit ? updates.slice(0, limit) : updates
+
+  for (let entry of updates) {
+    const md = new MarkdownFile(await readFile(new URL(entry.contentPath, dbFileURL), 'utf-8'), {
+      enableDirectives: false,
+      generateToc: false,
+      allowHtml: false,
+    })
+
+    await md.process()
+    entry.html = toHtml(md).contents
+  }
+
+  return updates
 })
 
 /**

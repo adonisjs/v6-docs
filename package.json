@@ -5,10 +5,12 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "export": "vite build && node --loader=ts-node/esm bin/build.ts",
+    "export": "vite build && npm run download:sponsors && node --loader=ts-node/esm bin/build.ts",
+    "postexport": "copyfiles -u 1 public/* public/**/* dist",
+    "download:sponsors": "node --loader=ts-node/esm bin/download_sponsors.ts",
+    "serve": "node --loader=ts-node/esm bin/serve.ts",
     "start": "node --loader=ts-node/esm bin/serve.ts",
     "build": "npm run export",
-    "serve": "node --loader=ts-node/esm bin/serve.ts",
     "dev": "concurrently \"vite\" \"npm run serve\"",
     "test": "node ace test"
   },
@@ -26,6 +28,7 @@
     "@dimerapp/content": "^4.1.0",
     "@dimerapp/docs-theme": "^3.0.2",
     "@dimerapp/edge": "^4.0.0",
+    "@dimerapp/markdown": "^7.0.3",
     "@docsearch/css": "^3.5.2",
     "@docsearch/js": "^3.5.2",
     "@swc/core": "^1.3.99",
@@ -48,9 +51,11 @@
     "@adonisjs/core": "^6.1.5-29",
     "@adonisjs/static": "^1.0.3-2",
     "@radix-ui/colors": "^3.0.0",
+    "dayjs": "^1.11.10",
     "edge-uikit": "^1.0.0-1",
     "edge.js": "^6.0.0-10",
-    "graphql-request": "^6.1.0"
+    "graphql-request": "^6.1.0",
+    "undici": "^5.27.0"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"

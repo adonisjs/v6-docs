@@ -10,10 +10,11 @@
 */
 
 import 'reflect-metadata'
+import '@adonisjs/ally/types'
 import { Ignitor } from '@adonisjs/core'
+import { defineConfig, services } from '@adonisjs/ally'
 import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
 import { defineConfig as httpConfig } from '@adonisjs/core/http'
-import { defineConfig, services } from '@adonisjs/ally'
 
 /**
  * URL to the application root. AdonisJS need it to resolve
@@ -41,7 +42,7 @@ const allyConfig = defineConfig({
   }),
 })
 declare module '@adonisjs/ally/types' {
-  interface SocialProviders extends InferSocialProviders<typeof allyConfig> {}
+  export interface SocialProviders extends InferSocialProviders<typeof allyConfig> {}
 }
 
 /**

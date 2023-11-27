@@ -69,7 +69,7 @@ The configuration for the CORS middleware is stored inside the `config/cors.ts` 
 ```ts
 import { defineConfig } from '@adonisjs/cors'
 
-export default defineConfig({
+const corsConfig = defineConfig({
   enabled: true,
   origin: true,
   methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
@@ -78,6 +78,8 @@ export default defineConfig({
   credentials: true,
   maxAge: 90,
 })
+
+export default corsConfig
 ```
 
 <dl>

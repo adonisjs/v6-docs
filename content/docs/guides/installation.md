@@ -14,7 +14,7 @@ node -v
 
 You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init), [yarn create](https://classic.yarnpkg.com/en/docs/cli/create) or [pnpm create](https://pnpm.io/tr/next/cli/create). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
 
-During installation, you must select a [starter kit](#starter-kits) for the initial project structure. Optionally, you may also [configure ESLint and Prettier](#configuring-the-development-environment)
+During installation, you must select a [starter kit](#starter-kits) for the initial project structure. Optionally, you may use the `-K` CLI flag to create a project with a [custom starter kit](#bring-your-starter-kit).
 
 :::codegroup
 
@@ -84,6 +84,10 @@ The web starter kit comes with the following packages.
 <td>A set of security primitives to keep your web apps safe from attacks like <strong>CSRF</strong> and <strong>‌ XSS</strong>.</td>
 </tr>
 <tr>
+<td><code>@adonisjs/static</code></td>
+<td>Middleware to serve static assets from the <code>/public</code> directory of your application.</td>
+</tr>
+<tr>
 <td><code>vite</code></td>
 <td><a href="https://vitejs.dev/">Vite</a> is used for compiling the frontend assets.</td>
 </tr>
@@ -102,14 +106,16 @@ In this starter kit:
 
 The API starter kit is configured with session-based authentication. However, if you wish to use tokens-based authentication, you can use the `--tokens-auth` flag.
 
+See also: [Which authentication guard should I use?](../auth/introduction.md#choosing-an-auth-guard)
+
 ```sh
 npm init adonisjs -- --tokens-auth
 ```
 
-### Slim starter kits
+### Slim starter kit
 For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
 
-### Bring your starter kits
+### Bring your starter kit
 Starter kits are pre-built projects hosted with a Git repository provider like Github, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
 
 ```sh
@@ -165,13 +171,11 @@ node ace build --production
 
 ## Configuring the development environment
 
-While AdonisJS takes care of building the end-user applications, you might need additional tools to enjoy the development process and have consistency in your coding style. 
+While AdonisJS takes care of building the end-user applications, you may need additional tools to enjoy the development process and have consistency in your coding style. 
 
-We strongly recommend you to **use [ESLint](https://eslint.org/)** to lint your code **and [Prettier](https://prettier.io)** to re-format your code for consistency.
+We strongly recommend you to **[ESLint](https://eslint.org/)** to lint your code and **[Prettier](https://prettier.io)** to re-format your code for consistency.
 
-During the installation process, AdonisJS will prompt you to configure both ESLint and Prettier. We will set up these tools and their related dependencies if you accept the prompt.
-
-The default configuration uses opinionated presets from the AdonisJS core team. You can learn more about them in the [Tooling config](../fundamentals/tooling_config.md) section of the docs.
+The official starter kits comes pre-configured with both ESLint and Prettier and uses the opinionated presets from the AdonisJS core team. You can learn more about them in the [Tooling config](../fundamentals/tooling_config.md) section of the docs.
 
 Finally, we recommend you install ESLint and Prettier plugins for your code editor so that you have a tighter feedback loop during the application development. Also, you can use the following commands to `lint` and `format` your code from the command line.
 
@@ -189,17 +193,21 @@ npm run format
 ## VSCode extensions
 You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
 
-### AdonisJS Extension
-You can download the [AdonisJS extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) from the VSCode marketplace. Following are some of the highlighted features of the extension.
+### AdonisJS extension
+You may download the [AdonisJS extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) from the VSCode marketplace. Following are some of the highlighted features of the extension.
 
-- Syntax highlighting, autocomplete, and jump to file support for Edge templates.
-- Run [Ace](../ace/introduction.md) commands from the VSCode activity bar.
+- Command palette for [Ace commands](../ace/introduction.md).
+- Migrate and seed your database.
 - View application routes in the sidebar.
-- And some snippets.
+- View documentation within VSCode.
+- Snippets.
 
-### Japa Extension
+### Edge Extension
+The [official extension for Edge](https://marketplace.visualstudio.com/items?itemName=AdonisJS.vscode-edge) provides support for syntax highlighting, autocomplete, go-to templates for Edge templates.
+
+### Japa extension
 Japa is the [testing framework](../testing/introduction.md) used by AdonisJS, and the [Japa extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) allows you to run your tests without leaving your code editor.
 
 - You can click on the code lens to run a specific or all the tests inside a file. The same action can be triggered using keyboard shortcuts.
 - Go to the snapshots file from the test (If using snapshot testing).
-- And some snippets.
+- Snippets.

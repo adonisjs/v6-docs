@@ -2,6 +2,7 @@
   {
     "permalink": "introduction",
     "title": "Introduction",
+    "draft": true,
     "contentPath": "./guides/introduction.md",
     "category": "Getting started"
   },
@@ -410,11 +411,5 @@
     "title": "REPL",
     "contentPath": "./ace/repl.md",
     "category": "Ace command line"
-  },
-  {
-    "permalink": "resources/changelog",
-    "title": "Changelog",
-    "contentPath": "./resources/updates.md",
-    "category": "Resources"
   }
 ]

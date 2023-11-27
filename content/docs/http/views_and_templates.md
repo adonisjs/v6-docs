@@ -13,7 +13,6 @@ The AdonisJS core team has created a framework-agnostic template engine called [
 
 - Edge is simple, modern, and a batteries-included template engine in the Node.js ecosystem.
 - It has support for Components with features like slots and context API.
-- Comes with a headless UI KIT.
 - Integration with Iconify to render SVG icons.
 
 AdonisJS does not force you to use Edge, and you can pick any other template engine of your choice, be it Pug, Nunjucks, and so on.
@@ -218,4 +217,13 @@ Resolve the URL of an asset processed by Vite. Learn more about [referencing ass
 
 ```edge
 <img src="{{ asset('resources/images/hero.jpg') }}" />
+```
+
+### embedImage / embedImageData
+The `embedImage` and the `embedImageData` helpers are added by the [mail](../mail/message.md#embedding-images) package and are only available when rendering a template to send an email.
+
+```edge
+<img src="{{
+  embedImage(app.makePath('assets/hero.jpg'))
+}}" />
 ```

@@ -175,7 +175,15 @@ Also, you do not have to wrap the `validate` method call inside a `try/catch`. B
 ## Error handling
 The [HttpExceptionHandler](./exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
 
-- HTTP requests with `Accept=appliction/json` will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
+:::tip
+
+You might want to peek through the [ExceptionHandler codebase](https://github.com/adonisjs/http-server/blob/next/src/exception_handler.ts#L343-L345) and see how the validation exceptions are converted to an HTTP response.
+
+Also, the session middleware [overwrites the `renderValidationErrorAsHTML` method](https://github.com/adonisjs/session/blob/next/src/session_middleware.ts#L30-L37) and uses flash messages to share the validation errors with the form.
+
+:::
+
+- HTTP requests with `Accept=application/json` will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
 
 - HTTP requests with `Accept=application/vnd.api+json` will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
 
@@ -344,6 +352,11 @@ import { JSONAPIErrorReporter } from '../app/validation_reporters.js'
 
 vine.errorReporter = () => new JSONAPIErrorReporter()
 ```
+
+## Rules contributed by AdonisJS
+Following is the list of VineJS rules contributed by AdonisJS.
+
+- The [`vine.file`](https://github.com/adonisjs/core/blob/next/providers/vinejs_provider.ts) schema type is added by the AdonisJS core package.
 
 ## What's next?
 

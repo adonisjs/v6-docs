@@ -144,7 +144,7 @@ The configuration for the CSRF guard is stored inside the `config/shield.ts` fil
 ```ts
 import { defineConfig } from '@adonisjs/shield'
 
-export default defineConfig({
+const shieldConfig = defineConfig({
   csrf: {
     enabled: true,
     exceptRoutes: [],
@@ -152,6 +152,8 @@ export default defineConfig({
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   },
 })
+
+export default shieldConfig
 ```
 
 <dl>
@@ -241,7 +243,7 @@ The CSP guard is disabled by default. However, we recommend you enable it and co
 ```ts
 import { defineConfig } from '@adonisjs/shield'
 
-export default defineConfig({
+const shieldConfig = defineConfig({
   csp: {
     enabled: true,
     directives: {
@@ -250,6 +252,8 @@ export default defineConfig({
     reportOnly: false,
   },
 })
+
+export default shieldConfig
 ```
 
 <dl>
@@ -277,7 +281,7 @@ directives
 Configure the CSP directives. You can view the list of available directives on [https://content-security-policy.com/](https://content-security-policy.com/#directive)
 
 ```ts
-export default defineConfig({
+const shieldConfig = defineConfig({
   csp: {
     enabled: true,
     // highlight-start
@@ -290,6 +294,8 @@ export default defineConfig({
     reportOnly: false,
   },
 })
+
+export default shieldConfig
 ```
 
 </dd>
@@ -305,7 +311,7 @@ reportOnly
 The CSP policy will not block the resources when the `reportOnly` flag is enabled. Instead, it will report the violations on an endpoint configured using the `reportUri` directive.
 
 ```ts
-export default defineConfig({
+const shieldConfig = defineConfig({
   csp: {
     enabled: true,
     directives: {
@@ -347,7 +353,7 @@ You may allow inline `script` and `style` tags by defining the [nonce attribute]
 Also, use the `@nonce` keyword inside the directives config to allow nonce-based inline scripts and styles.
 
 ```ts
-export default defineConfig({
+const shieldConfig = defineConfig({
   csp: {
     directives: {
       defaultSrc: [`'self'`, '@nonce'],
@@ -363,7 +369,7 @@ If you are using the [Vite integration](../http/assets_bundling.md), you can use
 - The `@viteHmrUrl` adds the Vite HMR websocket server URL to the allowed list.
 
 ```ts
-export default defineConfig({
+const shieldConfig = defineConfig({
   csp: {
     directives: {
       defaultSrc: [`'self'`, '@viteDevUrl'],
@@ -398,7 +404,7 @@ You can configure the header directives using the `config/shield.ts` file.
 ```ts
 import { defineConfig } from '@adonisjs/shield'
 
-export default defineConfig({
+const shieldConfig = defineConfig({
   hsts: {
     enabled: true,
     maxAge: '180 days',
@@ -475,7 +481,7 @@ You can configure the header directives using the `config/shield.ts` file.
 ```ts
 import { defineConfig } from '@adonisjs/shield'
 
-export default defineConfig({
+const shieldConfig = defineConfig({
   xFrame: {
     enabled: true,
     action: 'DENY'
@@ -534,7 +540,7 @@ Once you enable this guard, Shield will define the `X-Content-Type-Options: nosn
 ```ts
 import { defineConfig } from '@adonisjs/shield'
 
-export default defineConfig({
+const shieldConfig = defineConfig({
   contentTypeSniffing: {
     enabled: true,
   },

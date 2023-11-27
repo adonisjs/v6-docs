@@ -12,7 +12,7 @@ We provide fake implementations for the following container services. The fakes 
 
 - [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
 - [Hash fake](../security/hash.md#faking-hash-service-during-tests)
-<!-- - [Mailer fake]() -->
+- [Fake mailer](../mail/fake_mailer.md)
 
 ## Dependency injection and fakes
 
@@ -77,3 +77,40 @@ app.container.restore()
 If your application makes outgoing HTTP requests to third-party services, you can use [nock](https://github.com/nock/nock) during testing to mock the network requests.
 
 Since nock intercepts all outgoing requests from the [Node.js HTTP module](https://nodejs.org/dist/latest-v20.x/docs/api/http.html#class-httpclientrequest), it works with almost every third-party library like `got`, `axios` and so on.
+
+## Freezing time
+You may use the [timekeeper](https://www.npmjs.com/package/timekeeper) package to freeze or travel time when writing tests. The timekeeper packages works by mocking the `Date` class.
+
+In the following example, we encapsulate the API of `timekeeper` inside a [Japa Test resource](https://japa.dev/docs/test-resources).
+
+```ts
+export function timeTravel(secondsToTravel: number) {
+  const test = getActiveTest()
+  if (!test) {
+    throw new Error('Cannot use "timeTravel" outside of a Japa test')
+  }
+
+  timekeeper.reset()
+
+  const date = new Date()
+  date.setSeconds(date.getSeconds() + secondsToTravel)
+  timekeeper.travel(date)
+
+  test.cleanup(() => {
+    timekeeper.reset()
+  })
+}
+```
+
+You may use the `timeTravel` method inside your tests as follows.
+
+```ts
+import { timeTravel } from '#test_helpers'
+
+test('expire token after 2 hours', async ({ assert }) => {
+  /**
+   * Travel 3 hours into the future
+   */
+  timeTravel(60 * 60 * 3)
+})
+```

@@ -135,6 +135,7 @@ The listener classes are instantiated using the [IoC container](../fundamentals/
 In the following example, we type-hint the `TokensService` as a constructor argument. When invoking this listener, the IoC container will inject an instance of the `TokensService` class.
 
 ```ts
+// title: Constructor injection
 import { inject } from '@adonisjs/core'
 import TokensService from '#services/tokens_service'
 
@@ -144,6 +145,21 @@ export default class SendVerificationEmail {
 
   handle(user: User) {
     const token = this.tokensService.generate(user.email)
+  }
+}
+```
+
+In the following example, we inject the `TokensService` inside the handle method. However, do remember, the first argument will always be the event payload.
+
+```ts
+// title: Method injection
+import { inject } from '@adonisjs/core'
+import TokensService from '#services/tokens_service'
+
+export default class SendVerificationEmail {
+  @inject()
+  handle(user: User, tokensService: TokensService) {
+    const token = tokensService.generate(user.email)
   }
 }
 ```
@@ -406,6 +422,165 @@ emitter.on('i18n:missing:translation', function (event) {
   console.log(event.locale)
 })
 ```
+
+### mail\:sending
+The event is emitted before sending the email.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('mail:sending', (event) => {
+  console.log(event.mailerName)
+  console.log(event.message)
+  console.log(event.views)
+})
+```
+
+### mail\:sent
+The event is emitted after the email has been sent.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('mail:sent', (event) => {
+  console.log(event.response)
+
+  console.log(event.mailerName)
+  console.log(event.message)
+  console.log(event.views)
+})
+```
+
+### mail\:queueing
+The event is emitted before queueing the job for sending the email
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('mail:queueing', (event) => {
+  console.log(event.mailerName)
+  console.log(event.message)
+  console.log(event.views)
+})
+```
+
+### mail\:queued
+The event is emitted after the email has been queued
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('mail:queued', (event) => {
+  console.log(event.mailerName)
+  console.log(event.message)
+  console.log(event.views)
+})
+```
+
+### session_auth\:credentials_verified
+
+The event is emitted after the credentials have been successfully verified using the `guard.attempt` method.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:credentials_verified', (event) => {
+  console.log(event.uid)
+  console.log(event.user)
+})
+```
+
+### session_auth\:login_attempted
+
+The event is emitter once the `auth.login` method is called directly or internally by the session guard.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:login_attempted', (event) => {
+  console.log(event.user)
+})
+```
+
+### session_auth\:login_failed
+
+The event is emitted when unable to login the user.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:login_failed', (event) => {
+  console.log(event.error)
+  console.log(event.user) // User | null
+})
+```
+
+### session_auth\:login_succeeded
+
+The event is emitted when the user has been logged in successfully.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:login_succeeded', (event) => {
+  console.log(event.sessionId)
+  console.log(event.user)
+  console.log(event.rememberMeToken) // (if created one)
+})
+```
+
+### session_auth\:authentication_attempted
+
+The event is emitted when the authentication is attempted using the `guard.authenticate` method. The `auth` middleware calls this method under the hood.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:authentication_attempted', (event) => {
+  console.log(event.sessionId)
+})
+```
+
+### session_auth\:authentication_succeeded
+
+The event is emitted when the authentication is successful.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:authentication_succeeded', (event) => {
+  console.log(event.sessionId)
+  console.log(event.user)
+  console.log(event.rememberMeToken) // if authenticated using token
+})
+```
+
+### session_auth\:authentication_failed
+
+The event is emitted when the authentication has failed.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:authentication_failed', (event) => {
+  console.log(event.sessionId)
+  console.log(event.error)
+})
+```
+
+### session_auth\:logged_out
+
+The event is emitted when the `guard.logout` method completes successfully.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('session_auth:logged_out', (event) => {
+  console.log(event.sessionId)
+  console.log(event.user) // User | null
+})
+```
+
 
 ## Faking events during tests
 

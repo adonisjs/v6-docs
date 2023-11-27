@@ -58,26 +58,6 @@ node ace configure @adonisjs/static
 
 :::
 
-## Serving static files
-
-Once the middleware is registered, you may create files inside the `public` directory and access them in the browser using the file path. For example, the `./public/css/style.css` file can be accessed using the `http://localhost:3333/css/style.css` URL.
-
-<!-- The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](./assets_bundler.md). -->
-
-## Copy static files to production build
-To copy static files to the production build folder, you must register the `public` directory under the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `adonisrc.ts` file.
-
-```ts
-{
-  metaFiles: [
-    {
-      pattern: 'public/**',
-      reloadServer: false
-    }
-  ]
-}
-```
-
 ## Configuration
 
 The configuration for the static middleware is stored inside the `config/static.ts` file.
@@ -85,12 +65,14 @@ The configuration for the static middleware is stored inside the `config/static.
 ```ts
 import { defineConfig } from '@adonisjs/static'
 
-export default defineConfig({
+const staticServerConfig = defineConfig({
   enabled: true,
   etag: true,
   lastModified: true,
   dotFiles: 'ignore',
 })
+
+export default staticServerConfig
 ```
 
 <dl>
@@ -267,3 +249,27 @@ A function that returns an object of headers to set on the response. The functio
 
 
 </dl>
+
+## Serving static files
+
+Once the middleware is registered, you may create files inside the `public` directory and access them in the browser using the file path. For example, the `./public/css/style.css` file can be accessed using the `http://localhost:3333/css/style.css` URL.
+
+<!-- The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](./assets_bundler.md). -->
+
+## Copying static files to production build
+The static files stored inside the `/public` directory are automatically copied to the `build` folder when you run `node ace build` command. 
+
+However, if you wish to not copy the static files, you must remove them from the [metaFiles array](../fundamentals/adonisrc_file.md#metafiles) inside the `adonisrc.ts` file.
+
+```ts
+{
+  metaFiles: [
+    // delete-start
+    {
+      pattern: 'public/**',
+      reloadServer: false
+    }
+    // delete-end
+  ]
+}
+```

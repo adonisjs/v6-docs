@@ -255,7 +255,7 @@ Reference to an instance of [Session](./session.md) created for the current HTTP
 
 </dd>
 
-<!-- <dt>
+<dt>
 
 ctx.auth
 
@@ -263,9 +263,9 @@ ctx.auth
 
 <dd>
 
-Reference to an instance of the [Auth class](). The property is contributed by the `@adonisjs/auth` package.
+Reference to an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/next/src/auth/authenticator.ts). Learn more about [authentication](../auth/introduction.md).
 
-</dd> -->
+</dd>
 
 <dt>
 
@@ -287,7 +287,7 @@ ctx\.ally
 
 <dd>
 
-Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/next/src/ally_manager.ts) to implement social login in your apps. [Learn more about Ally](../digging_deeper/social_auth.md)
+Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/next/src/ally_manager.ts) to implement social login in your apps. Learn more about [Ally](../digging_deeper/social_auth.md)
 
 </dd>
 

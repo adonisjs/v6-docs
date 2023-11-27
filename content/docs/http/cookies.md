@@ -190,4 +190,3 @@ The following guides cover the usage of cookies when writing tests.
 
 - Defining cookies with [Japa API client](../testing/http_tests.md#defining-cookies).
 - Defining cookie with [Japa browser client](../testing/browser_tests.md#readingwriting-cookies).
-- Creating cookie header using the [CookieClient]().

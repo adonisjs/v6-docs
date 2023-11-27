@@ -26,6 +26,9 @@ node ace make:controller users --api
 
 # Force name to be singular
 node ace make:controller users --singular
+
+# Generate controller with custom methods
+node ace make:controller users index show store
 ```
 
 Run the following command to eject controller stubs.
@@ -33,6 +36,8 @@ Run the following command to eject controller stubs.
 ```sh
 node ace eject make/controller
 ```
+
+You may create a controller with pre-defined methods as follows.
 
 ## make\:middleware
 
@@ -104,7 +109,7 @@ node ace eject make/listener
 
 ## make\:service
 
-Create a new service class. You may use services to encapsulate some logic. For example, A `CurrencyService` class to manage monetary values or an `InvoiceService` class to generate and send invoices. 
+Create a new service class. You may use services to encapsulate some logic. For example, a `CurrencyService` class is used to manage monetary values, or an `InvoiceService` class is used to generate and send invoices. 
 
 - Form: `singular`
 - Suffix: `service`
@@ -233,6 +238,25 @@ Run the following command to eject the test stub.
 node ace eject make/test/main.stub
 ```
 
+## make\:mail
+Create a new mail class inside the `./app/mails` directory. The mail classes are prefixed with the `Notification` keyword. However, you may define a custom suffix using the `--intent` CLI flag.
+
+- Form: NA
+- Suffix: `Intent`
+- Class name example: ShipmentNotification
+- File name example: shipment_notification.ts
+
+```sh
+node ace make:mail shipment
+# ./app/mails/shipment_notification.ts
+
+node ace make:mail shipment --intent=confirmation
+# ./app/mails/shipment_confirmation.ts
+
+node ace make:mail storage --intent=warning
+# ./app/mails/storage_warning.ts
+```
+
 ## Stubs
 Stubs are the template files AdonisJS uses to generate a resource. We allow you to copy stubs from the package source code to your application and modify them to customize their contents or the output location.
 
@@ -244,7 +268,7 @@ node ace eject make/controller/main.stub
 
 :::note
 
-Stubs use the [tempura template engine](https://github.com/lukeed/tempura) for evaluating JavaScript expressions and defining inline variables.
+Stubs use the [tempura template engine](https://github.com/lukeed/tempura) to evaluate JavaScript expressions and define inline variables.
 
 For syntax highlighting to work, you may set the language for `.stub` files to `handlebars`.
 
@@ -255,9 +279,11 @@ If you open the stub file, it will have the following contents.
 ```hbs
 {{#var controllerName = generators.controllerName(entity.name)}}
 {{#var controllerFileName = generators.controllerFileName(entity.name)}}
----
-to: {{ app.httpControllersPath(entity.path, controllerFileName) }}
----
+{{{
+  exports({
+    to: app.httpControllersPath(entity.path, controllerFileName)
+  })
+}}}
 // import { HttpContext } from '@adonisjs/core/http'
 
 export default class {{ controllerName }} {
@@ -265,8 +291,8 @@ export default class {{ controllerName }} {
 ```
 
 - In the first two lines, we use the [generators module](https://github.com/adonisjs/application/blob/next/src/generators.ts) to generate the controller class name and the controller file name.
-- From lines 3-5, we [define the destination path](#customizing-the-destination-path) for the controller file as YAML front matter.
-- After the YAML front matter, we define the controller's contents.
+- From lines 3-5, we [define the destination path](#customizing-the-destination-path) for the controller file using the `exports` function.
+- Finally, we define the contents for the scaffolded controller.
 
 Feel free to modify the stub; the changes will be picked when you run the `make:controller` command.
 
@@ -294,16 +320,14 @@ node ace eject make/migration/main.stub --pkg=@adonisjs/lucid
 
 When you run the `make:controller` command, the controller is placed inside the `app/controllers` directory. 
 
-If you want to create the controller at a different location, say `app/http/controllers`, you may specify the destination path within the template using the YAML front matter. 
-
-YAML front-matter is a YAML block in the stub file surrounded by three dashes `---`. 
+If you want to create the controller at a different location, say `app/http/controllers`, you may specify the destination path using the `exports` function. For example:
 
 ```hbs
----
-to: {{
-  app.makePath('app/http/controllers', controllerFileName)
-}}
----
+{{{
+  exports({
+    to: app.makePath('app/http/controllers', controllerFileName)
+  })
+}}}
 ```
 
 ### Available variables
@@ -316,4 +340,4 @@ You may access the following variables inside a stub.
 | `generators` | Reference to the [generators module](https://github.com/adonisjs/application/blob/next/src/generators.ts). |
 | `randomString` | Reference to the [randomString](./helpers.md#random) helper function. |
 | `string` | A function to create a [string builder](./helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. | 
-| `flags` | The command-line flags applied to the ace command. 
+| `flags` | The command-line flags defined at the time of running the ace command. |

@@ -67,7 +67,7 @@ export const plugins: Config['plugins'] = [
 ```
 
 ## Basic example
-Let's create an example test that will open the home page of your AdonisJS application and verifies the contents of the page. The [`visit`](https://japa.dev/docs/plugins/browser-client#browser-api) helper opens a new page and visits a URL. The return value is the [page object](https://playwright.dev/docs/api/class-page).
+Let's create an example test that will open the home page of your AdonisJS application and verify the contents of the page. The [`visit`](https://japa.dev/docs/plugins/browser-client#browser-api) helper opens a new page and visits a URL. The return value is the [page object](https://playwright.dev/docs/api/class-page).
 
 See also: [List of assertions methods](https://japa.dev/docs/plugins/browser-client#assertions)
 
@@ -99,7 +99,7 @@ node ace test browser
 ## Reading/writing cookies
 When testing inside a real browser, the cookies are persisted throughout the lifecycle of a [browser context](https://playwright.dev/docs/api/class-browsercontext). 
 
-Japa creates a fresh browser context for each test, therefore the cookies from one test will not leak onto other tests. However, multiple page visits inside a single test will share the cookies, because they are using the same `browserContext`.
+Japa creates a fresh browser context for each test. Therefore, the cookies from one test will not leak onto other tests. However, multiple page visits inside a single test will share the cookies because they use the same `browserContext`.
 
 ```ts
 test.group('Home page', () => {
@@ -153,6 +153,143 @@ await browserContext.setPlainCookie('username', 'virk')
 await browserContext.getEncryptedCookie('cartTotal')
 await browserContext.getPlainCookie('cartTotal')
 ```
+
+## Populating session store
+If you are using the [`@adonisjs/session`](../http/session.md) package to read/write session data in your application, you may also want to use the `sessionBrowserClient` plugin to populate the session store when writing tests.
+
+### Setup
+The first step is registering the plugin inside the `tests/bootstrap.ts` file.
+
+```ts
+// insert-start
+import { sessionBrowserClient } from '@adonisjs/session/plugins/browser_client'
+// insert-end
+
+export const plugins: Config['plugins'] = [
+  assert(),
+  pluginAdonisJS(app),
+  // insert-start
+  sessionBrowserClient(app)
+  // insert-end
+]
+```
+
+And then, update the `.env.test` file (create one if it is missing) and set the `SESSON_DRIVER` to `memory`.
+
+```dotenv
+// title: .env.test
+SESSION_DRIVER=memory
+```
+
+### Writing session data
+You may use the `browserContext.setSession` method to define the session data for the current browser context. 
+
+All page visits using the same browser context will have access to the same session data. However, the session data will be removed when the browser or the context is closed.
+
+```ts
+test('checkout with cart items', async ({ browserContext, visit }) => {
+  // highlight-start
+  await browserContext.setSession({
+    cartItems: [
+      {
+        id: 1,
+        name: 'South Indian Filter Press Coffee'
+      },
+      {
+        id: 2,
+        name: 'Cold Brew Bags',
+      }
+    ]
+  })
+  // highlight-end
+
+  const page = await visit('/checkout')
+})
+```
+
+Like the `setSession` method, you may use the `browser.setFlashMessages` method to define flash messages.
+
+```ts
+/**
+ * Define flash messages
+ */
+await browserContext.setFlashMessages({
+  success: 'Post created successfully',
+})
+
+const page = await visit('/posts/1')
+
+/**
+ * Assert the post page shows the flash message
+ * inside ".alert-success" div.
+ */
+await page.assertExists(page.locator(
+  'div.alert-success',
+  { hasText: 'Post created successfully' }
+))
+```
+
+### Reading session data
+You may read the data inside a session store using the `browserContext.getSession` and `browser.getFlashMessages` methods. These methods will return all the data for the session ID associated with a specific browser context instance.
+
+```ts
+const session = await browserContext.getSession()
+const flashMessages = await browserContext.getFlashMessages()
+```
+
+## Authenticating users
+If you are using the `@adonisjs/auth` package to authenticate users in your application, you may use the `authBrowserClient` Japa plugin to authenticate users when making HTTP requests to your application.
+
+The first step is registering the plugin inside the `tests/bootstrap.ts` file.
+
+```ts
+// title: tests/bootstrap.ts
+// insert-start
+import { authBrowserClient } from '@adonisjs/auth/plugins/browser_client'
+// insert-end
+
+export const plugins: Config['plugins'] = [
+  assert(),
+  pluginAdonisJS(app),
+  // insert-start
+  authBrowserClient(app)
+  // insert-end
+]
+```
+
+If you are using session-based authentication, then make sure to switch the session driver to an in-memory store.
+
+```dotenv
+// title: .env.test
+SESSION_DRIVER=memory
+```
+
+That's all. Now, you may login users using the `loginAs` method. The method accepts the user object as the only argument and marks the user as logged in the current browser context.
+
+All page visits using the same browser context will have access to the logged-in user. However, the user session will be destroyed when the browser or the context is closed.
+
+```ts
+import User from '#models/user'
+
+test('get payments list', async ({ browserContext, visit }) => {
+  // highlight-start
+  const user = await User.create(payload)
+  await browserContext.loginAs(user)
+  // highlight-end
+
+  const page = await visit('/dashboard')
+})
+```
+
+The `loginAs` method uses the default guard configured inside the `config/auth.ts` file for authentication. However, you may specify a custom guard using the `withGuard` method. For example:
+
+```ts
+const user = await User.create(payload)
+await browserContext
+  .withGuard('admin')
+  .loginAs(user)
+```
+
 
 ## The route helper
 You may use the `route` helper from the TestContext to create a URL for a route. Using the route helper ensures that whenever you update your routes, you do not have to come back and fix all the URLs inside your tests.

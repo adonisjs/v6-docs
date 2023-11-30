@@ -32,7 +32,9 @@ const ALLOWED_USERNAMES = [
   'petya-', // via coddess
   'valllentinnaa', // via coddess
   'kovachevx', // via coddess
-]
+  'adriannemo', // via nemoengineering,
+  'simonenemo', // via nemoengineering
+].map((username) => username.toLowerCase())
 
 /**
  * Returns true when the user is sponsoring with amount greater than

@@ -36,6 +36,7 @@
   --sidebar-loading-link-bg-color: var(--violet-a3);
   --aside-active-link-text-color: var(--violet-11);
   --pre-tabs-active-border-color: var(--violet-10);
+  --code-highlight-bg-color: hsl(261.43deg 8.91% 34.26% / 61%);
 
   --disclosure-wrapper-bg-color: var(--mauve-a3);
   --disclosure-wrapper-border-color: var(--mauve-6);

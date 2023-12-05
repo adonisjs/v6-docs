@@ -34,6 +34,7 @@ const ALLOWED_USERNAMES = [
   'kovachevx', // via coddess
   'adriannemo', // via nemoengineering,
   'simonenemo', // via nemoengineering
+  'royvanderzon', // via transpaclean
 ].map((username) => username.toLowerCase())
 
 /**

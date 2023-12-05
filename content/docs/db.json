@@ -305,7 +305,6 @@
   {
     "permalink": "authorization",
     "title": "Authorization",
-    "draft": true,
     "contentPath": "./digging_deeper/authorization.md",
     "category": "Digging Deeper"
   },

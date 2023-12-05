@@ -37,8 +37,6 @@ Run the following command to eject controller stubs.
 node ace eject make/controller
 ```
 
-You may create a controller with pre-defined methods as follows.
-
 ## make\:middleware
 
 Create a new middleware class for HTTP requests. Make sure to register the middleware inside the [middleware stacks](../http/middleware#middleware-stacks)
@@ -255,6 +253,31 @@ node ace make:mail shipment --intent=confirmation
 
 node ace make:mail storage --intent=warning
 # ./app/mails/storage_warning.ts
+```
+
+## make\:policy
+
+Create a new Bouncer policy class. You may use the `--model` flag to explicitly define the model name for which to generate the policy, otherwise the model name will be inferred from the policy name.
+
+- Form: `singular`
+- Suffix: `policy`
+- Class name example: `PostPolicy`
+- File name example: `post_policy.ts`
+
+```sh
+node ace make:policy post
+
+# Generate policy with custom model name
+node ace make:policy post --model=article
+
+# Generate policy with pre-defined methods
+node ace make:policy post view viewAll show edit delete
+```
+
+Run the following command to eject policy stubs.
+
+```sh
+node ace eject make/policy --pkg=@adonisjs/bouncer
 ```
 
 ## Stubs

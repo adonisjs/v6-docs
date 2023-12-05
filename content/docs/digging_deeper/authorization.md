@@ -6,7 +6,7 @@ The goal of abilities and policies is to abstract the logic of authorizing an ac
 
 - [Abilities](#defining-abilities) are defined as functions and can be a great fit if your application has fewer and simpler authorization checks.
 
-- [Policies](#defining-policies) are defined as classes, and you must create one policy for every resource in your application. Policies can also benefit from [automatic dependency injection]().
+- [Policies](#defining-policies) are defined as classes, and you must create one policy for every resource in your application. Policies can also benefit from [automatic dependency injection](#dependency-injection).
 
 :::note
 
@@ -149,13 +149,13 @@ Policies offer an abstraction layer to organize the authorization checks as clas
 
 The policies are stored inside the `./app/policies` directory, and each file represents a single policy. You may create a new policy by running the following command.
 
-See also: [Make policy scaffolding command]()
+See also: [Make policy scaffolding command](./scaffolding.md#makepolicy)
 
 ```sh
 node ace make:policy post
 ```
 
-The policy class extends the [BasePolicy]() class, and you may implement methods for the authorization checks you want to perform. In the following example, we define authorization checks to `create`, `edit`, and `delete` a post.
+The policy class extends the [BasePolicy](https://github.com/adonisjs/bouncer/blob/next/src/base_policy.ts) class, and you may implement methods for the authorization checks you want to perform. In the following example, we define authorization checks to `create`, `edit`, and `delete` a post.
 
 ```ts
 // title: app/policies/post_policy.ts
@@ -365,7 +365,7 @@ export class PostPolicy extends BasePolicy {
 ```
 
 ## Throwing AuthorizationException
-Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException]() when the check fails.
+Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](https://github.com/adonisjs/bouncer/blob/next/src/errors.ts#L19) when the check fails.
 
 ```ts
 router.put('posts/:id', async ({ bouncer, params }) => {
@@ -413,7 +413,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 ```
 
 ## Customizing Authorization response
-Instead of returning a boolean value from abilities and policies, you may construct an error response using the [AuthorizationResponse]() class. 
+Instead of returning a boolean value from abilities and policies, you may construct an error response using the [AuthorizationResponse](https://github.com/adonisjs/bouncer/blob/next/src/response.ts) class. 
 
 The `AuthorizationResponse` class gives you fine grained control to define a custom HTTP status code and the error message.
 

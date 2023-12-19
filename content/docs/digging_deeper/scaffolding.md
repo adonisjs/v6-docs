@@ -8,7 +8,7 @@ The naming conventions are enforced using the [generators module](https://github
 
 ## make\:controller
 
-Create a new HTTP controller class. You may use the `--resource` flag to generate a controller with resource methods.
+Create a new HTTP controller class. By default, the controllers are created inside the `app/controllers` directory.
 
 - Form: `plural`
 - Suffix: `controller`
@@ -18,15 +18,25 @@ Create a new HTTP controller class. You may use the `--resource` flag to generat
 ```sh
 node ace make:controller users
 
+# Force name to be singular
+node ace make:controller users --singular
+```
+
+You may use the `--resource`, or the `--api` flag to generate a controller with methods to perform CRUD operations on a resource.
+
+The api flag is similar to the resource flag, however it does not create methods responsible for rendering forms.
+
+```sh
 # Generate controller with resource methods
 node ace make:controller users --resource
 
 # Generate controller with API resource methods
 node ace make:controller users --api
+```
 
-# Force name to be singular
-node ace make:controller users --singular
+Finally, you may generate controllers with custom actions as follows.
 
+```sh
 # Generate controller with custom methods
 node ace make:controller users index show store
 ```
@@ -39,7 +49,9 @@ node ace eject make/controller
 
 ## make\:middleware
 
-Create a new middleware class for HTTP requests. Make sure to register the middleware inside the [middleware stacks](../http/middleware#middleware-stacks)
+Create a new middleware class for HTTP requests. By default, middleware are stored inside the `app/middleware` directory.
+
+Post creation, the `make:middleware` command will prompt you register the middleware inside a [middleware stack](../http/middleware.md#middleware-stacks).
 
 - Form: `singular`
 - Suffix: `middleware`
@@ -58,13 +70,13 @@ node ace eject make/middleware
 
 ## make\:event
 
-Create a new event class. Event classes provide end-to-end type safety without defining explicit types.
+Create a new event class. By default, events are stored inside the `app/events` directory and each class represents a single event.
 
 - Form: `NA`
 - Suffix: `NA`
 - Class name example: `OrderShipped`
 - File name example: `order_shipped.ts`
-- Recommendation: You must name events in the past tense and not apply any suffix. For example, `OrderShipped`, `UserRegistered`, and `EmailVerified`.
+- Recommendation: You must name your events around the lifecycle of an action. For example: `MailSending`, `MailSent`, `RequestCompleted` and so on.
 
 ```sh
 node ace make:event orderShipped
@@ -77,17 +89,37 @@ node ace eject make/event
 ```
 
 ## make\:validator
+Create a new VineJS validator file. By default the validators are stored inside the `app/validators` directory. 
 
-Create a new VineJS validator file.
+The validator files are created for an entity and each file can have multiple validators inside it.
 
-- Form: `singular`
-- Suffix: `validator`
-- File name example: `post_validator.ts`
-- Recommendation: You must name the validator after the entity you want to validate. For example: `post_validator`, `user_validator`, or `invoice_validator`.
+- Form: `NA`
+- Suffix: `NA`
+- File name example: `user.ts`
+
+```sh
+# A validator for managing a user
+node ace make:validator user
+
+# A validator for managing a post
+node ace make:validator post
+```
+
+You may create validators with pre-defined `create` and `update` actions using the `--resource` flag.
+
+```sh
+node ace make:validator post --resource
+```
+
+Run the following command to eject the validators stub.
+
+```sh
+node ace eject make/validator
+```
 
 ## make\:listener
 
-Create a new listener class.
+Create a new listener class. The listener classes are stored inside the `app/listeners` directory.
 
 - Form: `NA`
 - Suffix: `NA`
@@ -99,6 +131,12 @@ Create a new listener class.
 node ace make:listener sendShipmentNotification
 ```
 
+You may use the `--event` flag to create a listener for a specific known event. 
+
+```sh
+node ace make:listener sendShipmentNotification --event=shipment_received
+```
+
 Run the following command to eject the listener stub.
 
 ```sh
@@ -107,7 +145,9 @@ node ace eject make/listener
 
 ## make\:service
 
-Create a new service class. You may use services to encapsulate some logic. For example, a `CurrencyService` class is used to manage monetary values, or an `InvoiceService` class is used to generate and send invoices. 
+Create a new service class. Service classes are stored inside the `app/services` directory.
+
+You may use services to encapsulate some logic. For example, a `CurrencyService` class is used to manage monetary values, or an `InvoiceService` class is used to generate and send invoices. 
 
 - Form: `singular`
 - Suffix: `service`
@@ -126,7 +166,7 @@ node ace eject make/service
 
 ## make\:exception
 
-Create a custom exception class.
+Create a [custom exception class](../http/exception_handling.md#custom-exceptions). Exceptions are stored inside the `app/exceptions` directory.
 
 - Form: `NA`
 - Suffix: `exception`
@@ -145,7 +185,9 @@ node ace eject make/exception
 
 ## make\:command
 
-Create a new Ace command. 
+Create a new Ace command. By default, the commands are stored inside the `commands` directory in the root of your application.
+
+Commands from this directory are imported automatically by AdonisJS when you try to execute any Ace command. You may prefix the filename with an `_` to store additional files in this directory, that are not Ace commands.
 
 - Form: `NA`
 - Suffix: `NA`
@@ -168,10 +210,12 @@ Create a new Edge template file. The file will be created inside the [views dire
 
 - Form: `NA`
 - Suffix: `NA`
-- File name example: `view_posts.edge`
+- File name example: `posts/view.edge`
+- Recommendation: You must group templates for a resource inside a subdirectory. For example: `posts/list.edge`, `posts/create.edge` and so on.
 
 ```sh
-node ace make:view view_posts
+node ace make:view posts/create
+node ace make:view posts/list
 ```
 
 Run the following command to eject the template stub.
@@ -183,7 +227,9 @@ node ace eject make/view
 
 ## make\:provider
 
-Create a service provider. The provider will automatically be registered within the `adonisrc.ts` file.
+Create a [service provider file](../fundamentals/service_providers.md). Providers are stored inside the `providers` directory in the root of your application.
+
+The `make:provider` command will automtically register the provider inside the `.adonisrc.ts` file.
 
 - Form: `singular`
 - Suffix: `provider`
@@ -201,7 +247,9 @@ node ace eject make/provider
 ```
 
 ## make\:preload
-Create a [preload file](../fundamentals/adonisrc_file.md#preloads). The file will automatically be registered within the `adonisrc.ts` file.
+Create a [preload file](../fundamentals/adonisrc_file.md#preloads). Preload files are stored inside the `start` directory.
+
+The `make:preload` command will automtically register the preload file inside the `.adonisrc.ts` file.
 
 - Form: `NA`
 - Suffix: `NA`
@@ -214,13 +262,11 @@ node ace make:preload view
 Run the following command to eject the preload file stub.
 
 ```sh
-node ace eject make/preload_file
+node ace eject make/preload
 ```
 
-
 ## make\:test
-
-Create a new test file. You may specify the suite for the test using the `--suite` flag. The command will show a prompt for suite selection if you do not mention the suite explicitly while running the command.
+Create a new test file. The `make:test` command will display a prompt to select the suite for the test. Otherwise, you may use the `--suite` flag to skip the prompt.
 
 - Form: NA
 - Suffix: `.spec`
@@ -237,7 +283,7 @@ node ace eject make/test/main.stub
 ```
 
 ## make\:mail
-Create a new mail class inside the `./app/mails` directory. The mail classes are prefixed with the `Notification` keyword. However, you may define a custom suffix using the `--intent` CLI flag.
+Create a new mail class inside the `app/mails` directory. The mail classes are prefixed with the `Notification` keyword. However, you may define a custom suffix using the `--intent` CLI flag.
 
 - Form: NA
 - Suffix: `Intent`
@@ -253,6 +299,12 @@ node ace make:mail shipment --intent=confirmation
 
 node ace make:mail storage --intent=warning
 # ./app/mails/storage_warning.ts
+```
+
+Run the following command to eject mail stubs.
+
+```sh
+node ace eject make/mail --pkg=@adonisjs/mail
 ```
 
 ## make\:policy

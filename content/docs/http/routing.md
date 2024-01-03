@@ -550,15 +550,15 @@ In the following example, the request for the URL `/posts/archived` will be hand
 ```ts
 import router from '@adonisjs/core/services/router'
 
-route.get('posts/:id', () => {})
-route.get('posts/archived', () => {})
+router.get('posts/:id', () => {})
+router.get('posts/archived', () => {})
 ```
 
 This behavior can be fixed by re-ordering the routes by placing the most specific route before the route with a dynamic param.
 
 ```ts
-route.get('posts/archived', () => {})
-route.get('posts/:id', () => {})
+router.get('posts/archived', () => {})
+router.get('posts/:id', () => {})
 ```
 
 
@@ -625,7 +625,7 @@ import { Route } from '@adonisjs/core/http'
 Route.macro('property', function (this: Route) {
   return value
 })
-Route.getter('property', function (this: Route) {
+Router.getter('property', function (this: Route) {
   return value
 })
 ```
@@ -700,7 +700,7 @@ import { BriskRoute } from '@adonisjs/core/http'
 BriskRoute.macro('property', function (this: BriskRoute) {
   return value
 })
-BriskRoute.getter('property', function (this: BriskRoute) {
+BriskRouter.getter('property', function (this: BriskRoute) {
   return value
 })
 ```

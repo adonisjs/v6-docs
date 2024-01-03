@@ -6,8 +6,8 @@ HTTP Context holds all the information you may need related to an HTTP request. 
 
 - You can access the request body, headers, and query params using the [ctx.request](./request.md) property.
 - You can respond to the HTTP request using the [ctx.response](./response.md) property.
-<!-- - Access the logged-in user using the [ctx.auth]() property. -->
-<!-- - Or, authorize user actions using the [ctx.bouncer]() property. -->
+- Access the logged-in user using the [ctx.auth](../auth/introduction.md) property.
+- Or, authorize user actions using the [ctx.bouncer](../digging_deeper/authorization.md) property.
 
 In a nutshell, the context is a request-specific store holding all the information for the ongoing request.
 
@@ -20,14 +20,18 @@ The HTTP context is passed by reference to the route handler, middleware, and ex
 The [router handler](./routing.md) receives the HTTP context as the first parameter.
 
 ```ts
-Route.get('/', (ctx) => {
+import router from '@adonisjs/core/services/router'
+
+router.get('/', (ctx) => {
   console.log(ctx.inspect())
 })
 ```
 
 ```ts
-// Destructure properties
-Route.get('/', ({ request, response }) => {
+// title: Destructure properties
+import router from '@adonisjs/core/services/router'
+
+router.get('/', ({ request, response }) => {
   console.log(request.url())
   console.log(request.headers())
   console.log(request.qs())
@@ -291,7 +295,7 @@ Reference to an instance of the [Ally Manager class](https://github.com/adonisjs
 
 </dd>
 
-<!-- <dt>
+<dt>
 
 ctx.bouncer
 
@@ -299,9 +303,9 @@ ctx.bouncer
 
 <dd>
 
-Reference to an instance of the [Bouncer class](). The property is contributed by the `@adonisjs/bouncer` package.
+Reference to an instance of the [Bouncer class](https://github.com/adonisjs/bouncer/blob/next/src/bouncer.ts). Learn more about [Authorization](../digging_deeper/authorization.md).
 
-</dd> -->
+</dd>
 
 <dt>
 

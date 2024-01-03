@@ -84,6 +84,9 @@ You may use the [timekeeper](https://www.npmjs.com/package/timekeeper) package t
 In the following example, we encapsulate the API of `timekeeper` inside a [Japa Test resource](https://japa.dev/docs/test-resources).
 
 ```ts
+import { getActiveTest } from '@japa/runner'
+import timekeeper from 'timekeeper'
+
 export function timeTravel(secondsToTravel: number) {
   const test = getActiveTest()
   if (!test) {

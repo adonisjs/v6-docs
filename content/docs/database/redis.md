@@ -10,17 +10,17 @@ Install the package from the npm packages registry using one of the following co
 
 ```sh
 // title: npm
-npm i @adonisjs/redis@next
+npm i @adonisjs/redis
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/redis@next
+yarn add @adonisjs/redis
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/redis@next
+pnpm add @adonisjs/redis
 ```
 
 :::
@@ -60,6 +60,8 @@ node ace configure @adonisjs/redis
 ## Configuration
 
 The configuration for the Redis package is stored inside the `config/redis.ts` file.
+
+See also: [Config file stub](https://github.com/adonisjs/redis/blob/next/stubs/config/redis.stub)
 
 ```ts
 import env from '#start/env'
@@ -119,20 +121,37 @@ The `@adonisjs/redis` package will create a [cluster connection](https://github.
 const redisConfig = defineConfig({
   connections: {
     main: {
+      // highlight-start
       clusters: [
-        {
-          port: 6380,
-          host: '127.0.0.1',
-        },
-        {
-          port: 6381,
-          host: '127.0.0.1',
-        },
+        { host: '127.0.0.1', port: 6380 },
+        { host: '127.0.0.1', port: 6381 },
       ],
       clusterOptions: {
         scaleReads: 'slave',
         slotsRefreshTimeout: 10 * 1000,
       },
+      // highlight-end
+    },
+  },
+})
+```
+
+### Configuring sentinels
+You can configure a redis connection to use sentinels by defining an array of sentinel nodes within the connection config. For example:
+
+See also: [IORedis docs on Sentinels config](https://github.com/redis/ioredis?tab=readme-ov-file#sentinel)
+
+```ts
+const redisConfig = defineConfig({
+  connections: {
+    main: {
+      // highlight-start
+      sentinels: [
+        { host: 'localhost', port: 26379 },
+        { host: 'localhost', port: 26380 },
+      ],
+      name: 'mymaster',
+      // highlight-end
     },
   },
 })

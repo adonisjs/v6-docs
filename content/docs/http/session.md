@@ -561,6 +561,8 @@ console.log(session.flashMessages.has('key'))
 
 The same `flashMessages` property is also shared with Edge templates, and you can access it as follows.
 
+See also: [Edge helpers reference](../reference/edge.md#flashmessages)
+
 ```edge
 {{ flashMessages.all() }}
 {{ flashMessages.get('key') }}
@@ -580,41 +582,7 @@ Finally, you can access a specific flash message or a validation error using the
 ```
 
 ## Events
-Following is the list of events emitted by the session package.
-
-### session\:initiated
-The event is emitted when the session store is initiated during an HTTP request. 
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('session:initiated', ({ session }) => {
-  console.log(`Initiated store for ${session.sessionId}`)
-})
-```
-
-### session\:committed
-The event is emitted when the session data is written to the store during an HTTP request.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('session:committed', ({ session }) => {
-  console.log(`Persisted data for ${session.sessionId}`)
-})
-```
-
-### session\:migrated
-The event is emitted when a new session ID is generated using the `.regenerate()` method.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('session:migrated', ({ session, fromSessionId, toSessionId }) => {
-  console.log(`Migrating data to ${toSessionId}`)
-  console.log(`Destroying session ${fromSessionId}`)
-})
-```
+Please check the [events reference guide](../reference/events.md#sessioninitiated) to view the list of events dispatched by the `@adonisjs/session` package.
 
 ## Creating a custom session store
 Session stores must implement the [SessionStoreContract](https://github.com/adonisjs/session/blob/next/src/types.ts#L23C18-L23C38) interface and define the following methods.

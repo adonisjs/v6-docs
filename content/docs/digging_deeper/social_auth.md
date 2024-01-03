@@ -22,17 +22,17 @@ Install the package from the npm packages registry using one of the following co
 
 ```sh
 // title: npm
-npm i @adonisjs/ally@next
+npm i @adonisjs/ally
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/ally@next
+yarn add @adonisjs/ally
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/ally@next
+pnpm add @adonisjs/ally
 ```
 
 :::
@@ -41,6 +41,9 @@ Once the package is installed, you must configure it using the `node ace configu
 
 ```sh
 node ace configure @adonisjs/ally
+
+# Define providers as CLI flags
+node ace configure @adonisjs/ally --providers=github --providers=google
 ```
 
 :::disclosure{title="See steps performed by the configure command"}
@@ -56,7 +59,7 @@ node ace configure @adonisjs/ally
     }
     ```
 
-2. Creates the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
+2. Create the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
 
 3. Defines the environment variables to store `CLIENT_ID` and `CLIENT_SECRET` for selected OAuth providers. 
 
@@ -65,7 +68,7 @@ node ace configure @adonisjs/ally
 ## Configuration
 The `@adonisjs/ally` package configuration is stored inside the `config/ally.ts` file. You can define config for multiple services within a single config file.
 
-See also: [Config stub](https://github.com/adonisjs/ally/blob/next/stubs/config.stub)
+See also: [Config stub](https://github.com/adonisjs/ally/blob/next/stubs/config/ally.stub)
 
 ```ts
 import { defineConfig, services } from '@adonisjs/ally'
@@ -140,7 +143,7 @@ router.get('/github/callback', async ({ ally }) => {
   const gh = ally.use('github')
 
   /**
-   * User has denied access by cancelling
+   * User has denied access by canceling
    * the login flow
    */
   if (gh.accessDenied()) {
@@ -187,13 +190,13 @@ user.original
 ```
 
 ### id
-A unique id returned by the OAuth provider.
+A unique ID returned by the OAuth provider.
 
 ### email
 The email address returned by the OAuth provider. The value will be `null` if the OAuth request does not ask for the user's email address.
 
 ### emailVerificationState
-Many OAuth providers allow users with unverified emails to log in and authenticate OAuth requests. You might want to use this flag to ensure only users with verified emails can log in.
+Many OAuth providers allow users with unverified emails to log in and authenticate OAuth requests. You should use this flag to ensure only users with verified emails can log in.
 
 Following is the list of possible values.
 
@@ -226,7 +229,7 @@ user.token.expiresIn
 | `token` | OAuth2 / OAuth1 | The value of the access token. The value is available for the `OAuth2` and the `OAuth1` protocols. |
 | `secret` | OAuth1 | The token secret applicable only for `OAuth1` protocol. Currently, Twitter is the only official driver using OAuth1. |
 | `type` | OAuth2 | The token type. Usually, it will be a [bearer token](https://oauth.net/2/bearer-tokens/).
-| `refreshToken` | OAuth2 | The refresh token you can use to create a new access token. The value will be `undefined` if the OAuth provider does not support refresh tokens |
+| `refreshToken` | OAuth2 | You can use the refresh token to create a new access token. The value will be `undefined` if the OAuth provider does not support refresh tokens |
 | `expiresAt` | OAuth2 | An instance of the luxon DateTime class representing the absolute time when the access token will expire. |
 | `expiresIn` | OAuth2 | Value in seconds, after which the token will expire. It is a static value and does not change as time passes by. |
 
@@ -289,7 +292,7 @@ router.get('/google/redirect', async ({ ally }) => {
 ```
 
 ## Fetching user details from an access token
-Sometimes you might want to fetch user details from an access token stored inside the database or provided via some other OAuth flow. For example, you used the Native OAuth flow via a mobile app and received back an access token.
+Sometimes, you might want to fetch user details from an access token stored in the database or provided via another OAuth flow. For example, you used the Native OAuth flow via a mobile app and received an access token back.
 
 You can fetch the user details using the `.userFromToken()` method.
 
@@ -312,7 +315,7 @@ Many OAuth providers [recommend using a CSRF state token](https://developers.goo
 
 Ally creates a CSRF token and saves it inside an encrypted cookie, which is later verified after the user approves the authentication request.
 
-However, if you cannot use cookies for some reason, you can enable the stateless mode in which no state verification will take place, and hence no CSRF cookie will be generated.
+However, if you cannot use cookies for some reason, you can enable the stateless mode in which no state verification will take place, and hence, no CSRF cookie will be generated.
 
 ```ts
 // title: Redirecting
@@ -330,7 +333,7 @@ await gh.user()
 ADD it once we have the accordion component
 
 ## Complete config reference
-Following is the complete config reference for all the drivers. You can copy-paste the following objects directly to your application config file. However, define and validate the required [environment variables](#validation-environment-variables).
+The following is the complete configuration reference for all the drivers. You can copy-paste the following objects directly to your application config file. However, define and validate the required [environment variables](#validation-environment-variables).
 
 :::accordion[Github]
 
@@ -340,3 +343,6 @@ Following is the complete config reference for all the drivers. You can copy-pas
 
 ## Creating a custom social driver
 We have created a [starter kit](https://github.com/adonisjs-community/ally-driver-boilerplate) to implement and publish a custom social driver on npm. Please go through the README of the starter kit for further instructions.
+
+## Testing
+Since social authentication relies on manual user intervention to approve the authentication flow on a third-party website, there is no simple way to write automated tests. Therefore, you will have to rely on manual testing.

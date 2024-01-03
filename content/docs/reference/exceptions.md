@@ -1,0 +1,308 @@
+# Exceptions reference
+
+In this guide we will go through the list of known exceptions raised by the framework core and the official packages. Some of the exceptions are marked as **self-handled**. [Self-handled exceptions](../http/exception_handling.md#defining-the-handle-method) can convert themselves to an HTTP response.
+
+<div style="--prose-h2-font-size: 22px;">
+
+## E_ROUTE_NOT_FOUND
+The exception is raised when the HTTP server receives a request for a non-existing route. By default, the client will get a 404 response, and optionally, you may render an HTML page using [status pages](../http/exception_handling.md#status-pages).
+
+- **Status code**: 404
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_ROUTE_NOT_FOUND) {
+  // handle error
+}
+```
+
+## E_AUTHORIZATION_FAILURE
+The exception is raised when a bouncer authorization check fails. The `E_AUTHORIZATION_FAILURE` exception is self-handled and [uses content-negotiation](../digging_deeper/authorization.md#throwing-authorizationexception) to return an appropriate error response to the client.
+
+- **Status code**: 403
+- **Self handled**: Yes. [Learn more](../digging_deeper/authorization.md#throwing-authorizationexception)
+
+```ts
+import { errors as bouncerErrors } from '@adonisjs/bouncer'
+if (error instanceof bouncerErrors.E_AUTHORIZATION_FAILURE) {
+}
+```
+
+## E_BAD_CSRF_TOKEN
+The exception is raised when a form using [CSRF protection](../security/web-security.md#csrf-protection) is submitted without the CSRF token, or the CSRF token is invalid.
+
+- **Status code**: 403
+- **Self handled**: Yes
+
+```ts
+import { errors as shieldErrors } from '@adonisjs/bouncer'
+if (error instanceof shieldErrors.E_BAD_CSRF_TOKEN) {
+}
+```
+
+The `E_BAD_CSRF_TOKEN` exception is [self-handled](https://github.com/adonisjs/shield/blob/next/src/errors.ts#L20), and the user will be redirected back to the form, and you can access the error using the flash messages.
+
+```edge
+@error('E_BAD_CSRF_TOKEN')
+@end
+@error('E_BAD_CSRF_TOKEN')
+  <p>{{ message }}</p>
+@end
+```
+
+## E_OAUTH_MISSING_CODE
+The `@adonisjs/ally` package raises the exception when the OAuth service does not provide the OAuth code during the redirect.
+
+You can avoid this exception if you [handle the errors](../digging_deeper/social_auth.md#handling-callback-response) before calling the `.accessToken` or `.user` methods.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors as allyErrors } from '@adonisjs/bouncer'
+if (error instanceof allyErrors.E_OAUTH_MISSING_CODE) {
+}
+```
+
+## E_OAUTH_STATE_MISMATCH
+The `@adonisjs/ally` package raises the exception when the CSRF state defined during the redirect is missing.
+
+You can avoid this exception if you [handle the errors](../digging_deeper/social_auth.md#handling-callback-response) before calling the `.accessToken` or `.user` methods.
+
+- **Status code**: 400
+- **Self handled**: No
+
+```ts
+import { errors as allyErrors } from '@adonisjs/bouncer'
+if (error instanceof allyErrors.E_OAUTH_STATE_MISMATCH) {
+}
+```
+
+## AuthenticationException
+
+
+## E_CANNOT_LOOKUP_ROUTE
+The exception is raised when you attempt to create a URL for a route using the [URL builder](../http/url_builder.md).
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_CANNOT_LOOKUP_ROUTE) {
+  // handle error
+}
+```
+
+## E_HTTP_EXCEPTION
+The `E_HTTP_EXCEPTION` is a generic exception for throwing errors during an HTTP request. You can use this exception directly or create a custom exception extending it.
+
+- **Status code**: Defined at the time of raising the exception
+- **Self handled**: Yes
+
+```ts
+// title: Throw exception
+import { errors } from '@adonisjs/core'
+
+throw errors.E_HTTP_EXCEPTION.invoke(
+  {
+    errors: ['Cannot process request']
+  },
+  422
+)
+```
+
+```ts
+// title: Handle exception
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_HTTP_EXCEPTION) {
+  // handle error
+}
+```
+
+## E_HTTP_REQUEST_ABORTED
+The `E_HTTP_REQUEST_ABORTED` is a sub-class of the `E_HTTP_EXCEPTION` exception. This exception is raised by the [response.abort](../http/response.md#aborting-request-with-an-error) method.
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_HTTP_REQUEST_ABORTED) {
+  // handle error
+}
+```
+
+## E_INSECURE_APP_KEY
+The exception is raised when the length of `appKey` is smaller than 16 characters. You can use the [generate:key](./commands.md#generatekey) ace command to generate a secure app key.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_INSECURE_APP_KEY) {
+  // handle error
+}
+```
+
+## E_MISSING_APP_KEY
+The exception is raised when the `appKey` property is not defined inside the `config/app.ts` file. By default, the value of the `appKey` is set using the `APP_KEY` environment variable.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_MISSING_APP_KEY) {
+  // handle error
+}
+```
+
+## E_INVALID_ENV_VARIABLES
+The exception is raised when one or more environment variables fail the validation. The detailed validation errors can be accessed using the `error.help` property.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_INVALID_ENV_VARIABLES) {
+  console.log(error.help)
+}
+```
+
+## E_MISSING_COMMAND_NAME
+The exception is raised when a command does not define the `commandName` property or its value is an empty string.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_MISSING_COMMAND_NAME) {
+  console.log(error.commandName)
+}
+```
+
+## E_COMMAND_NOT_FOUND
+The exception is raised by Ace when unable to find a command.
+
+- **Status code**: 404
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_COMMAND_NOT_FOUND) {
+  console.log(error.commandName)
+}
+```
+
+## E_MISSING_FLAG
+The exception is raised when executing a command without passing a required CLI flag.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_MISSING_FLAG) {
+  console.log(error.commandName)
+}
+```
+
+## E_MISSING_FLAG_VALUE
+The exception is raised when trying to execute a command without providing any value to a non-boolean CLI flag.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_MISSING_FLAG_VALUE) {
+  console.log(error.commandName)
+}
+```
+
+## E_MISSING_ARG
+The exception is raised when executing a command without defining the required arguments.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_MISSING_ARG) {
+  console.log(error.commandName)
+}
+```
+
+## E_MISSING_ARG_VALUE
+The exception is raised when executing a command without defining the value for a required argument.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_MISSING_ARG_VALUE) {
+  console.log(error.commandName)
+}
+```
+
+## E_UNKNOWN_FLAG
+The exception is raised when executing a command with an unknown CLI flag.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_UNKNOWN_FLAG) {
+  console.log(error.commandName)
+}
+```
+
+## E_INVALID_FLAG
+The exception is raised when the value provided for a CLI flag is invalid—for example, passing a string value to a flag that accepts numeric values.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors } from '@adonisjs/core'
+if (error instanceof errors.E_INVALID_FLAG) {
+  console.log(error.commandName)
+}
+```
+
+## E_MULTIPLE_REDIS_SUBSCRIPTIONS
+The `@adonisjs/redis` package raises the exception when you attempt to [subscribe to a given pub/sub channel](../database/redis.md#pubsub) multiple times.
+
+```ts
+import { errors as redisErrors } from '@adonisjs/redis'
+if (error instanceof redisErrors.E_MULTIPLE_REDIS_SUBSCRIPTIONS) {
+}
+```
+
+## E_MULTIPLE_REDIS_PSUBSCRIPTIONS
+The `@adonisjs/redis` package raises the exception when you attempt to [subscribe to a given pub/sub pattern](../database/redis.md#pubsub) multiple times.
+
+```ts
+import { errors as redisErrors } from '@adonisjs/redis'
+if (error instanceof redisErrors.E_MULTIPLE_REDIS_PSUBSCRIPTIONS) {
+}
+```
+
+## E_MAIL_TRANSPORT_ERROR
+The exception is raised by the `@adonisjs/mail` package when unable to send the email using a given transport. Usually, this will happen when the HTTP API of the email service returns a non-200 HTTP response.
+
+You may access the network request error using the `error.cause` property. The `cause` property is the [error object](https://github.com/sindresorhus/got/blob/main/documentation/8-errors.md) returned by `got` (npm package).
+
+```ts
+import { errors as mailErrors } from '@adonisjs/redis'
+if (error instanceof mailErrors.E_MAIL_TRANSPORT_ERROR) {
+  console.log(error.cause)
+}
+```
+
+</div>
+

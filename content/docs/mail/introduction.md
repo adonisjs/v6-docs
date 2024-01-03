@@ -16,17 +16,17 @@ Install the package from the npm packages registry using one of the following co
 :::codegroup
 ```sh
 // title: npm
-npm i @adonisjs/mail@next
+npm i @adonisjs/mail
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/mail@next
+yarn add @adonisjs/mail
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/mail@next
+pnpm add @adonisjs/mail
 ```
 :::
 
@@ -34,6 +34,9 @@ Once done, you must run the following command to configure the mail package.
 
 ```sh
 node ace configure @adonisjs/mail
+
+# Pre-define transports to use via CLI flag
+node ace configure @adonisjs/mail --transports=resend --transports=smtp
 ```
 
 :::disclosure{title="See steps performed by the configure command"}
@@ -520,85 +523,4 @@ Message.templateEngine = {
 ```
 
 ## Events
-Following is the list of events emitted by the mail package.
-
-### mail\:sending
-The event is emitted before sending the email.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('mail:sending', (event) => {
-  console.log(event.mailerName)
-  console.log(event.message)
-  console.log(event.views)
-})
-```
-
-### mail\:sent
-The event is emitted after the email has been sent.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('mail:sent', (event) => {
-  console.log(event.response)
-
-  console.log(event.mailerName)
-  console.log(event.message)
-  console.log(event.views)
-})
-```
-
-### mail\:queueing
-The event is emitted before queueing the job for sending the email
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('mail:queueing', (event) => {
-  console.log(event.mailerName)
-  console.log(event.message)
-  console.log(event.views)
-})
-```
-
-### mail\:queued
-The event is emitted after the email has been queued
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('mail:queued', (event) => {
-  /**
-   * Additional metadata shared by the queue, like the job
-   * id
-   */
-  console.log(event.metaData)
-
-  console.log(event.mailerName)
-  console.log(event.message)
-  console.log(event.views)
-})
-```
-
-### queued\:mail\:erorr
-The event is emitted when the queue is unable to send email. You should listen to this event, write it to the log, or repeat the job.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('queued:mail:error', (event) => {
-  console.log(event.error)
-
-  /**
-   * Additional metadata shared by the queue, like the job
-   * id
-   */
-  console.log(event.metaData)
-
-  console.log(event.mailerName)
-  console.log(event.message)
-  console.log(event.views)
-})
-```
+Please check the [events reference guide](../reference/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.

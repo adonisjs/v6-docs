@@ -166,6 +166,8 @@ router
 
 You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
 
+See also: [Edge helpers reference](../reference/edge.md#route)
+
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">
   View post
@@ -179,16 +181,6 @@ You may use the `route` and the `signedRoute` methods inside templates to genera
     prefixUrl: 'https://blog.adonisjs.com'    
   })
 }}">
- Unsubscribe
+  Unsubscribe
 </a>
 ```
-
-The view helpers do not have a fluent API and instead accepts the following parameters.
-
-- **First parameter**: The route identifier or the route pattern.
-- **Second parameter**: Route params defined as an array or an object.
-- **Third parameter**: The options object with following properties.
-  - `qs`: Define query string parameters as an object.
-  - `domain`: Search for routes under a specific domain.
-  - `prefixUrl`: Prefix a URL to the output.
-  - `disableRouteLookup`: Enable/disable routes lookup.

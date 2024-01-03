@@ -34,6 +34,12 @@ Once the package is installed, you must configure it using the `node ace configu
 
 ```sh
 node ace configure @adonisjs/vite
+
+# Auto install vite
+node ace configure @adonisjs/vite --install
+
+# Do not install vite
+node ace configure @adonisjs/vite --no-install
 ```
 
 :::disclosure{title="See steps performed by the configure command"}
@@ -60,7 +66,7 @@ node ace configure @adonisjs/vite
 The setup process creates two configuration files. The `vite.config.js` file is used to configure the Vite bundler, and `config/vite.ts` is used by AdonisJS on the backend.
 
 ### Vite config file
-The `vite.config.js` file is a regular configuration file used by Vite. Per your project requirements, you can install and register additional Vite plugins inside this file. We will cover some popular setups later in this guide.
+The `vite.config.js` file is a regular configuration file used by Vite. Per your project requirements, you can install and register additional Vite plugins inside this file.
 
 By default, the `vite.config.js` file uses the AdonisJS plugin, which accepts the following options.
 

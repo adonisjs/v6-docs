@@ -271,6 +271,12 @@
     "category": "Fundamentals"
   },
   {
+    "permalink": "fundamentals/config-providers",
+    "title": "Config providers",
+    "contentPath": "./fundamentals/config_providers.md",
+    "category": "Fundamentals"
+  },
+  {
     "permalink": "fundamentals/async-local-storage",
     "title": "Async local storage",
     "contentPath": "./fundamentals/async_local_storage.md",
@@ -313,12 +319,6 @@
     "redirects": ["guides/events"],
     "title": "Emitter",
     "contentPath": "./digging_deeper/emitter.md",
-    "category": "Digging Deeper"
-  },
-  {
-    "permalink": "helpers",
-    "title": "Helpers",
-    "contentPath": "./digging_deeper/helpers.md",
     "category": "Digging Deeper"
   },
   {
@@ -417,5 +417,35 @@
     "title": "REPL",
     "contentPath": "./ace/repl.md",
     "category": "Ace command line"
+  },
+  {
+    "permalink": "reference/commands",
+    "title": "Commands",
+    "contentPath": "./reference/commands.md",
+    "category": "Reference"
+  },
+  {
+    "permalink": "reference/edge",
+    "title": "Edge helpers and tags",
+    "contentPath": "./reference/edge.md",
+    "category": "Reference"
+  },
+  {
+    "permalink": "reference/events",
+    "title": "Events",
+    "contentPath": "./reference/events.md",
+    "category": "Reference"
+  },
+  {
+    "permalink": "reference/exceptions",
+    "title": "Exceptions",
+    "contentPath": "./reference/exceptions.md",
+    "category": "Reference"
+  },
+  {
+    "permalink": "reference/helpers",
+    "title": "Helpers",
+    "contentPath": "./reference/helpers.md",
+    "category": "Reference"
   }
 ]

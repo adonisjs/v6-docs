@@ -361,7 +361,7 @@ router.resource('posts.comments', PostsController).params({
 ```
 
 ### Assigning middleware to resource routes
-Using the `resource.use` method to assign middleware to routes registered by a resource. The method accepts an array of action names and the middleware to assign to them. For example:
+You may assign middleware to routes register by a resource using the `resource.use` method. The method accepts an array of action names and the middleware to assign to them. For example:
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -394,9 +394,6 @@ router
   )
   .use(
     ['update', 'destroy'],
-    middleware.can({
-      perform: ['update', 'destroy'],
-      using: PostPolicy,
-    })
+    middleware.someMiddleware()
   )
 ```

@@ -18,15 +18,61 @@ Bouncer is not an implementation of RBAC or ACL. Instead, it provides a low-leve
 
 Install the package from the npm packages registry using one of the following commands.
 
+:::codegroup
+
 ```sh
-npm i @adonisjs/bouncer@next
+// title: npm
+npm i @adonisjs/bouncer
 ```
 
-Once done, you must run the following command to configure the session package.
+```sh
+// title: yarn
+yarn add @adonisjs/bouncer
+```
+
+```sh
+// title: pnpm
+pnpm add @adonisjs/bouncer
+```
+
+:::
+
+
+Once done, you must run the following command to configure the bouncer package.
 
 ```sh
 node ace configure @adonisjs/bouncer
 ```
+
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/bouncer/bouncer_provider')
+      ]
+    }
+    ```
+
+2. Creates the `app/abilities/main.ts` file to define and export abilities.
+
+3. Creates the `app/policies/main.ts` file to export all policies as a collection.
+
+3. Creates `initialize_bouncer_middleware` inside the `middleware` directory.
+
+4. Register the following middleware inside the `start/kernel.ts` file.
+
+    ```ts
+    router.use([
+      () => import('#middleware/initialize_bouncer_middleware')
+    ])
+    ```
+
+:::
+
 
 ## Defining abilities
 
@@ -612,15 +658,4 @@ These tags accepts the `ability` name or the `policy.method` name as the first p
 ```
 
 ## Events
-Bouncer emits the `authorization:finished` event after the authorization check has been performed. The event payload includes the final response you may inspect to know the status of the check.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('authorization:finished', (event) => {
-  console.log(event.user)
-  console.log(event.response)
-  console.log(event.parameters)
-  console.log(event.action) 
-})
-```
+Please check the [events reference guide](../reference/events.md#authorizationfinished) to view the list of events dispatched by the `@adonisjs/bouncer` package.

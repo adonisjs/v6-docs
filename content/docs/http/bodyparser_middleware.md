@@ -4,6 +4,9 @@ The request data is parsed using the `BodyParser` middleware registered inside t
 
 The configuration for the middleware is stored inside the `config/bodyparser.ts` file. In this file, you may configure parsers for parsing **JSON payloads**, **multipart forms with file uploads**, and **URL-encoded forms**.
 
+See also: [Reading request body](./request.md#request-body)\
+See also: [File uploads](./file_uploads.md)
+
 ```ts
 import { defineConfig } from '@adonisjs/core/bodyparser'
 

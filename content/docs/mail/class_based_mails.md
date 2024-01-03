@@ -4,11 +4,13 @@ Instead of writing emails inside the `mail.send` method closure, you may move th
 
 The mail classes are stored inside the `./app/mails` directory, and each file represents a single email. You may create a mail class by running the `make:mail` ace command.
 
+See also: [Make mail command](../reference/commands.md#makemail)
+
 ```sh
 node ace make:mail verify_email
 ```
 
-The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/next/src/base_mail.ts) class and is scaffolded with the following contents. You may configure the mail message inside the `prepare` method using the `this.message` property.
+The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/next/src/base_mail.ts) class and is scaffolded with following properties and methods. You may configure the mail message inside the `prepare` method using the `this.message` property.
 
 ```ts
 import User from '#models/user'

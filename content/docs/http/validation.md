@@ -79,7 +79,7 @@ router.put('posts/:id', [PostsController, 'update'])
 
 ```sh
 // title: Create controller
-node ace make:controller post
+node ace make:controller post store update
 ```
 
 ```ts
@@ -183,9 +183,9 @@ Also, the session middleware [overwrites the `renderValidationErrorAsHTML` metho
 
 :::
 
-- HTTP requests with `Accept=application/json` will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
+- HTTP requests with `Accept=application/json` header will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
 
-- HTTP requests with `Accept=application/vnd.api+json` will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+- HTTP requests with `Accept=application/vnd.api+json` header will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
 
 - Server rendered forms using the [session package](./session.md) will receive the errors via [session flash messages](./session.md#validation-errors-and-flash-messages).
 

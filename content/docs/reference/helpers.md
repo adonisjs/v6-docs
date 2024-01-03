@@ -1,6 +1,14 @@
-# Helpers
+# Helpers reference
 
 AdonisJS bundles the utilities the framework uses into the `helpers` module and makes them available to your application code. Since these utilities are already installed and used by the framework, the `helpers` module does not add any additional bloat to your `node_modules`.
+
+The helper methods are exported from the following modules.
+
+```ts
+import is from '@adonisjs/helpers/is'
+import * as helpers from '@adonisjs/core/helpers'
+import string from '@adonisjs/core/helpers/string'
+```
 
 ## escapeHTML
 
@@ -18,12 +26,9 @@ Optionally, you can encode non-ASCII symbols using the `encodeSymbols` option.
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.escapeHTML(
-  '<p> foo © bar </p>',
-  {
-    encodeSymbols: true
-  }
-)
+string.escapeHTML('<p> foo © bar </p>', {
+  encodeSymbols: true,
+})
 // &lt;p&gt; foo &#xA9; bar &lt;/p&gt;
 ```
 
@@ -34,7 +39,7 @@ You may encode non-ASCII symbols in a string value using the `encodeSymbols` hel
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.encodeSymbols('foo © bar ≠ baz 𝌆 qux');
+string.encodeSymbols('foo © bar ≠ baz 𝌆 qux')
 // 'foo &#xA9; bar &#x2260; baz &#x1D306; qux'
 ```
 
@@ -51,7 +56,7 @@ await someOperation()
 const endTime = hrtime(startTime)
 
 console.log(string.prettyHrTime(endTime))
-``` 
+```
 
 ## isEmpty
 
@@ -71,35 +76,24 @@ Truncate a string at a given number of characters.
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.truncate(
-  'This is a very long, maybe not that long title',
-  12
-) // This is a ve...
+string.truncate('This is a very long, maybe not that long title', 12) // This is a ve...
 ```
 
 By default, the string is truncated exactly at the given index. However, you can instruct the method to wait for the words to complete.
 
 ```ts
-string.truncate(
-  'This is a very long, maybe not that long title',
-  12,
-  {
-    completeWords: true
-  }
-) // This is a very...
+string.truncate('This is a very long, maybe not that long title', 12, {
+  completeWords: true,
+}) // This is a very...
 ```
 
 You can customize the suffix using the `suffix` option.
 
 ```ts
-string.truncate(
-  'This is a very long, maybe not that long title',
-  12,
-  {
-    completeWords: true,
-    suffix: '... <a href="/1"> Read more </a>',
-  }
-) // This is a very... <a href="/1"> Read more </a>
+string.truncate('This is a very long, maybe not that long title', 12, {
+  completeWords: true,
+  suffix: '... <a href="/1"> Read more </a>',
+}) // This is a very... <a href="/1"> Read more </a>
 ```
 
 ## excerpt
@@ -109,15 +103,10 @@ The `excerpt` method is identical to the `truncate` method. However, it strips t
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.excerpt(
-  '<p>This is a <strong>very long</strong>, maybe not that long title</p>',
-  12,
-  {
-    completeWords: true,
-  }
-) // This is a very...
+string.excerpt('<p>This is a <strong>very long</strong>, maybe not that long title</p>', 12, {
+  completeWords: true,
+}) // This is a very...
 ```
-
 
 ## slug
 
@@ -146,10 +135,7 @@ Interpolate variables inside a string. The variables must be inside double curly
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.interpolate(
-  'hello {{ user.username }}',
-  { user: { username: 'virk' } }
-)
+string.interpolate('hello {{ user.username }}', { user: { username: 'virk' } })
 // hello virk
 ```
 
@@ -354,7 +340,7 @@ Following are some of the conversion examples.
 | 'FOO_bar'              | 'foo bar'              |
 | 'XMLHttpRequest'       | 'xml http request'     |
 | 'IQueryAArgs'          | 'i query a args'       |
-| 'dot\.case'             | 'dot case'             |
+| 'dot\.case'            | 'dot case'             |
 | 'path/case'            | 'path case'            |
 | 'snake_case'           | 'snake case'           |
 | 'snake_case123'        | 'snake case123'        |
@@ -436,7 +422,7 @@ Following are some of the conversion examples.
 
 ## titleCase
 
-Convert a string value to title case.
+Convert a string value to the title case.
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -507,6 +493,8 @@ string.sentence(['routes', 'controllers'], {
 Remove multiple whitespaces from a string to a single whitespace.
 
 ```ts
+import string from '@adonisjs/core/helpers/string'
+
 string.condenseWhitespace('hello  world')
 // hello world
 
@@ -519,6 +507,8 @@ string.condenseWhitespace('  hello  world  ')
 Parse a string-based time expression to seconds.
 
 ```ts
+import string from '@adonisjs/core/helpers/string'
+
 string.seconds.parse('10h') // 36000
 string.seconds.parse('1 day') // 86400
 ```
@@ -541,6 +531,8 @@ string.seconds.format(36000, true) // 10 hours
 Parse a string-based time expression to milliseconds.
 
 ```ts
+import string from '@adonisjs/core/helpers/string'
+
 string.milliseconds.parse('1 h') // 3.6e6
 string.milliseconds.parse('1 day') // 8.64e7
 ```
@@ -563,6 +555,8 @@ string.milliseconds.format(3.6e6, true) // 1 hour
 Parse a string-based unit expression to bytes.
 
 ```ts
+import string from '@adonisjs/core/helpers/string'
+
 string.bytes.parse('1KB') // 1024
 string.bytes.parse('1MB') // 1048576
 ```
@@ -586,6 +580,8 @@ string.bytes.format(1024 * 1024 * 1000, { thousandsSeparator: ',' }) // 1,000MB
 Get the ordinal letter for a given number.
 
 ```ts
+import string from '@adonisjs/core/helpers/string'
+
 string.ordinal(1) // 1st
 string.ordinal(2) // '2nd'
 string.ordinal(3) // '3rd'
@@ -621,9 +617,28 @@ if (safeEqual(trustedValue, userInput)) {
 }
 ```
 
+## cuid
+Create a secure, collision-resistant id optimized for horizontal scaling and performance. This method uses the [@paralleldrive/cuid2](https://github.com/paralleldrive/cuid2) package under the hood.
+
+```ts
+import { cuid } from '@adonisjs/core/helpers'
+
+const id = cuid()
+// tz4a98xxat96iws9zmbrgj3a
+```
+
+You can use the `isCuid` method to check if a value is a valid CUID.
+
+```ts
+import { cuid, isCuid } from '@adonisjs/core/helpers'
+
+const id = cuid()
+isCuid(id) // true
+```
+
 ## compose
 
-The `compose` helper allows you to use TypeScript class mixins with a cleaner API. Following is an example of mixins usage without the `compose` helper.
+The `compose` helper allows you to use TypeScript class mixins with a cleaner API. Following is an example of mixin usage without the `compose` helper.
 
 ```ts
 class User extends UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail(BaseModel)))) {}
@@ -632,7 +647,7 @@ class User extends UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail
 Following is an example with the `compose` helper.
 
 - There is no nesting.
-- The order of mixins is from left to right. Whereas earlier, it was inside out.
+- The order of mixins is from (left to right/top to bottom). Whereas earlier, it was inside out.
 
 ```ts
 import { compose } from '@adonisjs/core/helpers'
@@ -657,7 +672,7 @@ base64.encode('hello world')
 // aGVsbG8gd29ybGQ=
 ```
 
-Like the `encode` method, you can may the `urlEncode` to generate a base64 string safe to pass in a URL.
+Like the `encode` method, you can use the `urlEncode` to generate a base64 string safe to pass in a URL.
 
 The `urlEncode` method performs the following replacements.
 
@@ -712,12 +727,12 @@ const options: Partial<Options> = {}
 await fsReadAll(location, options)
 ```
 
-| Argument            | Type    | Description                                                                                                                                                                   |
-| ------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ignoreMissingRoot` | boolean | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error, and an empty array is returned.   |
-| `filter`            | method  | Define a filter to ignore certain paths. The method is called on the final list of files.                                                                                     |
-| `sort`              | method  | Define a custom method to sort file paths. By default, the files are sorted using natural sort.                                                                               |
-| `pathType`          | enum    | Define how to return the collected paths. By default, OS-specific relative paths are returned. If you want to import the collected files, you must set the `pathType = 'url'` |
+| Argument | Description |
+|------------|------------|
+| `ignoreMissingRoot` | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error, and an empty array is returned. |
+| `filter` | Define a filter to ignore certain paths. The method is called on the final list of files. |
+| `sort` | Define a custom method to sort file paths. By default, the files are sorted using natural sort. |
+| `pathType` | Define how to return the collected paths. By default, OS-specific relative paths are returned. If you want to import the collected files, you must set the`pathType = 'url'` |
 
 ## fsImportAll
 
@@ -736,13 +751,24 @@ console.log(collection)
 
 The second param is the option to customize the import behavior.
 
-| Argument            | Type    | Description                                                                                                                                                                  |
-| ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ignoreMissingRoot` | boolean | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error, and an empty object will be returned. |
-| `filter`            | method  | Define a filter to ignore certain paths. By default, only files ending with `.js`, `.ts`, `.json`, `.cjs`, and `.mjs` are imported.                                           |
-| `sort`              | method  | Define a custom method to sort file paths. By default, the files are sorted using natural sort.                                                                              |
-| `transformKeys`     | method  | Define a callback method to transform the keys for the final object. The method receives an array of nested keys and must return an array.                              |
+```ts
+type Options = {
+  ignoreMissingRoot?: boolean
+  filter?: (filePath: string, index: number) => boolean
+  sort?: (current: string, next: string) => number
+  transformKeys? (keys: string[]) => string[]
+}
 
+const options: Partial<Options> = {}
+await fsImportAll(location, options)
+```
+
+| Argument | Description |
+|------------|------------|
+| `ignoreMissingRoot` | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error, and an empty object will be returned. |
+| `filter` | Define a filter to ignore certain paths. By default, only files ending with `.js`, `.ts`, `.json`, `.cjs`, and `.mjs` are imported. |
+| `sort` | Define a custom method to sort file paths. By default, the files are sorted using natural sort. |
+| `transformKeys` | Define a callback method to transform the keys for the final object. The method receives an array of nested keys and must return an array. |
 
 ## String builder
 
@@ -751,7 +777,8 @@ The `StringBuilder` class offers a fluent API to perform transformations on a st
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-const value = string.create('userController')
+const value = string
+  .create('userController')
   .removeSuffix('controller') // user
   .plural() // users
   .snakeCase() // users
@@ -761,6 +788,7 @@ const value = string.create('userController')
 ```
 
 ## Message builder
+
 The `MessageBuilder` class offers an API to serialize JavaScript data types with an expiry and purpose. You can either store the serialized output in safe storage like your application database or encrypt it (to avoid tampering) and share it publicly.
 
 In the following example, we serialize an object with the `token` property and set its expiry to be `1 hour`.

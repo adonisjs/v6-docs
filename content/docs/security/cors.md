@@ -16,17 +16,17 @@ You can install the package from the npm packages registry.
 
 ```sh
 // title: npm
-npm i @adonisjs/cors@next
+npm i @adonisjs/cors
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/cors@next
+yarn add @adonisjs/cors
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/cors@next
+pnpm add @adonisjs/cors
 ```
 
 :::

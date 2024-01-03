@@ -26,17 +26,17 @@ See also: [Edge documentation](https://edgejs.dev)
 
 ```sh
 // title: npm
-npm i edge.js@next
+npm i edge.js
 ```
 
 ```sh
 // title: yarn
-yarn add edge.js@next
+yarn add edge.js
 ```
 
 ```sh
 // title: pnpm
-pnpm add edge.js@next
+pnpm add edge.js
 ```
 
 :::
@@ -71,7 +71,7 @@ node ace make:view welcome
 
 Open the newly created file and write the following markup inside it.
 
-```html
+```edge
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,104 +126,4 @@ edge.global('appUrl', env.get('APP_URL'))
 ```
 
 ## Global helpers
-AdonisJS adds the following global helpers to Edge. You can access them inside your templates, including components.
-
-### request
-Reference the current HTTP [request](./request.md) object.
-
-```edge
-{{ request.url() }}
-{{ request.input('signature') }}
-```
-
-### route/signedRoute
-Helper functions to create [URL for a route](./url_builder.md#generating-urls-inside-templates)
-
-```edge
-<a href="{{ route('posts.show', [post.id]) }}">
-  View post
-</a>
-```
-
-```edge
-<a href="{{
-  signedRoute('unsubscribe', [user.id], {
-    expiresIn: '3 days',
-    prefixUrl: 'https://blog.adonisjs.com'    
-  })
-}}">
- Unsubscribe
-</a>
-```
-
-### app
-Reference to the [Application instance](../fundamentals/application.md).
-
-```edge
-{{ app.getEnvironment() }}
-```
-
-### config
-A [helper function](../guides/config.md#reading-config-inside-edge-templates) to reference configuration values inside Edge templates.
-
-```edge
-@if(config.has('app.appUrl'))
-  <a href="{{ config('app.appUrl') }}"> Home </a>
-@else
-  <a href="/"> Home </a>
-@end
-```
-
-### session
-A read-only copy of the [session object](./session.md#reading-and-writing-data). You cannot mutate session data within Edge templates.
-
-```edge
-Post views: {{ session.get(`post.${post.id}.visits`) }}
-```
-
-### flashMessages
-A read-only copy of [session flash messages](./session.md#flash-messages). You can access the flash messages using the `flashMessages` property or the following helper methods.
-
-```edge
-@if(flashMessages.has('errors.title'))
-  <p>{{ flashMessages.get('errors.title') }}</p>
-@end
-
-@if(flashMessages.has('notification'))
-  <div class="notification {{ flashMessages.get('notification').type }}">
-    {{ flashMessages.get('notification').message }}
-  </div>
-@end
-```
-
-For a better developer experience, we recommend using the following tags to read data from flash messages.
-
-```edge
-@flashMessage('notification')
-  <div class="notification {{ message.type }}">
-    {{ message.message }}
-  </div>
-@end
-
-@error('title')
-  @each(message in messages)
-    <p>{{ message }}</p>
-  @end
-@end
-```
-
-### asset
-Resolve the URL of an asset processed by Vite. Learn more about [referencing assets inside Edge templates](./assets_bundling.md#referencing-assets-inside-edge-templates).
-
-```edge
-<img src="{{ asset('resources/images/hero.jpg') }}" />
-```
-
-### embedImage / embedImageData
-The `embedImage` and the `embedImageData` helpers are added by the [mail](../mail/message.md#embedding-images) package and are only available when rendering a template to send an email.
-
-```edge
-<img src="{{
-  embedImage(app.makePath('assets/hero.jpg'))
-}}" />
-```
+Please check the [Edge helpers reference guide](../reference/edge.md) to view the list of helpers contributed by AdonisJS.

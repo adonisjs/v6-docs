@@ -475,8 +475,8 @@ You can access the flash messages inside the edge templates using the `flashMess
 
 ```edge
 @flashMessage('notification')
-  <div class="notification {{ message.type }}">
-    {{ message.message }}
+  <div class="notification {{ $message.type }}">
+    {{ $message.message }}
   </div>
 @end
 
@@ -502,7 +502,7 @@ The Session middleware automatically captures the [validation exceptions](./vali
 In the following example:
 
 - We access the value of the `title` input field using the `flashMessages.get()` method.
-- And access the error message using the `@error` tag. You can also access the error message using `flashMessages.get('errors.title')`
+- And access the error message using the `@inputError` tag. You can also access the error message using `flashMessages.get('errorsBag.title')`
 
 ```edge
 <form method="POST" action="/posts">
@@ -515,8 +515,8 @@ In the following example:
       value="{{ flashMessages.get('title') || '' }}"
     />
 
-    @error('title')
-      @each(message in messages)
+    @inputError('title')
+      @each(message in $messages)
         <p> {{ message }} </p>
       @end
     @end
@@ -572,12 +572,19 @@ See also: [Edge helpers reference](../reference/edge.md#flashmessages)
 Finally, you can access a specific flash message or a validation error using the following Edge tags. 
 
 ```edge
+{{-- Read any flash message by key --}}
 @flashMessage('key')
-  {{ inspect(message) }}
+  {{ inspect($message) }}
 @end
 
+{{-- Read generic errors --}}
 @error('key')
-  {{ inspect(messages) }}
+  {{ inspect($message) }}
+@end
+
+{{-- Read validation errors --}}
+@inputError('key')
+  {{ inspect($messages) }}
 @end
 ```
 
@@ -671,4 +678,4 @@ export default defineConfig({
 
 ### A note on serializing data
 
-The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../digging_deeper/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session store](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).
+The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../reference/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session store](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).

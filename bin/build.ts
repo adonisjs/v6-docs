@@ -10,11 +10,8 @@
 */
 
 import 'reflect-metadata'
-import '@adonisjs/ally/types'
 import { Ignitor } from '@adonisjs/core'
-import { defineConfig, services } from '@adonisjs/ally'
-import { defineConfig as viteDefineConfig } from '@adonisjs/vite'
-import { defineConfig as httpConfig } from '@adonisjs/core/http'
+import { defineConfig } from '@adonisjs/vite'
 
 /**
  * URL to the application root. AdonisJS need it to resolve
@@ -31,18 +28,6 @@ const IMPORTER = (filePath: string) => {
     return import(new URL(filePath, APP_ROOT).href)
   }
   return import(filePath)
-}
-
-const allyConfig = defineConfig({
-  github: services.github({
-    clientId: '',
-    clientSecret: '',
-    callbackUrl: '',
-    scopes: ['read:user'],
-  }),
-})
-declare module '@adonisjs/ally/types' {
-  export interface SocialProviders extends InferSocialProviders<typeof allyConfig> {}
 }
 
 /**
@@ -65,14 +50,14 @@ async function exportHTML() {
   }
 }
 
-const ignitor = new Ignitor(APP_ROOT, { importer: IMPORTER })
+const application = new Ignitor(APP_ROOT, { importer: IMPORTER })
   .tap((app) => {
     app.initiating(() => {
       app.useConfig({
         appUrl: process.env.APP_URL || '',
         app: {
           appKey: 'zKXHe-Ahdb7aPK1ylAJlRgTefktEaACi',
-          http: httpConfig({}),
+          http: {},
         },
         logger: {
           default: 'app',
@@ -82,16 +67,12 @@ const ignitor = new Ignitor(APP_ROOT, { importer: IMPORTER })
             },
           },
         },
-        ally: allyConfig,
-        vite: viteDefineConfig({
-          assetsUrl: '/assets',
-          buildDirectory: 'dist/assets',
-        }),
+        vite: defineConfig({}),
       })
     })
   })
   .createApp('console')
 
-await ignitor.init()
-await ignitor.boot()
-await ignitor.start(exportHTML)
+await application.init()
+await application.boot()
+await application.start(exportHTML)

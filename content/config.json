@@ -9,8 +9,9 @@
       "href": "https://github.com/adonisjs/core"
     }
   },
-  "sponsors_sources": ["https://raw.githubusercontent.com/thetutlage/static/main/sponsorkit/sponsors.json"],
-  "advertising_sponsors": [],
+  "sponsors_sources": [
+    "https://raw.githubusercontent.com/thetutlage/static/main/sponsorkit/sponsors.json"
+  ],
   "fileEditBaseUrl": "https://github.com/adonisjs/v6-docs/blob/main",
   "copyright": "AdonisJS"
 }

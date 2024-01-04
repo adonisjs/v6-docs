@@ -86,8 +86,8 @@ Post views: {{ session.get(`post.${post.id}.visits`) }}
 A read-only copy of [session flash messages](../http/session.md#flash-messages). The `flashMessages` property is only available when the template is rendered using the `ctx.view.render` method.
 
 ```edge
-@if(flashMessages.has('errors.title'))
-  <p>{{ flashMessages.get('errors.title') }}</p>
+@if(flashMessages.has('inputErrorsBag.title'))
+  <p>{{ flashMessages.get('inputErrorsBag.title') }}</p>
 @end
 
 @if(flashMessages.has('notification'))
@@ -179,22 +179,45 @@ The `@flashMessage` tag provides a better DX for reading flash messages for a gi
 
 ```edge
 @flashMessage('notification')
-  <div class="notification {{ message.type }}">
-    {{ message.message }}
+  <div class="notification {{ $message.type }}">
+    {{ $message.message }}
   </div>
 @end
 ```
 
 ## @error
-The `@error` tag provides a better DX for reading error messages stored inside the `errors` key in `flashMessages`.
+The `@error` tag provides a better DX for reading error messages stored inside the `errorsBag` key in `flashMessages`.
 
 :::caption{for="error"}
 **Instead of writing conditionals**
 :::
 
 ```edge
-@if(flashMessages.has('errors.title'))
-  @each(message in flashMessages.get('errors.title'))
+@if(flashMessages.has('errorsBag.E_BAD_CSRF_TOKEN'))
+  <p>{{ flashMessages.get('errorsBag.E_BAD_CSRF_TOKEN') }}</p>
+@end
+```
+
+:::caption{for="success"}
+**You may prefer using the tag**
+:::
+
+```edge
+@error('E_BAD_CSRF_TOKEN')
+  <p>{{ $message }}</p>
+@end
+```
+
+## @inputError
+The `@inputError` tag provides a better DX for reading validation error messages stored inside the `inputErrorsBag` key in `flashMessages`.
+
+:::caption{for="error"}
+**Instead of writing conditionals**
+:::
+
+```edge
+@if(flashMessages.has('inputErrorsBag.title'))
+  @each(message in flashMessages.get('inputErrorsBag.title'))
     <p>{{ message }}</p>
   @end
 @end
@@ -206,7 +229,7 @@ The `@error` tag provides a better DX for reading error messages stored inside t
 
 ```edge
 @error('title')
-  @each(message in messages)
+  @each(message in $messages)
     <p>{{ message }}</p>
   @end
 @end

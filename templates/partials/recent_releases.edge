@@ -1,0 +1,26 @@
+<div class="table_container table_expanded">
+  <table>
+    <thead>
+      <tr>
+        <th>Package</th>
+        <th style="width: 60%;">Change</th>
+        <th>Released on</th>
+      </tr>
+    </thead>
+    <tbody>
+      @each(release in (await getReleases()).slice(0, 5))
+        <tr>
+          <th>
+            <code>{{ release.package }}</code>
+          </th>
+          <td>
+            {{{ release.description }}}
+          </td>
+          <td>
+            {{ dayjs(release.released_on).format('MMM D, YYYY') }}
+          </td>
+        </tr>
+      @end
+    </tbody>
+  </table>
+</div>

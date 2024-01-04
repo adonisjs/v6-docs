@@ -45,9 +45,11 @@ export async function downloadSponsors() {
      */
     for (let source of sources) {
       const { body } = await request(source)
-      const sponsors = (await body.json()) as string[]
-      sponsorsList = sponsorsList.concat(sponsors)
-      console.log(`Downloaded "${sponsors.length} sponsors" from "${source}"`)
+      const sponsors = await body.json()
+      if (Array.isArray(sponsors)) {
+        sponsorsList = sponsorsList.concat(sponsors)
+        console.log(`Downloaded "${sponsors.length} sponsors" from "${source}"`)
+      }
     }
 
     await writeFile(SPONSORS_FILE_PATH, JSON.stringify(sponsorsList))

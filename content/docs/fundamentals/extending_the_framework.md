@@ -13,6 +13,7 @@ Since macros and getters are added at runtime, you will have to inform TypeScrip
 You can write the code for adding macros inside a dedicated file (like the `extensions.ts`) and import it inside the service provider's `boot` method.
 
 ```ts
+// title: providers/app_provider.ts
 export default class AppProvider {
   async boot() {
     await import('../src/extensions.js')
@@ -23,7 +24,7 @@ export default class AppProvider {
 In the following example, we add the `wantsJSON` method to the [Request](../http/request.md) class and define its types simultaneously.
 
 ```ts
-// title: extensions.ts
+// title: src/extensions.ts
 import { Request } from '@adonisjs/core/http'
 
 Request.macro('wantsJSON', function (this: Request) {
@@ -37,7 +38,7 @@ Request.macro('wantsJSON', function (this: Request) {
 ```
 
 ```ts
-// title: extensions.ts
+// title: src/extensions.ts
 declare module '@adonisjs/core/http' {
   interface Request {
     wantsJSON(): boolean

@@ -9,8 +9,11 @@ See also: [Application lifecycle](./application_lifecycle.md)
 The environment refers to the application runtime environment. The application is always booted in one of the following known environments. 
 
 - `web` environment refers to the process started for the HTTP server.
+
 - `console` environment refers to the Ace commands except for the REPL command.
+
 - `repl` environment refers to the process started using the `node ace repl` command.
+
 - Finally, the `test` environment refers to the process started using the `node ace test` command.
 
 You can access the application environment using the `getEnvironment` method.
@@ -78,9 +81,13 @@ The state refers to the current state of the application. The framework features
 The application is always in one of the following known states.
 
 - `created`: It is the default state of the application.
+
 - `initiated`: In this state, we parse/validate the environment variables and process the `adonisrc.ts` file.
+
 - `booted`: The application service providers are registered and booted at this state.
+
 - `ready`: The ready state varies between different environments. For example, in the `web` environment, the ready state means the application is ready to accept new HTTP requests.
+
 - `terminated`: The application has been terminated, and the process will exit shortly. The application will not accept new HTTP requests in the `web` environment.
 
 ```ts

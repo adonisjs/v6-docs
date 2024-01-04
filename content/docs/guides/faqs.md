@@ -32,5 +32,13 @@ However, we look closer at the performance metrics and fine-tune the framework p
 - The validation layer of the framework [outperforms other popular validation libraries](https://github.com/adonisjs/validator/blob/next/benchmarks.md) in the Node.js ecosystem.
 
 ## Do you offer paid support?
+Yes! You can learn more about the [priority support program](https://adonisjs.com/support_program) on our website.
 
-The support program will be launched soon.
+## How do I stay upto-date with AdonisJS?
+Check out the following links to be an integral part of the community and stay upto-date.
+
+- [Discord server](https://discord.gg/vDcEjq6)
+- [X (Formerly Twitter)](https://twitter.com/adonisframework)
+- [Github discussions](https://github.com/adonisjs/core/discussions)
+- [Blog and Newsletter](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
+- [Adocasts](https://adocasts.com/?referrer=adonisjs_docs_faq)

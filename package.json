@@ -6,11 +6,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "export": "vite build && npm run download:sponsors && node --loader=ts-node/esm bin/build.ts",
+    "build": "npm run export",
     "postexport": "copyfiles -u 1 public/* public/**/* dist",
     "download:sponsors": "node --loader=ts-node/esm bin/download_sponsors.ts",
     "serve": "node --loader=ts-node/esm bin/serve.ts",
-    "start": "node --loader=ts-node/esm bin/serve.ts",
-    "build": "npm run export",
     "dev": "concurrently \"vite\" \"npm run serve\"",
     "test": "node ace test"
   },

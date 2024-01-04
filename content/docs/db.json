@@ -2,7 +2,6 @@
   {
     "permalink": "introduction",
     "title": "Introduction",
-    "draft": true,
     "contentPath": "./guides/introduction.md",
     "category": "Getting started"
   },
@@ -34,6 +33,12 @@
     "permalink": "faqs",
     "title": "FAQs",
     "contentPath": "./guides/faqs.md",
+    "category": "Getting started"
+  },
+  {
+    "permalink": "releases",
+    "title": "Releases",
+    "contentPath": "./guides/releases.md",
     "category": "Getting started"
   },
   {

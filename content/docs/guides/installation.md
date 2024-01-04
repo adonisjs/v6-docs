@@ -54,6 +54,10 @@ The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.de
 
 Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like an SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
+```sh
+npm init adonisjs -- -K=web
+```
+
 The web starter kit comes with the following packages.
 
 <table>
@@ -93,9 +97,15 @@ The web starter kit comes with the following packages.
 </tr>
 </tbody></table>
 
-### API starter kit :span[Not ready yet]{class="badge"}
+---
+
+### API starter kit
 
 The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
+
+```sh
+npm init adonisjs -- -K=api
+```
 
 In this starter kit:
 
@@ -109,11 +119,19 @@ The API starter kit is configured with session-based authentication. However, if
 See also: [Which authentication guard should I use?](../auth/introduction.md#choosing-an-auth-guard)
 
 ```sh
-npm init adonisjs -- --tokens-auth
+npm init adonisjs -- -K=api --tokens-auth
 ```
+
+---
 
 ### Slim starter kit
 For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
+
+```sh
+npm init adonisjs -- -K=slim
+```
+
+---
 
 ### Bring your starter kit
 Starter kits are pre-built projects hosted with a Git repository provider like Github, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
@@ -193,21 +211,8 @@ npm run format
 ## VSCode extensions
 You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
 
-### AdonisJS extension
-You may download the [AdonisJS extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) from the VSCode marketplace. Following are some of the highlighted features of the extension.
+- [**AdonisJS**](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) - View application routes, run ace commands, migrate the database, and read documentation directly from your code editor.
 
-- Command palette for [Ace commands](../ace/introduction.md).
-- Migrate and seed your database.
-- View application routes in the sidebar.
-- View documentation within VSCode.
-- Snippets.
+- [**Edge**](https://marketplace.visualstudio.com/items?itemName=AdonisJS.vscode-edge) - Supercharge your development workflow with support for syntax highlighting, autocompletion, and code snippets.
 
-### Edge Extension
-The [official extension for Edge](https://marketplace.visualstudio.com/items?itemName=AdonisJS.vscode-edge) provides support for syntax highlighting, autocomplete, go-to templates for Edge templates.
-
-### Japa extension
-Japa is the [testing framework](../testing/introduction.md) used by AdonisJS, and the [Japa extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) allows you to run your tests without leaving your code editor.
-
-- You can click on the code lens to run a specific or all the tests inside a file. The same action can be triggered using keyboard shortcuts.
-- Go to the snapshots file from the test (If using snapshot testing).
-- Snippets.
+- [**Japa**](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) - Run tests without leaving your code editor using Keyboard shortcuts or run them directly from the activity sidebar.

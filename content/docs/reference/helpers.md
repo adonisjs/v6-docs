@@ -618,7 +618,7 @@ if (safeEqual(trustedValue, userInput)) {
 ```
 
 ## cuid
-Create a secure, collision-resistant id optimized for horizontal scaling and performance. This method uses the [@paralleldrive/cuid2](https://github.com/paralleldrive/cuid2) package under the hood.
+Create a secure, collision-resistant ID optimized for horizontal scaling and performance. This method uses the [@paralleldrive/cuid2](https://github.com/paralleldrive/cuid2) package under the hood.
 
 ```ts
 import { cuid } from '@adonisjs/core/helpers'
@@ -830,6 +830,48 @@ if (!decoded) {
 }
 
 console.log(decoded.token)
+```
+
+## Secret
+The `Secret` class lets you hold sensitive values within your application without accidentally leaking them inside logs and console statements.
+
+For example, the `appKey` value defined inside the `config/app.ts` file is an instance of the `Secret` class. If you try to log this value to the console, you will see `[redacted]` and not the original value.
+
+For demonstration, let's fire up a REPL session and try it.
+
+```sh
+node ace repl
+```
+
+```sh
+> (js) config = await import('./config/app.js')
+
+# [Module: null prototype] {
+  // highlight-start
+#   appKey: [redacted],
+  // highlight-end
+#   http: {
+#   }
+# }
+```
+
+```sh
+> (js) console.log(config.appKey)
+
+# [redacted]
+```
+
+You can call the `config.appKey.release` method to read the original value. The purpose of the Secret class is not to prevent your code from accessing the original value. Instead, it provides a safety net from exposing sensitive data inside logs.
+
+### Using the Secret class
+You can wrap custom values inside the Secret class as follows.
+
+```ts
+import { Secret } from '@adonisjs/core/helpers'
+const value = new Secret('some-secret-value')
+
+console.log(value) // [redacted]
+console.log(value.release()) // some-secret-value
 ```
 
 ## Types detection

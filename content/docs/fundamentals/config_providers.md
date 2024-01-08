@@ -50,7 +50,7 @@ export default {
 **🚨 The above example will fail** because the AdonisJS [container services](./container_services.md) are unavailable until the application has been booted and the config files are imported before the application boot phase.
 
 ### Well, that's a problem with AdonisJS architecture 🤷🏻‍♂️
-Not really. Let's not use the container service and create an instance of the emitter instance directly within the config file.
+Not really. Let's not use the container service and create an instance of the Emitter class directly within the config file.
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -84,7 +84,7 @@ Therefore, you might want to move the construction of the `Emitter` class to its
 
 ```ts
 // title: start/emitter.ts
-import emitter from '@adonisjs/core/services/emitter'
+import { Emitter } from '@adonisjs/core/events'
 export const emitter = new Emitter()
 ```
 

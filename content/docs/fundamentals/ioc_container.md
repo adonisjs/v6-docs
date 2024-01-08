@@ -482,13 +482,14 @@ export default class DatabaseProvider {
 
 ## Container events
 
-The container emits the `container:resolve` event that you can listen for to observe the bindings as they resolve.
+The container emits the `container_binding:resolved` event after resolving a binding or constructing a class instance. The `event.binding` property will be a string (binding name) or a class constructor, and the `event.value` property is the resolved value.
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
 
-emitter.on('container:resolved', ({ binding, value }) => {
-  console.log({ binding, value })
+emitter.on('container_binding:resolved', (event) => {
+  console.log(event.binding)
+  console.log(event.value)
 })
 ```
 

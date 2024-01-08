@@ -79,7 +79,7 @@ Like HTTP controllers, listener classes offer an abstraction layer to move inlin
 
 See also: [Make listener scaffolding command](./scaffolding.md#makelistener)
 
-```ts
+```sh
 node ace make:listener sendVerificationEmail
 ```
 
@@ -255,8 +255,9 @@ emitter.listen(UserRegistered, [
 ```
 
 ## Handling errors
+By default, the exceptions raised by the listeners will result in [unhandledRejection](https://nodejs.org/api/process.html#event-unhandledrejection). Therefore, it is recommended to self capture and handle the error using the `emitter.onError` method.
 
-The exceptions raised by the listeners can be captured using the `emitter.onError` method. The callback receives the event name, error, and event data.
+The `emitter.onError` method accepts a callback which receives the event name, error, and event data.
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'

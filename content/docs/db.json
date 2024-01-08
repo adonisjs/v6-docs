@@ -42,6 +42,13 @@
     "category": "Getting started"
   },
   {
+    "permalink": "http",
+    "redirects": [],
+    "title": "Introduction",
+    "contentPath": "./http/introduction.md",
+    "category": "HTTP"
+  },
+  {
     "permalink": "http-context",
     "redirects": ["context"],
     "title": "HTTP context",

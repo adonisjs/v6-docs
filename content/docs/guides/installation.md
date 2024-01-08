@@ -184,7 +184,7 @@ When Vite is configured, this command also compiles the frontend assets using Vi
 See also: [TypeScript build process](../fundamentals/typescript_build_process.md).
 
 ```sh
-node ace build --production
+node ace build
 ```
 
 ## Configuring the development environment

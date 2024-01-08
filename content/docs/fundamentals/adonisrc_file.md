@@ -53,7 +53,10 @@ A set of directories and their paths used by the [scaffolding commands](../diggi
     mails: 'app/mails',
     middleware: 'app/middleware',
     policies: 'app/policies',
-    validators: 'app/validators'
+    validators: 'app/validators',
+    events: 'app/events',
+    listeners: 'app/listeners',
+    stubs: 'stubs',
   }
 }
 ```

@@ -17,12 +17,12 @@ However, when using an IoC container, you can offload the task of constructing a
 
 ```ts
 import app from '@adonisjs/core/services/app'
-const db = await app.container.make('db')
+const db = await app.container.make('lucid.db')
 ```
 
 ## The need for container services
 
-Using the container to resolve pre-configured object is great. However, using the `container.make` method has its own downsides.
+Using the container to resolve pre-configured objects is great. However, using the `container.make` method has its own downsides.
 
 - Editors are good with auto imports. If you attempt to use a variable and the editor can guess the import path of the variable, then it will write the import statement for you. **However, this cannot work with `container.make` calls.**
 
@@ -33,7 +33,7 @@ To overcome these downsides, we wrap `container.make` calls inside a regular Jav
 For example, the `@adonisjs/lucid` package has a file called `services/db.ts` and this file has roughly the following contents.
 
 ```ts
-const db = await app.container.make('db')
+const db = await app.container.make('lucid.db')
 export { db as default }
 ```
 
@@ -42,14 +42,14 @@ Within your application, you can replace the `container.make` call with an impor
 ```ts
 // delete-start
 import app from '@adonisjs/core/services/app'
-const db = await app.container.make('db')
+const db = await app.container.make('lucid.db')
 // delete-end
 // insert-start
 import db from '@adonisjs/lucid/services/db'
 // insert-end
 ```
 
-As you can see, we are still relying on the container to resolve an instance of `database` for us. However, with a layer of indirection, we can replace the `container.make` call with a regular `import` statement.
+As you can see, we are still relying on the container to resolve an instance of the Database class for us. However, with a layer of indirection, we can replace the `container.make` call with a regular `import` statement.
 
 **The JavaScript module wrapping the `container.make` calls is known as a Container service.** Almost every package that interacts with the container ships with one or more container services.
 

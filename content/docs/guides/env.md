@@ -18,7 +18,7 @@ process.env.HOST
 process.env.PORT
 ```
 
-### Using the AdonisJS env module
+## Using the AdonisJS env module
 
 Reading environment variables via the `process.env` object requires no setup on the AdonisJS side, as the Node.js runtime supports it. However, in the rest of this document, we will use the AdonisJS env module for the following reasons.
 
@@ -34,23 +34,31 @@ import env from '#start/env'
 env.get('NODE_ENV')
 env.get('HOST')
 env.get('PORT')
+
+// Returns 3333 when PORT is undefined
+env.get('PORT', 3333)
 ```
 
 ### Sharing env module with Edge templates
 If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
 
-You can create `view.ts` as a [preload file](../fundamentals/adonisrc_file.md#preloads) inside the `start` directory and write following lines of code inside it.
+You can [create `view.ts` as a preload file](../fundamentals/adonisrc_file.md#preloads) inside the `start` directory and write the following lines of code inside it.
 
 ```ts
+// title: start/view.ts
 import env from '#start/env'
-import view from '@adonisjs/view/services/main'
+import edge from 'edge.js'
 
-view.global('env', env)
+edge.global('env', env)
 ```
 
 ## Validating environment variables
 
-The validation rules are defined using the `Env.create` method called inside the `start/env.ts` file. A validation schema is an object of key-value pair.
+The validation rules for environment variables are defined inside the `start/env.ts` file using the `Env.create` method. 
+
+The validation is performed automatically when you first import this file. Typically, the `start/env.ts` file is imported by one of the config files in your project. If not, then AdonisJS will import this file implicitly [before booting the application](https://github.com/adonisjs/slim-starter-kit/blob/main/bin/server.ts#L34-L36).
+
+The `Env.create` method accepts the validation schema as a key-value pair.
 
 - The key is the name of the environment variable.
 - The value is the function that performs the validation. It can be a custom inline function or a reference to pre-defined schema methods like `schema.string` or `schema.number`.
@@ -126,7 +134,7 @@ Validate the value to be a valid URL. Optionally, you can make the validation le
   S3_ENDPOINT: Env.schema.string({ format: 'url', tld: false })
 }
 ```
-	
+  
 #### email
 Validate the value to be a valid email address.
 
@@ -140,7 +148,7 @@ Validate the value to be a valid email address.
 
 The `schema.boolean` method ensures the value is a valid boolean. Empty values fail the validation, and you must use the optional variant to allow empty values.
 
-The string representation of `'true'`, `'1'`, `'false'`, and `'0'` are cast to the boolean data type.
+The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to the boolean data type.
 
 ```ts
 {
@@ -199,9 +207,9 @@ enum NODE_ENV = {
 ```
 
 ### Custom functions
-Custom functions can be used to perform validations not covered by the schema API. 
+Custom functions can perform validations not covered by the schema API. 
 
-The function receives the environment variable name as the first argument and value as the second argument. It must return the final value post-validation.
+The function receives the name of the environment variable as the first argument and the value as the second argument. It must return the final value post-validation.
 
 ```ts
 {
@@ -235,12 +243,17 @@ CACHE_VIEWS=false
 ```
 
 ### In production
-In production, it is recommended to use your deployment platform for defining the environment variables. Most modern-day deployment platforms have first-class support for defining environment variables from their web UI.
+Using your deployment platform to define the environment variables is recommended in production. Most modern-day deployment platforms have first-class support for defining environment variables from their web UI.
 
-Suppose your deployment platform provides no means for defining environment variables. You can create a `.env` file on your production server and tell AdonisJS to load that file by setting the `ENV_PATH` environment variable.
+Suppose your deployment platform provides no means for defining environment variables. You can create a `.env` file in the project root or at some different location on your production server.
+
+AdonisJS will automatically read the `.env` file from the project root. However, you must set the `ENV_PATH` variable when the `.env` file is stored at some different location.
 
 ```sh
-# Assuming the .env file exists at path /etc/secrets/.env
+# Attempts to read .env file from project root
+node server.js
+
+# Reads the .env file from the "/etc/secrets" directory
 ENV_PATH=/etc/secrets node server.js
 ```
 
@@ -270,14 +283,14 @@ env.get('SESSION_DRIVER') // memory
 
 ## All other dot-env files
 
-Alongside the `.env` file, AdonisJS also process the environment variables from the following dot-env files. Therefore, you can optionally create these files (if needed).
+Alongside the `.env` file, AdonisJS processes the environment variables from the following dot-env files. Therefore, you can optionally create these files (if needed).
 
-The file with the highest rank overrides the values from the lower-rank files.
+The file with the top-most rank overrides the values from the bottom rank files.
 
 <table>
     <thead>
         <tr>
-            <th width="60px">Rank</th>
+            <th width="40px">Rank</th>
             <th width="220px">Filename</th>
             <th>Notes</th>
         </tr>

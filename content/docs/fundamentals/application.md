@@ -1,6 +1,6 @@
 # Application
 
-The [Application](https://github.com/adonisjs/application/blob/next/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to learn about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
+The [Application](https://github.com/adonisjs/application/blob/next/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
 
 See also: [Application lifecycle](./application_lifecycle.md)
 
@@ -309,18 +309,6 @@ app.tmpPath()
 // /project_root/tmp
 ```
 
-### typesPath
-
-Returns path to a file inside the `types` directory within the project root.
-
-```ts
-app.typesPath('auth.ts')
-// /project_root/types/auth.ts
-
-app.typesPath()
-// /project_root/types
-```
-
 ### httpControllersPath
 
 Returns path to a file inside the HTTP controllers directory.
@@ -425,8 +413,32 @@ Returns path to a file inside the commands directory.
 app.commandsPath('greet.ts')
 // /project_root/commands/greet.ts
 
-app.validatorsPath()
+app.commandsPath()
 // /project_root/commands
+```
+
+### eventsPath
+
+Return path to a file inside the events directory.
+
+```ts
+app.eventsPath('user_created.ts')
+// /project_root/app/events/user_created.ts
+
+app.eventsPath()
+// /project_root/app/events
+```
+
+### listenersPath
+
+Return path to a file inside the listeners directory.
+
+```ts
+app.listenersPath('send_invoice.ts')
+// /project_root/app/listeners/send_invoice.ts
+
+app.listenersPath()
+// /project_root/app/listeners
 ```
 
 ## Generators

@@ -4,7 +4,24 @@ In this guide, we will learn how AdonisJS boots your application and what lifecy
 
 The lifecycle of an application depends upon the environment in which it is running. For example, a long-lived process started to serve HTTP requests is managed differently from a short-lived ace command.
 
-So let's understand the application lifecycle for every supported environment.
+So, let's understand the application lifecycle for every supported environment.
+
+## How an AdonisJS application gets started
+An AdonisJS application has multiple entry points, and each entry point boots the application in a specific environment. The following entrypoint files are stored inside the `bin` directory.
+
+- The `bin/server.ts` entry point boots the AdonisJS application to handle HTTP requests. When you run the `node ace serve` command, behind the scenes we run this file as a child process.
+- The `bin/console.ts` entry point boots the AdonisJS application to handle CLI commands. This file uses [Ace](../ace/introduction.md) under the hood.
+- The `bin/test.ts` entrypoint boots the AdonisJS application to run tests using Japa.
+
+If you open any of these files, you will find us using the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/main.ts#L23) module to wire things up and then start the application.
+
+The Ignitor module encapsulates the logic of starting an AdonisJS application. Under the hood, it performs the following actions.
+
+- Create an instance of the [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class.
+- Initiate/boot the application.
+- Perform the main action to start the application. For example, in the case of an HTTP server, the `main` action involves starting the HTTP server. Whereas, in the case of tests, the `main` action involves running the tests.
+
+The [Ignitor codebase](https://github.com/adonisjs/core/tree/main/src/ignitor) is relatively straightforward, so browse the source code to understand it better.
 
 ## The boot phase
 
@@ -30,7 +47,7 @@ In the web environment, a long-lived HTTP connection is created to listen for in
 
 ### During the test environment
 
-The **pre-start** and the **post-start** actions are executed in the test environment. Post that, we import the test files and execute the tests.
+The **pre-start** and the **post-start** actions are executed in the test environment. After that, we import the test files and execute the tests.
 
 ### During the console environment
 
@@ -70,7 +87,7 @@ In all the environments, we begin a graceful shutdown process when the applicati
 
 In the web environment, the application keeps running until the underlying HTTP server crashes with an error. In that case, we begin terminating the app.
 
-### During the tests environment
+### During the test environment
 
 The graceful termination begins after all the tests have been executed.
 
@@ -180,4 +197,4 @@ export default class AppProvider {
 
 - `ready`: The ready method runs after the application is considered ready.
 
-- `shutdown`: The shutdown method is invoked when the application begins the graceful shutdown. You can use this method to close database connections or end opened streams.
+- `shutdown`: The shutdown method is invoked when the application begins the graceful shutdown. You can use this method to close database connections, or end opened streams.

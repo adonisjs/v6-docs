@@ -1,6 +1,6 @@
 # Logger
 
-AdonisJS comes with an inbuilt logger that supports writing logs to a **file**, **standard output**, and **external logging services**. Under the hood, we use [pino](https://getpino.io/#/). Pino is one of the fastest logging libraries in the Node.js ecosystem that generates logs in the [NDJSON format](http://ndjson.org/).
+AdonisJS has an inbuilt logger that supports writing logs to a **file**, **standard output**, and **external logging services**. Under the hood, we use [pino](https://getpino.io/#/). Pino is one of the fastest logging libraries in the Node.js ecosystem that generates logs in the [NDJSON format](http://ndjson.org/).
 
 ## Usage
 
@@ -13,7 +13,7 @@ logger.info('this is an info message')
 logger.error({ err: error }, 'Something went wrong')
 ```
 
-It is recommended to use the `ctx.logger` property during HTTP requests. The HTTP context holds an instance of a request-aware logger that adds the current request id to every log statement.
+It is recommended to use the `ctx.logger` property during HTTP requests. The HTTP context holds an instance of a request-aware logger that adds the current request ID to every log statement.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -42,8 +42,6 @@ export default defineConfig({
       enabled: true,
       name: Env.get('APP_NAME'),
       level: Env.get('LOG_LEVEL', 'info')
-      
-      // ...rest of the config
     },
   }
 })
@@ -72,7 +70,7 @@ loggers
 
 <dd>
 
-The `loggers` object is a key-value pair to configure multiple loggers. The key is the name of the logger and the value is the config object accepted by [pino](https://getpino.io/#/docs/api?id=options)
+The `loggers` object is a key-value pair to configure multiple loggers. The key is the name of the logger, and the value is the config object accepted by [pino](https://getpino.io/#/docs/api?id=options)
 
 </dd>
 </dl>
@@ -80,7 +78,15 @@ The `loggers` object is a key-value pair to configure multiple loggers. The key 
 
 
 ## Transport targets
-Transports in pino play an essential role, as they are responsible for writing logs to a destination. You can configure [multiple targets](https://getpino.io/#/docs/api?id=transport-object) within your config file, and pino will deliver logs to all of them. Each target can also specify a level from which it wants to receive the logs.
+Transports in pino play an essential role as they write logs to a destination. You can configure [multiple targets](https://getpino.io/#/docs/api?id=transport-object) within your config file, and pino will deliver logs to all of them. Each target can also specify a level from which it wants to receive the logs.
+
+:::note
+
+If you have not defined the `level` within the target configuration, the configured targets will inherit it from the parent logger.
+
+This behavior is different from pino. In Pino, targets do not inherit levels from the parent logger.
+
+:::
 
 ```ts
 {
@@ -270,7 +276,7 @@ class UserService {
 
 ## Logging methods
 
-The Logger API is nearly identical to pino, except the AdonisJS logger is not an instance of an Event emitter (whereas pino is). Apart from that, the logging methods have the same API as pino.
+The Logger API is nearly identical to Pino, except the AdonisJS logger is not an instance of an Event emitter (whereas Pino is). Apart from that, the logging methods have the same API as pino.
 
 ```ts
 import logger from '@adonisjs/core/services/logger'
@@ -297,7 +303,7 @@ logger.error({ err: error }, 'Unable to lookup user')
 
 ## Logging conditionally
 
-The logger produces logs for and above the level configured in the config file. For example, if the level is set to `warn`, then the logs for the `info`, `debug`, and the `trace` levels will be ignored.
+The logger produces logs for and above the level configured in the config file. For example, if the level is set to `warn`, the logs for the `info`, `debug`, and the `trace` levels will be ignored.
 
 If computing data for a log message is expensive, you should check if a given log level is enabled before computing the data.
 
@@ -378,7 +384,7 @@ app: {
 ```
 
 ### File rotation
-Pino does not have inbuilt support for file rotation, and therefore you either have to use a system-level tool like [logrotate](https://getpino.io/#/docs/help?id=rotate) or make use of a third-party package like [pino-roll](https://github.com/feugy/pino-roll).
+Pino does not have inbuilt support for file rotation, and therefore, you either have to use a system-level tool like [logrotate](https://getpino.io/#/docs/help?id=rotate) or make use of a third-party package like [pino-roll](https://github.com/feugy/pino-roll).
 
 ```sh
 npm i pino-roll
@@ -433,7 +439,10 @@ app: {
 ```ts
 import logger from '@adonisjs/core/services/logger'
 
-logger.info({ username: 'virk', password: 'secret' }, 'user signup')
+const username = request.input('username')
+const password = request.input('password')
+
+logger.info({ username, password }, 'user signup')
 // output: {"username":"virk","password":"[Redacted]","msg":"user signup"}
 ```
 
@@ -450,4 +459,24 @@ redact: {
   paths: ['password', '*.password'],
   remove: true
 }
+```
+
+### Using the Secret data type
+An alternative to redaction is to wrap sensitive values inside the Secret class. For example:
+
+See also: [Secret class usage docs](../reference/helpers.md#secret)
+
+```ts
+import { Secret } from '@adonisjs/core/helpers'
+
+const username = request.input('username')
+// delete-start
+const password = request.input('password')
+// delete-end
+// insert-start
+const password = new Secret(request.input('password'))
+// insert-end
+
+logger.info({ username, password }, 'user signup')
+// output: {"username":"virk","password":"[redacted]","msg":"user signup"}
 ```

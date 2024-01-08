@@ -2,12 +2,12 @@
 
 The configuration files of your AdonisJS application are stored inside the `config` directory. A brand new AdonisJS application comes with a handful of pre-existing files used by the framework core and installed packages.
 
-Feel free to create additional files required by your application inside the `config` directory.
+Feel free to create additional files your application requires inside the `config` directory.
 
 
 :::note
 
-We recommend you to use [environment variables](./env.md) for storing secrets and environment-specific configuration.
+We recommend using [environment variables](./env.md) for storing secrets and environment-specific configuration.
 
 
 :::
@@ -32,13 +32,23 @@ The config service offers an alternate API for reading the configuration values.
 import config from '@adonisjs/core/services/config'
 
 config.get('app.appKey')
+config.get('app.http.cookie') // read nested values
 ```
 
-There are no direct benefits of using the config service over importing config files. However, the config service is the only choice to read configuration in external packages and edge templates.
+The `config.get` method accepts a dot-separated key and parses it as follows.
 
-### Reading config inside service providers
+- The first part is the filename from which you want to read the values. I.e., `app.ts` file.
+- The rest of the string fragment is the key you want to access from the exported values. I.e., `appKey` in this case.
 
-If creating an external package, you should use the config service inside service providers to read the config from a certain file. For example:
+## Config service vs. directly importing config files
+
+Using the config service over directly importing the config files has no direct benefits. However, the config service is the only choice to read the configuration in external packages and edge templates.
+
+### Reading config inside external packages
+
+If you are creating a third-party package, you should not directly import the config files from the user application because it will make your package tightly coupled with the folder structure of the host application.
+
+Instead, you should use the config service to access the config values inside a service provider. For example:
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
@@ -65,7 +75,7 @@ You may access configuration values inside edge templates using the `config` glo
 <a href="{{ config('app.appUrl') }}"> Home </a>
 ```
 
-You can use the `config.has` method to check if a configuration value exists for a given key. The method returns `false`, if the value is `undefined`.
+You can use the `config.has` method to check if a configuration value exists for a given key. The method returns `false` if the value is `undefined`.
 
 ```edge
 @if(config.has('app.appUrl'))
@@ -99,13 +109,19 @@ Make sure to update the import alias within the `package.json` file.
 
 The config files stored within the `config` directory are imported during the boot phase of the application. As a result, the config files cannot rely on the application code.
 
-For example, the application will fail to start if you try to import and use the router service inside the `config/app.ts` file. This is because the router service is not configured until the app is in `booted` state.
+For example, if you try to import and use the router service inside the `config/app.ts` file, the application will fail to start. This is because the router service is not configured until the app is in a `booted` state.
 
-Fundamentally, this limitation positively impacts your codebase because the application code should rely on the config and not the other way around.
+Fundamentally, this limitation positively impacts your codebase because the application code should rely on the config, not vice versa.
 
 ## Updating config at runtime
 
 You can mutate the config values at runtime using the config service. The `config.set` updates the value within the memory, and no changes are made to the files on the disk.
+
+:::note
+
+The config value is mutated for the entire application, not just for a single HTTP request. This is because Node.js is not a threaded runtime, and the memory in Node.js is shared between multiple HTTP requests.
+
+:::
 
 ```ts
 import env from '#start/env'

@@ -2,7 +2,7 @@
 
 The users of your website or web application can visit different URLs like `/`, `/about`, or `/posts/1`. To make these URLs work, you have to define routes.
 
-Routes are defined inside the `start/routes.ts` file. A route is a combination of a URI pattern and a handler to handle requests for that specific route. For example:
+In AdonisJS, routes are defined inside the `start/routes.ts` file. A route is a combination of a **URI pattern** and a **handler** to handle requests for that specific route. For example:
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -199,7 +199,7 @@ Finally, you can create a route for custom HTTP methods using the `route.route` 
 router.route('/', ['TRACE'], () => {})
 ```
 
-### Router handler
+## Router handler
 
 The route handler handles the request by returning a response or raising an exception to abort the request.
 

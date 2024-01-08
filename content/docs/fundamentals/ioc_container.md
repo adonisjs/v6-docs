@@ -253,8 +253,8 @@ We recommend you not make your applications unnecessarily complex by registering
 
 Following are some of the examples which are using container bindings inside the framework packages.
 
-- [Registering BodyParserMiddleware inside container](https://github.com/adonisjs/core/blob/next/providers/http_provider.ts#L52-L54): Since the middleware class requires configuration stored inside the `config/bodyparser.ts` file, there is no way for automatic dependency injection to work. In this case, we manually construct the middleware class instance by registering it as a binding.
-- [Registering Encryption service as a singleton](https://github.com/adonisjs/core/blob/next/providers/app_provider.ts#L97-L100): The Encryption class requires the `appKey` stored inside the `config/app.ts` file, therefore, we use container binding as a bridge to read the `appKey` from the user application and configure a singleton instance of the Encryption class.
+- [Registering BodyParserMiddleware inside container](https://github.com/adonisjs/core/blob/main/providers/app_provider.ts#L134-L139): Since the middleware class requires configuration stored inside the `config/bodyparser.ts` file, there is no way for automatic dependency injection to work. In this case, we manually construct the middleware class instance by registering it as a binding.
+- [Registering Encryption service as a singleton](https://github.com/adonisjs/core/blob/main/providers/app_provider.ts#L97-L100): The Encryption class requires the `appKey` stored inside the `config/app.ts` file, therefore, we use container binding as a bridge to read the `appKey` from the user application and configure a singleton instance of the Encryption class.
 
 
 :::important

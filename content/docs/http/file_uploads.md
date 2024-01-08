@@ -230,6 +230,7 @@ router.get('/uploads/*', ({ request, response }) => {
 - Using the `PATH_TRAVERSAL_REGEX` we protect this route against [path traversal](https://owasp.org/www-community/attacks/Path_Traversal).
 - Finally, we convert the `normalizedPath` to an absolute path inside the `uploads` directory and serve the file using the `response.download` method.
 
+<!--
 ## Using Drive to upload and serve files
 
 Drive is a file system abstraction created by the AdonisJS core team. You may use Drive to manage user-uploaded files and store them inside the local file system or move them to a cloud storage service like S3 or GCS.
@@ -237,6 +238,7 @@ Drive is a file system abstraction created by the AdonisJS core team. You may us
 We recommend using Drive over manually uploading and serving files. Drive handles many security concerns like path traversal and offers a unified API across multiple storage providers.
 
 For usage documentation, visit [drive.adonisjs.com](https://drive.adonisjs.com).
+ -->
 
 ## Self-processing multipart stream
 You can turn off the automatic processing of multipart requests and self-process the stream for advanced use cases. Open the `config/bodyparser.ts` file and change one of the following options to disable auto-processing.

@@ -17,7 +17,7 @@ The AdonisJS core team has created a framework agnostic data validation library 
 
 However, AdonisJS does not technically force you to use VineJS. You can use any validation library that fits great for you or your team. Just uninstall the `@vinejs/vine` package and install the package you want to use.
 
-## Using VineJS
+## Configuring VineJS
 Install VineJS from the npm packages registry using one of the following commands.
 
 See also: [VineJS documentation](https://vinejs.dev)
@@ -62,7 +62,7 @@ node ace configure vinejs
 
 :::
 
-## Using VineJS validators
+## Using validators
 VineJS uses the concept of validators. You create one validator for each action your application can perform. For example: Define a validator for **creating a new post**, another for **updating the post**, and maybe a validator for **deleting a post**.
 
 We will use a blog as an example and define validators to create/update a post. Let's start by registering a couple of routes and the `PostsController`.
@@ -96,6 +96,8 @@ export default class PostsController {
 ### Creating validators
 
 Once you have created the `PostsController` and defined the routes, you may use the following ace command to create a validator.
+
+See also: [Make validator command](../reference/commands.md#makevalidator)
 
 ```sh
 node ace make:validator post
@@ -142,28 +144,28 @@ Let's go back to the `PostsController` and use the validators to validate the re
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
-// highlight-start
+// insert-start
 import {
   createPostValidator,
   updatePostValidator
 } from '#validators/post_validator'
-// highlight-end
+// insert-end
 
 export default class PostsController {
   async store({ request }: HttpContext) {
-    // highlight-start
+    // insert-start
     const data = request.all()
     const payload = await createPostValidator.validate(data)
     return payload
-    // highlight-end
+    // insert-end
   }
 
   async update({ request }: HttpContext) {
-    // highlight-start
+    // insert-start
     const data = request.all()
     const payload = await updatePostValidator.validate(data)
     return payload
-    // highlight-end
+    // insert-end
   }
 }
 ```
@@ -177,9 +179,9 @@ The [HttpExceptionHandler](./exception_handling.md) will convert the validation 
 
 :::tip
 
-You might want to peek through the [ExceptionHandler codebase](https://github.com/adonisjs/http-server/blob/next/src/exception_handler.ts#L343-L345) and see how the validation exceptions are converted to an HTTP response.
+You might want to peek through the [ExceptionHandler codebase](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts#L343-L345) and see how the validation exceptions are converted to an HTTP response.
 
-Also, the session middleware [overwrites the `renderValidationErrorAsHTML` method](https://github.com/adonisjs/session/blob/next/src/session_middleware.ts#L30-L37) and uses flash messages to share the validation errors with the form.
+Also, the session middleware [overwrites the `renderValidationErrorAsHTML` method](https://github.com/adonisjs/session/blob/main/src/session_middleware.ts#L30-L37) and uses flash messages to share the validation errors with the form.
 
 :::
 
@@ -356,7 +358,7 @@ vine.errorReporter = () => new JSONAPIErrorReporter()
 ## Rules contributed by AdonisJS
 Following is the list of VineJS rules contributed by AdonisJS.
 
-- The [`vine.file`](https://github.com/adonisjs/core/blob/next/providers/vinejs_provider.ts) schema type is added by the AdonisJS core package.
+- The [`vine.file`](https://github.com/adonisjs/core/blob/main/providers/vinejs_provider.ts) schema type is added by the AdonisJS core package.
 
 ## What's next?
 

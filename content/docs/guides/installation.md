@@ -114,12 +114,12 @@ In this starter kit:
 - Turn off XSS and CSRF protection, and enable CORS protection.
 - Use the ContentNegotiation middleware to send HTTP responses in JSON.
 
-The API starter kit is configured with session-based authentication. However, if you wish to use tokens-based authentication, you can use the `--tokens-auth` flag.
+The API starter kit is configured with session-based authentication. However, if you wish to use tokens-based authentication, you can use the `--auth-guard` flag.
 
 See also: [Which authentication guard should I use?](../auth/introduction.md#choosing-an-auth-guard)
 
 ```sh
-npm init adonisjs -- -K=api --tokens-auth
+npm init adonisjs -- -K=api --auth-guard=opaque_tokens
 ```
 
 ---

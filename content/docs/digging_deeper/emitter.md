@@ -77,7 +77,7 @@ declare module '@adonisjs/core/types' {
 
 Like HTTP controllers, listener classes offer an abstraction layer to move inline event listeners inside dedicated files. Listener classes are stored inside the `app/listeners` directory and you may create a new listener using the `make:listener` command.
 
-See also: [Make listener scaffolding command](./scaffolding.md#makelistener)
+See also: [Make listener command](../reference/commands.md#makelistener)
 
 ```sh
 node ace make:listener sendVerificationEmail
@@ -175,7 +175,7 @@ Class-based events encapsulate the event identifier and the event data within th
 
 You may create an event class using the `make:event` command.
 
-See also: [Make event scaffolding command](./scaffolding.md#makeevent)
+See also: [Make event command](../reference/commands.md#makeevent)
 
 ```sh
 node ace make:event UserRegistered
@@ -373,7 +373,7 @@ test.group('User signup', () => {
 })
 ```
 
-- The `event.fake` method returns an instance of the [EventBuffer](https://github.com/adonisjs/events/blob/next/src/events_buffer.ts) class, and you may use it for assertions and finding emitted events.
+- The `event.fake` method returns an instance of the [EventBuffer](https://github.com/adonisjs/events/blob/main/src/events_buffer.ts) class, and you may use it for assertions and finding emitted events.
 - The `emitter.restore` method restores the fake. After restoring the fake, the events will be emitted normally.
 
 ### Faking specific events

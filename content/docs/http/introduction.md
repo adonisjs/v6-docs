@@ -16,7 +16,7 @@ The HTTP layer inside an AdonisJS application consists of the following modules.
 
 <dd>
 
-The [router module](https://github.com/adonisjs/http-server/blob/next/src/router/main.ts) is responsible for defining the endpoints of your application, which are known as routes. A route should define a handler responsible for handling the request. The handler can be a closure or reference to a controller.
+The [router module](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts) is responsible for defining the endpoints of your application, which are known as routes. A route should define a handler responsible for handling the request. The handler can be a closure or reference to a controller.
 
 </dd>
 
@@ -41,7 +41,7 @@ Controllers are JavaScript classes that you bind to a route to handle the HTTP r
 
 <dd>
 
-AdonisJS creates an instance of the [HttpContext](https://github.com/adonisjs/http-server/blob/next/src/http_context/main.ts) class for every incoming HTTP request. The HttpContext (aka `ctx`) carries the information like the request body, headers, authenticated user, etc, for a given request.
+AdonisJS creates an instance of the [HttpContext](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) class for every incoming HTTP request. The HttpContext (aka `ctx`) carries the information like the request body, headers, authenticated user, etc, for a given request.
 
 </dd>
 
@@ -77,20 +77,20 @@ Server
 
 <dd>
 
-The [server module](https://github.com/adonisjs/http-server/blob/next/src/server/main.ts) wires up the router, middleware, the global exception handler and exports [a `handle` function](https://github.com/adonisjs/http-server/blob/next/src/server/main.ts#L330) you can bind to the Node.js HTTP server to handle requests.
+The [server module](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts) wires up the router, middleware, the global exception handler and exports [a `handle` function](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts#L330) you can bind to the Node.js HTTP server to handle requests.
 
 </dd>
 
 </dl>
 
 ## How AdonisJS boots the HTTP server
-The HTTP server is booted once you call [the `boot` method](https://github.com/adonisjs/http-server/blob/next/src/server/main.ts#L252) on the Server class. Under the hood, this method performs the following actions.
+The HTTP server is booted once you call [the `boot` method](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts#L252) on the Server class. Under the hood, this method performs the following actions.
 
 - Create the middleware pipeline
 - Compile routes
 - Import and instantiate the global exception handler
 
-In a typical AdonisJS application, the `boot` method is called by the [Ignitor](https://github.com/adonisjs/core/blob/next/src/ignitor/http.ts) module within the `bin/server.ts` file.
+In a typical AdonisJS application, the `boot` method is called by the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/http.ts) module within the `bin/server.ts` file.
 
 Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](../fundamentals/adonisrc_file.md#preloads).
 

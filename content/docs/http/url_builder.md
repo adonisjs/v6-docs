@@ -2,7 +2,7 @@
 
 You may use the URL builder to create URLs for pre-defined routes in your application. For example, create a form action URL inside Edge templates, or make the URL to redirect the request to another route.
 
-The `router.builder` method creates an instance of the [URL builder](https://github.com/adonisjs/http-server/blob/next/src/router/lookup_store/url_builder.ts) class, and you can use the builder's fluent API to lookup a route and create a URL for it.
+The `router.builder` method creates an instance of the [URL builder](https://github.com/adonisjs/http-server/blob/main/src/router/lookup_store/url_builder.ts) class, and you can use the builder's fluent API to lookup a route and create a URL for it.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -49,7 +49,7 @@ router
   .make('posts.index') // /posts?page=1&sort=asc
 ```
 
-The query string is serialized using the [qs](https://www.npmjs.com/package/qs) npm package. You can [configure its settings](https://github.com/adonisjs/http-server/blob/next/src/define_config.ts#L41-L46) inside the `config/app.ts` file under the `http` object.
+The query string is serialized using the [qs](https://www.npmjs.com/package/qs) npm package. You can [configure its settings](https://github.com/adonisjs/http-server/blob/main/src/define_config.ts#L49-L54) inside the `config/app.ts` file under the `http` object.
 
 ```ts
 // config/app.js
@@ -166,7 +166,7 @@ router
 
 You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
 
-See also: [Edge helpers reference](../reference/edge.md#route)
+See also: [Edge helpers reference](../reference/edge.md#routesignedroute)
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">

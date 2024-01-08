@@ -37,7 +37,7 @@ Service providers are stored inside the `providers` directory of your app. Alter
 
 The provider module must have an `export default` statement returning the provider class. The class constructor receives an instance of the [Application](./application.md) class.
 
-See also: [Make provider scaffolding command](../digging_deeper/scaffolding.md#make-provider)
+See also: [Make provider command](../reference/commands.md#makeprovider)
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'

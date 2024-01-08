@@ -8,7 +8,7 @@ node ace
 
 Since the `node` binary cannot run the TypeScript source code directly, we have to keep the ace file in pure JavaScript and use the `.js` extension.
 
-Under the hood, the `ace.js` file runs the `bin/console.ts` as a child process using the [ts-node/esm](../fundamentals/typescript_build_process.md) loader hook.
+Under the hood, the `ace.js` file registers TS Node as an [ESM module loader hook](https://nodejs.org/api/module.html#customization-hooks) to execute the TypeScript code and imports the `bin/console.ts` file.
 
 ## Help and list commands
 
@@ -85,6 +85,8 @@ node ace resource admin
     ```
 
 ## Passing Node options
+Certain ace commands like `serve` and 
+
 The ace commands are executed inside a child process, therefore the options passed to the `node` binary are not shared with the child process. 
 
 In the following example, the `--inspect` flag is set for the `ace.js` file and not for the `serve` command running as a child process.

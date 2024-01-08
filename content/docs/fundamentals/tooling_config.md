@@ -1,8 +1,8 @@
 # Tooling config
 
-AdonisJS relies heavily on TypeScript, Prettier, and ESLint to write consistent code, check for errors at build time, and more importantly, have a joyful development experience.
+AdonisJS relies heavily on TypeScript, Prettier, and ESLint to have consistency in code, check for errors at build time, and more importantly, have a joyful development experience.
 
-We have abstracted all our choices inside ready-to-use configuration presets used by all the official packages and optionally by the application starter kits.
+We have abstracted all our choices inside ready-to-use configuration presets used by all the official packages and by the official starter kits.
 
 Continue reading this guide if you want to use the same configuration presets in your Node.js applications written in TypeScript.
 

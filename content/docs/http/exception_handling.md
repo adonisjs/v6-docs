@@ -2,7 +2,7 @@
 
 Exceptions raised during an HTTP request are handled by the `HttpExceptionHandler` defined inside the `./app/exceptions/handler.ts` file. Inside this file, you can decide how to convert exceptions to responses and log them using the logger or report them to an external logging provider.
 
-The `HttpExceptionHandler` extends the [ExceptionHandler](https://github.com/adonisjs/http-server/blob/next/src/exception_handler.ts) class, which does all the heavy lifting of handling errors and provides you with high-level APIs to tweak the reporting and rendering behavior.
+The `HttpExceptionHandler` extends the [ExceptionHandler](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts) class, which does all the heavy lifting of handling errors and provides you with high-level APIs to tweak the reporting and rendering behavior.
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -34,7 +34,7 @@ server.errorHandler(() => import('#exceptions/handler'))
 
 The exceptions are handled by the `handle` method on the exceptions handler class. By default, the following steps are performed while handling an error.
 
-- Check if the error instance has a `handle` method. If yes, call the [error.handle](#self-handled-exceptions) method and return its response.
+- Check if the error instance has a `handle` method. If yes, call the [error.handle](#defining-the-handle-method) method and return its response.
 - Check if a status page is defined for the `error.status` code. If yes, render the status page.
 - Otherwise, render the exception using content negotiation renderers.
 
@@ -102,13 +102,13 @@ You can add custom properties to the log messages by returning an object from th
 
 ```ts
 export default class HttpExceptionHandler extends ExceptionHandler {
-    protected context(ctx: HttpContext) {
-      return {
-        requestId: ctx.requestId,
-        userId: ctx.auth.user?.id,
-        ip: ctx.request.ip(),
-      }
+  protected context(ctx: HttpContext) {
+    return {
+      requestId: ctx.requestId,
+      userId: ctx.auth.user?.id,
+      ip: ctx.request.ip(),
     }
+  }
 }
 ```
 
@@ -159,7 +159,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
 ### Custom shouldReport method
 
-The logic to ignore status codes or exceptions is written inside the [`shouldReport` method](https://github.com/adonisjs/http-server/blob/next/src/exception_handler.ts#L218). If needed, you can override this method and define your custom logic for ignoring exceptions.
+The logic to ignore status codes or exceptions is written inside the [`shouldReport` method](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts#L155). If needed, you can override this method and define your custom logic for ignoring exceptions.
 
 ```ts
 import { HttpError } from '@adonisjs/core/types/http'
@@ -175,7 +175,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
 You can create an exception class using the `make:exception` ace command. An exception extends the `Exception` class from the `@adonisjs/core` package.
 
-See also: [Make exception scaffolding command](../digging_deeper/scaffolding.md#make-exception)
+See also: [Make exception command](../reference/commands.md#makeexception)
 
 ```sh
 node ace make:exception UnAuthorized
@@ -239,7 +239,7 @@ export default class UnAuthorizedException extends Exception {
 ```
 
 ## Narrowing down the error type
-The framework core and other official packages exports the exceptions raised by them. You can test if an error is an instance of a specific exception using the `instanceof` check. For example:
+The framework core and other official packages exports the exceptions raised by them. You can verify if an error is an instance of a specific exception using the `instanceof` check. For example:
 
 ```ts
 import { errors } from '@adonisjs/core'

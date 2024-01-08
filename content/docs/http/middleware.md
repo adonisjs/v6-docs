@@ -66,7 +66,7 @@ router.named({
 
 Middleware are stored inside the `./app/middleware` directory, and you can create a new middleware file by running the `make:middleware` ace command.
 
-See also: [Make middleware scaffolding command](../digging_deeper/scaffolding.md#makemiddleware)
+See also: [Make middleware command](../reference/commands.md#makemiddleware)
 
 ```sh
 node ace make:middleware user_location
@@ -349,7 +349,7 @@ await middleware.handle(ctx, () => {
 
 The `testUtils` service is available only after the AdonisJS application is booted. However, if you are testing a middleware inside a package, you can use the `HttpContextFactory` class to create a dummy HTTP context instance without booting an application.
 
-See also: [CORS middleware test](https://github.com/adonisjs/cors/blob/develop/tests/cors_middleware.spec.ts#L24-L41) for a real-world example.
+See also: [CORS middleware test](https://github.com/adonisjs/cors/blob/main/tests/cors_middleware.spec.ts#L24-L41) for a real-world example.
 
 ```ts
 import {

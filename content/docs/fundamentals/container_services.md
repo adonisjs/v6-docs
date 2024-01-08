@@ -158,7 +158,7 @@ The following table outlines a list of container bindings and their related serv
         <code>app</code>
       </td>
       <td>
-        <a href="https://github.com/adonisjs/application/blob/next/src/application.ts">Application</a>
+        <a href="https://github.com/adonisjs/application/blob/main/src/application.ts">Application</a>
       </td>
       <td>
         <code>@adonisjs/core/services/app</code>
@@ -169,7 +169,7 @@ The following table outlines a list of container bindings and their related serv
         <code>ace</code>
       </td>
       <td>
-        <a href="https://github.com/adonisjs/core/blob/next/modules/ace/kernel.ts">Kernel</a>
+        <a href="https://github.com/adonisjs/core/blob/main/modules/ace/kernel.ts">Kernel</a>
       </td>
       <td>
         <code>@adonisjs/core/services/kernel</code>
@@ -180,7 +180,7 @@ The following table outlines a list of container bindings and their related serv
         <code>config</code>
       </td>
       <td>
-        <a href="https://github.com/adonisjs/config/blob/next/src/config.ts">Config</a>
+        <a href="https://github.com/adonisjs/config/blob/main/src/config.ts">Config</a>
       </td>
       <td>
         <code>@adonisjs/core/services/config</code>
@@ -191,7 +191,7 @@ The following table outlines a list of container bindings and their related serv
         <code>encryption</code>
       </td>
       <td>
-        <a href="">Encryption</a>
+        <a href="https://github.com/adonisjs/encryption/blob/main/src/encryption.ts">Encryption</a>
       </td>
       <td>
         <code>@adonisjs/core/services/encryption</code>
@@ -202,7 +202,7 @@ The following table outlines a list of container bindings and their related serv
         <code>emitter</code>
       </td>
       <td>
-        <a href="">Emitter</a>
+        <a href="https://github.com/adonisjs/events/blob/main/src/emitter.ts">Emitter</a>
       </td>
       <td>
         <code>@adonisjs/core/services/emitter</code>
@@ -213,7 +213,7 @@ The following table outlines a list of container bindings and their related serv
         <code>hash</code>
       </td>
       <td>
-        <a href="">HashManager</a>
+        <a href="https://github.com/adonisjs/hash/blob/main/src/hash_manager.ts">HashManager</a>
       </td>
       <td>
         <code>@adonisjs/core/services/hash</code>
@@ -224,7 +224,7 @@ The following table outlines a list of container bindings and their related serv
         <code>logger</code>
       </td>
       <td>
-        <a href="">LoggerManager</a>
+        <a href="https://github.com/adonisjs/logger/blob/main/src/logger_manager.ts">LoggerManager</a>
       </td>
       <td>
         <code>@adonisjs/core/services/logger</code>
@@ -235,7 +235,7 @@ The following table outlines a list of container bindings and their related serv
         <code>repl</code>
       </td>
       <td>
-        <a href="">Repl</a>
+        <a href="https://github.com/adonisjs/repl/blob/main/src/repl.ts">Repl</a>
       </td>
       <td>
         <code>@adonisjs/core/services/repl</code>
@@ -246,7 +246,7 @@ The following table outlines a list of container bindings and their related serv
         <code>router</code>
       </td>
       <td>
-        <a href="">Router</a>
+        <a href="https://github.com/adonisjs/http-server/blob/main/src/router/main.ts">Router</a>
       </td>
       <td>
         <code>@adonisjs/core/services/router</code>
@@ -257,7 +257,7 @@ The following table outlines a list of container bindings and their related serv
         <code>server</code>
       </td>
       <td>
-        <a href="">Server</a>
+        <a href="https://github.com/adonisjs/http-server/blob/main/src/server/main.ts">Server</a>
       </td>
       <td>
         <code>@adonisjs/core/services/server</code>
@@ -268,7 +268,7 @@ The following table outlines a list of container bindings and their related serv
         <code> testUtils</code>
       </td>
       <td>
-        <a href="https://github.com/adonisjs/core/blob/next/src/test_utils/main.ts">TestUtils</a>
+        <a href="https://github.com/adonisjs/core/blob/main/src/test_utils/main.ts">TestUtils</a>
       </td>
       <td>
         <code>@adonisjs/core/services/test_utils</code>

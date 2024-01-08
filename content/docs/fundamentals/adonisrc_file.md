@@ -28,7 +28,7 @@ The `typescript` property informs the framework and the Ace commands that your a
 
 ## directories
 
-A set of directories and their paths used by the [scaffolding commands](../digging_deeper/scaffolding.md). If you decide to rename specific directories, update their new path inside the `directories` object to notify scaffolding commands.
+A set of directories and their paths used by the scaffolding commands. If you decide to rename specific directories, update their new path inside the `directories` object to notify scaffolding commands.
 
 ```ts
 {

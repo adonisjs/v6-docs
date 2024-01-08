@@ -83,14 +83,17 @@ Following is the list of classes that can be extended using Macros and getters.
 
 | Class | Import path |
 |------|------------|
-| [Request](https://github.com/adonisjs/http-server/blob/next/src/request.ts) | `@adonisjs/core/http` |
-| [Response](https://github.com/adonisjs/http-server/blob/next/src/response.ts) | `@adonisjs/core/http` |
-| [HttpContext](https://github.com/adonisjs/http-server/blob/next/src/http_context/main.ts) | `@adonisjs/core/http` |
-| [Route](https://github.com/adonisjs/http-server/blob/next/src/router/route.ts) | `@adonisjs/core/http` |
-| [RouteGroup](https://github.com/adonisjs/http-server/blob/next/src/router/group.ts) | `@adonisjs/core/http` |
-| [RouteResource](https://github.com/adonisjs/http-server/blob/next/src/router/resource.ts) | `@adonisjs/core/http` |
-| [BriskRoute](https://github.com/adonisjs/http-server/blob/next/src/router/brisk.ts) | `@adonisjs/core/http` |
-| [MultipartFile](https://github.com/adonisjs/bodyparser/blob/next/src/multipart/file.ts) | `@adonisjs/core/bodyparser` |
+| [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) | `@adonisjs/core/app` |
+| [Request](https://github.com/adonisjs/http-server/blob/main/src/request.ts) | `@adonisjs/core/http` |
+| [Response](https://github.com/adonisjs/http-server/blob/main/src/response.ts) | `@adonisjs/core/http` |
+| [HttpContext](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) | `@adonisjs/core/http` |
+| [Route](https://github.com/adonisjs/http-server/blob/main/src/router/route.ts) | `@adonisjs/core/http` |
+| [RouteGroup](https://github.com/adonisjs/http-server/blob/main/src/router/group.ts) | `@adonisjs/core/http` |
+| [RouteResource](https://github.com/adonisjs/http-server/blob/main/src/router/resource.ts) | `@adonisjs/core/http` |
+| [BriskRoute](https://github.com/adonisjs/http-server/blob/main/src/router/brisk.ts) | `@adonisjs/core/http` |
+| [ExceptionHandler](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts) | `@adonisjs/core/http` |
+| [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts) | `@adonisjs/core/bodyparser` |
+
 
 ## Extending modules
 Most of the AdonisJS modules provide extensible APIs to register custom implementations. Following is an aggregated list of the same.

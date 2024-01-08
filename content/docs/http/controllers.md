@@ -4,7 +4,7 @@ HTTP controllers offer an abstraction layer to organize the route handlers insid
 
 The controllers are stored within the `./app/controllers` directory, representing each controller as a plain JavaScript class. You may create a new controller by running the following command.
 
-See also: [Make controller scaffolding command](../digging_deeper/scaffolding.md#makecontroller)
+See also: [Make controller command](../reference/commands.md#makecontroller)
 
 ```sh
 node ace make:controller users
@@ -31,7 +31,7 @@ export default class UsersController {
 }
 ```
 
-Finally, let's bind this controller to a route. We will import the controller using the `#controllers` alias. The aliases are defined using [subpath imports feature of Node.js](../guides/folder_structure.md#subpath-imports).
+Finally, let's bind this controller to a route. We will import the controller using the `#controllers` alias. The aliases are defined using [subpath imports feature of Node.js](../guides/folder_structure.md#the-sub-path-imports).
 
 ```ts
 // title: start/routes.ts
@@ -137,7 +137,7 @@ export default class UsersController {
 
 ### Method injection
 
-You can inject an instance of `UserService` directly inside the controller method using [method injection](../fundamentals/ioc_container.md#method-injection). In this case, you must apply the `@inject` decorator on the method name.
+You can inject an instance of `UserService` directly inside the controller method using [method injection](../fundamentals/ioc_container.md#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
 
 The first parameter passed to the controller method is always the HttpContext. Therefore, you must type-hint the `UserService` as the second parameter.
 

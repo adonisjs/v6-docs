@@ -1,6 +1,6 @@
 # Request
 
-An instance of the [request class](https://github.com/adonisjs/http-server/blob/next/src/request.ts) holds data for the ongoing HTTP request, including the **request body**, **reference to uploaded files**, **cookies**, **request headers**, and much more. The request instance can be accessed using the `ctx.request` property.
+An instance of the [request class](https://github.com/adonisjs/http-server/blob/main/src/request.ts) holds data for the ongoing HTTP request, including the **request body**, **reference to uploaded files**, **cookies**, **request headers**, and much more. The request instance can be accessed using the `ctx.request` property.
 
 ## Query string and route params
 
@@ -45,7 +45,7 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 
 ## Request body
 
-AdonisJS parses the request body using the [body-parser middleware](./bodyparser_middleware.md) registered inside the `start/kernel.ts` file.
+AdonisJS parses the request body using the [bodyparser middleware](./bodyparser_middleware.md) registered inside the `start/kernel.ts` file.
 
 You can access the request body using the `request.body()` method. It returns the parsed request body as an object.
 
@@ -393,7 +393,7 @@ Suppose your application is only accessible through a load balancer, and you do 
 
 Query strings from the request URL are parsed using the [qs](http://npmjs.com/qs) module. You can configure the parser settings inside the `config/app.ts` file.
 
-[View the list](https://github.com/adonisjs/http-server/blob/next/src/types/qs.ts#L11) of all the available options.
+[View the list](https://github.com/adonisjs/http-server/blob/main/src/types/qs.ts#L11) of all the available options.
 
 ```ts
 http: {
@@ -429,26 +429,6 @@ Once enabled, you can spoof the form method as follows.
 
 ```html
 <form method="POST" action="/articles/1?_method=DELETE">
-  <!-- Delete form -->
-</form>
-```
-
-With the `route` helper, you can use the `route.put` and the `route.delete` methods.
-
-```edge
-<form
-  method="POST"
-  action="{{ route.put('articles.update', [article.id]) }}"
->
-  <!-- Update form -->
-</form>
-```
-
-```edge
-<form
-  method="POST"
-  action="{{ route.delete('articles.destroy', [article.id]) }}"
->
   <!-- Delete form -->
 </form>
 ```

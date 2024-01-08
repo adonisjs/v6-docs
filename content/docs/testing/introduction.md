@@ -100,6 +100,8 @@ export const reporters: Config['reporters'] = {
 
 You may create a new test using the `make:test` command. The command needs the suite's name to create the test file.
 
+See also: [Make test command](../reference/commands.md#maketest)
+
 ```sh
 node ace make:test posts/create --suite=functional
 ```
@@ -300,5 +302,4 @@ The `SESSION_DRIVER` during testing must be set to `memory`.
 ```dotenv
 // title: .env.test
 SESSION_DRIVER=memory
-MAIL_DRIVER=memory
 ```

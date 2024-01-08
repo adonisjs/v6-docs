@@ -79,7 +79,9 @@ export default class PostsController {
 
 The AdonisJS documentation is written as a reference guide, covering the usage and the API of several packages and modules maintained by the core team.
 
-With that said, the documentation is not a step by step tutorial guiding you to create an application from scratch. If you are looking for a tutorial, we recommend starting your journey with [Adocasts](https://adocasts.com/). Tom (the creator of Adocasts) has created some highly quality screencasts, helping you to take the first steps with AdonisJS.
+**The guide does not teach you how to build an application from scratch**. If you are looking for a tutorial, we recommend starting your journey with [Adocasts](https://adocasts.com/). Tom (the creator of Adocasts) has created some highly quality screencasts, helping you to take the first steps with AdonisJS.
+
+With that said, the documentation extensively covers the usage of available modules and the inner workings of the framework.
 
 ## VSCode extensions
 You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
@@ -96,7 +98,7 @@ You can develop an AdonisJS application on any code editor supporting TypeScript
 
 - [**X (Formerly Twitter)**](https://twitter.com/adonisframework) - Stay upto-date with framework announcements.
 
-- [**Github discussions**](https://github.com/adonisjs/core/discussions) - Browse existing topic and ask for help.
+- [**Github discussions**](https://github.com/adonisjs/core/discussions) - Browse existing topics and ask for help.
 
 - [**Priority Support**](https://adonisjs.com/support_program) - Get priority support and a direct line of contact with the framework creator.
 

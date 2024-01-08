@@ -1,6 +1,6 @@
 # Cookies
 
-The request cookies are parsed automatically during an HTTP request. You can read cookies using the [request](./request.md) class and set/clear cookies using the [response](./response.md) class.
+The request cookies are parsed automatically during an HTTP request. You can read cookies using the [request](./request.md) object and set/clear cookies using the [response](./response.md) object.
 
 ```ts
 // title: Read cookies
@@ -48,8 +48,8 @@ http: {
     path: '/',
     maxAge: '2h',
     httpOnly: true,
-    secure: false,
-    sameSite: false,
+    secure: true,
+    sameSite: 'lax',
   }
 }
 ```
@@ -64,8 +64,8 @@ response.cookie('key', value, {
   path: '/',
   maxAge: '2h',
   httpOnly: true,
-  secure: false,
-  sameSite: false,
+  secure: true,
+  sameSite: 'lax',
 })
 ```
 
@@ -188,5 +188,5 @@ request.plainCookie('token', {
 ## Setting cookies during tests
 The following guides cover the usage of cookies when writing tests.
 
-- Defining cookies with [Japa API client](../testing/http_tests.md#defining-cookies).
+- Defining cookies with [Japa API client](../testing/http_tests.md#readingwriting-cookies).
 - Defining cookie with [Japa browser client](../testing/browser_tests.md#readingwriting-cookies).

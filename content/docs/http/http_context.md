@@ -7,7 +7,8 @@ HTTP Context holds all the information you may need related to an HTTP request. 
 - You can access the request body, headers, and query params using the [ctx.request](./request.md) property.
 - You can respond to the HTTP request using the [ctx.response](./response.md) property.
 - Access the logged-in user using the [ctx.auth](../auth/introduction.md) property.
-- Or, authorize user actions using the [ctx.bouncer](../digging_deeper/authorization.md) property.
+- Authorize user actions using the [ctx.bouncer](../digging_deeper/authorization.md) property.
+- And so on.
 
 In a nutshell, the context is a request-specific store holding all the information for the ongoing request.
 
@@ -219,7 +220,7 @@ ctx.route
 
 <dd>
 
-The matched route for the current HTTP request. The `route` property is an object of type [StoreRouteNode](https://github.com/adonisjs/http-server/blob/next/src/types/route.ts#L54)
+The matched route for the current HTTP request. The `route` property is an object of type [StoreRouteNode](https://github.com/adonisjs/http-server/blob/main/src/types/route.ts#L69)
 
 </dd>
 
@@ -371,14 +372,19 @@ import testUtils from '@adonisjs/core/services/test_utils'
 const ctx = testUtils.createHttpContext()
 ```
 
-Optionally, you may pass Node.js `req` and `res` objects to create the HttpContext for a specific request.
+By default, the `createHttpContext` method uses fake values for the `req` and the `res` objects. However, you can define custom values for these properties as shown in the following example.
 
 ```ts
 import { createServer } from 'node:http'
 import testUtils from '@adonisjs/core/services/test_utils'
 
 createServer((req, res) => {
-  const ctx = testUtils.createHttpContext({ req, res })
+  const ctx = testUtils.createHttpContext({
+    // highlight-start
+    req,
+    res
+    // highlight-end
+  })
 })
 ```
 

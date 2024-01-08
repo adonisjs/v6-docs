@@ -1,6 +1,6 @@
 # Response
 
-An instance of the [response class](https://github.com/adonisjs/http-server/blob/next/src/response.ts) is used to respond to HTTP requests. AdonisJS supports sending **HTML fragments**, **JSON objects**, **streams**, and much more. The response instance can be accessed using the `ctx.response` property.
+An instance of the [response class](https://github.com/adonisjs/http-server/blob/main/src/response.ts) is used to respond to HTTP requests. AdonisJS supports sending **HTML fragments**, **JSON objects**, **streams**, and much more. The response instance can be accessed using the `ctx.response` property.
 
 ## Sending response
 
@@ -24,7 +24,7 @@ route.get('/', async () => {
 })
 ```
 
-Along with returning a value from the route handler, you can use the `response.send` method to explicitly set the response body. However, calling the `response.send` method multiple times will overwrite the old body and only keeps the latest one.
+Along with returning a value from the route handler, you can use the `response.send` method to explicitly set the response body. However, calling the `response.send` method multiple times will overwrite the old body and only keep the latest one.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -68,7 +68,7 @@ route.get('/', async ({ response }) => {
 })
 ```
 
-A 500 status code is sent to the client in case of an error. However, you can customize the error code and message by defining a callback as the second param.
+A 500 status code is sent to the client in case of an error. However, you can customize the error code and message by defining a callback as the second parameter.
 
 ```ts
 const image = fs.createReadStream('./some-file.jpg')
@@ -96,7 +96,7 @@ route.get('/uploads/:file', async ({ response, params }) => {
 })
 ```
 
-Optionally you can generate an [Etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) for the file contents. Using Etags will help the browser re-use the cached response from the previous request (if any).
+Optionally, you can generate an [Etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) for the file contents. Using Etags will help the browser re-use the cached response from the previous request (if any).
 
 ```ts
 const filePath = app.makePath(`uploads/${params.file}`)
@@ -145,20 +145,36 @@ You may set the response status using the `response.status` method. Calling this
 import router from '@adonisjs/core/services/router'
 
 route.get('/', async ({ response }) => {
-  response.status(200)
+  /**
+   * Sets the status to 200
+   */
+  response.safeStatus(200)
+
+  /**
+   * Does not set the status since it
+   * is already set
+   */
   response.safeStatus(201)
 })
 ```
 
 ### Setting headers
 
-You may set the response headers using the `response.header` method. This method overrides the existing header value (if it already exists). However, you can may the `response.safeHeader` method to set the header only when it is `undefined`.
+You may set the response headers using the `response.header` method. This method overrides the existing header value (if it already exists). However, you may use the `response.safeHeader` method to set the header only when it is `undefined`.
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 route.get('/', async ({ response }) => {
-  response.header('Content-type', 'text/html')
+  /**
+   * Defines the content-type header
+   */
+  response.safeHeader('Content-type', 'text/html')
+
+  /**
+   * Does not set the content-type header since it
+   * is already set
+   */
   response.safeHeader('Content-type', 'text/html')
 })
 ```
@@ -177,7 +193,7 @@ response.removeHeader('Set-cookie')
 
 ## Redirects
 
-The `response.redirect` method returns an instance of the [Redirect](https://github.com/adonisjs/http-server/blob/next/src/redirect.ts) class. The redirect class uses fluent API to construct the redirect URL.
+The `response.redirect` method returns an instance of the [Redirect](https://github.com/adonisjs/http-server/blob/main/src/redirect.ts) class. The redirect class uses fluent API to construct the redirect URL.
 
 The simplest way to perform a redirect is to call the `redirect.toPath` method with the redirection path.
 
@@ -205,7 +221,7 @@ route.get('/posts/:id', async ({ response, params }) => {
 
 ### Redirect back to the previous page
 
-You might want to redirect the user back to the previous page during form submissions in case of validation errors. You can do that using the `redirect.back` method.
+You might want to redirect the user to the previous page during form submissions in case of validation errors. You can do that using the `redirect.back` method.
 
 ```ts
 response.redirect().back()
@@ -221,7 +237,7 @@ response.redirect().status(301).toRoute('articles.show', { id: params.id })
 
 ### Redirect with query string
 
-You can use the `withQs` method to append a query string to the redirect URL. The method accepts an object of key-value pair and converts it to a string.
+You can use the `withQs` method to append a query string to the redirect URL. The method accepts an object of a key-value pair and converts it to a string.
 
 ```ts
 response.redirect().withQs({ page: 1, limit: 20 }).toRoute('articles.index')
@@ -243,13 +259,13 @@ response.redirect().withQs().back()
 
 ## Aborting request with an error
 
-You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and triggers the [exception handling](./exception_handling.md) flow.
+You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and trigger the [exception handling](./exception_handling.md) flow.
 
 ```ts
 router.get('posts/:id/edit', ({ response, auth, params }) => {
   const post = await Post.findByOrFail(params.id)
 
-  if (!auth.user.canEditPost(post)) {
+  if (!auth.user.can('editPost', post)) {
     response.abort({ message: 'Cannot edit post' })
   }
 
@@ -261,28 +277,6 @@ By default, the exception will create an HTTP response with a `400` status code.
 
 ```ts
 response.abort({ message: 'Cannot edit post' }, 403)
-```
-
-The `response.abortIf` and the `response.abortUnless` methods can be used to abort the request conditionally. For example:
-
-```ts
-router.get('posts/:id/edit', ({ response, auth, params }) => {
-  const post = await Post.findByOrFail(params.id)
-
-  response.abortIf(!auth.user.canEditPost(post), { message: 'Cannot edit post' }, 403)
-
-  // continue with the rest of the logic
-})
-```
-
-```ts
-router.get('posts/:id/edit', ({ response, auth, params }) => {
-  const post = await Post.findByOrFail(params.id)
-
-  response.abortUnless(auth.user.canEditPost(post), { message: 'Cannot edit post' }, 403)
-
-  // continue with the rest of the logic
-})
 ```
 
 ## Running actions after response finishes
@@ -313,7 +307,7 @@ The response body set using the `response.send` method gets serialized to a stri
 
 Following is the list of supported data types and their serialization rules.
 
-- Arrays and Objects are stringified using the [safe stringify function](https://github.com/poppinss/utils/blob/next/src/json/safe_stringify.ts). The method is similar to `JSON.stringify` but removes the circular references and serializes `BigInt(s)`.
+- Arrays and Objects are stringified using the [safe stringify function](https://github.com/poppinss/utils/blob/main/src/json/safe_stringify.ts). The method is similar to `JSON.stringify` but removes the circular references and serializes `BigInt(s)`.
 - The number and boolean values are converted to a string.
 - The instance of the Date class is converted to a string by calling the `toISOString` method.
 - Regular expressions and error objects are converted to a string by calling the `toString` method.

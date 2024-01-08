@@ -1,6 +1,6 @@
 # Application
 
-The [Application](https://github.com/adonisjs/application/blob/next/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
+The [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
 
 See also: [Application lifecycle](./application_lifecycle.md)
 
@@ -455,4 +455,4 @@ app.generators.controllerName('user')
 // output - UsersController
 ```
 
-Please [reference the `generators.ts` source code](https://github.com/adonisjs/application/blob/next/src/generators.ts) to view the list of available generators.
+Please [reference the `generators.ts` source code](https://github.com/adonisjs/application/blob/main/src/generators.ts) to view the list of available generators.

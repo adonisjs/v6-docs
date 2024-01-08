@@ -28,7 +28,7 @@ export default class Greet extends BaseCommand {
 }
 ```
 
-Once the command has been created, let's create a **unit** test inside the `tests/unit` directory. Feel free to [define the unit test suite](./introduction.md#suites) if it is not already defined.
+Let's create a **unit** test inside the `tests/unit` directory. Feel free to [define the unit test suite](./introduction.md#suites) if it is not already defined.
 
 ```sh
 node ace make:test commands/greet --suite=unit
@@ -36,7 +36,7 @@ node ace make:test commands/greet --suite=unit
 # DONE:    create tests/unit/commands/greet.spec.ts
 ```
 
-Let's open the newly created file and write the following test. We will use the `ace` service to create an instance of the `Greet` command and assert it exits successfully.
+Let's open the newly created file and write the following test. We will use the `ace` service to create an instance of the `Greet` command and assert that it exits successfully.
 
 ```ts
 import { test } from '@japa/runner'

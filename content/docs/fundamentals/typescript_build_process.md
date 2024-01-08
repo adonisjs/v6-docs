@@ -7,7 +7,7 @@ Compiling TypeScript source files can be performed using many different build to
 
 :::note
 
-All the below-mentioned tools come pre-installed as development dependencies with AdonisJS starter kits.
+All the below-mentioned tools come pre-installed as development dependencies with official starter kits.
 
 
 :::
@@ -33,7 +33,7 @@ You may execute the TypeScript files without compiling them using the `ts-node/e
 node --loader="ts-node/esm" bin/server.js
 ```
 
-- `--loader`: The loader flag registers the module loader hooks with the ES module system. Loader hooks are part of the [Node.js API](https://nodejs.org/dist/latest-v16.x/docs/api/esm.html#loaders).
+- `--loader`: The loader flag registers the module loader hooks with the ES module system. Loader hooks are part of the [Node.js API](https://nodejs.org/dist/latest-v21.x/docs/api/esm.html#loaders).
 
 - `ts-node/esm`: The path to the `ts-node/esm` script that registers lifecycle hooks to perform Just-in-Time compilation of TypeScript source to JavaScript.
 
@@ -61,11 +61,7 @@ node --loader ts-node/esm path/to/file.js
 
 You might have noticed us using `.js` file extension everywhere, even though the file on disk is saved with the `.ts` file extension.
 
-This is because, with ES modules, TypeScript forces you to use the `.js` extension in imports and when running scripts. You can learn about the thesis behind this choice in [TypeScript documentation](https://www.typescriptlang.org/docs/handbook/esm-node.html) (search for - "when a `.ts` file is compiled").
-
-### Using the `ace run` command
-
-You may use the `node ace run` command to execute a TypeScript file. Under the hood, the `run` command uses the **`ts-node/esm` loader hook** as shown in the previous examples.
+This is because, with ES modules, TypeScript forces you to use the `.js` extension in imports and when running scripts. You can learn about the thesis behind this choice in [TypeScript documentation](https://www.typescriptlang.org/docs/handbook/modules/theory.html#typescript-imitates-the-hosts-module-resolution-but-with-types).
 
 ## Running the development server
 Instead of running the `bin/server.js` file directly, we recommend using the `serve` command for the following reasons.

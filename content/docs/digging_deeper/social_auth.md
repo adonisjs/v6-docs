@@ -11,9 +11,7 @@ Ally comes with the following inbuilt drivers, alongside an extensible API to [r
 - Discord
 - LinkedIn
 
-Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. 
-
-As a next step, you can store that information inside a database or perform a one-time action.
+Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. You can store that information inside a database and use the [auth](../auth/introduction.md) package to login the user within your application.
 
 ## Installation
 Install the package from the npm packages registry using one of the following commands.
@@ -68,7 +66,7 @@ node ace configure @adonisjs/ally --providers=github --providers=google
 ## Configuration
 The `@adonisjs/ally` package configuration is stored inside the `config/ally.ts` file. You can define config for multiple services within a single config file.
 
-See also: [Config stub](https://github.com/adonisjs/ally/blob/next/stubs/config/ally.stub)
+See also: [Config stub](https://github.com/adonisjs/ally/blob/main/stubs/config/ally.stub)
 
 ```ts
 import { defineConfig, services } from '@adonisjs/ally'
@@ -328,21 +326,144 @@ const gh = ally.use('github').stateless()
 await gh.user()
 ```
 
-<!--
-
-ADD it once we have the accordion component
 
 ## Complete config reference
-The following is the complete configuration reference for all the drivers. You can copy-paste the following objects directly to your application config file. However, define and validate the required [environment variables](#validation-environment-variables).
+The following is the complete configuration reference for all the drivers. You can copy-paste the following objects directly to `config/ally.ts` file.
 
-:::accordion[Github]
+<div class="disclosure_wrapper">
+
+:::disclosure{title="Github config"}
+
+```ts
+{
+  github: services.github({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // GitHub specific
+    login: 'adonisjs',
+    scopes: ['user', 'gist'],
+    allowSignup: true,
+  })
+}
+```
 
 :::
 
- -->
+:::disclosure{title="Google config"}
+
+```ts
+{
+  google: services.google({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // Google specific
+    prompt: 'select_account',
+    accessType: 'offline',
+    hostedDomain: 'adonisjs.com',
+    display: 'page',
+    scopes: ['userinfo.email', 'calendar.events'],
+  })
+}
+```
+
+:::
+
+:::disclosure{title="Twitter config"}
+
+```ts
+{
+  twitter: services.twitter({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+  })
+}
+```
+
+:::
+
+:::disclosure{title="Discord config"}
+
+```ts
+{
+  discord: services.discord({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // Discord specific
+    prompt: 'consent' | 'none',
+    guildId: '',
+    disableGuildSelect: false,
+    permissions: 10,
+    scopes: ['identify', 'email'],
+  })
+}
+```
+
+:::
+
+:::disclosure{title="LinkedIn config"}
+
+```ts
+{
+  linkedin: services.linkedin({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // LinkedIn specific
+    scopes: ['r_emailaddress', 'r_liteprofile'],
+  })
+}
+```
+
+:::
+
+:::disclosure{title="Facebook config"}
+
+```ts
+{
+  facebook: services.facebook({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // Facebook specific
+    scopes: ['email', 'user_photos'],
+    userFields: ['first_name', 'picture', 'email'],
+    display: '',
+    authType: '',
+  })
+}
+```
+
+:::
+
+:::disclosure{title="Spotify config"}
+
+```ts
+{
+  spotify: services.spotify({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // Spotify specific
+    scopes: ['user-read-email', 'streaming'],
+    showDialog: false
+  })
+}
+```
+
+:::
+
+
+</div>
 
 ## Creating a custom social driver
 We have created a [starter kit](https://github.com/adonisjs-community/ally-driver-boilerplate) to implement and publish a custom social driver on npm. Please go through the README of the starter kit for further instructions.
-
-## Testing
-Since social authentication relies on manual user intervention to approve the authentication flow on a third-party website, there is no simple way to write automated tests. Therefore, you will have to rely on manual testing.

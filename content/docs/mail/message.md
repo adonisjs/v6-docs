@@ -1,6 +1,6 @@
 # Configuring message
 
-The properties of an email are defined using the [Message](https://github.com/adonisjs/mail/blob/next/src/message.ts) class. An instance of this class is provided to the callback function created using the `mail.send`, or `mail.sendLater` methods.
+The properties of an email are defined using the [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) class. An instance of this class is provided to the callback function created using the `mail.send`, or `mail.sendLater` methods.
 
 ```ts
 import { Message } from '@adonisjs/mail'

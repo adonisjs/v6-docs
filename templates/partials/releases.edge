@@ -1,6 +1,6 @@
 <h1> Releases </h1>
 <p class="lede">
-  This document outlines the list of releases for the framework core and the ecosystem packages maintained by the AdonisJS core team.
+  This document outlines notable releases for the framework core and the ecosystem packages maintained by the AdonisJS core team.
 </p>
 
 <div class="table_container table_expanded">
@@ -19,7 +19,10 @@
             <code>{{ release.package }}</code>
           </th>
           <td>
-            {{{ release.description }}}
+            {{{ release.description }}}.
+            <a href="{{ release.release_notes_link }}" target="_blank">
+              <strong>Read release notes</strong>
+            </a>
           </td>
           <td>
             {{ dayjs(release.released_on).format('MMM D, YYYY') }}

@@ -12,17 +12,17 @@ The `@adonisjs/shield` package has a peer dependency on the `@adonisjs/session` 
 
 ```sh
 // title: npm
-npm i @adonisjs/shield@next
+npm i @adonisjs/shield
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/shield@next
+yarn add @adonisjs/shield
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/shield@next
+pnpm add @adonisjs/shield
 ```
 
 :::
@@ -104,8 +104,8 @@ You can access the flash message as follows inside an edge template.
 
 ```edge
 // highlight-start
-@flashMessage('error')
-  <p> {{ message.message }} </p>
+@error('E_BAD_CSRF_TOKEN')
+  <p> {{ $message }} </p>
 @end
 // highlight-end
 

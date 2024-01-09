@@ -67,7 +67,7 @@ node ace configure @adonisjs/mail --transports=resend --transports=smtp
 
 The configuration for the mail package is stored inside the `config/mail.ts` file. Inside this file, you may configure multiple email services as `mailers` to use them within your application.
 
-See also: [Config stub](https://github.com/adonisjs/mail/blob/next/stubs/config.stub)
+See also: [Config stub](https://github.com/adonisjs/mail/blob/main/stubs/config/mail.stub)
 
 ```ts
 import env from '#start/env'
@@ -170,7 +170,7 @@ The `mailers` object is used to configure one or more mailers you want to use fo
 ## Transports config
 Following is a complete reference of configuration options accepted by the officially supported transports. 
 
-See also: [TypeScript types for config object](https://github.com/adonisjs/mail/blob/next/src/types.ts#L261)
+See also: [TypeScript types for config object](https://github.com/adonisjs/mail/blob/main/src/types.ts#L261)
 
 <div class="disclosure_wrapper">
 
@@ -344,9 +344,9 @@ The following configuration options are sent to the Resend's [`/emails`](https:/
 
 ## Basic example
 
-Once the initial configuration is completed, you may send emails using the `mail.send` method. The mail service is a singleton instance of the [MailManager](https://github.com/adonisjs/mail/blob/next/src/mail_manager.ts) class created using the config file.
+Once the initial configuration is completed, you may send emails using the `mail.send` method. The mail service is a singleton instance of the [MailManager](https://github.com/adonisjs/mail/blob/main/src/mail_manager.ts) class created using the config file.
 
-The `mail.send` method passes an instance of the [Message](https://github.com/adonisjs/mail/blob/next/src/message.ts) class to the callback and delivers the email using the `default` mailer configured inside the config file.
+The `mail.send` method passes an instance of the [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) class to the callback and delivers the email using the `default` mailer configured inside the config file.
 
 In the following example, we trigger an email from the controller after creating a new user account.
 
@@ -463,7 +463,7 @@ new Worker('emails', async (job) => {
 That's all! You may continue using the `mail.sendLater` method. However, the emails will be queued inside a redis database this time.
 
 ## Switching between mailers
-You may switch between the configured mailers using the `mail.use` method. The `mail.use` method accepts the name of the mailer (as defined inside the config file) and returns an instance of the [Mailer](https://github.com/adonisjs/mail/blob/next/src/mailer.ts) class.
+You may switch between the configured mailers using the `mail.use` method. The `mail.use` method accepts the name of the mailer (as defined inside the config file) and returns an instance of the [Mailer](https://github.com/adonisjs/mail/blob/main/src/mailer.ts) class.
 
 ```ts
 import mail from '@adonisjs/mail/services/mail'

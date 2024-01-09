@@ -84,23 +84,6 @@ node ace resource admin
     make:controller --resource --singular admin --help
     ```
 
-## Passing Node options
-Certain ace commands like `serve` and 
-
-The ace commands are executed inside a child process, therefore the options passed to the `node` binary are not shared with the child process. 
-
-In the following example, the `--inspect` flag is set for the `ace.js` file and not for the `serve` command running as a child process.
-
-```sh
-node --inspect ace serve
-```
-
-With `ace` commands, you have to pass the Node options after `node ace` in order for them to be shared with the child process.
-
-```sh
-node ace --inspect serve
-```
-
 ## Running commands programmatically
 
 You can use the `ace` service to execute commands programmatically. The ace service is available after the application has been booted.

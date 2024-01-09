@@ -1,9 +1,9 @@
 [
   {
-    "package": "@japa/browser-client",
-    "description": "The plugin is built on top of Playwright, and you can use it for writing end-to-end browser tests using it.",
-    "released_on": "2023-11-10",
-    "version": "2.3.1",
-    "release_notes_link": ""
+    "package": "@adonisjs/mail",
+    "description": "Add mjml component to convert mjml markup to HTML when sending emails",
+    "released_on": "2024-01-09",
+    "version": "9.1.0",
+    "release_notes_link": "https://github.com/adonisjs/mail/releases/tag/v9.1.0"
   }
 ]

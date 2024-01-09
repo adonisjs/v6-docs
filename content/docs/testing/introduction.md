@@ -293,6 +293,13 @@ export const reporters: Config['reporters'] = {
 }
 ```
 
+### Passing options to the Node.js commandline
+The `test` command runs tests `(bin/test.ts file)` as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+
+```sh
+node ace --no-warnings --trace-exit test
+```
+
 ## Environment variables
 
 You may use the `.env.test` file to define the environment variables required during testing. The values inside the `.env.test` takes precedence over those inside the `.env` file.

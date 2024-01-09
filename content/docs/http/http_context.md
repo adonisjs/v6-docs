@@ -139,7 +139,7 @@ That's all! The `UserService` will now automatically receive an instance of the 
 
 Dependency injection is one way to accept the HTTP context as a class constructor or a method dependency and then rely on the container to resolve it for you.
 
-However, it is not a hard requirement to restructure your application and use Dependency injection everywhere. You can also access the HTTP context from anywhere inside your application using the [Async local storage](https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#class-asynclocalstorage) provided by Node.js. 
+However, it is not a hard requirement to restructure your application and use Dependency injection everywhere. You can also access the HTTP context from anywhere inside your application using the [Async local storage](https://nodejs.org/dist/latest-v21.x/docs/api/async_context.html#class-asynclocalstorage) provided by Node.js. 
 
 We have a [dedicated guide](../fundamentals/async_local_storage.md) on how Async local storage works and how AdonisJS uses it to provide global access to the HTTP context.
 

@@ -35,7 +35,7 @@ Once the package is installed, you must configure it using the `node ace configu
 ```sh
 node ace configure @adonisjs/vite
 
-# Auto install vite
+# Auto-install vite
 node ace configure @adonisjs/vite --install
 
 # Do not install vite
@@ -57,7 +57,7 @@ node ace configure @adonisjs/vite --no-install
 
 2. Create `vite.config.js` and `config/vite.ts` configuration files.
 
-3. Create the frontend entrypoint file, ie. `resources/js/app.js`.
+3. Create the frontend entry point file, i.e. `resources/js/app.js`.
 
 :::
 
@@ -143,7 +143,7 @@ assetsUrl
 
 The URL to prefix when generating links for assets in production. If you upload the Vite output to a CDN, then the value of this property should be the CDN server URL.
 
-Ensure to update the backend config to use the same `assetsUrl` value.
+Ensure you update the backend configuration to use the same `assetsUrl` value.
 
 </dd>
 </dl>
@@ -193,7 +193,7 @@ scriptAttributes
 
 <dd>
 
-You can use the `scriptAttributes` property to set attributes on the script tags generated using the `@vite` tag. The attributes is a collection of key-value pair.
+You can use the `scriptAttributes` property to set attributes on the script tags generated using the `@vite` tag. The attributes are a collection of key-value pairs.
 
 ```ts
 // title: config/vite.ts
@@ -213,7 +213,7 @@ styleAttributes
 
 <dd>
 
-You can use the `styleAttributes` property to set attributes on the link tags generated using the `@vite` tag. The attributes is a collection of key-value pair.
+You can use the `styleAttributes` property to set attributes on the link tags generated using the `@vite` tag. The attributes are a collection of key-value pairs.
 
 ```ts
 // title: config/vite.ts
@@ -313,12 +313,12 @@ import '../css/app.css'
 ```
 
 ## Referencing assets inside Edge templates
-Vite creates a dependency graph of files imported by the entrypoints and auto-updates their paths as per the bundled output. However, Vite is unaware of Edge templates and cannot detect the assets referenced by them.
+Vite creates a dependency graph of files imported by the entrypoints and auto-updates their paths per the bundled output. However, Vite is unaware of Edge templates and cannot detect their referenced assets.
 
 Therefore, we provide an Edge helper you can use to create URLs for files processed by Vite. In the following example:
 
 - The `asset` helper will return a URL pointing to the Vite dev server during development.
-- And return a URL pointing to the output filename during production.
+- Return a URL pointing to the output filename during production.
 
 ```edge
 <link ref="stylesheet" href="{{ asset('resources/css/app.css') }}">
@@ -335,7 +335,7 @@ Therefore, we provide an Edge helper you can use to create URLs for files proces
 ```
 
 ## Processing additional assets with Vite
-Vite never processes static assets not imported by the frontend code. It could be static images, fonts, or SVG icons only referenced inside the Edge templates.
+Vite ignores static assets not imported by the frontend code. It could be static images, fonts, or SVG icons only referenced inside the Edge templates.
 
 Therefore, you will have to notify Vite about the existence of these assets using its [Glob imports](https://vitejs.dev/guide/features.html#glob-import) API.
 
@@ -358,7 +358,7 @@ If you plan to use TypeScript in your frontend codebase, create an additional `t
 ```json
 // title: resources/tsconfig.json
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "lib": ["DOM"],
@@ -412,7 +412,7 @@ export default defineConfig({
 ## Deploying assets to a CDN
 After you create the production build using Vite, you can upload the bundled output to a CDN server to serve the files.
 
-However, before you do that, you will have to register the URL of your CDN server with both Vite and AdonisJS so that the output URLs should point to your CDN server.
+However, before you do that, you must register the URL of your CDN server with both Vite and AdonisJS so that the output URLs inside the `manifest.json` file or lazy loaded chunks should point to your CDN server.
 
 You must define the `assetsUrl` inside the `vite.config.js` and `config/vite.ts` files.
 

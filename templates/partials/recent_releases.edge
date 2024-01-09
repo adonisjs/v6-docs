@@ -14,7 +14,10 @@
             <code>{{ release.package }}</code>
           </th>
           <td>
-            {{{ release.description }}}
+            {{{ release.description }}}.
+            <a href="{{ release.release_notes_link }}" target="_blank">
+              <strong>Read release notes</strong>
+            </a>
           </td>
           <td>
             {{ dayjs(release.released_on).format('MMM D, YYYY') }}

@@ -1,6 +1,6 @@
 # Async Local storage
 
-As per the [Node.js official documentation](https://nodejs.org/docs/latest-v14.x/api/async_hooks.html): “AsyncLocalStorage is used to create asynchronous state within callbacks and promise chains. **It allows storing data throughout the lifetime of a web request or any other asynchronous duration. It is similar to thread-local storage in other languages**.”
+As per the [Node.js official documentation](https://nodejs.org/docs/latest-v21.x/api/async_context.html#class-asynclocalstorage): “AsyncLocalStorage is used to create asynchronous state within callbacks and promise chains. **It allows storing data throughout the lifetime of a web request or any other asynchronous duration. It is similar to thread-local storage in other languages**.”
 
 To simplify the explanation further, AsyncLocalStorage allows you to store a state when executing an async function and make it available to all the code paths within that function.
 

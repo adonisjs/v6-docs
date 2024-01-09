@@ -1,6 +1,6 @@
 # TypeScript build process
 
-Applications written in TypeScript must get compiled to JavaScript before you can run them in production.
+Applications written in TypeScript must be compiled into JavaScript before you can run them in production.
 
 Compiling TypeScript source files can be performed using many different build tools. However, with AdonisJS, we stick to the most straightforward approach and use the following time-tested tools.
 
@@ -59,7 +59,7 @@ node --loader ts-node/esm path/to/file.js
 
 ### A note on file extensions
 
-You might have noticed us using `.js` file extension everywhere, even though the file on disk is saved with the `.ts` file extension.
+You might have noticed us using the `.js` file extension everywhere, even though the file on disk is saved with the `.ts` file extension.
 
 This is because, with ES modules, TypeScript forces you to use the `.js` extension in imports and when running scripts. You can learn about the thesis behind this choice in [TypeScript documentation](https://www.typescriptlang.org/docs/handbook/modules/theory.html#typescript-imitates-the-hosts-module-resolution-but-with-types).
 
@@ -67,7 +67,7 @@ This is because, with ES modules, TypeScript forces you to use the `.js` extensi
 Instead of running the `bin/server.js` file directly, we recommend using the `serve` command for the following reasons.
 
 - The command includes a file watcher and restarts the development server on file change.
-- The `serve` command detects the frontend assets bundler your app is using and starts its development server. For example: If you have a `vite.config.js` file in your project root, the `serve` command will start the `vite` dev server.
+- The `serve` command detects the frontend assets bundler your app is using and starts its development server. For example, If you have a `vite.config.js` file in your project root, the `serve` command will start the `vite` dev server.
 
 ```sh
 node ace serve --watch
@@ -83,6 +83,13 @@ You may use the `--no-assets` flag to disable the Vite dev server.
 
 ```sh
 node ace serve --watch --no-assets
+```
+
+### Passing options to the Node.js commandline
+The `serve` command starts the development server `(bin/server.ts file)` as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+
+```sh
+node ace --no-warnings --inspect serve --watch
 ```
 
 ## Creating production build
@@ -101,7 +108,7 @@ And that is all!
 node ace build
 ```
 
-Once the build has been created, you can `cd` into the `build` folder, install production dependencies and run your application.
+Once the build has been created, you can `cd` into the `build` folder, install production dependencies, and run your application.
 
 ```sh
 cd build
@@ -119,7 +126,7 @@ You may pass arguments to the Vite build command using the `--assets-args` comma
 node ace build --assets-args="--debug --base=/public"
 ```
 
-You may use the `--no-assets` flag to not compile the frontend assets.
+You may use the `--no-assets` flag to avoid compiling the frontend assets.
 
 ```sh
 node ace build --no-assets

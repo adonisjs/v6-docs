@@ -21,17 +21,17 @@ Install the package from the npm packages registry using one of the following co
 
 ```sh
 // title: npm
-npm i @adonisjs/session@next
+npm i @adonisjs/session
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/session@next
+yarn add @adonisjs/session
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/session@next
+pnpm add @adonisjs/session
 ```
 
 :::
@@ -76,6 +76,8 @@ node ace configure @adonisjs/session
 ## Configuration
 The configuration for the session package is stored inside the `config/session.ts` file.
 
+See also: [Session config stub](https://github.com/adonisjs/session/blob/main/stubs/config/session.stub)
+
 ```ts
 import env from '#start/env'
 import app from '@adonisjs/core/services/app'
@@ -86,31 +88,17 @@ export default defineConfig({
   enabled: true,
   cookieName: 'adonis-session',
   clearWithBrowser: false,
+
   cookie: {
     path: '/',
     httpOnly: true,
-    sameSite: false,
+    secure: app.inProduction,
+    sameSite: 'lax',
   },
 
   store: env.get('SESSION_DRIVER'),
   stores: {
     cookie: stores.cookie(),
-
-    /**
-     * Enable when using file store
-     *
-      file: stores.file({
-        location: app.tmpPath('sessions')
-      }),
-     */
-
-    /**
-     * Enable when using the redis store
-     *
-      redis: stores.redis({
-        connection: 'main'
-      })
-     */
   }
 })
 ```
@@ -501,8 +489,8 @@ The Session middleware automatically captures the [validation exceptions](./vali
 
 In the following example:
 
-- We access the value of the `title` input field using the `flashMessages.get()` method.
-- And access the error message using the `@inputError` tag. You can also access the error message using `flashMessages.get('errorsBag.title')`
+- We access the value of the `title` input field using the [`old` method](../reference/edge.md#old).
+- And access the error message using the [`@inputError` tag](../reference/edge.md#inputerror).
 
 ```edge
 <form method="POST" action="/posts">
@@ -512,7 +500,7 @@ In the following example:
       type="text"
       id="title"
       name="title"
-      value="{{ flashMessages.get('title') || '' }}"
+      value="{{ old('title') || '' }}"
     />
 
     @inputError('title')
@@ -525,7 +513,7 @@ In the following example:
 ```
 
 ### Writing flash messages
-The following are the methods to write data to the flash messages store.
+The following are the methods to write data to the flash messages store. The `session.flash` method accepts a key-value pair and writes it to the flash messages property inside the session store.
 
 ```ts
 session.flash('key', value)
@@ -534,15 +522,51 @@ session.flash({
 })
 ```
 
-You can flash form data using one of the following methods.
+Instead of manually reading the request data and storing it to the flash messages, you can use one of the following methods to flash form data.
 
 ```ts
+// title: flashAll
+/**
+ * Short hand for flashing request
+ * data
+ */
 session.flashAll()
-session.flashOnly(['username', 'email'])
-session.flashExcept(['password'])
+
+/**
+ * Same as "flashAll"
+ */
+session.flash(request.all())
 ```
 
-Finally, you can reflash data from the current request using the `reflash` method.
+```ts
+// title: flashOnly
+/**
+ * Short hand for flashing selected 
+ * properties from request data
+ */
+session.flashOnly(['username', 'email'])
+
+/**
+ * Same as "flashOnly"
+ */
+session.flash(request.only(['username', 'email']))
+```
+
+```ts
+// title: flashExcept
+/**
+ * Short hand for flashing selected 
+ * properties from request data
+ */
+session.flashExcept(['password'])
+
+/**
+ * Same as "flashExcept"
+ */
+session.flash(request.except(['password']))
+```
+
+Finally, if you want to reflash the current flash messages, you can that using `session.reflash` method.
 
 ```ts
 session.reflash()
@@ -678,4 +702,4 @@ export default defineConfig({
 
 ### A note on serializing data
 
-The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../reference/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session store](https://github.com/adonisjs/session/blob/next/src/drivers/redis.ts).
+The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../reference/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session stores](https://github.com/adonisjs/session/blob/main/src/stores/redis.ts#L59).

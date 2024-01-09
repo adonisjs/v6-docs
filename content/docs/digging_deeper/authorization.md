@@ -195,13 +195,13 @@ Policies offer an abstraction layer to organize the authorization checks as clas
 
 The policies are stored inside the `./app/policies` directory, and each file represents a single policy. You may create a new policy by running the following command.
 
-See also: [Make policy scaffolding command](./scaffolding.md#makepolicy)
+See also: [Make policy command](../reference/commands.md#makepolicy)
 
 ```sh
 node ace make:policy post
 ```
 
-The policy class extends the [BasePolicy](https://github.com/adonisjs/bouncer/blob/next/src/base_policy.ts) class, and you may implement methods for the authorization checks you want to perform. In the following example, we define authorization checks to `create`, `edit`, and `delete` a post.
+The policy class extends the [BasePolicy](https://github.com/adonisjs/bouncer/blob/main/src/base_policy.ts) class, and you may implement methods for the authorization checks you want to perform. In the following example, we define authorization checks to `create`, `edit`, and `delete` a post.
 
 ```ts
 // title: app/policies/post_policy.ts
@@ -411,7 +411,7 @@ export class PostPolicy extends BasePolicy {
 ```
 
 ## Throwing AuthorizationException
-Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](https://github.com/adonisjs/bouncer/blob/next/src/errors.ts#L19) when the check fails.
+Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](https://github.com/adonisjs/bouncer/blob/main/src/errors.ts#L19) when the check fails.
 
 ```ts
 router.put('posts/:id', async ({ bouncer, params }) => {
@@ -446,12 +446,14 @@ export default class HttpExceptionHandler extends ExceptionHandler {
   protected renderStatusPages = app.inProduction
 
   async handle(error: unknown, ctx: HttpContext) {
+    // highlight-start
     if (error instanceof errors.E_AUTHORIZATION_FAILURE) {
       return ctx
         .response
         .status(error.status)
         .send(error.getResponseMessage(ctx))
     }
+    // highlight-end
 
     return super.handle(error, ctx)
   }
@@ -459,7 +461,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 ```
 
 ## Customizing Authorization response
-Instead of returning a boolean value from abilities and policies, you may construct an error response using the [AuthorizationResponse](https://github.com/adonisjs/bouncer/blob/next/src/response.ts) class. 
+Instead of returning a boolean value from abilities and policies, you may construct an error response using the [AuthorizationResponse](https://github.com/adonisjs/bouncer/blob/main/src/response.ts) class. 
 
 The `AuthorizationResponse` class gives you fine grained control to define a custom HTTP status code and the error message.
 

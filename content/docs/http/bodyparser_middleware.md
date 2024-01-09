@@ -236,7 +236,7 @@ Enabling `autoProcess` will move all the user-uploaded files to the `tmp` direct
 
 Later, inside the controllers, you can validate the files and move them to a persistent location or a cloud service.
 
-If you disable the `autoProcess` flag, then you will have to manually process the stream and read files/fields from the request body. See also: [Advanced file uploads](../file_uploads#advanced-file-uploads).
+If you disable the `autoProcess` flag, then you will have to manually process the stream and read files/fields from the request body. See also: [Self-processing multipart stream](./file_uploads.md#self-processing-multipart-stream).
 
 You may define an array of routes for which to auto process the files. The values **must be a route pattern** and not the URL.
 

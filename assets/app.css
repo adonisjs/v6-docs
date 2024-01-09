@@ -134,6 +134,7 @@ html.dark {
 
 .markdown .table_container {
   margin: var(--prose-elements-margin) 0;
+  overflow: auto;
 }
 
 .markdown table {
@@ -168,11 +169,13 @@ html.dark {
   border-radius: 0 0 7px 7px;
 }
 
-.markdown .table_expanded {
-  max-width: 120%;
-  width: 120%;
-}
-
 .markdown p.lede {
   font-size: 18px;
+}
+
+@media (min-width: 1440px) {
+  .markdown .table_expanded {
+    max-width: 120%;
+    width: 120%;
+  }
 }

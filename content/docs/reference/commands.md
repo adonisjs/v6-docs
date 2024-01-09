@@ -21,6 +21,12 @@ The `serve` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler
 node ace serve --watch
 ```
 
+The `serve` command starts the development server `(bin/server.ts file)` as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+
+```sh
+node ace --no-warnings --inspect serve --watch
+```
+
 Following is the list of available options you can pass to the `serve` command. Alternatively, use the `--help` flag to view the command's help.
 
 <dl>
@@ -302,7 +308,7 @@ Generate a controller with methods to perform CRUD operations on a resource.
 
 <dd>
 
-The `--api` flag is similar to the `--resource` flag. However, it does not define the `create` and the `edit` methods since these methods are used to display forms.
+The `--api` flag is similar to the `--resource` flag. However, it does not define the `create` and the `edit` methods since they are used to display forms.
 
 </dd>
 
@@ -426,6 +432,12 @@ node ace make:listener sendShipmentNotification --event=shipment_received
 ## make\:service
 
 Create a new service class. Service classes are stored inside the `app/services` directory and use the following naming conventions.
+
+:::note
+
+A service has no pre-defined meaning, and you can use it to extract the business logic inside your application. For example, if your application generates a lot of PDFs, you may create a service called `PdfGeneratorService` and reuse it in multiple places.
+
+:::
 
 - Form: `singular`
 - Suffix: `service`

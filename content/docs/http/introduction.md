@@ -126,7 +126,7 @@ shared as the local storage state.
 
 <dd>
 
-Next, the middleware from the [server middleware stack](./middleware.md#server-middleware-stack) is executed. This middleware can intercept and respond to the request before it reaches the route handler.
+Next, the middleware from the [server middleware stack](./middleware.md#server-middleware-stack) are executed. These middleware can intercept and respond to the request before it reaches the route handler.
 
 Also, every HTTP request goes through the server middleware stack, even if you have not defined any router for the given endpoint. This allows server middleware to add functionality to an app without relying on the routing system.
 

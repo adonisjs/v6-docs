@@ -1,338 +1,91 @@
 # Session guard
+The session guard uses the [@adonisjs/session](../http/session.md) package to login and authenticate users during an HTTP request.
 
-The session guard uses the [@adonisjs/session](../http/session.md) package to log in and authenticate users. We recommend using the session guard for **server-rendered web apps** or **an AdonisJS API with its client on the same top-level domain**.
+Sessions and cookies have been long on the internet and work great for most applications. Therefore, we recommend using the session guard for server rendered applications or an SPA web-client on the same top-level domain.
 
-## Configuration
-
-The configuration for the auth package is stored within the `config/auth.ts` file. You can configure multiple authentication guards in this file based on your application requirements.
-
-You can copy-paste the following example configuration examples to the `config/auth.ts` file. Feel free to create the config file if it's missing.
-
-:::disclosure{title="Session guard with Lucid provider"}
+## Configuring the guard
+The authentication guards are defined inside the `config/auth.ts` file. You can configure multiple guards inside this file under the `guards` object.
 
 ```ts
-import { defineConfig, providers } from '@adonisjs/auth'
-import { sessionGuard } from '@adonisjs/auth/session'
-import { InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
+// title: config/auth.ts
+import { defineConfig } from '@adonisjs/auth'
+// highlight-start
+import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
+// highlight-end
 
 const authConfig = defineConfig({
-  default: 'web',
+  default: 'session',
   guards: {
-    web: sessionGuard({
-      provider: providers.lucid({
+    // highlight-start
+    session: sessionGuard({
+      useRememberTokens: false,
+      provider: sessionUserProvider({
         model: () => import('#models/user'),
-        uids: ['email'],
       }),
-    }),
+    })
+    // highlight-end
   },
 })
 
 export default authConfig
-
-/**
- * Inferring types from the configured auth
- * guards.
- */
-declare module '@adonisjs/auth/types' {
-  interface Authenticators extends InferAuthenticators<typeof authConfig> {}
-}
-declare module '@adonisjs/core/types' {
-  interface EventsList extends InferAuthEvents<Authenticators> {}
-}
 ```
 
+The `sessionGuard` method creates an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) class. It accepts a user provider that can be used for finding users during authentication and an optional config object to configure the remember tokens behavior.
 
-:::
+The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
 
+## Performing login
+You can login a user using the `guard.login` method. The method accepts an instance of the User model and creates a login session for them.
 
-## Configuring session guard
+In the following example:
 
-The session guard accepts the following properties.
+- We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
 
-<dl>
+- The `auth.use('session')` return an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/next/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
 
-<dt>
+- Next, we call the `guard.login(user)` method to create a login session for the user.
 
-provider
-
-</dt>
-
-<dd>
-
-Reference to the user provider to lookup users. [Learn more about the Lucid provider](./lucid_user_provider.md).
-
-</dd>
-
-<dt>
-
-tokens (optional)
-
-</dt>
-
-<dd>
-
-Reference to a remember me tokens provider. You must configure a tokens provider to use the remember me feature. [Learn more](#remember-me-feature)
-
-</dd>
-
-<dt>
-
-rememberMeTokenAge (optional)
-
-</dt>
-
-<dd>
-
-Define the expiry age of the remember me token. Defaults to `2 years`.
-
-</dd>
-
-</dl>
-
-## Remember Me feature
-
-The Remember Me feature automatically login user after their session expires. This is done by generating a cryptographically secure token and saving it as a cookie inside the user's browser.
-
-After the user session has expired, AdonisJS will use the remember me cookie, verify the token's validity, and automatically re-create the logged-in session for the user.
-
-When using remember me tokens, you must generate the migration to create the `remember_me_tokens` database table, and the table must have the following columns.
-
-
-:::note
-
-
-In the following migration, we define a foreign key constraint for the `user_id` column. However, change the migration and remove the foreign key constraint if you are fetching users from a different source (not the same database). 
-
-
-:::
+- Finally, we redirect the user to the `/dashboard` endpoint. Feel free to customize the redirect endpoint.
 
 ```ts
-import { BaseSchema } from '@adonisjs/lucid/schema'
+import User from '#models/user'
+import { HttpContext } from '@adonisjs/core/http'
 
-export default class extends BaseSchema {
-  protected tableName = 'remember_me_tokens'
+export default class SessionController {
+  async store({ request, auth, response }: HttpContext) {
+    // highlight-start
+    /**
+     * Step 1: Get credentials from request body
+     */
+    const { email, password } = request.only(['email', 'password'])
 
-  async up() {
-    this.schema.createTable(this.tableName, (table) => {
-      table.string('series').notNullable().unique()
-      table
-        .string('user_id')
-        .unsigned()
-        .notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
+    /**
+     * Step 2: Verify credentials
+     */
+    const user = await User.verifyCredentials(email, password)
 
-      table.string('type').notNullable()
-      table.string('guard').notNullable()
-      table.string('token').notNullable().unique()
-      table.timestamp('created_at').notNullable()
-      table.timestamp('updated_at').notNullable()
-      table.timestamp('expires_at').notNullable()
-    })
-  }
+    /**
+     * Step 3: Login user
+     */
+    await auth.use('session').login(user)
 
-  async down() {
-    this.schema.dropTable(this.tableName)
+    /**
+     * Step 4: Send them to a protected route
+     */
+    response.redirect('/dashboard')
+    // highlight-end
   }
 }
-```
-
-Finally, you must define a token provider within the config file and register it with the session guard.
-
-```ts
-import {
-  sessionGuard,
-  // insert-start
-  tokenProviders,
-  // insert-end
-} from '@adonisjs/auth/session'
-
-// insert-start
-const rememberTokensProvider = tokenProviders.db({
-  table: 'remember_me_tokens',
-})
-// insert-end
-
-const authConfig = defineConfig({
-  default: 'web',
-  guards: {
-    web: sessionGuard({
-      provider: userProvider,
-      // insert-start
-      tokens: rememberMeTokensProvider,
-      rememberMeTokenAge: '2 years',
-      // insert-end
-    }),
-  },
-})
-```
-
-## Getting access to the guard
-
-You can access the guard instance using the `ctx.auth.use` method. The auth property is an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/next/src/auth/authenticator.ts), created for every HTTP request using the [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/next/src/auth/middleware/initialize_auth_middleware.ts).
-
-The `auth.use` method accepts the guard name (as mentioned inside the config file) and returns a singleton instance.
-
-```ts
-import router from '@adonisjs/core/services/router'
-
-router.post('login', async ({ auth }) => {
-  const guard = auth.use('web')
-  // guard instanceof SessionGuard = true
-})
-```
-
-## How to login a user
-
-As shown in the following example, you can login a user using the `guard.attempt` method. The `attempt` method will verify the user credentials and create a login session.
-
-```ts
-import router from '@adonisjs/core/services/router'
-
-router.post('login', async ({ auth, request, response }) => {
-  const email = request.input('email')
-  const password = request.input('password')
-
-  await auth.use('web').attempt(email, password)
-
-  response.redirect('/dashboard')
-})
-```
-
-- The `guard.attempt` method accepts the value for a [`UID` column](./lucid_user_provider.md) and the account password. Under the hood, it will query the user from the database and verify the password using the [hash](../security/hash.md) module.
-
-- An [InvalidCredentialsException](#handling-login-errors) will be raised when unable to find the user or if the password is incorrect.
-
-- Otherwise, the session guard will create a login session for the user. 
-
-- Finally, you can redirect the user to the home page or dashboard (depending on your application workflow).
-
-### How to create a login form?
-
-The `guard.attempt` method does not care how you ask for the user credentials. If you can provide valid credentials, it will create a login session for the authenticated user.
-
-If you are creating an SPA, you can create the login form inside your frontend app and send the credentials via an AJAX/fetch request. Make sure to implement [CORS](../security/cors.md) to protect your APIs from unwanted access. 
-
-If you are creating a server-rendered application with Edge templates, you can create a regular HTML form. However, configure [CSRF protection](../security/web-security.md#csrf-protection) to protect the login form.
-
-### How to log in without a password?
-
-If you are creating a passwordless authentication system, you will have to verify the authenticity of a user manually. 
-
-After you have verified a user, you can call the `guard.login` method with an instance of the `User` model.
-
-```ts
-router.post('verify/otp', async ({ auth, request, response }) => {
-  /**
-   * Imaginary method call to verify OTP and get
-   * the user for whom the OTP was generated
-   */
-  const userId = await verifyMobileOtp(otp)
-
-  /**
-   * Find user by ID user the User model
-   */
-  const user = await User.findOrFail(userId)
-
-  /**
-   * Mark the user as logged-in
-   */
-  await auth.use('web').login(user)
-
-  response.redirect('/dashboard')
-})
-```
-
-Similar to the login method, you may also use the `guard.loginViaId` method to login a user by id. The `loginViaId` method will query the database to ensure a user with the given id exists and create a login session for them.
-
-```ts
-router.post('verify/otp', async ({ auth, request, response }) => {
-  /**
-   * Imaginary method call to verify OTP and get
-   * the user for whom the OTP was generated
-   */
-  const userId = await verifyMobileOtp(otp)
-
-  /**
-   * Mark the user as logged-in
-   */
-  await auth.use('web').login(userId)
-
-  response.redirect('/dashboard')
-})
-```
-
-### Handling login errors
-
-The `guard.attempt` and `guard.loginViaId` methods will raise [InvalidCredentialsException](https://github.com/adonisjs/auth/blob/next/src/auth/errors.ts#L126) when unable to find a user or when the password is incorrect. The exception is handled automatically using the following content-negotiation rules.
-
-- Request with `Accept=application/json` header will receive an array of errors with the `message` property.
-- Request with `Accept=application/vnd.api+json` header will receive an array of errors as per the [JSON API](https://jsonapi.org/format/#errors) spec.
-- The user will be redirected to the login page with a flash error message for server-rendered applications. You can access the flash message inside edge templates as follows.
-
-    ```edge
-    @error('auth.login')
-      @each(message in messages)
-        <p> {{ message }} </p>
-      @end
-    @end
-    
-    <form>
-      <!-- Login form goes here -->
-    </form>
-    ```
-
-## How to logout a user
-
-You can logout a user using the `guard.logout` method. During logout, the user state will be deleted from the session store. The currently active token will also be deleted if using remember me tokens.
-
-```ts
-import router from '@adonisjs/core/services/router'
-
-router.post('logout', async ({ auth, response }) => {
-  await auth.use('web').logout()
-
-  return response.redirect('/login')
-})
 ```
 
 ## Protecting routes
 
-You can protect routes from unauthenticated users using the `auth` middleware. The middleware should be registered under the named middleware collection inside the `start/kernel.ts` file.
+You can protect routes from unauthenticated users using the `auth` middleware. The middleware is registered inside the `start/kernel.ts` file under the named middleware collection.
 
 ```ts
 export const middleware = router.named({
   auth: () => import('#middleware/auth_middleware')
 })
-```
-
-```ts
-// title: app/middleware/auth.ts
-import type { HttpContext } from '@adonisjs/core/http'
-import type { NextFn } from '@adonisjs/core/types/http'
-import type { Authenticators } from '@adonisjs/auth/types'
-
-/**
- * Auth middleware is used to authenticate HTTP requests and deny
- * access to unauthenticated users.
- */
-export default class AuthMiddleware {
-  /**
-   * The URL to redirect to when authentication fails
-   */
-  redirectTo = '/login'
-
-  async handle(
-    ctx: HttpContext,
-    next: NextFn,
-    options: {
-      guards?: (keyof Authenticators)[]
-    } = {}
-  ) {
-    await ctx.auth.authenticateUsing(options.guards, { loginRoute: this.redirectTo })
-    return next()
-  }
-}
 ```
 
 Apply the `auth` middleware to the routes you want to protect from unauthenticated users. 
@@ -352,7 +105,7 @@ router
 
 By default, the auth middleware will authenticate the user against the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `auth` middleware.
 
-The auth middleware will attempt to authenticate the request using the `web` and the `basic_auth` guards in the following example.
+The auth middleware will attempt to authenticate the request using the `session` and the `api` guards in the following example.
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -363,15 +116,15 @@ router
  // highlight-start
  .use(
    middleware.auth({
-     guards: ['web', 'basic_auth']
+     guards: ['session', 'api']
    })
  )
  // highlight-end
 ```
 
-### Handling AuthenticationException
+### Handling authentication exception
 
-The auth middleware throws the [AuthenticationException](https://github.com/adonisjs/auth/blob/next/src/auth/errors.ts#L18) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
+The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/next/src/auth/errors.ts#L18) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
 
 - Request with `Accept=application/json` header will receive an array of errors with the `message` property.
 
@@ -381,7 +134,7 @@ The auth middleware throws the [AuthenticationException](https://github.com/adon
 
 ## Getting access to the logged-in user
 
-You can access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` middleware or manually calling the `auth.authenticate` method.
+You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` middleware or if you call the `auth.authenticate` method manually.
 
 ```ts
 // title: Using auth middleware
@@ -389,12 +142,12 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
- .get('dashboard', ({ auth }) => {
-   // highlight-start
-   console.log(auth.user) // User
-   // highlight-end
- })
- .use(middleware.auth())
+  .get('dashboard', ({ auth }) => {
+    // highlight-start
+    await auth.user!.getAllMetrics()
+    // highlight-end
+  })
+  .use(middleware.auth())
 ```
 
 ```ts
@@ -403,65 +156,182 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
- .get('dashboard', ({ auth }) => {
-   // highlight-start
-   console.log(auth.user) // undefined
-   await auth.authenticate()
-   console.log(auth.user) // User
-   // highlight-end
- })
+  .get('dashboard', ({ auth }) => {
+    // highlight-start
+    /**
+     * First authenticate the user
+     */
+    await auth.authenticate()
+
+    /**
+     * Then access the user object
+     */ 
+    await auth.user!.getAllMetrics()
+    // highlight-end
+  })
 ```
 
-The `auth.user` property refers to the guard's user object for which the authentication succeeded. For example:
+### Check if the request is authenticated
+You can check if a request has been authenticated using the `auth.isAuthenticated` flag. The value of `auth.user` will always be defined for an authenticated request.
 
 ```ts
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
- .get('dashboard', ({ auth }) => {
-   if (auth.authenticatedViaGuard === 'web') {
-     auth.user // instance of web guard's user
-   }
-
-   if (auth.authenticatedViaGuard === 'basic_auth') {
-     auth.user // instance of basic_auth guard's user
-   }
- })
- .use(
-   middleware.auth({
-     guards: ['web', 'basic_auth']
-   })
- )
+  .get('dashboard', ({ auth }) => {
+    // highlight-start
+    if (auth.isAuthenticated) {
+      await auth.user!.getAllMetrics()
+    }
+    // highlight-end
+  })
+  .use(middleware.auth())
 ```
 
-## Remembering users
+### Get authenticated user or fail
 
-If you have configured the [remember me feature](#remember-me-feature), you can display a "remember me checkbox" in your login forms to keep the users logged in indefinitely until they manually logout.
-
-You can pass the boolean state of the checkbox to the `guard.attempt`, `guard.loginViaId`, and `guard.login` methods as follows.
+If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../reference/exceptions.md#e_unauthorized_access) exception.
 
 ```ts
+import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
-router.post('login', async ({ auth, request, response }) => {
-  const email = request.input('email')
-  const password = request.input('password')
+router
+  .get('dashboard', ({ auth }) => {
+    // highlight-start
+    const user = auth.getUserOrFail()
+    await user.getAllMetrics()
+    // highlight-end
+  })
+  .use(middleware.auth())
+```
 
-  // highlight-start
-  const rememberMe = !!request.input('remember_me')
-  await auth
-    .use('web')
-    .attempt(email, password, rememberMe)
-  // highlight-end
+## Performing logout
+You can logout a user using the `guard.logout` method. During logout, the user state will be deleted from the session store. The currently active remember me token will also be deleted (if using remember me tokens).
 
-  response.redirect('/dashboard')
-})
+```ts
+import { middleware } from '#start/kernel'
+import router from '@adonisjs/core/services/router'
+
+router
+  .post('logout', async ({ auth, response }) => {
+    await auth.use('web').logout()
+    return response.redirect('/login')
+  })
+  .use(middleware.auth())
+```
+
+## Using the Remember me feature
+The Remember me feature automatically login user after their session expires. This is done by generating a cryptographically secure token and saving it as a cookie inside the user's browser.
+
+After the user session has expired, AdonisJS will use the remember me cookie, verify the token's validity, and automatically re-create the logged-in session for the user.
+
+### Creating the remember me tokens table
+
+The remember me tokens are saved inside the database and therefore you must create a new migration to create the `remember_me_tokens` table.
+
+```sh
+node ace make:migration remember_me_tokens
 ```
 
 ```ts
-await auth.use('web').login(user, rememberMe)
-await auth.use('web').loginViaId(userId, rememberMe)
+import { BaseSchema } from '@adonisjs/lucid/schema'
+
+export default class extends BaseSchema {
+  protected tableName = 'remember_me_tokens'
+
+  async up() {
+    this.schema.createTable(this.tableName, (table) => {
+      table.increments()
+      table
+        .string('tokenable_id')
+        .unsigned()
+        .notNullable()
+        .references('users.id')
+        .onDelete('CASCADE')
+
+      table.string('hash').notNullable().unique()
+      table.timestamp('created_at').notNullable()
+      table.timestamp('updated_at').notNullable()
+      table.timestamp('expires_at').notNullable()
+    })
+  }
+
+  async down() {
+    this.schema.dropTable(this.tableName)
+  }
+}
+```
+
+### Configuring the tokens provider
+In order read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/token_providers/db.ts) to the User model.
+
+```ts
+import { BaseModel } from '@adonisjs/lucid/orm'
+// highlight-start
+import { DbRememberMeTokensProvider } from '@adonisjs/auth/session'
+// highlight-end
+
+export default class User extends BaseModel {
+  // ...rest of the model properties
+
+  // highlight-start
+  static rememberMeTokens = DbRememberMeTokensProvider.forModel(User)
+  // highlight-end
+}
+```
+
+### Enabling remember me tokens inside the config
+Finally, let's enable the `useRememberTokens` flag on the session guard config inside the `config/auth.ts` file.
+
+```ts
+import { defineConfig } from '@adonisjs/auth'
+import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
+
+const authConfig = defineConfig({
+  default: 'session',
+  guards: {
+    session: sessionGuard({
+      // highlight-start
+      useRememberTokens: true,
+      rememberMeTokensAge: '2 years',
+      // highlight-end
+      provider: sessionUserProvider({
+        model: () => import('#models/user'),
+      }),
+    })
+  },
+})
+
+export default authConfig
+```
+
+### Remembering users during login
+Once the setup is completed, you can generate the remember me token and cookie using the `guard.login` method as follows.
+
+```ts
+import User from '#models/user'
+import { HttpContext } from '@adonisjs/core/http'
+
+export default class SessionController {
+  async store({ request, auth, response }: HttpContext) {
+    const { email, password } = request.only(['email', 'password'])
+    const user = await User.verifyCredentials(email, password)
+
+    await auth.use('session').login(
+      user,
+      // highlight-start
+      /**
+       * Generate token when "remember_me" input exists
+       */
+      !!request.input('remember_me')
+      // highlight-end
+    )
+    
+    response.redirect('/dashboard')
+  }
+}
 ```
 
 ## Using the guest middleware

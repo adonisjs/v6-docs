@@ -60,20 +60,9 @@ When using access tokens, it becomes the responsibility of your client-side appl
 
 ### Basic auth
 
-The basic auth guard is an implementation of the [HTTP authentication framework](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication), in which the client must pass the user credentials as base64 encoded via the `Authorization` header.
+The basic auth guard is an implementation of the [HTTP authentication framework](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication), in which the client must pass the user credentials as a base64 encoded string via the `Authorization` header.
 
 There are better ways to implement a secure login system than basic authentication. However, you may use it temporarily while your application is in active development.
-
-### Why not JWTs?
-
-JWTs have become the darling of the internet lately. However, for most applications, JWTs are overkill and need complicated setups to keep them secure.
-
-The internet is full of articles covering "Why you should not JWT?". We will not repeat the same concerns. You can read the following articles to understand our point of view.
-
-- [Why you should not use JWT](https://apibakery.com/blog/tech/no-jwt/)
-- [Stop using JWTs for sessions](http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/)
-
-That said, we are not saying that JWTs are never the right choice. If you decide to use JWT, you can [implement a custom guard for it](./custom_auth_guards.md). 
 
 ## Choosing a user provider
 As covered earlier in this guide, a user provider is responsible for finding users during the authentication process.
@@ -183,52 +172,8 @@ export default class extends BaseSchema {
 
 Also, update the `User` model if you define, rename, or remove columns from the `users` table.
 
-## Configuring the Auth finder mixin
-The Auth finder mixin adds `findForAuth` and `verifyCredentials` methods to the applied model. The `verifyCredentials` method is used to find a user inside the database and verify their password during login.
-
-The main reason for using the `verifyCredentials` method is to keep your application secure from [timing attacks](https://en.wikipedia.org/wiki/Timing_attack). Learn more about [user login and timing attacks]().
-
-```ts
-import { DateTime } from 'luxon'
-// highlight-start
-import { useWithFinder } from '@adonisjs/auth'
-import hash from '@adonisjs/core/services/hash'
-// highlight-end
-import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-
-// highlight-start
-const AuthFinder = useWithFinder(hash.use('scrypt'), {
-  uids: ['email'],
-  passwordColumnName: 'password',
-})
-// highlight-end
-
-// highlight-start
-export default class User extends compose(BaseModel, AuthFinder) {
-  // highlight-end
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column()
-  declare fullName: string | null
-
-  @column()
-  declare email: string
-
-  @column()
-  declare password: string
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
-}
-```
-
 ## Next steps
 
-- Learn how to [verify user credentials]() without compromising the security of your application.
+- Learn how to [verify user credentials](./verifying_user_credentials.md) without compromising the security of your application.
 - Use [session guard](./session_guard.md) for stateful authentication.
 - Use [access tokens guard](./access_tokens_guard.md) for tokens based authentication.

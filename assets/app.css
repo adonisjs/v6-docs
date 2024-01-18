@@ -173,6 +173,16 @@ html.dark {
   font-size: 18px;
 }
 
+.markdown li > ul {
+  margin-top: 0px;
+}
+
+.markdown .card {
+  border: 1px solid var(--prose-table-border-color);
+  border-radius: var(--rounded-md);
+  padding: 15px 20px 15px 20px;
+}
+
 @media (min-width: 1440px) {
   .markdown .table_expanded {
     max-width: 120%;

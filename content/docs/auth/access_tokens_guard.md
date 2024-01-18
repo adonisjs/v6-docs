@@ -333,6 +333,8 @@ The `tokensUserProvider` method accepts the following options and returns an ins
 ## Authenticating requests
 Once the guard has been configured, you can start authenticating requests using the `auth` middleware or manually calling the `auth.authenticate` method.
 
+The `auth.authenticate` method returns an instance of the User model for the authenticated user, or it throws an [E_UNAUTHORIZED_ACCESS](../reference/exceptions.md#e_unauthorized_access) exception when unable to authenticate the request.
+
 ```ts
 import router from '@adonisjs/core/services/router'
 
@@ -345,9 +347,11 @@ router.post('projects', async ({ auth }) => {
 })
 ```
 
-The `auth.authenticate` method returns an instance of the User model for the authenticated user, or it throws an [E_UNAUTHORIZED_ACCESS](../reference/exceptions.md#e_unauthorized_access) exception when unable to authenticate the request.
+### Using the auth middleware
 
-You may use the auth middleware as follows. The auth middleware accepts an array of guards to use for authenticating the request. The authentication process stops after one of the mentioned guards authenticates the request.
+Instead of manually calling the `authenticate` method. You can use the `auth` middleware to authenticate the request or throw an exception.
+
+The auth middleware accepts an array of guards to use for authenticating the request. The authentication process stops after one of the mentioned guards authenticates the request.
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -364,6 +368,36 @@ router
   }))
 ```
 
+### Check if the request is authenticated
+You can check if a request has been authenticated using the `auth.isAuthenticated` flag. The value of `auth.user` will always be defined for an authenticated request.
+
+```ts
+import { HttpContext } from '@adonisjs/core/http'
+
+class PostsController {
+  async store({ auth }: HttpContext) {
+    if (auth.isAuthenticated) {
+      await auth.user!.related('posts').create(postData)
+    }
+  }
+}
+```
+
+### Get authenticated user or fail
+
+If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../reference/exceptions.md#e_unauthorized_access) exception.
+
+```ts
+import { HttpContext } from '@adonisjs/core/http'
+
+class PostsController {
+  async store({ auth }: HttpContext) {
+    const user = auth.getUserOrFail()
+    await user.related('posts').create(postData)
+  }
+}
+```
+
 ## The current access token
 The access token guard defines the `currentAccessToken` property on the user object after successfully authenticating the request. The `currentAccessToken` property is an instance of the [AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts) class. 
 
@@ -371,7 +405,7 @@ You may use the `currentAccessToken` object to get the token's abilities or chec
 
 If you reference the User model with `currentAccessToken` as a type in the rest of the codebase, you may want to declare this property on the model itself.
 
-:::caption{for="info"}
+:::caption{for="error"}
 
 **Instead of merging `currentAccessToken`**
 
@@ -386,7 +420,7 @@ Bouncer.ability((
 })
 ```
 
-:::caption{for="info"}
+:::caption{for="success"}
 
 **Declare it as a property on the model**
 

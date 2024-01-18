@@ -76,6 +76,10 @@ The web starter kit comes with the following packages.
 <td>The <a href="https://edgejs.dev">edge</a> template engine for composing HTML pages.</td>
 </tr>
 <tr>
+<td><code>@vinejs/vine</code></td>
+<td><a href="https://vinejs.dev">VineJS</a> is one of the fastest validation library in the Node.js ecosystem.</td>
+</tr>
+<tr>
 <td><code>@adonisjs/lucid</code></td>
 <td>Lucid is a SQL ORM maintained by the AdonisJS core team.</td>
 </tr>
@@ -163,7 +167,7 @@ npm init adonisjs -- -K="user/repo#v2.1.0"
 ```
 
 ## Starting the development server
-You may start the development server by running the `node ace serve` command.
+Once you have created an AdonisJS application, you may start the development server by running the `node ace serve` command.
 
 Ace is a command line framework bundled inside the framework's core. The `--watch` flag monitors the file system and restarts the development server on file change.
 

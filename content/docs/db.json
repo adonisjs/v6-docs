@@ -191,21 +191,27 @@
     "category": "Auth"
   },
   {
-    "permalink": "auth/lucid_user_provider",
-    "title": "Lucid user provider",
-    "contentPath": "./auth/lucid_user_provider.md",
-    "category": "Auth"
-  },
-  {
-    "permalink": "auth/database_user_provider",
-    "title": "Database user provider",
-    "contentPath": "./auth/database_user_provider.md",
+    "permalink": "auth/verifying_user_credentials",
+    "title": "Verifying user credentials",
+    "contentPath": "./auth/verifying_user_credentials.md",
     "category": "Auth"
   },
   {
     "permalink": "auth/session_guard",
     "title": "Session guard",
     "contentPath": "./auth/session_guard.md",
+    "category": "Auth"
+  },
+  {
+    "permalink": "auth/session_guard_new",
+    "title": "Session guard new",
+    "contentPath": "./auth/session_guard_new.md",
+    "category": "Auth"
+  },
+  {
+    "permalink": "auth/access_tokens_guard",
+    "title": "Access tokens guard",
+    "contentPath": "./auth/access_tokens_guard.md",
     "category": "Auth"
   },
   {
@@ -308,6 +314,12 @@
     "category": "Fundamentals"
   },
   {
+    "permalink": "fundamentals/scaffolding",
+    "title": "Scaffolding",
+    "contentPath": "./fundamentals/scaffolding.md",
+    "category": "Fundamentals"
+  },
+  {
     "permalink": "fundamentals/package-development",
     "draft": true,
     "title": "Package development",
@@ -337,12 +349,6 @@
     "permalink": "logger",
     "title": "Logger",
     "contentPath": "./digging_deeper/logger.md",
-    "category": "Digging Deeper"
-  },
-  {
-    "permalink": "scaffolding",
-    "title": "Scaffolding",
-    "contentPath": "./digging_deeper/scaffolding.md",
     "category": "Digging Deeper"
   },
   {

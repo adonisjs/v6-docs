@@ -1,5 +1,3 @@
-# Scaffolding
-
 AdonisJS ships with scaffolding commands registered under the `make` namespace to speed up repetitive tasks of creating new files.
 
 The scaffolding commands use opinionated rules for naming various classes and files. You might agree or disagree with our choices, but sticking to conventions will ensure consistency across your codebase.

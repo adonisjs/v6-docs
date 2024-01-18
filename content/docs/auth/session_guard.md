@@ -45,51 +45,6 @@ declare module '@adonisjs/core/types' {
 :::
 
 
-:::disclosure{title="Session guard with Database provider"}
-
-```ts
-import { defineConfig, providers } from '@adonisjs/auth'
-import { sessionGuard } from '@adonisjs/auth/session'
-import { InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
-
-const authConfig = defineConfig({
-  default: 'web',
-  guards: {
-    web: sessionGuard({
-      provider: providers.db({
-        table: 'users',
-        id: 'id',
-        passwordColumnName: 'password',
-        uids: ['email']
-      }),
-    }),
-  },
-})
-
-export default authConfig
-
-/**
- * Inferring types from the configured auth
- * guards.
- */
-declare module '@adonisjs/auth/types' {
-  interface Authenticators extends InferAuthenticators<typeof authConfig> {}
-}
-declare module '@adonisjs/core/types' {
-  interface EventsList extends InferAuthEvents<Authenticators> {}
-}
-```
-
-
-:::
-
-## Configuring user provider
-Reference the following guides to configure the Lucid or the Database user provider.
-
-- [Lucid provider config reference](./lucid_user_provider.md)
-- [Database provider config reference](./database_user_provider.md)
-
-
 ## Configuring session guard
 
 The session guard accepts the following properties.
@@ -104,7 +59,7 @@ provider
 
 <dd>
 
-Reference to the user provider to lookup users.
+Reference to the user provider to lookup users. [Learn more about the Lucid provider](./lucid_user_provider.md).
 
 </dd>
 
@@ -167,6 +122,8 @@ export default class extends BaseSchema {
         .references('users.id')
         .onDelete('CASCADE')
 
+      table.string('type').notNullable()
+      table.string('guard').notNullable()
       table.string('token').notNullable().unique()
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').notNullable()
@@ -212,7 +169,7 @@ const authConfig = defineConfig({
 
 ## Getting access to the guard
 
-You can access the guard instance using the `ctx.auth.use` method. The auth property is an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/next/src/auth/authenticator.ts), created for every HTTP request using the [InitializeSessionMiddleware](https://github.com/adonisjs/auth/blob/next/src/auth/middleware/initialize_auth_middleware.ts).
+You can access the guard instance using the `ctx.auth.use` method. The auth property is an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/next/src/auth/authenticator.ts), created for every HTTP request using the [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/next/src/auth/middleware/initialize_auth_middleware.ts).
 
 The `auth.use` method accepts the guard name (as mentioned inside the config file) and returns a singleton instance.
 
@@ -449,7 +406,7 @@ router
  .get('dashboard', ({ auth }) => {
    // highlight-start
    console.log(auth.user) // undefined
-   await auth.use('web').authenticate()
+   await auth.authenticate()
    console.log(auth.user) // User
    // highlight-end
  })

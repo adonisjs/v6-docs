@@ -8,6 +8,7 @@ import { defineConfig, providers } from '@adonisjs/auth'
 const userProvider = providers.lucid({
   model: () => import('#models/user'),
   uids: ['email'],
+  passwordColumnName: 'password',
   connection: 'pg',
 })
 ```
@@ -40,6 +41,19 @@ An array of unique IDs can be used to look up a user during login. For example, 
 
 <dt>
 
+passwordColumnName
+
+</dt>
+
+<dd>
+
+Reference to the property that has user password hash. The password hash is used to verify the plain text password during login.
+
+</dd>
+
+
+<dt>
+
 connection (optional)
 
 </dt>
@@ -56,26 +70,39 @@ Do note this is a static property and will be applied to all queries a guard mak
 
 ## Verifying user password
 
-The Lucid user provider uses the [hash service](../security/hash.md) (with default driver) to verify the user's password. If you want to use a different driver, you can define the `verifyPasswordForAuth` method on the User model to manually verify the password hash. For example:
+The Lucid user provider uses the [hash service](../security/hash.md) (with default driver) to verify the user's password. If you want to use a different driver, you can define the `hasher` property within the provider's config. The `hasher` property is a reference to the list of hashers defined within the `config/hash.ts` file.
 
 ```ts
-import { BaseModel } from '@adonisjs/lucid/orm'
-import hash from '@adonisjs/core/services/hash'
+// title: config/hash.ts
+import { defineConfig, drivers } from '@adonisjs/core/hash'
 
-export default class User extends BaseModel {
-  // ...rest of the model properties
-
-  async verifyPasswordForAuth(plainTextPassword: string) {
-    return hash.verify(this.password, plainTextPassword)
+export default defineConfig({
+  default: 'scrypt',
+  list: {
+    scrypt: drivers.scrypt(),
+    // highlight-start
+    argon: drivers.argon2(),
+    // highlight-end
   }
-}
+})
+```
+
+```ts
+// title: config/auth.ts
+const userProvider = providers.lucid({
+  model: () => import('#models/user'),
+  uids: ['email'],
+  passwordColumnName: 'password',
+  // highlight-start
+  hasher: 'argon'
+  // highlight-end
+})
 ```
 
 ## Finding user during login
+During the `guard.attempt` method call, the Lucid provider queries the model for all the `uids` with an `orWhere` clause. However, if you need more control, you can define `getUserForAuth` static method on the model to customize the user lookup query.
 
-You can customize the behavior of user lookup during the `guard.attempt` method call by defining the `getUserForAuth` method on the User model.
-
-The method will receive an array of UID column names and the value for the search. It must return an instance of the model or `null` when unable to find the user.
+The `getUserForAuth` will receive an array of UID column names and the value for the search. It must return an instance of the model or `null` when unable to find the user.
 
 ```ts
 import { BaseModel } from '@adonisjs/lucid/orm'

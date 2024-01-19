@@ -207,7 +207,7 @@ However, you can force overwrite files using the `--force` flag.
 
 Eject stubs from a given package to your application `stubs` directory. In the following example, we copy the `make/controller` stubs to our application for modification.
 
-See also: [Customizing stubs](../digging_deeper/scaffolding.md)
+See also: [Customizing stubs](../fundamentals/scaffolding.md#ejecting-stubs)
 
 ```sh
 # Copy stub from @adonisjs/core package

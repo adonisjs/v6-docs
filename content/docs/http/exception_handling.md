@@ -38,14 +38,14 @@ The exceptions are handled by the `handle` method on the exceptions handler clas
 - Check if a status page is defined for the `error.status` code. If yes, render the status page.
 - Otherwise, render the exception using content negotiation renderers.
 
-If you want to handle a specific exception differently, you can do that inside the `handle` method.
+If you want to handle a specific exception differently, you can do that inside the `handle` method. Make sure to use the `ctx.response.send` method to send a response, since the return value from the `handle` method is discarded.
 
 ```ts
-import { errors } from '@adonisjs/core'
+import { errors } from '@vinejs/vine'
 
 async handle(error: unknown, ctx: HttpContext) {
   if (error instanceof errors.E_VALIDATION_EXCEPTION) {
-    //self-handle validation exception
+    ctx.response.status(422).send(error.messages)
     return
   }
   
@@ -62,8 +62,10 @@ The range of status codes can be defined as a string expression. Two dots separa
 If you are creating a JSON server, you may not need status pages.
 
 ```ts
+import { StatusPageRange, StatusPageRenderer } from '@adonisjs/http-server/types'
+
 export default class HttpExceptionHandler extends ExceptionHandler {
-  protected statusPages = {
+  protected statusPages: Record<StatusPageRange, StatusPageRenderer> = {
     '404': (_, { view }) => view.render('errors/not-found'),
     '500..599': (_, { view }) => view.render('errors/server-error')
   }
@@ -210,7 +212,9 @@ export default class UnAuthorizedException extends Exception {
 
 ### Defining the `handle` method
 
-To self-handle the exception, you can define the `handle` method on the exception class. The method receives an instance of the error as the first argument and the HTTP context as the second argument.
+To self-handle the exception, you can define the `handle` method on the exception class. This method should convert an error to an HTTP response using the `ctx.response.send` method.
+
+The `error.handle` method receives an instance of the error as the first argument and the HTTP context as the second argument.
 
 ```ts
 import { Exception } from '@adonisjs/core'

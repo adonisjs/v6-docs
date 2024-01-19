@@ -2,7 +2,7 @@
 
 Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. AdonisJS needs `Node.js >= 20`.
 
-You may install Node.js using either the [official installers](https://nodejs.org/en/download/) or [Volta](https://docs.volta.sh/guide/getting-started). Volta is a cross-platform package manager to install and run multiple Node.js versions on your computer.
+You may install Node.js using either the [official installers](https://nodejs.org/en/download/) or [Volta](https://docs.volta.sh/guide/getting-started). Volta is a cross-platform package manager that installs and runs multiple Node.js versions on your computer.
 
 ```sh
 // title: Verify Node.js version
@@ -52,7 +52,7 @@ The Web starter kit is tailored for creating traditional server renderer web app
 
 The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.dev) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
 
-Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like an SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
+Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
 ```sh
 npm init adonisjs -- -K=web
@@ -77,7 +77,7 @@ The web starter kit comes with the following packages.
 </tr>
 <tr>
 <td><code>@vinejs/vine</code></td>
-<td><a href="https://vinejs.dev">VineJS</a> is one of the fastest validation library in the Node.js ecosystem.</td>
+<td><a href="https://vinejs.dev">VineJS</a> is one of the fastest validation libraries in the Node.js ecosystem.</td>
 </tr>
 <tr>
 <td><code>@adonisjs/lucid</code></td>
@@ -115,7 +115,7 @@ In this starter kit:
 
 - We remove support for serving static files.
 - Do not configure the views layer and vite.
-- Turn off XSS and CSRF protection, and enable CORS protection.
+- Turn off XSS and CSRF protection and enable CORS protection.
 - Use the ContentNegotiation middleware to send HTTP responses in JSON.
 
 The API starter kit is configured with session-based authentication. However, if you wish to use tokens-based authentication, you can use the `--auth-guard` flag.
@@ -123,7 +123,7 @@ The API starter kit is configured with session-based authentication. However, if
 See also: [Which authentication guard should I use?](../auth/introduction.md#choosing-an-auth-guard)
 
 ```sh
-npm init adonisjs -- -K=api --auth-guard=opaque_tokens
+npm init adonisjs -- -K=api --auth-guard=access_tokens
 ```
 
 ---
@@ -179,7 +179,7 @@ Once the development server runs, you may visit [http://localhost:3333](http://l
 
 ## Building for production
 
-Since AdonisJS applications are written in TypeScript, they must get compiled to JavaScript before running in production.
+Since AdonisJS applications are written in TypeScript, they must be compiled into JavaScript before running in production.
 
 You may create the JavaScript output using the `node ace build` command. The JavaScript output is written to the `build` directory. 
 
@@ -195,9 +195,9 @@ node ace build
 
 While AdonisJS takes care of building the end-user applications, you may need additional tools to enjoy the development process and have consistency in your coding style. 
 
-We strongly recommend you to **[ESLint](https://eslint.org/)** to lint your code and **[Prettier](https://prettier.io)** to re-format your code for consistency.
+We strongly recommend you use **[ESLint](https://eslint.org/)** to lint your code and use **[Prettier](https://prettier.io)** to re-format your code for consistency.
 
-The official starter kits comes pre-configured with both ESLint and Prettier and uses the opinionated presets from the AdonisJS core team. You can learn more about them in the [Tooling config](../fundamentals/tooling_config.md) section of the docs.
+The official starter kits come pre-configured with both ESLint and Prettier and use the opinionated presets from the AdonisJS core team. You can learn more about them in the [Tooling config](../fundamentals/tooling_config.md) section of the docs.
 
 Finally, we recommend you install ESLint and Prettier plugins for your code editor so that you have a tighter feedback loop during the application development. Also, you can use the following commands to `lint` and `format` your code from the command line.
 

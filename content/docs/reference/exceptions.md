@@ -18,10 +18,11 @@ if (error instanceof errors.E_ROUTE_NOT_FOUND) {
 ```
 
 ## E_AUTHORIZATION_FAILURE
-The exception is raised when a bouncer authorization check fails. The `E_AUTHORIZATION_FAILURE` exception is self-handled and [uses content-negotiation](../digging_deeper/authorization.md#throwing-authorizationexception) to return an appropriate error response to the client.
+The exception is raised when a bouncer authorization check fails. The exception is self-handled and [uses content-negotiation](../digging_deeper/authorization.md#throwing-authorizationexception) to return an appropriate error response to the client.
 
 - **Status code**: 403
-- **Self handled**: Yes. [Learn more](../digging_deeper/authorization.md#throwing-authorizationexception)
+- **Self handled**: Yes
+- **Translation identifier**: `errors.E_AUTHORIZATION_FAILURE`
 
 ```ts
 import { errors as bouncerErrors } from '@adonisjs/bouncer'
@@ -34,9 +35,10 @@ The exception is raised when a form using [CSRF protection](../security/web-secu
 
 - **Status code**: 403
 - **Self handled**: Yes
+- **Translation identifier**: `errors.E_BAD_CSRF_TOKEN`
 
 ```ts
-import { errors as shieldErrors } from '@adonisjs/bouncer'
+import { errors as shieldErrors } from '@adonisjs/shield'
 if (error instanceof shieldErrors.E_BAD_CSRF_TOKEN) {
 }
 ```
@@ -79,8 +81,31 @@ if (error instanceof allyErrors.E_OAUTH_STATE_MISMATCH) {
 }
 ```
 
-## AuthenticationException
+## E_UNAUTHORIZED_ACCESS
+The exception is raised when one of the authentication guards is not able to authenticate the request. The exception is self-handled and uses [content-negotiation](../auth/session_guard.md#handling-authentication-exception) to return an appropriate error response to the client.
 
+- **Status code**: 401
+- **Self handled**: Yes
+- **Translation identifier**: `errors.E_UNAUTHORIZED_ACCESS`
+
+```ts
+import { errors as authErrors } from '@adonisjs/auth'
+if (error instanceof authErrors.E_UNAUTHORIZED_ACCESS) {
+}
+```
+
+## E_INVALID_CREDENTIALS
+The exception is raised when the auth finder is not able to verify the user credentials. The exception is handled and use [content-negotiation](../auth/verifying_user_credentials.md#handling-exceptions)  to return an appropriate error response to the client.
+
+- **Status code**: 400
+- **Self handled**: Yes
+- **Translation identifier**: `errors.E_INVALID_CREDENTIALS`
+
+```ts
+import { errors as authErrors } from '@adonisjs/auth'
+if (error instanceof authErrors.E_INVALID_CREDENTIALS) {
+}
+```
 
 ## E_CANNOT_LOOKUP_ROUTE
 The exception is raised when you attempt to create a URL for a route using the [URL builder](../http/url_builder.md).

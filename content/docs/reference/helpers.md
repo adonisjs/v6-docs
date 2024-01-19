@@ -76,7 +76,8 @@ Truncate a string at a given number of characters.
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.truncate('This is a very long, maybe not that long title', 12) // This is a ve...
+string.truncate('This is a very long, maybe not that long title', 12)
+// Output: This is a ve...
 ```
 
 By default, the string is truncated exactly at the given index. However, you can instruct the method to wait for the words to complete.
@@ -84,7 +85,8 @@ By default, the string is truncated exactly at the given index. However, you can
 ```ts
 string.truncate('This is a very long, maybe not that long title', 12, {
   completeWords: true,
-}) // This is a very...
+})
+// Output: This is a very...
 ```
 
 You can customize the suffix using the `suffix` option.
@@ -93,7 +95,8 @@ You can customize the suffix using the `suffix` option.
 string.truncate('This is a very long, maybe not that long title', 12, {
   completeWords: true,
   suffix: '... <a href="/1"> Read more </a>',
-}) // This is a very... <a href="/1"> Read more </a>
+})
+// Output: This is a very... <a href="/1"> Read more </a>
 ```
 
 ## excerpt
@@ -105,7 +108,8 @@ import string from '@adonisjs/core/helpers/string'
 
 string.excerpt('<p>This is a <strong>very long</strong>, maybe not that long title</p>', 12, {
   completeWords: true,
-}) // This is a very...
+})
+// Output: This is a very...
 ```
 
 ## slug
@@ -135,7 +139,11 @@ Interpolate variables inside a string. The variables must be inside double curly
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
-string.interpolate('hello {{ user.username }}', { user: { username: 'virk' } })
+string.interpolate('hello {{ user.username }}', {
+  user: {
+    username: 'virk'
+  }
+})
 // hello virk
 ```
 

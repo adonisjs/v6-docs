@@ -37,7 +37,7 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-The `commandName` property is used to define the command name. A command name should not have spaces inside. Also, it is recommended to avoid using unfamiliar special characters like `*`, `&`, or slashes in the command name.
+The `commandName` property is used to define the command name. A command name should not contain spaces. Also, it is recommended to avoid using unfamiliar special characters like `*`, `&`, or slashes in the command name.
 
 The command names can be under a namespace. For example, to define a command under the `make` namespace, you may prefix it with `make:`.
 

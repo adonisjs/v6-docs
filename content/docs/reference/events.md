@@ -4,7 +4,7 @@ In this guide, we look at the list of events dispatched by the framework core an
 
 ## http\:request_completed
 
-The `http:request_completed` event is dispatched after an HTTP request is completed. The event contains an instance of the [HttpContext](../http/http_context.md) and the `duration` property, the output of the `process.hrtime`.
+The [`http:request_completed`](https://github.com/adonisjs/http-server/blob/develop/src/types/server.ts#L65) event is dispatched after an HTTP request is completed. The event contains an instance of the [HttpContext](../http/http_context.md) and the request duration. The `duration` value is the output of the `process.hrtime` method.
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -151,7 +151,7 @@ emitter.on('mail:queued', (event) => {
 })
 ```
 
-## qeued\:mail\:error
+## queued\:mail\:error
 The event is dispatched when the [MemoryQueue](https://github.com/adonisjs/mail/blob/next/src/messengers/memory_queue.ts) implementation of the `@adonisjs/mail` package is unable to send the email queued using the `mail.sendLater` method.
 
 If you are using a custom queue implementation, you must capture the job errors and emit this event.
@@ -159,23 +159,9 @@ If you are using a custom queue implementation, you must capture the job errors 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
 
-emitter.on('qeued:mail:error', (event) => {
+emitter.on('queued:mail:error', (event) => {
   console.log(event.error)
   console.log(event.mailerName)
-})
-```
-
-## session_auth\:credentials_verified
-
-The event is dispatched by the [SessionGuard](https://github.com/adonisjs/auth/blob/next/src/guards/session/guard.ts) implementation of the `@adonisjs/auth` package after the credentials have been verified using the `guard.attempt` method.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('session_auth:credentials_verified', (event) => {
-  console.log(event.guardName)
-  console.log(event.uid)
-  console.log(event.user)
 })
 ```
 
@@ -189,21 +175,6 @@ import emitter from '@adonisjs/core/services/emitter'
 emitter.on('session_auth:login_attempted', (event) => {
   console.log(event.guardName)
   console.log(event.user)
-})
-```
-
-## session_auth\:login_failed
-
-The event is dispatched by the [SessionGuard](https://github.com/adonisjs/auth/blob/next/src/guards/session/guard.ts) implementation of the `@adonisjs/auth` package when the guard is not able to login the user. You may use the `event.error` property to know the reason for the failure.
-
-```ts
-import emitter from '@adonisjs/core/services/emitter'
-
-emitter.on('session_auth:login_failed', (event) => {
-  console.log(event.error)
-
-  console.log(event.guardName)
-  console.log(event.user) // User | null
 })
 ```
 
@@ -282,6 +253,43 @@ emitter.on('session_auth:logged_out', (event) => {
   console.log(event.user)
 })
 ```
+
+## access_tokens_auth\:authentication_attempted
+The event is dispatched by the `@adonisjs/auth` package when an attempt is made to validate the access token during an HTTP request.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('access_tokens_auth:authentication_attempted', (event) => {
+  console.log(event.guardName)
+})
+```
+
+## access_tokens_auth\:authentication_succeeded
+The event is dispatched by the `@adonisjs/auth` package after the access token has been verified. You may access the authenticated user using the `event.user` property.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('access_tokens_auth:authentication_succeeded', (event) => {
+  console.log(event.guardName)
+  console.log(event.user)
+  console.log(event.token)
+})
+```
+
+## access_tokens_auth\:authentication_failed
+The event is dispatched by the `@adonisjs/auth` package when the authentication check fails.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('access_tokens_auth:authentication_failed', (event) => {
+  console.log(event.guardName)
+  console.log(event.error)
+})
+```
+
 
 ## authorization\:finished
 The event is dispatched by the `@adonisjs/bouncer` package after the authorization check has been performed. The event payload includes the final response you may inspect to know the status of the check.

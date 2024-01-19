@@ -21,7 +21,7 @@ The `serve` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler
 node ace serve --watch
 ```
 
-The `serve` command starts the development server `(bin/server.ts file)` as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+The `serve` command starts the development server (via `bin/server.ts` file) as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
 
 ```sh
 node ace --no-warnings --inspect serve --watch
@@ -98,7 +98,7 @@ node ace serve --watch --assets-args="--cors --open"
 </dl>
 
 ## build
-The `build` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#bundler) package to create the production build of your AdonisJS application. The following steps are performed to generate the build.
+The `build` command uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#bundler) package to create the production build of your AdonisJS application. The following steps are performed to generate the build.
 
 See also: [TypeScript build process](../fundamentals/typescript_build_process.md).
 

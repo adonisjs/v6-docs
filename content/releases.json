@@ -1,10 +1,17 @@
 [
   {
-    "package": "@adonisjs/mail",
-    "description": "Add mjml component to convert mjml markup to HTML when sending emails",
-    "released_on": "2024-01-09",
-    "version": "9.1.0",
-    "release_notes_link": "https://github.com/adonisjs/mail/releases/tag/v9.1.0"
+    "package": "@adonisjs/shield",
+    "description": "Optionally read CSRF exception error message via i18n",
+    "released_on":" 2024-01-22",
+    "version": "8.1.0",
+    "release_notes_link": "https://github.com/adonisjs/shield/releases/tag/v8.1.0"
+  },
+  {
+    "package": "@adonisjs/http-server",
+    "description": "Use status pages return value and add new cookie options",
+    "released_on":" 2024-01-22",
+    "version": "7.0.1",
+    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.0.1"
   },
   {
     "package": "@adonisjs/assembler",
@@ -14,10 +21,10 @@
     "release_notes_link": "https://github.com/adonisjs/assembler/releases/tag/v7.1.0"
   },
   {
-    "package": "@adonisjs/http-server",
-    "description": "Use status pages return value and add new cookie options",
-    "released_on":" 2024-01-22",
-    "version": "7.0.1",
-    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.0.1"
+    "package": "@adonisjs/mail",
+    "description": "Add mjml component to convert mjml markup to HTML when sending emails",
+    "released_on": "2024-01-09",
+    "version": "9.1.0",
+    "release_notes_link": "https://github.com/adonisjs/mail/releases/tag/v9.1.0"
   }
 ]

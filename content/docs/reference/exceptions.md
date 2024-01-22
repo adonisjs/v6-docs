@@ -47,8 +47,6 @@ The `E_BAD_CSRF_TOKEN` exception is [self-handled](https://github.com/adonisjs/s
 
 ```edge
 @error('E_BAD_CSRF_TOKEN')
-@end
-@error('E_BAD_CSRF_TOKEN')
   <p>{{ message }}</p>
 @end
 ```

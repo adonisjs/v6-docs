@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/bouncer",
+    "description": "Update i18n error identifier and JSONAPI error code",
+    "released_on":" 2024-01-22",
+    "version": "3.1.0",
+    "release_notes_link": "https://github.com/adonisjs/bouncer/releases/tag/v3.1.0"
+  },
+  {
     "package": "@adonisjs/shield",
     "description": "Optionally read CSRF exception error message via i18n",
     "released_on":" 2024-01-22",

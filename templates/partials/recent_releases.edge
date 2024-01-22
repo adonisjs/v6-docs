@@ -11,13 +11,12 @@
       @each(release in (await getReleases()).slice(0, 5))
         <tr>
           <th>
-            <code>{{ release.package }}</code>
+            <a href="{{ release.release_notes_link }}" target="_blank">
+              <code>{{ release.package }}</code>
+            </a>
           </th>
           <td>
             {{{ release.description }}}.
-            <a href="{{ release.release_notes_link }}" target="_blank">
-              <strong>Read release notes</strong>
-            </a>
           </td>
           <td>
             {{ dayjs(release.released_on).format('MMM D, YYYY') }}

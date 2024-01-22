@@ -12,5 +12,12 @@
     "released_on": "2024-01-19",
     "version": "7.1.0",
     "release_notes_link": "https://github.com/adonisjs/assembler/releases/tag/v7.1.0"
+  },
+  {
+    "package": "@adonisjs/http-server",
+    "description": "Use status pages return value and add new cookie options",
+    "released_on":" 2024-01-22",
+    "version": "7.0.1",
+    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.0.1"
   }
 ]

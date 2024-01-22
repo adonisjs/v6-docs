@@ -50,6 +50,12 @@ http: {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
+    /**
+     * Experimental properties
+     * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#partitioned
+     */
+    partitioned: false,
+    priority: 'medium',
   }
 }
 ```

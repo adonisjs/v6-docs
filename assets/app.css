@@ -57,6 +57,9 @@
   --accent-a12: var(--violet-a12);
 
   --sidebar-active-link-text-color: var(--iris-12);
+  --code-highlight-bg-color: hsl(261.43deg 9.32% 31.73% / 61%);
+  --code-highlight-border-color: var(--accent-8);
+  --pre-tabs-active-border-color: var(--accent-8);
 }
 
 html.dark {
@@ -132,16 +135,6 @@ html.dark {
   margin: 0;
 }
 
-.markdown .table_container {
-  margin: var(--prose-elements-margin) 0;
-  overflow: auto;
-}
-
-.markdown table {
-  margin: 0;
-  --code-font-size: var(--prose-table-font-size);
-}
-
 .disclosure_wrapper {
   border-radius: var(--rounded-md);
   margin: var(--prose-elements-margin) 0;
@@ -167,14 +160,6 @@ html.dark {
 
 .disclosure_wrapper .disclosure:last-child .disclosure_panel {
   border-radius: 0 0 7px 7px;
-}
-
-.markdown p.lede {
-  font-size: 18px;
-}
-
-.markdown li > ul {
-  margin-top: 0px;
 }
 
 .markdown .card {

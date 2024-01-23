@@ -340,14 +340,7 @@ You can configure Vue by first enabling the Vue loader inside the `webpack.confi
 :::codegroup
 
 ```ts
-// title: Vue 2
-Encore.enableVueLoader(() => {}, {
-  version: 2,
-});
-```
-
-```ts
-// title: Vue 3
+// title: Vue
 Encore.enableVueLoader(() => {}, {
   version: 3,
 });
@@ -355,18 +348,13 @@ Encore.enableVueLoader(() => {}, {
 
 :::
 
-Next, install the following required dependencies for Vue 2 or Vue 3.
+Next, install the following required dependencies for Vue.
 
 :::codegroup
 
 ```sh
-// title: Vue 2
+// title: Vue 
 npm i vue vue-loader @vue/compiler-sfc
-```
-
-```sh
-// title: Vue 3
-npm i vue@next vue-loader@next @vue/compiler-sfc
 ```
 
 :::

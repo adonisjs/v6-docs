@@ -160,7 +160,7 @@ export default class SessionController {
 ```
 
 ### Handling exceptions
-In case of invalid credentials, the `verifyCredentials` method will throw [E_INVALID_CREDENTIALS]() exception.
+In case of invalid credentials, the `verifyCredentials` method will throw [E_INVALID_CREDENTIALS](../reference/exceptions.md#e_invalid_credentials) exception.
 
 The exception is self-handled and will be converted to a response using the following content negotiation rules.
 
@@ -168,7 +168,7 @@ The exception is self-handled and will be converted to a response using the foll
 
 - HTTP requests with the `Accept=application/vnd.api+json` header will receive an array of error messages formatted per the JSON API spec.
 
-- If you use sessions, the user will be redirected to the form and receive the errors via [session flash messages]().
+- If you use sessions, the user will be redirected to the form and receive the errors via [session flash messages](../http/session.md#flash-messages).
 
 - All other requests will receive errors back as plain text.
 

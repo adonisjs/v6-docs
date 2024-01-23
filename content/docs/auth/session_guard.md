@@ -14,10 +14,10 @@ import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
 // highlight-end
 
 const authConfig = defineConfig({
-  default: 'session',
+  default: 'web',
   guards: {
     // highlight-start
-    session: sessionGuard({
+    web: sessionGuard({
       useRememberTokens: false,
       provider: sessionUserProvider({
         model: () => import('#models/user'),
@@ -41,7 +41,7 @@ In the following example:
 
 - We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
 
-- The `auth.use('session')` return an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/next/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
+- The `auth.use('web')` return an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/next/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
 
 - Next, we call the `guard.login(user)` method to create a login session for the user.
 
@@ -67,7 +67,7 @@ export default class SessionController {
     /**
      * Step 3: Login user
      */
-    await auth.use('session').login(user)
+    await auth.use('web').login(user)
 
     /**
      * Step 4: Send them to a protected route
@@ -105,7 +105,7 @@ router
 
 By default, the auth middleware will authenticate the user against the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `auth` middleware.
 
-The auth middleware will attempt to authenticate the request using the `session` and the `api` guards in the following example.
+The auth middleware will attempt to authenticate the request using the `web` and the `api` guards in the following example.
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -116,7 +116,7 @@ router
  // highlight-start
  .use(
    middleware.auth({
-     guards: ['session', 'api']
+     guards: ['web', 'api']
    })
  )
  // highlight-end
@@ -290,9 +290,9 @@ import { defineConfig } from '@adonisjs/auth'
 import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
 
 const authConfig = defineConfig({
-  default: 'session',
+  default: 'web',
   guards: {
-    session: sessionGuard({
+    web: sessionGuard({
       // highlight-start
       useRememberTokens: true,
       rememberMeTokensAge: '2 years',
@@ -319,7 +319,7 @@ export default class SessionController {
     const { email, password } = request.only(['email', 'password'])
     const user = await User.verifyCredentials(email, password)
 
-    await auth.use('session').login(
+    await auth.use('web').login(
       user,
       // highlight-start
       /**

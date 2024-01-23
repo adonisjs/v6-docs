@@ -300,6 +300,9 @@ if (error instanceof errors.E_INVALID_FLAG) {
 ## E_MULTIPLE_REDIS_SUBSCRIPTIONS
 The `@adonisjs/redis` package raises the exception when you attempt to [subscribe to a given pub/sub channel](../database/redis.md#pubsub) multiple times.
 
+- **Status code**: 500
+- **Self handled**: No
+
 ```ts
 import { errors as redisErrors } from '@adonisjs/redis'
 if (error instanceof redisErrors.E_MULTIPLE_REDIS_SUBSCRIPTIONS) {
@@ -308,6 +311,9 @@ if (error instanceof redisErrors.E_MULTIPLE_REDIS_SUBSCRIPTIONS) {
 
 ## E_MULTIPLE_REDIS_PSUBSCRIPTIONS
 The `@adonisjs/redis` package raises the exception when you attempt to [subscribe to a given pub/sub pattern](../database/redis.md#pubsub) multiple times.
+
+- **Status code**: 500
+- **Self handled**: No
 
 ```ts
 import { errors as redisErrors } from '@adonisjs/redis'
@@ -320,10 +326,52 @@ The exception is raised by the `@adonisjs/mail` package when unable to send the 
 
 You may access the network request error using the `error.cause` property. The `cause` property is the [error object](https://github.com/sindresorhus/got/blob/main/documentation/8-errors.md) returned by `got` (npm package).
 
+- **Status code**: 400
+- **Self handled**: No
+
 ```ts
 import { errors as mailErrors } from '@adonisjs/redis'
 if (error instanceof mailErrors.E_MAIL_TRANSPORT_ERROR) {
   console.log(error.cause)
+}
+```
+
+## E_SESSION_NOT_MUTABLE
+The exception is raised by the `@adonisjs/session` package when the session store is initiated in the read-only mode. 
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors as sessionErrors } from '@adonisjs/session'
+if (error instanceof sessionErrors.E_SESSION_NOT_MUTABLE) {
+  console.log(error.message)
+}
+```
+
+## E_SESSION_NOT_MUTABLE
+The exception is raised by the `@adonisjs/session` package when the session store is initiated in the read-only mode.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors as sessionErrors } from '@adonisjs/session'
+if (error instanceof sessionErrors.E_SESSION_NOT_MUTABLE) {
+  console.log(error.message)
+}
+```
+
+## E_SESSION_NOT_READY
+The exception is raised by the `@adonisjs/session` package when the session store has not been initiated yet. This will be the case when you are not using the session middleware.
+
+- **Status code**: 500
+- **Self handled**: No
+
+```ts
+import { errors as sessionErrors } from '@adonisjs/session'
+if (error instanceof sessionErrors.E_SESSION_NOT_READY) {
+  console.log(error.message)
 }
 ```
 

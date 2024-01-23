@@ -475,4 +475,4 @@ await User.authTokens.delete(user, token.identifier)
 ```
 
 ## Events
-Please check the [events reference guide]() to view the list of available events emitted by the access tokens guard.
+Please check the [events reference guide](../reference/events.md#access_tokens_authauthentication_attempted) to view the list of available events emitted by the access tokens guard.

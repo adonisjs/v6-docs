@@ -79,17 +79,17 @@ The auth system comes pre-configured with the `web` and the `api` starter kits. 
 
 ```sh
 // title: npm
-npm i @adonisjs/auth@next
+npm i @adonisjs/auth
 ```
 
 ```sh
 // title: yarn
-yarn add @adonisjs/auth@next
+yarn add @adonisjs/auth
 ```
 
 ```sh
 // title: pnpm
-pnpm add @adonisjs/auth@next
+pnpm add @adonisjs/auth
 ```
 
 :::

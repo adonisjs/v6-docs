@@ -155,173 +155,173 @@
     "category": "HTTP"
   },
   {
-    "permalink": "database/redis",
+    "permalink": "redis",
     "title": "Redis",
     "contentPath": "./database/redis.md",
     "category": "Database"
   },
   {
-    "permalink": "security/hashing",
+    "permalink": "hashing",
     "title": "Hash",
     "contentPath": "./security/hash.md",
     "category": "Security"
   },
   {
-    "permalink": "security/encryption",
+    "permalink": "encryption",
     "title": "Encryption",
     "contentPath": "./security/encryption.md",
     "category": "Security"
   },
   {
-    "permalink": "security/web-security",
+    "permalink": "web-security",
     "title": "Securing SSR apps",
     "contentPath": "./security/web-security.md",
     "category": "Security"
   },
   {
-    "permalink": "security/cors",
+    "permalink": "cors",
     "title": "CORS",
     "contentPath": "./security/cors.md",
     "category": "Security"
   },
   {
-    "permalink": "auth/introduction",
+    "permalink": "auth",
     "title": "Introduction",
     "contentPath": "./auth/introduction.md",
     "category": "Auth"
   },
   {
-    "permalink": "auth/verifying_user_credentials",
+    "permalink": "verifying_user_credentials",
     "title": "Verifying user credentials",
     "contentPath": "./auth/verifying_user_credentials.md",
     "category": "Auth"
   },
   {
-    "permalink": "auth/session_guard",
+    "permalink": "auth-session-guard",
     "title": "Session guard",
     "contentPath": "./auth/session_guard.md",
     "category": "Auth"
   },
   {
-    "permalink": "auth/access_tokens_guard",
+    "permalink": "auth-access-tokens-guard",
     "title": "Access tokens guard",
     "contentPath": "./auth/access_tokens_guard.md",
     "category": "Auth"
   },
   {
-    "permalink": "auth/custom_auth_guards",
+    "permalink": "auth-custom-guards",
     "title": "Custom auth guards",
     "contentPath": "./auth/custom_auth_guards.md",
     "category": "Auth"
   },
   {
-    "permalink": "mail/introduction",
+    "permalink": "mail",
     "title": "Introduction",
     "contentPath": "./mail/introduction.md",
     "category": "Mail"
   },
   {
-    "permalink": "mail/message",
+    "permalink": "mail-message",
     "title": "Configuring message",
     "contentPath": "./mail/message.md",
     "category": "Mail"
   },
   {
-    "permalink": "mail/classes",
+    "permalink": "mail-classes",
     "title": "Class-based mails",
     "contentPath": "./mail/class_based_mails.md",
     "category": "Mail"
   },
   {
-    "permalink": "mail/fake_mailer",
+    "permalink": "fake-mailer",
     "title": "Fake mailer",
     "contentPath": "./mail/fake_mailer.md",
     "category": "Mail"
   },
   {
-    "permalink": "mail/custom_transports",
+    "permalink": "mail-custom-transports",
     "title": "Creating custom transports",
     "contentPath": "./mail/custom_transports.md",
     "category": "Mail"
   },
   {
-    "permalink": "fundamentals/application",
+    "permalink": "application",
     "redirects": ["guides/application"],
     "title": "Application",
     "contentPath": "./fundamentals/application.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/application_lifecycle",
+    "permalink": "application-lifecycle",
     "title": "Application lifecycle",
     "contentPath": "./fundamentals/application_lifecycle.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/adonisrc-file",
+    "permalink": "adonisrc-file",
     "redirects": ["guides/adonis-rcfile"],
     "title": "AdonisRC file",
     "contentPath": "./fundamentals/adonisrc_file.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/ioc-container",
+    "permalink": "ioc-container",
     "title": "IoC container",
     "contentPath": "./fundamentals/ioc_container.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/container-services",
+    "permalink": "container-services",
     "title": "Container services",
     "contentPath": "./fundamentals/container_services.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/service-providers",
+    "permalink": "service-providers",
     "title": "Service providers",
     "contentPath": "./fundamentals/service_providers.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/config-providers",
+    "permalink": "config-providers",
     "title": "Config providers",
     "contentPath": "./fundamentals/config_providers.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/async-local-storage",
+    "permalink": "async-local-storage",
     "title": "Async local storage",
     "contentPath": "./fundamentals/async_local_storage.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/typescript-build-process",
+    "permalink": "typescript-build-process",
     "redirects": ["guides/typescript-build-process"],
     "title": "TypeScript build process",
     "contentPath": "./fundamentals/typescript_build_process.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/extend",
+    "permalink": "extend-adonisjs",
     "title": "Extending the framework",
     "contentPath": "./fundamentals/extending_the_framework.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/scaffolding",
+    "permalink": "scaffolding",
     "title": "Scaffolding",
     "contentPath": "./fundamentals/scaffolding.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/package-development",
+    "permalink": "package-development",
     "draft": true,
     "title": "Package development",
     "contentPath": "./fundamentals/package_development.md",
     "category": "Fundamentals"
   },
   {
-    "permalink": "fundamentals/tooling-config",
+    "permalink": "tooling-config",
     "title": "Tooling config",
     "contentPath": "./fundamentals/tooling_config.md",
     "category": "Fundamentals"
@@ -346,7 +346,7 @@
     "category": "Digging Deeper"
   },
   {
-    "permalink": "social_auth",
+    "permalink": "social-auth",
     "title": "Social authentication",
     "contentPath": "./digging_deeper/social_auth.md",
     "category": "Digging Deeper"
@@ -358,68 +358,68 @@
     "category": "Digging Deeper"
   },
   {
-    "permalink": "testing/introduction",
+    "permalink": "testing",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",
     "category": "Testing"
   },
   {
-    "permalink": "testing/http-tests",
+    "permalink": "http-tests",
     "title": "HTTP tests",
     "contentPath": "./testing/http_tests.md",
     "category": "Testing"
   },
   {
-    "permalink": "testing/browser-tests",
+    "permalink": "browser-tests",
     "title": "Browser tests",
     "contentPath": "./testing/browser_tests.md",
     "category": "Testing"
   },
   {
-    "permalink": "testing/commandline_tests",
+    "permalink": "command-line-tests",
     "title": "Command-line tests",
     "contentPath": "./testing/commandline_tests.md",
     "category": "Testing"
   },
   {
-    "permalink": "testing/mocks-and-fakes",
+    "permalink": "mocks-and-fakes",
     "redirects": ["guides/testing/fakes"],
     "title": "Mocks and fakes",
     "contentPath": "./testing/mocks_and_fakes.md",
     "category": "Testing"
   },
   {
-    "permalink": "ace/introduction",
+    "permalink": "ace",
     "title": "Introduction",
     "contentPath": "./ace/introduction.md",
     "category": "Ace command line"
   },
   {
-    "permalink": "ace/creating_commands",
+    "permalink": "ace-creating-commands",
     "title": "Creating commands",
     "contentPath": "./ace/creating_commands.md",
     "category": "Ace command line"
   },
   {
-    "permalink": "ace/arguments",
+    "permalink": "ace-arguments",
     "title": "Command arguments",
     "contentPath": "./ace/args.md",
     "category": "Ace command line"
   },
   {
-    "permalink": "ace/flags",
+    "permalink": "ace-flags",
     "title": "Command flags",
     "contentPath": "./ace/flags.md",
     "category": "Ace command line"
   },
   {
-    "permalink": "ace/prompts",
+    "permalink": "ace-prompts",
     "title": "Prompts",
     "contentPath": "./ace/prompts.md",
     "category": "Ace command line"
   },
   {
-    "permalink": "ace/terminal-ui",
+    "permalink": "ace-terminal-ui",
     "title": "Terminal UI",
     "contentPath": "./ace/tui.md",
     "category": "Ace command line"
@@ -431,31 +431,31 @@
     "category": "Ace command line"
   },
   {
-    "permalink": "reference/commands",
+    "permalink": "commands-reference",
     "title": "Commands",
     "contentPath": "./reference/commands.md",
     "category": "Reference"
   },
   {
-    "permalink": "reference/edge",
+    "permalink": "edge-reference",
     "title": "Edge helpers and tags",
     "contentPath": "./reference/edge.md",
     "category": "Reference"
   },
   {
-    "permalink": "reference/events",
+    "permalink": "events-reference",
     "title": "Events",
     "contentPath": "./reference/events.md",
     "category": "Reference"
   },
   {
-    "permalink": "reference/exceptions",
+    "permalink": "exceptions-reference",
     "title": "Exceptions",
     "contentPath": "./reference/exceptions.md",
     "category": "Reference"
   },
   {
-    "permalink": "reference/helpers",
+    "permalink": "helpers-reference",
     "title": "Helpers",
     "contentPath": "./reference/helpers.md",
     "category": "Reference"

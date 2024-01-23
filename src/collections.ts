@@ -15,7 +15,7 @@ import { renderer } from './bootstrap.js'
 const docs = new Collection()
   .db(new URL('../content/docs/db.json', import.meta.url))
   .useRenderer(renderer)
-  .urlPrefix('/docs')
+  .urlPrefix('/guides')
   .tap((entry) => entry.setMarkdownOptions({ tocDepth: 3 }))
 
 await docs.boot()

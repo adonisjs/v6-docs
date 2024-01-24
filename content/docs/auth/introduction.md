@@ -69,7 +69,9 @@ As covered earlier in this guide, a user provider is responsible for finding use
 
 The user providers are guards specific; for example, The user provider for the session guard is responsible for finding users by their ID, and the user provider for the access tokens guard is also responsible for verifying access tokens.
 
-We ship with a Lucid user provider for the inbuilt guards, which uses Lucid models to find users, generate tokens, and verify tokens. If you are not using Lucid, you must [implement a custom user provider]().
+We ship with a Lucid user provider for the inbuilt guards, which uses Lucid models to find users, generate tokens, and verify tokens. 
+
+<!-- If you are not using Lucid, you must [implement a custom user provider](). -->
 
 ## Installation
 

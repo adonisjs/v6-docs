@@ -199,8 +199,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-## FAQs
+<!-- ## FAQs
 
 ### How to generate an access token after verifying credentials?
 
-### How to login using session after verifying credentials?
+### How to login using session after verifying credentials? -->

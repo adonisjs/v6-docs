@@ -155,6 +155,12 @@
     "category": "HTTP"
   },
   {
+    "permalink": "sql",
+    "title": "SQL & ORMs",
+    "contentPath": "./database/sql.md",
+    "category": "Database"
+  },
+  {
     "permalink": "redis",
     "title": "Redis",
     "contentPath": "./database/redis.md",

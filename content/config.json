@@ -9,6 +9,11 @@
       "href": "https://github.com/adonisjs/core"
     }
   },
+  "search": {
+    "appId": "KXECYAMEX8",
+    "indexName": "adonisjs_next",
+    "apiKey": "01279e9ede105d87a1ade54565b1a2fd"
+  },
   "sponsors_sources": [
     "https://raw.githubusercontent.com/thetutlage/static/main/sponsorkit/sponsors.json"
   ],

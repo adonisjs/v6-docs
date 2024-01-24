@@ -1,4 +1,14 @@
 {
+  "menu": [
+    {
+      "href": "https://v6-migration.adonisjs.com",
+      "title": "Migration Guide"
+    },
+    {
+      "href": "https://v5-docs.adonisjs.com",
+      "title": "V5 Documentation"
+    }
+  ],
   "links": {
     "home": {
       "title": "AdonisJS",

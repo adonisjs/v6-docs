@@ -82,7 +82,7 @@ import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 // highlight-start
-const AuthFinder = withAuthFinder(hash.use('scrypt'), {
+const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
@@ -111,7 +111,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
 }
 ```
 
-- The `withAuthFinder` method accepts a hasher as the first argument. We use the `scrypt` hasher in the above example. However, you can replace it with a different hasher.
+- The `withAuthFinder` method accepts a callback that returns a hasher as the first argument. We use the `scrypt` hasher in the above example. However, you can replace it with a different hasher.
 
 - Next, it accepts a configuration object with the following properties.
   - `uids`: An array of model properties that can be used to identify a user uniquely. If you assign a user a username or phone number, you can also use them as a UID.

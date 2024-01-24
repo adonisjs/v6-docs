@@ -98,7 +98,7 @@ You can develop an AdonisJS application on any code editor supporting TypeScript
 
 - [**X (Formerly Twitter)**](https://twitter.com/adonisframework) - Stay upto-date with framework announcements.
 
-- [**Github discussions**](https://github.com/adonisjs/core/discussions) - Browse existing topics and ask for help.
+- [**GitHub discussions**](https://github.com/adonisjs/core/discussions) - Browse existing topics and ask for help.
 
 - [**Priority Support**](https://adonisjs.com/support_program) - Get priority support and a direct line of contact with the framework creator.
 

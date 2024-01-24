@@ -259,7 +259,7 @@ node ace eject make/migration/main.stub --pkg=@adonisjs/lucid
 ```
 
 ### How do you find which stubs to copy?
-You can find a package's stubs by visiting its Github repo. We store all the stubs at the root level of the package inside the `stubs` directory.
+You can find a package's stubs by visiting its GitHub repo. We store all the stubs at the root level of the package inside the `stubs` directory.
 
 ## Stubs execution flow
 Here's a visual representation of how we find and execute stubs via the `makeUsingStub` method.

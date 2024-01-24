@@ -11,7 +11,7 @@ Let's see it in action. First, we will create a new Node.js project (without any
 
 :::note
 
-You can find the final code for this example on [als-basic-example](https://github.com/thetutlage/als-basic-example) Github repo.
+You can find the final code for this example on [als-basic-example](https://github.com/thetutlage/als-basic-example) GitHub repo.
 
 
 :::

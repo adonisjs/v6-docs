@@ -7,7 +7,7 @@ Ally comes with the following inbuilt drivers, alongside an extensible API to [r
 - Facebook
 - Spotify
 - Google
-- Github
+- GitHub
 - Discord
 - LinkedIn
 
@@ -88,7 +88,7 @@ defineConfig({
 ### Configuring the callback URL
 OAuth providers require you to register a callback URL to handle the redirect response after the user authorizes the login request. 
 
-The callback URL must be registered with the OAuth service provider. For example: If you are using Github, you must log in to your Github account, [create a new app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) and define the callback URL using the Github interface.
+The callback URL must be registered with the OAuth service provider. For example: If you are using GitHub, you must log in to your GitHub account, [create a new app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) and define the callback URL using the GitHub interface.
 
 Also, you must register the same callback URL within the `config/ally.ts` file using the `callbackUrl` property.
 
@@ -97,7 +97,7 @@ Once the package has been configured, you can interact with Ally APIs using the 
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
-  // Github driver instance
+  // GitHub driver instance
   const gh = ally.use('github')
 
   // Twitter driver instance
@@ -157,7 +157,7 @@ router.get('/github/callback', async ({ ally }) => {
   }
 
   /**
-   * Github responded with some error
+   * GitHub responded with some error
    */
   if (gh.hasError()) {
     return gh.getError()
@@ -332,7 +332,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 <div class="disclosure_wrapper">
 
-:::disclosure{title="Github config"}
+:::disclosure{title="GitHub config"}
 
 ```ts
 {

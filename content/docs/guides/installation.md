@@ -138,7 +138,7 @@ npm init adonisjs -- -K=slim
 ---
 
 ### Bring your starter kit
-Starter kits are pre-built projects hosted with a Git repository provider like Github, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
+Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
 
 ```sh
 npm init adonisjs -- -K="github_user/repo"

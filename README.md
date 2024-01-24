@@ -88,7 +88,7 @@ The `vscode_grammars` directory contains a collection of custom VSCode languages
 See also: [Using custom VSCode grammars](#using-custom-vscode-grammars)
 
 ## Usage
-Clone the repo from Github. We recommend using [degit](https://www.npmjs.com/package/degit), which downloads the repo without git history.
+Clone the repo from GitHub. We recommend using [degit](https://www.npmjs.com/package/degit), which downloads the repo without git history.
 
 ```sh
 npx degit dimerapp/docs-boilerplate <my-website>
@@ -144,7 +144,7 @@ We use a very minimal configuration file to update certain website sections. The
       "href": "/"
     },
     "github": {
-      "title": "Your project on Github",
+      "title": "Your project on GitHub",
       "href": "https://github.com/dimerapp"
     }
   },
@@ -153,9 +153,9 @@ We use a very minimal configuration file to update certain website sections. The
 }
 ```
 
-- `links`: The object has two fixed links. The homepage and the Github project URL.
+- `links`: The object has two fixed links. The homepage and the GitHub project URL.
 
-- `fileEditBaseUrl`: The base URL for the file on Github. This is used inside the content footer to display the **Edit on Github** link.
+- `fileEditBaseUrl`: The base URL for the file on GitHub. This is used inside the content footer to display the **Edit on GitHub** link.
 
 - `copyright`: The name of display in the Copyright footer.
 
@@ -271,7 +271,7 @@ trigger is displayed in mobile view only.
   ```edge
   @component('docs::header', contentConfig)
     @slots('github')
-      <span> Github (11K+ Stars) </span>
+      <span> GitHub (11K+ Stars) </span>
     @end
   @end
   ```

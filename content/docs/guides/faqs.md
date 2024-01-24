@@ -6,11 +6,11 @@ AdonisJS is an independent project created by [Harminder Virk](https://twitter.c
 
 The framework creator (Harminder Virk) is the project lead and works full-time on the framework.
 
-The project is funded through Github Sponsors. If you or your business benefit from AdonisJS, consider [sponsoring us to support the framework development](https://github.com/sponsors/thetutlage).
+The project is funded through GitHub Sponsors. If you or your business benefit from AdonisJS, consider [sponsoring us to support the framework development](https://github.com/sponsors/thetutlage).
 
 ## How is AdonisJS licensed?
 
-AdonisJS (the framework) and the official packages are distributed under the [MIT License](https://opensource.org/license/mit/). In addition, the source code is publicly available on [Github](https://github.com/adonisjs).
+AdonisJS (the framework) and the official packages are distributed under the [MIT License](https://opensource.org/license/mit/). In addition, the source code is publicly available on [GitHub](https://github.com/adonisjs).
 
 ## Is AdonisJS reliable and well-maintained?
 
@@ -39,6 +39,6 @@ Check out the following links to stay connected and up-to-date.
 
 - [Discord server](https://discord.gg/vDcEjq6)
 - [X (Formerly Twitter)](https://twitter.com/adonisframework)
-- [Github discussions](https://github.com/adonisjs/core/discussions)
+- [GitHub discussions](https://github.com/adonisjs/core/discussions)
 - [Blog and Newsletter](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
 - [Adocasts](https://adocasts.com/?referrer=adonisjs_docs_faq)

@@ -174,6 +174,9 @@ router
 The `router.get` method creates a route that responds to [GET HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET). Similarly, you can use the following methods to register routes for different HTTP methods.
 
 ```ts
+// GET method
+router.get('users', () => {})
+
 // POST method
 router.post('users', () => {})
 

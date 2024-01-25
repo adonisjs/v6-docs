@@ -46,10 +46,14 @@ node ace configure @adonisjs/bouncer
 
 :::disclosure{title="See steps performed by the configure command"}
 
-1. Registers the following service provider inside the `adonisrc.ts` file.
+1. Registers the following service provider and command inside the `adonisrc.ts` file.
 
     ```ts
     {
+      commands: [
+        // ...other commands
+        () => import('@adonisjs/bouncer/commands')
+      ],
       providers: [
         // ...other providers
         () => import('@adonisjs/bouncer/bouncer_provider')

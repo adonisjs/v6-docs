@@ -103,7 +103,7 @@ Once done, you must run the following command to configure the auth package.
 node ace configure @adonisjs/auth --guard=session
 
 # Configure with access tokens guard
-node ace configure @adonisjs/auth --guard=tokens
+node ace configure @adonisjs/auth --guard=access_tokens
 
 # Configure with basic auth guard
 node ace configure @adonisjs/auth --guard=basic_auth

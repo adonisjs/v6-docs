@@ -144,13 +144,13 @@ The router ships with the following helper methods for commonly used data types.
 import router from '@adonisjs/core/services/router'
 
 // Validate id to be numeric + cast to number data type
-router.where('id', route.matchers.number())
+router.where('id', router.matchers.number())
 
 // Validate id to be a valid UUID
-router.where('id', route.matchers.uuid())
+router.where('id', router.matchers.uuid())
 
 // Validate slug to match a given slug regex: regexr.com/64su0
-router.where('slug', route.matchers.slug())
+router.where('slug', router.matchers.slug())
 ```
 
 ### Global matchers
@@ -161,12 +161,12 @@ The route matchers can be defined globally on the router instance. Unless explic
 import router from '@adonisjs/core/services/router'
 
 // Global matcher
-router.where('id', route.matchers.uuid())
+router.where('id', router.matchers.uuid())
 
 router
   .get('/posts/:id', () => {})
   // Overridden at route level
-  .where('id', route.matchers.number())
+  .where('id', router.matchers.number())
 ```
 
 ## HTTP methods

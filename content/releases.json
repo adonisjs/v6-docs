@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/auth",
+    "description": "Fix cross DB issues with the tokens and the users providers",
+    "released_on":" 2024-01-25",
+    "version": "9.0.3",
+    "release_notes_link": "https://github.com/adonisjs/auth/releases/tag/v9.0.3"
+  },
+  {
     "package": "@adonisjs/lucid",
     "description": "Switch default naming strategy to camelCase and add support for nulls treatment in order by clause",
     "released_on":" 2024-01-25",

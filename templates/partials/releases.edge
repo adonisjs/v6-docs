@@ -7,23 +7,23 @@
   <table>
     <thead>
       <tr>
-        <th style="width: 240px;">Package</th>
+        <th>Package</th>
         <th>Change</th>
-        <th style="width: 120px;">Released on</th>
+        <th style="width: 120px; text-align: right;">Released on</th>
       </tr>
     </thead>
     <tbody>
       @each(release in await getReleases())
         <tr>
-          <th>
+          <th style="white-space: nowrap;">
             <a href="{{ release.release_notes_link }}" target="_blank">
-              <code>{{ release.package }}</code>
+              <code>{{ release.package }}&commat;{{ release.version }}</code>
             </a>
           </th>
           <td>
             {{{ release.description }}}.
           </td>
-          <td>
+          <td style="text-align: right;">
             {{ dayjs(release.released_on).format('MMM D, YYYY') }}
           </td>
         </tr>

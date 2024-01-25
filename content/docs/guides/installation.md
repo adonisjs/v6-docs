@@ -55,7 +55,7 @@ The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.de
 Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
 ```sh
-npm init adonisjs -- -K=web
+npm init adonisjs@latest -- -K=web
 ```
 
 The web starter kit comes with the following packages.
@@ -108,7 +108,7 @@ The web starter kit comes with the following packages.
 The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
 
 ```sh
-npm init adonisjs -- -K=api
+npm init adonisjs@latest -- -K=api
 ```
 
 In this starter kit:
@@ -123,7 +123,7 @@ The API starter kit is configured with session-based authentication. However, if
 See also: [Which authentication guard should I use?](../auth/introduction.md#choosing-an-auth-guard)
 
 ```sh
-npm init adonisjs -- -K=api --auth-guard=access_tokens
+npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
 ```
 
 ---
@@ -132,7 +132,7 @@ npm init adonisjs -- -K=api --auth-guard=access_tokens
 For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
 
 ```sh
-npm init adonisjs -- -K=slim
+npm init adonisjs@latest -- -K=slim
 ```
 
 ---
@@ -141,29 +141,29 @@ npm init adonisjs -- -K=slim
 Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
 
 ```sh
-npm init adonisjs -- -K="github_user/repo"
+npm init adonisjs@latest -- -K="github_user/repo"
 
 # Download from GitLab
-npm init adonisjs -- -K="gitlab:user/repo"
+npm init adonisjs@latest -- -K="gitlab:user/repo"
 
 # Download from BitBucket
-npm init adonisjs -- -K="bitbucket:user/repo"
+npm init adonisjs@latest -- -K="bitbucket:user/repo"
 ```
 
 You can download private repos using Git+SSH authentication using the `git` mode.
 
 ```sh
-npm init adonisjs -- -K="user/repo" --mode=git
+npm init adonisjs@latest -- -K="user/repo" --mode=git
 ```
 
 Finally, you can specify a tag, branch, or commit.
 
 ```sh
 # Branch
-npm init adonisjs -- -K="user/repo#develop"
+npm init adonisjs@latest -- -K="user/repo#develop"
 
 # Tag
-npm init adonisjs -- -K="user/repo#v2.1.0"
+npm init adonisjs@latest -- -K="user/repo#v2.1.0"
 ```
 
 ## Starting the development server

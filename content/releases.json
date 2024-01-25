@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/presets",
+    "description": "Generate access tokens migration file during setup",
+    "released_on":" 2024-01-25",
+    "version": "2.2.4",
+    "release_notes_link": "https://github.com/adonisjs/presets/releases/tag/v2.2.4"
+  },
+  {
     "package": "@adonisjs/auth",
     "description": "Fix cross DB issues with the tokens and the users providers",
     "released_on":" 2024-01-25",

@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/lucid",
+    "description": "Switch default naming strategy to camelCase and add support for nulls treatment in order by clause",
+    "released_on":" 2024-01-25",
+    "version": "20.0.0",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v20.0.0"
+  },
+  {
     "package": "@adonisjs/bouncer",
     "description": "Update i18n error identifier and JSONAPI error code",
     "released_on":" 2024-01-22",

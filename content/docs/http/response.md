@@ -9,7 +9,7 @@ The simplest way to send a response is to return a value from the route handler.
 ```ts
 import router from '@adonisjs/core/services/router'
 
-route.get('/', async () => {
+router.get('/', async () => {
   /** Plain string */
   return 'This is the homepage.'
 
@@ -29,7 +29,7 @@ Along with returning a value from the route handler, you can use the `response.s
 ```ts
 import router from '@adonisjs/core/services/router'
 
-route.get('/', async ({ response }) => {
+router.get('/', async ({ response }) => {
   /** Plain string */
   response.send('This is the homepage')
 
@@ -62,7 +62,7 @@ The `response.stream` method does not set the `content-type` and the `content-le
 ```ts
 import router from '@adonisjs/core/services/router'
 
-route.get('/', async ({ response }) => {
+router.get('/', async ({ response }) => {
   const image = fs.createReadStream('./some-file.jpg')
   response.stream(image)
 })
@@ -89,7 +89,7 @@ We recommend using the `response.download` method over the `response.stream` met
 import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 
-route.get('/uploads/:file', async ({ response, params }) => {
+router.get('/uploads/:file', async ({ response, params }) => {
   const filePath = app.makePath(`uploads/${params.file}`)
 
   response.download(filePath)
@@ -128,7 +128,7 @@ The `response.attachment` method is similar to the `response.download` method, b
 import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 
-route.get('/uploads/:file', async ({ response, params }) => {
+router.get('/uploads/:file', async ({ response, params }) => {
   const filePath = app.makePath(`uploads/${params.file}`)
 
   response.attachment(filePath, 'custom-filename.jpg')
@@ -144,7 +144,7 @@ You may set the response status using the `response.status` method. Calling this
 ```ts
 import router from '@adonisjs/core/services/router'
 
-route.get('/', async ({ response }) => {
+router.get('/', async ({ response }) => {
   /**
    * Sets the status to 200
    */
@@ -165,7 +165,7 @@ You may set the response headers using the `response.header` method. This method
 ```ts
 import router from '@adonisjs/core/services/router'
 
-route.get('/', async ({ response }) => {
+router.get('/', async ({ response }) => {
   /**
    * Defines the content-type header
    */
@@ -201,7 +201,7 @@ The simplest way to perform a redirect is to call the `redirect.toPath` method w
 import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 
-route.get('/posts', async ({ response }) => {
+router.get('/posts', async ({ response }) => {
   response.redirect().toPath('/articles')
 })
 ```
@@ -212,9 +212,9 @@ The redirect class also allows constructing a URL from a pre-registered route. T
 import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 
-route.get('/articles/:id', async () => {}).as('articles.show')
+router.get('/articles/:id', async () => {}).as('articles.show')
 
-route.get('/posts/:id', async ({ response, params }) => {
+router.get('/posts/:id', async ({ response, params }) => {
   response.redirect().toRoute('articles.show', { id: params.id })
 })
 ```

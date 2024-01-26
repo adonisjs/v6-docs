@@ -130,7 +130,7 @@ router.put('posts/:id', async ({ bouncer, params, response }) => {
   }
   // highlight-end
 
-  return response.accessDenied('You cannot edit the post')
+  return response.forbidden('You cannot edit the post')
 })
 ```
 
@@ -256,7 +256,7 @@ export default class PostsController {
   async create({ bouncer, response }: HttpContext) {
     // highlight-start
     if (await bouncer.with(PostPolicy).denies('create')) {
-      return response.accessDenied('Cannot create a post')
+      return response.forbidden('Cannot create a post')
     }
     // highlight-end
 
@@ -268,7 +268,7 @@ export default class PostsController {
 
     // highlight-start
     if (await bouncer.with(PostPolicy).denies('edit', post)) {
-      return response.accessDenied('Cannot edit the post')
+      return response.forbidden('Cannot edit the post')
     }
     // highlight-end
 
@@ -280,7 +280,7 @@ export default class PostsController {
 
     // highlight-start
     if (await bouncer.with(PostPolicy).denies('delete', post)) {
-      return response.accessDenied('Cannot delete the post')
+      return response.forbidden('Cannot delete the post')
     }
     // highlight-end
 
@@ -628,7 +628,7 @@ export default class PostsController {
     // insert-start
     if (await bouncer.with('PostPolicy').denies('create')) {
     // insert-end
-      return response.accessDenied('Cannot create a post')
+      return response.forbidden('Cannot create a post')
     }
 
     //Continue with the controller logic

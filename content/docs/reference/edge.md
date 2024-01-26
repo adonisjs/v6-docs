@@ -228,7 +228,7 @@ The `@inputError` tag provides a better DX for reading validation error messages
 :::
 
 ```edge
-@error('title')
+@inputError('title')
   @each(message in $messages)
     <p>{{ message }}</p>
   @end

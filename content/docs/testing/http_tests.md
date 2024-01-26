@@ -45,14 +45,14 @@ export const plugins: Config['plugins'] = [
 ]
 ```
 
-The `apiClient` method optionally accepts the `baseUrl` for the server. If not provided, it will use the `HOST` and the `PORT` environment variables.
+The `apiClient` method optionally accepts the `baseURL` for the server. If not provided, it will use the `HOST` and the `PORT` environment variables.
 
 ```ts
 import env from '#start/env'
 
 export const plugins: Config['plugins'] = [
   apiClient({
-    baseUrl: `http://${env.get('HOST')}:${env.get('PORT')}`
+    baseURL: `http://${env.get('HOST')}:${env.get('PORT')}`
   })
 ]
 ```

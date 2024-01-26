@@ -198,6 +198,10 @@ Most applications will use a single store. However, you can configure multiple s
 
 ### Stores configuration
 Following is the list of the backend stores bundled with the `@adonisjs/session` package.
+Dont forget to edit `start/env.ts` 
+```ts
+  SESSION_DRIVER: Env.schema.enum(['cookie', 'memory', 'redis'] as const), //Example line with added redis 
+```
 
 ```ts
 import app from '@adonisjs/core/services/app'

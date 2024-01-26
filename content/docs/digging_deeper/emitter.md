@@ -33,9 +33,15 @@ Once you have defined the event listener, you can emit the `user:registered` eve
 import emitter from '@adonisjs/core/services/emitter'
 
 export default class UsersController {
-  store() {
-    const user = await User.create(data)
+  async store({ request, response }: HttpContext) {
+    const { email, password, fullName } = request.only(['email', 'password', 'fullName'])
+    const user = await User.create({
+      fullName: fullName,
+      password: password,
+      email: email,
+    })
     emitter.emit('user:registered', user)
+    return response.json(user)
   }
 }
 ```

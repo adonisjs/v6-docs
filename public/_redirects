@@ -7,8 +7,13 @@
 /guides/assets-manager /guides/assets-bundling
 /guides/views/* /guides/views-and-templates
 /guides/validator/* /guides/validation
-/guides/database/* /guides/database/sql
-/guides/database/* /guides/database/sql
+/guides/database/introduction /guides/database/sql
+/guides/database/query-builder /guides/database/sql
+/guides/database/transactions /guides/database/sql
+/guides/database/pagination /guides/database/sql
+/guides/database/migrations /guides/database/sql
+/guides/database/seeders /guides/database/sql
+/guides/database/debugging /guides/database/sql
 /guides/models/* /guides/database/sql
 /guides/auth/introduction /guides/auth
 /guides/auth/web-guard /guides/auth-session-guard

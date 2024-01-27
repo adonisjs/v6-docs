@@ -77,6 +77,37 @@ node ace configure @adonisjs/bouncer
 
 :::
 
+##  The Initialize bouncer middleware
+During the setup process, we create and register `#middleware/initialize_bouncer_middleware` middleware within your application. The initialize middleware is responsible for creating an instance of the [Bouncer](https://github.com/adonisjs/bouncer/blob/develop/src/bouncer.ts) class for the currently authenticated user and shares it via the `ctx.bouncer` property with the rest of the request.
+
+Also, we share the same Bouncer instance with Edge templates using the `ctx.view.share` method. Feel free the remove the following lines of code from the middleware, if you are not using Edge inside your application.
+
+:::note
+
+You own the source code of your application including the files created during the initial setup. So, do not hesitate to change them and make them work with your application environment.
+
+:::
+
+```ts
+async handle(ctx: HttpContext, next: NextFn) {
+  ctx.bouncer = new Bouncer(
+    () => ctx.auth.user || null,
+    abilities,
+    policies
+  ).setContainerResolver(ctx.containerResolver)
+
+  // delete-start
+  /**
+   * Remove if not using Edge
+   */
+  if ('view' in ctx) {
+    ctx.view.share(ctx.bouncer.edgeHelpers)
+  }
+  // delete-end
+
+  return next()
+}
+```
 
 ## Defining abilities
 

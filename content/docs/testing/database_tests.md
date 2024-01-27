@@ -70,7 +70,7 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
 
 ### Global transaction
 
-When running tests, you may want to keep your database clean between each test. For that, you can use the `testUtils.db().beginGlobalTransaction()` hook. This hook will start a transaction before each test and roll it back at the end of the test.
+When running tests, you may want to keep your database clean between each test. For that, you can use the `testUtils.db().withGlobalTransaction()` hook. This hook will start a transaction before each test and roll it back at the end of the test.
 
 ```ts
 // title: tests/unit/user.spec.ts
@@ -78,7 +78,7 @@ import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 
 test.group('User', (group) => {
-  group.each.setup(() => testUtils.db().beginGlobalTransaction())
+  group.each.setup(() => testUtils.db().withGlobalTransaction())
 })
 ```
 

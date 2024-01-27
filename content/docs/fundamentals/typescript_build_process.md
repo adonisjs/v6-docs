@@ -104,7 +104,7 @@ The production build of your AdonisJS application is created using the `node ace
 - Copy the `package.json` and `package-lock.json/yarn.lock` files to the `./build` folder.
 
 :::warning
-Any modifications made to the `ace.js` file will be lost during the build process since the file is rewritten from scratch. If you want to have any additional code that runs before Ace starts, you should instead do it inside the `bin/console.ts` file.
+Any modifications to the `ace.js` file will be lost during the build process since the file is rewritten from scratch. If you want to have any additional code that runs before Ace starts, you should instead do it inside the `bin/console.ts` file.
 :::
 
 And that is all!

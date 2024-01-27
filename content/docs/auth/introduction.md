@@ -4,7 +4,7 @@ AdonisJS ships with a robust and secure authentication system you can use to log
 
 The authentication package is built around **guards** and **providers**. 
 
-- Guards are end-to-end implementations of a specific login type. For example, the `session` guard allows you to authenticate users using cookies and session. Meanwhile, the `access_tokens` guard allows you to authenticate clients using tokens.
+- Guards are end-to-end implementations of a specific login type. For example, the `session` guard allows you to authenticate users using cookies and session. Meanwhile, the `access_tokens` guard will enable you to authenticate clients using tokens.
 
 - Providers are used to look up users and tokens from a database. You can either use the inbuilt providers or implement your own.
 
@@ -142,6 +142,19 @@ node ace configure @adonisjs/auth --guard=basic_auth
 4. Creates database migration for the `users` table.
 5. Creates database migrations for the selected guard.
 :::
+
+## The Initialize auth middleware
+During setup, we register the `@adonisjs/auth/initialize_auth_middleware` within your application. The middleware is responsible for creating an instance of the [Authenticator](https://github.com/adonisjs/auth/blob/next/src/authenticator.ts) class and shares it via the `ctx.auth` property with the rest of the request.
+
+Note that the initialize auth middleware does not authenticate the request or protect the routes. It's used only for initializing the authenticator and sharing it with the rest of the request. You must use the [auth](./session_guard.md#protecting-routes) middleware for protecting routes.
+
+Also, the same authenticator instance is shared with Edge templates (if your app is using Edge), and you can access it using the `auth` property. For example:
+
+```edge
+@if(auth.isAuthenticated)
+  <p> Hello {{ auth.user.email }} </p>
+@end
+```
 
 ## Creating the users table
 The `configure` command creates a database migration for the `users` table inside the `database/migrations` directory. Feel free to open this file and make changes per your application requirements.

@@ -208,7 +208,7 @@ router
 ```
 
 ### Access user within Edge templates
-The [InitializeAuthMiddleware]() also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
+The [InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware) also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
 
 ```edge
 @if(auth.isAuthenticated)

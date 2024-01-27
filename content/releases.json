@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/application",
+    "description": "Fix stub exports parser and use dash-case for command names",
+    "released_on":" 2024-01-27",
+    "version": "8.0.3",
+    "release_notes_link": "https://github.com/adonisjs/application/releases/tag/v8.0.3"
+  },
+  {
     "package": "@adonisjs/presets",
     "description": "Generate access tokens migration file during setup",
     "released_on":" 2024-01-25",

@@ -204,6 +204,8 @@ import app from '@adonisjs/core/services/app'
 import { defineConfig, stores } from '@adonisjs/session'
 
 export default defineConfig({
+  store: env.get('SESSION_DRIVER'),
+
   // highlight-start
   stores: {
     cookie: stores.cookie(),
@@ -263,6 +265,37 @@ Make sure to first install and configure the [@adonisjs/redis](../database/redis
 </dd>
 
 </dl>
+
+---
+
+### Updating environment variables validation
+If you decide to use session stores other than the default one, make sure to also update the environment variables validation for the `SESSION_DRIVER` environment variable.
+
+We configure the `cookie` and the `redis` stores in the following example. Therefore, we should also allow the `SESSION_DRIVER` environment variable to be one of them.
+
+```ts
+import { defineConfig, stores } from '@adonisjs/session'
+
+export default defineConfig({
+  // highlight-start
+  store: env.get('SESSION_DRIVER'),
+
+  stores: {
+    cookie: stores.cookie(),
+    redis: stores.redis({
+      connection: 'main'
+    })
+  }
+  // highlight-end
+})
+```
+
+```ts
+// title: start/env.ts
+{
+  SESSION_DRIVER: Env.schema.enum(['cookie', 'redis', 'memory'] as const)
+}
+```
 
 ## Basic example
 Once the session package has been registered, you can access the `session` property from the [HTTP Context](./http_context.md). The session property exposes the API for reading and writing data to the session store.
@@ -522,7 +555,7 @@ session.flash({
 })
 ```
 
-Instead of manually reading the request data and storing it to the flash messages, you can use one of the following methods to flash form data.
+Instead of manually reading the request data and storing it in the flash messages, you can use one of the following methods to flash form data.
 
 ```ts
 // title: flashAll
@@ -566,7 +599,7 @@ session.flashExcept(['password'])
 session.flash(request.except(['password']))
 ```
 
-Finally, if you want to reflash the current flash messages, you can that using `session.reflash` method.
+Finally, if you want to reflash the current flash messages, you can do that using the `session.reflash` method.
 
 ```ts
 session.reflash()

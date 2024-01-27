@@ -78,13 +78,13 @@ node ace configure @adonisjs/bouncer
 :::
 
 ##  The Initialize bouncer middleware
-During the setup process, we create and register `#middleware/initialize_bouncer_middleware` middleware within your application. The initialize middleware is responsible for creating an instance of the [Bouncer](https://github.com/adonisjs/bouncer/blob/develop/src/bouncer.ts) class for the currently authenticated user and shares it via the `ctx.bouncer` property with the rest of the request.
+During setup, we create and register the `#middleware/initialize_bouncer_middleware` middleware within your application. The initialize middleware is responsible for creating an instance of the [Bouncer](https://github.com/adonisjs/bouncer/blob/develop/src/bouncer.ts) class for the currently authenticated user and shares it via the `ctx.bouncer` property with the rest of the request.
 
-Also, we share the same Bouncer instance with Edge templates using the `ctx.view.share` method. Feel free the remove the following lines of code from the middleware, if you are not using Edge inside your application.
+Also, we share the same Bouncer instance with Edge templates using the `ctx.view.share` method. Feel free to remove the following lines of code from the middleware if you are not using Edge inside your application.
 
 :::note
 
-You own the source code of your application including the files created during the initial setup. So, do not hesitate to change them and make them work with your application environment.
+You own your application's source code, including the files created during the initial setup. So, do not hesitate to change them and make them work with your application environment.
 
 :::
 
@@ -178,7 +178,7 @@ By default, Bouncer denies authorization checks for non-logged-in users without 
 
 However, you may want to define certain abilities that can work with a guest user. For example, allow guests to view published posts but allow the creator of the post to view drafts as well.
 
-You may define an ability that allows guest users using the `allowGuest` option. In this case, the options will defined as the first parameter and callback will be the second parameter.
+You may define an ability that allows guest users using the `allowGuest` option. In this case, the options will be defined as the first parameter, and callback will be the second parameter.
 
 ```ts
 export const viewPost = Bouncer.ability(
@@ -407,7 +407,7 @@ export default class PostPolicy extends BasePolicy {
 ```
 
 ### Dependency injection
-The policy classes are created using the [IoC container](../fundamentals/ioc_container.md) and therefore you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
+The policy classes are created using the [IoC container](../fundamentals/ioc_container.md); therefore, you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -427,7 +427,7 @@ export class PostPolicy extends BasePolicy {
 }
 ```
 
-If a Policy class is created during an HTTP request, then you may also inject an instance of [HttpContext](../http/http_context.md) inside it.
+If a Policy class is created during an HTTP request, you may also inject an instance of [HttpContext](../http/http_context.md) inside it.
 
 ```ts
 // highlight-start
@@ -557,14 +557,14 @@ Bouncer.responseBuilder = (response: boolean | AuthorizationResponse) => {
 ```
 
 ## Pre-registering abilities and policies
-So far in this guide, we explicitly import an ability or a policy everytime we want to use it. However, once you pre-register them, you will be able to reference an ability or a policy by its name as a string.
+So far, in this guide, we explicitly import an ability or a policy whenever we want to use it. However, once you pre-register them, you can reference an ability or a policy by its name as a string.
 
-Pre-registering abilities and policies might not be super useful within your TypeScript codebase, apart from just cleaning up the imports. However, they are offer far better DX within Edge templates.
+Pre-registering abilities and policies might be less useful within your TypeScript codebase than just cleaning up the imports. However, they offer far better DX within Edge templates.
 
 Look at the following code examples of Edge templates with and without pre-registering a policy.
 
 :::caption{for="error"}
-**Without pre-registering. Naah, not super clean**
+**Without pre-registering. No, not super clean**
 :::
 
 ```edge
@@ -587,7 +587,7 @@ Look at the following code examples of Edge templates with and without pre-regis
 @end
 ```
 
-If you open the `initialize_bouncer_middleware.ts` file, you will find us already importing and pre-registering abilities and policies at the time of creating the Bouncer instance.
+If you open the `initialize_bouncer_middleware.ts` file, you will find us already importing and pre-registering abilities and policies when creating the Bouncer instance.
 
 ```ts
 // highlight-start
@@ -612,7 +612,7 @@ export default InitializeBouncerMiddleware {
 
 - If you decide to define abilities in other parts of your codebase, then make sure to import and pre-register them inside the middleware.
 
-- In case of policies, everytime you run the `make:policy` command, make sure to accept the prompt to register the policy inside the policies collection. The policies collection is defined inside the `./app/policies/main.ts` file.
+- In the case of policies, every time you run the `make:policy` command, make sure to accept the prompt to register the policy inside the policies collection. The policies collection is defined inside the `./app/policies/main.ts` file.
 
   ```ts
   // title: app/policies/main.ts
@@ -623,7 +623,7 @@ export default InitializeBouncerMiddleware {
   ```
 
 ### Referencing pre-registered abilities and policies
-In the following example, we get rid of the imports and reference abilities and policies by their name. Do note, **the string based API is also type-safe**, but the "Go to Definition" feature of your code editor might not work.
+In the following example, we get rid of the imports and reference abilities and policies by their name. Do note **the string-based API is also type-safe**, but your code editor's "Go to Definition" feature may not work.
 
 ```ts
 // title: Ability usage example
@@ -670,7 +670,7 @@ export default class PostsController {
 ## Authorization checks inside Edge templates
 Before you can perform authorization checks inside Edge templates, make sure to [pre-register abilities and policies](#pre-registering-abilities-and-policies). Once done, you may use the `@can` and `@cannot` tags to perform the authorization checks.
 
-These tags accepts the `ability` name or the `policy.method` name as the first parameter, followed by rest of the parameters accepted by ab ability or a policy.
+These tags accept the `ability` name or the `policy.method` name as the first parameter, followed by the rest of the parameters accepted by the ability or a policy.
 
 ```edge
 // title: Usage with ability

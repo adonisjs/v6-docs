@@ -1,7 +1,7 @@
 # Session guard
 The session guard uses the [@adonisjs/session](../http/session.md) package to login and authenticate users during an HTTP request.
 
-Sessions and cookies have been long on the internet and work great for most applications. Therefore, we recommend using the session guard for server rendered applications or an SPA web-client on the same top-level domain.
+Sessions and cookies have been on the internet for a long time and work great for most applications. Therefore, we recommend using the session guard for server-rendered applications or an SPA web client on the same top-level domain.
 
 ## Configuring the guard
 The authentication guards are defined inside the `config/auth.ts` file. You can configure multiple guards inside this file under the `guards` object.
@@ -30,7 +30,7 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-The `sessionGuard` method creates an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) class. It accepts a user provider that can be used for finding users during authentication and an optional config object to configure the remember tokens behavior.
+The `sessionGuard` method creates an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) class. It accepts a user provider that can be used to find users during authentication and an optional config object to configure the remember tokens behavior.
 
 The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
 
@@ -41,7 +41,7 @@ In the following example:
 
 - We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
 
-- The `auth.use('web')` return an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/next/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
+- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/next/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
 
 - Next, we call the `guard.login(user)` method to create a login session for the user.
 
@@ -55,7 +55,7 @@ export default class SessionController {
   async store({ request, auth, response }: HttpContext) {
     // highlight-start
     /**
-     * Step 1: Get credentials from request body
+     * Step 1: Get credentials from the request body
      */
     const { email, password } = request.only(['email', 'password'])
 
@@ -105,7 +105,7 @@ router
 
 By default, the auth middleware will authenticate the user against the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `auth` middleware.
 
-The auth middleware will attempt to authenticate the request using the `web` and the `api` guards in the following example.
+In the following example, the auth middleware will attempt to authenticate the request using the `web` and the `api` guards.
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -134,7 +134,7 @@ The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonis
 
 ## Getting access to the logged-in user
 
-You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` middleware or if you call the `auth.authenticate` method manually.
+You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` middleware or if you call the `auth.authenticate` or `auth.check` methods manually.
 
 ```ts
 // title: Using auth middleware
@@ -159,7 +159,7 @@ router
   .get('dashboard', ({ auth }) => {
     // highlight-start
     /**
-     * First authenticate the user
+     * First, authenticate the user
      */
     await auth.authenticate()
 
@@ -207,6 +207,38 @@ router
   .use(middleware.auth())
 ```
 
+### Access user within Edge templates
+The [InitializeAuthMiddleware]() also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
+
+```edge
+@if(auth.isAuthenticated)
+  <p> Hello {{ auth.user.email }} </p>
+@end
+```
+
+If you want to fetch logged-in user information on a non-protected route, you can use the `auth.check` method to check if the user is logged-in and then access the `auth.user` property. A great use case for this is displaying the logged-in user information on the website header of a public page.
+
+```edge
+{{--
+  This is a public page; therefore, it is not protected by the auth
+  middleware. However, we still want to display the logged-in
+  user info in the header of the website.
+
+  For that, we use the `auth.check` method to silently check if the
+  user is logged in and then displays their email in the header.
+
+  You get the idea!
+--}}
+
+@eval(await auth.check())
+
+<header>
+  @if(auth.isAuthenticated)
+    <p> Hello {{ auth.user.email }} </p>
+  @end
+</header>
+```
+
 ## Performing logout
 You can logout a user using the `guard.logout` method. During logout, the user state will be deleted from the session store. The currently active remember me token will also be deleted (if using remember me tokens).
 
@@ -222,14 +254,14 @@ router
   .use(middleware.auth())
 ```
 
-## Using the Remember me feature
-The Remember me feature automatically login user after their session expires. This is done by generating a cryptographically secure token and saving it as a cookie inside the user's browser.
+## Using the Remember Me feature
+The Remember Me feature automatically login user after their session expires. This is done by generating a cryptographically secure token and saving it as a cookie inside the user's browser.
 
 After the user session has expired, AdonisJS will use the remember me cookie, verify the token's validity, and automatically re-create the logged-in session for the user.
 
-### Creating the remember me tokens table
+### Creating the Remember Me Tokens table
 
-The remember me tokens are saved inside the database and therefore you must create a new migration to create the `remember_me_tokens` table.
+The remember me tokens are saved inside the database, and therefore, you must create a new migration to create the `remember_me_tokens` table.
 
 ```sh
 node ace make:migration remember_me_tokens
@@ -266,7 +298,7 @@ export default class extends BaseSchema {
 ```
 
 ### Configuring the tokens provider
-In order read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/token_providers/db.ts) to the User model.
+To read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/token_providers/db.ts) to the User model.
 
 ```ts
 import { BaseModel } from '@adonisjs/lucid/orm'
@@ -283,7 +315,7 @@ export default class User extends BaseModel {
 }
 ```
 
-### Enabling remember me tokens inside the config
+### Enabling Remember Me tokens inside the config
 Finally, let's enable the `useRememberTokens` flag on the session guard config inside the `config/auth.ts` file.
 
 ```ts

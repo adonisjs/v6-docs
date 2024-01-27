@@ -97,10 +97,15 @@ node ace --no-warnings --inspect serve --watch
 The production build of your AdonisJS application is created using the `node ace build` command. The `build` command performs the following operations to create a [**standalone JavaScript application**](#what-is-a-standalone-build) inside the `./build` directory.
 
 - Remove the existing `./build` folder (if any).
+- Rewrite the `ace.js` file **from scratch** to remove the `ts-node/esm` loader. 
 - Compile frontend assets using Vite (if configured).
 - Compile TypeScript source code to JavaScript using [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html).
 - Copy non-TypeScript files registered under the [`metaFiles`](./adonisrc_file.md#metafiles) array to the `./build` folder.
 - Copy the `package.json` and `package-lock.json/yarn.lock` files to the `./build` folder.
+
+:::warning
+Any modifications made to the `ace.js` file will be lost during the build process since the file is rewritten from scratch. If you want to have any additional code that runs before Ace starts, you should instead do it inside the `bin/console.ts` file.
+:::
 
 And that is all!
 

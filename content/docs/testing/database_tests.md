@@ -38,7 +38,6 @@ At the end of each run cycle, the tables will just be truncated, but our schema 
 
 ```ts
 // title: tests/bootstrap.ts
-
 import testUtils from '@adonisjs/core/services/test_utils'
 
 export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {

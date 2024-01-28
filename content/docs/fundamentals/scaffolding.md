@@ -287,10 +287,10 @@ Also, the codemod does not overwrite the existing validation rule for a given en
 :::
 
 ```ts
-const transformer = new CodeTransformer(appRoot)
+const codemods = await command.createCodemods()
 
 try {
-  await transformer.defineEnvValidations({
+  await codemods.defineEnvValidations({
     leadingComment: 'App environment variables',
     variables: {
       PORT: 'Env.schema.number()',
@@ -323,10 +323,10 @@ This codemod expects the `start/kernel.ts` file to exist and must have a functio
 :::
 
 ```ts
-const transformer = new CodeTransformer(appRoot)
+const codemods = await command.createCodemods()
 
 try {
-  await transformer.addMiddlewareToStack('router', [
+  await codemods.addMiddlewareToStack('router', [
     {
       path: '@adonisjs/core/bodyparser_middleware'
     }
@@ -349,10 +349,10 @@ router.use([
 You may define named middleware as follows.
 
 ```ts
-const transformer = new CodeTransformer(appRoot)
+const codemods = await command.createCodemods()
 
 try {
-  await transformer.addMiddlewareToStack('named', [
+  await codemods.addMiddlewareToStack('named', [
     {
       name: 'auth',
       path: '@adonisjs/auth/auth_middleware'
@@ -372,10 +372,10 @@ This codemod expects the `adonisrc.ts` file to exist and must have an `export de
 :::
 
 ```ts
-const transformer = new CodeTransformer(appRoot)
+const codemods = await command.createCodemods()
 
 try {
-  await transformer.updateRcFile((rcFile) => {
+  await codemods.updateRcFile((rcFile) => {
     rcFile
       .addProvider('@adonisjs/lucid/db_provider')
       .addCommand('@adonisjs/lucid/commands'),
@@ -412,7 +412,7 @@ This codemod expects the `tests/bootstrap.ts` file to exist and must have the `e
 :::
 
 ```ts
-const transformer = new CodeTransformer(appRoot)
+const codemods = await command.createCodemods()
 
 const imports = [
   {
@@ -429,7 +429,7 @@ const imports = [
 const pluginUsage = 'sessionApiClient(app)'
 
 try {
-  await transformer.addJapaPlugin(pluginUsage, imports)
+  await codemods.addJapaPlugin(pluginUsage, imports)
 } catch (error) {
   console.error('Unable to register japa plugin')
   console.error(error)
@@ -454,10 +454,10 @@ This codemod expects the `app/policies/main.ts` file to exist and must export a 
 :::
 
 ```ts
-const transformer = new CodeTransformer(appRoot)
+const codemods = await command.createCodemods()
 
 try {
-  await transformer.addPolicies([
+  await codemods.addPolicies([
     {
       name: 'PostPolicy',
       path: '#policies/post_policy'

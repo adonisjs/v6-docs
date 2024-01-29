@@ -215,6 +215,12 @@
     "category": "Auth"
   },
   {
+    "permalink": "basic-auth-guard",
+    "title": "Basic auth guard",
+    "contentPath": "./auth/basic_auth_guard.md",
+    "category": "Auth"
+  },
+  {
     "permalink": "auth-custom-guards",
     "title": "Custom auth guards",
     "contentPath": "./auth/custom_auth_guards.md",

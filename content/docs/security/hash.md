@@ -382,7 +382,7 @@ test('get users list', async ({ client }) => {
 ```
 
 ## Creating a custom hash driver
-A hash driver must implement the [HashDriverContract](https://github.com/adonisjs/hash/blob/next/src/types.ts#L13) interface. Also, the official Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize the hash output for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/next/src/drivers/bcrypt.ts) to make and verify hashes.
+A hash driver must implement the [HashDriverContract](https://github.com/adonisjs/hash/blob/main/src/types.ts#L13) interface. Also, the official Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize the hash output for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/main/src/drivers/bcrypt.ts) to make and verify hashes.
 
 ```ts
 import {

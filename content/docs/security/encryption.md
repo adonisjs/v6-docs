@@ -75,7 +75,7 @@ encryption.encrypt(new Date())
 
 ## Using custom secret keys
 
-You can create an [instance of the Encryption class](https://github.com/adonisjs/encryption/blob/next/src/encryption.ts) directly to use custom secret keys.
+You can create an [instance of the Encryption class](https://github.com/adonisjs/encryption/blob/main/src/encryption.ts) directly to use custom secret keys.
 
 ```ts
 import { Encryption } from '@adonisjs/core/encryption'

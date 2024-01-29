@@ -37,7 +37,7 @@ validator.rule('camelCase', (value, _, options) => {
 - The `validator.rule` method accepts the rule name as the first argument.
 - The second argument is the rule implementation. The function receives the field's value under validation, the rule options, and an object representing the schema tree.
 
-In the above example, we create a `camelCase` rule that checks if the field value is the same as its camelCase version or not. If not, we will report an error using the [errorReporter](https://github.com/adonisjs/validator/blob/develop/src/ErrorReporter/Vanilla.ts#L39) class instance.
+In the above example, we create a `camelCase` rule that checks if the field value is the same as its camelCase version or not. If not, we will report an error using the [errorReporter](https://github.com/adonisjs/validator/blob/main/src/ErrorReporter/Vanilla.ts#L39) class instance.
 
 ## Using the rule
 Before using your custom rules, you will have to inform the TypeScript compiler about the same. Otherwise, it will complain that the rule does not exist.

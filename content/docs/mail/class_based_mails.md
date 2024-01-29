@@ -10,7 +10,7 @@ See also: [Make mail command](../reference/commands.md#makemail)
 node ace make:mail verify_email
 ```
 
-The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/next/src/base_mail.ts) class and is scaffolded with following properties and methods. You may configure the mail message inside the `prepare` method using the `this.message` property.
+The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts) class and is scaffolded with following properties and methods. You may configure the mail message inside the `prepare` method using the `this.message` property.
 
 ```ts
 import User from '#models/user'
@@ -88,7 +88,7 @@ build :span[Inherited]{class="badge"}
 
 The `build` method is inherited from the `BaseMail` class. The method is called automatically at the time of sending the email.
 
-Make sure to reference the [original implementation](https://github.com/adonisjs/mail/blob/next/src/base_mail.ts#L72-L81) if you decide to override this method.
+Make sure to reference the [original implementation](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts#L72-L81) if you decide to override this method.
 
 </dd>
 
@@ -187,4 +187,4 @@ email.message.assertAttachment(
 // highlight-end
 ```
 
-Feel free to look at the [Message](https://github.com/adonisjs/mail/blob/next/src/message.ts) class source code for all the available assertion methods.
+Feel free to look at the [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) class source code for all the available assertion methods.

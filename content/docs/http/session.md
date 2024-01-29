@@ -649,7 +649,7 @@ Finally, you can access a specific flash message or a validation error using the
 Please check the [events reference guide](../reference/events.md#sessioninitiated) to view the list of events dispatched by the `@adonisjs/session` package.
 
 ## Creating a custom session store
-Session stores must implement the [SessionStoreContract](https://github.com/adonisjs/session/blob/next/src/types.ts#L23C18-L23C38) interface and define the following methods.
+Session stores must implement the [SessionStoreContract](https://github.com/adonisjs/session/blob/main/src/types.ts#L23C18-L23C38) interface and define the following methods.
 
 ```ts
 import {

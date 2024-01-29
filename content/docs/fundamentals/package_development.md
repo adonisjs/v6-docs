@@ -111,7 +111,7 @@ You can repeat this process for any class that is constructed using the containe
 ### Registering singleton services
 If your package has certain classes that should have only one instance throughout the lifecycle of the application, you can bind them to the container and export them as [container services](./container_services.md).
 
-A great example of the same is the HTTP router shipped with the framework core. Since, a typical AdonisJS application needs a single instance of the [Router class](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts), we [register it as a singleton](https://github.com/adonisjs/core/blob/next/providers/http_provider.ts#L39-L44) inside the container.
+A great example of the same is the HTTP router shipped with the framework core. Since, a typical AdonisJS application needs a single instance of the [Router class](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts), we [register it as a singleton](https://github.com/adonisjs/core/blob/main/providers/http_provider.ts#L39-L44) inside the container.
 
 Let's take example of dummy `Cache` class and register it as a singleton inside the container.
 

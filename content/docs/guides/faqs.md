@@ -29,7 +29,7 @@ When creating the framework or adding new features, we primarily focus on solvin
 However, we look closer at the performance metrics and fine-tune the framework performance wherever it matters. For example:
 
 - The AdonisJS HTTP server in standalone mode is [on par with Fastify in performance](https://github.com/adonisjs/http-server/blob/main/benchmarks.md). 
-- The validation layer of the framework [outperforms other popular validation libraries](https://github.com/vinejs/vine/blob/develop/benchmarks.md) in the Node.js ecosystem.
+- The validation layer of the framework [outperforms other popular validation libraries](https://github.com/vinejs/vine/blob/main/benchmarks.md) in the Node.js ecosystem.
 
 ## Do you offer paid support?
 Yes! On our website, you can learn more about the [priority support program](https://adonisjs.com/support_program).

@@ -87,7 +87,7 @@ router
 
 ### Handling authentication exception
 
-The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/next/src/auth/errors.ts#L18) if the user is not authenticated. The exception is automatically converted to an HTTP response with the [WWW-Authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate) header in the response. The `WWW-Authenticate` challenges the authentication and triggers a web-native prompt to re-enter the credentials.
+The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18) if the user is not authenticated. The exception is automatically converted to an HTTP response with the [WWW-Authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate) header in the response. The `WWW-Authenticate` challenges the authentication and triggers a web-native prompt to re-enter the credentials.
 
 ## Getting access to the authenticated user
 You may access the logged-in user instance using the `auth.user` property. Since, you are using the `auth` middleware, the `auth.user` property will always be available.

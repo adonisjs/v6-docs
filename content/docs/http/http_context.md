@@ -268,7 +268,7 @@ ctx.auth
 
 <dd>
 
-Reference to an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/next/src/auth/authenticator.ts). Learn more about [authentication](../auth/introduction.md).
+Reference to an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/main/src/auth/authenticator.ts). Learn more about [authentication](../auth/introduction.md).
 
 </dd>
 
@@ -292,7 +292,7 @@ ctx\.ally
 
 <dd>
 
-Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/next/src/ally_manager.ts) to implement social login in your apps. Learn more about [Ally](../digging_deeper/social_auth.md)
+Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/main/src/ally_manager.ts) to implement social login in your apps. Learn more about [Ally](../digging_deeper/social_auth.md)
 
 </dd>
 
@@ -304,7 +304,7 @@ ctx.bouncer
 
 <dd>
 
-Reference to an instance of the [Bouncer class](https://github.com/adonisjs/bouncer/blob/next/src/bouncer.ts). Learn more about [Authorization](../digging_deeper/authorization.md).
+Reference to an instance of the [Bouncer class](https://github.com/adonisjs/bouncer/blob/main/src/bouncer.ts). Learn more about [Authorization](../digging_deeper/authorization.md).
 
 </dd>
 
@@ -316,7 +316,7 @@ ctx.i18n
 
 <dd>
 
-Reference to an instance of the [I18n class](https://github.com/adonisjs/i18n/blob/next/src/i18n.ts). Learn more about `i18n` in [Internationalization](../digging_deeper/i18n.md) guide.
+Reference to an instance of the [I18n class](https://github.com/adonisjs/i18n/blob/main/src/i18n.ts). Learn more about `i18n` in [Internationalization](../digging_deeper/i18n.md) guide.
 
 </dd>
 
@@ -389,7 +389,7 @@ createServer((req, res) => {
 ```
 
 ### Using the HttpContext factory
-The `testUtils` service is only available inside an AdonisJS application; therefore, if you are building a package and need access to a fake HTTP context, you may use the [HttpContextFactory](https://github.com/adonisjs/http-server/blob/next/factories/http_context.ts#L30) class.
+The `testUtils` service is only available inside an AdonisJS application; therefore, if you are building a package and need access to a fake HTTP context, you may use the [HttpContextFactory](https://github.com/adonisjs/http-server/blob/main/factories/http_context.ts#L30) class.
 
 ```ts
 import { HttpContextFactory } from '@adonisjs/core/factories/http'

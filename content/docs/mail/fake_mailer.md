@@ -3,7 +3,7 @@ You may want to use the Fake mailer during testing to prevent your application f
 
 In the following example:
 
-- We start by creating an instance of the [FakeMailer](https://github.com/adonisjs/mail/blob/next/src/fake_mailer.ts) using the `mail.fake` method. 
+- We start by creating an instance of the [FakeMailer](https://github.com/adonisjs/mail/blob/main/src/fake_mailer.ts) using the `mail.fake` method. 
 - Next, we call the `/register` endpoint API.
 - Finally, we use the `mails` property from the fake mailer to assert the `VerifyEmailNotification` was sent.
 

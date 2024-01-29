@@ -4,7 +4,7 @@ In this guide, we look at the list of events dispatched by the framework core an
 
 ## http\:request_completed
 
-The [`http:request_completed`](https://github.com/adonisjs/http-server/blob/develop/src/types/server.ts#L65) event is dispatched after an HTTP request is completed. The event contains an instance of the [HttpContext](../http/http_context.md) and the request duration. The `duration` value is the output of the `process.hrtime` method.
+The [`http:request_completed`](https://github.com/adonisjs/http-server/blob/main/src/types/server.ts#L65) event is dispatched after an HTTP request is completed. The event contains an instance of the [HttpContext](../http/http_context.md) and the request duration. The `duration` value is the output of the `process.hrtime` method.
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -51,7 +51,7 @@ emitter.on('container_binding:resolved', (event) => {
 ```
 
 ## session\:initiated
-The `@adonisjs/session` package emits the event when the session store is initiated during an HTTP request. The `event.session` property is an instance of the [Session class](https://github.com/adonisjs/session/blob/next/src/session.ts).
+The `@adonisjs/session` package emits the event when the session store is initiated during an HTTP request. The `event.session` property is an instance of the [Session class](https://github.com/adonisjs/session/blob/main/src/session.ts).
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -152,7 +152,7 @@ emitter.on('mail:queued', (event) => {
 ```
 
 ## queued\:mail\:error
-The event is dispatched when the [MemoryQueue](https://github.com/adonisjs/mail/blob/next/src/messengers/memory_queue.ts) implementation of the `@adonisjs/mail` package is unable to send the email queued using the `mail.sendLater` method.
+The event is dispatched when the [MemoryQueue](https://github.com/adonisjs/mail/blob/main/src/messengers/memory_queue.ts) implementation of the `@adonisjs/mail` package is unable to send the email queued using the `mail.sendLater` method.
 
 If you are using a custom queue implementation, you must capture the job errors and emit this event.
 
@@ -167,7 +167,7 @@ emitter.on('queued:mail:error', (event) => {
 
 ## session_auth\:login_attempted
 
-The event is dispatched by the [SessionGuard](https://github.com/adonisjs/auth/blob/next/src/guards/session/guard.ts) implementation of the `@adonisjs/auth` package when the `auth.login` method is called either directly or internally by the session guard.
+The event is dispatched by the [SessionGuard](https://github.com/adonisjs/auth/blob/main/src/guards/session/guard.ts) implementation of the `@adonisjs/auth` package when the `auth.login` method is called either directly or internally by the session guard.
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -180,7 +180,7 @@ emitter.on('session_auth:login_attempted', (event) => {
 
 ## session_auth\:login_succeeded
 
-The event is dispatched by the [SessionGuard](https://github.com/adonisjs/auth/blob/next/src/guards/session/guard.ts) implementation of the `@adonisjs/auth` package after a user has been logged in successfully. 
+The event is dispatched by the [SessionGuard](https://github.com/adonisjs/auth/blob/main/src/guards/session/guard.ts) implementation of the `@adonisjs/auth` package after a user has been logged in successfully. 
 
 You may use this event to track sessions associated with a given user.
 

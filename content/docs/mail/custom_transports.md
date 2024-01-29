@@ -8,7 +8,7 @@ In this guide, we will wrap the [nodemailer-postmark-transport](https://www.npmj
 npm i nodemailer nodemailer-postmark-transport
 ```
 
-As you can see in the following example, the heavy lifting of sending an email is done by the `nodemailer`. The AdonisJS transport acts as an adapter forwarding the message to nodemailer and normalizing its response to an instance of [MailResponse](https://github.com/adonisjs/mail/blob/next/src/mail_response.ts).
+As you can see in the following example, the heavy lifting of sending an email is done by the `nodemailer`. The AdonisJS transport acts as an adapter forwarding the message to nodemailer and normalizing its response to an instance of [MailResponse](https://github.com/adonisjs/mail/blob/main/src/mail_response.ts).
 
 ```ts
 import nodemailer from 'nodemailer'

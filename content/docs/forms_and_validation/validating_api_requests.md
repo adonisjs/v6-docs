@@ -4,7 +4,7 @@ In AdonisJS, the API requests are validated at the controller layer. If the requ
 
 The API requests validation logic in AdonisJS is framework agnostic and you can use any validation library you like. However, we ship a great validator as part of the framework core. AdonisJS validator is:
 
-- One of the [fastest validator in the Node.js ecosystem](https://github.com/adonisjs/validator/blob/develop/benchmarks.md).
+- One of the [fastest validator in the Node.js ecosystem](https://github.com/adonisjs/validator/blob/main/benchmarks.md).
 - Provides static and runtime safety.
 - Allows defining custom error messages.
 - Allows defining translations for error messages and fields.

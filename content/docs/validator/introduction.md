@@ -147,7 +147,7 @@ router.post('users', async ({ request, response }) => {
 })
 ```
 
-We recommend **NOT self-handling** the exception and let AdonisJS [convert the exception](https://github.com/adonisjs/validator/blob/develop/src/ValidationException/index.ts#L25-L49) to a response using content negotiation.
+We recommend **NOT self-handling** the exception and let AdonisJS [convert the exception](https://github.com/adonisjs/validator/blob/main/src/ValidationException/index.ts#L25-L49) to a response using content negotiation.
 
 Following is an explanation of how content negotiation works.
 

@@ -123,7 +123,7 @@ Reference to an instance of the I18n class configured using the application's de
 ```
 
 ## auth
-Reference to the [ctx.auth](../http/http_context.md#http-context-properties) property shared by the [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/next/src/auth/middleware/initialize_auth_middleware.ts#L14). You may use this property to access information about the logged-in user.
+Reference to the [ctx.auth](../http/http_context.md#http-context-properties) property shared by the [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/main/src/auth/middleware/initialize_auth_middleware.ts#L14). You may use this property to access information about the logged-in user.
 
 ```edge
 @if(auth.isAuthenticated)

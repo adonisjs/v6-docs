@@ -66,7 +66,7 @@ The difference in response time is enough for an attacker to find a valid email 
 </div>
 
 ## Using the Auth finder mixin
-To prevent the timing attacks, we recommend you use the [AuthFinder mixin](https://github.com/adonisjs/auth/blob/next/src/mixins/with_auth_finder.ts) on the User model.
+To prevent the timing attacks, we recommend you use the [AuthFinder mixin](https://github.com/adonisjs/auth/blob/main/src/mixins/with_auth_finder.ts) on the User model.
 
 The Auth finder mixin adds `findForAuth` and `verifyCredentials` methods to the applied model. The `verifyCredentials` method offers a timing attack safe API for finding a user and verifying their password.
 
@@ -200,7 +200,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 ```
 
 ## Hashing user password
-The `AuthFinder` mixin registers a [beforeSave](https://github.com/adonisjs/auth/blob/next/src/mixins/with_auth_finder.ts#L40-L50) hook to automatically hash the user passwords during `INSERT` and `UPDATE` calls. Therefore, you do not have to manually perform password hashing in your models.
+The `AuthFinder` mixin registers a [beforeSave](https://github.com/adonisjs/auth/blob/main/src/mixins/with_auth_finder.ts#L40-L50) hook to automatically hash the user passwords during `INSERT` and `UPDATE` calls. Therefore, you do not have to manually perform password hashing in your models.
 
 <!-- ## FAQs
 

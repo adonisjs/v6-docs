@@ -144,7 +144,7 @@ node ace configure @adonisjs/auth --guard=basic_auth
 :::
 
 ## The Initialize auth middleware
-During setup, we register the `@adonisjs/auth/initialize_auth_middleware` within your application. The middleware is responsible for creating an instance of the [Authenticator](https://github.com/adonisjs/auth/blob/next/src/authenticator.ts) class and shares it via the `ctx.auth` property with the rest of the request.
+During setup, we register the `@adonisjs/auth/initialize_auth_middleware` within your application. The middleware is responsible for creating an instance of the [Authenticator](https://github.com/adonisjs/auth/blob/main/src/authenticator.ts) class and shares it via the `ctx.auth` property with the rest of the request.
 
 Note that the initialize auth middleware does not authenticate the request or protect the routes. It's used only for initializing the authenticator and sharing it with the rest of the request. You must use the [auth](./session_guard.md#protecting-routes) middleware for protecting routes.
 

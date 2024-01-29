@@ -332,7 +332,7 @@ export default authConfig
 
 The `tokensGuard` method creates an instance of the [AccessTokensGuard](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/guard.ts) class. It accepts a user provider that can be used for verifying tokens and finding users.
 
-The `tokensUserProvider` method accepts the following options and returns an instance of the [AccessTokensLucidUserProvider](https://github.com/adonisjs/auth/blob/next/modules/access_tokens_guard/user_providers/lucid.ts) class.
+The `tokensUserProvider` method accepts the following options and returns an instance of the [AccessTokensLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/user_providers/lucid.ts) class.
 
 - `model`: The Lucid model to use for finding users.
 - `tokens`: The static property name of the model to reference the tokens provider.

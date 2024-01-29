@@ -32,7 +32,7 @@ export default authConfig
 
 The `sessionGuard` method creates an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) class. It accepts a user provider that can be used to find users during authentication and an optional config object to configure the remember tokens behavior.
 
-The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
+The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
 
 ## Performing login
 You can login a user using the `guard.login` method. The method accepts an instance of the User model and creates a login session for them.
@@ -41,7 +41,7 @@ In the following example:
 
 - We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
 
-- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/next/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
+- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
 
 - Next, we call the `guard.login(user)` method to create a login session for the user.
 
@@ -124,7 +124,7 @@ router
 
 ### Handling authentication exception
 
-The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/next/src/auth/errors.ts#L18) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
+The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
 
 - Request with `Accept=application/json` header will receive an array of errors with the `message` property.
 
@@ -298,7 +298,7 @@ export default class extends BaseSchema {
 ```
 
 ### Configuring the tokens provider
-To read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/next/modules/session_guard/token_providers/db.ts) to the User model.
+To read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/token_providers/db.ts) to the User model.
 
 ```ts
 import { BaseModel } from '@adonisjs/lucid/orm'

@@ -2,7 +2,7 @@
 
 The auth package enables you to create custom authentication guards for use cases not served by the built-in guards. In this guide, we will create a guard for using JWT tokens for authentication.
 
-The first step is to create a guard that implements the [`GuardContract`](https://github.com/adonisjs/auth/blob/next/src/auth/types.ts#L19) interface.
+The first step is to create a guard that implements the [`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/auth/types.ts#L19) interface.
 
 ```ts
 import { symbols } from '@adonisjs/auth'
@@ -76,7 +76,7 @@ In the above code snippet, we use the `UserProvider` generic to infer the exact 
 
 The inbuilt user providers define a type-only property via the `PROVIDER_REAL_USER` symbol that we are using to infer the user data type.
 
-All this may seem complicated if you are unfamiliar with TypeScript generics. So we recommend looking at the [code of the inbuilt user providers](https://github.com/adonisjs/auth/blob/next/src/core/user_providers/lucid.ts#L59-L62) to see how everything is setup.
+All this may seem complicated if you are unfamiliar with TypeScript generics. So we recommend looking at the [code of the inbuilt user providers](https://github.com/adonisjs/auth/blob/main/src/core/user_providers/lucid.ts#L59-L62) to see how everything is setup.
 
 ## Accepting a user provider
 A guard must accept a user provider to look up users during authentication. You can accept it as a constructor parameter and store a private reference.

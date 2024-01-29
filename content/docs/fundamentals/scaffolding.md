@@ -26,7 +26,7 @@ The codemods API exposed by AdonisJS are very specific to accomplish high-level 
 ### Configure command
 The configure command is used to configure an AdonisJS package. Under the hood, this command imports the main entry point file and executes the `configure` method exported by the mentioned package.
 
-The package's `configure` method receives an instance of the [Configure command](https://github.com/adonisjs/core/blob/develop/commands/configure.ts), and therefore, it can access the stubs and codemods API from the command instance directly.
+The package's `configure` method receives an instance of the [Configure command](https://github.com/adonisjs/core/blob/main/commands/configure.ts), and therefore, it can access the stubs and codemods API from the command instance directly.
 
 ## Using stubs
 Most of the time, you will use stubs within an Ace command or inside the `configure` method of a package you have created. You can initialize the codemods module in both cases via the Ace command's `createCodemods` method. 
@@ -169,7 +169,7 @@ The following global variables are always shared with a stub.
 | Variable       | Description                                                                                                                                         |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `app`          | Reference to an instance of the [application class](../fundamentals/application.md).                                                                |
-| `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/next/src/generators.ts).                                          |
+| `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts).                                          |
 | `randomString` | Reference to the [randomString](../reference/helpers.md#random) helper function.                                                                               |
 | `string`       | A function to create a [string builder](../reference/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |
 | `flags`        | The command-line flags are defined when running the ace command.                                                                              |
@@ -200,7 +200,7 @@ export default class {{ controllerName }} {
 }
 ```
 
-- In the first two lines, we use the [generators module](https://github.com/adonisjs/application/blob/next/src/generators.ts) to generate the controller class name and the controller file name.
+- In the first two lines, we use the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts) to generate the controller class name and the controller file name.
 - From lines 3-7, we [define the destination path](#customizing-the-destination-path) for the controller file using the `exports` function.
 - Finally, we define the contents of the scaffolded controller.
 

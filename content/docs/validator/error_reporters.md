@@ -10,7 +10,7 @@ The validations performed using the `request.validate` method uses content negot
 
 However, you can also define the error reporter explicitly, which will turn off the content negotiation checks.
 
-Both the `validator.validate` and `request.validate` method accepts a reporter to use. Either you can use one of the [pre-existing reporters](https://github.com/adonisjs/validator/blob/develop/src/Validator/index.ts#L219-L222) or create/use a custom reporter.
+Both the `validator.validate` and `request.validate` method accepts a reporter to use. Either you can use one of the [pre-existing reporters](https://github.com/adonisjs/validator/blob/main/src/Validator/index.ts#L219-L222) or create/use a custom reporter.
 
 ```ts
 // highlight-start
@@ -47,7 +47,7 @@ export default class CreateUserValidator {
 ```
 
 ## Creating your error reporter
-Every reporter report must adhere to the [ErrorReporterContract](https://github.com/adonisjs/validator/blob/develop/adonis-typings/validator.ts#L168) interface and define the following properties/methods on it.
+Every reporter report must adhere to the [ErrorReporterContract](https://github.com/adonisjs/validator/blob/main/adonis-typings/validator.ts#L168) interface and define the following properties/methods on it.
 
 ```ts
 export interface ErrorReporterContract<Messages extends any = any> {
@@ -191,6 +191,6 @@ export class MyReporter implements ErrorReporterContract<{ errors: ErrorNode[] }
 
 #### Points to note
 
-- You must always use the [MessagesBag](https://github.com/adonisjs/validator/blob/develop/src/MessagesBag/index.ts) to retrieve the error. It checks the user-defined custom error messages and returns the best match for a given field and validation rule.
+- You must always use the [MessagesBag](https://github.com/adonisjs/validator/blob/main/src/MessagesBag/index.ts) to retrieve the error. It checks the user-defined custom error messages and returns the best match for a given field and validation rule.
 - You should always raise an exception within the `report` method when `this.bail` is set to true.
 - When in confusion, do check the implementation of [existing error reporters](https://github.com/adonisjs/validator/tree/develop/src/ErrorReporter).

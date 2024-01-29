@@ -6,7 +6,7 @@ In AdonisJS, the forms are validated at the controller layer. If the form valida
 
 The form validation in AdonisJS is framework agnostic, and you can use any validation library you like. However, we ship a great validator as part of the framework core. AdonisJS validator is:
 
-- One of the [fastest validators in the Node.js ecosystem](https://github.com/adonisjs/validator/blob/develop/benchmarks.md).
+- One of the [fastest validators in the Node.js ecosystem](https://github.com/adonisjs/validator/blob/main/benchmarks.md).
 - Provides static and runtime safety.
 - Casts form input values to JavaScript data types.
 - Allows defining custom error messages.

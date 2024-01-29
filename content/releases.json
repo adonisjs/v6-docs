@@ -1,5 +1,12 @@
 [
   {
+    "package": "@vinejs/vine",
+    "description": "Bug fix and performance improvements",
+    "released_on":" 2024-01-29",
+    "version": "1.7.1",
+    "release_notes_link": "https://github.com/vinejs/vine/releases/tag/v1.7.1"
+  },
+  {
     "package": "@adonisjs/auth",
     "description": "Add basic auth guard",
     "released_on":" 2024-01-29",

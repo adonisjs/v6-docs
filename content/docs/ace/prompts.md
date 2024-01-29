@@ -1,6 +1,6 @@
 # Prompts
 
-Prompts are interactive terminal widgets you can use to accept user input. Ace prompts are powered by the [@poppinss/prompts](https://github.com/poppinss/prompts/tree/next) package, which supports the following prompt types.
+Prompts are interactive terminal widgets you can use to accept user input. Ace prompts are powered by the [@poppinss/prompts](https://github.com/poppinss/prompts) package, which supports the following prompt types.
 
 - input
 - list

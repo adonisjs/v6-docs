@@ -88,7 +88,7 @@ build :span[Inherited]{class="badge"}
 
 The `build` method is inherited from the `BaseMail` class. The method is called automatically at the time of sending the email.
 
-Make sure to reference the [original implementation](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts#L72-L81) if you decide to override this method.
+Make sure to reference the [original implementation](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts#L81) if you decide to override this method.
 
 </dd>
 

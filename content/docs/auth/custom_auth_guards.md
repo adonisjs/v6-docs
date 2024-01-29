@@ -2,7 +2,7 @@
 
 The auth package enables you to create custom authentication guards for use cases not served by the built-in guards. In this guide, we will create a guard for using JWT tokens for authentication.
 
-The first step is to create a guard that implements the [`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/auth/types.ts#L19) interface.
+The first step is to create a guard that implements the [`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/types.ts#L30) interface.
 
 ```ts
 import { symbols } from '@adonisjs/auth'

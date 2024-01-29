@@ -133,7 +133,7 @@ test('hashes user password when creating a new user', async ({ assert }) => {
 
 ### Using test groups
 
-Test groups are created using the `test.group` method. Groups add structure to your tests and allow you to run [lifecycle hooks](https://japa.dev/docs/grouping-tests#hooks) around your tests.
+Test groups are created using the `test.group` method. Groups add structure to your tests and allow you to run [lifecycle hooks](https://japa.dev/docs/lifecycle-hooks) around your tests.
 
 Continuing the previous example, let's move the password hashing test inside a group. 
 

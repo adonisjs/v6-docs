@@ -95,7 +95,7 @@ export default class SendVerificationEmail {
 }
 ```
 
-As the final step, you must bind the listener class to an event within the `start/events.ts` file. You may import the listener using the `#listeners` alias. The aliases are defined using the [subpath imports feature of Node.js](../guides/folder_structure.md#subpath-imports).
+As the final step, you must bind the listener class to an event within the `start/events.ts` file. You may import the listener using the `#listeners` alias. The aliases are defined using the [subpath imports feature of Node.js](../guides/folder_structure.md#the-sub-path-imports).
 
 ```ts
 // title: start/events.ts

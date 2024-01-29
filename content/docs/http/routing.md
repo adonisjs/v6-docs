@@ -693,7 +693,7 @@ declare module '@adonisjs/core/http' {
 
 ### BriskRoute
 
-The [BriskRoute class](https://github.com/adonisjs/http-server/blob/main/src/router/resource.ts) represents a route without an explicit handler. An instance of BriskRoute class is created once you call the `router.on` method.
+The [BriskRoute class](https://github.com/adonisjs/http-server/blob/main/src/router/brisk.ts) represents a route without an explicit handler. An instance of BriskRoute class is created once you call the `router.on` method.
 
 You can call the `this.setHandler` method inside your macro or getter to assign a route handler.
 

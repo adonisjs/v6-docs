@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/auth",
+    "description": "Add basic auth guard",
+    "released_on":" 2024-01-29",
+    "version": "9.1.0",
+    "release_notes_link": "https://github.com/adonisjs/auth/releases/tag/v9.1.0"
+  },
+  {
     "package": "@adonisjs/application",
     "description": "Fix stub exports parser and use dash-case for command names",
     "released_on":" 2024-01-27",

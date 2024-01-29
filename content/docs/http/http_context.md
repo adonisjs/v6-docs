@@ -268,7 +268,7 @@ ctx.auth
 
 <dd>
 
-Reference to an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/main/src/auth/authenticator.ts). Learn more about [authentication](../auth/introduction.md).
+Reference to an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/main/src/authenticator.ts). Learn more about [authentication](../auth/introduction.md).
 
 </dd>
 

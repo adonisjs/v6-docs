@@ -330,10 +330,10 @@ You may add custom properties to the HTTP context class using macros or getters.
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
 
-HttpContext.macro('property', function (this: HttpContext) {
+HttpContext.macro('aMethod', function (this: HttpContext) {
   return value
 }
-HttpContext.getter('property', function (this: HttpContext) {
+HttpContext.getter('aProperty', function (this: HttpContext) {
   return value
 })
 ```

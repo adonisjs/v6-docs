@@ -382,6 +382,12 @@
     "category": "Testing"
   },
   {
+    "permalink": "database-tests",
+    "title": "Database tests",
+    "contentPath": "./testing/database_tests.md",
+    "category": "Testing"
+  },
+  {
     "permalink": "browser-tests",
     "title": "Browser tests",
     "contentPath": "./testing/browser_tests.md",

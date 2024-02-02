@@ -25,7 +25,7 @@ export default class User extends BaseModel {
   // ...rest of the model properties
 
   // highlight-start
-  static authTokens = DbAccessTokensProvider.forModel(User)
+  static accessTokens = DbAccessTokensProvider.forModel(User)
   // highlight-end
 }
 ```
@@ -36,7 +36,7 @@ The `DbAccessTokensProvider.forModel` accepts the User model as the first argume
 export default class User extends BaseModel {
   // ...rest of the model properties
 
-  static authTokens = DbAccessTokensProvider.forModel(User, {
+  static accessTokens = DbAccessTokensProvider.forModel(User, {
     expiresIn: '30 days',
     prefix: 'oat_',
     table: 'auth_access_tokens',
@@ -174,7 +174,7 @@ export default class extends BaseSchema {
 ## Issuing tokens
 Depending upon your application, you might issue a token during login or after login from the application dashboard. In either case, issuing a token requires a user object (for whom the token will be generated), and you can generate them directly using the `User` model.
 
-In the following example, we **find a user by id** and **issue them an access token** using the `User.authTokens.create` method. Of course, in a real-world application, you will have this endpoint guarded by authentication, but let's keep it simple for now.
+In the following example, we **find a user by id** and **issue them an access token** using the `User.accessTokens.create` method. Of course, in a real-world application, you will have this endpoint guarded by authentication, but let's keep it simple for now.
 
 The `.create` method accepts an instance of the User model and returns an instance of the [AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts) class. 
 
@@ -186,7 +186,7 @@ import User from '#models/user'
 
 router.post('users/:id/tokens', ({ params }) => {
   const user = await User.findOrFail(params.id)
-  const token = await User.authTokens.create(user)
+  const token = await User.accessTokens.create(user)
 
   return {
     type: 'bearer',
@@ -200,7 +200,7 @@ You can also return the `token` directly in response, which will be serialized t
 ```ts
 router.post('users/:id/tokens', ({ params }) => {
   const user = await User.findOrFail(params.id)
-  const token = await User.authTokens.create(user)
+  const token = await User.accessTokens.create(user)
 
   // delete-start
   return {
@@ -230,7 +230,7 @@ In the following example, we define an array of abilities as the second paramete
 For the auth package, the abilities have no real meaning. It is up to your application to check for token abilities before performing a given action.
 
 ```ts
-await User.authTokens.create(user, ['server:create', 'server:read'])
+await User.accessTokens.create(user, ['server:create', 'server:read'])
 ```
 
 ### Token abilities vs. Bouncer abilities
@@ -280,7 +280,7 @@ By default, the tokens are long-lived, and they never expire. However, you defin
 The expiry can be defined as a numeric value representing seconds or a string-based time expression.
 
 ```ts
-await User.authTokens.create(
+await User.accessTokens.create(
   user, // for user
   ['*'], // with all abilities
   {
@@ -293,7 +293,7 @@ await User.authTokens.create(
 By default, the tokens are not named. However, you can assign them a name when generating the token. For example, if you allow the users of your application to self-generate tokens, you may ask them also to specify a recognizable name.
 
 ```ts
-await User.authTokens.create(
+await User.accessTokens.create(
   user,
   ['*'],
   {
@@ -319,7 +319,7 @@ const authConfig = defineConfig({
     // highlight-start
     api: tokensGuard({
       provider: tokensUserProvider({
-        tokens: 'authTokens',
+        tokens: 'accessTokens',
         model: () => import('#models/user'),
       })
     }),
@@ -447,12 +447,12 @@ Bouncer.ability((user: User) => {
 ```
 
 ## Listing all tokens
-You may use the tokens provider to get a list of all the tokens using the `authTokens.all` method. The return value will be an array of `AccessToken` class instances.
+You may use the tokens provider to get a list of all the tokens using the `accessTokens.all` method. The return value will be an array of `AccessToken` class instances.
 
 ```ts
 router
   .get('/tokens', async ({ auth }) => {
-    return User.authTokens.all(auth.user!)
+    return User.accessTokens.all(auth.user!)
   })
   .use(
     middleware.auth({
@@ -475,10 +475,10 @@ The `all` method also returns expired tokens. You may want to filter them before
 ```
 
 ## Deleting tokens
-You may delete a token using the `authTokens.delete` method. The method accepts the user as the first parameter and the token id as the second parameter.
+You may delete a token using the `accessTokens.delete` method. The method accepts the user as the first parameter and the token id as the second parameter.
 
 ```ts
-await User.authTokens.delete(user, token.identifier)
+await User.accessTokens.delete(user, token.identifier)
 ```
 
 ## Events

@@ -379,7 +379,7 @@ await client
 ## Making a request with a CSRF token
 If forms in your application use [CSRF protection](../security/web-security.md), you may use the `withCsrfToken` method to generate a CSRF token and pass it as a header during the request.
 
-Before using the `withCsrfToken` method, register the following Japa plugins inside the `tests/bootstrap.ts` file.
+Before using the `withCsrfToken` method, register the following Japa plugins inside the `tests/bootstrap.ts` file and also make sure to [switch the `SESSION_DRIVER` env variable](#setup-1) to `memory`.
 
 ```ts
 // title: tests/bootstrap.ts
@@ -393,7 +393,7 @@ export const plugins: Config['plugins'] = [
   pluginAdonisJS(app),
   // insert-start
   sessionApiClient(app),
-  shieldApiClient(app)
+  shieldApiClient()
   // insert-end
 ]
 ```

@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/shield",
+    "description": "Fix shieldApiClient plugin export function",
+    "released_on":" 2024-02-02",
+    "version": "8.1.1",
+    "release_notes_link": "https://github.com/adonisjs/shield/releases/tag/v8.1.1"
+  },
+  {
     "package": "@adonisjs/http-server",
     "description": "Make Router class macroable Latest",
     "released_on":" 2024-02-02",

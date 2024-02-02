@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/http-server",
+    "description": "Make Router class macroable Latest",
+    "released_on":" 2024-02-02",
+    "version": "7.0.3",
+    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.0.3"
+  },
+  {
     "package": "@vinejs/vine",
     "description": "Bug fix and performance improvements",
     "released_on":" 2024-01-29",

@@ -174,3 +174,15 @@ html.dark {
     width: 120%;
   }
 }
+
+.carbon_ad_wrapper {
+  background: none !important;
+  padding: var(--surface-spacing);
+  margin: 0 !important;
+}
+
+.carbon_ad_wrapper #carbonads {
+  background: var(--neutral-gray-3);
+  padding: 15px;
+  border-radius: var(--rounded-md);
+}

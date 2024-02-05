@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/core",
+    "description": "Respect singular CLI flag when creating a new controller",
+    "released_on":" 2024-02-05",
+    "version": "6.2.3",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.2.3"
+  },
+  {
     "package": "@adonisjs/shield",
     "description": "Fix shieldApiClient plugin export function",
     "released_on":" 2024-02-02",

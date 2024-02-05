@@ -321,17 +321,17 @@ Therefore, we provide an Edge helper you can use to create URLs for files proces
 - Return a URL pointing to the output filename during production.
 
 ```edge
-<link ref="stylesheet" href="{{ asset('resources/css/app.css') }}">
+<link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
 ```
 
 ```html
 // title: Output in development
-<link ref="stylesheet" href="http://localhost:5173/resources/css/app.css">
+<link rel="stylesheet" href="http://localhost:5173/resources/css/app.css">
 ```
 
 ```html
 // title: Output in production
-<link ref="stylesheet" href="/assets/app-3bc29777.css">
+<link rel="stylesheet" href="/assets/app-3bc29777.css">
 ```
 
 ## Processing additional assets with Vite

@@ -372,7 +372,7 @@ The response from the `before` is interpreted as follows.
 
 ```ts
 export default class PostPolicy extends BasePolicy {
-  before(user: User | null, action: string, ...params: any[]) {
+  async before(user: User | null, action: string, ...params: any[]) {
     /**
      * Always allow an admin user without performing any check
      */
@@ -393,7 +393,7 @@ The `after` method receives the raw response from the action method and can over
 import { AuthorizerResponse } from '@adonisjs/bouncer/types'
 
 export default class PostPolicy extends BasePolicy {
-  after(
+  async after(
     user: User | null,
     action: string,
     response: AuthorizerResponse,

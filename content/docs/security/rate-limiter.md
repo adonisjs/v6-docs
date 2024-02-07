@@ -627,7 +627,7 @@ export default class SessionController {
     const loginLimiter = limiter.use({
       requests: 5,
       duration: '1 min',
-      blockFor: '20 mins'
+      blockDuration: '20 mins'
     })
 
     /**

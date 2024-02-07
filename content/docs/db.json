@@ -185,6 +185,12 @@
     "category": "Security"
   },
   {
+    "permalink": "rate-limiter",
+    "title": "Rate limiter",
+    "contentPath": "./security/rate-limiter.md",
+    "category": "Security"
+  },
+  {
     "permalink": "cors",
     "title": "CORS",
     "contentPath": "./security/cors.md",

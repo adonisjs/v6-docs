@@ -30,6 +30,19 @@ if (error instanceof bouncerErrors.E_AUTHORIZATION_FAILURE) {
 }
 ```
 
+## E_TOO_MANY_REQUESTS
+The exception is raised by the [@adonisjs/rate-limiter](../security/rate-limiter.md) package when a request exhausts all the requests allowed during a given duration. The exception is self-handled and [uses content-negotiation](../security/rate-limiter.md#handling-throttleexception) to return an appropriate error response to the client.
+
+- **Status code**: 429
+- **Self handled**: Yes
+- **Translation identifier**: `errors.E_TOO_MANY_REQUESTS`
+
+```ts
+import { errors as limiterErrors } from '@adonisjs/limiter'
+if (error instanceof limiterErrors.E_TOO_MANY_REQUESTS) {
+}
+```
+
 ## E_BAD_CSRF_TOKEN
 The exception is raised when a form using [CSRF protection](../security/web-security.md#csrf-protection) is submitted without the CSRF token, or the CSRF token is invalid.
 

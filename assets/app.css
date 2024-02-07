@@ -57,7 +57,7 @@
   --accent-a12: var(--violet-a12);
 
   --sidebar-active-link-text-color: var(--iris-12);
-  --code-highlight-bg-color: hsl(261.43deg 9.32% 31.73% / 61%);
+  --code-highlight-bg-color: hsl(261.43deg 8.54% 22.81% / 61%);
   --code-highlight-border-color: var(--accent-8);
   --pre-tabs-active-border-color: var(--accent-8);
 }

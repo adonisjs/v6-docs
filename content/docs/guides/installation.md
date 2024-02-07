@@ -16,6 +16,16 @@ You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/comm
 
 During installation, you must select a [starter kit](#starter-kits) for the initial project structure. Optionally, you may use the `-K` CLI flag to create a project with a [custom starter kit](#bring-your-starter-kit).
 
+:::note
+
+Depending on your starter kit, you can use the `--db` flag to customize the database configuration during the project creation process. Same goes for the `--auth-guard` flag to customize the authentication guard.
+
+```sh
+npm init adonisjs@latest -- -K=web --db=postgres
+```
+
+:::
+
 :::codegroup
 
 ```sh
@@ -181,7 +191,7 @@ Once the development server runs, you may visit [http://localhost:3333](http://l
 
 Since AdonisJS applications are written in TypeScript, they must be compiled into JavaScript before running in production.
 
-You may create the JavaScript output using the `node ace build` command. The JavaScript output is written to the `build` directory. 
+You may create the JavaScript output using the `node ace build` command. The JavaScript output is written to the `build` directory.
 
 When Vite is configured, this command also compiles the frontend assets using Vite and writes the output to the `build/public` folder.
 
@@ -193,7 +203,7 @@ node ace build
 
 ## Configuring the development environment
 
-While AdonisJS takes care of building the end-user applications, you may need additional tools to enjoy the development process and have consistency in your coding style. 
+While AdonisJS takes care of building the end-user applications, you may need additional tools to enjoy the development process and have consistency in your coding style.
 
 We strongly recommend you use **[ESLint](https://eslint.org/)** to lint your code and use **[Prettier](https://prettier.io)** to re-format your code for consistency.
 

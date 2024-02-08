@@ -267,7 +267,9 @@ export const updateUserValidator = vine
       email: vine.string().unique(async (db, value, field) => {
         const user = await db
           .from('users')
+          // highlight-start
           .whereNot('id', field.meta.userId)
+          // highlight-end
           .where('email', value)
           .first()
         return !user

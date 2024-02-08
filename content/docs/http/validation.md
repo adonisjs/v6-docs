@@ -264,13 +264,15 @@ Let's take an example of the `unique` validation rule. We want to ensure the use
 export const updateUserValidator = vine
   .compile(
     vine.object({
-      email: vine.string().unique((query, field) => {
-        query.whereNot(
-          'id',
+      email: vine.string().unique(async (db, value, field) => {
+        const user = await db
+          .from('users')
           // highlight-start
-          field.meta.userId
+          .whereNot('id', field.meta.userId)
           // highlight-end
-        )
+          .where('email', value)
+          .first()
+        return !user
       })
     })
   )
@@ -303,11 +305,13 @@ export const updateUserValidator = vine
   // insert-end
   .compile(
     vine.object({
-      email: vine.string().unique((query, field) => {
-        query.whereNot(
-          'id',
-          field.meta.userId
-        )
+      email: vine.string().unique(async (db, value, field) => {
+        const user = await db
+          .from('users')
+          .whereNot('id', field.meta.userId)
+          .where('email', value)
+          .first()
+        return !user
       })
     })
   )

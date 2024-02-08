@@ -140,16 +140,16 @@ The `ready` method gets called at different stages based on the application's en
 ```ts
 export default class AppProvider {
   async start() {
-    if (this.app.environment === 'web') {
+    if (this.app.getEnvironment() === 'web') {
     }
 
-    if (this.app.environment === 'console') {
+    if (this.app.getEnvironment() === 'console') {
     }
 
-    if (this.app.environment === 'test') {
+    if (this.app.getEnvironment() === 'test') {
     }
 
-    if (this.app.environment === 'repl') {
+    if (this.app.getEnvironment() === 'repl') {
     }
   }
 }

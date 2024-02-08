@@ -327,6 +327,25 @@ router
   .prefix('api')
 ```
 
+It's possible to split your routes into different files. In that case, you need to export a function.
+
+```ts
+function v1Route () {
+    router
+      .group(() => {
+        router.get('users', () => {})
+        router.get('payments', () => {})
+      })
+      .prefix('v1')
+}
+
+router
+  .group(() => {
+    v1Route
+  })
+  .prefix('api')
+```
+
 ### Naming routes inside a group
 
 Similar to prefixing the route pattern, you can also prefix the route names inside a group using the `group.as` method.
@@ -399,7 +418,7 @@ AdonisJS allows you to register routes under a specific domain name. This is hel
 
 In the following example, we define two sets of routes.
 
-- Routes that are resolved for any domain/hostname. 
+- Routes that are resolved for any domain/hostname.
 - Routes that are matched when the domain/hostname matches the pre-defined domain name value.
 
 ```ts
@@ -502,7 +521,7 @@ router.on('/posts').redirect('/articles', {
   qs: {
     limit: 20,
     page: 1,
-  }  
+  }
 })
 ```
 
@@ -565,7 +584,7 @@ router.get('posts/:id', () => {})
 ```
 
 
-### Handling 404 requests 
+### Handling 404 requests
 
 AdonisJS raises a 404 exception when no matching route is found for the current request's URL.
 
@@ -583,7 +602,7 @@ export default class HttpExceptionsHandler extends ExceptionHandler {
     if (error instanceof errors.E_ROUTE_NOT_FOUND) {
       return ctx.view.render('errors/404')
     }
-    
+
     return super.handle(error, ctx)
   }
 }

@@ -24,7 +24,7 @@ By default, a provider is loaded in all the runtime environments. However, you c
   providers: [
     () => import('@adonisjs/core/providers/app_provider'),
     {
-      file: import('./providers/app_provider.js'),
+      file: () => import('./providers/app_provider.js'),
       environments: ['web', 'repl']
     }
   ]

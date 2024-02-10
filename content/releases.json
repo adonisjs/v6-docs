@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/logger",
+    "description": "Support falsy value in sprintf substitution",
+    "released_on":" 2024-02-09",
+    "version": "4.1.6",
+    "release_notes_link": "https://github.com/adonisjs/logger/releases/tag/v4.1.6"
+  },
+  {
     "package": "@adonisjs/limiter",
     "description": "Breaking - Final release with v6 compatibility",
     "released_on":" 2024-02-07",

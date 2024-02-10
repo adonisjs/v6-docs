@@ -18,7 +18,7 @@ const authConfig = defineConfig({
   guards: {
     // highlight-start
     web: sessionGuard({
-      useRememberTokens: false,
+      useRememberMeTokens: false,
       provider: sessionUserProvider({
         model: () => import('#models/user'),
       }),
@@ -327,7 +327,7 @@ const authConfig = defineConfig({
   guards: {
     web: sessionGuard({
       // highlight-start
-      useRememberTokens: true,
+      useRememberMeTokens: true,
       rememberMeTokensAge: '2 years',
       // highlight-end
       provider: sessionUserProvider({

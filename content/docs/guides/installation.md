@@ -14,17 +14,17 @@ node -v
 
 You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init), [yarn create](https://classic.yarnpkg.com/en/docs/cli/create) or [pnpm create](https://pnpm.io/tr/next/cli/create). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
 
-During installation, you must select a [starter kit](#starter-kits) for the initial project structure. Optionally, you may use the `-K` CLI flag to create a project with a [custom starter kit](#bring-your-starter-kit).
+You may customize the initial project output using one of the following CLI flags.
 
-:::note
+- `--kit`: Select the [starter kit](#starter-kits) for the project. You can choose between **web**, **api**, or **slim**.
 
-Depending on your starter kit, you can use the `--db` flag to customize the database configuration during the project creation process. Same goes for the `--auth-guard` flag to customize the authentication guard.
+- `--db`: Specify the database dialect of your choice. You can choose between **sqlite**, **postgres**, **mysql**, or **mssql**. Defaults to `sqlite`.
 
-```sh
-npm init adonisjs@latest -- -K=web --db=postgres
-```
+- `--git-init`: Initiate the git repository. Defaults to `false`.
 
-:::
+- `--auth-guard`: Specify the authentication guard of your choice. You can choose between **session**, **access_tokens**, or **basic_auth**. Defaults to `session`.
+
+- `--install`: Skip the prompt to install dependencies. Use the `--no-install` flag to create a project without installing any dependencies.
 
 :::codegroup
 
@@ -44,6 +44,19 @@ pnpm create adonisjs@latest hello-world
 ```
 
 :::
+
+When passing CLI flags using the `npm init` command, make sure to use [double slash twice](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command). Otherwise, `npm init` will not pass the flags to the `create-adonisjs` initializer package. For example:
+
+```sh
+# Create a project with MYSQL
+npm init adonisjs@latest hello-world -- --db=mysql
+
+# Create a project with PostgreSQL and API starter kit
+npm init adonisjs@latest hello-world -- --db=mysql --kit=api
+
+# Create a project with API starter kit and access tokens guard
+npm init adonisjs@latest hello-world -- --kit=api --auth-guard=access_tokens
+```
 
 ## Starter kits
 
@@ -66,6 +79,9 @@ Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or 
 
 ```sh
 npm init adonisjs@latest -- -K=web
+
+# Switch database dialect
+npm init adonisjs@latest -- -K=web --db=mysql
 ```
 
 The web starter kit comes with the following packages.
@@ -119,6 +135,9 @@ The API starter kit is tailored for creating JSON API servers. It is a trimmed-d
 
 ```sh
 npm init adonisjs@latest -- -K=api
+
+# Switch database dialect
+npm init adonisjs@latest -- -K=api --db=mysql
 ```
 
 In this starter kit:
@@ -143,6 +162,9 @@ For minimalists, we have created a `slim` starter kit. It comes with just the co
 
 ```sh
 npm init adonisjs@latest -- -K=slim
+
+# Switch database dialect
+npm init adonisjs@latest -- -K=slim --db=mysql
 ```
 
 ---

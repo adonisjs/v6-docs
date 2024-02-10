@@ -83,6 +83,25 @@ await mail.send((message) => {
 })
 ```
 
+You can define multiple `cc` and `bcc` recipients as an array of email addresses or an object with email addresses and the recipient name.
+
+```ts
+await mail.send((message) => {
+  message
+    .cc(['first@example.com', 'second@example.com'])
+    .bcc([
+      {
+        name: 'First recipient',
+        address: 'first@example.com'
+      },
+      {
+        name: 'Second recipient',
+        address: 'second@example.com'
+      }
+    ])
+})
+```
+
 You may also define the `replyTo` email address using the `message.replyTo` method.
 
 ```ts

@@ -466,7 +466,7 @@ That's all! You may continue using the `mail.sendLater` method. However, the ema
 You may switch between the configured mailers using the `mail.use` method. The `mail.use` method accepts the name of the mailer (as defined inside the config file) and returns an instance of the [Mailer](https://github.com/adonisjs/mail/blob/main/src/mailer.ts) class.
 
 ```ts
-import mail from '@adonisjs/mail/services/mail'
+import mail from '@adonisjs/mail/services/main'
 
 mail.use() // Instance of default mailer
 mail.use('mailgun') // Mailgun mailer instance
@@ -491,7 +491,7 @@ await mail
 The mailer instances are cached for the lifecycle of the process. You may use the `mail.close` method to destroy an existing instance and re-create a new instance from scratch.
 
 ```ts
-import mail from '@adonisjs/mail/services/mail'
+import mail from '@adonisjs/mail/services/main'
 
 /**
  * Close transport and remove instance from

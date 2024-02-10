@@ -99,7 +99,7 @@ You may call the `mail.send` method and pass it an instance of the mail class to
 
 ```ts
 // title: Send mail
-import mail from '@adonisjs/mail/services/mail'
+import mail from '@adonisjs/mail/services/main'
 import VerifyEmailNotification from '#mails/verify_email'
 
 await mail.send(new VerifyEmailNotification())
@@ -107,7 +107,7 @@ await mail.send(new VerifyEmailNotification())
 
 ```ts
 // title: Queue mail
-import mail from '@adonisjs/mail/services/mail'
+import mail from '@adonisjs/mail/services/main'
 import VerifyEmailNotification from '#mails/verify_email'
 
 await mail.sendLater(new VerifyEmailNotification())

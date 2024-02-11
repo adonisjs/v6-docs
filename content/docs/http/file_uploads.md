@@ -213,7 +213,7 @@ import router from '@adonisjs/core/services/router'
 const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
 
 router.get('/uploads/*', ({ request, response }) => {
-  const filePath = request.param('*').join(path.sep)
+  const filePath = request.param('*').join(sep)
   const normalizedPath = normalize(filePath)
   
   if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {

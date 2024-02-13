@@ -37,3 +37,11 @@
 /reference/views/* /guides/edge-reference
 /reference/i18n/* /guides/i18n
 /releases/* /guides/releases
+
+/cookbooks/validating-server-rendered-forms https://v5-docs.adonisjs.com/cookbooks/validating-server-rendered-forms 308
+/cookbooks/using-ally-with-api-guard https://v5-docs.adonisjs.com/cookbooks/using-ally-with-api-guard 308
+/cookbooks/deploy-to-heroku https://v5-docs.adonisjs.com/cookbooks/deploy-to-heroku 308
+/cookbooks/using-postgres-custom-type-parsers https://v5-docs.adonisjs.com/cookbooks/using-postgres-custom-type-parsers 308
+/cookbooks/using-knex-postgis-with-lucid https://v5-docs.adonisjs.com/cookbooks/using-knex-postgis-with-lucid 308
+/cookbooks/dockerizing-adonis https://v5-docs.adonisjs.com/cookbooks/dockerizing-adonis 308
+/cookbooks/socketio-with-adonisjs https://v5-docs.adonisjs.com/cookbooks/socketio-with-adonisjs 308

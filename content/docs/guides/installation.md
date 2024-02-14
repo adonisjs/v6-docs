@@ -52,7 +52,7 @@ When passing CLI flags using the `npm init` command, make sure to use [double sl
 npm init adonisjs@latest hello-world -- --db=mysql
 
 # Create a project with PostgreSQL and API starter kit
-npm init adonisjs@latest hello-world -- --db=mysql --kit=api
+npm init adonisjs@latest hello-world -- --db=postgres --kit=api
 
 # Create a project with API starter kit and access tokens guard
 npm init adonisjs@latest hello-world -- --kit=api --auth-guard=access_tokens

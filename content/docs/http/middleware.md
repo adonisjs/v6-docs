@@ -207,13 +207,24 @@ Given you have a `GeoIpService` class to look up user location from the request 
 ```ts
 // title: app/services/geoip_service.ts
 export default class GeoIpService {
-  async lookup(ipAddress: string) {
+  async lookup(ipAddress: string):string {
     // lookup location and return
+  }
+}
+```
+Now we need to notify the typescript about the **location** inside **HttpContext** so we must create a *./types* folder and create a *context.ts* inside ( file name does not matter )
+
+```ts
+// title: types/context.ts
+declare module '@adonisjs/core/http' {
+  interface HttpContext {
+    location: string
   }
 }
 ```
 
 ```ts
+// title: app/services/geoip_middleware.ts
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import { NextFn } from '@adonisjs/core/types/http'

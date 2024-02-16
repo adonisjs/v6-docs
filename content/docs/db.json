@@ -376,6 +376,12 @@
     "category": "Digging Deeper"
   },
   {
+    "permalink": "inertia",
+    "title": "Inertia",
+    "contentPath": "./digging_deeper/inertia.md",
+    "category": "Digging Deeper"
+  },
+  {
     "permalink": "testing",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",

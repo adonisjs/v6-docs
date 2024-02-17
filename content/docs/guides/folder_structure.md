@@ -140,6 +140,7 @@ The `start` directory contains the files you want to import during the boot life
 
 ```
 ├── start
+│  ├── env.ts
 │  ├── kernel.ts
 │  ├── routes.ts
 │  ├── validator.ts

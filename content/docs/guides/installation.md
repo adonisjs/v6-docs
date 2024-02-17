@@ -45,7 +45,7 @@ pnpm create adonisjs@latest hello-world
 
 :::
 
-When passing CLI flags using the `npm init` command, make sure to use [double slash twice](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command). Otherwise, `npm init` will not pass the flags to the `create-adonisjs` initializer package. For example:
+When passing CLI flags using the `npm init` command, make sure to use [double dashes twice](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command). Otherwise, `npm init` will not pass the flags to the `create-adonisjs` initializer package. For example:
 
 ```sh
 # Create a project with MYSQL

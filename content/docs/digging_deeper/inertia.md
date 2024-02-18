@@ -203,6 +203,43 @@ As simple as that.
 While passing data to the frontend, everything is serialized to JSON. Do not expect to pass instance of models, dates or other complex objects. 
 :::
 
+### Root Edge template
+
+The Root template is a regular Edge template that will be loaded on the first page visit of your application. This is the place where you should include your CSS and Javascript files, and also where you should include the `@inertia` tag. A typical root template looks like this :
+
+```edge
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title inertia>AdonisJS x Inertia</title>
+
+  @vite(['resources/app.ts'])
+</head>
+
+<body>
+  @inertia()
+</body>
+
+</html>
+```
+
+It may differ depending on the frontend framework you are using. ( [`@viteReactRefresh`](https://docs.adonisjs.com/guides/edge-reference#vitereactrefresh) may be needed, `app.ts` may be `app.tsx`, etc. )
+
+You can configure the root template path in the `config/inertia.ts` file. By default, it assumes that your template is located at `resources/views/root.edge`.
+
+```ts
+import { defineConfig } from '@adonisjs/inertia'
+
+export default defineConfig({
+  // The path to the root template relative 
+  // to the `resources/views` directory
+  rootView: 'app_root', 
+})
+```
+
 ### Root template data
 
 Sometimes you may want to share data with your root Edge template. For example, for adding a meta title, or open graph tags. You can do so by using the 3rd argument of the `inertia.render` method :

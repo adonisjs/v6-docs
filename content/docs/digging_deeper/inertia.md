@@ -6,9 +6,9 @@ summary: How to use Inertia.JS with AdonisJS
 
 [Inertia.js](https://inertiajs.com/) is a framework agnostic way to create single page applications without a lot of the complexity that comes with modern SPAs.
 
-This is a great middle ground between traditional server rendered applications ( with templating engines ) and modern SPAs ( with client side routing and state management ).
+This is a great middle ground between traditional server rendered applications (with templating engines) and modern SPAs (with client side routing and state management).
 
-Using Inertia.js will allow you to create a SPA with your favorite frontend framework ( Vue.js, React, Svelte or Solid.js ), without having to create a separate API. Best of both worlds.
+Using Inertia.js will allow you to create a SPA with your favorite frontend framework (Vue.js, React, Svelte or Solid.js), without having to create a separate API. Best of both worlds.
 
 :::codegroup
 
@@ -138,7 +138,7 @@ Inertia.js is a backend agnostic library. We just created an adapter to make it 
 
 While configuring your package, a `inertia_middleware` has been registered inside the `start/kernel.ts` file. This middleware is responsible for setting up the `inertia` object on the [`HttpContext`](../http/http_context.md). This is the only thing used for interacting with Inertia.js and rendering views.
 
-For rendering a view using Inertia.js, you must use the `inertia.render` method. The method accepts the view name and the data to be passed to the component as props.
+To render a view using Inertia.js, you must use the `inertia.render` method. The method accepts the view name and the data to be passed to the component as props.
 
 ```ts
 // title: app/controllers/home_controller.ts
@@ -153,7 +153,7 @@ export default class HomeController {
 
 See the `home` passed to the `inertia.render` method? This should be the path to the component file relative to the `resources/pages` directory. That means, here we are rendering the `resources/pages/home.(vue,tsx)` file.
 
-You frontend component will receive the `user` as props : 
+You frontend component will receive the `user` object as a prop : 
 
 :::codegroup
 
@@ -205,25 +205,34 @@ While passing data to the frontend, everything is serialized to JSON. Do not exp
 
 ### Root template data
 
-Sometimes you may want to share data with your root Edge template. For example, adding a meta title, or open graph tags. You can do so by using the 3rd argument to the `inertia.render` method.
+Sometimes you may want to share data with your root Edge template. For example, for adding a meta title, or open graph tags. You can do so by using the 3rd argument of the `inertia.render` method :
 
 ```ts
 // title: app/controllers/posts_controller.ts
 export default class PostsController {
   public async index({ inertia }: HttpContext) {
     return inertia.render('posts/details', post, {
+      // highlight-start
       title: post.title,
       description: post.description
+      // highlight-end
     })
   }
 }
 ```
 
-The `title` and `description` will be available to the root Edge template : 
+The `title` and `description` will now be available to the root Edge template : 
 
 ```edge
-<title>{{ title }}</title>
-<meta name="description" content="{{ description }}">
+// title: resources/views/root.edge
+<html>
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+
+  <body>
+    @inertia()
+  </body>
+</html
 ```
 
 ## Redirects
@@ -243,13 +252,13 @@ export default class UsersController {
 
   async externalRedirect({ response }: HttpContext) {
     // 👇 Or use the inertia.location for external redirects
-    return inertia.redirect('https://adonisjs.com')
+    return inertia.location('https://adonisjs.com')
   }
 }
 ```
 ## Sharing data with all views
 
-Sometimes you may need to share a same piece of data with multiple views. For example, sharing the current user with all views. This can be boring to do in every controller. We have two solutions for that.
+Sometimes, you may need to share the same data across multiple views. For instance, sharing the current user information with all views. Having to do this for every controller can become tedious. Fortunately, we have two solutions for this issue.
 
 ### `sharedData` 
 
@@ -272,7 +281,7 @@ export default defineConfig({
 
 ### Share from a middleware
 
-Sometimes it may be more convenient to share data from a middleware instead of the `config/inertia.ts` file. You can do so by using the `inertia.share` method.
+Sometimes, it might be more convenient to share data from a middleware rather than the `config/inertia.ts` file. You can do so by using the `inertia.share` method :
 
 ```ts
 import type { HttpContext } from '@adonisjs/core/http'
@@ -290,7 +299,7 @@ export default class MyMiddleware {
 
 Please first read the [official documentation](https://inertiajs.com/partial-reloads) to understand what partial reloads are and how they work.
 
-About lazy data evaluation, here how it works in AdonisJS :
+About lazy data evaluation, here is how it works in AdonisJS :
 
 ```ts
 export default class UsersController {
@@ -346,11 +355,11 @@ export default defineConfig({
 
 At the time of writing, we don't have any SSR support for Inertia.js. See [this article](https://adonisjs.com/blog/future-plans-for-adonisjs-6#adonisjsinertia) for more information.
 
-However we are currently working to add SSR support. You should be able to start working on your project right now even if it requires SSR. Moving your app to SSR should be super easy once it's available ( No breaking changes )
+However we are currently working to add SSR support. You should be able to start working on your project right now even if it requires SSR. Moving your app to SSR should be super easy once it's available (No breaking changes)
 
 ## Testing
 
-There are several ways to test your front-end code:
+There are several ways to test your frontend code:
 
 - End-to-end testing. You can use the [Browser Client](https://docs.adonisjs.com/guides/browser-tests), a seamless integration between Japa and Playwright.
 - Unit testing. We recommend using testing tools adapted for the frontend ecosystem, in particular [Vitest](https://vitest.dev).

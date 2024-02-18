@@ -307,7 +307,7 @@ import { defineConfig } from '@adonisjs/inertia'
 export default defineConfig({
   sharedData: {
     // 👇 This will be available in all views
-    appName: 'My App' 
+    appName: 'My App' ,
     // 👇 Scoped to the current request
     user: (ctx) => ctx.auth?.user, 
     // 👇 Scoped to the current request
@@ -345,7 +345,7 @@ export default class UsersController {
       // ALWAYS included on first visit.
       // OPTIONALLY included on partial reloads.
       // ALWAYS evaluated
-      'users': await User.all()
+      'users': await User.all()m
 
       // ALWAYS included on first visit.
       // OPTIONALLY included on partial reloads.

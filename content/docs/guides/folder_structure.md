@@ -188,6 +188,7 @@ Learn more about [configuration management](./config.md).
 ```
 ├── config
 │  ├── app.ts
+│  ├── auth.ts
 │  ├── bodyparser.ts
 │  ├── cors.ts
 │  ├── database.ts

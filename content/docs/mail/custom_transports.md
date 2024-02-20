@@ -24,7 +24,9 @@ import type {
  * Configuration accepted by the transport
  */
 export type PostMarkConfig = {
-  apiKey: string
+  auth: {
+    apiKey: string
+  }
 }
 
 /**
@@ -60,7 +62,7 @@ export class PostMarkTransport implements MailTransportContract {
     /**
      * Normalize response to an instance of the "MailResponse" class
      */
-    return new MailResponse(response.messageId, response.envelope)
+    return new MailResponse(response.messageId, response.envelope, response)
   }
 }
 ```
@@ -99,7 +101,9 @@ import { postMarkTransport } from 'my-custom-package'
 const mailConfig = defineConfig({
   mailers: {
     postmark: postMarkTransport({
-      apiKey: env.get('POSTMARK_API_KEY'),
+      auth: {
+        apiKey: env.get('POSTMARK_API_KEY'),
+      },
     }),
   },
 })

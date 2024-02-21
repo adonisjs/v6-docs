@@ -5,7 +5,7 @@ AdonisJS bundles the utilities the framework uses into the `helpers` module and 
 The helper methods are exported from the following modules.
 
 ```ts
-import is from '@adonisjs/helpers/is'
+import is from '@adonisjs/core/helpers/is'
 import * as helpers from '@adonisjs/core/helpers'
 import string from '@adonisjs/core/helpers/string'
 ```
@@ -887,7 +887,7 @@ console.log(value.release()) // some-secret-value
 We export the [@sindresorhus/is](https://github.com/sindresorhus/is) module from the `helpers/is` import path, and you may use it to perform the type detection in your apps.
 
 ```ts
-import is from '@adonisjs/helpers/is'
+import is from '@adonisjs/core/helpers/is'
 
 is.object({}) // true
 is.object(null) // false

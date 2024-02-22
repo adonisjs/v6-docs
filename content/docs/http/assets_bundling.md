@@ -9,42 +9,23 @@ AdonisJS uses [Vite](https://vitejs.dev/) to bundle the frontend assets of your 
 ## Installation
 Vite comes pre-configured with the [web starter kit](../guides/installation.md#web-starter-kit-spannot-ready-yetclassbadge). However, you can follow the below instructions to configure it inside an existing AdonisJS project.
 
-
-:::codegroup
-
+Install and configure the package using the following command :
 
 ```sh
-// title: npm
-npm i @adonisjs/vite
-```
-
-```sh
-// title: yarn
-yarn add @adonisjs/vite
-```
-
-```sh
-// title: pnpm
-pnpm add @adonisjs/vite
-```
-
-:::
-
-Once the package is installed, you must configure it using the `node ace configure` command. The `configure` command will create the necessary config files and install the [vite](https://www.npmjs.com/package/vite) package from npm.
-
-```sh
-node ace configure @adonisjs/vite
+node ace add @adonisjs/vite
 
 # Auto-install vite
-node ace configure @adonisjs/vite --install
+node ace add @adonisjs/vite --install
 
 # Do not install vite
-node ace configure @adonisjs/vite --no-install
+node ace add @adonisjs/vite --no-install
 ```
 
-:::disclosure{title="See steps performed by the configure command"}
+:::disclosure{title="See steps performed by the add command"}
 
-1. Registers the following service provider inside the `adonisrc.ts` file.
+1. Installs the `@adonisjs/vite` package using the detected package manager.
+
+2. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -55,9 +36,9 @@ node ace configure @adonisjs/vite --no-install
     }
     ```
 
-2. Create `vite.config.js` and `config/vite.ts` configuration files.
+3. Create `vite.config.js` and `config/vite.ts` configuration files.
 
-3. Create the frontend entry point file, i.e. `resources/js/app.js`.
+4. Create the frontend entry point file, i.e. `resources/js/app.js`.
 
 :::
 

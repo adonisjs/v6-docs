@@ -18,38 +18,19 @@ The AdonisJS core team has created a framework-agnostic template engine called [
 AdonisJS does not force you to use Edge, and you can pick any other template engine of your choice, be it Pug, Nunjucks, and so on.
 
 ## Using Edge
-Install Edge from the npm packages registry using one of the following commands.
+Install and configure Edge using the following command.
 
 See also: [Edge documentation](https://edgejs.dev)
 
-:::codegroup
-
 ```sh
-// title: npm
-npm i edge.js
+node ace add edge
 ```
 
-```sh
-// title: yarn
-yarn add edge.js
-```
+:::disclosure{title="See steps performed by the add command"}
 
-```sh
-// title: pnpm
-pnpm add edge.js
-```
+1. Installs the `edge.js` package using the detected package manager.
 
-:::
-
-Once done, you must run the following command to configure Edge within an AdonisJS application. 
-
-```sh
-node ace configure edge
-```
-
-:::disclosure{title="See steps performed by the configure command"}
-
-1. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {

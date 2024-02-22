@@ -99,10 +99,17 @@ Once the package has been configured, you can interact with Ally APIs using the 
 router.get('/github/redirect', ({ ally }) => {
   // GitHub driver instance
   const gh = ally.use('github')
+})
 
+router.get('/twitter/redirect', ({ ally }) => {
   // Twitter driver instance
   const twitter = ally.use('twitter')
 })
+
+// You could also dynamicaly retrieve the driver
+router.get('/:provider/redirect', ({ ally, params }) => {
+  const driverInstance = ally.use(params.provider)
+}).where('provider', /github|twitter/)
 ```
 
 ### Redirecting the user for authentication

@@ -6,37 +6,17 @@ The `@adonisjs/limiter` package is built on top of the [node-rate-limiter-flexib
 
 ## Installation
 
-Install the package from the npm packages registry using one of the following commands.
-
-
-:::codegroup
+Install and configure the package using the following command :
 
 ```sh
-// title: npm
-npm i @adonisjs/limiter
+node ace add @adonisjs/limiter
 ```
 
-```sh
-// title: yarn
-yarn add @adonisjs/limiter
-```
+:::disclosure{title="See steps performed by the add command"}
 
-```sh
-// title: pnpm
-pnpm add @adonisjs/limiter
-```
+1. Installs the `@adonisjs/limiter` package using the detected package manager.
 
-:::
-
-Once done, you must run the following command to configure the limiter package.
-
-```sh
-node ace configure @adonisjs/limiter
-```
-
-:::disclosure{title="See steps performed by the configure command"}
-
-1. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider inside the `adonisrc.ts` file.
     ```ts
     {
       providers: [
@@ -46,16 +26,16 @@ node ace configure @adonisjs/limiter
     }
     ```
 
-2. Create the `config/limiter.ts` file.
+3. Create the `config/limiter.ts` file.
 
-3. Create the `start/limiter.ts` file. This file is used to define HTTP throttle middleware.
+4. Create the `start/limiter.ts` file. This file is used to define HTTP throttle middleware.
 
-4. Define the following environment variable alongside its validation inside the `start/env.ts` file.
+5. Define the following environment variable alongside its validation inside the `start/env.ts` file.
    ```ts
    LIMITER_STORE=redis
    ```
 
-5. Optionally, create the database migration for the `rate_limits` table if using the `database` store.
+6. Optionally, create the database migration for the `rate_limits` table if using the `database` store.
 
 :::
 

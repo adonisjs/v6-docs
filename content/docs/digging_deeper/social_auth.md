@@ -14,39 +14,21 @@ Ally comes with the following inbuilt drivers, alongside an extensible API to [r
 Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. You can store that information inside a database and use the [auth](../auth/introduction.md) package to login the user within your application.
 
 ## Installation
-Install the package from the npm packages registry using one of the following commands.
 
-:::codegroup
-
-```sh
-// title: npm
-npm i @adonisjs/ally
-```
+Install and configure the package using the following command :
 
 ```sh
-// title: yarn
-yarn add @adonisjs/ally
-```
-
-```sh
-// title: pnpm
-pnpm add @adonisjs/ally
-```
-
-:::
-
-Once the package is installed, you must configure it using the `node ace configure` command.
-
-```sh
-node ace configure @adonisjs/ally
+node ace add @adonisjs/ally
 
 # Define providers as CLI flags
-node ace configure @adonisjs/ally --providers=github --providers=google
+node ace add @adonisjs/ally --providers=github --providers=google
 ```
 
-:::disclosure{title="See steps performed by the configure command"}
+:::disclosure{title="See steps performed by the add command"}
 
-1. Registers the following service provider inside the `adonisrc.ts` file.
+1. Installs the `@adonisjs/ally` package using the detected package manager.
+
+2. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -57,9 +39,9 @@ node ace configure @adonisjs/ally --providers=github --providers=google
     }
     ```
 
-2. Create the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
+3. Create the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
 
-3. Defines the environment variables to store `CLIENT_ID` and `CLIENT_SECRET` for selected OAuth providers. 
+4. Defines the environment variables to store `CLIENT_ID` and `CLIENT_SECRET` for selected OAuth providers. 
 
 :::
 

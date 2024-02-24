@@ -308,12 +308,32 @@ try {
 import { Env } from '@adonisjs/core/env'
 
 export default await Env.create(new URL('../', import.meta.url), {
+  /**
+   * App environment variables
+   */
   PORT: Env.schema.number(),
   HOST: Env.schema.string(),
 })
 ```
 
-### addMiddlewareToStack
+### defineEnvVariables
+Add one or multiple new environment variables to the `.env` file. The method accepts a key-value pair of variables.
+
+```ts
+const codemods = await command.createCodemods()
+
+try {
+  await codemods.defineEnvVariables({
+    MY_NEW_VARIABLE: 'some-value',
+    MY_OTHER_VARIABLE: 'other-value'
+  })
+} catch (error) {
+  console.error('Unable to define env variables')
+  console.error(error)
+}
+```
+
+### registerMiddleware
 Register AdonisJS middleware to one of the known middleware stacks. The method accepts the middleware stack and an array of middleware to register.
 
 The middleware stack could be one of `server | router | named`.
@@ -326,7 +346,7 @@ This codemod expects the `start/kernel.ts` file to exist and must have a functio
 const codemods = await command.createCodemods()
 
 try {
-  await codemods.addMiddlewareToStack('router', [
+  await codemods.registerMiddleware('router', [
     {
       path: '@adonisjs/core/bodyparser_middleware'
     }
@@ -352,7 +372,7 @@ You may define named middleware as follows.
 const codemods = await command.createCodemods()
 
 try {
-  await codemods.addMiddlewareToStack('named', [
+  await codemods.registerMiddleware('named', [
     {
       name: 'auth',
       path: '@adonisjs/auth/auth_middleware'
@@ -404,7 +424,7 @@ export default defineConfig({
 })
 ```
 
-### addJapaPlugin
+### registerJapaPlugin
 Register a Japa plugin to the `tests/bootstrap.ts` file.
 
 :::note
@@ -429,7 +449,7 @@ const imports = [
 const pluginUsage = 'sessionApiClient(app)'
 
 try {
-  await codemods.addJapaPlugin(pluginUsage, imports)
+  await codemods.registerJapaPlugin(pluginUsage, imports)
 } catch (error) {
   console.error('Unable to register japa plugin')
   console.error(error)
@@ -446,7 +466,7 @@ export const plugins: Config['plugins'] = [
 ]
 ```
 
-### addPolicies
+### registerPolicies
 Register AdonisJS bouncer policies to the list of `policies` object exported from the `app/policies/main.ts` file.
 
 :::note
@@ -457,7 +477,7 @@ This codemod expects the `app/policies/main.ts` file to exist and must export a 
 const codemods = await command.createCodemods()
 
 try {
-  await codemods.addPolicies([
+  await codemods.registerPolicies([
     {
       name: 'PostPolicy',
       path: '#policies/post_policy'
@@ -475,3 +495,72 @@ export const policies = {
   PostPolicy: () => import('#policies/post_policy')
 }
 ```
+
+### registerVitePlugin
+
+Register a Vite plugin to the `vite.config.ts` file.
+
+:::note
+This codemod expects the `vite.config.ts` file to exist and must have the `export default defineConfig` function call.
+:::
+
+```ts
+const transformer = new CodeTransformer(appRoot)
+const imports = [
+  {
+    isNamed: false,
+    module: '@vitejs/plugin-vue',
+    identifier: 'vue'
+  },
+]
+const pluginUsage = 'vue({ jsx: true })'
+
+try {
+  await transformer.addVitePlugin(pluginUsage, imports)
+} catch (error) {
+  console.error('Unable to register vite plugin')
+  console.error(error)
+}
+```
+
+```ts
+// title: Output
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [
+    vue({ jsx: true })
+  ]
+})
+```
+
+### installPackages
+
+Install one or multiple packages using the detected package manager in the user's project.
+
+```ts
+const codemods = await command.createCodemods()
+
+try {
+  await codemods.installPackages([
+    { name: 'vinejs', isDevDependency: false },
+    { name: 'edge', isDevDependency: false }
+  ])
+} catch (error) {
+  console.error('Unable to install packages')
+  console.error(error)
+}
+```
+
+### getTsMorphProject
+
+The `getTsMorphProject` method returns an instance of `ts-morph`. This can be useful when you want to perform custom file transformations that are not covered by the Codemods API.
+
+```ts
+const project = await codemods.getTsMorphProject()
+
+project.getSourceFileOrThrow('start/routes.ts')
+```
+
+Make sure to read the [ts-morph documentation](https://ts-morph.com/) to know more about the available APIs.

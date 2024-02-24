@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/core",
+    "version": "6.3.0",
+    "description": "Experimental hooks, `node ace add` and new Codemods APIs",
+    "released_on": "2024-02-24",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.3.0"
+  },
+  {
     "package": "@adonisjs/mail",
     "description": "Add support for defining multiple cc and bcc addresses",
     "released_on":"2024-02-10",

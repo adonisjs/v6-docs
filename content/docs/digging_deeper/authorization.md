@@ -16,37 +16,17 @@ Bouncer is not an implementation of RBAC or ACL. Instead, it provides a low-leve
 
 ## Installation
 
-Install the package from the npm packages registry using one of the following commands.
-
-:::codegroup
+Install and configure the package using the following command :
 
 ```sh
-// title: npm
-npm i @adonisjs/bouncer
+node ace add @adonisjs/bouncer
 ```
 
-```sh
-// title: yarn
-yarn add @adonisjs/bouncer
-```
+:::disclosure{title="See steps performed by the add command"}
 
-```sh
-// title: pnpm
-pnpm add @adonisjs/bouncer
-```
+1. Installs the `@adonisjs/bouncer` package using the detected package manager.
 
-:::
-
-
-Once done, you must run the following command to configure the bouncer package.
-
-```sh
-node ace configure @adonisjs/bouncer
-```
-
-:::disclosure{title="See steps performed by the configure command"}
-
-1. Registers the following service provider and command inside the `adonisrc.ts` file.
+2. Registers the following service provider and command inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -61,13 +41,13 @@ node ace configure @adonisjs/bouncer
     }
     ```
 
-2. Creates the `app/abilities/main.ts` file to define and export abilities.
+3. Creates the `app/abilities/main.ts` file to define and export abilities.
 
-3. Creates the `app/policies/main.ts` file to export all policies as a collection.
+4. Creates the `app/policies/main.ts` file to export all policies as a collection.
 
-3. Creates `initialize_bouncer_middleware` inside the `middleware` directory.
+5. Creates `initialize_bouncer_middleware` inside the `middleware` directory.
 
-4. Register the following middleware inside the `start/kernel.ts` file.
+6. Register the following middleware inside the `start/kernel.ts` file.
 
     ```ts
     router.use([

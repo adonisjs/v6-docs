@@ -18,38 +18,19 @@ The AdonisJS core team has created a framework agnostic data validation library 
 However, AdonisJS does not technically force you to use VineJS. You can use any validation library that fits great for you or your team. Just uninstall the `@vinejs/vine` package and install the package you want to use.
 
 ## Configuring VineJS
-Install VineJS from the npm packages registry using one of the following commands.
+Install and configure VineJS using the following command.
 
 See also: [VineJS documentation](https://vinejs.dev)
 
-:::codegroup
-
 ```sh
-// title: npm
-npm i @vinejs/vine
+node ace add vinejs
 ```
 
-```sh
-// title: yarn
-yarn add @vinejs/vine
-```
+:::disclosure{title="See steps performed by the add command"}
 
-```sh
-// title: pnpm
-pnpm add @vinejs/vine
-```
+1. Installs the `@vinejs/vine` package using the detected package manager.
 
-:::
-
-Once done, you must run the following command to configure VineJS within an AdonisJS application.
-
-```sh
-node ace configure vinejs
-```
-
-:::disclosure{title="See steps performed by the configure command"}
-
-1. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {

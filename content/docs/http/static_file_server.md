@@ -4,38 +4,20 @@ You can serve static files from a given directory using the `@adonisjs/static` p
 
 ## Installation
 
-The package comes pre-configured with the `web` starter kit. However, you can install it as follows with other starter kits.
+The package comes pre-configured with the `web` starter kit. However, you can install and configure it as follows with other starter kits.
 
 
-:::codegroup
-
-
-```sh
-// title: npm
-npm i @adonisjs/static
-```
+Install and configure the package using the following command :
 
 ```sh
-// title: yarn
-yarn add @adonisjs/static
+node ace add @adonisjs/static
 ```
 
-```sh
-// title: pnpm
-pnpm add @adonisjs/static
-```
+:::disclosure{title="See steps performed by the add command"}
 
-:::
+1. Installs the `@adonisjs/static` package using the detected package manager.
 
-Once done, you must run the following command to configure the `@adonisjs/static` package.
-
-```sh
-node ace configure @adonisjs/static
-```
-
-:::disclosure{title="See steps performed by the configure command"}
-
-1. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -46,9 +28,9 @@ node ace configure @adonisjs/static
     }
     ```
 
-2. Create the `config/static.ts` file.
+3. Create the `config/static.ts` file.
 
-3. Registers the following middleware inside the `start/kernel.ts` file.
+4. Registers the following middleware inside the `start/kernel.ts` file.
 
     ```ts
     server.use([

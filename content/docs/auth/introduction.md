@@ -75,24 +75,43 @@ We ship with a Lucid user provider for the inbuilt guards, which uses Lucid mode
 
 ## Installation
 
-The auth system comes pre-configured with the `web` and the `api` starter kits. However, you can install and configure it manually inside an application as follows.
+The auth system comes pre-configured with the `web` and the `api` starter kits. However, you can configure it manually inside an application as follows.
+
+:::codegroup
+
+```sh
+// title: npm
+npm i @adonisjs/auth
+```
+
+```sh
+// title: yarn
+yarn add @adonisjs/auth
+```
+
+```sh
+// title: pnpm
+pnpm add @adonisjs/auth
+```
+
+:::
+
+Once done, you must run the following command to configure the auth package.
 
 ```sh
 # Configure with session guard (default)
-node ace add @adonisjs/auth --guard=session
+node ace configure @adonisjs/auth --guard=session
 
 # Configure with access tokens guard
-node ace add @adonisjs/auth --guard=access_tokens
+node ace configure @adonisjs/auth --guard=access_tokens
 
 # Configure with basic auth guard
-node ace add @adonisjs/auth --guard=basic_auth
+node ace configure @adonisjs/auth --guard=basic_auth
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="See steps performed by the configure command"}
 
-1. Install the `@adonisjs/auth` package using the detected package manager.
-
-2. Registers the following service provider inside the `adonisrc.ts` file.
+1. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -103,7 +122,7 @@ node ace add @adonisjs/auth --guard=basic_auth
     }
     ```
 
-3. Creates and registers the following middleware inside the `start/kernel.ts` file.
+2. Creates and registers the following middleware inside the `start/kernel.ts` file.
 
     ```ts
     router.use([
@@ -119,9 +138,9 @@ node ace add @adonisjs/auth --guard=basic_auth
     ])
     ```
 
-4. Creates the user model inside the `app/models` directory.
-5. Creates database migration for the `users` table.
-6. Creates database migrations for the selected guard.
+3. Creates the user model inside the `app/models` directory.
+4. Creates database migration for the `users` table.
+5. Creates database migrations for the selected guard.
 :::
 
 ## The Initialize auth middleware

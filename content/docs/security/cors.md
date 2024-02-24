@@ -8,17 +8,38 @@ In AdonisJS, you can implement the CORS policy using the `@adonisjs/cors` packag
 
 ## Installation
 
-Install and configure the package using the following command :
+You can install the package from the npm packages registry.
+
+
+:::codegroup
+
 
 ```sh
-node ace add @adonisjs/cors
+// title: npm
+npm i @adonisjs/cors
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+```sh
+// title: yarn
+yarn add @adonisjs/cors
+```
 
-1. Installs the `@adonisjs/cors` package using the detected package manager.
+```sh
+// title: pnpm
+pnpm add @adonisjs/cors
+```
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+:::
+
+After installing the package, run the following command to configure the package.
+
+```sh
+node ace configure @adonisjs/cors
+```
+
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -29,9 +50,9 @@ node ace add @adonisjs/cors
     }
     ```
 
-3. Creates the `config/cors.ts` file. This file contains the configuration settings for CORS.
+2. Creates the `config/cors.ts` file. This file contains the configuration settings for CORS.
 
-4. Registers the following middleware inside the `start/kernel.ts` file.
+3. Registers the following middleware inside the `start/kernel.ts` file.
 
     ```ts
     server.use([

@@ -11,20 +11,37 @@ You can send emails from your AdonisJS application using the `@adonisjs/mail` pa
 
 ## Installation
 
-Install and configure the package using the following command :
+Install the package from the npm packages registry using one of the following commands.
 
+:::codegroup
 ```sh
-node ace add @adonisjs/mail
-
-# Pre-define transports to use via CLI flag
-node ace add @adonisjs/mail --transports=resend --transports=smtp
+// title: npm
+npm i @adonisjs/mail
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+```sh
+// title: yarn
+yarn add @adonisjs/mail
+```
 
-1. Installs the `@adonisjs/mail` package using the detected package manager.
+```sh
+// title: pnpm
+pnpm add @adonisjs/mail
+```
+:::
 
-2. Registers the following service provider and command inside the `adonisrc.ts` file.
+Once done, you must run the following command to configure the mail package.
+
+```sh
+node ace configure @adonisjs/mail
+
+# Pre-define transports to use via CLI flag
+node ace configure @adonisjs/mail --transports=resend --transports=smtp
+```
+
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider and command inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -39,9 +56,9 @@ node ace add @adonisjs/mail --transports=resend --transports=smtp
     }
     ```
 
-3. Create the `config/mail.ts` file.
+2. Create the `config/mail.ts` file.
 
-4. Defines the environment variables and their validations for the selected mail services
+3. Defines the environment variables and their validations for the selected mail services
 
 :::
 

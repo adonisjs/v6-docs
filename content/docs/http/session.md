@@ -15,18 +15,36 @@ You can manage user sessions inside your AdonisJS application using the `@adonis
 Alongside the inbuilt backend stores, you can also create and [register custom session stores](#creating-a-custom-session-store).
 
 ## Installation
+Install the package from the npm packages registry using one of the following commands.
 
-Install and configure the package using the following command :
+:::codegroup
 
 ```sh
-node ace add @adonisjs/session
+// title: npm
+npm i @adonisjs/session
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+```sh
+// title: yarn
+yarn add @adonisjs/session
+```
 
-1. Installs the `@adonisjs/session` package using the detected package manager.
+```sh
+// title: pnpm
+pnpm add @adonisjs/session
+```
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+:::
+
+Once done, you must run the following command to configure the session package.
+
+```sh
+node ace configure @adonisjs/session
+```
+
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -37,15 +55,15 @@ node ace add @adonisjs/session
     }
     ```
 
-3. Create the `config/session.ts` file.
+2. Create the `config/session.ts` file.
 
-4. Define the following environment variables and their validations. 
+3. Define the following environment variables and their validations. 
 
     ```dotenv
     SESSION_DRIVER=cookie
     ```
 
-5. Registers the following middleware inside the `start/kernel.ts` file.
+4. Registers the following middleware inside the `start/kernel.ts` file.
 
     ```ts
     router.use([

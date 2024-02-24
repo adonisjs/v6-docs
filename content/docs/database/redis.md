@@ -4,17 +4,36 @@ You can use Redis inside your AdonisJS applications using the `@adonisjs/redis` 
 
 ## Installation
 
-Install and configure the package using the following command :
+Install the package from the npm packages registry using one of the following commands.
+
+:::codegroup
 
 ```sh
-node ace add @adonisjs/redis
+// title: npm
+npm i @adonisjs/redis
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+```sh
+// title: yarn
+yarn add @adonisjs/redis
+```
 
-1. Installs the `@adonisjs/redis` package using the detected package manager.
+```sh
+// title: pnpm
+pnpm add @adonisjs/redis
+```
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+:::
+
+Once the package is installed, you must configure it using the `node ace configure` command.
+
+```sh
+node ace configure @adonisjs/redis
+```
+
+:::disclosure{title="See steps performed by the configure command"}
+
+1. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -25,9 +44,9 @@ node ace add @adonisjs/redis
     }
     ```
 
-3. Create `config/redis.ts` file. This file contains the connection configuration for your redis server.
+2. Create `config/redis.ts` file. This file contains the connection configuration for your redis server.
 
-4. Define following environment variables and their validation rules.
+3. Define following environment variables and their validation rules.
 
     ```dotenv
     REDIS_HOST=127.0.0.1

@@ -21,7 +21,7 @@ The `serve` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler
 node ace serve --watch
 ```
 
-The `serve` command starts the development server (via `bin/server.ts` file) as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+The `serve` command starts the development server (via the `bin/server.ts` file) as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
 
 ```sh
 node ace --no-warnings --inspect serve --watch
@@ -161,6 +161,76 @@ Pass commandline arguments to the asset manager child process. For example, if y
 ```sh
 node ace serve --watch --assets-args="--sourcemap --debug"
 ```
+
+</dd>
+
+</dl>
+
+## add
+
+The `add` command combines the `npm install <package-name>` and `node ace configure` commands. So, instead of running two separate commands, you can install and configure the package in one go using the `add` command.
+
+The `add` command will automatically detect the package manager used by your application and use that to install the package. However, you can always opt for a specific package manager using the `--package-manager` CLI flag.
+
+```sh
+# Install and configure the @adonisjs/lucid package
+node ace add @adonisjs/lucid
+
+# Install the package as a development dependency and configure it
+node ace add my-dev-package --dev
+```
+
+If the package can be configured using flags, you can pass them directly to the `add` command. Every unknown flag will be passed down to the `configure` command.
+
+```sh
+node ace add @adonisjs/lucid --db=sqlite
+```
+
+<dl>
+
+<dt>
+
+--verbose
+
+</dt>
+
+<dd>
+
+Enable verbose mode to display the package installation and configuration logs.
+
+</dd>
+
+<dt>
+
+--force
+
+</dt>
+
+<dd>
+
+Passed down to the `configure` command. Force overwrite files when configuring the package. See the `configure` command for more information.
+
+<dt>
+
+--package-manager
+
+</dt>
+
+<dd>
+
+Define the package manager to use for installing the package. The value must be `npm`, `pnpm`, or `yarn`.
+
+</dd>
+
+<dt>
+
+--dev
+
+</dt>
+
+<dd>
+
+Install the package as a development dependency.
 
 </dd>
 
@@ -353,7 +423,7 @@ Create a new event class. Events are stored inside the `app/events` directory an
 - Suffix: `NA`
 - Class name example: `OrderShipped`
 - File name example: `order_shipped.ts`
-- Recommendation: You must name your events around the lifecycle of an action. For example: `MailSending`, `MailSent`, `RequestCompleted` and so on.
+- Recommendation: You must name your events around the lifecycle of an action. For example: `MailSending`, `MailSent`, `RequestCompleted`, and so on.
 
 ```sh
 node ace make:event orderShipped

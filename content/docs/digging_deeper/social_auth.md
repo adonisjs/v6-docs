@@ -106,7 +106,7 @@ router.get('/twitter/redirect', ({ ally }) => {
   const twitter = ally.use('twitter')
 })
 
-// You could also dynamicaly retrieve the driver
+// You could also dynamically retrieve the driver
 router.get('/:provider/redirect', ({ ally, params }) => {
   const driverInstance = ally.use(params.provider)
 }).where('provider', /github|twitter/)

@@ -198,7 +198,6 @@ The `response.redirect` method returns an instance of the [Redirect](https://git
 The simplest way to perform a redirect is to call the `redirect.toPath` method with the redirection path.
 
 ```ts
-import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 
 router.get('/posts', async ({ response }) => {
@@ -209,7 +208,6 @@ router.get('/posts', async ({ response }) => {
 The redirect class also allows constructing a URL from a pre-registered route. The `redirect.toRoute` method accepts the [route identifier](./routing.md#route-identifier) as the first parameter and the route params as the second parameter.
 
 ```ts
-import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
 
 router.get('/articles/:id', async () => {}).as('articles.show')

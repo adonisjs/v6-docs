@@ -6,7 +6,7 @@ However, the AdonisJS core team [has created/maintains Lucid](https://lucid.adon
 
 :::note
 
-The Lucid documentation has moved. Please visit [https://lucid.adonisjs.com](https://lucid.adonisjs.com) for the latest resources.
+The documentation for Lucid is available on [https://lucid.adonisjs.com](https://lucid.adonisjs.com)
 
 :::
 

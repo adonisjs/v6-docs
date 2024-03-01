@@ -390,9 +390,150 @@ export default defineConfig({
 
 ## SSR
 
-At the time of writing, we don't have any SSR support for Inertia.js. See [this article](https://adonisjs.com/blog/future-plans-for-adonisjs-6#adonisjsinertia) for more information.
+### Enabling SSR
 
-However we are currently working to add SSR support. You should be able to start working on your project right now even if it requires SSR. Moving your app to SSR should be super easy once it's available (No breaking changes)
+[Inertia Starter Kit](../guides/installation.md#starter-kits) comes with a server-side rendering (SSR) support out of the box. So make sure to use it if you want to enable SSR for your application. 
+
+If you started your application without enabling SSR, you can always enable it later by following the next steps : 
+
+#### Adding a server entrypoint
+
+We need to add a server entrypoint that will look super similar to the client entrypoint. This entrypoint will be used to render the first page visit on the server, so it will be executed server side and not on the browser.
+
+You should create a `resources/ssr.ts` that default export a function like this :
+
+:::codegroup
+
+```ts
+// title: Vue 
+import { createInertiaApp } from '@inertiajs/vue3'
+import { renderToString } from '@vue/server-renderer'
+import { createSSRApp, h, type DefineComponent } from 'vue'
+
+export default function render(page) {
+  return createInertiaApp({
+    page,
+    render: renderToString,
+    resolve: (name) => {
+      const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true })
+      return pages[`./pages/${name}.vue`]
+    },
+
+    setup({ App, props, plugin }) {
+      return createSSRApp({ render: () => h(App, props) }).use(plugin)
+    },
+  })
+}
+```
+
+```ts
+// title: React
+import ReactDOMServer from 'react-dom/server'
+import { createInertiaApp } from '@inertiajs/react'
+
+export default function render(page) {
+  return createInertiaApp({
+    page,
+    render: ReactDOMServer.renderToString,
+    resolve: (name) => {
+      const pages = import.meta.glob('./pages/**/*.tsx', { eager: true })
+      return pages[`./pages/${name}.tsx`]
+    },
+    setup: ({ App, props }) => <App {...props} />,
+  })
+}
+```
+
+```ts
+// title: Svelte
+import { createInertiaApp } from '@inertiajs/svelte'
+import createServer from '@inertiajs/svelte/server'
+
+export default function render(page) {
+  return createInertiaApp({
+    page,
+    resolve: name => {
+      const pages = import.meta.glob('./pages/**/*.svelte', { eager: true })
+      return pages[`./pages/${name}.svelte`]
+    },
+  })
+}
+```
+
+```ts
+// title: Solid
+import { hydrate } from 'solid-js/web'
+import { createInertiaApp } from 'inertia-adapter-solid'
+
+export default function render(page: any) {
+  return createInertiaApp({
+    page,
+    resolve: (name) => {
+      const pages = import.meta.glob('./pages/**/*.tsx', { eager: true })
+      return pages[`./pages/${name}.tsx`]
+    },
+    setup({ el, App, props }) {
+      hydrate(() => <App {...props} />, el)
+    },
+  })
+}
+```
+:::
+
+#### Update the config file
+
+Head over to the `config/inertia.ts` file and update the `ssr` prop to enable it and also point to your server entrypoint in case you are using a different path.
+
+```ts
+import { defineConfig } from '@adonisjs/inertia'
+
+export default defineConfig({
+  // ...
+  ssr: {
+    enabled: true,
+    entrypoint: 'resources/ssr.tsx'
+  }
+})
+```
+
+#### Update the Vite config
+
+First, make sure you have registered the `inertia` vite plugin. Once done, you should update the path to the server entrypoint in the `vite.config.ts` file in case you are using a different path.
+
+```ts
+import { defineConfig } from 'vite'
+import inertia from '@adonisjs/inertia/client'
+
+export default defineConfig({
+  plugins: [
+    inertia({
+      ssr: {
+        enabled: true,
+        entrypoint: 'resources/ssr.tsx'
+      }
+    })
+  ]
+})
+```
+
+You should now be able to render the first page visit on the server and then continue with the client-side rendering.
+
+### SSR Allowlist
+
+When using SSR, you may want to allowlist the routes that should be rendered on the server. Maybe you are building an admin dashboard gated by authentication, so theses routes have no reason to be rendered on the server. But on the same application, you maybe have a landing page that could benefit from SSR to improve SEO.
+
+So, you can add the pages that should be rendered on the server in the `config/inertia.ts` file.
+
+```ts
+import { defineConfig } from '@adonisjs/inertia'
+
+export default defineConfig({
+  ssr: {
+    enabled: true,
+    pages: ['home']
+  }
+})
+```
 
 ## Testing
 

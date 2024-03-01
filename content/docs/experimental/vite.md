@@ -13,6 +13,8 @@ AdonisJS uses [Vite](https://vitejs.dev/) to bundle the frontend assets of your 
 - Edge helpers and tags to generate URLs for assets processed by Vite.
 - Access to the [Vite Runtime API](https://vitejs.dev/guide/api-vite-runtime.html#vite-runtime-api) to perform server-side rendering (SSR).
 
+Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite is proxied to it through an AdonisJS middleware. This allows us to directly access Vite's runtime API to perform server-side rendering (SSR) and also have a single dev server to manage. That also means that assets are served by AdonisJS itself, and not by a separate Vite dev server.
+
 ## Installation
 
 First make sure to have at least the following versions of AdonisJS installed:
@@ -283,8 +285,6 @@ You can start your application as usual, and AdonisJS will automatically proxy t
 ```sh
 node ace serve --watch
 ```
-
-![](./vite-dev-server.png)
 
 ## Including entrypoints in Edge templates
 You can render the script and the style tags for the entrypoints defined inside the `vite.config.ts` file using the `@vite` Edge tag. The tag accepts an array of entrypoints and returns the `script` and the `link` tags.

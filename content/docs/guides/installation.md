@@ -171,7 +171,7 @@ npm init adonisjs@latest -- -K=slim --db=mysql
 
 :::warning
 
-This starter kit is using experimental features. Please use it knowing that some minor breaking changes may occur in the future.
+This starter kit uses experimental features. Please use it knowing that some minor breaking changes may occur.
 
 :::
 
@@ -180,7 +180,7 @@ This starter kit is using experimental features. Please use it knowing that some
 
 You can use the `--adapter` flag to choose the frontend framework you want to use. The available options are `react`, `vue`, `solid`, and `svelte`.
 
-You can also use the `--ssr` and `--no-ssr` flags to enable or disable server-side rendering.
+You can also use the `--ssr` and `--no-ssr` flags to turn server-side rendering on or off.
 
 ```sh
 # React with server-side rendering

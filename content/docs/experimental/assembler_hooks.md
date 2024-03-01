@@ -1,10 +1,10 @@
 # Assembler Hooks
 
-Assembler hooks are a way of executing code at specific points in the assembler lifecycle. As a reminder, the Assembler is a part of AdonisJS that enables you to launch your dev server, build your application and run your tests. 
+Assembler hooks are a way of executing code at specific points in the assembler lifecycle. As a reminder, the Assembler is a part of AdonisJS that enables you to launch your dev server, build your application, and run your tests. 
 
-These hooks can be useful for tasks such as file generation, code compilation, or injecting custom build steps.
+These hooks can be helpful for tasks such as file generation, code compilation, or injecting custom build steps.
 
-Assembler hooks were initially introduced for our [new experimental version of Vite](./vite.md). These hooks enable the `adonisjs/vite` package to customize the build process, and inject a step where front-end assets are built, and also, if necessary, generate an SSR build.
+Assembler hooks were initially introduced for our [new experimental version of Vite](./vite.md). These hooks enable the `adonisjs/vite` package to customize the build process and inject a step where front-end assets are built, and also, if necessary, generate an SSR build.
 
 ## Adding a hook
 
@@ -33,7 +33,7 @@ export default defineConfig({
 
 Several hooks can be defined for each stage of the assembly lifecycle. Each hook is an array of functions to be executed.
 
-We recommend using dynamic imports to load hooks. This ensures that hooks are not loaded unnecessarily, but only when needed. If you write your hook code directly in the `adonisrc.ts` file, this may slow down the start-up of your application.
+We recommend using dynamic imports to load hooks. It ensures that hooks are not loaded unnecessarily but only when needed. If you write your hook code directly in the `adonisrc.ts` file, this may slow down the start-up of your application.
 
 ## Create a hook
 
@@ -69,7 +69,7 @@ export default defineConfig({
 })
 ```
 
-And now, every time you will run `node ace build`, the `onBuildStarting` hook will be executed with the custom logic you defined.
+And now, every time you run `node ace build`, the `onBuildStarting` hook will be executed with the custom logic you defined.
 
 ## Hooks list
 
@@ -77,11 +77,11 @@ Here's the list of available hooks:
 
 ### onBuildStarting
 
-This hook is executed before the build starts. It is useful for tasks such as file generation, or for injecting custom build steps.
+This hook is executed before the build starts. It is helpful for tasks such as file generation or for injecting custom build steps.
 
 ### onBuildCompleted
 
-This hook is executed once the build is complete. Can also be used to customize the build process.
+This hook is executed once the build is complete. It can also be used to customize the build process.
 
 ### onDevServerStarted
 

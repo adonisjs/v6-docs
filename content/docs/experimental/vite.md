@@ -2,7 +2,7 @@
 
 :::warning
 
-This documentation targets the new experimental version of our Vite integration ( 3.x.x ). If you are using the older version, please refer to the [Vite 2.x.x documentation](../http/assets_bundling.md). 
+This documentation targets the new experimental version of our Vite integration ( 3.x.x ). If you use an older version, please refer to the [Vite 2.x.x documentation](../http/assets_bundling.md). 
 
 :::
 
@@ -13,11 +13,11 @@ AdonisJS uses [Vite](https://vitejs.dev/) to bundle the frontend assets of your 
 - Edge helpers and tags to generate URLs for assets processed by Vite.
 - Access to the [Vite Runtime API](https://vitejs.dev/guide/api-vite-runtime.html#vite-runtime-api) to perform server-side rendering (SSR).
 
-Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite is proxied to it through an AdonisJS middleware. This allows us to directly access Vite's runtime API to perform server-side rendering (SSR) and also have a single dev server to manage. That also means that assets are served by AdonisJS itself, and not by a separate Vite dev server.
+Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite is proxied to it through an AdonisJS middleware. It allows us to directly access Vite's runtime API to perform server-side rendering (SSR) and manage a single dev server. That also means that assets are served by AdonisJS directly and not by a separate process.
 
 ## Installation
 
-First make sure to have at least the following versions of AdonisJS installed:
+First, make sure to have at least the following versions of AdonisJS installed:
 
 - `@adonisjs/core`: 6.3.1 or later
 - `@adonisjs/assembler`: 7.2.3 or later
@@ -75,7 +75,7 @@ node ace configure @adonisjs/vite --no-install
 
 :::
 
-Once done, make sure to add the following to your `adonisrc.ts` file.
+Once done, add the following to your `adonisrc.ts` file.
 
 ```ts
 import { defineConfig } from '@adonisjs/core/build/standalone'
@@ -90,9 +90,9 @@ export default defineConfig({
 })
 ```
 
-The `assetsBundler` property is set to `false` to disable the assets bundler management done by the AdonisJS Assembler.
+The `assetsBundler` property is set to `false` to turn off the assets bundler management done by the AdonisJS Assembler.
 
-The `unstable_assembler` property is used to register the `@adonisjs/vite/build_hook` to execute the Vite build process. See [Assembler hooks](./assembler_hooks.md) for more information.
+The `unstable_assembler` property registers the `@adonisjs/vite/build_hook` to execute the Vite build process. See [Assembler hooks](./assembler_hooks.md) for more information.
 
 
 ## Configuration
@@ -128,7 +128,7 @@ entrypoints
 
 The `entrypoints` refers to the entry point file of your frontend codebase. Usually, it will be a JavaScript or a TypeScript file with additional imports. Each entry point will result in a separate output bundle.
 
-Also, if needed, you can define multiple entrypoints. For example, An entry point for your user-facing app and another for the admin panel.
+Also, if needed, you can define multiple entrypoints. For example, an entry point for your user-facing app and another for the admin panel.
 
 </dd>
 
@@ -152,7 +152,7 @@ reload
 
 <dd>
 
-An array of glob patterns to watch and reload the browser on file change. By default, we watch for Edge templates. However, you can configure additional patterns as well.
+It contains an array of glob patterns to watch and reload the browser on file change. By default, we watch for Edge templates. However, you can configure additional patterns as well.
 
 </dd>
 
@@ -162,7 +162,7 @@ assetsUrl
 
 <dd>
 
-The URL to prefix when generating links for assets in production. If you upload the Vite output to a CDN, then the value of this property should be the CDN server URL.
+It contains the URL to prefix when generating links for assets in production. If you upload the Vite output to a CDN, then the value of this property should be the CDN server URL.
 
 Ensure you update the backend configuration to use the same `assetsUrl` value.
 
@@ -194,7 +194,7 @@ buildDirectory
 
 <dd>
 
-The path to the Vite's build output directory. You must also update this backend config if you change the default value inside the `vite.config.ts` file.
+It contains the path to the Vite's build output directory. You must also update this backend config if you change the default value inside the `vite.config.ts` file.
 
 </dd>
 
@@ -276,7 +276,7 @@ resources
 └── images
 ```
 
-The vite output will be written to the `public/assets` folder. We choose the `/assets` subdirectory so you can continue using the `public` folder for other static files you wish not to process using Vite.
+The vite output will be in the `public/assets` folder. We choose the `/assets` subdirectory so you can continue using the `public` folder for other static files you wish not to process using Vite.
 
 ## Starting the dev server
 
@@ -460,11 +460,11 @@ export default viteBackendConfig
 
 ### Middleware Mode 
 
-With older versions of AdonisJS, Vite was spawned as a separate process, and had its own dev server.
+With older versions of AdonisJS, Vite was spawned as a separate process and had its own dev server.
 
 With the new experimental version, Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite are proxied to it through an AdonisJS middleware.
 
-Advantages of the middleware mode is that we can directly access Vite's runtime API to perform server-side rendering (SSR) and also have a single dev server to manage.
+The advantages of the middleware mode are that we can directly access Vite's runtime API to perform server-side rendering (SSR) and have a single dev server to manage.
 
 You can read more about the middleware mode in the [Vite documentation](https://vitejs.dev/guide/ssr#setting-up-the-dev-server).
 

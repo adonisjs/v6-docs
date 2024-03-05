@@ -253,6 +253,7 @@ The `user.currentAccessToken` refers to the access token used for authentication
 
 ```ts
 import { AccessToken } from '@adonisjs/auth/access_tokens'
+import { Bouncer } from '@adonisjs/bouncer'
 
 export const createProject = Bouncer.ability(
   (user: User & { currentAccessToken?: AccessToken }) => {

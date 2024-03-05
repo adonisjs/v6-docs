@@ -63,6 +63,8 @@ export default class User extends BaseModel {
 Once you have configured the guard, you can use the `auth` middleware to protect routes from unauthenticated requests. The middleware is registered inside the `start/kernel.ts` file under the named middleware collection.
 
 ```ts
+import router from '@adonisjs/core/services/router'
+
 export const middleware = router.named({
   auth: () => import('#middleware/auth_middleware')
 })

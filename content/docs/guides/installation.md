@@ -167,6 +167,29 @@ npm init adonisjs@latest -- -K=slim
 npm init adonisjs@latest -- -K=slim --db=mysql
 ```
 
+### Inertia Starter kit
+
+:::warning
+
+This starter kit uses experimental features. Please use it knowing that some minor breaking changes may occur.
+
+:::
+
+
+[Inertia](https://inertiajs.com/) is a way to build server-driven single-page applications. You can use your favorite frontend framework ( React, Vue, Solid, Svelte ) to build the frontend of your application.
+
+You can use the `--adapter` flag to choose the frontend framework you want to use. The available options are `react`, `vue`, `solid`, and `svelte`.
+
+You can also use the `--ssr` and `--no-ssr` flags to turn server-side rendering on or off.
+
+```sh
+# React with server-side rendering
+npm init adonisjs@latest -- -K=inertia --adapter=react --ssr
+
+# Vue without server-side rendering
+npm init adonisjs@latest -- -K=inertia --adapter=vue --no-ssr
+```
+
 ---
 
 ### Bring your starter kit

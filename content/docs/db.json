@@ -483,5 +483,23 @@
     "title": "Helpers",
     "contentPath": "./reference/helpers.md",
     "category": "Reference"
+  },
+  {
+    "permalink": "experimental-vite",
+    "title": "New Vite Integration",
+    "contentPath": "./experimental/vite.md",
+    "category": "Experimental"
+  },
+  {
+    "permalink": "experimental-assembler-hooks",
+    "title": "Assembler Hooks",
+    "contentPath": "./experimental/assembler_hooks.md",
+    "category": "Experimental"
+  },
+  {
+    "permalink": "inertia",
+    "title": "Inertia",
+    "contentPath": "./experimental/inertia.md",
+    "category": "Experimental"
   }
 ]

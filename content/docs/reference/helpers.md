@@ -1,6 +1,6 @@
 # Helpers reference
 
-AdonisJS bundles the utilities the framework uses into the `helpers` module and makes them available to your application code. Since these utilities are already installed and used by the framework, the `helpers` module does not add any additional bloat to your `node_modules`.
+AdonisJS bundles its utilities into the `helpers` module and makes them available to your application code. Since these utilities are already installed and used by the framework, the `helpers` module does not add any additional bloat to your `node_modules`.
 
 The helper methods are exported from the following modules.
 

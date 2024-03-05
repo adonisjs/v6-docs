@@ -17,6 +17,7 @@ It is recommended to use the `ctx.logger` property during HTTP requests. The HTT
 
 ```ts
 import router from '@adonisjs/core/services/router'
+import User from '#models/user'
 
 router.get('/users/:id', ({ logger, params }) => {
   logger.info('Fetching user by id %s', params.id)

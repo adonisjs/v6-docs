@@ -287,6 +287,12 @@ export default defineConfig({
 
 Since you will be using the `hash` service to hash user passwords, you may find placing the logic inside the `beforeSave` model hook helpful.
 
+:::note
+
+If you are using the `@adonisjs/auth` module, hashing passwords within your model is unnecessary. The `AuthFinder` automatically handles password hashing, ensuring your user credentials are securely processed. Learn more about this process [here](../auth/verifying_user_credentials.md#hashing-user-password).
+
+:::
+
 ```ts
 import { BaseModel, beforeSave } from '@adonisjs/lucid'
 import hash from '@adonisjs/core/services/hash'

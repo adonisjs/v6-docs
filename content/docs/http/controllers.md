@@ -61,6 +61,26 @@ router.get('users', (ctx) => {
 })
 ```
 
+## Single action controllers
+
+AdonisJS provides a way to define a single action controller. It's an effective way to wrap up functionality into clearly named classes. To accomplish this, you need to define a handle method inside the controller.
+
+```ts
+import type { HttpContext } from '@adonisjs/core/http'
+
+export default class RegisterNewsletterSubscriptionController {
+  async handle({}: HttpContext) {
+    // ...
+  }
+}
+```
+
+Then, you can reference the controller on the route with the following.
+
+```ts
+router.post('newsletter/subscriptions', [RegisterNewsletterSubscriptionController])
+```
+
 ## Lazy loading controllers
 
 As your codebase grows, you will notice it starts impacting the boot time of your application. A common reason for that is importing all controllers inside the routes file.

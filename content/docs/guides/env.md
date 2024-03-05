@@ -152,12 +152,12 @@ The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to 
 
 ```ts
 {
-  CACHE_VIEWS: schema.boolean()
+  CACHE_VIEWS: Env.schema.boolean()
 }
 
 // Mark it as optional
 {
-  CACHE_VIEWS: schema.boolean.optional()
+  CACHE_VIEWS: Env.schema.boolean.optional()
 }
 ```
 
@@ -167,12 +167,12 @@ The `schema.number` method ensures the value is a valid number. The string repre
 
 ```ts
 {
-  PORT: schema.number()
+  PORT: Env.schema.number()
 }
 
 // Mark it as optional
 {
-  PORT: schema.number.optional()
+  PORT: Env.schema.number.optional()
 }
 ```
 

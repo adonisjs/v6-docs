@@ -144,7 +144,7 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
-  .get('dashboard', ({ auth }) => {
+  .get('dashboard', async ({ auth }) => {
     // highlight-start
     await auth.user!.getAllMetrics()
     // highlight-end
@@ -158,7 +158,7 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
-  .get('dashboard', ({ auth }) => {
+  .get('dashboard', async ({ auth }) => {
     // highlight-start
     /**
      * First, authenticate the user
@@ -181,7 +181,7 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
-  .get('dashboard', ({ auth }) => {
+  .get('dashboard', async ({ auth }) => {
     // highlight-start
     if (auth.isAuthenticated) {
       await auth.user!.getAllMetrics()
@@ -200,7 +200,7 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 router
-  .get('dashboard', ({ auth }) => {
+  .get('dashboard', async ({ auth }) => {
     // highlight-start
     const user = auth.getUserOrFail()
     await user.getAllMetrics()

@@ -4,6 +4,12 @@ SQL databases are popular for storing the application's data in persistent stora
 
 However, the AdonisJS core team [has created/maintains Lucid](https://lucid.adonisjs.com/docs/introduction). Lucid is a SQL query builder and an Active Record ORM built on top of [Knex](https://knexjs.org/). We created Lucid back in 2016 and maintain it to date.
 
+:::note
+
+The documentation for Lucid is available on [https://lucid.adonisjs.com](https://lucid.adonisjs.com)
+
+:::
+
 ## Why Lucid
 
 Apart from the features listed on the [Lucid website](https://lucid.adonisjs.com/docs/introduction), the following are additional reasons for using Lucid inside an AdonisJS application.

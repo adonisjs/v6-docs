@@ -126,15 +126,129 @@ node ace configure @adonisjs/inertia
 
 Once done, you should be ready to use Inertia in your AdonisJS application. Start your development server and visit the `/inertia` route to see the home page rendered using Inertia and your selected frontend framework.
 
-## Rendering pages
-
 :::note
 **Read the [Inertia official documentation](https://inertiajs.com/)**.
 
 Inertia is a backend-agnostic library. We just created an adapter to make it work with AdonisJS. You should be familiar with the Inertia concepts before reading this documentation.
 
-**We will cover AdonisJS's specific parts in this documentation.**
+**We will only cover AdonisJS's specific parts in this documentation.**
 :::
+
+## Client-side entrypoint
+
+If you used the `configure` or `add` command, the package will have created an entrypoint file at `resources/app.ts` so you can skip this step. 
+
+Basically, this file will be the main entrypoint for your frontend application and will be used to bootstrap Inertia and your frontend framework. This file should be the entrypoint loaded by your root Edge template with the `@vite` tag.
+
+:::codegroup
+
+```ts
+// title: Vue
+import { createApp, h } from 'vue'
+import type { DefineComponent } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { resolvePageComponent } from '@adonisjs/inertia/helpers'
+
+const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
+
+createInertiaApp({
+  title: (title) => {{ `${title} - ${appName}` }},
+  resolve: (name) => {
+    return resolvePageComponent(
+      `./pages/${name}.vue`,
+      import.meta.glob<DefineComponent>('./pages/**/*.vue'),
+    )
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .mount(el)
+  },
+})
+```
+
+```ts
+// title: React
+import { createRoot } from 'react-dom/client';
+import { createInertiaApp } from '@inertiajs/react';
+import { resolvePageComponent } from '@adonisjs/inertia/helpers'
+
+const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
+
+createInertiaApp({
+  progress: { color: '#5468FF' },
+
+  title: (title) => `${title} - ${appName}`',
+
+  resolve: (name) => {
+    return resolvePageComponent(
+      `./pages/${name}.tsx`',
+      import.meta.glob('./pages/**/*.tsx'),
+    )
+  },
+
+  setup({ el, App, props }) {
+    const root = createRoot(el);
+    root.render(<App {...props} />);
+  },
+});
+```
+
+```ts
+// title: Svelte
+import { createInertiaApp } from '@inertiajs/svelte'
+import { resolvePageComponent } from '@adonisjs/inertia/helpers'
+
+const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
+
+createInertiaApp({
+  progress: { color: '#5468FF' },
+
+  title: (title) => `${title} - ${appName}`',
+
+  resolve: (name) => {
+    return resolvePageComponent(
+      `./pages/${name}.svelte`,
+      import.meta.glob('./pages/**/*.svelte'),
+    )
+  },
+
+  setup({ el, App, props }) {
+    new App({ target: el, props })
+  },
+})
+```
+
+```ts
+// title: Solid
+import { render } from 'solid-js/web'
+import { createInertiaApp } from 'inertia-adapter-solid'
+import { resolvePageComponent } from '@adonisjs/inertia/helpers'
+
+const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
+
+createInertiaApp({
+  progress: { color: '#5468FF' },
+
+  title: (title) => `${title} - ${appName}`,
+
+  resolve: (name) => {
+    return resolvePageComponent(
+      `./pages/${name}.tsx`',
+      import.meta.glob('./pages/**/*.tsx'),
+    )
+  },
+
+  setup({ el, App, props }) {
+    render(() => <App {...props} />, el)
+  },
+})
+```
+:::
+
+The role of this file is to create an Inertia app and to resolve the page component. The page component you write when using `inertia.render` will be passed down the the `resolve` function and the role of this function is to return the component that need to be rendered.
+
+## Rendering pages
 
 While configuring your package, a `inertia_middleware` has been registered inside the `start/kernel.ts` file. This middleware is responsible for setting up the `inertia` object on the [`HttpContext`](../http/http_context.md).
 
@@ -207,7 +321,10 @@ While passing data to the frontend, everything is serialized to JSON. Do not exp
 
 The Root template is a regular Edge template that will be loaded on the first-page visit of your application. It is the place where you should include your CSS and Javascript files and also where you should include the `@inertia` tag. A typical root template looks like this :
 
+:::codegroup
+
 ```edge
+// title: Vue
 <!DOCTYPE html>
 <html>
 
@@ -216,7 +333,8 @@ The Root template is a regular Edge template that will be loaded on the first-pa
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title inertia>AdonisJS x Inertia</title>
 
-  @vite(['resources/app.ts'])
+  @inertiaHead()
+  @vite(['resources/app.ts', `resources/pages/${page.component}.vue`])
 </head>
 
 <body>
@@ -226,7 +344,72 @@ The Root template is a regular Edge template that will be loaded on the first-pa
 </html>
 ```
 
-It may differ depending on the frontend framework you are using. ( [`@viteReactRefresh`](https://docs.adonisjs.com/guides/edge-reference#vitereactrefresh) may be needed, `app.ts` may be `app.tsx`, etc. )
+```edge
+// title: React
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title inertia>AdonisJS x Inertia</title>
+
+  @inertiaHead()
+  @viteReactRefresh()
+  @vite(['resources/app.tsx', `resources/pages/${page.component}.tsx`])
+</head>
+
+<body>
+  @inertia()
+</body>
+
+</html>
+```
+
+```edge
+// title: Svelte
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title inertia>AdonisJS x Inertia</title>
+
+  @inertiaHead()
+  @vite(['resources/app.ts', `resources/pages/${page.component}.svelte`])
+</head>
+
+<body>
+  @inertia()
+</body>
+
+</html>
+```
+
+```edge
+// title: Solid
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title inertia>AdonisJS x Inertia</title>
+
+  @inertiaHead()
+  @vite(['resources/app.tsx', `resources/pages/${page.component}.tsx`])
+</head>
+
+<body>
+  @inertia()
+</body>
+
+</html>
+```
+
+
+:::
 
 You can configure the root template path in the `config/inertia.ts` file. By default, it assumes your template is at `resources/views/root.edge`.
 
@@ -346,17 +529,17 @@ export default class UsersController {
       // ALWAYS included on first visit.
       // OPTIONALLY included on partial reloads.
       // ALWAYS evaluated
-      'users': await User.all()m
+      users: await User.all(),
 
       // ALWAYS included on first visit.
       // OPTIONALLY included on partial reloads.
       // ONLY evaluated when needed
-      'users': () => User.all(),
+      users: () => User.all(),
 
       // NEVER included on first visit.
       // OPTIONALLY included on partial reloads.
       // ONLY evaluated when needed
-      'users': inertia.lazy(() => User.all())
+      users: inertia.lazy(() => User.all())
     }),
   }
 }
@@ -416,8 +599,8 @@ export default function render(page) {
     page,
     render: renderToString,
     resolve: (name) => {
-      const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true })
-      return pages[`./pages/${name}.vue`]
+      const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue')
+      return pages[`./pages/${name}.vue`]()
     },
 
     setup({ App, props, plugin }) {
@@ -551,9 +734,7 @@ First, make sure to configure the `inertiaApiClient` and `apiClient` plugins in 
 // title: tests/bootstrap.ts
 import { assert } from '@japa/assert'
 import app from '@adonisjs/core/services/app'
-import type { Config } from '@japa/runner/types'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
-import testUtils from '@adonisjs/core/services/test_utils'
 // highlight-start
 import { apiClient } from '@japa/api-client'
 import { inertiaApiClient } from '@adonisjs/inertia'
@@ -638,3 +819,22 @@ test('returns correct data', async ({ client }) => {
   console.log(response.inertiaProps)
 })
 ```
+
+## FAQ
+
+### Why my server is constantly reloading when updating my frontend code?
+
+Let's say you are using React. Every time you update your frontend code, the server will reload and the browser will refresh. You are not benefiting from the hot module replacement (HMR) feature. 
+
+You need to exclude `resources/**/*` from your root `tsconfig.json` file to make it work. 
+
+```jsonc
+{
+  "compilerOptions": {
+    // ...
+  },
+  "exclude": ["resources/**/*"]
+}
+```
+
+Because, the AdonisJS process that is responsible for restarting the server is watching files included in the `tsconfig.json` file.

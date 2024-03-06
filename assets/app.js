@@ -21,3 +21,7 @@ Alpine.plugin(initBaseComponents)
 Alpine.plugin(initSearchComponent(docsearch))
 Alpine.plugin(initZoomComponent(mediumZoom))
 Alpine.start()
+
+up.on('up:fragment:offline', function (event) {
+  window.location.reload()
+})

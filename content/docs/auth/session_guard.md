@@ -83,6 +83,8 @@ export default class SessionController {
 You can protect routes from unauthenticated users using the `auth` middleware. The middleware is registered inside the `start/kernel.ts` file under the named middleware collection.
 
 ```ts
+import router from '@adonisjs/core/services/router'
+
 export const middleware = router.named({
   auth: () => import('#middleware/auth_middleware')
 })

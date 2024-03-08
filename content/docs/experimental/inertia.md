@@ -106,19 +106,21 @@ node ace configure @adonisjs/inertia
 
 4. Copy a few stubs into your application to help you start quickly. Each copied file is adapted to the frontend framework previously selected.
 
-  1. Create a `./resources/views/root.edge` file that will be used to render the HTML page used to boot Inertia.
+  1. Create a `./resources/views/inertia_layout.edge` file that will be used to render the HTML page used to boot Inertia.
 
-  2. Create a `./resources/css/app.css` file with the content needed to style the `root.edge` view.
+  2. Create a `./inertia/css/app.css` file with the content needed to style the `root.edge` view.
 
-  3. Create a `./resources/tsconfig.json` file to differentiate between the server and client-side TypeScript configuration.
+  3. Create a `./inertia/tsconfig.json` file to differentiate between the server and client-side TypeScript configuration.
 
-  4. Create a `./resources/app.ts` for bootstrapping Inertia and your frontend framework.
+  4. Create a `./inertia/app.ts` for bootstrapping Inertia and your frontend framework.
 
-  5. Create a `./resources/pages/home.{tsx|vue|svelte}` file to render the home page of your application.
+  5. Create a `./inertia/pages/home.{tsx|vue|svelte}` file to render the home page of your application.
 
-  5. Add the correct vite plugin to compile your frontend framework in the `vite.config.ts` file.
+  6. Create a `./inertia/pages/server_error.{tsx|vue|svelte}` and `./inertia/pages/not_found.{tsx|vue|svelte}` files to render the error pages.
 
-  6. Add a dumb route `/inertia` in your `start/routes.ts` file to render the home page with Inertia
+  7. Add the correct vite plugin to compile your frontend framework in the `vite.config.ts` file.
+
+  8. Add a dumb route `/inertia` in your `start/routes.ts` file to render the home page with Inertia
  
 5. Install packages based on the selected frontend framework.
 

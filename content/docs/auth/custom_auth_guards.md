@@ -2,18 +2,98 @@
 
 The auth package enables you to create custom authentication guards for use cases not served by the built-in guards. In this guide, we will create a guard for using JWT tokens for authentication.
 
-The first step is to create a guard that implements the [`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/types.ts#L30) interface.
+The authentication guard revolves around the following concepts.
+
+- **User Provider**: Guards must be user agnostic. They should not hardcode the functions to query and find users from the database. Instead, a guard should rely on a User Provider and accept its implementation as a constructor dependency.
+
+- **Guard implementation**: The guard implementation must adhere to the `GuardContract` interface. This interface describes the APIs needed to integrate the guard with the rest of the Auth layer.
+
+## Creating the `UserProvider` interface
+
+A guard is responsible for defining the `UserProvider` interface and the methods/properties it should contain. For example, the UserProvider accepted by the [Session guard](https://github.com/adonisjs/auth/blob/develop/modules/session_guard/types.ts#L153-L166) is far simpler than the UserProvider accepted by the [Access tokens guard](https://github.com/adonisjs/auth/blob/develop/modules/access_tokens_guard/types.ts#L192-L222).
+
+So, there is no need to create User Providers that satisfy every guard implementation. Each guard can dictate the requirements for the User provider they accept.
+
+For this example, we need a provider to look up users inside the database using the `user ID`. We do not care which database is used or how the query is performed. That's the responsibility of the developer implementing the User provider.
+
+:::note
+
+All the code we will write in this guide can initially live inside a single file stored within the `app/auth/guards` directory.
+
+:::
+
+```ts
+// title: app/auth/guards/jwt.ts
+import { symbols } from '@adonisjs/auth'
+
+/**
+ * The bridge between the User provider and the
+ * Guard
+ */
+export type JwtGuardUser<RealUser> = {
+  /**
+   * Returns the unique ID of the user
+   */
+  getId(): string | number | BigInt
+
+  /**
+   * Returns the original user object
+   */
+  getOriginal(): RealUser
+}
+
+/**
+ * The interface for the UserProvider accepted by the
+ * JWT guard.
+ */
+export interface JwtUserProviderContract<RealUser> {
+  /**
+   * A property the guard implementation can use to infer
+   * the data type of the actual user (aka RealUser)
+   */
+  [symbols.PROVIDER_REAL_USER]: RealUser
+
+  /**
+   * Create a user object that acts as an adapter between
+   * the guard and real user value.
+   */
+  createUserForGuard(user: RealUser): Promise<JwtGuardUser<RealUser>>
+
+  /**
+   * Find a user by their id.
+   */
+  findById(identifier: string | number | BigInt): Promise<JwtGuardUser<RealUser> | null>
+}
+```
+
+In the above example, the `JwtUserProviderContract` interface accepts a generic user property named `RealUser`. Since this interface does not know what the actual user (the one we fetch from the database) looks like, it accepts it as a generic. For example:
+
+- An implementation using Lucid models will return an instance of the Model. Hence, the value of `RealUser` will be that instance.
+
+- An implementation using Prisma will return a user object with specific properties; therefore, the value of `RealUser` will be that object.
+
+To summarize, the `JwtUserProviderContract` leaves it to the User Provider implementation to decide the User's data type.
+
+### Understanding the `JwtGuardUser` type
+The `JwtGuardUser` type acts as a bridge between the User provider and the guard. The guard uses the `getId` method to get the user's unique ID and the `getOriginal` method to get the user's object after authenticating the request.
+
+## Implementing the guard
+Let's create the `JwtGuard` class and define the methods/properties needed by the [`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/types.ts#L30) interface. Initially, we will have many errors in this file, but that's okay; as we progress, all the errors will disappear.
+
+:::note
+
+Please take some time and read the comments next to every property/method in
+the following example.
+
+:::
 
 ```ts
 import { symbols } from '@adonisjs/auth'
-import { GuardContract } from '@adonisjs/auth/types'
-import { UserProviderContract } from '@adonisjs/auth/types/core'
+import { AuthClientResponse, GuardContract } from '@adonisjs/auth/types'
 
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
   /**
    * A list of events and their types emitted by
    * the guard.
@@ -45,9 +125,7 @@ export class JwtGuard<
   /**
    * Generate a JWT token for a given user.
    */
-  async generate(
-    user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
-  ): Promise<string> {
+  async generate(user: UserProvider[typeof symbols.PROVIDER_REAL_USER]) {
   }
 
   /**
@@ -55,38 +133,39 @@ export class JwtGuard<
    * the user instance if there is a valid JWT token
    * or throw an exception
    */
-  async authenticate(): Promise<
-    UserProvider[typeof symbols.PROVIDER_REAL_USER]
-  > {}
+  async authenticate(): Promise<UserProvider[typeof symbols.PROVIDER_REAL_USER]> {
+  }
 
   /**
    * Same as authenticate, but does not throw an exception
    */
-  async check(): Promise<boolean> {}
+  async check(): Promise<boolean> {
+  }
 
   /**
    * Returns the authenticated user or throws an error
    */
-  getUserOrFail(): UserProvider[typeof symbols.PROVIDER_REAL_USER] {}
+  getUserOrFail(): UserProvider[typeof symbols.PROVIDER_REAL_USER] {
+  }
+
+  /**
+   * This method is called by Japa during testing when "loginAs"
+   * method is used to login the user.
+   */
+  async authenticateAsClient(
+    user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
+  ): Promise<AuthClientResponse> {
+  }
 }
 ```
-
-## The `UserProvider` generic
-In the above code snippet, we use the `UserProvider` generic to infer the exact user type based on the [configured user provider](./introduction.md#choosing-a-user-provider).
-
-The inbuilt user providers define a type-only property via the `PROVIDER_REAL_USER` symbol that we are using to infer the user data type.
-
-All this may seem complicated if you are unfamiliar with TypeScript generics. So we recommend looking at the [code of the inbuilt user providers](https://github.com/adonisjs/auth/blob/main/src/core/user_providers/lucid.ts#L59-L62) to see how everything is setup.
 
 ## Accepting a user provider
 A guard must accept a user provider to look up users during authentication. You can accept it as a constructor parameter and store a private reference.
 
 ```ts
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
   // insert-start
   #userProvider: UserProvider
 
@@ -106,7 +185,7 @@ Let's implement the `generate` method and create a token for a given user. We wi
 npm i jsonwebtoken @types/jsonwebtoken
 ```
 
-Also, we will have to use a **secret key** to sign a token, so let's update the `constructor` method and accept the secret key as an option.
+Also, we will have to use a **secret key** to sign a token, so let's update the `constructor` method and accept the secret key as an option via the config object.
 
 ```ts
 // insert-start
@@ -117,22 +196,23 @@ export type JwtGuardOptions = {
 }
 // insert-end
 
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
-  #options: JwtGuardOptions
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
+  #userProvider: UserProvider
+  // insert-start
+  #config: JwtGuardOptions
+  // insert-end
 
   constructor(
-    userProvider: UserProvider,
+    userProvider: UserProvider
     // insert-start
-    options: JwtGuardOptions
+    config: JwtGuardOptions
     // insert-end
   ) {
     this.#userProvider = userProvider
     // insert-start
-    this.#options = options
+    this.#config = config
     // insert-end
   }
 
@@ -141,20 +221,23 @@ export class JwtGuard<
    */
   async generate(
     user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
-  ): Promise<string> {
+  ) {
     // insert-start
     const providerUser = await this.#userProvider.createUserForGuard(user)
     const token = jwt.sign({ userId: providerUser.getId() }, this.#options.secret)
 
-    return token
+    return {
+      type: 'bearer',
+      token: token
+    }
     // insert-end
   }
 }
 ```
 
-- We use the `userProvider.createUserForGuard` method to create an instance of the provider user. 
-The provider user exposes a unified API to get the user's unique ID.
-- Finally, we use the `jwt.sign` method to create a signed token with the `userId` in the payload and return the token.
+- First, we use the `userProvider.createUserForGuard` method to create an instance of the provider user (aka the bridge between the real user and the guard).
+
+- Next, we use the `jwt.sign` method to create a signed token with the `userId` in the payload and return it.
 
 ## Authenticating a request
 
@@ -164,19 +247,21 @@ Authenticating a request includes:
 - Verifying its authenticity.
 - Fetching the user for whom the token was generated.
 
-To read request headers and cookies, our guard will need access to the [HttpContext](../http/http_context.md), so let's update the class `constructor` and accept it as an argument.
+Our guard will need access to the [HttpContext](../http/http_context.md) to read request headers and cookies, so let's update the class `constructor` and accept it as an argument.
 
 ```ts
 // insert-start
 import type { HttpContext } from '@adonisjs/core/http'
 // insert-end
 
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
+  // insert-start
   #ctx: HttpContext
+  // insert-end
+  #userProvider: UserProvider
+  #config: JwtGuardOptions
 
   constructor(
     // insert-start
@@ -200,24 +285,19 @@ We will read the token from the `authorization` header for this example. However
 import {
   symbols,
   // insert-start
-  AuthenticationException
+  errors
   // insert-end
 } from '@adonisjs/auth'
 
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
   /**
    * Authenticate the current HTTP request and return
    * the user instance if there is a valid JWT token
    * or throw an exception
    */
-  async authenticate(): Promise<
-    UserProvider[typeof symbols.PROVIDER_REAL_USER]
-  > {
-    // insert-start
+  async authenticate(): Promise<UserProvider[typeof symbols.PROVIDER_REAL_USER]> {
     /**
      * Avoid re-authentication when it has been done already
      * for the given request
@@ -232,7 +312,7 @@ export class JwtGuard<
      */
     const authHeader = this.#ctx.request.header('authorization')
     if (!authHeader) {
-      throw new AuthenticationException('Unauthorized access', {
+      throw new errors.E_UNAUTHORIZED_ACCESS('Unauthorized access', {
         guardDriverName: this.driverName,
       })
     }
@@ -242,7 +322,7 @@ export class JwtGuard<
      */
     const [, token] = authHeader.split('Bearer ')
     if (!token) {
-      throw new AuthenticationException('Unauthorized access', {
+      throw new errors.E_UNAUTHORIZED_ACCESS('Unauthorized access', {
         guardDriverName: this.driverName,
       })
     }
@@ -252,7 +332,7 @@ export class JwtGuard<
      */
     const payload = jwt.verify(token, this.#options.secret)
     if (typeof payload !== 'object' || !('userId' in payload)) {
-      throw new AuthenticationException('Unauthorized access', {
+      throw new errors.E_UNAUTHORIZED_ACCESS('Unauthorized access', {
         guardDriverName: this.driverName,
       })
     }
@@ -260,22 +340,26 @@ export class JwtGuard<
     /**
      * Fetch the user by user ID and save a reference to it
      */
-    this.user = await this.#userProvider.findById(payload.userId)
+    const providerUser = await this.#userProvider.findById(payload.userId)
+    if (!providerUser) {
+      throw new errors.E_UNAUTHORIZED_ACCESS('Unauthorized access', {
+        guardDriverName: this.driverName,
+      })
+    }
+
+    this.user = providerUser.getOriginal()
     return this.getUserOrFail()
-    // insert-end
   }
 }
 ```
 
 ## Implementing the `check` method
-The `check` method is a silent version of the authenticate method, and you can implement it as follows.
+The `check` method is a silent version of the `authenticate` method, and you can implement it as follows.
 
 ```ts
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
   /**
    * Same as authenticate, but does not throw an exception
    */
@@ -296,11 +380,12 @@ export class JwtGuard<
 Finally, let's implement the `getUserOrFail` method. It should return the user instance or throw an error (if the user does not exist).
 
 ```ts
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
+  /**
+   * Returns the authenticated user or throws an error
+   */
   getUserOrFail(): UserProvider[typeof symbols.PROVIDER_REAL_USER] {
     // insert-start
     if (!this.user) {
@@ -315,142 +400,88 @@ export class JwtGuard<
 }
 ```
 
+## Implementing the `authenticateAsClient` method
+The `authenticateAsClient` method is used during tests when you want to login a user during tests via the [`loginAs` method](../testing/http_tests.md#authenticating-users). For the JWT implementation, this method should return the `authorization` header containing the JWT token.
+
+```ts
+export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
+  implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
+{
+  /**
+   * This method is called by Japa during testing when "loginAs"
+   * method is used to login the user.
+   */
+  async authenticateAsClient(
+    user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
+  ): Promise<AuthClientResponse> {
+    // insert-start
+    const token = await this.generate(user)
+    return {
+      headers: {
+        authorization: `Bearer ${token.token}`,
+      },
+    }
+    // insert-end
+  }
+}
+```
+
 ## Using the guard
-To use the JWT guard within your application, you must register a factory function within the `guards` object inside the `config/auth.ts` file.
-
-The factory function is invoked on every HTTP request. It receives an instance of the [HttpContext](../http/http_context.md) and must return an instance of the `JwtGuard`.
+Let's head over to the `config/auth.ts` and register the guard within the `guards` list.
 
 ```ts
-function jwtFactory(ctx) {
-  return new JwtGuard(ctx, provider, config)
-}
-```
-
-As you can notice, the `jwtFactory` does not have access to the `provider` and the `config` variables, and therefore it cannot create an instance of the `JwtGuard`. 
-
-To solve this issue, we must create a helper method that accepts the configuration and a provider and returns the `jwtFactory` function. The final implementation will look as follows.
-
-```ts
-import { ConfigProvider } from '@adonisjs/core/types'
-import {
-  GuardContract,
-  GuardConfigProvider
-} from '@adonisjs/auth/types'
-
-/**
- * Helper function to configure the JwtGuard
- */
-export function jwtGuard<UserProvider extends UserProviderContract<unknown>>(
-  config: JwtGuardOptions & {
-    provider: ConfigProvider<UserProvider>
-  }
-): GuardConfigProvider<(ctx: HttpContext) => JwtGuard<UserProvider>> {
-  return {
-    async resolver(_, app) {
-      const provider = await config.provider.resolver(app)
-      return (ctx) => {
-        return new JwtGuard(ctx, provider, config)
-      }
-    },
-  }
-}
-```
-
-Once done, you can use the `jwtGuard` helper inside the `config/auth.ts` file.
-
-```ts
-import { defineConfig, providers } from '@adonisjs/auth'
-
+import { defineConfig } from '@adonisjs/auth'
 // insert-start
+import { sessionUserProvider } from '@adonisjs/auth/session'
 import env from '#start/env'
-import { jwtGuard } from 'my-custom-package'
+import { JwtGuard } from '../app/auth/jwt/guard.js'
 // insert-end
 
-const userProvider = providers.lucid({
+// insert-start
+const jwtConfig = {
+  secret: env.get('APP_KEY'),
+}
+const userProvider = sessionUserProvider({
   model: () => import('#models/user'),
-  uids: ['email'],
 })
+// insert-end
 
-/**
- * Configure auth guards
- */
 const authConfig = defineConfig({
   default: 'jwt',
   guards: {
     // insert-start
-    jwt: jwtGuard({
-      provider: userProvider,
-      secret: env.get('APP_KEY'),
-    }),
+    jwt: (ctx) => {
+      return new JwtGuard(ctx, userProvider, jwtConfig)
+    },
     // insert-end
   },
 })
+
+export default authConfig
 ```
 
-Finally, you can use the `ctx.auth` object to grab an instance of the `JwtGuard` and use its API.
+As you can notice, we are using the `sessionUserProvider` with our `JwtGuard` implementation. This is because the `JwtUserProviderContract` interface is compatible with the User Provider created by the Session guard.
+
+So, instead of creating our own implementation of a User Provider, we re-use one from the Session guard.
+
+## Final example
+Once the implementation is completed, you can use the `jwt` guard like other inbuilt guards. The following is an example of how to generate and verify JWT tokens.
 
 ```ts
 import User from '#models/user'
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 
-router.post('/login', ({ auth, request }) => {
-  const email = request.input('email')
-  const user = await User.findByOrFail('email', email)
+router.post('login', async ({ request, auth }) => {
+  const { email, password } = request.all()
+  const user = await User.verifyCredentials(email, password)
 
-  return auth.use('jwt').generate(user)
+  return await auth.use('jwt').generate(user)
 })
-```
 
-## Implementing the `attempt` method
-In the previous example, we manually fetch the user from the database and call the `generate` method to create a token.
-
-However, we can encapsulate the logic for finding a user, verifying their password, and generating the token within the `JwtGuard` class. Let's create a new method named `attempt` for the same.
-
-```ts
-import {
-  symbols,
-  // insert-start
-  InvalidCredentialsException
-  // insert-end
-} from '@adonisjs/auth'
-
-export class JwtGuard<
-  UserProvider extends UserProviderContract<unknown>
-> implements GuardContract<
-  UserProvider[typeof symbols.PROVIDER_REAL_USER]
-> {
-  // insert-start
-  /**
-   * Attempt to generate a token after verifying the user
-   * credentials.
-   */
-  async attempt(uid: string, password: string): Promise<string> {
-    /**
-     * Find a user by uid
-     */
-    const providerUser = await this.#userProvider.findByUid(uid)
-    if (!providerUser) {
-      throw new errors.InvalidCredentialsException('Invalid credentials', {
-        guardDriverName: this.driverName,
-      })
-    }
-
-    /**
-     * Verify user password
-     */
-    if (!(await providerUser.verifyPassword(password))) {
-      throw new errors.InvalidCredentialsException('Invalid credentials', {
-        guardDriverName: this.driverName,
-      })
-    }
-
-    /**
-     * Get a reference to the underlying user object
-     * and call the `generate` method with it
-     */
-    const user = providerUser.getOriginal()
-    return this.generate(user)
-  }
-  // insert-end
-}
+router
+  .get('/', async ({ auth }) => {
+    return auth.getUserOrFail()
+  })
+  .use(middleware.auth())
 ```

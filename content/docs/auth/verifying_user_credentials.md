@@ -138,15 +138,15 @@ export default class SessionController {
      * Find a user by email. Return error if a user does
      * not exists
      */ 
-    const user = await User.findBy('email', email)
-    if (!user) {
+    const userFound = await User.findBy('email', email)
+    if (!userFound) {
       response.abort('Invalid credentials')
     }
 
     /**
      * Verify the password using the hash service
      */
-    await hash.verify(user.password, password)
+    await hash.verify(userFound.password, password)
     // delete-end
     // insert-start
     const user = await User.verifyCredentials(email, password)

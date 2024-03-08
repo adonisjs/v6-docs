@@ -162,12 +162,6 @@ html.dark {
   border-radius: 0 0 7px 7px;
 }
 
-.markdown .card {
-  border: 1px solid var(--prose-table-border-color);
-  border-radius: var(--rounded-md);
-  padding: 15px 20px 15px 20px;
-}
-
 @media (min-width: 1440px) {
   .markdown .table_expanded {
     max-width: 120%;
@@ -175,14 +169,12 @@ html.dark {
   }
 }
 
-.carbon_ad_wrapper {
-  background: none !important;
-  padding: var(--surface-spacing);
-  margin: 0 !important;
+.dark_mode {
+  display: none;
 }
-
-.carbon_ad_wrapper #carbonads {
-  background: var(--neutral-gray-3);
-  padding: 15px;
-  border-radius: var(--rounded-md);
+.dark .dark_mode {
+  display: block;
+}
+.dark .light_mode {
+  display: none;
 }

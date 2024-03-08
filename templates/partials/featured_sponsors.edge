@@ -1,0 +1,27 @@
+@let(featuredSponsors = (await getConfig()).featured_sponsors)
+
+@if(featuredSponsors)
+<div class="sponsors_container">
+  <h3> Featured sponsors </h3>
+
+  <div class="sponsors_list">
+    @each(sponsor in featuredSponsors)
+      <a
+        href="{{ sponsor.website }}?utm_source=adonisjs.com"
+        class="sponsor_item featured_sponsor"
+        target="_blank"
+      >
+        @include(sponsor.logo)
+      </a>
+    @end
+
+    <a
+      href="https://github.com/sponsors/thetutlage/sponsorships?tier_id=379745&preview=false&pay_prorated=false"
+      class="sponsor_item featured_sponsor_empty_box"
+      target="_blank"
+    >
+      Your logo
+    </a>
+  </div>
+</div>
+@end

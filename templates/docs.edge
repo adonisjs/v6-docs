@@ -31,7 +31,6 @@
 
       @if(file.toc)
         @component('docs::toc', {
-          sponsors: siteConfig.advertising_sponsors,
           carbonAds: siteConfig.carbon_ads
         })
           @!component('dimer_element', { node: file.toc, pipeline })~

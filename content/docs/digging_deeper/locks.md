@@ -1,6 +1,6 @@
 # Atomic Locks
 
-An atomic lock, otherwise known as a `mutex`, is a used for synchronizing access to a shared resource. In other words, it prevents several processes, or concurrent code, from executing a section of code at the same time.
+An atomic lock, otherwise known as a `mutex`, is used for synchronizing access to a shared resource. In other words, it prevents several processes, or concurrent code, from executing a section of code at the same time.
 
 The AdonisJS team has created a framework-agnostic package called [Verrou](https://github.com/Julien-R44/verrou). The `@adonisjs/lock` package is based on this package, **so make sure to also read [the Verrou documentation](https://verrou.dev/docs/introduction) which is more detailed.**
 
@@ -14,7 +14,7 @@ node ace add @adonisjs/lock
 
 :::disclosure{title="See steps performed by the add command"}
 
-1. Installs the `@adonisjs/lock` package using the detected package manager.
+1. Install the `@adonisjs/lock` package using the detected package manager.
 
 2. Registers the following service provider inside the `adonisrc.ts` file.
     ```ts
@@ -108,9 +108,9 @@ Also, the environment variable must be validated to allow one of the pre-configu
 ```
 
 ### Redis store
-The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the redis store.
+The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the Redis store.
 
-Following is the list of options the redis store accepts (alongside the shared options).
+Following is the list of options the Redis store accepts (alongside the shared options).
 
 ```ts
 {
@@ -347,7 +347,7 @@ export class ProcessOrder {
 
 ## Testing 
 
-During testing you can use the `memory` store to avoid making real network requests to acquire locks. You can do this by setting the `LOCK_STORE` environment variable to `memory` inside the `.env.testing` file.
+During testing, you can use the `memory` store to avoid making real network requests to acquire locks. You can do this by setting the `LOCK_STORE` environment variable to `memory` inside the `.env.testing` file.
 
 ```env
 // title: .env.test

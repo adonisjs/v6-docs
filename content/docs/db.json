@@ -376,6 +376,12 @@
     "category": "Digging Deeper"
   },
   {
+    "permalink": "locks",
+    "title": "Atomic Locks",
+    "contentPath": "./digging_deeper/locks.md",
+    "category": "Digging Deeper"
+  },
+  {
     "permalink": "testing",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",

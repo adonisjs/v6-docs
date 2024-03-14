@@ -110,7 +110,7 @@ Also, the environment variable must be validated to allow one of the pre-configu
 ### Redis store
 The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the Redis store.
 
-Following is the list of options the Redis store accepts (alongside the shared options).
+Following is the list of options the Redis store accepts :
 
 ```ts
 {
@@ -135,7 +135,7 @@ The `connectionName` property refers to a connection defined within the `config/
 
 The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the database store.
 
-Following is the list of options the database store accepts (alongside the shared options).
+Following is the list of options the database store accepts :
 
 ```ts
 {
@@ -203,32 +203,28 @@ export default class OrderController {
   public async process({ response, request }: HttpContext) {
     const orderId = request.input('order_id')
 
+    /**
+     * Try to acquire the lock immediately ( without retrying )
+     */
     const lock = locks.createLock(`order.processing.${orderId}`)
+    const acquired = await lock.acquireImmediately()
+    if (!acquired) {
+      return 'Order is already being processed'
+    }
 
     /**
-     * Try to acquire the lock immediately. Otherwise, throw an exception
-     * if the lock is already acquired.
+     * Lock has been acquired. We can process the order
      */
     try {
-      await lock.acquireImmediately()
-
-      /**
-       * Lock has been acquired. We can process the order
-       */
       await processOrder()
-
+      return 'Order processed successfully'
+    } finally {
       /**
-       * Release the lock
+       * Always release the lock using the `finally` block, so that
+       * we are sure that the lock is released even when an exception
+       * is thrown during the processing.
        */
       await lock.release()
-      return 'Order processed successfully'
-    } catch (err) {
-      /**
-       * The lock is already locked by another process/request
-       */
-      if (err instanceof errors.E_LOCK_ALREADY_ACQUIRED) {
-        return 'Order is already being processed'
-      }
     }
   }
 }
@@ -249,7 +245,7 @@ export default class OrderController {
      * Lock will also be automatically released once the function
      * has been executed
      */
-    await locks
+    const [executed, result] = await locks
       .createLock(`order.processing.${orderId}`)
       .runImmediately(async (lock) => {
         /**
@@ -258,11 +254,13 @@ export default class OrderController {
         await processOrder()
         return 'Order processed successfully'
       })
-      .catch((error) => {
-        if (error instanceof errors.E_LOCK_ALREADY_ACQUIRED) {
-          return 'Order is already being processed'
-        }
-      })
+
+    /**
+     * Lock could not be acquired and function was not executed
+     */
+    if (!executed) return 'Order is already being processed'
+
+    return result
   }
 }
 ```

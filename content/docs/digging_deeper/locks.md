@@ -352,4 +352,87 @@ During testing, you can use the `memory` store to avoid making real network requ
 LOCK_STORE=memory
 ```
 
+## Create a custom lock store
 
+First, make sure to consult the [Verrou documentation](https://verrou.dev/docs/custom-lock-store) that goes deeper into the creation of a custom lock store. In AdonisJS, it will be pretty much the same. 
+
+Let's create a simple Noop store that does not do anything. First, we must create a class that will implement the `LockStore` interface.
+
+```ts
+import type { LockStore } from '@adonisjs/lock/types'
+
+class NoopStore implements LockStore {
+  /**
+   * Save the lock in the store.
+   * This method should return false if the given key is already locked
+   *
+   * @param key The key to lock
+   * @param owner The owner of the lock
+   * @param ttl The time to live of the lock in milliseconds. Null means no expiration
+   *
+   * @returns True if the lock was acquired, false otherwise
+   */
+  async save(key: string, owner: string, ttl: number | null): Promise<boolean> {
+    return false
+  }
+
+  /**
+   * Delete the lock from the store if it is owned by the given owner
+   * Otherwise should throws a E_LOCK_NOT_OWNED error
+   *
+   * @param key The key to delete
+   * @param owner The owner
+   */
+  async delete(key: string, owner: string): Promise<void> {
+    return false
+  }
+
+  /**
+   * Force delete the lock from the store without checking the owner
+   */
+  async forceDelete(key: string): Promise<Void> {
+    return false
+  }
+
+  /**
+   * Check if the lock exists. Returns true if so, false otherwise
+   */
+  async exists(key: string): Promise<boolean> {
+    return false
+  }
+
+  /**
+   * Extend the lock expiration. Throws an error if the lock is not owned by 
+   * the given owner
+   * Duration is in milliseconds
+   */
+  async extend(key: string, owner: string, duration: number): Promise<void> {
+    return false
+  }
+}
+```
+
+### Defining the store factory
+
+Once you have created your store, you must define a simple factory function that will be used by `@adonisjs/lock` to create an instance of you store.
+
+```ts
+function noopStore(options: MyNoopStoreConfig) {
+  return { driver: { factory: () => new NoopStore(options) } }
+}
+```
+
+### Using the custom store
+
+Once done, you may use the `noopStore` function as follows:
+
+```ts
+import { defineConfig } from '@adonisjs/lock'
+
+const lockConfig = defineConfig({
+  default: 'noop',
+  stores: {
+    noop: noopStore({}),
+  },
+})
+```

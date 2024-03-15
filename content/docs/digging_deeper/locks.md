@@ -6,7 +6,7 @@ The AdonisJS team has created a framework-agnostic package called [Verrou](https
 
 ## Installation
 
-Install and configure the package using the following command :
+Install and configure the package using the following command:
 
 ```sh
 node ace add @adonisjs/lock
@@ -110,7 +110,7 @@ Also, the environment variable must be validated to allow one of the pre-configu
 ### Redis store
 The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the Redis store.
 
-Following is the list of options the Redis store accepts :
+Following is the list of options the Redis store accepts:
 
 ```ts
 {
@@ -135,7 +135,7 @@ The `connectionName` property refers to a connection defined within the `config/
 
 The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the database store.
 
-Following is the list of options the database store accepts :
+Following is the list of options the database store accepts:
 
 ```ts
 {

@@ -237,7 +237,7 @@ import { HttpContext } from '@adonisjs/core/http'
 
 export default class UnAuthorizedException extends Exception {
   async report(error: this, ctx: HttpContext) {
-    ctx.logger.error({ err: err }, error.message)
+    ctx.logger.error({ err: error }, error.message)
   }
 }
 ```

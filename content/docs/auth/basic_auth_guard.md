@@ -38,6 +38,8 @@ The model (`User` model in this example) configured with the `basicAuthUserProvi
 If you decide to not use the mixin, then make sure to implement a static `verifyCredentials` method with the following signature.
 
 ```ts
+import hash from '@adonisjs/core/services/hash'
+
 export default class User extends BaseModel {
   /**
    * Dummy implementation: it is recommended to use

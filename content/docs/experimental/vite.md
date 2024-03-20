@@ -112,7 +112,7 @@ export default defineConfig({
   plugins: [
     adonisjs({
       entrypoints: ['resources/js/app.js'],
-      reloads: ['resources/views/**/*.edge'],
+      reload: ['resources/views/**/*.edge'],
     }),
   ]
 })

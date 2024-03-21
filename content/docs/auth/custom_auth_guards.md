@@ -185,7 +185,7 @@ Let's implement the `generate` method and create a token for a given user. We wi
 npm i jsonwebtoken @types/jsonwebtoken
 ```
 
-Also, we will have to use a **secret key** to sign a token, so let's update the `constructor` method and accept the secret key as an option via the config object.
+Also, we will have to use a **secret key** to sign a token, so let's update the `constructor` method and accept the secret key as an option via the options object.
 
 ```ts
 // insert-start
@@ -201,18 +201,18 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 {
   #userProvider: UserProvider
   // insert-start
-  #config: JwtGuardOptions
+  #options: JwtGuardOptions
   // insert-end
 
   constructor(
     userProvider: UserProvider
     // insert-start
-    config: JwtGuardOptions
+    options: JwtGuardOptions
     // insert-end
   ) {
     this.#userProvider = userProvider
     // insert-start
-    this.#config = config
+    this.#options = options
     // insert-end
   }
 
@@ -261,7 +261,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   #ctx: HttpContext
   // insert-end
   #userProvider: UserProvider
-  #config: JwtGuardOptions
+  #options: JwtGuardOptions
 
   constructor(
     // insert-start
@@ -389,7 +389,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   getUserOrFail(): UserProvider[typeof symbols.PROVIDER_REAL_USER] {
     // insert-start
     if (!this.user) {
-      throw new errors.AuthenticationException('Unauthorized access', {
+      throw new errors.E_UNAUTHORIZED_ACCESS('Unauthorized access', {
         guardDriverName: this.driverName,
       })
     }

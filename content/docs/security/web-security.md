@@ -2,40 +2,21 @@
 
 If you are creating a server-rendered application using AdonisJS, then you must use the `@adonisjs/shield` package to protect your applications from common web attacks like **CSRF**, **XSS**, **Content sniffing**, and so on.
 
-The package comes pre-configured with the **web starter kit**. However, you can manually install the package as follows.
+The package comes pre-configured with the **web starter kit**. However, you can manually install and configure the package as follows.
 
 :::note
 The `@adonisjs/shield` package has a peer dependency on the `@adonisjs/session` package, so make sure to [configure the session package](../http/session.md) first.
 :::
 
-:::codegroup
-
 ```sh
-// title: npm
-npm i @adonisjs/shield
+node ace add @adonisjs/shield
 ```
 
-```sh
-// title: yarn
-yarn add @adonisjs/shield
-```
+:::disclosure{title="See steps performed by the add command"}
 
-```sh
-// title: pnpm
-pnpm add @adonisjs/shield
-```
+1. Installs the `@adonisjs/shield` package using the detected package manager.
 
-:::
-
-Once done, you must run the following command to configure the shield package.
-
-```sh
-node ace configure @adonisjs/shield
-```
-
-:::disclosure{title="See steps performed by the configure command"}
-
-1. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider inside the `adonisrc.ts` file.
 
    ```ts
    {
@@ -46,9 +27,9 @@ node ace configure @adonisjs/shield
    }
    ```
 
-2. Creates the `config/shield.ts` file.
+3. Creates the `config/shield.ts` file.
 
-3. Registers the following middleware inside the `start/kernel.ts` file.
+4. Registers the following middleware inside the `start/kernel.ts` file.
 
    ```ts
    router.use([() => import('@adonisjs/shield/shield_middleware')])

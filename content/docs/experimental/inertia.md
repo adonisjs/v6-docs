@@ -27,7 +27,7 @@ export default class UsersController {
 
 
 ```vue
-// title: resources/pages/users/index.vue
+// title: inertia/pages/users/index.vue
 <script setup lang="ts">
 import { Link, Head } from '@inertiajs/vue3'
 
@@ -112,7 +112,7 @@ node ace configure @adonisjs/inertia
 
   3. Create a `./inertia/tsconfig.json` file to differentiate between the server and client-side TypeScript configuration.
 
-  4. Create a `./inertia/app.ts` for bootstrapping Inertia and your frontend framework.
+  4. Create a `./inertia/app/app.ts` for bootstrapping Inertia and your frontend framework.
 
   5. Create a `./inertia/pages/home.{tsx|vue|svelte}` file to render the home page of your application.
 
@@ -138,7 +138,7 @@ Inertia is a backend-agnostic library. We just created an adapter to make it wor
 
 ## Client-side entrypoint
 
-If you used the `configure` or `add` command, the package will have created an entrypoint file at `resources/app.ts` so you can skip this step. 
+If you used the `configure` or `add` command, the package will have created an entrypoint file at `inertia/app/app.ts` so you can skip this step. 
 
 Basically, this file will be the main entrypoint for your frontend application and will be used to bootstrap Inertia and your frontend framework. This file should be the entrypoint loaded by your root Edge template with the `@vite` tag.
 
@@ -267,7 +267,7 @@ export default class HomeController {
 }
 ```
 
-Do you see the `home` passed to the `inertia.render` method? It should be the path to the component file relative to the `resources/pages` directory. We render the `resources/pages/home.(vue,tsx)` file here.
+Do you see the `home` passed to the `inertia.render` method? It should be the path to the component file relative to the `inertia/pages` directory. We render the `inertia/pages/home.(vue,tsx)` file here.
 
 Your frontend component will receive the `user` object as a prop : 
 
@@ -336,7 +336,7 @@ The Root template is a regular Edge template that will be loaded on the first-pa
   <title inertia>AdonisJS x Inertia</title>
 
   @inertiaHead()
-  @vite(['resources/app.ts', `resources/pages/${page.component}.vue`])
+  @vite(['inertia/app/app.ts', `inertia/pages/${page.component}.vue`])
 </head>
 
 <body>
@@ -358,7 +358,7 @@ The Root template is a regular Edge template that will be loaded on the first-pa
 
   @inertiaHead()
   @viteReactRefresh()
-  @vite(['resources/app.tsx', `resources/pages/${page.component}.tsx`])
+  @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
 </head>
 
 <body>
@@ -379,7 +379,7 @@ The Root template is a regular Edge template that will be loaded on the first-pa
   <title inertia>AdonisJS x Inertia</title>
 
   @inertiaHead()
-  @vite(['resources/app.ts', `resources/pages/${page.component}.svelte`])
+  @vite(['inertia/app/app.ts', `inertia/pages/${page.component}.svelte`])
 </head>
 
 <body>
@@ -400,7 +400,7 @@ The Root template is a regular Edge template that will be loaded on the first-pa
   <title inertia>AdonisJS x Inertia</title>
 
   @inertiaHead()
-  @vite(['resources/app.tsx', `resources/pages/${page.component}.tsx`])
+  @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
 </head>
 
 <body>
@@ -569,7 +569,7 @@ export class UsersController {
 ```
 
 ```tsx
-// title: resources/pages/users/index.tsx
+// title: inertia/pages/users/index.tsx
 import { InferPageProps } from '@adonisjs/inertia'
 import type { UsersController } from '../../controllers/users_controller.ts'
 
@@ -627,7 +627,7 @@ If you started your application without enabling SSR, you can always enable it l
 
 We need to add a server entrypoint that looks super similar to the client entrypoint. This entrypoint will render the first-page visit on the server and not on the browser.
 
-You must create a `resources/ssr.ts` that default export a function like this :
+You must create a `inertia/app/ssr.ts` that default export a function like this :
 
 :::codegroup
 
@@ -718,7 +718,7 @@ export default defineConfig({
   // ...
   ssr: {
     enabled: true,
-    entrypoint: 'resources/ssr.tsx'
+    entrypoint: 'inertia/app/ssr.tsx'
   }
 })
 ```
@@ -736,7 +736,7 @@ export default defineConfig({
     inertia({
       ssr: {
         enabled: true,
-        entrypoint: 'resources/ssr.tsx'
+        entrypoint: 'inertia/app/ssr.tsx'
       }
     })
   ]
@@ -882,14 +882,14 @@ test('returns correct data', async ({ client }) => {
 
 Let's say you are using React. Every time you update your frontend code, the server will reload and the browser will refresh. You are not benefiting from the hot module replacement (HMR) feature. 
 
-You need to exclude `resources/**/*` from your root `tsconfig.json` file to make it work. 
+You need to exclude `inertia/**/*` from your root `tsconfig.json` file to make it work. 
 
 ```jsonc
 {
   "compilerOptions": {
     // ...
   },
-  "exclude": ["resources/**/*"]
+  "exclude": ["inertia/**/*"]
 }
 ```
 

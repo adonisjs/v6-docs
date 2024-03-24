@@ -547,6 +547,47 @@ export default class UsersController {
 }
 ```
 
+## Share types
+
+Usually, you will want to share the types of the data you are passing to your frontend pages components. A simple way to do this is to use the `InferPageProps` type.
+
+:::codegroup
+
+```ts
+// title: app/controllers/users_controller.ts
+export class UsersController {
+  index() {
+    return inertia.render('users/index', {
+      users: [
+        { id: 1, name: 'julien' }
+        { id: 2, name: 'virk' },
+        { id: 3, name: 'romain' },
+      ]
+    }
+  }
+}
+```
+
+```tsx
+// title: resources/pages/users/index.tsx
+import { InferPageProps } from '@adonisjs/inertia'
+import type { UsersController } from '../../controllers/users_controller.ts'
+
+export function UsersPage(
+  // 👇 It will be correctly typed based
+  // on what you passed to inertia.render
+  // in your controller
+  props: InferPageProps<UsersController, 'index'>
+) {
+  return (
+    // ...
+  )
+}
+```
+
+:::
+
+Note that the `InferPageProps` will "serialize at type-level" the data you are passing. For example, if you pass a `Date` object to `inertia.render`, the resulting type of `InferPageProps` will be `string`.
 
 ## CSRF 
 
@@ -721,6 +762,19 @@ export default defineConfig({
 })
 ```
 
+You can also pass a function to the `pages` prop to dynamically decide which pages should be rendered on the server.
+
+```ts
+import { defineConfig } from '@adonisjs/inertia'
+
+export default defineConfig({
+  ssr: {
+    enabled: true,
+    pages: (ctx, page) => page.startsWith('admin')
+  }
+})
+```
+
 ## Testing
 
 There are several ways to test your frontend code:
@@ -840,3 +894,7 @@ You need to exclude `resources/**/*` from your root `tsconfig.json` file to make
 ```
 
 Because, the AdonisJS process that is responsible for restarting the server is watching files included in the `tsconfig.json` file.
+
+### Why my production build is not working ?
+
+A common issue is that you just forgot to set `NODE_ENV=production` when running your production build. 

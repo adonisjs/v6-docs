@@ -71,7 +71,7 @@ node ace make:test users/list --suite=functional
 import { test } from '@japa/runner'
 
 test.group('Users list', () => {
-  test('get a list of users', ({ client }) => {
+  test('get a list of users', async ({ client }) => {
     const response = await client.get('/users')
 
     response.assertStatus(200)
@@ -413,7 +413,7 @@ You may use the `route` helper from the TestContext to create a URL for a route.
 The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#generating-urls-inside-templates).
 
 ```ts
-test('get a list of users', ({ client, route }) => {
+test('get a list of users', async ({ client, route }) => {
   const response = await client.get(
     // highlight-start
     route('users.list')

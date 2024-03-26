@@ -589,6 +589,21 @@ export function UsersPage(
 
 Note that the `InferPageProps` will "serialize at type-level" the data you are passing. For example, if you pass a `Date` object to `inertia.render`, the resulting type of `InferPageProps` will be `string`.
 
+If you're using Vue, you'll have to manually define each property in your `defineProps`. This is an annoying limitation of Vue, see https://github.com/vitejs/vite-plugin-vue/issues/167.
+
+```vue
+<script setup lang="ts">
+import { InferPageProps } from '@adonisjs/inertia'
+
+defineProps<{
+  // 👇 You will have to manually define each prop
+  users: InferPageProps<UsersController, 'index'>['users'],
+  posts: InferPageProps<PostsController, 'index'>['posts'],
+}>()
+
+</script>
+```
+
 ## CSRF 
 
 If you enabled [CSRF protection](../security/web-security.md#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.

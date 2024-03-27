@@ -30,6 +30,9 @@
   --sidebar-title-padding-left: 25px;
   --sidebar-title-padding-right: 25px;
 
+  --content-width: 900px;
+  --markdown-width: 70ch;
+
   --accent-1: var(--violet-1);
   --accent-2: var(--violet-2);
   --accent-3: var(--violet-3);

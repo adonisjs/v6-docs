@@ -808,7 +808,7 @@ import app from '@adonisjs/core/services/app'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
 // highlight-start
 import { apiClient } from '@japa/api-client'
-import { inertiaApiClient } from '@adonisjs/inertia'
+import { inertiaApiClient } from '@adonisjs/inertia/plugins/api_client'
 // highlight-end
 
 export const plugins: Config['plugins'] = [

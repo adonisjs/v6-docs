@@ -1,4 +1,4 @@
-  ---
+---
 summary: How to use Inertia with AdonisJS
 ---
 

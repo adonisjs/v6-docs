@@ -1,4 +1,4 @@
----
+  ---
 summary: How to use Inertia with AdonisJS
 ---
 
@@ -180,11 +180,11 @@ const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
 createInertiaApp({
   progress: { color: '#5468FF' },
 
-  title: (title) => `${title} - ${appName}`',
+  title: (title) => `${title} - ${appName}`,
 
   resolve: (name) => {
     return resolvePageComponent(
-      `./pages/${name}.tsx`',
+      `./pages/${name}.tsx`,
       import.meta.glob('./pages/**/*.tsx'),
     )
   },
@@ -206,7 +206,7 @@ const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
 createInertiaApp({
   progress: { color: '#5468FF' },
 
-  title: (title) => `${title} - ${appName}`',
+  title: (title) => `${title} - ${appName}`,
 
   resolve: (name) => {
     return resolvePageComponent(
@@ -236,7 +236,7 @@ createInertiaApp({
 
   resolve: (name) => {
     return resolvePageComponent(
-      `./pages/${name}.tsx`',
+      `./pages/${name}.tsx`,
       import.meta.glob('./pages/**/*.tsx'),
     )
   },

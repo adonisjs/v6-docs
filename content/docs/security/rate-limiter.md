@@ -239,7 +239,7 @@ Reject the rate-limiting requests when the status of the Redis connection is not
 ---
 
 ### Database store
-The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the Redis store.
+The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the Database store.
 
 Following is the list of options the database store accepts (alongside the shared options).
 

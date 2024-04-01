@@ -1,5 +1,54 @@
 [
   {
+    "package": "@adonisjs/env",
+    "version": "v6.0.0",
+    "description": "Allow to add identifiers",
+    "released_on": "2024-03-30",
+    "release_notes_link": "https://github.com/adonisjs/env/releases/tag/v6.0.0"
+  },
+  {
+    "package": "@adonisjs/mail",
+    "version": "v9.2.1",
+    "description": "Fix mail assertion API to allow mail class constructor to accept arguments",
+    "released_on": "2024-03-27",
+    "release_notes_link": "https://github.com/adonisjs/mail/releases/tag/v9.2.1"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v20.5.1",
+    "description": "Add clause variant to findBy method",
+    "released_on": "2024-03-27",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v20.5.1"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v20.5.0",
+    "description": "Add step option to the migrator",
+    "released_on": "2024-03-27",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v20.5.0"
+  },
+  {
+    "package": "@adonisjs/session",
+    "version": "v7.3.0",
+    "description": "Display validation error summary in flash messages errorsBag",
+    "released_on": "2024-03-20",
+    "release_notes_link": "https://github.com/adonisjs/session/releases/tag/v7.3.0"
+  },
+  {
+    "package": "@adonisjs/session",
+    "version": "v7.2.0",
+    "description": "Add @errors tag",
+    "released_on": "2024-03-20",
+    "release_notes_link": "https://github.com/adonisjs/session/releases/tag/v7.2.0"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v20.4.0",
+    "description": "Add support for pretty printing debug queries and findMany helper method",
+    "released_on": "2024-03-13",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v20.4.0"
+  },
+  {
     "package": "@adonisjs/core",
     "version": "6.3.0",
     "description": "Experimental hooks, `node ace add` and new Codemods APIs",

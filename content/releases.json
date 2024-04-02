@@ -1,5 +1,12 @@
 [
   {
+    "package": "@adonisjs/auth",
+    "version": "v9.2.0",
+    "description": "Configure basic auth guard and export authFinder mixin from its own subpath",
+    "released_on": "2024-04-02",
+    "release_notes_link": "https://github.com/adonisjs/auth/releases/tag/v9.2.0"
+  },
+  {
     "package": "@adonisjs/env",
     "version": "v6.0.0",
     "description": "Allow to add identifiers",

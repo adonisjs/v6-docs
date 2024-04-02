@@ -578,7 +578,7 @@ import {
   ExceptionHandler
 } from '@adonisjs/core/http'
 
-export default class HttpExceptionsHandler extends ExceptionHandler {
+export default class HttpExceptionHandler extends ExceptionHandler {
   async handle(error: unknown, ctx: HttpContext) {
     if (error instanceof errors.E_ROUTE_NOT_FOUND) {
       return ctx.view.render('errors/404')

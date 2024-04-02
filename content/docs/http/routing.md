@@ -573,10 +573,7 @@ To display a 404 page to the user, you can catch the `E_ROUTE_NOT_FOUND` excepti
 
 ```ts
 import { errors } from '@adonisjs/core'
-import {
-  HttpContext,
-  ExceptionHandler
-} from '@adonisjs/core/http'
+import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   async handle(error: unknown, ctx: HttpContext) {

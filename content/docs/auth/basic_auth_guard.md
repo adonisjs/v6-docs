@@ -35,29 +35,42 @@ The `basicAuthUserProvider` method creates an instance of the [BasicAuthLucidUse
 ## Preparing the User model
 The model (`User` model in this example) configured with the `basicAuthUserProvider` must use the [AuthFinder](./verifying_user_credentials.md#using-the-auth-finder-mixin) mixin to verify the user credentials during authentication.
 
-If you decide to not use the mixin, then make sure to implement a static `verifyCredentials` method with the following signature.
-
 ```ts
+import { DateTime } from 'luxon'
+import { compose } from '@adonisjs/core/helpers'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
+// highlight-start
 import hash from '@adonisjs/core/services/hash'
+import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+// highlight-end
 
-export default class User extends BaseModel {
-  /**
-   * Dummy implementation: it is recommended to use
-   * the AuthFinder mixin
-   */
-  static verifyCredentials(uid: string, password: string) {
-    const user = await this.query().where('email', uid).first()
-    if (!user) {
-      throw new Error('Invalid user credentials')
-    }
-    
-    const isValid = await hash.verify(user.password, password)
-    if (!isValid) {
-      throw new Error('Invalid user credentials')
-    }
+// highlight-start
+const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
+  uids: ['email'],
+  passwordColumnName: 'password',
+})
+// highlight-end
 
-    return user
-  }
+// highlight-start
+export default class User extends compose(BaseModel, AuthFinder) {
+  // highlight-end
+  @column({ isPrimary: true })
+  declare id: number
+
+  @column()
+  declare fullName: string | null
+
+  @column()
+  declare email: string
+
+  @column()
+  declare password: string
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
 }
 ```
 

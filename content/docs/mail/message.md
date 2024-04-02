@@ -20,7 +20,7 @@ await mail.sendLater((message) => {
 ```
 
 ## Defining subject and sender
-You may define the email subject using the `message.subject` method and the email's sender using the `mail.from` method.
+You may define the email subject using the `message.subject` method and the email's sender using the `message.from` method.
 
 ```ts
 await mail.send((message) => {

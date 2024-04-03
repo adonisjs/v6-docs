@@ -434,6 +434,7 @@ import { Disk } from '@adonisjs/drive'
 import UserService from '#services/user_service'
 import PostService from '#services/post_service'
 import { ApplicationService } from '@adonisjs/core/types'
+import drive from '@adonisjs/drive/services/main'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}

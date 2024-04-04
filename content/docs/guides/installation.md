@@ -35,7 +35,7 @@ npm init adonisjs@latest hello-world
 
 ```sh
 // title: yarn
-yarn create adonisjs@latest hello-world
+yarn create adonisjs hello-world
 ```
 
 ```sh

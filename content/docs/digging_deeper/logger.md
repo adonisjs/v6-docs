@@ -164,7 +164,7 @@ loggers: {
           : []
         ),
         ...(app.inProduction
-          ? [{ target: 'pino-pretty', level: 'info' }]
+          ? [{ target: 'pino/file', level: 'info' }]
           : []
         ),
       ]

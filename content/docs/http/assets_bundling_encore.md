@@ -22,18 +22,6 @@ npm i @adonisjs/encore
 npm i -D @babel/core @babel/preset-env @symfony/webpack-encore webpack webpack-cli
 ```
 
-```sh
-// title: yarn
-yarn add @adonisjs/encore
-yarn add -D @babel/core @babel/preset-env @symfony/webpack-encore webpack webpack-cli
-```
-
-```sh
-// title: pnpm
-pnpm add @adonisjs/encore
-pnpm add -D @babel/core @babel/preset-env @symfony/webpack-encore webpack webpack-cli
-```
-
 :::
 
 Then run :

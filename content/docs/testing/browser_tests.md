@@ -15,16 +15,6 @@ The first step is to install the following packages from the npm packages regist
 npm i -D playwright @japa/browser-client
 ```
 
-```sh
-// title: yarn
-yarn add -D playwright @japa/browser-client
-```
-
-```sh
-// title: pnpm
-pnpm add -D playwright @japa/browser-client
-```
-
 :::
 
 ### Registering browser suite

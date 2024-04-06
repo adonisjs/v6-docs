@@ -32,16 +32,6 @@ Then install the `@adonisjs/vite` `next` version from npm.
 npm i @adonisjs/vite@next
 ```
 
-```sh
-// title: yarn
-yarn add @adonisjs/vite@next
-```
-
-```sh
-// title: pnpm
-pnpm add @adonisjs/vite@next
-```
-
 :::
 
 Once the package is installed, you must configure it using the `node ace configure` command. The `configure` command will create the necessary config files and install the [vite](https://www.npmjs.com/package/vite) package from npm.

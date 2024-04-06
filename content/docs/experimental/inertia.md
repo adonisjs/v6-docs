@@ -57,23 +57,13 @@ defineProps<{
 Are you starting a new project and want to use Inertia? Check out the [Inertia starter kit](https://docs.adonisjs.com/guides/installation#starter-kits).
 :::
 
-Install the package from the npm registry using one of the following commands.
+Install the package from the npm registry running:
 
 :::codegroup
 
 ```sh
 // title: npm
 npm i @adonisjs/inertia
-```
-
-```sh
-// title: pnpm
-pnpm add @adonisjs/inertia
-```
-
-```sh
-// title: yarn
-yarn add @adonisjs/inertia
 ```
 
 :::

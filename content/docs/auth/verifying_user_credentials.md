@@ -190,7 +190,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       return ctx
         .response
         .status(error.status)
-        .send(error.getResponseMessage(ctx))
+        .send(error.getResponseMessage(error, ctx))
     }
     // highlight-end
 

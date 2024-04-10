@@ -35,6 +35,14 @@ First, make sure you have AdonisJS version 6.x.x. Then, you can configure HMR in
 }
 ```
 
+:::tip
+What is a boundary? Make sure to read the [Hot-Hook documentation](https://github.com/Julien-R44/hot-hook#boundary) about this concept. 
+
+TL;DR: In Hot Hook, modules marked as "boundaries" create an area where HMR is applied, allowing for dynamic reloading of these modules and their dependencies as long as the dependency path to the entrypoint file includes at least one boundary-marked module. 
+
+Modifications outside these boundaries require a full server restart. 
+:::
+
 ## Usage
 
 To launch the server with HMR, you will need to use the command `node ace serve --hmr` instead of `node ace serve --watch`.

@@ -119,7 +119,7 @@ const UserController = () => import('#controllers/users_controller.js')
 router.get('/users', [UserController, 'index'])
 ```
 
-If you use the [Eslint configuration](./tooling_config.md#eslint-config) of AdonisJS, this will be automatically done for you.
+If you use the [ESLint configuration](./tooling_config.md#eslint-config) of AdonisJS, the dynamic import of the controller will be automatically applied.
 
 :::tip
 For more information on this subject, consult [this part of the Hot hook documentation](https://github.com/Julien-R44/hot-hook#esm-cache-busting)

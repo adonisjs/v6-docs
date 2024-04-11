@@ -51,7 +51,7 @@ To launch the server with HMR, you will need to use the command `node ace serve 
 node ace serve --hmr
 ```
 
-And there you go. Try modifying a controller and you will see that the server does not restart, and if you execute a request, the modifications will be taken into account: you will always have the latest version of your code.
+If you modify a controller, you will see that the server does not restart, but the modifications will be taken into account: you will always have the latest version of your code.
 
 ## Cleaning up side-effects
 

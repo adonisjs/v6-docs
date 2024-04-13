@@ -29,7 +29,8 @@ First, make sure you have AdonisJS version 6.x.x. Then, you can configure HMR in
   // ...
   "hotHook": {
     "boundaries": [
-      "./app/controllers/**/*.ts"
+      "./app/controllers/**/*.ts",
+      "./middlewares/*.ts"
     ]
   }
 }

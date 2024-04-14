@@ -563,14 +563,14 @@ export class UsersController {
         { id: 2, name: 'virk' },
         { id: 3, name: 'romain' },
       ]
-    }
+    })
   }
 }
 ```
 
 ```tsx
 // title: inertia/pages/users/index.tsx
-import { InferPageProps } from '@adonisjs/inertia'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import type { UsersController } from '../../controllers/users_controller.ts'
 
 export function UsersPage(
@@ -586,6 +586,14 @@ export function UsersPage(
 ```
 
 :::
+
+You will also need to ensure that your frontend is aware of the types you're passing. To do this, you need to add this line to your `inertia/app/app.ts` file:
+
+```ts
+/// <reference path="../../adonisrc.ts" />
+```
+
+---
 
 Note that the `InferPageProps` will "serialize at type-level" the data you are passing. For example, if you pass a `Date` object to `inertia.render`, the resulting type of `InferPageProps` will be `string`.
 

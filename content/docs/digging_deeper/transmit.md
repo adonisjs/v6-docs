@@ -93,7 +93,7 @@ Channels are used to group events. For example, you can have a channel for notif
 
 ### Channel Names
 
-Channel names are used to identify the channel. They are case-insensitive and must be a string. You cannot use any special characters or spaces in the channel name except `/`. The following are some examples of valid channel names:
+Channel names are used to identify the channel. They are case-sensitive and must be a string. You cannot use any special characters or spaces in the channel name except `/`. The following are some examples of valid channel names:
 
 ```ts
 transmit.broadcast('global', { message: 'Hello' })
@@ -101,9 +101,13 @@ transmit.broadcast('chats/1/messages', { message: 'Hello' })
 transmit.broadcast('users/1', { message: 'Hello' })
 ```
 
+:::tip
+Channel names use the same syntax as route in AdonisJS.
+:::
+
 ### Channel Authorization
 
-You can authorize or reject a connection to a channel using the `authorizeChannel` method. The method receives the channel name and the request object. It must return a boolean value.
+You can authorize or reject a connection to a channel using the `authorizeChannel` method. The method receives the channel name and the `HttpContext`. It must return a boolean value.
 
 ```ts
 // title: start/transmit.ts

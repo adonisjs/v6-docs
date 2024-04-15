@@ -335,7 +335,7 @@ The `create` method registers the subscription on the server. It returns a promi
 
 ### Listening for Events
 
-You can listen for events on the subscription using the `onMessage` method and receives a callback function. You can call the `onMessage` method multiple times to add different callbacks.
+You can listen for events on the subscription using the `onMessage` method that receives a callback function. You can call the `onMessage` method multiple times to add different callbacks.
 
 ```ts
 subscription.onMessage((data) => {

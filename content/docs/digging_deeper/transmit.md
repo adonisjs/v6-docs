@@ -1,6 +1,6 @@
 # Transmit
 
-Transmit is a native Server-Sent-Event (SSE) module built for AdonisJS. It is a simple and efficient way to send data from the server to the client. It is a great way to send real-time updates to the client, such as notifications, live chat messages, or any other type of real-time data.
+Transmit is a native Server-Sent-Event (SSE) module built for AdonisJS. It is a simple and efficient way to send real-time updates to the client, such as notifications, live chat messages, or any other type of real-time data.
 
 :::note
 The data transmission occurs only from server to client, not the other way around. 

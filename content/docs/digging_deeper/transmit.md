@@ -323,7 +323,7 @@ A function that is called when the unsubscription is successful. It receives the
 
 ### Creating a Subscription
 
-You can create a subscription to a channel using the `subscribe` method. The method receives the channel name.
+You can create a subscription to a channel using the `subscription` method. The method receives the channel name.
 
 ```ts
 const subscription = transmit.subscription('chats/1/messages')

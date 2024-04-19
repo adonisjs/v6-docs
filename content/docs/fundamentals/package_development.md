@@ -34,16 +34,6 @@ You may create a new package by running the following command. The [create-adoni
 npm init adonisjs@latest my-package -- -K "adonisjs/pkg-starter-kit"
 ```
 
-```sh
-// title: yarn
-yarn create adonisjs@latest my-package -- -K "adonisjs/pkg-starter-kit"
-```
-
-```sh
-// title: pnpm
-pnpm create adonisjs@latest my-package -- -K "adonisjs/pkg-starter-kit"
-```
-
 :::
 
 Once the project has been created, you may `cd` into the newly created directory and run the example test.

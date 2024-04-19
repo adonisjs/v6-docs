@@ -12,7 +12,7 @@ node -v
 
 ## Creating a new application
 
-You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init), [yarn create](https://classic.yarnpkg.com/en/docs/cli/create) or [pnpm create](https://pnpm.io/tr/next/cli/create). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
+You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
 
 You may customize the initial project output using one of the following CLI flags.
 
@@ -31,16 +31,6 @@ You may customize the initial project output using one of the following CLI flag
 ```sh
 // title: npm
 npm init adonisjs@latest hello-world
-```
-
-```sh
-// title: yarn
-yarn create adonisjs@latest hello-world
-```
-
-```sh
-// title: pnpm
-pnpm create adonisjs@latest hello-world
 ```
 
 :::

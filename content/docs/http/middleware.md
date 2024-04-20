@@ -95,12 +95,12 @@ Within the `handle` method, a middleware has to decide whether to continue with 
 If a middleware raises an exception, all the upcoming middleware and the route handler will not be executed, and the exception will be given to the global exception handler.
 
 ```ts
-import { HttpException } from '@adonisjs/core/http'
+import { Exception } from '@adonisjs/core/exceptions'
 import { NextFn } from '@adonisjs/core/types/http'
 
 export default class UserLocationMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
-    throw new HttpException('Aborting request')
+    throw new Exception('Aborting request')
   }
 }
 ```

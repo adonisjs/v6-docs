@@ -177,7 +177,7 @@ transmit.broadcastExcept('global', { message: 'Hello' }, 'uid-of-sender')
 
 By default, broadcasting events works only within the context of an HTTP request. However, you can broadcast events from the background using the `transmit` service if you register a `transport` in your configuration.
 
-The transport layer is responsible for syncing events across multiple servers or instances. It works by broadcasting any events (like broadcasted events, subscriptions, and un-subscriptions) to all connected servers or instances using a `Bus`.
+The transport layer is responsible for syncing events across multiple servers or instances. It works by broadcasting any events (like broadcasted events, subscriptions, and un-subscriptions) to all connected servers or instances using a `Message Bus`.
 
 The server or instance responsible for your client connection will receive the event and broadcast it to the client.
 

@@ -4,16 +4,20 @@ Hot Module Reloading (HMR) is a feature baked in since AdonisJS 6.x.x that allow
 
 Until recently, the traditional way of working with AdonisJS was to launch the dev server with the command `node ace serve --watch`, which would take care of completely restarting the server/node process each time a file was modified, just like Nodemon does for example.
 
-This process works well, but depending on certain things, it's sometimes not the most optimal:
+This process usually works well, but sometimes it's not the most efficient during development for a few reasons:
 
-- Sometimes you have a lot of configured packages, and therefore providers that execute on each restart. This can slow down the startup process.
-- If you use TSX as a template engine, then a simple modification of, let's say, paddings or margins in one of your views forces you to reload the entire server, resulting in a quite slow feedback loop.
+- If you use TSX as a template engine, even a small change in a view file requires a full server restart.
+- Having many packages set up can slow down the server restart process. Waiting for the server to restart can be frustrating.
+- The more complex your application becomes, the longer the server takes to restart.
+- And waiting 1 or 2 seconds every time you make a change before being able to see the result, can be frustrating.
 
 To correct these issues and improve the development experience, AdonisJS 6.x.x introduced Hot Module Reloading (HMR) based on [Hot-Hook](https://github.com/julien-R44/hot-hook), also developed by the Core Team.
 
 :::tip
 
-Make sure to read the extensive documentation of [Hot-Hook](https://github.com/julien-R44/hot-hook) to understand in more detail how it works.
+Make sure to read the extensive documentation of [Hot-Hook](https://github.com/julien-R44/hot-hook) to get a better understanding of the underlying concepts. We gonna cover the AdonisJS specific part in this documentation.
+
+We also recommend reading the blog post [Hot Module Reloading in AdonisJS](https://adonisjs.com/blog/hmr-in-adonisjs) to get a better understanding of the feature.
 
 :::
 
@@ -36,10 +40,12 @@ First, make sure you have AdonisJS version 6.x.x. Then, you can configure HMR in
 }
 ```
 
+If your controllers are in a different directory, you will need to adjust the glob pattern accordingly.
+
 :::tip
 What is a boundary? Make sure to read the [Hot-Hook documentation](https://github.com/Julien-R44/hot-hook#boundary) about this concept. 
 
-TL;DR: In Hot Hook, modules marked as "boundaries" create an area where HMR is applied, allowing for dynamic reloading of these modules and their dependencies as long as the dependency path to the entrypoint file includes at least one boundary-marked module. 
+TL;DR: In Hot Hook, modules marked as "boundaries" create an area where HMR is applied, allowing for dynamic reloading of these modules and their dependencies.
 
 Modifications outside these boundaries require a full server restart. 
 :::
@@ -107,17 +113,27 @@ By using `import.meta.hot?.decline`, HMR will not be applied to this file : the 
 
 ## Limitations
 
-### Unreloaded files
+### Un-reloaded files
 
 In AdonisJS, only your controllers and their dependencies are automatically reloaded. If you modify, for example, a provider or a configuration file, your server will be completely restarted: which makes sense because these files are executed only at the startup of your application. So it is necessary to restart the server for the modifications to be taken into account.
 
 ### Dynamic imports
 
-You will need to use dynamic imports for your controllers for HMR to work correctly:
+You will need to use controllers and dynamic imports, otherwise HMR will not work :
 
 ```ts
+// ✅ Works
 const UserController = () => import('#controllers/users_controller.js')
 router.get('/users', [UserController, 'index'])
+
+// ❌ Does not work
+import UserController from '#controllers/users_controller.js'
+router.get('/users', [UserController, 'index'])
+
+// ❌ Does not work too
+router.get('/users', () => {
+  return User.all()
+})
 ```
 
 If you use the [ESLint configuration](./tooling_config.md#eslint-config) of AdonisJS, the dynamic import of the controller will be automatically applied.

@@ -1,9 +1,9 @@
 # Transmit
 
-Transmit is a native Server-Sent-Event (SSE) module built for AdonisJS. It is a simple and efficient way to send real-time updates to the client, such as notifications, live chat messages, or any other type of real-time data.
+Transmit is a native opinionated Server-Sent-Event (SSE) module built for AdonisJS. It is a simple and efficient way to send real-time updates to the client, such as notifications, live chat messages, or any other type of real-time data.
 
 :::note
-The data transmission occurs only from server to client, not the other way around. 
+The data transmission occurs only from server to client, not the other way around. You have to use a form or a fetch request to achieve client to server communication.
 :::
 
 ## Installation
@@ -36,6 +36,7 @@ import { defineConfig } from '@adonisjs/transmit'
 export default defineConfig({
   pingInterval: false,
   transport: null
+  // routeHandlerModifier(route: Route) {}
 })
 ```
 
@@ -85,24 +86,53 @@ Ensure you have `ioredis` installed when using the `redis` transport.
 
 </dd>
 
+<dt>
+
+routeHandlerModifier
+
+</dt>
+
+<dd>
+
+A function that is called before registering transmit routes. It receives the route instance. Use this function to add custom middleware or modify the route handler.
+
+For example, you can use the [`Rate Limiter`](../security/rate-limiter.md) to avoid abuse of the transmit route.
+
+```ts
+import { defineConfig } from '@adonisjs/transmit'
+import { throttle } from '#start/limiter'
+
+export default defineConfig({
+  routeHandlerModifier(route) {
+    // Add a throttle middleware to all transmit routes
+    route.use(throttle)
+  }
+})
+```
+
+</dd>
+
 </dl>
 
 ## Channels
 
 Channels are used to group events. For example, you can have a channel for notifications, another for chat messages, and so on.
+They are created on the fly when the client subscribes to them.
 
 ### Channel Names
 
 Channel names are used to identify the channel. They are case-sensitive and must be a string. You cannot use any special characters or spaces in the channel name except `/`. The following are some examples of valid channel names:
 
 ```ts
+import transmit from '@adonisjs/transmit/services/main'
+
 transmit.broadcast('global', { message: 'Hello' })
 transmit.broadcast('chats/1/messages', { message: 'Hello' })
 transmit.broadcast('users/1', { message: 'Hello' })
 ```
 
 :::tip
-Channel names use the same syntax as route in AdonisJS.
+Channel names use the same syntax as route in AdonisJS but are not related to them. You can freely define a http route and a channel with the same key.
 :::
 
 ### Channel Authorization
@@ -112,6 +142,7 @@ You can authorize or reject a connection to a channel using the `authorizeChanne
 ```ts
 // title: start/transmit.ts
 
+import transmit from '@adonisjs/transmit/services/main'
 import Chat from '#models/chat'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -131,6 +162,8 @@ transmit.authorizeChannel<{ id: string }>('chats/:id/messages', async (ctx: Http
 You can broadcast events to a channel using the `broadcast` method. The method receives the channel name and the data to send.
 
 ```ts
+import transmit from '@adonisjs/transmit/services/main'
+
 transmit.broadcast('global', { message: 'Hello' })
 ```
 
@@ -140,9 +173,17 @@ You can also broadcast events to any channel except one using the `broadcastExce
 transmit.broadcastExcept('global', { message: 'Hello' }, 'uid-of-sender')
 ```
 
+### Syncing across multiple servers or instances
+
+By default, broadcasting events works only within the context of an HTTP request. However, you can broadcast events from the background using the `transmit` service if you register a `transport` in your configuration.
+
+The transport layer is responsible for syncing events across multiple servers or instances. It works by broadcasting any events (like broadcasted events, subscriptions, and un-subscriptions) to all connected servers or instances using a `Bus`.
+
+The server or instance responsible for your client connection will receive the event and broadcast it to the client.
+
 ## Listening for Events
 
-You can listen for events on the client-side using the `@adonisjs/transmit-client` package. The package provides a `Transmit` class.
+You can listen for events on the client-side using the `@adonisjs/transmit-client` package. The package provides a `Transmit` class. The client use the [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) API by default to connect to the server.
 
 ```ts
 import { Transmit } from '@adonisjs/transmit-client'
@@ -194,7 +235,7 @@ eventSourceFactory
 
 <dd>
 
-A function that creates a new `EventSource` instance. It defaults to the WebAPI `EventSource`. You need to provide a custom implementation if you want to use the client on `Node.js`, `React Native` or any other environment that does not support the `EventSource` API.
+A function that creates a new `EventSource` instance. It defaults to the WebAPI [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource). You need to provide a custom implementation if you want to use the client on `Node.js`, `React Native` or any other environment that does not support the `EventSource` API.
 
 </dd>
 
@@ -206,7 +247,7 @@ eventTargetFactory
 
 <dd>
 
-A function that creates a new `EventTarget` instance. It defaults to the WebAPI `EventTarget`. You need to provide a custom implementation if you want to use the client on `Node.js`, `React Native` or any other environment that does not support the `EventTarget` API. Return `null` to disable the `EventTarget` API.
+A function that creates a new `EventTarget` instance. It defaults to the WebAPI [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget). You need to provide a custom implementation if you want to use the client on `Node.js`, `React Native` or any other environment that does not support the `EventTarget` API. Return `null` to disable the `EventTarget` API.
 
 </dd>
 
@@ -332,6 +373,9 @@ await subscription.create()
 
 The `create` method registers the subscription on the server. It returns a promise that you can `await` or `void`.
 
+:::note
+If you don't call the `create` method, the subscription will not be registered on the server, and you will not receive any events.
+:::
 
 ### Listening for Events
 

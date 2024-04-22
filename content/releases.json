@@ -7,11 +7,25 @@
     "release_notes_link": "https://github.com/adonisjs/auth/releases/tag/v9.2.0"
   },
   {
+    "package": "@adonisjs/application",
+    "version": "v8.2.0",
+    "description": "Add onHttpServerMessage hook",
+    "released_on": "2024-03-31",
+    "release_notes_link": "https://github.com/adonisjs/application/releases/tag/v8.2.0"
+  },
+  {
     "package": "@adonisjs/env",
     "version": "v6.0.0",
     "description": "Allow to add identifiers",
     "released_on": "2024-03-30",
     "release_notes_link": "https://github.com/adonisjs/env/releases/tag/v6.0.0"
+  },
+  {
+    "package": "@adonisjs/http-server",
+    "version": "v7.2.0",
+    "description": "Add response.onFinish method to listen when response is finished",
+    "released_on": "2024-03-29",
+    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.2.0"
   },
   {
     "package": "@adonisjs/mail",

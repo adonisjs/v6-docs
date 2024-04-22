@@ -18,18 +18,30 @@ The output of the help screen is formatted as per the [docopt](http://docopt.org
 The `serve` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#dev-server) package to start the AdonisJS application in development environment. You can optionally watch for file changes and restart the HTTP server on every file change.
 
 ```sh
-node ace serve --watch
+node ace serve --hmr
 ```
 
 The `serve` command starts the development server (via the `bin/server.ts` file) as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
 
 ```sh
-node ace --no-warnings --inspect serve --watch
+node ace --no-warnings --inspect serve --hmr
 ```
 
 Following is the list of available options you can pass to the `serve` command. Alternatively, use the `--help` flag to view the command's help.
 
 <dl>
+
+<dt>
+
+--hmr
+
+</dt>
+
+<dd>
+
+Watch the filesystem and reload the server in HMR mode.
+
+</dd>
 
 <dt>
 
@@ -39,7 +51,7 @@ Following is the list of available options you can pass to the `serve` command. 
 
 <dd>
 
-Watch the filesystem and restart the HTTP server on file change.
+Watch the filesystem and always restart the process on file change.
 
 </dd>
 
@@ -90,7 +102,7 @@ Start the assets bundle development server alongside the AdonisJS HTTP server. U
 Pass commandline arguments to the asset manager child process. For example, if you use vite, you can define its options as follows.
 
 ```sh
-node ace serve --watch --assets-args="--cors --open"
+node ace serve --hmr --assets-args="--cors --open"
 ```
 
 </dd>
@@ -159,7 +171,7 @@ Bundle frontend assets alongside your backend application. Use the `--no-assets`
 Pass commandline arguments to the asset manager child process. For example, if you use vite, you can define its options as follows.
 
 ```sh
-node ace serve --watch --assets-args="--sourcemap --debug"
+node ace build --assets-args="--sourcemap --debug"
 ```
 
 </dd>

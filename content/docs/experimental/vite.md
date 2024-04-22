@@ -273,7 +273,7 @@ The vite output will be in the `public/assets` folder. We choose the `/assets` s
 You can start your application as usual, and AdonisJS will automatically proxy the needed requests to Vite.
 
 ```sh
-node ace serve --watch
+node ace serve --hmr
 ```
 
 ## Including entrypoints in Edge templates

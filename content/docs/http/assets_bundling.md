@@ -242,7 +242,7 @@ The vite output will be written to the `public/assets` folder. We choose the `/a
 You can start your application as usual, and AdonisJS will automatically start the Vite development server alongside it. For example:
 
 ```sh
-node ace serve --watch
+node ace serve --hmr
 ```
 
 ![](./vite-dev-server.png)
@@ -250,13 +250,13 @@ node ace serve --watch
 You may pass CLI arguments to the Vite dev server using the `--assets-args` commandline flag.
 
 ```sh
-node ace serve --watch --assets-args="--debug"
+node ace serve --hmr --assets-args="--debug"
 ```
 
 You may turn off the Vite development server using the `--no-assets` commandline flag.
 
 ```sh
-node ace serve --watch --no-assets
+node ace serve --hmr --no-assets
 ```
 
 ## Including entrypoints in Edge templates

@@ -320,6 +320,12 @@
     "category": "Fundamentals"
   },
   {
+    "permalink": "hot-module-reloading",
+    "title": "Hot Reloading (HMR)",
+    "contentPath": "./fundamentals/hmr.md",
+    "category": "Fundamentals"
+  },
+  {
     "permalink": "extend-adonisjs",
     "title": "Extending the framework",
     "contentPath": "./fundamentals/extending_the_framework.md",

@@ -1,5 +1,26 @@
 [
   {
+    "package": "@adonisjs/core",
+    "version": "v6.8.0",
+    "description": "Moving HMR out of experimental phase",
+    "released_on": "2024-04-22",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.8.0"
+  },
+  {
+    "package": "@adonisjs/core",
+    "version": "v6.7.0",
+    "description": "Experimental support for HMR",
+    "released_on": "2024-04-15",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.7.0"
+  },
+  {
+    "package": "@adonisjs/core",
+    "version": "v6.6.0",
+    "description": "Upgrade to VineJS 2.0",
+    "released_on": "2024-04-15",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.6.0"
+  },
+  {
     "package": "@adonisjs/auth",
     "version": "v9.2.0",
     "description": "Configure basic auth guard and export authFinder mixin from its own subpath",

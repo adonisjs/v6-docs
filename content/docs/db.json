@@ -321,7 +321,7 @@
   },
   {
     "permalink": "hot-module-reloading",
-    "title": "Hot Reloading (HMR)",
+    "title": "Hot module replacement (HMR)",
     "contentPath": "./fundamentals/hmr.md",
     "category": "Fundamentals"
   },

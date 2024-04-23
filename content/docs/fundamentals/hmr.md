@@ -1,6 +1,6 @@
-# Hot Module Reloading
+# Hot module replacement
 
-Hot Module Reloading (HMR) refers to the process of reloading JavaScript modules after modification without restarting the entire process. HMR usually results in a faster feedback loop since, after a file change, you do not have to wait for the whole of the process to restart.
+Hot module replacement (HMR) refers to the process of reloading JavaScript modules after modification without restarting the entire process. HMR usually results in a faster feedback loop since, after a file change, you do not have to wait for the whole of the process to restart.
 
 The term HMR has been used for many years now in the frontend ecosystem, where tools like Vite can hot-reload modules and apply changes to a webpage while maintaining its existing state.
 

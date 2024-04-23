@@ -37,6 +37,7 @@
 /reference/views/* /guides/edge-reference
 /reference/i18n/* /guides/i18n
 /releases/* /guides/releases
+/guides/hot-module-reloading /guides/hmr
 
 /cookbooks/validating-server-rendered-forms https://v5-docs.adonisjs.com/cookbooks/validating-server-rendered-forms 308
 /cookbooks/using-ally-with-api-guard https://v5-docs.adonisjs.com/cookbooks/using-ally-with-api-guard 308

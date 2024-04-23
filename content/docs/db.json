@@ -320,7 +320,7 @@
     "category": "Fundamentals"
   },
   {
-    "permalink": "hot-module-reloading",
+    "permalink": "hmr",
     "title": "Hot module replacement (HMR)",
     "contentPath": "./fundamentals/hmr.md",
     "category": "Fundamentals"

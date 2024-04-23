@@ -216,7 +216,7 @@ npm init adonisjs@latest -- -K="user/repo#v2.1.0"
 ## Starting the development server
 Once you have created an AdonisJS application, you may start the development server by running the `node ace serve` command.
 
-Ace is a command line framework bundled inside the framework's core. The `--hmr` flag monitors the file system and performs [hot module reloading (HMR)](../fundamentals/hmr.md) for certain sections of your codebase.
+Ace is a command line framework bundled inside the framework's core. The `--hmr` flag monitors the file system and performs [hot module replacement (HMR)](../fundamentals/hmr.md) for certain sections of your codebase.
 
 ```sh
 node ace serve --hmr

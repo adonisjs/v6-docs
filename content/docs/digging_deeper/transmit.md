@@ -24,6 +24,12 @@ node ace add @adonisjs/transmit
  
 :::
 
+You will also have to install the Transmit client package to listen for events on the client-side.
+
+```sh
+npm install @adonisjs/transmit-client
+```
+
 ## Configuration
 
 The configuration for the transmit package is stored within the `config/transmit.ts` file.
@@ -188,7 +194,7 @@ The transport layer is responsible for syncing events across multiple servers or
 
 The server or instance responsible for your client connection will receive the event and broadcast it to the client.
 
-## Listening for Events
+## Transmit Client
 
 You can listen for events on the client-side using the `@adonisjs/transmit-client` package. The package provides a `Transmit` class. The client use the [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) API by default to connect to the server.
 

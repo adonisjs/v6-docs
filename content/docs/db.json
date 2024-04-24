@@ -388,6 +388,12 @@
     "category": "Digging Deeper"
   },
   {
+    "permalink": "transmit",
+    "title": "Transmit",
+    "contentPath": "./digging_deeper/transmit.md",
+    "category": "Digging Deeper"
+  },
+  {
     "permalink": "testing",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",

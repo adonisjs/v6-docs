@@ -1,5 +1,7 @@
 # Introduction
 
+::include{template="partials/introduction_cards"}
+
 ## What is AdonisJS?
 
 AdonisJS is a TypeScript-first web framework for Node.js. You can use it to create a full-stack web application or a JSON API server.
@@ -82,27 +84,6 @@ The AdonisJS documentation is written as a reference guide, covering the usage a
 **The guide does not teach you how to build an application from scratch**. If you are looking for a tutorial, we recommend starting your journey with [Adocasts](https://adocasts.com/). Tom (the creator of Adocasts) has created some highly quality screencasts, helping you to take the first steps with AdonisJS.
 
 With that said, the documentation extensively covers the usage of available modules and the inner workings of the framework.
-
-## VSCode extensions
-You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
-
-- [**AdonisJS**](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) - View application routes, run ace commands, migrate the database, and read documentation directly from your code editor.
-
-- [**Edge**](https://marketplace.visualstudio.com/items?itemName=AdonisJS.vscode-edge) - Supercharge your development workflow with support for syntax highlighting, autocompletion, and code snippets.
-
-- [**Japa**](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) - Run tests without leaving your code editor using Keyboard shortcuts or run them directly from the activity sidebar.
-
-## Community and Help
-
-- [**Discord server**](https://discord.gg/vDcEjq6) - Hangout with fellow developers.
-
-- [**X (Formerly Twitter)**](https://twitter.com/adonisframework) - Stay upto-date with framework announcements.
-
-- [**GitHub discussions**](https://github.com/adonisjs/core/discussions) - Browse existing topics and ask for help.
-
-- [**Packages ecosystem**](https://packages.adonisjs.com/) - Discover official and community built packages.
-
-- [**Priority Support**](https://adonisjs.com/support_program) - Get priority support and a direct line of contact with the framework creator.
 
 ## Recent releases
 Following is the list of recent releases. [Click here](./releases.md) to view all the releases.

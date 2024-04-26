@@ -181,8 +181,17 @@ html.dark {
 
 .cards_grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .cards_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .span_full {
+    grid-column: span 2 / span 2;
+  }
 }
 
 .markdown .card {
@@ -199,10 +208,6 @@ html.dark {
 
 .markdown .card ul {
   margin-top: 10px;
-}
-
-.span_full {
-  grid-column: span 2 / span 2;
 }
 
 progress[value] {

@@ -36,7 +36,11 @@
 /guides/hmr /guides/concepts/hot-module-replacement
 /guides/http /guides/concepts/http-overview
 /guides/http-context /guides/concepts/http-context
+<<<<<<< HEAD
 /guides/adonisrc-file /guides/concepts/adonisrcrc-file
+=======
+/guides/adonisrc-file /guides/concepts/rc-file
+>>>>>>> a7aa500 (docs: first draft of new structure)
 /guides/service-providers /guides/concepts/service-providers
 /guides/scaffolding /guides/concepts/scaffolding
 /guides/tooling-config /guides/concepts/tooling-config
@@ -96,11 +100,19 @@
 /guides/transmit /guides/digging-deeper/transmit
 /guides/repl /guides/digging-deeper/repl
 
+<<<<<<< HEAD
 /guides/commands-reference /guides/references/commands
 /guides/edge-reference /guides/references/edge
 /guides/events-reference /guides/references/events
 /guides/exceptions-reference /guides/references/exceptions
 /guides/helpers-reference /guides/references/helpers
+=======
+/guides/commands-reference /guides/api-references/commands
+/guides/edge-reference /guides/api-references/edge
+/guides/events-reference /guides/api-references/events
+/guides/exceptions-reference /guides/api-references/exceptions
+/guides/helpers-reference /guides/api-references/helpers
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 /guides/mail /guides/digging-deeper/mail
 /guides/mail-message /guides/digging-deeper/mail#configuring-message

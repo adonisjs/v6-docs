@@ -11,12 +11,21 @@ Fakes are objects with working implementations explicitly created for testing. F
 We provide fake implementations for the following container services. The fakes API is documented alongside the module documentation.
 
 - [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
+<<<<<<< HEAD
 - [Hash fake](../security/hashing.md#faking-hash-service-during-tests)
 - [Fake mailer](../digging_deeper/mail.md#fake-mailer)
 
 ## Dependency injection and fakes
 
 If you use dependency injection in your application or use the [container to create class instances](../concepts/dependency_injection.md), you can provide a fake implementation for a class using the `container.swap` method.
+=======
+- [Hash fake](../../security/hashing#faking-hash-service-during-tests)
+- [Fake mailer](../old/mail/fake_mailer.md)
+
+## Dependency injection and fakes
+
+If you use dependency injection in your application or use the [container to create class instances](../../concepts/dependency_injection), you can provide a fake implementation for a class using the `container.swap` method.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 In the following example, we inject `UserService` to the `UsersController`.
 

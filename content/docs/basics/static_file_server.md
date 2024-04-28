@@ -1,4 +1,4 @@
-# Static files server
+# Static Files Server
 
 You can serve static files from a given directory using the `@adonisjs/static` package. The package ships with a middleware that you must register in the [server middleware stack](middleware.md#server-middleware-stack) to intercept the HTTP requests and serve files.
 
@@ -236,7 +236,11 @@ A function that returns an object of headers to set on the response. The functio
 
 Once the middleware is registered, you may create files inside the `public` directory and access them in the browser using the file path. For example, the `./public/css/style.css` file can be accessed using the `http://localhost:3333/css/style.css` URL.
 
+<<<<<<< HEAD
 The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](../basics/vite.md).
+=======
+The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](../../basics/vite).
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ## Copying static files to production build
 The static files stored inside the `/public` directory are automatically copied to the `build` folder when you run `node ace build` command.

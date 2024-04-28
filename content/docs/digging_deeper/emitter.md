@@ -77,7 +77,11 @@ declare module '@adonisjs/core/types' {
 
 Like HTTP controllers, listener classes offer an abstraction layer to move inline event listeners inside dedicated files. Listener classes are stored inside the `app/listeners` directory and you may create a new listener using the `make:listener` command.
 
+<<<<<<< HEAD
 See also: [Make listener command](../references/commands.md#makelistener)
+=======
+See also: [Make listener command](../api-references/commands.md#makelistener)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:listener sendVerificationEmail
@@ -130,7 +134,11 @@ You cannot inject the `HttpContext` inside a listener class. Because events are 
 
 :::
 
+<<<<<<< HEAD
 The listener classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
+=======
+The listener classes are instantiated using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 In the following example, we type-hint the `TokensService` as a constructor argument. When invoking this listener, the IoC container will inject an instance of the `TokensService` class.
 
@@ -175,7 +183,11 @@ Class-based events encapsulate the event identifier and the event data within th
 
 You may create an event class using the `make:event` command.
 
+<<<<<<< HEAD
 See also: [Make event command](../references/commands.md#makeevent)
+=======
+See also: [Make event command](../api-references/commands.md#makeevent)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:event UserRegistered
@@ -335,7 +347,11 @@ emitter.clearAllListeners()
 ```
 
 ## List of available events
+<<<<<<< HEAD
 Please check the [events reference guide](../references/events.md) to view the list of available events.
+=======
+Please check the [events reference guide](../api-references/events.md) to view the list of available events.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ## Faking events during tests
 

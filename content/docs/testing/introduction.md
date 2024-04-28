@@ -100,7 +100,11 @@ export const reporters: Config['reporters'] = {
 
 You may create a new test using the `make:test` command. The command needs the suite's name to create the test file.
 
+<<<<<<< HEAD
 See also: [Make test command](../references/commands.md#maketest)
+=======
+See also: [Make test command](../api-references/commands.md#maketest)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:test posts/create --suite=functional

@@ -1,4 +1,4 @@
-# HTTP context
+# HTTP Context
 
 A new instance of [HTTP Context class](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) is generated for every HTTP request and passed along to the route handler, middleware, and exception handler.
 
@@ -101,7 +101,11 @@ Ensure the `#middleware/container_bindings_middleware` middleware is registered 
 
 :::
 
+<<<<<<< HEAD
 See also: [IoC container guide](../concepts/dependency_injection.md)
+=======
+See also: [IoC container guide](../../concepts/dependency_injection)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 // title: app/services/user_service.ts

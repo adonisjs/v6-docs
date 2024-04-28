@@ -4,7 +4,11 @@ HTTP controllers offer an abstraction layer to organize the route handlers insid
 
 The controllers are stored within the `./app/controllers` directory, representing each controller as a plain JavaScript class. You may create a new controller by running the following command.
 
+<<<<<<< HEAD
 See also: [Make controller command](../references/commands.md#makecontroller)
+=======
+See also: [Make controller command](../api-references/commands.md#makecontroller)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:controller users
@@ -44,7 +48,11 @@ router.get('users', [UsersController, 'index'])
 As you might have noticed, we do not create an instance of the controller class and instead pass it directly to the route. Doing so allows AdonisJS to:
 
 - Create a fresh instance of the controller for each request.
+<<<<<<< HEAD
 - And also construct the class using the [IoC container](../concepts/dependency_injection.md), which allows you to leverage automatic dependency injection.
+=======
+- And also construct the class using the [IoC container](../../concepts/dependency_injection), which allows you to leverage automatic dependency injection.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 :::caption{for="error"}
 
@@ -127,7 +135,11 @@ Using magic strings is subjective, and you can decide if you want to use them pe
 
 ## Dependency injection
 
+<<<<<<< HEAD
 The controller classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
+=======
+The controller classes are instantiated using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 Given you have a `UserService` class, you can inject an instance of it inside the controller as follows.
 
@@ -157,7 +169,11 @@ export default class UsersController {
 
 ### Method injection
 
+<<<<<<< HEAD
 You can inject an instance of `UserService` directly inside the controller method using [method injection](../concepts/dependency_injection.md#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
+=======
+You can inject an instance of `UserService` directly inside the controller method using [method injection](../../concepts/dependency_injection#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 The first parameter passed to the controller method is always the HttpContext. Therefore, you must type-hint the `UserService` as the second parameter.
 
@@ -267,7 +283,7 @@ router.resource('posts', PostsController)
 
 Following is the list of routes registered by the `resource` method. You can view this list by running `node ace list:routes` command.
 
-![](./post_resource_routes_list.png)
+![](post_resource_routes_list.png)
 
 ### Nested resources
 
@@ -279,7 +295,7 @@ In the following example, we create routes for the `comments` resource nested un
 router.resource('posts.comments', CommentsController)
 ```
 
-![](./post_comments_resource_routes_list.png)
+![](post_comments_resource_routes_list.png)
 
 ### Shallow resources
 
@@ -296,7 +312,7 @@ A shallow resource registers its routes by keeping the URL structure flat (where
 router.shallowResource('posts.comments', CommentsController)
 ```
 
-![](./shallow_routes_list.png)
+![](shallow_routes_list.png)
 
 ### Naming resource routes
 

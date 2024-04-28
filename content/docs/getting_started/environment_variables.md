@@ -1,4 +1,4 @@
-# Environment variables
+# Environment Variables
 
 Environment variables serve the purpose of storing secrets like the database password, the app secret, or an API key outside of your application codebase.
 
@@ -42,7 +42,11 @@ env.get('PORT', 3333)
 ### Sharing env module with Edge templates
 If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
 
+<<<<<<< HEAD
 You can [create `view.ts` as a preload file](../concepts/adonisrc_file#preloads) inside the `start` directory and write the following lines of code inside it.
+=======
+You can [create `view.ts` as a preload file](../concepts/rc_file#preloads) inside the `start` directory and write the following lines of code inside it.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 // title: start/view.ts
@@ -90,7 +94,7 @@ export default await Env.create(APP_ROOT, {
 ### Static-type information
 The same validation rules are used to infer the static-type information. The type information is available when using the env module.
 
-![](./env_intellisense.jpeg)
+![](env_intellisense.jpeg)
 
 ## Validator schema API
 

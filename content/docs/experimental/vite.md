@@ -2,7 +2,11 @@
 
 :::warning
 
+<<<<<<< HEAD
 This documentation targets the new experimental version of our Vite integration ( 3.x.x ). If you use an older version, please refer to the [Vite 2.x.x documentation](../basics/vite.md). 
+=======
+This documentation targets the new experimental version of our Vite integration ( 3.x.x ). If you use an older version, please refer to the [Vite 2.x.x documentation](../../basics/vite). 
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 :::
 

@@ -1,4 +1,5 @@
 # EdgeJS
+<<<<<<< HEAD
 
 Edge is a **simple**, **Modern**, and **batteries included** template engine created and maintained by the AdonisJS core team for Node.js. Edge is similar to writing JavaScript. If you know JavaScript, you know Edge.
 
@@ -6,7 +7,13 @@ Edge is a **simple**, **Modern**, and **batteries included** template engine cre
 The documentation for Edge is available on [https://edgejs.dev](https://edgejs.dev)
 :::
 
+<<<<<<<< HEAD:content/docs/views-and-templates/edgejs.md
 ## Installation
+========
+- Choose a template engine to render HTML dynamically.
+- Use [Vite](../../basics/vite) for bundling CSS and frontend JavaScript.
+- Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like an SPA.
+>>>>>>>> a7aa500 (docs: first draft of new structure):content/docs/views-and-templates/introduction.md
 
 Install and configure Edge using the following command.
 
@@ -72,7 +79,11 @@ router.on('/').render('welcome')
 ```
 
 ## Configuring Edge
+<<<<<<<< HEAD:content/docs/views-and-templates/edgejs.md
 You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file#preloads) inside the `start` directory.
+========
+You can use Edge plugins or add global helpers to Edge by creating a [preload file](../../concepts/rc_file#preloads) inside the `start` directory.
+>>>>>>>> a7aa500 (docs: first draft of new structure):content/docs/views-and-templates/introduction.md
 
 ```sh
 node ace make:preload view
@@ -96,6 +107,7 @@ edge.global('appUrl', env.get('APP_URL'))
 ```
 
 ## Global helpers
+<<<<<<<< HEAD:content/docs/views-and-templates/edgejs.md
 
 Please check the [Edge helpers reference guide](../references/edge.md) to view the list of helpers contributed by AdonisJS.
 
@@ -105,3 +117,8 @@ Please check the [Edge helpers reference guide](../references/edge.md) to view t
 - [Components](https://edgejs.dev/docs/components)
 - [SVG icons](https://edgejs.dev/docs/edge-iconify)
 - [Adocasts Edge Series](https://adocasts.com/topics/edge)
+========
+Please check the [Edge helpers reference guide](../api-references/edge.md) to view the list of helpers contributed by AdonisJS.
+>>>>>>>> a7aa500 (docs: first draft of new structure):content/docs/views-and-templates/introduction.md
+=======
+>>>>>>> a7aa500 (docs: first draft of new structure)

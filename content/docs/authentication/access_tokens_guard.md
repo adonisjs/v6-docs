@@ -1,4 +1,4 @@
-# Access tokens guard
+# Access Tokens Guard
 Access tokens authenticate HTTP requests in API contexts where the server cannot persist cookies on the end-user device, for example, third-party access to an API or authentication for a mobile app.
 
 Access tokens can be generated in any format; for instance, the tokens that conform to the JWT standard are known as JWT access tokens, and tokens in a proprietary format are known as opaque access tokens.
@@ -178,7 +178,11 @@ In the following example, we **find a user by id** and **issue them an access to
 
 The `.create` method accepts an instance of the User model and returns an instance of the [AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts) class. 
 
+<<<<<<< HEAD
 The `token.value` property contains the value (wrapped as a [Secret](../references/helpers.md#secret)) that must be shared with the user. The value is only available when generating the token, and the user will not be able to see it again.
+=======
+The `token.value` property contains the value (wrapped as a [Secret](../api-references/helpers.md#secret)) that must be shared with the user. The value is only available when generating the token, and the user will not be able to see it again.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -341,7 +345,11 @@ The `tokensUserProvider` method accepts the following options and returns an ins
 ## Authenticating requests
 Once the guard has been configured, you can start authenticating requests using the `auth` middleware or manually calling the `auth.authenticate` method.
 
+<<<<<<< HEAD
 The `auth.authenticate` method returns an instance of the User model for the authenticated user, or it throws an [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception when unable to authenticate the request.
+=======
+The `auth.authenticate` method returns an instance of the User model for the authenticated user, or it throws an [E_UNAUTHORIZED_ACCESS](../api-references/exceptions.md#e_unauthorized_access) exception when unable to authenticate the request.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -393,7 +401,11 @@ class PostsController {
 
 ### Get authenticated user or fail
 
+<<<<<<< HEAD
 If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+=======
+If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../api-references/exceptions.md#e_unauthorized_access) exception.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -483,4 +495,8 @@ await User.accessTokens.delete(user, token.identifier)
 ```
 
 ## Events
+<<<<<<< HEAD
 Please check the [events reference guide](../references/events.md#access_tokens_authauthentication_attempted) to view the list of available events emitted by the access tokens guard.
+=======
+Please check the [events reference guide](../api-references/events.md#access_tokens_authauthentication_attempted) to view the list of available events emitted by the access tokens guard.
+>>>>>>> a7aa500 (docs: first draft of new structure)

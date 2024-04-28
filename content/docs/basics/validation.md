@@ -78,7 +78,11 @@ export default class PostsController {
 
 Once you have created the `PostsController` and defined the routes, you may use the following ace command to create a validator.
 
+<<<<<<< HEAD
 See also: [Make validator command](../references/commands.md#makevalidator)
+=======
+See also: [Make validator command](../api-references/commands.md#makevalidator)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:validator post
@@ -307,7 +311,11 @@ vine.withMetaData<{ userId: number }>((meta) => {
 ```
 
 ## Configuring VineJS
+<<<<<<< HEAD
 You may create a [preload file](../concepts/adonisrc_file#preloads) inside the `start` directory to configure VineJS with custom error messages or use a custom error reporter.
+=======
+You may create a [preload file](../../concepts/rc_file#preloads) inside the `start` directory to configure VineJS with custom error messages or use a custom error reporter.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:preload validator

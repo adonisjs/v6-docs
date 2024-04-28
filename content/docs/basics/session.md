@@ -504,8 +504,13 @@ The Session middleware automatically captures the [validation exceptions](valida
 
 In the following example:
 
+<<<<<<< HEAD
 - We access the value of the `title` input field using the [`old` method](../references/edge.md#old).
 - And access the error message using the [`@inputError` tag](../references/edge.md#inputerror).
+=======
+- We access the value of the `title` input field using the [`old` method](../api-references/edge.md#old).
+- And access the error message using the [`@inputError` tag](../api-references/edge.md#inputerror).
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```edge
 <form method="POST" action="/posts">
@@ -600,7 +605,11 @@ console.log(session.flashMessages.has('key'))
 
 The same `flashMessages` property is also shared with Edge templates, and you can access it as follows.
 
+<<<<<<< HEAD
 See also: [Edge helpers reference](../references/edge.md#flashmessages)
+=======
+See also: [Edge helpers reference](../api-references/edge.md#flashmessages)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```edge
 {{ flashMessages.all() }}
@@ -628,7 +637,11 @@ Finally, you can access a specific flash message or a validation error using the
 ```
 
 ## Events
+<<<<<<< HEAD
 Please check the [events reference guide](../references/events.md#sessioninitiated) to view the list of events dispatched by the `@adonisjs/session` package.
+=======
+Please check the [events reference guide](../api-references/events.md#sessioninitiated) to view the list of events dispatched by the `@adonisjs/session` package.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ## Creating a custom session store
 Session stores must implement the [SessionStoreContract](https://github.com/adonisjs/session/blob/main/src/types.ts#L23C18-L23C38) interface and define the following methods.
@@ -717,4 +730,8 @@ export default defineConfig({
 
 ### A note on serializing data
 
+<<<<<<< HEAD
 The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../references/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session stores](https://github.com/adonisjs/session/blob/main/src/stores/redis.ts#L59).
+=======
+The `write` method receives the session data as an object, and you might have to convert it to a string before saving it. You can use any serialization package for the same or the [MessageBuilder](../api-references/helpers.md#message-builder) helper provided by the AdonisJS helpers module. For inspiration, please consult the official [session stores](https://github.com/adonisjs/session/blob/main/src/stores/redis.ts#L59).
+>>>>>>> a7aa500 (docs: first draft of new structure)

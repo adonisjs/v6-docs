@@ -1,4 +1,4 @@
-# HTTP overview
+# HTTP Overview
 
 AdonisJS is primarily a web framework to create applications that respond to HTTP requests. In this guide, we will learn how AdonisJS boots the HTTP server, handles the incoming requests, and the modules available at the HTTP layer.
 
@@ -92,9 +92,13 @@ The HTTP server is booted once you call [the `boot` method](https://github.com/a
 
 In a typical AdonisJS application, the `boot` method is called by the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/http.ts) module within the `bin/server.ts` file.
 
+<<<<<<< HEAD
 Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](adonisrc_file#preloads).
+=======
+Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](rc_file#preloads).
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
-![](./server_boot_lifecycle.png)
+![](server_boot_lifecycle.png)
 
 ## HTTP request lifecycle
 Now that we have an HTTP server listening for incoming requests. Let's see how AdonisJS handles a given HTTP request.

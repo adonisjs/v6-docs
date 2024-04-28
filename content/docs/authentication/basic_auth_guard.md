@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Basic authentication guard
+=======
+# Basic Authentication
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 The basic auth guard is an implementation of the [HTTP authentication framework](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication), in which the client must pass the user credentials as a base64 encoded string via the `Authorization` header. The server allows the request if the credentials are valid. Otherwise, a web-native prompt is displayed to re-enter the credentials.
 
@@ -123,7 +127,11 @@ router
 ```
 
 ### Get authenticated user or fail
+<<<<<<< HEAD
 If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+=======
+If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../api-references/exceptions.md#e_unauthorized_access) exception.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import { middleware } from '#start/kernel'

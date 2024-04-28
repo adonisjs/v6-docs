@@ -1,4 +1,4 @@
-# TypeScript build process
+# TypeScript Build Process
 
 Applications written in TypeScript must be compiled into JavaScript before you can run them in production.
 
@@ -100,7 +100,11 @@ The production build of your AdonisJS application is created using the `node ace
 - Rewrite the `ace.js` file **from scratch** to remove the `ts-node/esm` loader. 
 - Compile frontend assets using Vite (if configured).
 - Compile TypeScript source code to JavaScript using [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html).
+<<<<<<< HEAD
 - Copy non-TypeScript files registered under the [`metaFiles`](../concepts/adonisrc_file#metafiles) array to the `./build` folder.
+=======
+- Copy non-TypeScript files registered under the [`metaFiles`](../../concepts/rc_file#metafiles) array to the `./build` folder.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 - Copy the `package.json` and `package-lock.json/yarn.lock` files to the `./build` folder.
 
 :::warning

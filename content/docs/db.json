@@ -22,6 +22,7 @@
     "title": "Releases",
     "contentPath": "./preface/releases.md",
     "category": "Preface"
+<<<<<<< HEAD
   },
   {
     "permalink": "preface/contribution-guide",
@@ -128,6 +129,108 @@
   {
     "permalink": "concepts/service-providers",
     "title": "Service providers",
+=======
+  },
+  {
+    "permalink": "preface/contribution-guide",
+    "title": "Contribution Guide",
+    "contentPath": "./preface/contribution_guide.md",
+    "category": "Preface"
+  },
+  {
+    "permalink": "getting-started/installation",
+    "title": "Installation",
+    "contentPath": "./getting_started/installation.md",
+    "category": "Getting Started"
+  },
+  {
+    "permalink": "getting-started/configuration",
+    "title": "Configuration",
+    "contentPath": "./getting_started/configuration.md",
+    "category": "Getting Started"
+  },
+  {
+    "permalink": "getting-started/environment-variables",
+    "title": "Environment Variables",
+    "contentPath": "./getting_started/environment_variables.md",
+    "category": "Getting Started"
+  },
+  {
+    "permalink": "getting-started/folder-structure",
+    "title": "Folder Structure",
+    "contentPath": "./getting_started/folder_structure.md",
+    "category": "Getting Started"
+  },
+  {
+    "permalink": "concepts/async-local-storage",
+    "title": "Async Local Storage",
+    "contentPath": "./concepts/async_local_storage.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/application",
+    "title": "Application",
+    "contentPath": "./concepts/application.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/application-lifecycle",
+    "title": "Application Lifecycle",
+    "contentPath": "./concepts/application_lifecycle.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/config-providers",
+    "title": "Config Providers",
+    "contentPath": "./concepts/config_providers.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/container-services",
+    "title": "Container Services",
+    "contentPath": "./concepts/container_services.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/dependency-injection",
+    "title": "Dependency Injection",
+    "contentPath": "./concepts/dependency_injection.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/extending-adonisjs",
+    "title": "Extending the Framework",
+    "contentPath": "./concepts/extending_the_framework.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/hot-module-replacement",
+    "title": "Hot Module Replacement (HMR)",
+    "contentPath": "./concepts/hmr.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/http-overview",
+    "title": "HTTP Overview",
+    "contentPath": "./concepts/http_overview.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/http-context",
+    "title": "HTTP Context",
+    "contentPath": "./concepts/http_context.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/rc-file",
+    "title": "RC File",
+    "contentPath": "./concepts/rc_file.md",
+    "category": "Concepts"
+  },
+  {
+    "permalink": "concepts/service-providers",
+    "title": "Service Providers",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./concepts/service_providers.md",
     "category": "Concepts"
   },
@@ -139,13 +242,21 @@
   },
   {
     "permalink": "concepts/tooling-config",
+<<<<<<< HEAD
     "title": "Tooling config",
+=======
+    "title": "Tooling Config",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./concepts/tooling_config.md",
     "category": "Concepts"
   },
   {
     "permalink": "concepts/typescript-build-process",
+<<<<<<< HEAD
     "title": "TypeScript build process",
+=======
+    "title": "TypeScript Build Process",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./concepts/typescript_build_process.md",
     "category": "Concepts"
   },
@@ -169,7 +280,11 @@
   },
   {
     "permalink": "basics/body-parser",
+<<<<<<< HEAD
     "title": "Body parser",
+=======
+    "title": "Body Parser",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./basics/body_parser.md",
     "category": "Basics"
   },
@@ -193,7 +308,11 @@
   },
   {
     "permalink": "basics/file-uploads",
+<<<<<<< HEAD
     "title": "File uploads",
+=======
+    "title": "File Uploads",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./basics/file_uploads.md",
     "category": "Basics"
   },
@@ -211,7 +330,11 @@
   },
   {
     "permalink": "basics/exception-handling",
+<<<<<<< HEAD
     "title": "Exception handling",
+=======
+    "title": "Exception Handling",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./basics/exception_handling.md",
     "category": "Basics"
   },
@@ -223,7 +346,11 @@
   },
   {
     "permalink": "basics/static-file-server",
+<<<<<<< HEAD
     "title": "Static file server",
+=======
+    "title": "Static File Server",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./basics/static_file_server.md",
     "category": "Basics"
   },
@@ -253,37 +380,61 @@
   },
   {
     "permalink": "authentication/verifying-user-credentials",
+<<<<<<< HEAD
     "title": "Verifying user credentials",
+=======
+    "title": "Verifying User Credentials",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./authentication/verifying_user_credentials.md",
     "category": "Authentication"
   },
   {
     "permalink": "authentication/session-guard",
+<<<<<<< HEAD
     "title": "Session guard",
+=======
+    "title": "Session Guard",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./authentication/session_guard.md",
     "category": "Authentication"
   },
   {
     "permalink": "authentication/access-tokens-guard",
+<<<<<<< HEAD
     "title": "Access tokens guard",
+=======
+    "title": "Access Tokens Guard",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./authentication/access_tokens_guard.md",
     "category": "Authentication"
   },
   {
     "permalink": "authentication/basic-auth-guard",
+<<<<<<< HEAD
     "title": "Basic auth guard",
+=======
+    "title": "Basic Auth Guard",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./authentication/basic_auth_guard.md",
     "category": "Authentication"
   },
   {
     "permalink": "authentication/custom-auth-guard",
+<<<<<<< HEAD
     "title": "Custom auth guard",
+=======
+    "title": "Custom Auth Guard",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./authentication/custom_auth_guard.md",
     "category": "Authentication"
   },
   {
     "permalink": "authentication/social-authentication",
+<<<<<<< HEAD
     "title": "Social authentication",
+=======
+    "title": "Social Authentication",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./authentication/social_authentication.md",
     "category": "Authentication"
   },
@@ -313,13 +464,21 @@
   },
   {
     "permalink": "security/securing-ssr-applications",
+<<<<<<< HEAD
     "title": "Securing SSR apps",
+=======
+    "title": "Securing SSR Apps",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./security/securing_ssr_applications.md",
     "category": "Security"
   },
   {
     "permalink": "security/rate-limiting",
+<<<<<<< HEAD
     "title": "Rate limiting",
+=======
+    "title": "Rate Limiting",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./security/rate_limiting.md",
     "category": "Security"
   },
@@ -343,19 +502,31 @@
   },
   {
     "permalink": "testing/http-tests",
+<<<<<<< HEAD
     "title": "HTTP tests",
+=======
+    "title": "HTTP Tests",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./testing/http_tests.md",
     "category": "Testing"
   },
   {
     "permalink": "testing/browser-tests",
+<<<<<<< HEAD
     "title": "Browser tests",
+=======
+    "title": "Browser Tests",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./testing/browser_tests.md",
     "category": "Testing"
   },
   {
     "permalink": "testing/console-tests",
+<<<<<<< HEAD
     "title": "Console tests",
+=======
+    "title": "Console Tests",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./testing/console_tests.md",
     "category": "Testing"
   },
@@ -375,78 +546,127 @@
     "permalink": "digging-deeper/emitter",
     "title": "Emitter",
     "contentPath": "./digging_deeper/emitter.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "digging-deeper/i18n",
     "title": "I18n",
     "contentPath": "./digging_deeper/i18n.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "digging-deeper/locks",
     "title": "Locks",
     "contentPath": "./digging_deeper/locks.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "digging-deeper/logger",
     "title": "Logger",
     "contentPath": "./digging_deeper/logger.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "digging-deeper/mail",
     "title": "Mail",
     "contentPath": "./digging_deeper/mail.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "digging-deeper/transmit",
     "title": "Transmit",
     "contentPath": "./digging_deeper/transmit.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "digging-deeper/repl",
     "title": "Repl",
     "contentPath": "./digging_deeper/repl.md",
+<<<<<<< HEAD
     "category": "Digging deeper"
+=======
+    "category": "Digging Deeper"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "ace",
     "title": "Introduction",
     "contentPath": "./ace/introduction.md",
+<<<<<<< HEAD
     "category": "Ace commands"
+=======
+    "category": "Ace Commands"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "ace-creating-commands",
     "title": "Creating commands",
     "contentPath": "./ace/creating_commands.md",
+<<<<<<< HEAD
     "category": "Ace commands"
+=======
+    "category": "Ace Commands"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "ace-arguments",
     "title": "Command arguments",
     "contentPath": "./ace/args.md",
+<<<<<<< HEAD
     "category": "Ace commands"
+=======
+    "category": "Ace Commands"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "ace-flags",
     "title": "Command flags",
     "contentPath": "./ace/flags.md",
+<<<<<<< HEAD
     "category": "Ace commands"
+=======
+    "category": "Ace Commands"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "ace-prompts",
     "title": "Prompts",
     "contentPath": "./ace/prompts.md",
+<<<<<<< HEAD
     "category": "Ace commands"
+=======
+    "category": "Ace Commands"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "ace-terminal-ui",
     "title": "Terminal UI",
     "contentPath": "./ace/tui.md",
+<<<<<<< HEAD
     "category": "Ace commands"
   },
   {
@@ -478,6 +698,39 @@
     "title": "Helpers",
     "contentPath": "./references/helpers.md",
     "category": "References"
+=======
+    "category": "Ace Commands"
+  },
+  {
+    "permalink": "api-references/commands",
+    "title": "Commands",
+    "contentPath": "./api-references/commands.md",
+    "category": "API References"
+  },
+  {
+    "permalink": "api-references/edge",
+    "title": "Edge helpers and tags",
+    "contentPath": "./api-references/edge.md",
+    "category": "API References"
+  },
+  {
+    "permalink": "api-references/events",
+    "title": "Events",
+    "contentPath": "./api-references/events.md",
+    "category": "API References"
+  },
+  {
+    "permalink": "api-references/exceptions",
+    "title": "Exceptions",
+    "contentPath": "./api-references/exceptions.md",
+    "category": "API References"
+  },
+  {
+    "permalink": "api-references/helpers",
+    "title": "Helpers",
+    "contentPath": "./api-references/helpers.md",
+    "category": "API References"
+>>>>>>> a7aa500 (docs: first draft of new structure)
   },
   {
     "permalink": "experimental-assembler-hooks",
@@ -487,7 +740,11 @@
   },
   {
     "permalink": "experimental-vite",
+<<<<<<< HEAD
     "title": "New Vite integration",
+=======
+    "title": "New Vite Integration",
+>>>>>>> a7aa500 (docs: first draft of new structure)
     "contentPath": "./experimental/vite.md",
     "category": "Experimental"
   },

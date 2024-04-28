@@ -1,6 +1,10 @@
-# File uploads
+# File Uploads
 
+<<<<<<< HEAD
 AdonisJS has first-class support for processing user-uploaded files sent using the `multipart/form-data` content type. The files are auto-processed using the [bodyparser middleware](../basics/body_parser.md#multipart-parser) and saved inside your operating system's `tmp` directory.
+=======
+AdonisJS has first-class support for processing user-uploaded files sent using the `multipart/form-data` content type. The files are auto-processed using the [bodyparser middleware](../../basics/body_parser#multipart-parser) and saved inside your operating system's `tmp` directory.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 Later, inside your controllers, you may access the files, validate them and move them to a persistent location or a cloud storage service like S3.
 

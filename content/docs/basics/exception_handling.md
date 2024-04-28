@@ -1,4 +1,4 @@
-# Exception handling
+# Exception Handling
 
 Exceptions raised during an HTTP request are handled by the `HttpExceptionHandler` defined inside the `./app/exceptions/handler.ts` file. Inside this file, you can decide how to convert exceptions to responses and log them using the logger or report them to an external logging provider.
 
@@ -179,7 +179,11 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
 You can create an exception class using the `make:exception` ace command. An exception extends the `Exception` class from the `@adonisjs/core` package.
 
+<<<<<<< HEAD
 See also: [Make exception command](../references/commands.md#makeexception)
+=======
+See also: [Make exception command](../api-references/commands.md#makeexception)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:exception UnAuthorized
@@ -260,4 +264,8 @@ try {
 ```
 
 ## Known errors
+<<<<<<< HEAD
 Please check the [exceptions reference guide](../references/exceptions.md) to view the list of known errors.
+=======
+Please check the [exceptions reference guide](../api-references/exceptions.md) to view the list of known errors.
+>>>>>>> a7aa500 (docs: first draft of new structure)

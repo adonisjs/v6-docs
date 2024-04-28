@@ -1,4 +1,4 @@
-# Verifying user credentials
+# Verifying User Credentials
 
 In an AdonisJS application, verifying user credentials is decoupled from the authentication layer. This ensures you can continue using the auth guards without limiting the options to verify the user credentials.
 
@@ -117,7 +117,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
   - `uids`: An array of model properties that can be used to identify a user uniquely. If you assign a user a username or phone number, you can also use them as a UID.
   - `passwordColumnName`: The model property name that holds the user password.
 
+<<<<<<< HEAD
 - Finally, you can use the return value of the `withAuthFinder` method as a [mixin](../references/helpers.md#compose) on the User model.
+=======
+- Finally, you can use the return value of the `withAuthFinder` method as a [mixin](../api-references/helpers.md#compose) on the User model.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ### Verifying credentials
 Once you have applied the Auth finder mixin, you can replace all the code from the `SessionController.store` method with the following code snippet.
@@ -160,7 +164,11 @@ export default class SessionController {
 ```
 
 ### Handling exceptions
+<<<<<<< HEAD
 In case of invalid credentials, the `verifyCredentials` method will throw [E_INVALID_CREDENTIALS](../references/exceptions.md#e_invalid_credentials) exception.
+=======
+In case of invalid credentials, the `verifyCredentials` method will throw [E_INVALID_CREDENTIALS](../api-references/exceptions.md#e_invalid_credentials) exception.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 The exception is self-handled and will be converted to a response using the following content negotiation rules.
 

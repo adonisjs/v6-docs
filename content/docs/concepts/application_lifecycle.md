@@ -29,7 +29,7 @@ The boot phase remains the same for all the environments except the `console` en
 
 You can only use the container bindings and services once the application is booted.
 
-![](./boot_phase_flow_chart.png)
+![](boot_phase_flow_chart.png)
 
 ## The start phase
 
@@ -39,7 +39,7 @@ The start phase varies between all the environments. Also, the execution flow is
 
 - The `post-start` phase refers to the actions performed after starting the app. In the case of an HTTP server, the actions will be executed after the HTTP server is ready to accept new connections.
 
-![](./start_phase_flow_chart.png)
+![](start_phase_flow_chart.png)
 
 ### During the web environment
 
@@ -77,7 +77,7 @@ A short-lived command or the test process begins the termination after the main 
 
 A long-lived HTTP server process waits for exit signals like `SIGTERM` to begin the termination process.
 
-![](./termination_phase_flow_chart.png)
+![](termination_phase_flow_chart.png)
 
 ### Responding to process signals
 

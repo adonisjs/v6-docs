@@ -2,7 +2,11 @@
 
 Alongside using Ace commands, you may also create custom commands as part of your application codebase. The commands are stored inside the `commands` directory (at the root level). You may create a command by running the following command.
 
+<<<<<<< HEAD
 See also: [Make command](../references/commands.md#makecommand)
+=======
+See also: [Make command](../api-references/commands.md#makecommand)
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:command greet

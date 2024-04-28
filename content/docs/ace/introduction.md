@@ -21,7 +21,7 @@ node ace
 node ace list
 ```
 
-![](./ace_help_screen.jpeg)
+![](ace_help_screen.jpeg)
 
 You can view help for a single command by typing the command name with the `--help` flag.
 

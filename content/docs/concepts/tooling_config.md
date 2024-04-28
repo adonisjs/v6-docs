@@ -1,4 +1,4 @@
-# Tooling config
+# Tooling Config
 
 AdonisJS relies heavily on TypeScript, Prettier, and ESLint to have consistency in code, check for errors at build time, and more importantly, have a joyful development experience.
 

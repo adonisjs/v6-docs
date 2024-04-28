@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Session guard
+=======
+# Session Guard
+>>>>>>> a7aa500 (docs: first draft of new structure)
 The session guard uses the [@adonisjs/session](../basics/session.md) package to login and authenticate users during an HTTP request.
 
 Sessions and cookies have been on the internet for a long time and work great for most applications. Therefore, we recommend using the session guard for server-rendered applications or an SPA web client on the same top-level domain.
@@ -193,7 +197,11 @@ router
 
 ### Get authenticated user or fail
 
+<<<<<<< HEAD
 If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+=======
+If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../api-references/exceptions.md#e_unauthorized_access) exception.
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -394,4 +402,8 @@ router
 Finally, you can configure the redirect route for the logged-in users inside the `./app/middleware/guest_middleware.ts` file.
 
 ## Events
+<<<<<<< HEAD
 Please check the [events reference guide](../references/events.md#session_authcredentials_verified) to view the list of available events emitted by the Auth package.
+=======
+Please check the [events reference guide](../api-references/events.md#session_authcredentials_verified) to view the list of available events emitted by the Auth package.
+>>>>>>> a7aa500 (docs: first draft of new structure)

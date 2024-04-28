@@ -1,4 +1,4 @@
-# Social authentication
+# Social Authentication
 
 You can implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
 Ally comes with the following inbuilt drivers, alongside an extensible API to [register custom drivers](#creating-a-custom-social-driver).

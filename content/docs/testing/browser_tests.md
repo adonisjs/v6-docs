@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Browser tests
+=======
+# Browser Tests
+>>>>>>> a7aa500 (docs: first draft of new structure)
 
 Browser tests are executed inside real browsers like Chrome, Firefox, or Safari. We make use of [Playwright](https://playwright.dev/) (a browser automation tool) for interacting with webpages programmatically.
 
@@ -85,7 +89,7 @@ Finally, let's run the above test using the `test` command. You may use the `--w
 node ace test browser
 ```
 
-![](./browser_tests_output.jpeg)
+![](browser_tests_output.jpeg)
 
 ## Reading/writing cookies
 When testing inside a real browser, the cookies are persisted throughout the lifecycle of a [browser context](https://playwright.dev/docs/api/class-browsercontext). 

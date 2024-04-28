@@ -4,7 +4,7 @@ Assembler hooks are a way of executing code at specific points in the assembler 
 
 These hooks can be helpful for tasks such as file generation, code compilation, or injecting custom build steps.
 
-Assembler hooks were initially introduced for our [new experimental version of Vite](./vite.md). These hooks enable the `adonisjs/vite` package to customize the build process and inject a step where front-end assets are built, and also, if necessary, generate an SSR build.
+Assembler hooks were initially introduced for our [new experimental version of Vite](vite.md). These hooks enable the `adonisjs/vite` package to customize the build process and inject a step where front-end assets are built, and also, if necessary, generate an SSR build.
 
 ## Adding a hook
 

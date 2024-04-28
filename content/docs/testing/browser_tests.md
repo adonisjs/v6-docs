@@ -1,4 +1,5 @@
-# Browser tests
+# Browser Tests
+
 Browser tests are executed inside real browsers like Chrome, Firefox, or Safari. We make use of [Playwright](https://playwright.dev/) (a browser automation tool) for interacting with webpages programmatically.
 
 Playwright is both a testing framework and a library that exposes JavaScript APIs to interact with the browser. We **do not use the Playwright testing framework** because we are already using Japa, and using multiple testing frameworks inside a single project will only lead to confusion and config bloat.
@@ -84,7 +85,7 @@ Finally, let's run the above test using the `test` command. You may use the `--w
 node ace test browser
 ```
 
-![](./browser_tests_output.jpeg)
+![](browser_tests_output.jpeg)
 
 ## Reading/writing cookies
 When testing inside a real browser, the cookies are persisted throughout the lifecycle of a [browser context](https://playwright.dev/docs/api/class-browsercontext). 
@@ -145,7 +146,7 @@ await browserContext.getPlainCookie('cartTotal')
 ```
 
 ## Populating session store
-If you are using the [`@adonisjs/session`](../http/session.md) package to read/write session data in your application, you may also want to use the `sessionBrowserClient` plugin to populate the session store when writing tests.
+If you are using the [`@adonisjs/session`](../basics/session.md) package to read/write session data in your application, you may also want to use the `sessionBrowserClient` plugin to populate the session store when writing tests.
 
 ### Setup
 The first step is registering the plugin inside the `tests/bootstrap.ts` file.

@@ -120,7 +120,7 @@ A typical database entry has the following properties.
 {
   "permalink": "introduction",
   "title": "Introduction",
-  "contentPath": "./introduction.md",
+  "contentPath": "./http_overview.md",
   "category": "Guides"
 }
 ```

@@ -4,7 +4,7 @@ Ace terminal UI is powered by the [@poppinss/cliui](https://github.com/poppinss/
 
 The terminal UI primitives are built with testing in mind. When writing tests, you may turn on the `raw` mode to disable colors and formatting and collect all logs in memory to write assertions against them.
 
-See also: [Testing Ace commands](../testing/commandline_tests.md)
+See also: [Testing Ace commands](../../testing/console_tests)
 
 ## Displaying log messages
 

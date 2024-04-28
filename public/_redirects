@@ -46,3 +46,103 @@
 /cookbooks/using-knex-postgis-with-lucid https://v5-docs.adonisjs.com/cookbooks/using-knex-postgis-with-lucid 308
 /cookbooks/dockerizing-adonis https://v5-docs.adonisjs.com/cookbooks/dockerizing-adonis 308
 /cookbooks/socketio-with-adonisjs https://v5-docs.adonisjs.com/cookbooks/socketio-with-adonisjs 308
+
+# Old Redirects
+/guides/testing/fakes /guides/testing/mocks-and-fakes
+/guides/events /guides/digging-deeper/emitter
+
+# New Structure
+/guides /guides/preface/introduction
+/guides/preface /guides/preface/introduction
+/guides/introduction /guides/preface/introduction
+/guides/faqs /guides/preface/faqs
+/guides/releases /guides/preface/releases
+
+/guides/getting-started /guides/getting-started/installation
+/guides/installation /guides/getting-started/installation
+/guides/config /guides/getting-started/configuration
+/guides/environment-variables /guides/getting-started/environment-variables
+/guides/folder-structure /guides/getting-started/folder-structure
+
+/guides/concepts /guides/concepts/async-local-storage
+/guides/async-local-storage /guides/concepts/async-local-storage
+/guides/application /guides/concepts/application
+/guides/application-lifecycle /guides/concepts/application-lifecycle
+/guides/config-providers /guides/concepts/config-providers
+/guides/container-services /guides/concepts/container-services
+/guides/ioc-container /guides/concepts/dependency-injection
+/guides/extend-adonisjs /guides/concepts/extending-adonisjs
+/guides/hmr /guides/concepts/hot-module-replacement
+/guides/http /guides/concepts/http-overview
+/guides/http-context /guides/concepts/http-context
+/guides/adonisrc-file /guides/concepts/rc-file
+/guides/service-providers /guides/concepts/service-providers
+/guides/scaffolding /guides/concepts/scaffolding
+/guides/tooling-config /guides/concepts/tooling-config
+/guides/typescript-build-process /guides/concepts/typescript-build-process
+
+/guides/basics /guides/basics/routing
+/guides/routing /guides/basics/routing
+/guides/controllers /guides/basics/controllers
+/guides/middleware /guides/basics/middleware
+/guides/bodyparser-middleware /guides/basics/body-parser
+/guides/request /guides/basics/request
+/guides/response /guides/basics/response
+/guides/validation /guides/basics/validation
+/guides/file-uploads /guides/basics/file-uploads
+/guides/session /guides/basics/session
+/guides/cookies /guides/basics/cookies
+/guides/exception-handling /guides/basics/exception-handling
+/guides/assets-bundling /guides/basics/vite
+/guides/static-file-server /guides/basics/static-file-server
+/guides/url-builder /guides/basics/routing#url-builder
+
+/guides/database /guides/database/introduction
+/guides/sql /guides/database/introduction
+/guides/redis /guides/database/redis
+
+/guides/authentication /guides/authentication/introduction
+/guides/auth /guides/authentication/introduction
+/guides/verifying_user_credentials /guides/authentication/verifying-user-credentials
+/guides/auth-session-guard /guides/authentication/session-guard
+/guides/auth-access-tokens-guard /guides/authentication/access-tokens-guard
+/guides/basic-auth-guard /guides/authentication/basic-auth-guard
+/guides/auth-custom-guards /guides/authentication/custom-auth-guard
+/guides/social-auth /guides/authentication/social-authentication
+
+/guides/security /guides/security/authorization
+/guides/authorization /guides/security/authorization
+/guides/encryption /guides/security/encryption
+/guides/hash /guides/security/hashing
+/guides/cors /guides/security/cors
+/guides/web-security /guides/security/securing-ssr-applications
+/guides/rate-limiter /guides/security/rate-limiting
+
+/guides/views-and-templates /guides/views-and-templates/introduction
+
+/guides/testing /guides/testing/introduction
+/guides/http-tests /guides/testing/http-tests
+/guides/browser-tests /guides/testing/browser-tests
+/guides/command-line-tests /guides/testing/console-tests
+/guides/database-tests /guides/testing/database
+/guides/mocks-and-fakes /guides/testing/mocks-and-fakes
+
+/guides/digging-deeper /guides/digging-deeper/emitter
+/guides/emitter /guides/digging-deeper/emitter
+/guides/i18n /guides/digging-deeper/i18n
+/guides/locks /guides/digging-deeper/locks
+/guides/logger /guides/digging-deeper/logger
+/guides/transmit /guides/digging-deeper/transmit
+/guides/repl /guides/digging-deeper/repl
+
+/guides/commands-reference /guides/api-references/commands
+/guides/edge-reference /guides/api-references/edge
+/guides/events-reference /guides/api-references/events
+/guides/exceptions-reference /guides/api-references/exceptions
+/guides/helpers-reference /guides/api-references/helpers
+
+/guides/mail /guides/digging-deeper/mail
+/guides/mail-message /guides/digging-deeper/mail#configuring-message
+/guides/mail-classes /guides/digging-deeper/mail#class-based-emails
+/guides/fake-mailer /guides/digging-deeper/mail#fake-mailer
+/guides/mail-custom-transports /guides/digging-deeper/mail#creating-custom-transports

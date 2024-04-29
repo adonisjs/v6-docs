@@ -317,7 +317,7 @@ export default await Env.create(new URL('../', import.meta.url), {
 ```
 
 ### defineEnvVariables
-Add one or multiple new environment variables to the `.env` file. The method accepts a key-value pair of variables.
+Add one or multiple new environment variables to the `.env` and `.env.example` files. The method accepts a key-value pair of variables.
 
 ```ts
 const codemods = await command.createCodemods()
@@ -332,6 +332,20 @@ try {
   console.error(error)
 }
 ```
+
+Sometimes you may want to not insert the variable value in the `.env.example` file. You can do so by using the `omitFromExample` key.
+
+```ts
+const codemods = await command.createCodemods()
+
+await codemods.defineEnvVariables({
+  MY_NEW_VARIABLE: 'SOME_VALUE',
+}, {
+  omitFromExample: ['MY_NEW_VARIABLE']
+})
+```
+
+The above code will insert `MY_NEW_VARIABLE=SOME_VALUE` in the `.env` file and `MY_NEW_VARIABLE=` in the `.env.example` file.
 
 ### registerMiddleware
 Register AdonisJS middleware to one of the known middleware stacks. The method accepts the middleware stack and an array of middleware to register.

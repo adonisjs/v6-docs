@@ -333,7 +333,7 @@ try {
 }
 ```
 
-Sometimes you may want to not insert the variable value in the `.env.example` file. You can do so by using the `omitFromExample` key.
+Sometimes you may want to **not** insert the variable value in the `.env.example` file. You can do so by using the `omitFromExample` option.
 
 ```ts
 const codemods = await command.createCodemods()

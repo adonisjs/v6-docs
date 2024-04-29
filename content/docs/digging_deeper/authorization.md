@@ -190,7 +190,7 @@ export const viewPost = Bouncer.ability(
 ```
 
 ### Authorizing users other than the logged-in user
-If you want to authorize a user other than the logged-in user, you may use the `Bouncer.create` method to create a new bouncer instance for a given user.
+If you want to authorize a user other than the logged-in user, you may use the `Bouncer` constructor to create a new bouncer instance for a given user.
 
 ```ts
 import User from '#models/user'
@@ -198,7 +198,7 @@ import { Bouncer } from '@adonisjs/bouncer'
 
 const user = await User.findOrFail(1)
 // highlight-start
-const bouncer = Bouncer.create(user)
+const bouncer = new Bouncer(user)
 // highlight-end
 
 if (await bouncer.allows(editPost, post)) {
@@ -577,7 +577,7 @@ import { policies } from '#policies/main'
 
 export default InitializeBouncerMiddleware {
   async handle(ctx, next) {
-    ctx.bouncer = Bouncer.create(
+    ctx.bouncer = new Bouncer(
       () => ctx.auth.user,
       // highlight-start
       abilities,

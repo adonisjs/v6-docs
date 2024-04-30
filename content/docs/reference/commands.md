@@ -784,3 +784,49 @@ Filter routes list and include the ones NOT using the mentioned middleware. You 
 </dd>
 
 </dl>
+
+## env\:add
+
+The `env:add` command allows you to add a new environment variables to the `.env`, `.env.example` files and will also define the validation rules in the `start/env.ts` file. 
+
+You can just run the command and it will prompt you for the variable name, value, and validation rules. Or you can pass them as arguments.
+
+```sh
+# Will prompt for the variable name, value, and validation rules
+node ace env:add
+
+# Define the variable name, value, and validation rule
+node ace env:add MY_VARIABLE value --type=string
+```
+
+<dl>
+
+<dt>
+
+--type
+
+</dt>
+
+<dd>
+
+Define the type of the environment variable. The value must be one of the following: `string`, `boolean`, `number`, `enum`.
+
+</dd>
+
+<dt>
+
+--enum-values
+
+</dt>
+
+<dd>
+
+Define the allowed values for the environment variable when the type is `enum`. 
+
+```sh
+node ace env:add MY_VARIABLE foo --type=enum --enum-values=foo --enum-values=bar
+```
+
+</dd>
+
+</dl>

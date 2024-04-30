@@ -2,8 +2,8 @@
   {
     "package": "@adonisjs/core",
     "version": "v6.9.0",
-    "description": "Add `env:add` command",
-    "released_on": "2024-04-29",
+    "description": "Add `env:add` command to define environment variable and its validation rules",
+    "released_on": "2024-04-30",
     "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.9.0"
   },
   {

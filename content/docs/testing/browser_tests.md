@@ -1,4 +1,4 @@
-# Browser Tests
+# Browser tests
 
 Browser tests are executed inside real browsers like Chrome, Firefox, or Safari. We make use of [Playwright](https://playwright.dev/) (a browser automation tool) for interacting with webpages programmatically.
 

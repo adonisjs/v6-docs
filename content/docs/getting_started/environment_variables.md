@@ -1,4 +1,4 @@
-# Environment Variables
+# Environment variables
 
 Environment variables serve the purpose of storing secrets like the database password, the app secret, or an API key outside of your application codebase.
 

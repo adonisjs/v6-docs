@@ -1,4 +1,4 @@
-# Basic Authentication
+# Basic authentication guard
 
 The basic auth guard is an implementation of the [HTTP authentication framework](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication), in which the client must pass the user credentials as a base64 encoded string via the `Authorization` header. The server allows the request if the credentials are valid. Otherwise, a web-native prompt is displayed to re-enter the credentials.
 

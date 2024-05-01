@@ -1,4 +1,4 @@
-# Service Providers
+# Service providers
 
 Services providers are plain JavaScript classes with lifecycle methods to perform actions during different phases of the application.
 

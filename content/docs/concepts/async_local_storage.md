@@ -1,4 +1,4 @@
-# Async Local Storage
+# Async local storage
 
 As per the [Node.js official documentation](https://nodejs.org/docs/latest-v21.x/api/async_context.html#class-asynclocalstorage): “AsyncLocalStorage is used to create asynchronous state within callbacks and promise chains. **It allows storing data throughout the lifetime of a web request or any other asynchronous duration. It is similar to thread-local storage in other languages**.”
 

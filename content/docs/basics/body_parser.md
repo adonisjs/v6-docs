@@ -1,4 +1,4 @@
-# Body Parser Middleware
+# Body parser middleware
 
 The request data is parsed using the `BodyParser` middleware registered inside the `start/kernel.ts` file.
 

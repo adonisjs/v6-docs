@@ -1,4 +1,4 @@
-# Dependency Injection
+# Dependency injection
 
 At the heart of every AdonisJS application is an IoC container that can construct classes and resolve dependencies with almost zero config.
 

@@ -1,4 +1,4 @@
-# Application Lifecycle
+# Application lifecycle
 
 In this guide, we will learn how AdonisJS boots your application and what lifecycle hooks you can use to change the application state before it is considered ready.
 

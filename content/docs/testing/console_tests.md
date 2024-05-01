@@ -1,4 +1,4 @@
-# Console Tests
+# Console tests
 
 Command-line tests refer to testing custom Ace commands that are part of your application or the package codebase.
 

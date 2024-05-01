@@ -1,4 +1,4 @@
-# Securing Server-Rendered Applications
+# Securing server-rendered applications
 
 If you are creating a server-rendered application using AdonisJS, then you must use the `@adonisjs/shield` package to protect your applications from common web attacks like **CSRF**, **XSS**, **Content sniffing**, and so on.
 

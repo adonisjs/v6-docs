@@ -1,4 +1,4 @@
-# Session Guard
+# Session guard
 The session guard uses the [@adonisjs/session](../basics/session.md) package to login and authenticate users during an HTTP request.
 
 Sessions and cookies have been on the internet for a long time and work great for most applications. Therefore, we recommend using the session guard for server-rendered applications or an SPA web client on the same top-level domain.

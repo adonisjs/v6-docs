@@ -1,4 +1,4 @@
-# Rate Limiting
+# Rate limiting
 
 AdonisJS provides a first-party package for implementing rate limits in your web application or the API server. The rate limiter provides `redis`, `mysql`, `postgresql` and `memory` as the storage options, with the ability to [create custom storage providers](#creating-a-custom-storage-provider).
 

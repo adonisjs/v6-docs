@@ -1,4 +1,4 @@
-# Assembler Hooks
+# Assembler hooks
 
 Assembler hooks are a way of executing code at specific points in the assembler lifecycle. As a reminder, the Assembler is a part of AdonisJS that enables you to launch your dev server, build your application, and run your tests. 
 

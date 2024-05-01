@@ -823,7 +823,7 @@ Next, we can request our Inertia endpoint using `withInertia()` to ensure the da
 
 ```ts
 test('returns correct data', async ({ client }) => {
-  const response = await client.withInertia().get('/home')
+  const response = await client.get('/home').withInertia()
 
   response.assertStatus(200)
   response.assertInertiaComponent('home/main')
@@ -843,7 +843,7 @@ Checks that the component returned by the server is the one expected.
 
 ```ts
 test('returns correct data', async ({ client }) => {
-  const response = await client.withInertia().get('/home')
+  const response = await client.get('/home').withInertia()
 
   response.assertInertiaComponent('home/main')
 })
@@ -855,7 +855,7 @@ Checks that the props returned by the server are exactly those passed as paramet
 
 ```ts
 test('returns correct data', async ({ client }) => {
-  const response = await client.withInertia().get('/home')
+  const response = await client.get('/home').withInertia()
 
   response.assertInertiaProps({ user: { name: 'julien' } })
 })
@@ -867,7 +867,7 @@ Checks that the props returned by the server contain some of the props passed as
 
 ```ts
 test('returns correct data', async ({ client }) => {
-  const response = await client.withInertia().get('/home')
+  const response = await client.get('/home').withInertia()
 
   response.assertInertiaPropsContains({ user: { name: 'julien' } })
 })
@@ -879,7 +879,7 @@ In addition to this, you can access the following properties on `ApiResponse` :
 
 ```ts
 test('returns correct data', async ({ client }) => {
-  const { body } = await client.withInertia().get('/home')
+  const { body } = await client.get('/home').withInertia()
 
   // 👇 The component returned by the server
   console.log(response.inertiaComponent) 

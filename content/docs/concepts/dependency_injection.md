@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Dependency injection
-=======
-# Dependency Injection
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 At the heart of every AdonisJS application is an IoC container that can construct classes and resolve dependencies with almost zero config.
 
@@ -348,7 +344,7 @@ import { inject } from '@adonisjs/core'
 
 export default class UsersController {
   @inject()
-  index(service: UserService) {}
+  index(, service: UserService) {}
 }
 ```
 

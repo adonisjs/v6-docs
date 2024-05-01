@@ -1,4 +1,4 @@
-# TypeScript Build Process
+# TypeScript build process
 
 Applications written in TypeScript must be compiled into JavaScript before you can run them in production.
 

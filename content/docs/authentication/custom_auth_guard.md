@@ -1,4 +1,4 @@
-# Creating a Custom Auth Guard
+# Creating a custom auth guard
 
 The auth package enables you to create custom authentication guards for use cases not served by the built-in guards. In this guide, we will create a guard for using JWT tokens for authentication.
 

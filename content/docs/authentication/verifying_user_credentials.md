@@ -1,4 +1,4 @@
-# Verifying User Credentials
+# Verifying user credentials
 
 In an AdonisJS application, verifying user credentials is decoupled from the authentication layer. This ensures you can continue using the auth guards without limiting the options to verify the user credentials.
 

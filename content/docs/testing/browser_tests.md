@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Browser tests
-=======
-# Browser Tests
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 Browser tests are executed inside real browsers like Chrome, Firefox, or Safari. We make use of [Playwright](https://playwright.dev/) (a browser automation tool) for interacting with webpages programmatically.
 
@@ -289,10 +285,10 @@ await browserContext
 ## The route helper
 You may use the `route` helper from the TestContext to create a URL for a route. Using the route helper ensures that whenever you update your routes, you do not have to come back and fix all the URLs inside your tests.
 
-The `route` helper accepts the same set of arguments accepted by the global template method [route](../basics/routing.md#url-builder).
+The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#route).
 
 ```ts
-test('see list of users', async ({ visit, route }) => {
+test('see list of users', ({ visit, route }) => {
   const page = await visit(
     // highlight-start
     route('users.list')

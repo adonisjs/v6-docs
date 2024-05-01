@@ -1,4 +1,4 @@
-# RC File
+# RC file
 
 The `adonisrc.ts` file is used to configure the workspace settings of your application. In this file, you can [register providers](#providers), define [command aliases](#commandsaliases), specify the [files to copy](#metafiles) to the production build, and much more.
 

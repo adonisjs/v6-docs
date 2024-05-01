@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Console tests
-=======
-# Console Tests
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 Command-line tests refer to testing custom Ace commands that are part of your application or the package codebase.
 

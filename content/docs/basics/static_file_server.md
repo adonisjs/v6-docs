@@ -1,4 +1,4 @@
-# Static Files Server
+# Static files server
 
 You can serve static files from a given directory using the `@adonisjs/static` package. The package ships with a middleware that you must register in the [server middleware stack](middleware.md#server-middleware-stack) to intercept the HTTP requests and serve files.
 

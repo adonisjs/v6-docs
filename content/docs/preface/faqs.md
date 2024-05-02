@@ -39,6 +39,6 @@ Check out the following links to stay connected and up-to-date.
 
 - [Discord server](https://discord.gg/vDcEjq6)
 - [X (Formerly Twitter)](https://twitter.com/adonisframework)
-- [GitHub discussions](https://github.com/adonisjs/core/discussions)
+- [GitHub discussions](https://github.com/orgs/adonisjs/discussions)
 - [Blog and Newsletter](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
 - [Adocasts](https://adocasts.com/?referrer=adonisjs_docs_faq)

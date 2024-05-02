@@ -1,4 +1,4 @@
-# Http tests
+# HTTP tests
 
 HTTP tests refer to testing your application endpoints by making an actual HTTP request against them and asserting the response body, headers, cookies, session, etc.
 

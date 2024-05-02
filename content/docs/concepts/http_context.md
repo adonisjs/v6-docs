@@ -1,4 +1,4 @@
-# Http context
+# HTTP context
 
 A new instance of [HTTP Context class](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) is generated for every HTTP request and passed along to the route handler, middleware, and exception handler.
 
@@ -90,7 +90,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 }
 ```
 
-## Injecting Http Context using Dependency Injection
+## Injecting HTTP Context using Dependency Injection
 
 If you use Dependency injection throughout your application, you can inject the HTTP context to a class or a method by type hinting the `HttpContext` class.
 

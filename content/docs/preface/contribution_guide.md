@@ -32,11 +32,7 @@ Educating others is one of the best ways to contribute to any community and earn
 You can use the **📚 Cookbooks** category on our discussion forum to share an article with others. The cookbooks section is NOT strictly moderated, except the shared knowledge should be relevant to the project.
 
 ## Creating pull requests
-<<<<<<< HEAD
 It is never a good experience to have your pull request declined after investing a lot of time and effort in writing the code. Therefore, we highly recommend you to [kick off a discussion](https://github.com/orgs/adonisjs/discussions) before starting any new work on your side.
-=======
-It is never a good experience to have your pull request declined after investing a lot of time and effort in writing the code. Therefore, we highly recommend you to [kick off a discussion]() before starting any new work on your side.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 Just start a discussion and explain what are you planning to contribute?
 

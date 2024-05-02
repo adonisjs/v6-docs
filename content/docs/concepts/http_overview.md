@@ -1,4 +1,4 @@
-# Http overview
+# HTTP overview
 
 AdonisJS is primarily a web framework to create applications that respond to HTTP requests. In this guide, we will learn how AdonisJS boots the HTTP server, handles the incoming requests, and the modules available at the HTTP layer.
 

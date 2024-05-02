@@ -1,4 +1,4 @@
-# Http context
+# HTTP context
 
 A new instance of [HTTP Context class](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) is generated for every HTTP request and passed along to the route handler, middleware, and exception handler.
 

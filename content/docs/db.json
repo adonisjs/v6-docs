@@ -103,13 +103,13 @@
   },
   {
     "permalink": "concepts/http-overview",
-    "title": "Http overview",
+    "title": "HTTP overview",
     "contentPath": "./concepts/http_overview.md",
     "category": "Concepts"
   },
   {
     "permalink": "concepts/http-context",
-    "title": "Http context",
+    "title": "HTTP context",
     "contentPath": "./concepts/http_context.md",
     "category": "Concepts"
   },
@@ -337,7 +337,7 @@
   },
   {
     "permalink": "testing/http-tests",
-    "title": "Http tests",
+    "title": "HTTP tests",
     "contentPath": "./testing/http_tests.md",
     "category": "Testing"
   },

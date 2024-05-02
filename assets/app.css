@@ -88,6 +88,8 @@ html.dark {
   --accent-a10: var(--violet-a10);
   --accent-a11: var(--violet-a11);
   --accent-a12: var(--violet-a12);
+
+  color-scheme: dark;
 }
 
 .docs_sidebar_container nav {

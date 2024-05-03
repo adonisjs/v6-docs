@@ -98,7 +98,7 @@ You can access the flash message as follows inside an edge template.
 </form>
 ```
 
-You can also self-handle the `E_BAD_CSRF_TOKEN` exception inside the [global exception handler](../../basics/exception_handling.md#handling-exceptions) as follows.
+You can also self-handle the `E_BAD_CSRF_TOKEN` exception inside the [global exception handler](../basics/exception_handling.md#handling-exceptions) as follows.
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -211,7 +211,7 @@ cookieOptions
 
 <dd>
 
-Configuration for the `XSRF-TOKEN` cookie. [See cookies configuration](../../basics/cookies.md#configuration) for available options.
+Configuration for the `XSRF-TOKEN` cookie. [See cookies configuration](../basics/cookies.md#configuration) for available options.
 
 </dd>
 
@@ -345,7 +345,7 @@ const shieldConfig = defineConfig({
 ```
 
 ### Loading assets from the Vite Dev server
-If you are using the [Vite integration](../../basics/vite), you can use the following CSP keywords to allow assets served by the Vite Dev server.
+If you are using the [Vite integration](../basics/vite.md), you can use the following CSP keywords to allow assets served by the Vite Dev server.
 
 - The `@viteDevUrl` adds the Vite dev server URL to the allowed list.
 - The `@viteHmrUrl` adds the Vite HMR websocket server URL to the allowed list.

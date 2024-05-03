@@ -43,13 +43,15 @@ If you want to handle a specific exception differently, you can do that inside t
 ```ts
 import { errors } from '@vinejs/vine'
 
-async handle(error: unknown, ctx: HttpContext) {
-  if (error instanceof errors.E_VALIDATION_EXCEPTION) {
-    ctx.response.status(422).send(error.messages)
-    return
+export default class HttpExceptionHandler extends ExceptionHandler {
+  async handle(error: unknown, ctx: HttpContext) {
+    if (error instanceof errors.E_VALIDATION_EXCEPTION) {
+      ctx.response.status(422).send(error.messages)
+      return
+    }
+
+    return super.handle(error, ctx)
   }
-  
-  return super.handle(error, ctx)
 }
 ```
 

@@ -101,7 +101,7 @@ Ensure the `#middleware/container_bindings_middleware` middleware is registered 
 
 :::
 
-See also: [IoC container guide](../../concepts/dependency_injection)
+See also: [IoC container guide](../concepts/dependency_injection.md)
 
 ```ts
 // title: app/services/user_service.ts
@@ -332,7 +332,8 @@ import { HttpContext } from '@adonisjs/core/http'
 
 HttpContext.macro('aMethod', function (this: HttpContext) {
   return value
-}
+})
+
 HttpContext.getter('aProperty', function (this: HttpContext) {
   return value
 })
@@ -354,7 +355,8 @@ declare module '@adonisjs/core/http' {
 
 HttpContext.macro('aMethod', function (this: HttpContext) {
   return value
-}
+})
+
 HttpContext.getter('aProperty', function (this: HttpContext) {
   return value
 })

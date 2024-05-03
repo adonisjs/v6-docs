@@ -387,7 +387,7 @@ export default class PostPolicy extends BasePolicy {
 ```
 
 ### Dependency injection
-The policy classes are created using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
+The policy classes are created using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
 
 ```ts
 import { inject } from '@adonisjs/core'

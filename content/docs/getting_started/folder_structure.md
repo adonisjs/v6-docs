@@ -183,7 +183,7 @@ The `config` directory contains the runtime configuration files for your applica
 
 The framework's core and other installed packages read configuration files from this directory. You can also store config local to your application inside this directory.
 
-Learn more about [configuration management](../../getting-started/configuration).
+Learn more about [configuration management](./configuration.md).
 
 ```
 ├── config

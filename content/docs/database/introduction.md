@@ -1,6 +1,6 @@
 # SQL and ORMs
 
-SQL databases are popular for storing the application's data in persistent storage. You can use any libraries and ORMS to make SQL queries inside an AdonisJS application.
+SQL databases are popular for storing the application's data in persistent storage. You can use any libraries and ORMs to make SQL queries inside an AdonisJS application.
 
 However, the AdonisJS core team [has created/maintains Lucid](https://lucid.adonisjs.com/docs/introduction). Lucid is a SQL query builder and an Active Record ORM built on top of [Knex](https://knexjs.org/). We created Lucid back in 2016 and maintain it to date.
 

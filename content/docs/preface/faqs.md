@@ -14,7 +14,7 @@ AdonisJS (the framework) and the official packages are distributed under the [MI
 
 ## Is AdonisJS reliable and well-maintained?
 
-AdonisJS is used in production by [Marie Claire](https://www.marieclaire.com/), [Cleavr](https://cleavr.io), [Ledger](https://www.ledger.com/), [Cavai](https://cavai.com), [Kayako](https://kayako.com), [Renault Group](https://www.renaultgroup.com/en/), [Zakodium](https://www.zakodium.com/), [FIVB](https://www.fivb.com/en), and many more companies in varying capacities.
+AdonisJS is used in production by [Marie Claire](https://www.marieclaire.com/), [Cleavr](https://cleavr.io), [Ledger](https://www.ledger.com/), [Cavai](https://cavai.com), [Kayako](https://kayako.com), [Renault Group](https://www.renaultgroup.com/en/), [Zakodium](https://www.zakodium.com/), [FIVB](https://www.fivb.com), and many more companies in varying capacities.
 
 The framework creator works full-time on AdonisJS and ensures the framework is actively improved and maintained.
 

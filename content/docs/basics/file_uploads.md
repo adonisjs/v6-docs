@@ -1,6 +1,6 @@
 # File uploads
 
-AdonisJS has first-class support for processing user-uploaded files sent using the `multipart/form-data` content type. The files are auto-processed using the [bodyparser middleware](../../basics/body_parser#multipart-parser) and saved inside your operating system's `tmp` directory.
+AdonisJS has first-class support for processing user-uploaded files sent using the `multipart/form-data` content type. The files are auto-processed using the [bodyparser middleware](../basics/body_parser.md#multipart-parser) and saved inside your operating system's `tmp` directory.
 
 Later, inside your controllers, you may access the files, validate them and move them to a persistent location or a cloud storage service like S3.
 
@@ -113,7 +113,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import { updateAvatarValidator } from '#validators/user_validator'
 
 export default class UserAvatarsController {
-  update({ request }: HttpContext) {
+  async update({ request }: HttpContext) {
     // highlight-start
     const { avatar } = await request.validateUsing(
       updateAvatarValidator
@@ -184,22 +184,22 @@ await auth.user.save()
 
 Following is the list of properties you may access on the [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts) instance.
 
-| Property | Description |
-|---------|------------|
-| `fieldName` | The name of the HTML input field. |
-| `clientName` | The file name on the user's computer. |
-| `size` | The size of the file in bytes.  |
-| `extname` | The file extname |
-| `errors` | An array of errors associated with a given file. |
-| `type` | The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of the file |
-| `subtype` | The [mime subtype](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of the file. |
-| `filePath` | The absolute path to the file after the `move` operation. |
-| `fileName` | The file name after the `move` operation. |
-| `tmpPath` | The absolute path to the file inside the `tmp` directory. |
-| `meta` | Metadata associated with the file as a key-value pair. The object is empty by default. |
-| `validated` | A boolean to know if the file has been validated. |
-| `isValid` | A boolean to know if the file has passed the validation rules. |
-| `hasErrors` | A boolean to know if one or more errors are associated with a given file. |
+| Property     | Description                                                                                                  |
+|--------------|--------------------------------------------------------------------------------------------------------------|
+| `fieldName`  | The name of the HTML input field.                                                                            |
+| `clientName` | The file name on the user's computer.                                                                        |
+| `size`       | The size of the file in bytes.                                                                               |
+| `extname`    | The file extname                                                                                             |
+| `errors`     | An array of errors associated with a given file.                                                             |
+| `type`       | The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of the file     |
+| `subtype`    | The [mime subtype](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of the file. |
+| `filePath`   | The absolute path to the file after the `move` operation.                                                    |
+| `fileName`   | The file name after the `move` operation.                                                                    |
+| `tmpPath`    | The absolute path to the file inside the `tmp` directory.                                                    |
+| `meta`       | Metadata associated with the file as a key-value pair. The object is empty by default.                       |
+| `validated`  | A boolean to know if the file has been validated.                                                            |
+| `isValid`    | A boolean to know if the file has passed the validation rules.                                               |
+| `hasErrors`  | A boolean to know if one or more errors are associated with a given file.                                    |
 
 ## Serving files
 

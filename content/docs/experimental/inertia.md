@@ -159,7 +159,7 @@ createInertiaApp({
 })
 ```
 
-```ts
+```tsx
 // title: React
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
@@ -549,7 +549,7 @@ export class UsersController {
   index() {
     return inertia.render('users/index', {
       users: [
-        { id: 1, name: 'julien' }
+        { id: 1, name: 'julien' },
         { id: 2, name: 'virk' },
         { id: 3, name: 'romain' },
       ]
@@ -666,7 +666,7 @@ export default function render(page) {
 }
 ```
 
-```ts
+```tsx
 // title: React
 import ReactDOMServer from 'react-dom/server'
 import { createInertiaApp } from '@inertiajs/react'
@@ -700,7 +700,7 @@ export default function render(page) {
 }
 ```
 
-```ts
+```tsx
 // title: Solid
 import { hydrate } from 'solid-js/web'
 import { createInertiaApp } from 'inertia-adapter-solid'

@@ -94,7 +94,7 @@ In a typical AdonisJS application, the `boot` method is called by the [Ignitor](
 
 Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](rc_file#preloads).
 
-![](server_boot_lifecycle.png)
+![](./server_boot_lifecycle.png)
 
 ## HTTP request lifecycle
 Now that we have an HTTP server listening for incoming requests. Let's see how AdonisJS handles a given HTTP request.

@@ -19,11 +19,11 @@ All the below-mentioned tools come pre-installed as development dependencies wit
 
 - **[SWC](https://swc.rs/)** is a TypeScript compiler written in Rust. We use it during development with TS Node to make the JIT process extremely fast.
 
-| Tool | Used for | Type checking |
-|------|---------|------------|
-| `TSC` | Creating production build | Yes |
-| `TS Node` | Development | No |
-| `SWC` | Development | No |
+| Tool      | Used for                  | Type checking |
+|-----------|---------------------------|---------------|
+| `TSC`     | Creating production build | Yes           |
+| `TS Node` | Development               | No            |
+| `SWC`     | Development               | No            |
 
 ## Executing TypeScript files without compilation
 
@@ -100,7 +100,7 @@ The production build of your AdonisJS application is created using the `node ace
 - Rewrite the `ace.js` file **from scratch** to remove the `ts-node/esm` loader. 
 - Compile frontend assets using Vite (if configured).
 - Compile TypeScript source code to JavaScript using [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html).
-- Copy non-TypeScript files registered under the [`metaFiles`](../../concepts/rc_file#metafiles) array to the `./build` folder.
+- Copy non-TypeScript files registered under the [`metaFiles`](../concepts/rc_file.md#metafiles) array to the `./build` folder.
 - Copy the `package.json` and `package-lock.json/yarn.lock` files to the `./build` folder.
 
 :::warning

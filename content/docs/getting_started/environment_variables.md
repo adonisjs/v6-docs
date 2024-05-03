@@ -90,7 +90,7 @@ export default await Env.create(APP_ROOT, {
 ### Static-type information
 The same validation rules are used to infer the static-type information. The type information is available when using the env module.
 
-![](env_intellisense.jpeg)
+![](./env_intellisense.jpeg)
 
 ## Validator schema API
 
@@ -196,7 +196,7 @@ The `schema.enum` method validates the environment variable against one of the p
 }
 
 // Using native enums
-enum NODE_ENV = {
+enum NODE_ENV {
   development = 'development',
   production = 'production'
 }

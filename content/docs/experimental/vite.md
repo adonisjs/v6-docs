@@ -2,7 +2,7 @@
 
 :::warning
 
-This documentation targets the new experimental version of our Vite integration ( 3.x.x ). If you use an older version, please refer to the [Vite 2.x.x documentation](../../basics/vite). 
+This documentation targets the new experimental version of our Vite integration ( 3.x.x ). If you use an older version, please refer to the [Vite 2.x.x documentation](../basics/vite.md). 
 
 :::
 

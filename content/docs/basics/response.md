@@ -260,7 +260,7 @@ response.redirect().withQs().back()
 You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and trigger the [exception handling](exception_handling.md) flow.
 
 ```ts
-router.get('posts/:id/edit', ({ response, auth, params }) => {
+router.get('posts/:id/edit', async ({ response, auth, params }) => {
   const post = await Post.findByOrFail(params.id)
 
   if (!auth.user.can('editPost', post)) {

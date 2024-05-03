@@ -102,7 +102,7 @@ routeHandlerModifier
 
 A function that is called before registering transmit routes. It receives the route instance. Use this function to add custom middleware or modify the route handler.
 
-For example, you can use the [`Rate Limiter`](../../security/rate_limiting) and auth middleware to avoid abuse of some transmit route.
+For example, you can use the [`Rate Limiter`](../security/rate_limiting.md) and auth middleware to avoid abuse of some transmit route.
 
 ```ts
 import { defineConfig } from '@adonisjs/transmit'

@@ -26,7 +26,7 @@ node ace add @adonisjs/lock
     }
     ```
 
-2. Create the `config/lock.ts` file.
+3. Create the `config/lock.ts` file.
 
 4. Define the following environment variable alongside its validation inside the `start/env.ts` file.
    ```ts
@@ -153,6 +153,8 @@ Following is the list of options the database store accepts:
 connectionName
 
 </dt>
+
+<dd>
 
 Reference to the database connection defined within the `config/database.ts` file. If not defined, we will use the default database connection.
 
@@ -328,7 +330,7 @@ export class ProcessOrder {
     /**
      * We are restoring the lock from the serialized version
      */
-    const lock = locks.restoreLock(lock)
+    const handle = locks.restoreLock(lock)
 
     /**
      * Process the order
@@ -338,7 +340,7 @@ export class ProcessOrder {
     /**
      * Release the lock
      */
-    await lock.release()
+    await handle.release()
   }
 }
 ```

@@ -307,7 +307,7 @@ vine.withMetaData<{ userId: number }>((meta) => {
 ```
 
 ## Configuring VineJS
-You may create a [preload file](../../concepts/rc_file#preloads) inside the `start` directory to configure VineJS with custom error messages or use a custom error reporter.
+You may create a [preload file](../concepts/rc_file.md#preloads) inside the `start` directory to configure VineJS with custom error messages or use a custom error reporter.
 
 ```sh
 node ace make:preload validator

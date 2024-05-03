@@ -33,7 +33,7 @@ Once you have defined the event listener, you can emit the `user:registered` eve
 import emitter from '@adonisjs/core/services/emitter'
 
 export default class UsersController {
-  store() {
+  async store() {
     const user = await User.create(data)
     emitter.emit('user:registered', user)
   }
@@ -130,7 +130,7 @@ You cannot inject the `HttpContext` inside a listener class. Because events are 
 
 :::
 
-The listener classes are instantiated using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
+The listener classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
 
 In the following example, we type-hint the `TokensService` as a constructor argument. When invoking this listener, the IoC container will inject an instance of the `TokensService` class.
 
@@ -226,7 +226,7 @@ import User from '#models/user'
 import UserRegistered from '#events/user_registered'
 
 export default class UsersController {
-  store() {
+  async store() {
     const user = await User.create(data)
     
     /**

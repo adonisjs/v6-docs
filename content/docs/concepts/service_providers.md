@@ -2,7 +2,7 @@
 
 Services providers are plain JavaScript classes with lifecycle methods to perform actions during different phases of the application.
 
-A service provider can register [bindings into the container](../../concepts/dependency_injection#container-bindings), [extend existing bindings](../../concepts/dependency_injection#container-events), or run actions after the HTTP server starts.
+A service provider can register [bindings into the container](../concepts/dependency_injection.md#container-bindings), [extend existing bindings](../concepts/dependency_injection.md#container-events), or run actions after the HTTP server starts.
 
 Service providers are the entry point to an AdonisJS application with the ability to modify the application state before it is considered ready.
 

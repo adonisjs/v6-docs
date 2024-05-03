@@ -1,5 +1,44 @@
 # Mail
 
+You can send emails from your AdonisJS application using the `@adonisjs/mail` package. The mail package is built on top of [Nodemailer](https://nodemailer.com/), bringing the following quality of life improvements over Nodemailer.
+
+- Fluent API to configure mail messages.
+- Ability to define emails as classes for better organization and easier testing.
+- An extensive suite of officially maintained transports. It includes `smtp`, `ses`, `mailgun`, `sparkpost`, `resend`, and `brevo`.
+- Improved testing experience using the Fakes API.
+- Mail messenger to queue emails.
+- Functional APIs to generate calendar events.
+
+## Installation
+
+Install and configure the package using the following command :
+
+```sh
+node ace add @adonisjs/mail
+
+# Pre-define transports to use via CLI flag
+node ace add @adonisjs/mail --transports=resend --transports=smtp
+```
+
+:::disclosure{title="See steps performed by the add command"}
+
+1. Installs the `@adonisjs/mail` package using the detected package manager.
+
+2. Registers the following service provider and command inside the `adonisrc.ts` file.
+
+    ```ts
+    {
+      commands: [
+        // ...other commands
+        () => import('@adonisjs/mail/commands')
+      ],
+      providers: [
+        // ...other providers
+        () => import('@adonisjs/mail/mail_provider')
+      ]
+    }
+    ```
+3. Create the `config/mail.ts` file.
 
 4. Defines the environment variables and their validations for the selected mail services
 
@@ -449,11 +488,11 @@ mail.use('mailgun')
 ```
 
 ## Configuring the template engine
-By default, the mail package is configured to use the [Edge template engine](../../views-and-templates/introduction#configuring-edge) for defining the email **HTML** and **Plain text** contents.
+By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.§
 
 However, as shown in the following example, you may also register a custom template engine by overriding the `Message.templateEngine` property.
 
-See also: [Defining email contents](message.md#defining-email-contents)
+See also: [Defining email contents](#defining-email-contents)
 
 ```ts
 import { Message } from '@adonisjs/mail'
@@ -466,7 +505,7 @@ Message.templateEngine = {
 ```
 
 ## Events
-Please check the [events reference guide](../../api-references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
+Please check the [events reference guide](../api-references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
 
 ## Configuring message
 
@@ -609,7 +648,7 @@ await mail.send((message) => {
 
 #### Using Edge templates
 
-Since writing inline content could be cumbersome, you may use Edge templates instead. If you have already [configured Edge](../../views-and-templates/introduction#configuring-edge), you may use the `message.htmlView` and `message.textView` methods to render templates.
+Since writing inline content could be cumbersome, you may use Edge templates instead. If you have already [configured Edge](../views-and-templates/introduction.md#configuring-edge), you may use the `message.htmlView` and `message.textView` methods to render templates.
 
 ```sh
 // title: Create templates
@@ -897,7 +936,7 @@ Instead of writing emails inside the `mail.send` method closure, you may move th
 
 The mail classes are stored inside the `./app/mails` directory, and each file represents a single email. You may create a mail class by running the `make:mail` ace command.
 
-See also: [Make mail command](../../api-references/commands.md#makemail)
+See also: [Make mail command](../api-references/commands.md#makemail)
 
 ```sh
 node ace make:mail verify_email
@@ -1158,7 +1197,7 @@ mails.assertSent(VerifyEmailNotification)
 
 You may pass a callback function to the `assertSent` method to further check if the email was sent to the expected recipient or has correct subject.
 
-The callback function receives an instance of the mail class and you can use the `.message` property to get access to the [message](message.md) object.
+The callback function receives an instance of the mail class and you can use the `.message` property to get access to the [message](#configuring-message) object.
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {

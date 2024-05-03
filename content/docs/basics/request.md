@@ -45,7 +45,7 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 
 ## Request body
 
-AdonisJS parses the request body using the [bodyparser middleware](../../basics/body_parser) registered inside the `start/kernel.ts` file.
+AdonisJS parses the request body using the [body-parser middleware](../basics/body_parser.md) registered inside the `start/kernel.ts` file.
 
 You can access the request body using the `request.body()` method. It returns the parsed request body as an object.
 
@@ -254,7 +254,7 @@ router.get('/', async ({ request }) => {
 Following is the complete list of content negotiation methods.
 
 | Method    | HTTP header in use                                                                           |
-| --------- | -------------------------------------------------------------------------------------------- |
+|-----------|----------------------------------------------------------------------------------------------|
 | types     | [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept)                   |
 | languages | [Accept-language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) |
 | encodings | [Accept-encoding](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) |

@@ -44,7 +44,7 @@ router.get('users', [UsersController, 'index'])
 As you might have noticed, we do not create an instance of the controller class and instead pass it directly to the route. Doing so allows AdonisJS to:
 
 - Create a fresh instance of the controller for each request.
-- And also construct the class using the [IoC container](../../concepts/dependency_injection), which allows you to leverage automatic dependency injection.
+- And also construct the class using the [IoC container](../concepts/dependency_injection.md), which allows you to leverage automatic dependency injection.
 
 :::caption{for="error"}
 
@@ -127,7 +127,7 @@ Using magic strings is subjective, and you can decide if you want to use them pe
 
 ## Dependency injection
 
-The controller classes are instantiated using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
+The controller classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
 
 Given you have a `UserService` class, you can inject an instance of it inside the controller as follows.
 
@@ -157,7 +157,7 @@ export default class UsersController {
 
 ### Method injection
 
-You can inject an instance of `UserService` directly inside the controller method using [method injection](../../concepts/dependency_injection#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
+You can inject an instance of `UserService` directly inside the controller method using [method injection](../concepts/dependency_injection.md#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
 
 The first parameter passed to the controller method is always the HttpContext. Therefore, you must type-hint the `UserService` as the second parameter.
 
@@ -267,7 +267,7 @@ router.resource('posts', PostsController)
 
 Following is the list of routes registered by the `resource` method. You can view this list by running `node ace list:routes` command.
 
-![](post_resource_routes_list.png)
+![](./post_resource_routes_list.png)
 
 ### Nested resources
 
@@ -279,7 +279,7 @@ In the following example, we create routes for the `comments` resource nested un
 router.resource('posts.comments', CommentsController)
 ```
 
-![](post_comments_resource_routes_list.png)
+![](./post_comments_resource_routes_list.png)
 
 ### Shallow resources
 
@@ -296,14 +296,14 @@ A shallow resource registers its routes by keeping the URL structure flat (where
 router.shallowResource('posts.comments', CommentsController)
 ```
 
-![](shallow_routes_list.png)
+![](./shallow_routes_list.png)
 
 ### Naming resource routes
 
 The routes created using the `router.resource` method are named after the resource name and the controller action. First, we convert the resource name to snake case and concatenate the action name using the dot `.` separator.
 
 | Resource         | Action name | Route name               |
-| ---------------- | ----------- | ------------------------ |
+|------------------|-------------|--------------------------|
 | posts            | index       | `posts.index`            |
 | userPhotos       | index       | `user_photos.index`      |
 | group-attributes | show        | `group_attributes.index` |
@@ -365,7 +365,7 @@ router.resource('posts', PostsController).params({
 The above change will generate the following routes _(showing partial list)_.
 
 | HTTP method | Route               | Controller method |
-| ----------- | ------------------- | ----------------- |
+|-------------|---------------------|-------------------|
 | GET         | `/posts/:post`      | show              |
 | GET         | `/posts/:post/edit` | edit              |
 | PUT         | `/posts/:post`      | update            |

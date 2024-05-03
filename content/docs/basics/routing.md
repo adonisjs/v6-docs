@@ -31,7 +31,7 @@ node ace list:routes
 
 Also, you can see the routes list from the VSCode activity bar, if you are using our [official VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension).
 
-![](vscode_routes_list.png)
+![](./vscode_routes_list.png)
 
 ## Route params
 
@@ -47,11 +47,11 @@ router.get('/posts/:id', ({ params }) => {
 })
 ```
 
-| URL               | Id        |
-| ----------------- | --------- |
-| `‌/posts/1`       | `1`       |
-| `‌/posts/100`     | `100`     |
-| `‌/posts/foo-bar` | `foo-bar` |
+| URL              | Id        |
+|------------------|-----------|
+| `/posts/1`       | `1`       |
+| `/posts/100`     | `100`     |
+| `/posts/foo-bar` | `foo-bar` |
 
 A URI can also accept multiple params. Each param should have a unique name.
 
@@ -64,10 +64,10 @@ router.get('/posts/:id/comments/:commentId', ({ params }) => {
 })
 ```
 
-| URL                           | Id        | Comment Id |
-| ----------------------------- | --------- | ---------- |
-| `‌/posts/1/comments/4`        | `1`       | `4`        |
-| `‌/posts/foo-bar/comments/22` | `foo-bar` | `22`       |
+| URL                          | Id        | Comment Id |
+|------------------------------|-----------|------------|
+| `/posts/1/comments/4`        | `1`       | `4`        |
+| `/posts/foo-bar/comments/22` | `foo-bar` | `22`       |
 
 ### Optional params
 
@@ -99,7 +99,7 @@ router.get('/docs/:category/*', ({ params }) => {
 ```
 
 | URL                  | Category | Wildcard param   |
-| -------------------- | -------- | ---------------- |
+|----------------------|----------|------------------|
 | `/docs/http/context` | `http`   | `['context']`    |
 | `/docs/api/sql/orm`  | `api`    | `['sql', 'orm']` |
 
@@ -245,7 +245,7 @@ router
 
 ## Route identifier
 
-Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](../old/http/url_builder.md) or redirect to a route using the [response.redirect](response.md#redirects) method.
+Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [response.redirect](response.md#redirects) method.
 
 By default, the route pattern is the route identifier. However, you can assign a unique, memorable name to the route using the `route.as` method.
 
@@ -754,7 +754,7 @@ router
 
 You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
 
-See also: [Edge helpers reference](../reference/edge.md#routesignedroute)
+See also: [Edge helpers reference](../api-references/edge.md#routesignedroute)
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">

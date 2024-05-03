@@ -81,25 +81,25 @@ Request.getter('hasRequestId', function (this: Request) {
 
 Following is the list of classes that can be extended using Macros and getters.
 
-| Class | Import path |
-|------|------------|
-| [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) | `@adonisjs/core/app` |
-| [Request](https://github.com/adonisjs/http-server/blob/main/src/request.ts) | `@adonisjs/core/http` |
-| [Response](https://github.com/adonisjs/http-server/blob/main/src/response.ts) | `@adonisjs/core/http` |
-| [HttpContext](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) | `@adonisjs/core/http` |
-| [Route](https://github.com/adonisjs/http-server/blob/main/src/router/route.ts) | `@adonisjs/core/http` |
-| [RouteGroup](https://github.com/adonisjs/http-server/blob/main/src/router/group.ts) | `@adonisjs/core/http` |
-| [RouteResource](https://github.com/adonisjs/http-server/blob/main/src/router/resource.ts) | `@adonisjs/core/http` |
-| [BriskRoute](https://github.com/adonisjs/http-server/blob/main/src/router/brisk.ts) | `@adonisjs/core/http` |
-| [ExceptionHandler](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts) | `@adonisjs/core/http` |
-| [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts) | `@adonisjs/core/bodyparser` |
+| Class                                                                                          | Import path                 |
+|------------------------------------------------------------------------------------------------|-----------------------------|
+| [Application](https://github.com/adonisjs/application/blob/main/src/application.ts)            | `@adonisjs/core/app`        |
+| [Request](https://github.com/adonisjs/http-server/blob/main/src/request.ts)                    | `@adonisjs/core/http`       |
+| [Response](https://github.com/adonisjs/http-server/blob/main/src/response.ts)                  | `@adonisjs/core/http`       |
+| [HttpContext](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts)      | `@adonisjs/core/http`       |
+| [Route](https://github.com/adonisjs/http-server/blob/main/src/router/route.ts)                 | `@adonisjs/core/http`       |
+| [RouteGroup](https://github.com/adonisjs/http-server/blob/main/src/router/group.ts)            | `@adonisjs/core/http`       |
+| [RouteResource](https://github.com/adonisjs/http-server/blob/main/src/router/resource.ts)      | `@adonisjs/core/http`       |
+| [BriskRoute](https://github.com/adonisjs/http-server/blob/main/src/router/brisk.ts)            | `@adonisjs/core/http`       |
+| [ExceptionHandler](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts) | `@adonisjs/core/http`       |
+| [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts)        | `@adonisjs/core/bodyparser` |
 
 
 ## Extending modules
 Most of the AdonisJS modules provide extensible APIs to register custom implementations. Following is an aggregated list of the same.
 
 - [Creating Hash driver](../security/hashing#creating-a-custom-hash-driver)
-- [Creating Session driver](../basics/session.md#creating-a-custom-session-driver)
+- [Creating Session driver](../basics/session.md#creating-a-custom-session-store)
 - [Creating Social auth driver](../authentication/social_authentication#creating-a-custom-social-driver)
 - [Extending REPL](../digging_deeper/repl.md#adding-custom-methods-to-repl)
 - [Creating i18n translations loader](../digging_deeper/i18n.md#creating-a-custom-translation-loader)

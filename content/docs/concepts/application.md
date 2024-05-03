@@ -45,12 +45,12 @@ console.log(app.nodeEnvironment)
 ```
 
 | NODE_ENV | Normalized to |
-|------------|----------------|
-| dev | development |
-| develop | development |
-| stage | staging |
-| prod | production |
-| testing | test |
+|----------|---------------|
+| dev      | development   |
+| develop  | development   |
+| stage    | staging       |
+| prod     | production    |
+| testing  | test          |
 
 Also, you can use the following properties as a shorthand to know the current environment.
 

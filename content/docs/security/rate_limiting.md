@@ -598,7 +598,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import limiter from '@adonisjs/limiter/services/main'
 
 export default class SessionController {
-  store({ request, response, session }: HttpContext) {
+  async store({ request, response, session }: HttpContext) {
     const { email, password } = request.only(['email', 'passwords'])
 
     /**

@@ -1,6 +1,5 @@
 # Mail
 
-<<<<<<< HEAD
 You can send emails from your AdonisJS application using the `@adonisjs/mail` package. The mail package is built on top of [Nodemailer](https://nodemailer.com/), bringing the following quality of life improvements over Nodemailer.
 
 - Fluent API to configure mail messages.
@@ -40,8 +39,6 @@ node ace add @adonisjs/mail --transports=resend --transports=smtp
     }
     ```
 3. Create the `config/mail.ts` file.
-=======
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 4. Defines the environment variables and their validations for the selected mail services
 
@@ -491,19 +488,11 @@ mail.use('mailgun')
 ```
 
 ## Configuring the template engine
-<<<<<<< HEAD
 By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.§
 
 However, as shown in the following example, you may also register a custom template engine by overriding the `Message.templateEngine` property.
 
 See also: [Defining email contents](#defining-email-contents)
-=======
-By default, the mail package is configured to use the [Edge template engine](../../views-and-templates/introduction#configuring-edge) for defining the email **HTML** and **Plain text** contents.
-
-However, as shown in the following example, you may also register a custom template engine by overriding the `Message.templateEngine` property.
-
-See also: [Defining email contents](message.md#defining-email-contents)
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import { Message } from '@adonisjs/mail'
@@ -516,11 +505,7 @@ Message.templateEngine = {
 ```
 
 ## Events
-<<<<<<< HEAD
-Please check the [events reference guide](../references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
-=======
-Please check the [events reference guide](../../api-references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
->>>>>>> a7aa500 (docs: first draft of new structure)
+Please check the [events reference guide](../api-references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
 
 ## Configuring message
 
@@ -663,11 +648,7 @@ await mail.send((message) => {
 
 #### Using Edge templates
 
-<<<<<<< HEAD
 Since writing inline content could be cumbersome, you may use Edge templates instead. If you have already [configured Edge](../views-and-templates/introduction.md#configuring-edge), you may use the `message.htmlView` and `message.textView` methods to render templates.
-=======
-Since writing inline content could be cumbersome, you may use Edge templates instead. If you have already [configured Edge](../../views-and-templates/introduction#configuring-edge), you may use the `message.htmlView` and `message.textView` methods to render templates.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 // title: Create templates
@@ -955,11 +936,7 @@ Instead of writing emails inside the `mail.send` method closure, you may move th
 
 The mail classes are stored inside the `./app/mails` directory, and each file represents a single email. You may create a mail class by running the `make:mail` ace command.
 
-<<<<<<< HEAD
-See also: [Make mail command](../references/commands.md#makemail)
-=======
-See also: [Make mail command](../../api-references/commands.md#makemail)
->>>>>>> a7aa500 (docs: first draft of new structure)
+See also: [Make mail command](../api-references/commands.md#makemail)
 
 ```sh
 node ace make:mail verify_email
@@ -1220,11 +1197,7 @@ mails.assertSent(VerifyEmailNotification)
 
 You may pass a callback function to the `assertSent` method to further check if the email was sent to the expected recipient or has correct subject.
 
-<<<<<<< HEAD
 The callback function receives an instance of the mail class and you can use the `.message` property to get access to the [message](#configuring-message) object.
-=======
-The callback function receives an instance of the mail class and you can use the `.message` property to get access to the [message](message.md) object.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {

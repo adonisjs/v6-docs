@@ -166,23 +166,13 @@ export default class {{ modelName }}Resource {
 ### Global variables
 The following global variables are always shared with a stub.
 
-<<<<<<< HEAD
 | Variable       | Description                                                                                                                                                         |
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `app`          | Reference to an instance of the [application class](application.md).                                                                                                |
 | `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts).                                                          |
-| `randomString` | Reference to the [randomString](../references/helpers.md#random) helper function.                                                                               |
-| `string`       | A function to create a [string builder](../references/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |
-| `flags`        | The command-line flags are defined when running the ace command.                                                                                                    |
-=======
-| Variable       | Description                                                                                                                                         |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `app`          | Reference to an instance of the [application class](application.md).                                                                |
-| `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts).                                          |
 | `randomString` | Reference to the [randomString](../api-references/helpers.md#random) helper function.                                                                               |
 | `string`       | A function to create a [string builder](../api-references/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |
-| `flags`        | The command-line flags are defined when running the ace command.                                                                              |
->>>>>>> a7aa500 (docs: first draft of new structure)
+| `flags`        | The command-line flags are defined when running the ace command.                                                                                                    |
 
 
 ## Ejecting stubs
@@ -274,7 +264,7 @@ You can find a package's stubs by visiting its GitHub repo. We store all the stu
 ## Stubs execution flow
 Here's a visual representation of how we find and execute stubs via the `makeUsingStub` method.
 
-![](scaffolding_workflow.png)
+![](./scaffolding_workflow.png)
 
 ## Codemods API
 The codemods API is powered by [ts-morph](https://github.com/dsherret/ts-morph) and is only available during development. You can lazily instantiate the codemods module using the `command.createCodemods` method. The `createCodemods` method returns an instance of the [Codemods](https://github.com/adonisjs/core/blob/main/modules/ace/codemods.ts) class.

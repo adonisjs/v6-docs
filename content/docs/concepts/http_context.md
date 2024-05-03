@@ -101,11 +101,7 @@ Ensure the `#middleware/container_bindings_middleware` middleware is registered 
 
 :::
 
-<<<<<<< HEAD
 See also: [IoC container guide](../concepts/dependency_injection.md)
-=======
-See also: [IoC container guide](../../concepts/dependency_injection)
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 // title: app/services/user_service.ts

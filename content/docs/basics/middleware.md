@@ -66,11 +66,7 @@ router.named({
 
 Middleware are stored inside the `./app/middleware` directory, and you can create a new middleware file by running the `make:middleware` ace command.
 
-<<<<<<< HEAD
-See also: [Make middleware command](../references/commands.md#makemiddleware)
-=======
 See also: [Make middleware command](../api-references/commands.md#makemiddleware)
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:middleware user_location
@@ -204,11 +200,7 @@ router.get('payments', () => {}).use(
 
 ## Dependency injection 
 
-<<<<<<< HEAD
 Middleware classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the middleware constructor, and the container will inject them for you.
-=======
-Middleware classes are instantiated using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint dependencies inside the middleware constructor, and the container will inject them for you.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 Given you have a `GeoIpService` class to look up user location from the request IP, you can inject it into the middleware using the `@inject` decorator.
 
@@ -247,7 +239,7 @@ The middleware layer of AdonisJS is built on top of [Chain of Responsibility](ht
 - The downstream phase is the block of code you write before calling the `next` method. In this phase, you handle the request.
 - The upstream phase is the block of code you might write after calling the `next` method. In this phase, you can inspect the response or change it completely. 
 
-![](middleware_flow.jpeg)
+![](./middleware_flow.jpeg)
 
 ## Middleware and exception handling
 

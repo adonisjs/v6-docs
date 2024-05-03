@@ -85,7 +85,7 @@ Finally, let's run the above test using the `test` command. You may use the `--w
 node ace test browser
 ```
 
-![](browser_tests_output.jpeg)
+![](./browser_tests_output.jpeg)
 
 ## Reading/writing cookies
 When testing inside a real browser, the cookies are persisted throughout the lifecycle of a [browser context](https://playwright.dev/docs/api/class-browsercontext). 
@@ -285,10 +285,10 @@ await browserContext
 ## The route helper
 You may use the `route` helper from the TestContext to create a URL for a route. Using the route helper ensures that whenever you update your routes, you do not have to come back and fix all the URLs inside your tests.
 
-The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#route).
+The `route` helper accepts the same set of arguments accepted by the global template method [route](../basics/routing.md#url-builder).
 
 ```ts
-test('see list of users', ({ visit, route }) => {
+test('see list of users', async ({ visit, route }) => {
   const page = await visit(
     // highlight-start
     route('users.list')

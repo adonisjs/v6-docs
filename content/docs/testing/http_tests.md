@@ -367,11 +367,7 @@ await client
 ```
 
 ## Making a request with a CSRF token
-<<<<<<< HEAD
 If forms in your application use [CSRF protection](../security/securing_ssr_applications.md), you may use the `withCsrfToken` method to generate a CSRF token and pass it as a header during the request.
-=======
-If forms in your application use [CSRF protection](../../security/securing_ssr_applications), you may use the `withCsrfToken` method to generate a CSRF token and pass it as a header during the request.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 Before using the `withCsrfToken` method, register the following Japa plugins inside the `tests/bootstrap.ts` file and also make sure to [switch the `SESSION_DRIVER` env variable](#setup-1) to `memory`.
 

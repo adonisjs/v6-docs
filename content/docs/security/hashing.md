@@ -1,10 +1,6 @@
 # Hashing
 
-<<<<<<< HEAD
 You may hash user passwords in your application using the `hash` service. AdonisJS has first-class support for `bcrypt`, `scrypt`, and `argon2` hashing algorithms and the ability to [add custom drivers](#creating-a-custom-hash-driver).
-=======
-You may hash user passwords in your application using the `hash` service. AdonisJS has first-class support for `bcrypt`, `scrypt`, and `argon2` hashing algorithms and the ability to [add custom drivers](../concepts/extending_the_framework.md#creating-a-hash-driver).
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 The hashed values are stored in [PHC string format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md). PHC is a deterministic encoding specification for formatting hashes.
 

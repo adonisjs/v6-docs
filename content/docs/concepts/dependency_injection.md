@@ -344,7 +344,7 @@ import { inject } from '@adonisjs/core'
 
 export default class UsersController {
   @inject()
-  index(, service: UserService) {}
+  index(service: UserService) {}
 }
 ```
 

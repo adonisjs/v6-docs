@@ -7,11 +7,7 @@ AdonisJS uses [Vite](https://vitejs.dev/) to bundle the frontend assets of your 
 - Edge helpers and tags to generate URLs for assets processed by Vite.
 
 ## Installation
-<<<<<<< HEAD
 Vite comes pre-configured with the [web starter kit](../getting_started/installation.md#web-starter-kit). However, you can follow the below instructions to configure it inside an existing AdonisJS project.
-=======
-Vite comes pre-configured with the [web starter kit](../getting_started/installation.md#web-starter-kit-spannot-ready-yetclassbadge). However, you can follow the below instructions to configure it inside an existing AdonisJS project.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 Install and configure the package using the following command :
 
@@ -249,7 +245,7 @@ You can start your application as usual, and AdonisJS will automatically start t
 node ace serve --hmr
 ```
 
-![](vite-dev-server.png)
+![](./vite-dev-server.png)
 
 You may pass CLI arguments to the Vite dev server using the `--assets-args` commandline flag.
 

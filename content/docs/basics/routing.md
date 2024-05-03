@@ -31,7 +31,7 @@ node ace list:routes
 
 Also, you can see the routes list from the VSCode activity bar, if you are using our [official VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension).
 
-![](vscode_routes_list.png)
+![](./vscode_routes_list.png)
 
 ## Route params
 
@@ -245,11 +245,7 @@ router
 
 ## Route identifier
 
-<<<<<<< HEAD
 Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [response.redirect](response.md#redirects) method.
-=======
-Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](../old/http/url_builder.md) or redirect to a route using the [response.redirect](response.md#redirects) method.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 By default, the route pattern is the route identifier. However, you can assign a unique, memorable name to the route using the `route.as` method.
 
@@ -758,11 +754,7 @@ router
 
 You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
 
-<<<<<<< HEAD
-See also: [Edge helpers reference](../references/edge.md#routesignedroute)
-=======
-See also: [Edge helpers reference](../reference/edge.md#routesignedroute)
->>>>>>> a7aa500 (docs: first draft of new structure)
+See also: [Edge helpers reference](../api-references/edge.md#routesignedroute)
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">

@@ -94,7 +94,7 @@ export default await Env.create(APP_ROOT, {
 ### Static-type information
 The same validation rules are used to infer the static-type information. The type information is available when using the env module.
 
-![](env_intellisense.jpeg)
+![](./env_intellisense.jpeg)
 
 ## Validator schema API
 

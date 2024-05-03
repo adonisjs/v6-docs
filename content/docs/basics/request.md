@@ -45,11 +45,7 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 
 ## Request body
 
-<<<<<<< HEAD
 AdonisJS parses the request body using the [body-parser middleware](../basics/body_parser.md) registered inside the `start/kernel.ts` file.
-=======
-AdonisJS parses the request body using the [bodyparser middleware](../../basics/body_parser) registered inside the `start/kernel.ts` file.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 You can access the request body using the `request.body()` method. It returns the parsed request body as an object.
 

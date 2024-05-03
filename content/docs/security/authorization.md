@@ -210,11 +210,7 @@ Policies offer an abstraction layer to organize the authorization checks as clas
 
 The policies are stored inside the `./app/policies` directory, and each file represents a single policy. You may create a new policy by running the following command.
 
-<<<<<<< HEAD
-See also: [Make policy command](../references/commands.md#makepolicy)
-=======
 See also: [Make policy command](../api-references/commands.md#makepolicy)
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```sh
 node ace make:policy post
@@ -391,11 +387,7 @@ export default class PostPolicy extends BasePolicy {
 ```
 
 ### Dependency injection
-<<<<<<< HEAD
 The policy classes are created using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
-=======
-The policy classes are created using the [IoC container](../../concepts/dependency_injection); therefore, you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
->>>>>>> a7aa500 (docs: first draft of new structure)
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -683,8 +675,4 @@ These tags accept the `ability` name or the `policy.method` name as the first pa
 ```
 
 ## Events
-<<<<<<< HEAD
-Please check the [events reference guide](../references/events.md#authorizationfinished) to view the list of events dispatched by the `@adonisjs/bouncer` package.
-=======
 Please check the [events reference guide](../api-references/events.md#authorizationfinished) to view the list of events dispatched by the `@adonisjs/bouncer` package.
->>>>>>> a7aa500 (docs: first draft of new structure)

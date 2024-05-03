@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Views and Templates
 
 AdonisJS is an excellent fit for creating traditional server-rendered applications in Node.js. If you enjoy the simplicity of using a backend template engine that outputs HTML without any overhead of Virtual DOM and build tools, then this guide is for you.
@@ -9,35 +8,19 @@ The typical workflow of a server-rendered application in AdonisJS looks as follo
 - Use [Vite](../basics/vite.md) for bundling CSS and frontend JavaScript.
 - Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like an SPA.
 
-:::note
-The AdonisJS core team has created a framework-agnostic template engine called [Edge.js](https://edgejs.dev) but does not force you to use it. You can use any other template engine you would like inside an AdonisJS application.
-:::
+## Choosing a template engine
+The AdonisJS core team has created a framework-agnostic template engine called [Edge.js](https://edgejs.dev). Following are some of the reasons for using Edge.
 
-## Popular options
+- Edge is simple, modern, and a batteries-included template engine in the Node.js ecosystem.
+- It has support for Components with features like slots and context API.
+- Integration with Iconify to render SVG icons.
 
-Following is the list of popular template engines you can use inside an AdonisJS application (just like any other Node.js application).
+AdonisJS does not force you to use Edge, and you can pick any other template engine of your choice, be it Pug, Nunjucks, and so on.
 
-- [**EdgeJS**](https://edgejs.dev) is a simple, modern, and batteries included template engine created and maintained by the AdonisJS core team for Node.js.
-- [**Pug**](https://pugjs.org) is a template engine heavily influenced by Haml.
-- [**Nunjucks**](https://mozilla.github.io/nunjucks) is a rich feature template engine inspired by Jinja2.
-=======
-# EdgeJS
-
-Edge is a **simple**, **Modern**, and **batteries included** template engine created and maintained by the AdonisJS core team for Node.js. Edge is similar to writing JavaScript. If you know JavaScript, you know Edge.
-
-:::note
-The documentation for Edge is available on [https://edgejs.dev](https://edgejs.dev)
-:::
-
-<<<<<<<< HEAD:content/docs/views-and-templates/edgejs.md
-## Installation
-========
-- Choose a template engine to render HTML dynamically.
-- Use [Vite](../../basics/vite) for bundling CSS and frontend JavaScript.
-- Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like an SPA.
->>>>>>>> a7aa500 (docs: first draft of new structure):content/docs/views-and-templates/introduction.md
-
+## Using Edge
 Install and configure Edge using the following command.
+
+See also: [Edge documentation](https://edgejs.dev)
 
 ```sh
 node ace add edge
@@ -61,7 +44,6 @@ node ace add edge
 :::
 
 ## Rendering your first template
-
 Once the configuration is completed, you can use Edge to render templates. Let's create a `welcome.edge` file inside the `resources/views` directory.
 
 ```sh
@@ -101,11 +83,7 @@ router.on('/').render('welcome')
 ```
 
 ## Configuring Edge
-<<<<<<<< HEAD:content/docs/views-and-templates/edgejs.md
-You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file#preloads) inside the `start` directory.
-========
-You can use Edge plugins or add global helpers to Edge by creating a [preload file](../../concepts/rc_file#preloads) inside the `start` directory.
->>>>>>>> a7aa500 (docs: first draft of new structure):content/docs/views-and-templates/introduction.md
+You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/rc_file.md#preloads) inside the `start` directory.
 
 ```sh
 node ace make:preload view
@@ -129,17 +107,4 @@ edge.global('appUrl', env.get('APP_URL'))
 ```
 
 ## Global helpers
-<<<<<<<< HEAD:content/docs/views-and-templates/edgejs.md
-
-Please check the [Edge helpers reference guide](../references/edge.md) to view the list of helpers contributed by AdonisJS.
-
-## Learn more
-
-- [Edge.js documentation](https://edgejs.dev)
-- [Components](https://edgejs.dev/docs/components)
-- [SVG icons](https://edgejs.dev/docs/edge-iconify)
-- [Adocasts Edge Series](https://adocasts.com/topics/edge)
-========
 Please check the [Edge helpers reference guide](../api-references/edge.md) to view the list of helpers contributed by AdonisJS.
->>>>>>>> a7aa500 (docs: first draft of new structure):content/docs/views-and-templates/introduction.md
->>>>>>> a7aa500 (docs: first draft of new structure)

@@ -11,11 +11,7 @@ On top of a standard Node.js REPL, AdonisJS provides the following features.
 
 - Import and execute TypeScript files.
 - Shorthand methods to import container services like the `router`, `helpers`, `hash` service, and so on.
-<<<<<<< HEAD
 - Shorthand method to make class instances using the [IoC container](../concepts/dependency_injection.md#constructing-a-tree-of-dependencies).
-=======
-- Shorthand method to make class instances using the [IoC container](../../concepts/dependency_injection#constructing-a-tree-of-dependencies).
->>>>>>> a7aa500 (docs: first draft of new structure)
 - Extensible API to add custom methods and REPL commands.
 
 ## Interacting with REPL
@@ -96,11 +92,7 @@ p                     Promisify a function. Similar to Node.js "util.promisify"
 ## Adding custom methods to REPL
 You can add custom methods to the REPL using `repl.addMethod`. The method accepts the name as the first argument and the implementation callback as the second argument.
 
-<<<<<<< HEAD
-For demonstration, let's create a [preload file](../concepts/adonisrc_file#preloads) file and define a method to import all models from the `./app/models` directory.
-=======
-For demonstration, let's create a [preload file](../../concepts/rc_file#preloads) file and define a method to import all models from the `./app/models` directory.
->>>>>>> a7aa500 (docs: first draft of new structure)
+For demonstration, let's create a [preload file](../concepts/rc_file.md#preloads) file and define a method to import all models from the `./app/models` directory.
 
 ```sh
 node ace make:preload repl --env=repl

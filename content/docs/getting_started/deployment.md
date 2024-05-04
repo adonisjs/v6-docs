@@ -186,14 +186,6 @@ If your application allows users to upload files, you must use a persistent stor
 
 AdonisJS uses the [`pino` logger](../digging_deeper/logger.md) by default, which writes logs to the console in JSON format. You can either set up an external logging service to read the logs from stdout/stderr, or forward them to a local file on the same server.
 
-## Caching templates
-
-When using the Edge template engine, you can cache the compiled templates to improve the performance of your application. The templates are cached in memory at runtime, and no precompiling is required.
-
-```dotenv
-CACHE_VIEWS=true
-```
-
 ## Serving static assets
 
 Serving static assets effectively is essential for the performance of your application. Regardless of how fast your AdonisJS applications are, the delivery of static assets plays a massive role to a better user experience.

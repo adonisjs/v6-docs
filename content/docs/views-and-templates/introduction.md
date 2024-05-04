@@ -8,103 +8,14 @@ The typical workflow of a server-rendered application in AdonisJS looks as follo
 - Use [Vite](../basics/vite.md) for bundling CSS and frontend JavaScript.
 - Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like an SPA.
 
-## Choosing a template engine
-The AdonisJS core team has created a framework-agnostic template engine called [Edge.js](https://edgejs.dev). Following are some of the reasons for using Edge.
-
-- Edge is simple, modern, and a batteries-included template engine in the Node.js ecosystem.
-- It has support for Components with features like slots and context API.
-- Integration with Iconify to render SVG icons.
-
-AdonisJS does not force you to use Edge, and you can pick any other template engine of your choice, be it Pug, Nunjucks, and so on.
-
-## Using Edge
-Install and configure Edge using the following command.
-
-See also: [Edge documentation](https://edgejs.dev)
-
-```sh
-node ace add edge
-```
-
-:::disclosure{title="See steps performed by the add command"}
-
-1. Installs the `edge.js` package using the detected package manager.
-
-2. Registers the following service provider inside the `adonisrc.ts` file.
-
-    ```ts
-    {
-      providers: [
-        // ...other providers
-        () => import('@adonisjs/core/providers/edge_provider')
-      ]
-    }
-    ```
-
+:::note
+The AdonisJS core team has created a framework-agnostic template engine called [Edge.js](https://edgejs.dev) but does not force you to use it. You can use any other template engine you would like inside an AdonisJS application.
 :::
 
-## Rendering your first template
-Once the configuration is completed, you can use Edge to render templates. Let's create a `welcome.edge` file inside the `resources/views` directory.
+## Popular options
 
-```sh
-node ace make:view welcome
-```
+Following is the list of popular template engines you can use inside an AdonisJS application (just like any other Node.js application).
 
-Open the newly created file and write the following markup inside it.
-
-```edge
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-</head>
-<body>
-  <h1>
-    Hello world from {{ request.url() }} endpoint
-  </h1>
-</body>
-</html>
-```
-
-Finally, let's register a route to render the template.
-
-```ts
-import router from '@adonisjs/core/services/router'
-
-router.get('/', async ({ view }) => {
-  return view.render('welcome')
-})
-```
-
-You can also use the `router.on.render` method to render a template without assigning a callback to the route.
-
-```ts
-router.on('/').render('welcome')
-```
-
-## Configuring Edge
-You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/rc_file.md#preloads) inside the `start` directory.
-
-```sh
-node ace make:preload view
-```
-
-```ts
-// title: start/view.ts
-import edge from 'edge.js'
-import env from '#start/env'
-import { edgeIconify } from 'edge-iconify'
-
-/**
- * Register a plugin
- */
-edge.use(edgeIconify)
-
-/**
- * Define a global property
- */
-edge.global('appUrl', env.get('APP_URL'))
-```
-
-## Global helpers
-Please check the [Edge helpers reference guide](../api-references/edge.md) to view the list of helpers contributed by AdonisJS.
+- [**EdgeJS**](https://edgejs.dev) is a simple, modern, and batteries included template engine created and maintained by the AdonisJS core team for Node.js.
+- [**Pug**](https://pugjs.org) is a template engine heavily influenced by Haml.
+- [**Nunjucks**](https://mozilla.github.io/nunjucks) is a rich feature template engine inspired by Jinja2.

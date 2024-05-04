@@ -18,6 +18,44 @@ The compiled output is written inside the `./build` directory. If you use Vite, 
 
 Once you have created the production build, you may copy the `./build` folder to your production server. **From now on, the build folder will be the root of your application**.
 
+### Creating a Docker image
+
+If you are using Docker to deploy your application, you may create a Docker image using the following `Dockerfile`.
+
+```dockerfile
+FROM node:20.12.2-alpine3.18 as base
+
+# All deps stage
+FROM base as deps
+WORKDIR /app
+ADD package.json package-lock.json ./
+RUN npm ci
+
+# Production only deps stage
+FROM base as production-deps
+WORKDIR /app
+ADD package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+# Build stage
+FROM base as build
+WORKDIR /app
+COPY --from=deps /app/node_modules /app/node_modules
+ADD . .
+RUN node ace build --ignore-ts-errors
+
+# Production stage
+FROM base
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=production-deps /app/node_modules /app/node_modules
+COPY --from=build /app/build /app
+EXPOSE 8080
+CMD ["node", "./bin/server.js"]
+```
+
+Feel free to modify the Dockerfile to suit your needs.
+
 ## Configuring a reverse proxy
 
 Node.js applications are usually [deployed behind a reverse proxy](https://medium.com/intrinsic-blog/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca) server like Nginx. So the incoming traffic on ports `80` and `443` will be handled by Nginx first and then forwarded to your Node.js application.

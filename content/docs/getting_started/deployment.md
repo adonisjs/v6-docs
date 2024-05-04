@@ -18,44 +18,6 @@ The compiled output is written inside the `./build` directory. If you use Vite, 
 
 Once you have created the production build, you may copy the `./build` folder to your production server. **From now on, the build folder will be the root of your application**.
 
-### Creating a Docker image
-
-If you are using Docker to deploy your application, you may create a Docker image using the following `Dockerfile`.
-
-```dockerfile
-FROM node:20.12.2-alpine3.18 as base
-
-# All deps stage
-FROM base as deps
-WORKDIR /app
-ADD package.json package-lock.json ./
-RUN npm ci
-
-# Production only deps stage
-FROM base as production-deps
-WORKDIR /app
-ADD package.json package-lock.json ./
-RUN npm ci --omit=dev
-
-# Build stage
-FROM base as build
-WORKDIR /app
-COPY --from=deps /app/node_modules /app/node_modules
-ADD . .
-RUN node ace build
-
-# Production stage
-FROM base
-ENV NODE_ENV=production
-WORKDIR /app
-COPY --from=production-deps /app/node_modules /app/node_modules
-COPY --from=build /app/build /app
-EXPOSE 8080
-CMD ["node", "./bin/server.js"]
-```
-
-Feel free to modify the Dockerfile to suit your needs.
-
 ## Configuring a reverse proxy
 
 Node.js applications are usually [deployed behind a reverse proxy](https://medium.com/intrinsic-blog/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca) server like Nginx. So the incoming traffic on ports `80` and `443` will be handled by Nginx first and then forwarded to your Node.js application.
@@ -186,6 +148,14 @@ If your application allows users to upload files, you must use a persistent stor
 
 AdonisJS uses the [`pino` logger](../digging_deeper/logger.md) by default, which writes logs to the console in JSON format. You can either set up an external logging service to read the logs from stdout/stderr, or forward them to a local file on the same server.
 
+## Caching templates
+
+When using the Edge template engine, you can cache the compiled templates to improve the performance of your application. The templates are cached in memory at runtime, and no precompiling is required.
+
+```dotenv
+CACHE_VIEWS=true
+```
+
 ## Serving static assets
 
 Serving static assets effectively is essential for the performance of your application. Regardless of how fast your AdonisJS applications are, the delivery of static assets plays a massive role to a better user experience.
@@ -220,7 +190,7 @@ location ~ \.(jpg|png|css|js|gif|ico|woff|woff2) {
 }
 ```
 
-### Using AdonisJS static file server
+## Using AdonisJS static file server
 
 You can also rely on the [AdonisJS inbuilt static file server](../basics/static_file_server.md) to serve the static assets from the `public` directory to keep things simple.
 

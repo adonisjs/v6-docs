@@ -54,6 +54,12 @@
     "category": "Getting started"
   },
   {
+    "permalink": "getting-started/deployment",
+    "title": "Deployment",
+    "contentPath": "./getting_started/deployment.md",
+    "category": "Getting started"
+  },
+  {
     "permalink": "concepts/async-local-storage",
     "title": "Async local storage",
     "contentPath": "./concepts/async_local_storage.md",

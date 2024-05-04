@@ -190,7 +190,7 @@ location ~ \.(jpg|png|css|js|gif|ico|woff|woff2) {
 }
 ```
 
-## Using AdonisJS static file server
+### Using AdonisJS static file server
 
 You can also rely on the [AdonisJS inbuilt static file server](../basics/static_file_server.md) to serve the static assets from the `public` directory to keep things simple.
 

@@ -1,3 +1,7 @@
+---
+summary: Learn how to issue, verify, and manage access tokens using the AdonisJS auth package.
+---
+
 # Access tokens guard
 Access tokens authenticate HTTP requests in API contexts where the server cannot persist cookies on the end-user device, for example, third-party access to an API or authentication for a mobile app.
 

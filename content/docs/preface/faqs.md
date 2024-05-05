@@ -1,3 +1,7 @@
+---
+summary: Frequently asked questions about AdonisJS.
+---
+
 # FAQs
 
 ## Who maintains AdonisJS?

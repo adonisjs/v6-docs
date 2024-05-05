@@ -1,3 +1,7 @@
+---
+summary: Learn about the events dispatched by the AdonisJS core and official packages.
+---
+
 # Events reference
 
 In this guide, we look at the list of events dispatched by the framework core and the official packages. Check out the [emitter](../digging_deeper/emitter.md) documentation to learn more about its usage.

@@ -1,3 +1,7 @@
+---
+summary: Learn about defining flags for your Ace commands
+---
+
 # Command flags
 
 Flags are named parameters mentioned with either two hyphens (`--`) or a single hyphen (`-`) (known as the flag alias). The flags can be mentioned in any order.

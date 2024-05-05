@@ -10,8 +10,13 @@
 */
 
 import 'reflect-metadata'
+import sharp from 'sharp'
 import { Ignitor } from '@adonisjs/core'
 import { defineConfig } from '@adonisjs/vite'
+import { Collection } from '@dimerapp/content'
+import { mkdir, readFile } from 'node:fs/promises'
+import { joinToURL } from '@adonisjs/core/helpers'
+import { existsSync, writeFileSync } from 'node:fs'
 
 /**
  * URL to the application root. AdonisJS need it to resolve
@@ -30,6 +35,71 @@ const IMPORTER = (filePath: string) => {
   return import(filePath)
 }
 
+const ogTemplate = await readFile(joinToURL(import.meta.url, '../assets/og_template.svg'), 'utf-8')
+
+async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutput: string) {
+  /**
+   * Read the HTML file to extract the meta description
+   */
+  const htmlLocation = joinToURL(import.meta.url, '../', 'dist', htmlOutput)
+  const html = await readFile(htmlLocation, 'utf-8')
+  const metaDescription = html.match(/<meta name="og:description" content="(.*)">/)
+  const description = metaDescription ? metaDescription[1] : ''
+
+  let shouldGenerateOgImage = true
+
+  /**
+   * TEMP: Only generate og images that have description
+   */
+  if (!description) shouldGenerateOgImage = false
+
+  /**
+   * Create the og directory when missing
+   */
+  if (!existsSync('public/og')) await mkdir('public/og', { recursive: true })
+
+  /**
+   * Skip generating the og image when it already exists
+   */
+  const output = `public/og/${entry.title}.png`
+  if (existsSync(output)) {
+    shouldGenerateOgImage = false
+  }
+
+  /**
+   * Take 3 lines of 40 characters each
+   * insert them in the svg template
+   */
+  const lines = description
+    .trim()
+    .split(/(.{0,40})(?:\s|$)/g)
+    .filter(Boolean)
+
+  const svg = ogTemplate
+    .replace('{{ title }}', entry.title)
+    .replace('{{ line1 }}', lines[0])
+    .replace('{{ line2 }}', lines[1] || '')
+    .replace('{{ line3 }}', lines[2] || '')
+
+  try {
+    if (shouldGenerateOgImage) {
+      await sharp(Buffer.from(svg))
+        .resize(1200 * 1.1, 630 * 1.1)
+        .png()
+        .toFile(output)
+    }
+  } catch (e) {
+    console.error('Failed to generate og image', e)
+  }
+
+  /**
+   * Insert the og:image meta tag in the output
+   */
+  const ogImageTag = `<meta property="og:image" content="/${output}">`
+  const updatedHtml = html.replace('</head>', `${ogImageTag}</head>`)
+  writeFileSync(htmlLocation, updatedHtml)
+}
+
 /**
  * Exports collection to HTML files
  */
@@ -42,6 +112,7 @@ async function exportHTML() {
     for (let entry of collection.all()) {
       try {
         const output = await entry.writeToDisk(app.makePath('dist'), { collection, entry })
+        await generateOgImage(entry, output.filePath)
         ace.ui.logger.action(`create ${output.filePath}`).succeeded()
       } catch (error) {
         ace.ui.logger.action(`create ${entry.permalink}`).failed(error)

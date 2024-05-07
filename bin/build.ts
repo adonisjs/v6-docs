@@ -92,7 +92,7 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
   /**
    * Insert the og:image meta tag in the output
    */
-  const ogImageUrl = output.replace('public/', 'https://docs.adonisjs.com')
+  const ogImageUrl = output.replace('public/', 'https://feat-og-images-v2.v6-docs.pages.dev')
   const ogImageTag = `<meta property="og:image" content="/${ogImageUrl}">`
   const updatedHtml = html.replace('</head>', `${ogImageTag}</head>`)
   writeFileSync(htmlLocation, updatedHtml)

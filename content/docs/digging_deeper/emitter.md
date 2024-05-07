@@ -77,7 +77,7 @@ declare module '@adonisjs/core/types' {
 
 Like HTTP controllers, listener classes offer an abstraction layer to move inline event listeners inside dedicated files. Listener classes are stored inside the `app/listeners` directory and you may create a new listener using the `make:listener` command.
 
-See also: [Make listener command](../api-references/commands.md#makelistener)
+See also: [Make listener command](../references/commands.md#makelistener)
 
 ```sh
 node ace make:listener sendVerificationEmail
@@ -175,7 +175,7 @@ Class-based events encapsulate the event identifier and the event data within th
 
 You may create an event class using the `make:event` command.
 
-See also: [Make event command](../api-references/commands.md#makeevent)
+See also: [Make event command](../references/commands.md#makeevent)
 
 ```sh
 node ace make:event UserRegistered
@@ -335,7 +335,7 @@ emitter.clearAllListeners()
 ```
 
 ## List of available events
-Please check the [events reference guide](../api-references/events.md) to view the list of available events.
+Please check the [events reference guide](../references/events.md) to view the list of available events.
 
 ## Faking events during tests
 

@@ -170,8 +170,8 @@ The following global variables are always shared with a stub.
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `app`          | Reference to an instance of the [application class](application.md).                                                                                                |
 | `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts).                                                          |
-| `randomString` | Reference to the [randomString](../api-references/helpers.md#random) helper function.                                                                               |
-| `string`       | A function to create a [string builder](../api-references/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |
+| `randomString` | Reference to the [randomString](../references/helpers.md#random) helper function.                                                                               |
+| `string`       | A function to create a [string builder](../references/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |
 | `flags`        | The command-line flags are defined when running the ace command.                                                                                                    |
 
 

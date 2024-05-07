@@ -450,34 +450,34 @@
     "category": "Ace commands"
   },
   {
-    "permalink": "api-references/commands",
+    "permalink": "references/commands",
     "title": "Commands",
-    "contentPath": "./api-references/commands.md",
-    "category": "API references"
+    "contentPath": "./references/commands.md",
+    "category": "References"
   },
   {
-    "permalink": "api-references/edge",
+    "permalink": "references/edge",
     "title": "Edge helpers and tags",
-    "contentPath": "./api-references/edge.md",
-    "category": "API references"
+    "contentPath": "./references/edge.md",
+    "category": "References"
   },
   {
-    "permalink": "api-references/events",
+    "permalink": "references/events",
     "title": "Events",
-    "contentPath": "./api-references/events.md",
-    "category": "API references"
+    "contentPath": "./references/events.md",
+    "category": "References"
   },
   {
-    "permalink": "api-references/exceptions",
+    "permalink": "references/exceptions",
     "title": "Exceptions",
-    "contentPath": "./api-references/exceptions.md",
-    "category": "API references"
+    "contentPath": "./references/exceptions.md",
+    "category": "References"
   },
   {
-    "permalink": "api-references/helpers",
+    "permalink": "references/helpers",
     "title": "Helpers",
-    "contentPath": "./api-references/helpers.md",
-    "category": "API references"
+    "contentPath": "./references/helpers.md",
+    "category": "References"
   },
   {
     "permalink": "experimental-assembler-hooks",

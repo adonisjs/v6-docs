@@ -437,7 +437,7 @@ limiter
 ```
 
 ## Handling ThrottleException
-The throttle middleware throws the [E_TOO_MANY_REQUESTS](../api-references/exceptions.md#e_too_many_requests) exception when the user has exhausted all the requests within the specified timeframe. The exception will be automatically converted to an HTTP response using the following content negotiation rules.
+The throttle middleware throws the [E_TOO_MANY_REQUESTS](../references/exceptions.md#e_too_many_requests) exception when the user has exhausted all the requests within the specified timeframe. The exception will be automatically converted to an HTTP response using the following content negotiation rules.
 
 - HTTP requests with the `Accept=application/json` header will receive an array of error messages. Each array element will be an object with the message property.
 
@@ -523,7 +523,7 @@ Alongside throttling HTTP requests, you may also use the limiter to apply rate l
 Before you can apply rate limiting on an action, you must get an instance of the [Limiter](https://github.com/adonisjs/limiter/blob/main/src/limiter.ts) class using the `limiter.use` method. The `use` method accepts the name of the backend store and the following rate-limiting options.
 
 - `requests`: The number of requests to allow for a given duration.
-- `duration`: The duration in seconds or a [time expression](../api-references/helpers.md#seconds) string.
+- `duration`: The duration in seconds or a [time expression](../references/helpers.md#seconds) string.
 - `block (optional)`: The duration for which to block the key after all the requests have been exhausted.
 - `inMemoryBlockOnConsumed (optional)`: See [shared options](#shared-options)
 - `inMemoryBlockDuration (optional)`: See [shared options](#shared-options)

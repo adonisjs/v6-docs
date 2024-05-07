@@ -505,7 +505,7 @@ Message.templateEngine = {
 ```
 
 ## Events
-Please check the [events reference guide](../api-references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
+Please check the [events reference guide](../references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
 
 ## Configuring message
 
@@ -936,7 +936,7 @@ Instead of writing emails inside the `mail.send` method closure, you may move th
 
 The mail classes are stored inside the `./app/mails` directory, and each file represents a single email. You may create a mail class by running the `make:mail` ace command.
 
-See also: [Make mail command](../api-references/commands.md#makemail)
+See also: [Make mail command](../references/commands.md#makemail)
 
 ```sh
 node ace make:mail verify_email

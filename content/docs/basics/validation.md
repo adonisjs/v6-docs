@@ -78,7 +78,7 @@ export default class PostsController {
 
 Once you have created the `PostsController` and defined the routes, you may use the following ace command to create a validator.
 
-See also: [Make validator command](../api-references/commands.md#makevalidator)
+See also: [Make validator command](../references/commands.md#makevalidator)
 
 ```sh
 node ace make:validator post

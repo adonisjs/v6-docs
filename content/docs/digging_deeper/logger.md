@@ -465,7 +465,7 @@ redact: {
 ### Using the Secret data type
 An alternative to redaction is to wrap sensitive values inside the Secret class. For example:
 
-See also: [Secret class usage docs](../api-references/helpers.md#secret)
+See also: [Secret class usage docs](../references/helpers.md#secret)
 
 ```ts
 import { Secret } from '@adonisjs/core/helpers'

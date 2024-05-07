@@ -179,7 +179,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
 You can create an exception class using the `make:exception` ace command. An exception extends the `Exception` class from the `@adonisjs/core` package.
 
-See also: [Make exception command](../api-references/commands.md#makeexception)
+See also: [Make exception command](../references/commands.md#makeexception)
 
 ```sh
 node ace make:exception UnAuthorized
@@ -260,4 +260,4 @@ try {
 ```
 
 ## Known errors
-Please check the [exceptions reference guide](../api-references/exceptions.md) to view the list of known errors.
+Please check the [exceptions reference guide](../references/exceptions.md) to view the list of known errors.

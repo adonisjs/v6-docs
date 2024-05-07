@@ -96,11 +96,11 @@
 /guides/transmit /guides/digging-deeper/transmit
 /guides/repl /guides/digging-deeper/repl
 
-/guides/commands-reference /guides/api-references/commands
-/guides/edge-reference /guides/api-references/edge
-/guides/events-reference /guides/api-references/events
-/guides/exceptions-reference /guides/api-references/exceptions
-/guides/helpers-reference /guides/api-references/helpers
+/guides/commands-reference /guides/references/commands
+/guides/edge-reference /guides/references/edge
+/guides/events-reference /guides/references/events
+/guides/exceptions-reference /guides/references/exceptions
+/guides/helpers-reference /guides/references/helpers
 
 /guides/mail /guides/digging-deeper/mail
 /guides/mail-message /guides/digging-deeper/mail#configuring-message

@@ -210,7 +210,7 @@ Policies offer an abstraction layer to organize the authorization checks as clas
 
 The policies are stored inside the `./app/policies` directory, and each file represents a single policy. You may create a new policy by running the following command.
 
-See also: [Make policy command](../api-references/commands.md#makepolicy)
+See also: [Make policy command](../references/commands.md#makepolicy)
 
 ```sh
 node ace make:policy post
@@ -675,4 +675,4 @@ These tags accept the `ability` name or the `policy.method` name as the first pa
 ```
 
 ## Events
-Please check the [events reference guide](../api-references/events.md#authorizationfinished) to view the list of events dispatched by the `@adonisjs/bouncer` package.
+Please check the [events reference guide](../references/events.md#authorizationfinished) to view the list of events dispatched by the `@adonisjs/bouncer` package.

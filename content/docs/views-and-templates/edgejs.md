@@ -97,7 +97,7 @@ edge.global('appUrl', env.get('APP_URL'))
 
 ## Global helpers
 
-Please check the [Edge helpers reference guide](../api-references/edge.md) to view the list of helpers contributed by AdonisJS.
+Please check the [Edge helpers reference guide](../references/edge.md) to view the list of helpers contributed by AdonisJS.
 
 ## Learn more
 

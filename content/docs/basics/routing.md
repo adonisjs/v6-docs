@@ -754,7 +754,7 @@ router
 
 You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
 
-See also: [Edge helpers reference](../api-references/edge.md#routesignedroute)
+See also: [Edge helpers reference](../references/edge.md#routesignedroute)
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">

@@ -66,7 +66,7 @@ router.named({
 
 Middleware are stored inside the `./app/middleware` directory, and you can create a new middleware file by running the `make:middleware` ace command.
 
-See also: [Make middleware command](../api-references/commands.md#makemiddleware)
+See also: [Make middleware command](../references/commands.md#makemiddleware)
 
 ```sh
 node ace make:middleware user_location

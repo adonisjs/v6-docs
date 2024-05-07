@@ -4,7 +4,7 @@ HTTP controllers offer an abstraction layer to organize the route handlers insid
 
 The controllers are stored within the `./app/controllers` directory, representing each controller as a plain JavaScript class. You may create a new controller by running the following command.
 
-See also: [Make controller command](../api-references/commands.md#makecontroller)
+See also: [Make controller command](../references/commands.md#makecontroller)
 
 ```sh
 node ace make:controller users

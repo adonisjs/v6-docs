@@ -11,7 +11,7 @@ Reference to the instance of ongoing [HTTP request](../basics/request.md). The p
 ```
 
 ## route/signedRoute
-Helper functions to create URL for a route using the [URL builder](../http/url_builder.md#generating-urls-inside-templates). Unlike the URL builder, the view helpers do not have a fluent API and accept the following parameters.
+Helper functions to create URL for a route using the [URL builder](../basics/routing.md#url-builder). Unlike the URL builder, the view helpers do not have a fluent API and accept the following parameters.
 
 <table>
     <tr>
@@ -65,7 +65,7 @@ Reference to the [Application instance](../concepts/application.md).
 ```
 
 ## config
-A [helper function](../../getting_started/configuration#reading-config-inside-edge-templates) to reference configuration values inside Edge templates. You may use the `config.has` method to check if the value for a key exists.
+A [helper function](../getting_started/configuration.md#reading-config-inside-edge-templates) to reference configuration values inside Edge templates. You may use the `config.has` method to check if the value for a key exists.
 
 ```edge
 @if(config.has('app.appUrl'))
@@ -143,14 +143,14 @@ If you are displaying the logged-in user info on a public page (not protected by
 ```
 
 ## asset
-Resolve the URL of an asset processed by Vite. Learn more about [referencing assets inside Edge templates](../../basics/vite#referencing-assets-inside-edge-templates).
+Resolve the URL of an asset processed by Vite. Learn more about [referencing assets inside Edge templates](../basics/vite.md#referencing-assets-inside-edge-templates).
 
 ```edge
 <img src="{{ asset('resources/images/hero.jpg') }}" />
 ```
 
 ## embedImage / embedImageData
-The `embedImage` and the `embedImageData` helpers are added by the [mail](../old/mail/message.md#embedding-images) package and are only available when rendering a template to send an email.
+The `embedImage` and the `embedImageData` helpers are added by the [mail](../digging_deeper/mail.md#embedding-images) package and are only available when rendering a template to send an email.
 
 ```edge
 <img src="{{

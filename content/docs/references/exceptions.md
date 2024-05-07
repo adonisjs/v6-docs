@@ -31,7 +31,7 @@ if (error instanceof bouncerErrors.E_AUTHORIZATION_FAILURE) {
 ```
 
 ## E_TOO_MANY_REQUESTS
-The exception is raised by the [@adonisjs/rate-limiter](../../security/rate_limiting) package when a request exhausts all the requests allowed during a given duration. The exception is self-handled and [uses content-negotiation](../../security/rate_limiting#handling-throttleexception) to return an appropriate error response to the client.
+The exception is raised by the [@adonisjs/rate-limiter](../security/rate_limiting.md) package when a request exhausts all the requests allowed during a given duration. The exception is self-handled and [uses content-negotiation](../security/rate_limiting.md#handling-throttleexception) to return an appropriate error response to the client.
 
 - **Status code**: 429
 - **Self handled**: Yes
@@ -44,7 +44,7 @@ if (error instanceof limiterErrors.E_TOO_MANY_REQUESTS) {
 ```
 
 ## E_BAD_CSRF_TOKEN
-The exception is raised when a form using [CSRF protection](../../security/securing_ssr_applications#csrf-protection) is submitted without the CSRF token, or the CSRF token is invalid.
+The exception is raised when a form using [CSRF protection](../security/securing_ssr_applications.md#csrf-protection) is submitted without the CSRF token, or the CSRF token is invalid.
 
 - **Status code**: 403
 - **Self handled**: Yes
@@ -67,7 +67,7 @@ The `E_BAD_CSRF_TOKEN` exception is [self-handled](https://github.com/adonisjs/s
 ## E_OAUTH_MISSING_CODE
 The `@adonisjs/ally` package raises the exception when the OAuth service does not provide the OAuth code during the redirect.
 
-You can avoid this exception if you [handle the errors](../../authentication/social_authentication#handling-callback-response) before calling the `.accessToken` or `.user` methods.
+You can avoid this exception if you [handle the errors](../authentication/social_authentication.md#handling-callback-response) before calling the `.accessToken` or `.user` methods.
 
 - **Status code**: 500
 - **Self handled**: No
@@ -81,7 +81,7 @@ if (error instanceof allyErrors.E_OAUTH_MISSING_CODE) {
 ## E_OAUTH_STATE_MISMATCH
 The `@adonisjs/ally` package raises the exception when the CSRF state defined during the redirect is missing.
 
-You can avoid this exception if you [handle the errors](../../authentication/social_authentication#handling-callback-response) before calling the `.accessToken` or `.user` methods.
+You can avoid this exception if you [handle the errors](../authentication/social_authentication.md#handling-callback-response) before calling the `.accessToken` or `.user` methods.
 
 - **Status code**: 400
 - **Self handled**: No
@@ -119,7 +119,7 @@ if (error instanceof authErrors.E_INVALID_CREDENTIALS) {
 ```
 
 ## E_CANNOT_LOOKUP_ROUTE
-The exception is raised when you attempt to create a URL for a route using the [URL builder](../http/url_builder.md).
+The exception is raised when you attempt to create a URL for a route using the [URL builder](../basics/routing.md#url-builder).
 
 - **Status code**: 500
 - **Self handled**: No

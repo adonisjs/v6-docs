@@ -96,6 +96,112 @@ export default class User extends BaseModel {
 }
 ```
 
+Learn more about models by visiting the [official documentation](https://lucid.adonisjs.com/docs/models).
+
+## Migrations
+
+Migrations are a way to modify the database schema and data using incremental changesets. You can create a new migration using the following command.
+
+```sh
+node ace make:migration users
+```
+
+This command creates a new file inside the `database/migrations` directory with the following content.
+
+```ts
+import { BaseSchema } from '@adonisjs/lucid/schema'
+
+export default class extends BaseSchema {
+  protected tableName = 'users'
+
+  async up() {
+    this.schema.createTable(this.tableName, (table) => {
+      table.increments('id')
+      table.timestamp('created_at')
+      table.timestamp('updated_at')
+    })
+  }
+
+  async down() {
+    this.schema.dropTable(this.tableName)
+  }
+}
+```
+
+You can run all the pending migrations using the following command.
+
+```sh
+node ace migration:run
+```
+
+Learn more about migrations by visiting the [official documentation](https://lucid.adonisjs.com/docs/migrations).
+
+## Query Builder
+
+Lucid ships with a fluent query builder built on top of Knex. You can use the query builder to perform CRUD operations on your database.
+
+```ts
+import db from '@adonisjs/lucid/services/db'
+
+/**
+ * Creates query builder instance
+ */
+const query = db.query()
+
+/**
+ * Creates query builder instance and also selects
+ * the table
+ */
+const queryWithTableSelection = db.from('users')
+```
+
+The query builder can also be scoped to a model instance.
+
+```ts
+import User from '#models/user'
+
+const user = await User.query().where('username', 'rlanz').first()
+```
+
+Learn more about the query builder by visiting the [official documentation](https://lucid.adonisjs.com/docs/select-query-builder).
+
+## CRUD operations
+
+Lucid models have built-in methods to perform CRUD operations on the database.
+
+```ts
+import User from '#models/user'
+
+/**
+ * Create a new user
+ */
+const user = await User.create({
+  username: 'rlanz',
+  email: 'romain@adonisjs.com',
+})
+
+/**
+ * Find a user by primary key
+ */
+const user = await User.find(1)
+
+/**
+ * Update a user
+ */
+
+const user = await User.find(1)
+user.username = 'romain'
+await user.save()
+
+/**
+ * Delete a user
+ */
+const user = await User.find(1)
+await user.delete()
+```
+
+Learn more about CRUD operations by visiting the [official documentation](https://lucid.adonisjs.com/docs/crud-operations).
+
 ## Learn more
 
 - [Lucid documentation](https://lucid.adonisjs.com)

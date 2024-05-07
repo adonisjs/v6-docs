@@ -1,4 +1,5 @@
 # Browser tests
+
 Browser tests are executed inside real browsers like Chrome, Firefox, or Safari. We make use of [Playwright](https://playwright.dev/) (a browser automation tool) for interacting with webpages programmatically.
 
 Playwright is both a testing framework and a library that exposes JavaScript APIs to interact with the browser. We **do not use the Playwright testing framework** because we are already using Japa, and using multiple testing frameworks inside a single project will only lead to confusion and config bloat.
@@ -145,7 +146,7 @@ await browserContext.getPlainCookie('cartTotal')
 ```
 
 ## Populating session store
-If you are using the [`@adonisjs/session`](../http/session.md) package to read/write session data in your application, you may also want to use the `sessionBrowserClient` plugin to populate the session store when writing tests.
+If you are using the [`@adonisjs/session`](../basics/session.md) package to read/write session data in your application, you may also want to use the `sessionBrowserClient` plugin to populate the session store when writing tests.
 
 ### Setup
 The first step is registering the plugin inside the `tests/bootstrap.ts` file.
@@ -284,10 +285,10 @@ await browserContext
 ## The route helper
 You may use the `route` helper from the TestContext to create a URL for a route. Using the route helper ensures that whenever you update your routes, you do not have to come back and fix all the URLs inside your tests.
 
-The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#route).
+The `route` helper accepts the same set of arguments accepted by the global template method [route](../basics/routing.md#url-builder).
 
 ```ts
-test('see list of users', ({ visit, route }) => {
+test('see list of users', async ({ visit, route }) => {
   const page = await visit(
     // highlight-start
     route('users.list')

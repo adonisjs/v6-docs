@@ -159,7 +159,7 @@ createInertiaApp({
 })
 ```
 
-```ts
+```tsx
 // title: React
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
@@ -242,7 +242,7 @@ The role of this file is to create an Inertia app and to resolve the page compon
 
 ## Rendering pages
 
-While configuring your package, a `inertia_middleware` has been registered inside the `start/kernel.ts` file. This middleware is responsible for setting up the `inertia` object on the [`HttpContext`](../http/http_context.md).
+While configuring your package, a `inertia_middleware` has been registered inside the `start/kernel.ts` file. This middleware is responsible for setting up the `inertia` object on the [`HttpContext`](../concepts/http_context.md).
 
 To render a view using Inertia, use the `inertia.render` method. The method accepts the view name and the data to be passed to the component as props.
 
@@ -549,7 +549,7 @@ export class UsersController {
   index() {
     return inertia.render('users/index', {
       users: [
-        { id: 1, name: 'julien' }
+        { id: 1, name: 'julien' },
         { id: 2, name: 'virk' },
         { id: 3, name: 'romain' },
       ]
@@ -604,7 +604,7 @@ defineProps<{
 
 ## CSRF 
 
-If you enabled [CSRF protection](../security/web-security.md#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.
+If you enabled [CSRF protection](../../security/securing_ssr_applications#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.
 
 Enabling this option will ensure that the `XSRF-TOKEN` cookie is set on the client side and sent back to the server with every request.
 
@@ -632,7 +632,7 @@ Read the [official documentation](https://inertiajs.com/asset-versioning) for mo
 
 ### Enabling SSR
 
-[Inertia Starter Kit](../guides/installation.md#starter-kits) comes with server-side rendering (SSR) support out of the box. So make sure to use it if you want to enable SSR for your application. 
+[Inertia Starter Kit](../getting_started/installation.md#starter-kits) comes with server-side rendering (SSR) support out of the box. So make sure to use it if you want to enable SSR for your application. 
 
 If you started your application without enabling SSR, you can always enable it later by following the following steps : 
 
@@ -666,7 +666,7 @@ export default function render(page) {
 }
 ```
 
-```ts
+```tsx
 // title: React
 import ReactDOMServer from 'react-dom/server'
 import { createInertiaApp } from '@inertiajs/react'
@@ -700,7 +700,7 @@ export default function render(page) {
 }
 ```
 
-```ts
+```tsx
 // title: Solid
 import { hydrate } from 'solid-js/web'
 import { createInertiaApp } from 'inertia-adapter-solid'

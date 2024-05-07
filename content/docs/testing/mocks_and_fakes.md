@@ -1,4 +1,4 @@
-# Mocks and fakes
+# Mocks and Fakes
 
 When testing your applications, you might want to mock or fake specific dependencies to prevent actual implementations from running. For example, you wish to refrain from emailing your customers when running tests and neither call third-party services like a payment gateway.
 
@@ -11,12 +11,12 @@ Fakes are objects with working implementations explicitly created for testing. F
 We provide fake implementations for the following container services. The fakes API is documented alongside the module documentation.
 
 - [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
-- [Hash fake](../security/hash.md#faking-hash-service-during-tests)
-- [Fake mailer](../mail/fake_mailer.md)
+- [Hash fake](../security/hashing.md#faking-hash-service-during-tests)
+- [Fake mailer](../digging_deeper/mail.md#fake-mailer)
 
 ## Dependency injection and fakes
 
-If you use dependency injection in your application or use the [container to create class instances](../fundamentals/ioc_container.md), you can provide a fake implementation for a class using the `container.swap` method.
+If you use dependency injection in your application or use the [container to create class instances](../concepts/dependency_injection.md), you can provide a fake implementation for a class using the `container.swap` method.
 
 In the following example, we inject `UserService` to the `UsersController`.
 
@@ -26,7 +26,7 @@ import { inject } from '@adonisjs/core'
 
 export default class UsersController {
   @inject()
-  index(, service: UserService) {}
+  index(service: UserService) {}
 }
 ```
 

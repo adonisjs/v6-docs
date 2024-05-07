@@ -2,7 +2,7 @@
 
 Alongside using Ace commands, you may also create custom commands as part of your application codebase. The commands are stored inside the `commands` directory (at the root level). You may create a command by running the following command.
 
-See also: [Make command](../reference/commands.md#makecommand)
+See also: [Make command](../references/commands.md#makecommand)
 
 ```sh
 node ace make:command greet
@@ -229,7 +229,7 @@ export default class GreetCommand extends BaseCommand {
 
 ## Dependency injection
 
-Ace commands are constructed and executed using the [IoC container](../fundamentals/ioc_container.md). Therefore, you can type-hint dependencies on command lifecycle methods and use the `@inject` decorator to resolve them.
+Ace commands are constructed and executed using the [IoC container](../../concepts/dependency_injection). Therefore, you can type-hint dependencies on command lifecycle methods and use the `@inject` decorator to resolve them.
 
 For demonstration, let's inject the `UserService` class in all the lifecycle methods.
 

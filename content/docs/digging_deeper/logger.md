@@ -19,7 +19,7 @@ It is recommended to use the `ctx.logger` property during HTTP requests. The HTT
 import router from '@adonisjs/core/services/router'
 import User from '#models/user'
 
-router.get('/users/:id', ({ logger, params }) => {
+router.get('/users/:id', async ({ logger, params }) => {
   logger.info('Fetching user by id %s', params.id)
   const user = await User.find(params.id)
 })
@@ -465,7 +465,7 @@ redact: {
 ### Using the Secret data type
 An alternative to redaction is to wrap sensitive values inside the Secret class. For example:
 
-See also: [Secret class usage docs](../reference/helpers.md#secret)
+See also: [Secret class usage docs](../references/helpers.md#secret)
 
 ```ts
 import { Secret } from '@adonisjs/core/helpers'

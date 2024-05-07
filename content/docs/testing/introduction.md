@@ -100,7 +100,7 @@ export const reporters: Config['reporters'] = {
 
 You may create a new test using the `make:test` command. The command needs the suite's name to create the test file.
 
-See also: [Make test command](../reference/commands.md#maketest)
+See also: [Make test command](../references/commands.md#maketest)
 
 ```sh
 node ace make:test posts/create --suite=functional
@@ -241,13 +241,13 @@ See also: [Japa filtering tests guide](https://japa.dev/docs/filtering-tests)
 
 :::
 
-| Flag | Description |
-|------|-----------|
-| `--tests` | Filter test by the test title. This filter matches against the exact test title. |
-| `--files` | Filter tests by subset of test file name. The match is performed against the end of the filename without `.spec.ts`. You can run tests for a complete folder using the wildcard expression. `folder/*` |
-| `--groups` | Filter test by group name. This filter matches against the exact group name. |
-| `--tags` | Filter tests by tags. You can prefix the tag name with tilde `~` to ignore tests with the given tag |
-| `--matchAll` | By default, Japa will run tests that matches any of the mentioned tags. If you want all tags to match, then use the `--matchAll` flag |
+| Flag         | Description                                                                                                                                                                                            |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--tests`    | Filter test by the test title. This filter matches against the exact test title.                                                                                                                       |
+| `--files`    | Filter tests by subset of test file name. The match is performed against the end of the filename without `.spec.ts`. You can run tests for a complete folder using the wildcard expression. `folder/*` |
+| `--groups`   | Filter test by group name. This filter matches against the exact group name.                                                                                                                           |
+| `--tags`     | Filter tests by tags. You can prefix the tag name with tilde `~` to ignore tests with the given tag                                                                                                    |
+| `--matchAll` | By default, Japa will run tests that matches any of the mentioned tags. If you want all tags to match, then use the `--matchAll` flag                                                                  |
 
 ### Force exiting tests
 

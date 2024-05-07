@@ -4,7 +4,7 @@ HTTP tests refer to testing your application endpoints by making an actual HTTP 
 
 HTTP tests are performed using the [API client plugin](https://japa.dev/docs/plugins/api-client) of Japa. The API client plugin is a stateless request library similar to `Axios` or `fetch` but more suited for testing.
 
-If you want to test your web apps inside a real browser and interact with them programmatically, we recommend using the [Browser client](./browser_tests.md) that uses Playwright for testing.
+If you want to test your web apps inside a real browser and interact with them programmatically, we recommend using the [Browser client](browser_tests.md) that uses Playwright for testing.
 
 ## Setup
 The first step is to install the following packages from the npm packages registry.
@@ -141,7 +141,7 @@ await client
   .withCookie('user_preferences', { limit: 10 })
 ```
 
-The `withCookie` method defines a [singed cookie](../http/cookies.md#signed-cookies). In addition, you may use the `withEncryptedCookie` or `withPlainCookie` methods to send other types of cookies to the server.
+The `withCookie` method defines a [singed cookie](../basics/cookies.md#signed-cookies). In addition, you may use the `withEncryptedCookie` or `withPlainCookie` methods to send other types of cookies to the server.
 
 ```ts
 await client
@@ -174,7 +174,7 @@ response.assertCookie('user_preferences')
 ```
 
 ## Populating session store
-If you are using the [`@adonisjs/session`](../http/session.md) package to read/write session data in your application, you may also want to use the `sessionApiClient` plugin to populate the session store when writing tests.
+If you are using the [`@adonisjs/session`](../basics/session.md) package to read/write session data in your application, you may also want to use the `sessionApiClient` plugin to populate the session store when writing tests.
 
 ### Setup
 The first step is registering the plugin inside the `tests/bootstrap.ts` file.
@@ -367,7 +367,7 @@ await client
 ```
 
 ## Making a request with a CSRF token
-If forms in your application use [CSRF protection](../security/web-security.md), you may use the `withCsrfToken` method to generate a CSRF token and pass it as a header during the request.
+If forms in your application use [CSRF protection](../security/securing_ssr_applications.md), you may use the `withCsrfToken` method to generate a CSRF token and pass it as a header during the request.
 
 Before using the `withCsrfToken` method, register the following Japa plugins inside the `tests/bootstrap.ts` file and also make sure to [switch the `SESSION_DRIVER` env variable](#setup-1) to `memory`.
 
@@ -400,7 +400,7 @@ test('create a post', async ({ client }) => {
 ## The route helper
 You may use the `route` helper from the TestContext to create a URL for a route. Using the route helper ensures that whenever you update your routes, you do not have to come back and fix all the URLs inside your tests.
 
-The `route` helper accepts the same set of arguments accepted by the global template method [route](../http/url_builder.md#generating-urls-inside-templates).
+The `route` helper accepts the same set of arguments accepted by the global template method [route](../basics/routing.md#url-builder).
 
 ```ts
 test('get a list of users', async ({ client, route }) => {

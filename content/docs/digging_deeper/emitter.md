@@ -33,7 +33,7 @@ Once you have defined the event listener, you can emit the `user:registered` eve
 import emitter from '@adonisjs/core/services/emitter'
 
 export default class UsersController {
-  store() {
+  async store() {
     const user = await User.create(data)
     emitter.emit('user:registered', user)
   }
@@ -77,7 +77,7 @@ declare module '@adonisjs/core/types' {
 
 Like HTTP controllers, listener classes offer an abstraction layer to move inline event listeners inside dedicated files. Listener classes are stored inside the `app/listeners` directory and you may create a new listener using the `make:listener` command.
 
-See also: [Make listener command](../reference/commands.md#makelistener)
+See also: [Make listener command](../references/commands.md#makelistener)
 
 ```sh
 node ace make:listener sendVerificationEmail
@@ -95,7 +95,7 @@ export default class SendVerificationEmail {
 }
 ```
 
-As the final step, you must bind the listener class to an event within the `start/events.ts` file. You may import the listener using the `#listeners` alias. The aliases are defined using the [subpath imports feature of Node.js](../guides/folder_structure.md#the-sub-path-imports).
+As the final step, you must bind the listener class to an event within the `start/events.ts` file. You may import the listener using the `#listeners` alias. The aliases are defined using the [subpath imports feature of Node.js](../getting_started/folder_structure.md#the-sub-path-imports).
 
 ```ts
 // title: start/events.ts
@@ -130,7 +130,7 @@ You cannot inject the `HttpContext` inside a listener class. Because events are 
 
 :::
 
-The listener classes are instantiated using the [IoC container](../fundamentals/ioc_container.md); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
+The listener classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
 
 In the following example, we type-hint the `TokensService` as a constructor argument. When invoking this listener, the IoC container will inject an instance of the `TokensService` class.
 
@@ -175,7 +175,7 @@ Class-based events encapsulate the event identifier and the event data within th
 
 You may create an event class using the `make:event` command.
 
-See also: [Make event command](../reference/commands.md#makeevent)
+See also: [Make event command](../references/commands.md#makeevent)
 
 ```sh
 node ace make:event UserRegistered
@@ -226,7 +226,7 @@ import User from '#models/user'
 import UserRegistered from '#events/user_registered'
 
 export default class UsersController {
-  store() {
+  async store() {
     const user = await User.create(data)
     
     /**
@@ -335,7 +335,7 @@ emitter.clearAllListeners()
 ```
 
 ## List of available events
-Please check the [events reference guide](../reference/events.md) to view the list of available events.
+Please check the [events reference guide](../references/events.md) to view the list of available events.
 
 ## Faking events during tests
 

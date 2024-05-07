@@ -10,7 +10,7 @@ The `adonisrc.ts` file is used to configure the workspace and some of the runtim
 
 In this file, you can register providers, define command aliases, or specify the files to copy to the production build.
 
-See also: [AdonisRC file reference guide](../concepts/rc_file)
+See also: [AdonisRC file reference guide](../concepts/adonisrc_file)
 
 ## The `tsconfig.json` file
 
@@ -149,7 +149,7 @@ The `start` directory contains the files you want to import during the boot life
 
 AdonisJS does not auto-import files from the `start` directory. It is merely used as a convention to group similar files.
 
-We recommend reading about [preload files](../concepts/rc_file#preloads) and the [application boot lifecycle](../concepts/application_lifecycle.md) to have a better understanding of which files to keep under the `start` directory.
+We recommend reading about [preload files](../concepts/adonisrc_file#preloads) and the [application boot lifecycle](../concepts/application_lifecycle.md) to have a better understanding of which files to keep under the `start` directory.
 
 ## The `public` directory
 

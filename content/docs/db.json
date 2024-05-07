@@ -60,6 +60,12 @@
     "category": "Getting started"
   },
   {
+    "permalink": "concepts/adonisrc-file",
+    "title": "AdonisRC file",
+    "contentPath": "./concepts/adonisrc_file.md",
+    "category": "Concepts"
+  },
+  {
     "permalink": "concepts/async-local-storage",
     "title": "Async local storage",
     "contentPath": "./concepts/async_local_storage.md",
@@ -117,12 +123,6 @@
     "permalink": "concepts/http-context",
     "title": "HTTP context",
     "contentPath": "./concepts/http_context.md",
-    "category": "Concepts"
-  },
-  {
-    "permalink": "concepts/rc-file",
-    "title": "RC file",
-    "contentPath": "./concepts/rc_file.md",
     "category": "Concepts"
   },
   {

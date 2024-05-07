@@ -92,7 +92,7 @@ The HTTP server is booted once you call [the `boot` method](https://github.com/a
 
 In a typical AdonisJS application, the `boot` method is called by the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/http.ts) module within the `bin/server.ts` file.
 
-Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](rc_file#preloads).
+Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](adonisrc_file#preloads).
 
 ![](./server_boot_lifecycle.png)
 

@@ -1,3 +1,7 @@
+---
+summary: Learn how to use the access tokens guard to authenticate HTTP requests using access tokens.
+---
+
 # Access tokens guard
 Access tokens authenticate HTTP requests in API contexts where the server cannot persist cookies on the end-user device, for example, third-party access to an API or authentication for a mobile app.
 

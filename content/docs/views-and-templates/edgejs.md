@@ -1,3 +1,7 @@
+---
+summary: Learn how to use Edge.js for templating in AdonisJS
+---
+
 # EdgeJS
 
 Edge is a **simple**, **Modern**, and **batteries included** template engine created and maintained by the AdonisJS core team for Node.js. Edge is similar to writing JavaScript. If you know JavaScript, you know Edge.

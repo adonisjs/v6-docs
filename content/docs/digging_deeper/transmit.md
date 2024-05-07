@@ -1,3 +1,7 @@
+---
+summary: Learn how to send real-time updates with SSE from your AdonisJS server using the Transmit package
+---
+
 # Transmit
 
 Transmit is a native opinionated Server-Sent-Event (SSE) module built for AdonisJS. It is a simple and efficient way to send real-time updates to the client, such as notifications, live chat messages, or any other type of real-time data.

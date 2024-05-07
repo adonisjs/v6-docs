@@ -1,3 +1,7 @@
+---
+summary: The Request class holds data for the ongoing HTTP request, including the request body, reference to uploaded files, cookies, request headers, and much more.
+---
+
 # Request
 
 An instance of the [request class](https://github.com/adonisjs/http-server/blob/main/src/request.ts) holds data for the ongoing HTTP request, including the **request body**, **reference to uploaded files**, **cookies**, **request headers**, and much more. The request instance can be accessed using the `ctx.request` property.

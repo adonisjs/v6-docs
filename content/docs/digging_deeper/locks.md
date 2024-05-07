@@ -1,3 +1,7 @@
+---
+summary: Use the `@adonisjs/lock` package to manage atomic locks in your AdonisJS application. 
+---
+
 # Atomic Locks
 
 An atomic lock, otherwise known as a `mutex`, is used for synchronizing access to a shared resource. In other words, it prevents several processes, or concurrent code, from executing a section of code at the same time.

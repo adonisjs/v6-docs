@@ -1,3 +1,7 @@
+---
+summary: Experimental new Vite integration for AdonisJS.
+---
+
 # Vite Experimental
 
 :::warning

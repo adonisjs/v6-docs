@@ -1,3 +1,7 @@
+---
+summary: Quick overview of Lucid ORM, a SQL query builder and Active Record ORM built on top of Knex.
+---
+
 # Lucid ORM
 
 Lucid is a SQL query builder, and an Active Record ORM built on top of [Knex](https://knexjs.org) created and maintained by the AdonisJS core team. Lucid strives to leverage SQL to its full potential and offers clean API for many advanced SQL operations.

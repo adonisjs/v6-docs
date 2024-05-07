@@ -1,3 +1,7 @@
+---
+summary: Learn how to read and update configuration values in AdonisJS.
+---
+
 # Configuration
 
 The configuration files of your AdonisJS application are stored inside the `config` directory. A brand new AdonisJS application comes with a handful of pre-existing files used by the framework core and installed packages.

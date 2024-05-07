@@ -1,3 +1,7 @@
+---
+summary: Learn about config providers and how they help you lazily compute the configuration after the application is booted.
+---
+
 # Config providers
 
 Some configuration files like (`config/hash.ts`) do not export config as a plain object. Instead, they export a [config provider](https://github.com/adonisjs/core/blob/main/src/config_provider.ts#L16). The config provider provides a transparent API for packages to lazily compute the configuration after the application is booted.

@@ -1,3 +1,7 @@
+---
+summary: Available options for rendering views and templates in AdonisJS
+---
+
 # Views and Templates
 
 AdonisJS is an excellent fit for creating traditional server-rendered applications in Node.js. If you enjoy the simplicity of using a backend template engine that outputs HTML without any overhead of Virtual DOM and build tools, then this guide is for you.

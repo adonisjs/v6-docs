@@ -1,3 +1,7 @@
+---
+summary: Inbuilt event emitter created on top of emittery. Dispatches events asynchronously and fixes many common issues with the Node.js default Event emitter.
+---
+
 # Event Emitter
 
 AdonisJS has an inbuilt event emitter created on top of [emittery](https://github.com/sindresorhus/emittery). Emittery dispatches events asynchronously and [fixes many common issues](https://github.com/sindresorhus/emittery#how-is-this-different-than-the-built-in-eventemitter-in-nodejs) with the Node.js default Event emitter.

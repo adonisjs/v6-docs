@@ -1,3 +1,7 @@
+---
+summary: Learn how to implement CORS in AdonisJS to protect your application..
+---
+
 # CORS
 
 [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) helps you protect your application from malicious requests triggered using scripts in a browser environment. 

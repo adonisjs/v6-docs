@@ -1,3 +1,7 @@
+---
+summary: Contributing to AdonisJS projects is a great way to give back to the community. This guide provides a general overview of how you can contribute to any AdonisJS project.
+---
+
 # Contributing
 This is a general contribution guide for all of the [AdonisJS](https://github.com/adonisjs) repos. Please read this guide thoroughly before contributing to any of the repos 🙏
 

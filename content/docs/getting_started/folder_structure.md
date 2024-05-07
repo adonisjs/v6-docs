@@ -1,3 +1,7 @@
+---
+summary: Take a tour of the important files and folders created by AdonisJS during the installation process.
+---
+
 # Folder structure
 
 In this guide, we will take a tour of the important files and folders created by AdonisJS during the installation process. 

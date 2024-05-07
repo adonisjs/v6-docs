@@ -1,5 +1,5 @@
 ---
-summary: How to use Inertia with AdonisJS
+summary: Learn how to use Inertia with AdonisJS to create server-rendered applications with your favorite frontend framework.
 ---
 
 # Inertia

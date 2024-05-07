@@ -1,3 +1,7 @@
+---
+summary: Learn how to send emails from your AdonisJS application using the @adonisjs/mail package. 
+---
+
 # Mail
 
 You can send emails from your AdonisJS application using the `@adonisjs/mail` package. The mail package is built on top of [Nodemailer](https://nodemailer.com/), bringing the following quality of life improvements over Nodemailer.

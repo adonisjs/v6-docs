@@ -1,3 +1,7 @@
+---
+summary: Learn how to process user-uploaded files in AdonisJS using the `request.file` method and validate them using the validator.
+---
+
 # File uploads
 
 AdonisJS has first-class support for processing user-uploaded files sent using the `multipart/form-data` content type. The files are auto-processed using the [bodyparser middleware](../basics/body_parser.md#multipart-parser) and saved inside your operating system's `tmp` directory.

@@ -1,3 +1,7 @@
+---
+summary: Learn how to write authorization checks in your AdonisJS application using the `@adonisjs/bouncer` package. Define abilities and policies to authorize actions in your application.
+---
+
 # Authorization
 
 You can write authorization checks in your AdonisJS application using the `@adonisjs/bouncer` package. Bouncer provides a JavaScript first API for writing authorization checks as **abilities** and **policies**.

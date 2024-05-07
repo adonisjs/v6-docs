@@ -1,3 +1,7 @@
+---
+summary: Learn how to create custom Ace commands in AdonisJS
+---
+
 # Creating commands
 
 Alongside using Ace commands, you may also create custom commands as part of your application codebase. The commands are stored inside the `commands` directory (at the root level). You may create a command by running the following command.

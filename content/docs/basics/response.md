@@ -1,3 +1,7 @@
+---
+summary: Response class is used to send HTTP responses. It supports sending HTML fragments, JSON objects, streams, and much more.
+---
+
 # Response
 
 An instance of the [response class](https://github.com/adonisjs/http-server/blob/main/src/response.ts) is used to respond to HTTP requests. AdonisJS supports sending **HTML fragments**, **JSON objects**, **streams**, and much more. The response instance can be accessed using the `ctx.response` property.

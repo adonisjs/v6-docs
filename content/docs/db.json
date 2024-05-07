@@ -313,7 +313,7 @@
   },
   {
     "permalink": "security/securing-ssr-applications",
-    "title": "Securing ssr apps",
+    "title": "Securing SSR apps",
     "contentPath": "./security/securing_ssr_applications.md",
     "category": "Security"
   },

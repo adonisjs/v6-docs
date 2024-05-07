@@ -36,7 +36,7 @@
 /guides/hmr /guides/concepts/hot-module-replacement
 /guides/http /guides/concepts/http-overview
 /guides/http-context /guides/concepts/http-context
-/guides/adonisrc-file /guides/concepts/rc-file
+/guides/adonisrc-file /guides/concepts/adonisrcrc-file
 /guides/service-providers /guides/concepts/service-providers
 /guides/scaffolding /guides/concepts/scaffolding
 /guides/tooling-config /guides/concepts/tooling-config

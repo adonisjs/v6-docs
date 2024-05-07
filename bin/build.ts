@@ -18,6 +18,8 @@ import { mkdir, readFile } from 'node:fs/promises'
 import { joinToURL } from '@adonisjs/core/helpers'
 import { existsSync, writeFileSync } from 'node:fs'
 import string from '@adonisjs/core/helpers/string'
+import { join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 /**
  * URL to the application root. AdonisJS need it to resolve
@@ -53,10 +55,15 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
   if (!existsSync('public/og')) await mkdir('public/og', { recursive: true })
 
   /**
+   * Generate the output filename
+   */
+  const relativePath = relative(join(fileURLToPath(APP_ROOT), 'content/docs'), entry.contentPath)
+  const filename = relativePath.replace('.md', '').replace(/\//g, '-').replace('-', '_')
+
+  /**
    * Skip generating the og image when it already exists
    */
-  const slugifiedTitle = string.slug(entry.title, { lower: true })
-  const output = `public/og/${slugifiedTitle}.png`
+  const output = `public/og/${filename}.png`
   let shouldGenerateOgImage = true
   if (existsSync(output)) {
     shouldGenerateOgImage = false

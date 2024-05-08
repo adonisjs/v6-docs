@@ -537,7 +537,7 @@ export default class UsersController {
 }
 ```
 
-## Share types
+## Types sharing
 
 Usually, you will want to share the types of the data you are passing to your frontend pages components. A simple way to do this is to use the `InferPageProps` type.
 
@@ -577,17 +577,7 @@ export function UsersPage(
 
 :::
 
-You will also need to ensure that your frontend is aware of the types you're passing. To do this, you need to add this line to your `inertia/app/app.ts` file:
-
-```ts
-/// <reference path="../../adonisrc.ts" />
-```
-
----
-
-Note that the `InferPageProps` will "serialize at type-level" the data you are passing. For example, if you pass a `Date` object to `inertia.render`, the resulting type of `InferPageProps` will be `string`.
-
-If you're using Vue, you'll have to manually define each property in your `defineProps`. This is an annoying limitation of Vue, see https://github.com/vitejs/vite-plugin-vue/issues/167.
+If you're using Vue, you'll have to manually define each property in your `defineProps`. This is an annoying limitation of Vue, see [this issue](https://github.com/vitejs/vite-plugin-vue/issues/167) for more information.
 
 ```vue
 <script setup lang="ts">
@@ -601,6 +591,109 @@ defineProps<{
 
 </script>
 ```
+
+
+### Reference Directives
+
+Since your Inertia Application is a separate TypeScript project (with its own `tsconfig.json`), you will need to help TypeScript understand some types. Many of our official packages use [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation) to add certain types to your AdonisJS project.
+
+For example, the `auth` property on the `HttpContext` and its typing will only be available when you import `@adonisjs/auth/initialize_auth_middleware` into your project. Now, the issue is that we don't import this module in our Inertia project, so if you try to infer the page props from a controller that uses `auth`, then you will likely receive a TypeScript error or an invalid type.
+
+To resolve this issue, you can use [reference directives](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-path-) to help TypeScript understand certain types. To do this, you need to add the following line in your `inertia/app/app.ts` file:
+
+```ts
+/// <reference path="../../adonisrc.ts" />
+```
+
+Depending on the types you use, you may need to add other reference directives, such as references to certain configuration files that also use module augmentation.
+
+```ts
+/// <reference path="../../adonisrc.ts" />
+/// <reference path="../../config/ally.ts" />
+/// <reference path="../../config/auth.ts" />
+```
+
+### Type-level Serialization
+
+An important thing to know about `InferPageProps` is that it will "serialize at the type level" the data you pass. For example, if you pass a `Date` object to `inertia.render`, the resulting type from `InferPageProps` will be `string`:
+
+:::codegroup
+
+```ts
+// title: app/controllers/users_controller.ts
+export default class UsersController {
+  async index({ inertia }: HttpContext) {
+    const users = [
+      { id: 1, name: 'John Doe', createdAt: new Date() }
+    ]
+
+    return inertia.render('users/index', { users })
+  }
+}
+```
+
+```tsx
+// title: inertia/pages/users/index.tsx
+import type { InferPageProps } from '@adonisjs/inertia/types'
+
+export function UsersPage(
+  props: InferPageProps<UsersController, 'index'>
+) {
+  props.users
+  //     ^? { id: number, name: string, createdAt: string }[]
+}
+```
+
+:::
+
+This makes total sense, as dates are serialized to string when they are passed over the network in JSON.
+
+### Model Serialization
+
+Keeping the last point in mind, another important thing to know is that if you pass an AdonisJS model to `inertia.render`, then the resulting type from `InferPageProps` will be a `ModelObject`: a type that contains almost no information. This can be problematic. To solve this issue, you have several options:
+
+- Cast your model to a simple object before passing it to `inertia.render`:
+- Use a DTO (Data Transfer Object) system to transform your models into simple objects before passing them to `inertia.render`.
+
+:::codegroup
+
+```ts
+// title: Casting
+class UsersController {
+  async edit({ inertia, params }: HttpContext) {
+    const user = users.serialize() as {
+        id: number
+        name: string 
+    }
+
+    return inertia.render('user/edit', { user })
+  }
+}
+```
+
+```ts
+// title: DTOs
+class UserDto {
+  constructor(private user: User) {}
+
+  public toJson() {
+    return {
+      id: this.user.id,
+      name: this.user.name
+    }
+  }
+}
+
+class UsersController {
+  async edit({ inertia, params }: HttpContext) {
+    const user = await User.findOrFail(params.id)
+    return inertia.render('user/edit', { user: new UserDto(user).toJson() })
+  }
+}
+
+:::
+
+You will now have accurate types in your frontend component.
 
 ## CSRF 
 

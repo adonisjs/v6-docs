@@ -104,7 +104,7 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
   /**
    * Insert the og:image and twitter:image meta tags
    */
-  const ogImageUrl = output.replace('public/', 'https://feat-og-images-v2.v6-docs.pages.dev/')
+  const ogImageUrl = output.replace('public/', 'https://docs.adonisjs.com/')
   const tags = `
     <meta property="og:image" content="${ogImageUrl}">
     <meta name="twitter:image" content="${ogImageUrl}">

@@ -690,6 +690,7 @@ class UsersController {
     return inertia.render('user/edit', { user: new UserDto(user).toJson() })
   }
 }
+```
 
 :::
 

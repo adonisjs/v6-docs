@@ -1,3 +1,7 @@
+---
+summary: Learn about the Application class and how to access the environment, state, and make URLs and paths to project files.
+---
+
 # Application
 
 The [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.

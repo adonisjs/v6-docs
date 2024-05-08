@@ -1,3 +1,7 @@
+---
+summary: Command-line testing in AdonisJS using the Ace command framework.
+---
+
 # Console tests
 
 Command-line tests refer to testing custom Ace commands that are part of your application or the package codebase.

@@ -1,3 +1,7 @@
+---
+summary: How to create and configure a new AdonisJS application.
+---
+
 # Installation
 
 Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. AdonisJS needs `Node.js >= 20.6`.

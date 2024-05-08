@@ -1,3 +1,7 @@
+---
+summary: Learn how to parse request bodies using the BodyParser middleware.
+---
+
 # Body parser middleware
 
 The request data is parsed using the `BodyParser` middleware registered inside the `start/kernel.ts` file.

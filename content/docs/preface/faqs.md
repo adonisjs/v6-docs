@@ -1,3 +1,7 @@
+---
+summary: Frequently asked questions about AdonisJS, the framework, and its ecosystem.
+---
+
 # FAQs
 
 ## Who maintains AdonisJS?

@@ -1,3 +1,7 @@
+---
+summary: Implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
+---
+
 # Social authentication
 
 You can implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.

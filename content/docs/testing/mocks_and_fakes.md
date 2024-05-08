@@ -1,3 +1,7 @@
+---
+summary: Learn how to mock or fake dependencies during testing in AdonisJS.
+---
+
 # Mocks and Fakes
 
 When testing your applications, you might want to mock or fake specific dependencies to prevent actual implementations from running. For example, you wish to refrain from emailing your customers when running tests and neither call third-party services like a payment gateway.

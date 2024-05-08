@@ -1,3 +1,7 @@
+---
+summary: Learn about defining and processing command arguments in Ace commands.
+---
+
 # Command arguments
 
 Arguments refer to the positional arguments mentioned after the command name. Since arguments are positional, passing them in the correct order is necessary.

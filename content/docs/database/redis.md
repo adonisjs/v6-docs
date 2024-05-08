@@ -1,3 +1,7 @@
+---
+summary: Use Redis inside your AdonisJS applications using the `@adonisjs/redis` package. 
+---
+
 # Redis
 
 You can use Redis inside your AdonisJS applications using the `@adonisjs/redis` package. The package is a thin wrapper on top of [ioredis](https://github.com/redis/ioredis) with better DX around Pub/Sub and automatic management of multiple redis connections.

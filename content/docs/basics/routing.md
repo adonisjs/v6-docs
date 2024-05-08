@@ -1,3 +1,7 @@
+---
+summary: Learn how to define routes, route params, and route handlers in AdonisJS.
+---
+
 # Routing
 
 The users of your website or web application can visit different URLs like `/`, `/about`, or `/posts/1`. To make these URLs work, you have to define routes.

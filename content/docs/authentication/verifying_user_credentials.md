@@ -1,3 +1,7 @@
+---
+summary: Verify user credentials in an AdonisJS application using the AuthFinder mixin.
+---
+
 # Verifying user credentials
 
 In an AdonisJS application, verifying user credentials is decoupled from the authentication layer. This ensures you can continue using the auth guards without limiting the options to verify the user credentials.

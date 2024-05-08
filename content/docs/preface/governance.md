@@ -1,3 +1,7 @@
+---
+summary: Governance model for the AdonisJS project.
+---
+
 # Governance
 
 ## Roles and responsibilities

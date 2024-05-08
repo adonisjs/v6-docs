@@ -1,3 +1,7 @@
+---
+summary: Manage user sessions inside your AdonisJS application using the @adonisjs/session package. 
+---
+
 # Session
 
 You can manage user sessions inside your AdonisJS application using the `@adonisjs/session` package. The session package provides a unified API for storing session data across different storage providers. 

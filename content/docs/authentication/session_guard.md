@@ -1,3 +1,7 @@
+---
+summary: Learn how to authenticate users using the session guard in AdonisJS.
+---
+
 # Session guard
 The session guard uses the [@adonisjs/session](../basics/session.md) package to login and authenticate users during an HTTP request.
 

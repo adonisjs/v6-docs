@@ -1,3 +1,7 @@
+---
+summary: Learn how to extend the AdonisJS framework using macros and getters.
+---
+
 # Extending the framework
 
 The architecture of AdonisJS makes it very easy to extend the framework. We dogfood framework's core APIs to build an ecosystem of first-party packages.

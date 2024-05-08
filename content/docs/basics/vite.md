@@ -1,3 +1,7 @@
+---
+summary: Learn how to use Vite to bundle frontend assets in AdonisJS applications.
+---
+
 # Vite
 
 AdonisJS uses [Vite](https://vitejs.dev/) to bundle the frontend assets of your applications. We provide an official integration that performs all the heavy lifting required to integrate Vite with a backend framework like AdonisJS. It includes:

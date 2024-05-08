@@ -1,3 +1,7 @@
+---
+summary: Learn about the exceptions raised by the AdonisJS framework core and official packages.
+---
+
 # Exceptions reference
 
 In this guide we will go through the list of known exceptions raised by the framework core and the official packages. Some of the exceptions are marked as **self-handled**. [Self-handled exceptions](../basics/exception_handling.md#defining-the-handle-method) can convert themselves to an HTTP response.

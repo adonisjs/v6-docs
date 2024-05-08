@@ -1,3 +1,7 @@
+---
+summary: Learn how to validate user input in AdonisJS using VineJS.
+---
+
 # Validation
 
 The data validation in AdonisJS is usually performed at the controller level. This ensures you validate the user input as soon as your application handles the request and send errors in the response that can be displayed next to the form fields.

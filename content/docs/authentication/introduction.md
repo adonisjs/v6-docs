@@ -1,3 +1,7 @@
+---
+summary: Learn about the authentication system in AdonisJS and how to authenticate users in your application.
+---
+
 # Authentication
 
 AdonisJS ships with a robust and secure authentication system you can use to log in and authenticate users of your application. Be it a server-rendered application, a SPA client, or a mobile app, you can set up authentication for all of them.

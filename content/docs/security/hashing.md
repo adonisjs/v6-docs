@@ -1,3 +1,7 @@
+---
+summary: Learn how to hash values using the AdonisJS hash service.
+---
+
 # Hashing
 
 You may hash user passwords in your application using the `hash` service. AdonisJS has first-class support for `bcrypt`, `scrypt`, and `argon2` hashing algorithms and the ability to [add custom drivers](#creating-a-custom-hash-driver).

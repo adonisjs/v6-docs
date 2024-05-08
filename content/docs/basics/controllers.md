@@ -1,3 +1,7 @@
+---
+summary: Learn about HTTP controllers in AdonisJS and how to organize route handlers inside dedicated files.
+---
+
 # Controllers
 
 HTTP controllers offer an abstraction layer to organize the route handlers inside dedicated files. Instead of expressing all the request handling logic within the routes file, you move it to controller classes.

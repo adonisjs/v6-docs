@@ -1,3 +1,7 @@
+---
+summary: Learn about general guidelines to deploy an AdonisJS application in production.
+---
+
 # Deployment
 
 Deploying an AdonisJS application is no different than deploying a standard Node.js application. You need a server running `Node.js >= 20.6` along with `npm` to install production dependencies.

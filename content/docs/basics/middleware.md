@@ -1,3 +1,7 @@
+---
+summary: Learn about middleware in AdonisJS, how to create them, and how to assign them to routes and route groups.
+---
+
 # Middleware
 
 Middleware are a series of functions executed during an HTTP request before the request reaches the route handler. Every function in the chain can end the request or forward it to the next middleware.

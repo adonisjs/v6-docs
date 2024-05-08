@@ -1,3 +1,7 @@
+---
+summary: Scaffold source files from templates and update TypeScript source code using codemods in AdonisJS
+---
+
 # Scaffolding and codemods
 
 Scaffolding refers to the process of generating source files from static templates (aka stubs), and codemods refer to updating the TypeScript source code by parsing the AST.

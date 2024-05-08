@@ -1,3 +1,7 @@
+---
+summary: Learn about the commands shipped with the AdonisJS framework core and official packages.
+---
+
 # Commands reference
 
 In this guide, we cover the usage of all the commands shipped with the framework core and the official packages. You may also view the commands help using the `node ace list` command or the `node ace <command-name> --help` command.

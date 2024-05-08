@@ -1,3 +1,7 @@
+---
+summary: Encrypt and decrypt values in your application using the encryption service.
+---
+
 # Encryption
 
 Using the encryption service, you may encrypt and decrypt values in your application. The encryption is based on the [aes-256-cbc algorithm](https://www.n-able.com/blog/aes-256-encryption-algorithm), and we append an integrity hash (HMAC) to the final output to prevent value tampering.

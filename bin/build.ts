@@ -42,12 +42,17 @@ const ogTemplate = await readFile(joinToURL(import.meta.url, '../assets/og_templ
 
 async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutput: string) {
   /**
-   * Read the HTML file to extract the meta description
+   * Read the HTML file to extract the meta description and category
+   * This is super hackish but works for now. Ideally, we should be able to extract
+   * frontmatter from markdown files, I think Dimmer doesn't support it yet.
    */
   const htmlLocation = joinToURL(import.meta.url, '../', 'dist', htmlOutput)
   const html = await readFile(htmlLocation, 'utf-8')
   const metaDescription = html.match(/<meta name="og:description" content="(.*)">/)
   const description = metaDescription ? metaDescription[1] : ''
+  const category = html.match(
+    /<meta property="og:url" content="https:\/\/docs\.adonisjs\.com\/guides\/(.*)\/.*">/
+  )
 
   /**
    * Create the og directory when missing
@@ -79,8 +84,8 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
     .filter(Boolean)
 
   const svg = ogTemplate
-    // max 24 characters for the title
-    .replace('{{ title }}', entry.title.slice(0, 24))
+    .replace('{{ category }}', category ? string.titleCase(category[1].replace('-', ' ')) : 'Docs')
+    .replace('{{ title }}', string.encodeSymbols(entry.title.slice(0, 24)))
     .replace('{{ line1 }}', lines[0])
     .replace('{{ line2 }}', lines[1] || '')
     .replace('{{ line3 }}', lines[2] || '')
@@ -93,7 +98,7 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
         .toFile(output)
     }
   } catch (e) {
-    console.error('Failed to generate og image', e)
+    console.error('Failed to generate og image for %s', entry.title, e)
   }
 
   /**

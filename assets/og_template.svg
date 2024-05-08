@@ -35,20 +35,24 @@
     </g>
   </g>
 
+  <text x="137" fill="#60646C" y="310" style="font-family: Graphik; font-size: 38px;line-height: 1.5;">
+    {{ category }}
+  </text>
+
   <text style="
       font-family: PolySans Trial;
       font-size: 120px;
-    " x="137" y="400" fill="black">
+    " x="137" y="450" fill="black">
     {{ title }}
   </text>
 
-  <text x="137" fill="#60646C" y="490" style="font-family: Graphik; font-size: 45px;line-height: 1.5;">
+  <text x="137" fill="#60646C" y="540" style="font-family: Graphik; font-size: 45px;line-height: 1.5;">
     {{ line1 }}
   </text>
-  <text x="137" fill="#60646C" y="550" style="font-family: Graphik; font-size: 45px;line-height: 1.5;">
+  <text x="137" fill="#60646C" y="610" style="font-family: Graphik; font-size: 45px;line-height: 1.5;">
     {{ line2 }}
   </text>
-  <text x="137" fill="#60646C" y="610" style="font-family: Graphik; font-size: 45px;line-height: 1.5;">
+  <text x="137" fill="#60646C" y="680" style="font-family: Graphik; font-size: 45px;line-height: 1.5;">
     {{ line3 }}
   </text>
 

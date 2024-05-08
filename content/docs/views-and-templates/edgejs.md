@@ -75,6 +75,40 @@ You can also use the `router.on.render` method to render a template without assi
 router.on('/').render('welcome')
 ```
 
+## Using a layout
+
+You can use slots to make a template. Let's create a `index.edge` file inside the `resources/views/components/layout`
+
+```edge
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ title || "Your default title" }}</title>
+  @if ($slots.meta)
+    {{{ await $slots.meta() }}}
+  @endif
+</head>
+<body>
+  {{{ await $slots.main() }}}
+</body>
+</html>
+```
+
+Edit your `welcome.edge` file inside the `resources/views` directory.
+
+```edge
+@layout({ title: "Welcome page title" })
+  @slot('meta')
+    <meta name="description" content="A welcome page made with AdonisJS">
+  @endslot
+
+  <h1>
+    Hello world from {{ request.url() }} endpoint
+  </h1>
+@end
+```
+
 ## Configuring Edge
 You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file#preloads) inside the `start` directory.
 

@@ -107,3 +107,10 @@
 /guides/mail-classes /guides/digging-deeper/mail#class-based-emails
 /guides/fake-mailer /guides/digging-deeper/mail#fake-mailer
 /guides/mail-custom-transports /guides/digging-deeper/mail#creating-custom-transports
+
+/guides/ace /guides/ace/introduction
+/guides/ace-creating-commands /guides/ace/creating-commands
+/guides/ace-arguments /guides/ace/arguments
+/guides/ace-flags /guides/ace/flags
+/guides/ace-prompts /guides/ace/prompts
+/guides/ace-terminal-ui /guides/ace/terminal-ui

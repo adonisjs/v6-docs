@@ -414,37 +414,37 @@
     "category": "Digging deeper"
   },
   {
-    "permalink": "ace",
+    "permalink": "ace/introduction",
     "title": "Introduction",
     "contentPath": "./ace/introduction.md",
     "category": "Ace commands"
   },
   {
-    "permalink": "ace-creating-commands",
+    "permalink": "ace/creating-commands",
     "title": "Creating commands",
     "contentPath": "./ace/creating_commands.md",
     "category": "Ace commands"
   },
   {
-    "permalink": "ace-arguments",
+    "permalink": "ace/arguments",
     "title": "Command arguments",
     "contentPath": "./ace/args.md",
     "category": "Ace commands"
   },
   {
-    "permalink": "ace-flags",
+    "permalink": "ace/flags",
     "title": "Command flags",
     "contentPath": "./ace/flags.md",
     "category": "Ace commands"
   },
   {
-    "permalink": "ace-prompts",
+    "permalink": "ace/prompts",
     "title": "Prompts",
     "contentPath": "./ace/prompts.md",
     "category": "Ace commands"
   },
   {
-    "permalink": "ace-terminal-ui",
+    "permalink": "ace/terminal-ui",
     "title": "Terminal UI",
     "contentPath": "./ace/tui.md",
     "category": "Ace commands"

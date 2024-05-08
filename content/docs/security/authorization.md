@@ -1,5 +1,5 @@
 ---
-summary: Learn how to write authorization checks in your AdonisJS application using the `@adonisjs/bouncer` package. Define abilities and policies to authorize actions in your application.
+summary: Learn how to write authorization checks in your AdonisJS application using the `@adonisjs/bouncer` package.
 ---
 
 # Authorization

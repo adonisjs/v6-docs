@@ -1,5 +1,5 @@
 ---
-summary: Assembler hooks are a way of executing code at specific points in the assembler lifecycle. These hooks can be helpful for tasks such as file generation, code compilation, or injecting custom build steps.
+summary: Assembler hooks are a way of executing code at specific points in the assembler lifecycle. 
 ---
 
 # Assembler hooks

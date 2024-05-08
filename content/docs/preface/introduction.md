@@ -90,7 +90,7 @@ The AdonisJS documentation is written as a reference guide, covering the usage a
 With that said, the documentation extensively covers the usage of available modules and the inner workings of the framework.
 
 ## Recent releases
-Following is the list of recent releases. [Click here](releases.md) to view all the releases.
+Following is the list of recent releases. [Click here](./releases.md) to view all the releases.
 
 ::include{template="partials/recent_releases"}
 

@@ -233,7 +233,7 @@ export default class GreetCommand extends BaseCommand {
 
 ## Dependency injection
 
-Ace commands are constructed and executed using the [IoC container](../../concepts/dependency_injection). Therefore, you can type-hint dependencies on command lifecycle methods and use the `@inject` decorator to resolve them.
+Ace commands are constructed and executed using the [IoC container](../concepts/dependency_injection). Therefore, you can type-hint dependencies on command lifecycle methods and use the `@inject` decorator to resolve them.
 
 For demonstration, let's inject the `UserService` class in all the lifecycle methods.
 

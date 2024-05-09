@@ -18,7 +18,7 @@ Prompts are interactive terminal widgets you can use to accept user input. Ace p
 
 Ace prompts are built with testing in mind. When writing tests, you may trap prompts and respond to them programmatically.
 
-See also: [Testing ace commands](../../testing/console_tests)
+See also: [Testing ace commands](../testing/console_tests)
 
 ## Displaying a prompt
 

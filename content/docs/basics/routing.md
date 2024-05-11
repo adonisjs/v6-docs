@@ -573,7 +573,7 @@ router.get('posts/:id', () => {})
 
 AdonisJS raises a 404 exception when no matching route is found for the current request's URL.
 
-To display a 404 page to the user, you can catch the `E_ROUTE_NOT_FOUND` exception inside the [global exception handler](exception_handling.md) and render a template.
+To display a 404 page to the user, you can catch the `E_ROUTE_NOT_FOUND` exception inside the [global exception handler](./exception_handling.md) and render a template.
 
 ```ts
 import { errors } from '@adonisjs/core'

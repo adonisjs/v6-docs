@@ -172,7 +172,7 @@ The following global variables are always shared with a stub.
 
 | Variable       | Description                                                                                                                                                         |
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `app`          | Reference to an instance of the [application class](application.md).                                                                                                |
+| `app`          | Reference to an instance of the [application class](./application.md).                                                                                                |
 | `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts).                                                          |
 | `randomString` | Reference to the [randomString](../references/helpers.md#random) helper function.                                                                               |
 | `string`       | A function to create a [string builder](../references/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |

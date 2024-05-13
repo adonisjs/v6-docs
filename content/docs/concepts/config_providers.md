@@ -51,7 +51,7 @@ export default {
 }
 ```
 
-**🚨 The above example will fail** because the AdonisJS [container services](container_services.md) are unavailable until the application has been booted and the config files are imported before the application boot phase.
+**🚨 The above example will fail** because the AdonisJS [container services](./container_services.md) are unavailable until the application has been booted and the config files are imported before the application boot phase.
 
 ### Well, that's a problem with AdonisJS architecture 🤷🏻‍♂️
 Not really. Let's not use the container service and create an instance of the Emitter class directly within the config file.
@@ -123,7 +123,7 @@ The above code will work fine. However, you are manually constructing the depend
 With AdonisJS, we strive to write minimal boilerplate code and use the IoC container for lookup dependencies.
 
 ## With config provider
-Now, let's re-write the `config/hash.ts` file and use a config provider this time. Config provider is a fancy name for a function that accepts an [instance of the Application class](application.md) and resolves its dependencies using the container.
+Now, let's re-write the `config/hash.ts` file and use a config provider this time. Config provider is a fancy name for a function that accepts an [instance of the Application class](./application.md) and resolves its dependencies using the container.
 
 ```ts
 // highlight-start
@@ -150,7 +150,7 @@ export default {
 }
 ```
 
-Once you use the [hash](../security/hashing) service, the config provider for the `scrypt` driver will be executed to resolve its dependencies. As a result, we do not attempt to look up the `emitter` until we use the hash service elsewhere inside our code.
+Once you use the [hash](../security/hashing.md) service, the config provider for the `scrypt` driver will be executed to resolve its dependencies. As a result, we do not attempt to look up the `emitter` until we use the hash service elsewhere inside our code.
 
 Since config providers are async, you might want to import the `Scrypt` driver lazily via dynamic import.
 

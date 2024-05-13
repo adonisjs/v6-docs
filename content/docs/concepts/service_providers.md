@@ -39,7 +39,7 @@ By default, a provider is loaded in all the runtime environments. However, you c
 
 Service providers are stored inside the `providers` directory of your app. Alternatively, you can use the `node ace make:provider app` command.
 
-The provider module must have an `export default` statement returning the provider class. The class constructor receives an instance of the [Application](application.md) class.
+The provider module must have an `export default` statement returning the provider class. The class constructor receives an instance of the [Application](./application.md) class.
 
 See also: [Make provider command](../references/commands.md#makeprovider)
 
@@ -163,7 +163,7 @@ export default class AppProvider {
 
 The `shutdown` method is called when AdonisJS is in the middle of gracefully exiting the application.
 
-The event of exiting the application depends upon the environment in which the app is running and how the application process started. Please read the [application lifecycle guide](application_lifecycle.md) to know more about it.
+The event of exiting the application depends upon the environment in which the app is running and how the application process started. Please read the [application lifecycle guide](./application_lifecycle.md) to know more about it.
 
 ```ts
 export default class AppProvider {

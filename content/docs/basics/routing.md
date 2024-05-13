@@ -219,7 +219,7 @@ router.post('users', async () => {
 
 In the following example, we import the `UsersController` class and bind it to the route. During an HTTP request, AdonisJS will create an instance of the controller class using the IoC container and execute the `store` method.
 
-See also: Dedicated guide on [controllers](controllers.md).
+See also: Dedicated guide on [controllers](./controllers.md).
 
 
 ```ts
@@ -232,7 +232,7 @@ router.post('users', [UsersController, 'store'])
 
 You can define a middleware on a route by calling the `route.use` method. The method accepts an inline callback or a reference to a named middleware.
 
-Following is a minimal example of defining a route middleware. We recommend reading the [dedicated guide on middleware](middleware.md) to explore all the available options and the execution flow of middleware.
+Following is a minimal example of defining a route middleware. We recommend reading the [dedicated guide on middleware](./middleware.md) to explore all the available options and the execution flow of middleware.
 
 ```ts
 router
@@ -249,7 +249,7 @@ router
 
 ## Route identifier
 
-Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [response.redirect](response.md#redirects) method.
+Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [response.redirect](./response.md#redirects) method.
 
 By default, the route pattern is the route identifier. However, you can assign a unique, memorable name to the route using the `route.as` method.
 
@@ -379,7 +379,7 @@ You can assign middleware to routes inside a group using the `group.use` method.
 
 In the case of nested groups, the middleware from the outermost group will run first. In other words, a group prepends middleware to the route middleware stack.
 
-See also: [Middleware guide](middleware.md)
+See also: [Middleware guide](./middleware.md)
 
 ```ts
 router
@@ -444,7 +444,7 @@ The render method accepts the name of the edge template to render. Optionally, y
 
 :::warning
 
-The `route.on.render` method only exists when you have configured the [Edge service provider](../views-and-templates/introduction#using-edge)
+The `route.on.render` method only exists when you have configured the [Edge service provider](../views-and-templates/introduction.md#using-edge)
 
 :::
 

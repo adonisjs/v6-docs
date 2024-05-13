@@ -261,7 +261,7 @@ response.redirect().withQs().back()
 
 ## Aborting request with an error
 
-You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and trigger the [exception handling](exception_handling.md) flow.
+You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and trigger the [exception handling](./exception_handling.md) flow.
 
 ```ts
 router.get('posts/:id/edit', async ({ response, auth, params }) => {

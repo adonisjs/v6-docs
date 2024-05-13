@@ -110,7 +110,7 @@ Passing data by reference has no technical downsides. But, it does make the code
 
 ## Usage
 
-AdonisJS uses `AsyncLocalStorage` during HTTP requests and shares the [HTTP context](http_context.md) as the state. As a result, you can access the HTTP context in your application globally.
+AdonisJS uses `AsyncLocalStorage` during HTTP requests and shares the [HTTP context](./http_context.md) as the state. As a result, you can access the HTTP context in your application globally.
 
 First, you must enable the `useAsyncLocalStorage` flag inside the `config/app.ts` file.
 

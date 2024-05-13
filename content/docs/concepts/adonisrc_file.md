@@ -213,7 +213,7 @@ By default, the providers are loaded in all the environments. However, you can a
 Providers are loaded in the same order as registered inside the `providers` array.
 :::
 
-See also: [Service providers](service_providers.md)
+See also: [Service providers](./service_providers.md)
 
 ```ts
 {

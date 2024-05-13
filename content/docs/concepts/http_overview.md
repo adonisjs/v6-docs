@@ -38,7 +38,7 @@ Controllers are JavaScript classes that you bind to a route to handle the HTTP r
 
 <dt>
 
-[HttpContext](http_context.md)
+[HttpContext](./http_context.md)
 
 </dt>
 
@@ -96,7 +96,7 @@ The HTTP server is booted once you call [the `boot` method](https://github.com/a
 
 In a typical AdonisJS application, the `boot` method is called by the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/http.ts) module within the `bin/server.ts` file.
 
-Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](adonisrc_file#preloads).
+Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](./adonisrc_file.md#preloads).
 
 ![](./server_boot_lifecycle.png)
 
@@ -119,9 +119,9 @@ Now that we have an HTTP server listening for incoming requests. Let's see how A
 
 <dd>
 
-As the first step, the server module creates an instance of the [HttpContext](http_context.md) class and passes it as a reference to the middleware, route handlers, and the global exception handler.
+As the first step, the server module creates an instance of the [HttpContext](./http_context.md) class and passes it as a reference to the middleware, route handlers, and the global exception handler.
 
-If you have enabled the [AsyncLocalStorage](async_local_storage.md#usage), then the same instance is 
+If you have enabled the [AsyncLocalStorage](./async_local_storage.md#usage), then the same instance is 
 shared as the local storage state.
 
 </dd>

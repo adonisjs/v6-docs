@@ -42,7 +42,7 @@ It provides ready-to-use actions for user registration, email management, sessio
 
 ## Choosing an auth guard
 
-The following inbuilt authentication guards provide you with the most straightforward workflow for authenticating users without compromising the security of your applications. Also, you can [build your authentication guards](custom_auth_guard) for custom requirements.
+The following inbuilt authentication guards provide you with the most straightforward workflow for authenticating users without compromising the security of your applications. Also, you can [build your authentication guards](./custom_auth_guard.md) for custom requirements.
 
 ### Session
 

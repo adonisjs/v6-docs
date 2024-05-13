@@ -6,7 +6,7 @@ summary: Learn about the Application class and how to access the environment, st
 
 The [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
 
-See also: [Application lifecycle](application_lifecycle.md)
+See also: [Application lifecycle](./application_lifecycle.md)
 
 ## Environment 
 
@@ -80,7 +80,7 @@ app.nodeEnvironment === 'test'
 
 ## State
 
-The state refers to the current state of the application. The framework features you can access significantly depend upon the current state of the application. For example, you cannot access the [container bindings](dependency_injection#container-bindings) or [container services](container_services.md) until the app is in a `booted` state.
+The state refers to the current state of the application. The framework features you can access significantly depend upon the current state of the application. For example, you cannot access the [container bindings](./dependency_injection.md#container-bindings) or [container services](./container_services.md) until the app is in a `booted` state.
 
 The application is always in one of the following known states.
 

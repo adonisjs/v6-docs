@@ -4,7 +4,7 @@ summary: Learn how to read, write, and clear cookies in AdonisJS.
 
 # Cookies
 
-The request cookies are parsed automatically during an HTTP request. You can read cookies using the [request](request.md) object and set/clear cookies using the [response](response.md) object.
+The request cookies are parsed automatically during an HTTP request. You can read cookies using the [request](./request.md) object and set/clear cookies using the [response](./response.md) object.
 
 ```ts
 // title: Read cookies

@@ -698,7 +698,7 @@ You will now have accurate types in your frontend component.
 
 ## CSRF 
 
-If you enabled [CSRF protection](../../security/securing_ssr_applications#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.
+If you enabled [CSRF protection](../security/securing_ssr_applications.md#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.
 
 Enabling this option will ensure that the `XSRF-TOKEN` cookie is set on the client side and sent back to the server with every request.
 

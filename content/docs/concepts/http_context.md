@@ -145,7 +145,7 @@ Dependency injection is one way to accept the HTTP context as a class constructo
 
 However, it is not a hard requirement to restructure your application and use Dependency injection everywhere. You can also access the HTTP context from anywhere inside your application using the [Async local storage](https://nodejs.org/dist/latest-v21.x/docs/api/async_context.html#class-asynclocalstorage) provided by Node.js. 
 
-We have a [dedicated guide](async_local_storage.md) on how Async local storage works and how AdonisJS uses it to provide global access to the HTTP context.
+We have a [dedicated guide](./async_local_storage.md) on how Async local storage works and how AdonisJS uses it to provide global access to the HTTP context.
 
 In the following example, the `UserService` class uses the `HttpContext.getOrFail` method to get the HTTP context instance for the ongoing request.
 
@@ -284,7 +284,7 @@ ctx.view
 
 <dd>
 
-Reference to an instance of Edge renderer. Learn more about Edge in [View and templates guide](../views-and-templates/introduction#using-edge)
+Reference to an instance of Edge renderer. Learn more about Edge in [View and templates guide](../views-and-templates/introduction.md#using-edge)
 
 </dd>
 
@@ -296,7 +296,7 @@ ctx\.ally
 
 <dd>
 
-Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/main/src/ally_manager.ts) to implement social login in your apps. Learn more about [Ally](../authentication/social_authentication)
+Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/main/src/ally_manager.ts) to implement social login in your apps. Learn more about [Ally](../authentication/social_authentication.md)
 
 </dd>
 

@@ -54,7 +54,7 @@ npm init adonisjs@latest hello-world -- --kit=api --auth-guard=access_tokens
 
 ## Starter kits
 
-Starter kits serve as a starting point for creating applications using AdonisJS. They come with an [opinionated folder structure](folder_structure.md), pre-configured AdonisJS packages, and the necessary tooling you need during development.
+Starter kits serve as a starting point for creating applications using AdonisJS. They come with an [opinionated folder structure](./folder_structure.md), pre-configured AdonisJS packages, and the necessary tooling you need during development.
 
 
 :::note

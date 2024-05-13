@@ -11,7 +11,7 @@ By default, we provide secure APIs to find users and verify their passwords. How
 In this guide, we will cover the process of finding a user by a UID and verifying their password before marking them as logged in.
 
 ## Basic example
-You can use the User model directly to find a user and verify their password. In the following example, we find a user by email and use the [hash](../security/hashing) service to verify the password hash.
+You can use the User model directly to find a user and verify their password. In the following example, we find a user by email and use the [hash](../security/hashing.md) service to verify the password hash.
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'

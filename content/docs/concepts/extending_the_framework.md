@@ -102,9 +102,9 @@ Following is the list of classes that can be extended using Macros and getters.
 ## Extending modules
 Most of the AdonisJS modules provide extensible APIs to register custom implementations. Following is an aggregated list of the same.
 
-- [Creating Hash driver](../security/hashing#creating-a-custom-hash-driver)
+- [Creating Hash driver](../security/hashing.md#creating-a-custom-hash-driver)
 - [Creating Session driver](../basics/session.md#creating-a-custom-session-store)
-- [Creating Social auth driver](../authentication/social_authentication#creating-a-custom-social-driver)
+- [Creating Social auth driver](../authentication/social_authentication.md#creating-a-custom-social-driver)
 - [Extending REPL](../digging_deeper/repl.md#adding-custom-methods-to-repl)
 - [Creating i18n translations loader](../digging_deeper/i18n.md#creating-a-custom-translation-loader)
 - [Creating i18n translations formatter](../digging_deeper/i18n.md#creating-a-custom-translation-formatter)

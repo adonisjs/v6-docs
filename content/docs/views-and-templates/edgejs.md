@@ -76,7 +76,7 @@ router.on('/').render('welcome')
 ```
 
 ## Configuring Edge
-You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file#preloads) inside the `start` directory.
+You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory.
 
 ```sh
 node ace make:preload view

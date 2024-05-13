@@ -8,8 +8,8 @@ The request data is parsed using the `BodyParser` middleware registered inside t
 
 The configuration for the middleware is stored inside the `config/bodyparser.ts` file. In this file, you may configure parsers for parsing **JSON payloads**, **multipart forms with file uploads**, and **URL-encoded forms**.
 
-See also: [Reading request body](request.md#request-body)\
-See also: [File uploads](file_uploads.md)
+See also: [Reading request body](./request.md#request-body)\
+See also: [File uploads](./file_uploads.md)
 
 ```ts
 import { defineConfig } from '@adonisjs/core/bodyparser'
@@ -212,7 +212,7 @@ The URL-encoded request body is parsed using the [qs package](https://www.npmjs.
 
 The `multipart` parser is used for parsing HTML form requests with file uploads.
 
-See also: [File uploads](file_uploads.md)
+See also: [File uploads](./file_uploads.md)
 
 ```ts
 multipart: {
@@ -240,7 +240,7 @@ Enabling `autoProcess` will move all the user-uploaded files to the `tmp` direct
 
 Later, inside the controllers, you can validate the files and move them to a persistent location or a cloud service.
 
-If you disable the `autoProcess` flag, then you will have to manually process the stream and read files/fields from the request body. See also: [Self-processing multipart stream](file_uploads.md#self-processing-multipart-stream).
+If you disable the `autoProcess` flag, then you will have to manually process the stream and read files/fields from the request body. See also: [Self-processing multipart stream](./file_uploads.md#self-processing-multipart-stream).
 
 You may define an array of routes for which to auto process the files. The values **must be a route pattern** and not the URL.
 
@@ -297,7 +297,7 @@ limit
 
 <dd>
 
-The maximum limit of bytes to allow when processing all files. You can define the individual file size limit using the [request.file](file_uploads.md) method.
+The maximum limit of bytes to allow when processing all files. You can define the individual file size limit using the [request.file](./file_uploads.md) method.
 
 </dd>
 

@@ -46,7 +46,7 @@ env.get('PORT', 3333)
 ### Sharing env module with Edge templates
 If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
 
-You can [create `view.ts` as a preload file](../concepts/adonisrc_file#preloads) inside the `start` directory and write the following lines of code inside it.
+You can [create `view.ts` as a preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory and write the following lines of code inside it.
 
 ```ts
 // title: start/view.ts

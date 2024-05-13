@@ -22,7 +22,7 @@ router.get('posts', async ({ request }) => {
 })
 ```
 
-The `request.params` method returns an object of [Route params](routing.md#route-params).
+The `request.params` method returns an object of [Route params](./routing.md#route-params).
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -114,7 +114,7 @@ router.post('comments', async ({ request }) => {
 
 The `request.all`, `request.body`, or the cherry-picking methods are not type-safe because there is no direct way for AdonisJS to know the expected data types of the request body.
 
-However, you may use the [validator](validation.md) to validate the request body and have static type-safety.
+However, you may use the [validator](./validation.md) to validate the request body and have static type-safety.
 
 ## Request URL
 

@@ -612,7 +612,7 @@ node ace make:provider app -e=web -e=console
 
 ## make\:preload
 
-Create a new [preload file](../../concepts/rc_file#preloads). Preload files are stored inside the `start` directory.
+Create a new [preload file](../concepts/adonisrc_file.md#preloads). Preload files are stored inside the `start` directory.
 
 ```sh
 node ace make:preload view
@@ -720,7 +720,7 @@ node ace make:policy post
 ## inspect\:rcfile
 View the contents of the `adonisrc.ts` file after merging the defaults. You may use this command to inspect the available configuration options and override them per your application requirements.
 
-See also: [AdonisRC file](../../concepts/rc_file)
+See also: [AdonisRC file](../concepts/adonisrc_file.md)
 
 ```sh
 node ace inspect:rcfile

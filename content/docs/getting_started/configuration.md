@@ -11,7 +11,7 @@ Feel free to create additional files your application requires inside the `confi
 
 :::note
 
-We recommend using [environment variables](environment_variables) for storing secrets and environment-specific configuration.
+We recommend using [environment variables](./environment_variables.md) for storing secrets and environment-specific configuration.
 
 
 :::

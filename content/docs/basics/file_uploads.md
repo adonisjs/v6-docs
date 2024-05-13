@@ -94,7 +94,7 @@ if (invalidDocuments.length) {
 
 ### Using validator
 
-Instead of validating files manually (as seen in the previous section), you may use the [validator](validation.md) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
+Instead of validating files manually (as seen in the previous section), you may use the [validator](./validation.md) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
 
 ```ts
 // app/validators/user_validator.ts
@@ -207,7 +207,7 @@ Following is the list of properties you may access on the [MultipartFile](https:
 
 ## Serving files
 
-If you have persisted user-uploaded files in the same filesystem as your application code, you may serve files by creating a route and using the [`response.download`](response.md#downloading-files) method. 
+If you have persisted user-uploaded files in the same filesystem as your application code, you may serve files by creating a route and using the [`response.download`](./response.md#downloading-files) method. 
 
 ```ts
 import { sep, normalize } from 'node:path'
@@ -229,7 +229,7 @@ router.get('/uploads/*', ({ request, response }) => {
 })
 ```
 
-- We get the file path using the [wildcard route param](routing.md#wildcard-params) and convert the array into a string.
+- We get the file path using the [wildcard route param](./routing.md#wildcard-params) and convert the array into a string.
 - Next, we normalize the path using the Node.js path module.
 - Using the `PATH_TRAVERSAL_REGEX` we protect this route against [path traversal](https://owasp.org/www-community/attacks/Path_Traversal).
 - Finally, we convert the `normalizedPath` to an absolute path inside the `uploads` directory and serve the file using the `response.download` method.

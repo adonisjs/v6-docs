@@ -4,7 +4,7 @@ summary: Learn about container services and how they help in keeping your codeba
 
 # Container services
 
-As we discussed in the [IoC container guide](dependency-injection#container-bindings), the container bindings are one of the primary reasons for the IoC container to exists in AdonisJS.
+As we discussed in the [IoC container guide](./dependency_injection.md#container-bindings), the container bindings are one of the primary reasons for the IoC container to exists in AdonisJS.
 
 Container bindings keep your codebase clean from boilerplate code required to construct objects before they can be used.
 

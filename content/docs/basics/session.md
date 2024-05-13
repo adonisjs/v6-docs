@@ -148,7 +148,7 @@ The `age` property controls the validity of session data without any user activi
 
 <dd>
 
-Control session ID cookie attributes. See also [cookie configuration](cookies.md#configuration).
+Control session ID cookie attributes. See also [cookie configuration](./cookies.md#configuration).
 
 </dd>
 
@@ -504,7 +504,7 @@ router.get('/contact', ({ view, session }) => {
 ```
 
 ### Validation errors and flash messages
-The Session middleware automatically captures the [validation exceptions](validation.md#error-handling) and redirects the user back to the form. The validation errors and form input data are kept within flash messages, and you can access them inside Edge templates.
+The Session middleware automatically captures the [validation exceptions](./validation.md#error-handling) and redirects the user back to the form. The validation errors and form input data are kept within flash messages, and you can access them inside Edge templates.
 
 In the following example:
 

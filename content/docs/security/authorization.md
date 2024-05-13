@@ -278,7 +278,7 @@ export default class PostsController {
     //Continue with the controller logic
   }
 
-  async create({ bouncer, params, response }: HttpContext) {
+  async edit({ bouncer, params, response }: HttpContext) {
     const post = await Post.findOrFail(params.id)
 
     // highlight-start
@@ -290,7 +290,7 @@ export default class PostsController {
     //Continue with the controller logic
   }
 
-  async create({ bouncer, params, response }: HttpContext) {
+  async delete({ bouncer, params, response }: HttpContext) {
     const post = await Post.findOrFail(params.id)
 
     // highlight-start

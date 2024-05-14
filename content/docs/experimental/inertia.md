@@ -453,14 +453,14 @@ It is how you should do it in AdonisJS :
 
 ```ts
 export default class UsersController {
-  async store({ inertia, response }: HttpContext) {
+  async store({ response }: HttpContext) {
     await User.create(request.body())
 
     // 👇 You can use standard AdonisJS redirections
     return response.redirect().toRoute('users.index')
   }
 
-  async externalRedirect({ response }: HttpContext) {
+  async externalRedirect({ inertia }: HttpContext) {
     // 👇 Or use the inertia.location for external redirects
     return inertia.location('https://adonisjs.com')
   }

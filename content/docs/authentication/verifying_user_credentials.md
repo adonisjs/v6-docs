@@ -21,7 +21,7 @@ import hash from '@adonisjs/core/services/hash'
 // highlight-end
 
 export default class SessionController {
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
     // highlight-start
@@ -134,7 +134,12 @@ import hash from '@adonisjs/core/services/hash'
 // delete-end
 
 export default class SessionController {
+  // delete-start
+  async store({ request, response }: HttpContext) {
+  // delete-end
+  // insert-start
   async store({ request }: HttpContext) {
+  // insert-end
     const { email, password } = request.only(['email', 'password'])
 
     // delete-start

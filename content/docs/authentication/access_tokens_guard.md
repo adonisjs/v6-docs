@@ -355,7 +355,7 @@ router.post('projects', async ({ auth }) => {
   const user = await auth.authenticate()
 
   // Authenticate using a named guard
-  const user = await auth.authenticateUsing('api')
+  const user = await auth.authenticateUsing(['api'])
 })
 ```
 

@@ -102,7 +102,7 @@ If you are using a deployment platform like Heroku or Cleavr, you may use their 
 Assuming you have created the `.env` file in an `/etc/secrets` directory, you must start your production server as follows.
 
 ```sh
-ENV_PATH=/etc/secrets node build/server.js
+ENV_PATH=/etc/secrets node build/bin/server.js
 ```
 
 The `ENV_PATH` environment variable instructs AdonisJS to look for the `.env` file inside the mentioned directory.

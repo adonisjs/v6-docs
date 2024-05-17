@@ -110,13 +110,14 @@ For example, you can use the [`Rate Limiter`](../security/rate_limiting.md) and 
 
 ```ts
 import { defineConfig } from '@adonisjs/transmit'
-import { middleware } from '#start/kernel'
 import { throttle } from '#start/limiter'
 
 export default defineConfig({
-  routeHandlerModifier(route) {
+  async routeHandlerModifier(route) {
+    const { middleware } = await import('#start/kernel')
+    
     // Ensure you are authenticated to register your client
-    if (route.getPattern() === '/__transmit/events') {
+    if (route.getPattern() === '__transmit/events') {
       route.middleware(middleware.auth())
       return
     }

@@ -499,5 +499,5 @@ emitter.on('container_binding:resolved', (event) => {
 
 ## See also
 
-- [The container README file](https://github.com/adonisjs/fold/tree/next) covers the container API in the framework agnostic manner.
+- [The container README file](https://github.com/adonisjs/fold/blob/develop/README.md) covers the container API in the framework agnostic manner.
 - [Why do you need an IoC container?](https://github.com/thetutlage/meta/discussions/4) In this article, the framework's creator shares his reasoning for using the IoC container.

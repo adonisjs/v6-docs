@@ -374,10 +374,11 @@ Now, you can register the `PaymentService` interface and the `StripePaymentServi
 ```ts
 // title: providers/app_provider.ts
 import { PaymentService } from '#contracts/payment_service'
-import { StripePaymentService } from '#services/stripe_payment_service'
 
 export default class AppProvider {
   async boot() {
+    const { StripePaymentService } = await import('#services/stripe_payment_service')
+    
     this.app.container.bind(PaymentService, () => {
       return this.app.container.make(StripePaymentService)
     })

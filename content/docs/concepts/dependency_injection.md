@@ -336,6 +336,73 @@ If you create a package, you can write the above code block inside the service p
 In your AdonisJS application, you can write the above code block inside the `types/container.ts` file.
 
 
+## Creating an abstraction layer
+
+The container allows you to create an abstraction layer for your application. You can define a binding for an interface and resolve it to a concrete implementation.
+
+:::note
+This method is useful when you want to apply Hexagonal Architecture, also known as Port and Adapter principles to your application.
+:::
+
+Since TypeScript interfaces do not exist at runtime, you must use an abstract class constructor for your interface.
+
+```ts
+export abstract class PaymentService {
+  abstract charge(amount: number): Promise<void>
+  abstract refund(amount: number): Promise<void>
+}
+```
+
+Next, you can create a concrete implementation of the `PaymentService` interface.
+
+```ts
+import { PaymentService } from '#contracts/payment_service'
+
+export class StripePaymentService implements PaymentService {
+  async charge(amount: number) {
+    // Charge the amount using Stripe
+  }
+
+  async refund(amount: number) {
+    // Refund the amount using Stripe
+  }
+}
+```
+
+Now, you can register the `PaymentService` interface and the `StripePaymentService` concrete implementation inside the container inside your `AppProvider`.
+
+```ts
+// title: providers/app_provider.ts
+import { PaymentService } from '#contracts/payment_service'
+import { StripePaymentService } from '#services/stripe_payment_service'
+
+export default class AppProvider {
+  async boot() {
+    this.app.container.bind(PaymentService, () => {
+      return this.app.container.make(StripePaymentService)
+    })
+  }
+}
+```
+
+Finally, you can resolve the `PaymentService` interface from the container and use it inside your application.
+
+```ts
+import { PaymentService } from '#contracts/payment_service'
+
+@inject()
+export default class PaymentController {
+  constructor(private paymentService: PaymentService) {
+  }
+
+  async charge() {
+    await this.paymentService.charge(100)
+    
+    // ...
+  }
+}
+```
+
 ## Swapping implementations during testing
 
 When you rely on the container to resolve a tree of dependencies, you have less/no control over the classes in that tree. Therefore, mocking/faking those classes can become harder.

@@ -20,7 +20,7 @@ You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/comm
 
 You may customize the initial project output using one of the following CLI flags.
 
-- `--kit`: Select the [starter kit](#starter-kits) for the project. You can choose between **web**, **api**, or **slim**.
+- `--kit`: Select the [starter kit](#starter-kits) for the project. You can choose between **web**, **api**, **slim** or **inertia**.
 
 - `--db`: Specify the database dialect of your choice. You can choose between **sqlite**, **postgres**, **mysql**, or **mssql**. Defaults to `sqlite`.
 

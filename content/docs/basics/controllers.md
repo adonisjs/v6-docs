@@ -17,7 +17,7 @@ node ace make:controller users
 A newly created controller is scaffolded with the `class` declaration, and you may manually create methods inside it. For this example, let's create an `index` method and return an array of users.
 
 ```ts
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default class UsersController {
   async index(ctx: HttpContext) {
@@ -40,7 +40,7 @@ Finally, let's bind this controller to a route. We will import the controller us
 ```ts
 // title: start/routes.ts
 import router from '@adonisjs/core/services/router'
-import UsersController from '#controllers/users_controller'
+const UsersController = () => import('#controllers/users_controller')
 
 router.get('users', [UsersController, 'index'])
 ```
@@ -65,6 +65,27 @@ router.get('users', (ctx) => {
 })
 ```
 
+You can also notice that we are lazy-loading the controller using a function.
+
+:::warning
+
+Lazy-loading controllers are needed when you are using [HMR](../concepts/hmr.md).
+
+:::
+
+As your codebase grows, you will notice it starts impacting the boot time of your application. A common reason for that is importing all controllers inside the routes file.
+
+Since controllers handle HTTP requests, they often import other modules like models, validators, or third-party packages. As a result, your routes file becomes this central point of importing the entire codebase.
+
+Lazy-loading is as simple as moving the import statement behind a function and using dynamic imports.
+
+:::tip
+
+You can use our [ESLint plugin](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin) to enforce and automatically convert standard controller imports to lazy dynamic imports.
+
+:::
+
+
 ## Single action controllers
 
 AdonisJS provides a way to define a single action controller. It's an effective way to wrap up functionality into clearly named classes. To accomplish this, you need to define a handle method inside the controller.
@@ -85,31 +106,6 @@ Then, you can reference the controller on the route with the following.
 router.post('newsletter/subscriptions', [RegisterNewsletterSubscriptionController])
 ```
 
-## Lazy loading controllers
-
-As your codebase grows, you will notice it starts impacting the boot time of your application. A common reason for that is importing all controllers inside the routes file.
-
-Since controllers handle HTTP requests, they often import other modules like models, validators, or third-party packages. As a result, your routes file becomes this central point of importing the entire codebase. **To prevent this from happening, we recommend lazy loading the controllers.**
-
-Lazy loading is as simple as moving the import statement behind a function and using dynamic imports.
-
-:::tip
-
-You can use our [ESLint plugin](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin) to enforce and automatically convert standard controller imports to lazy dynamic imports.
-
-:::
-
-```ts
-import router from '@adonisjs/core/services/router'
-// delete-start
-import UsersController from '#controllers/users_controller'
-// delete-end
-// insert-start
-const UsersController = () => import('#controllers/users_controller')
-// insert-end
-
-router.get('users', [UsersController, 'index'])
-```
 
 ### Using magic strings
 
@@ -145,8 +141,6 @@ export default class UserService {
 
 ```ts
 import { inject } from '@adonisjs/core'
-import { HttpContext } from '@adonisjs/core/http'
-
 import UserService from '#services/user_service'
 
 @inject()
@@ -215,7 +209,7 @@ node ace make:controller posts --resource
 ```
 
 ```ts
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default class PostsController {
   /**

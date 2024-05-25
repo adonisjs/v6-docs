@@ -69,10 +69,20 @@ router.get('/', async ({ view }) => {
 })
 ```
 
-You can also use the `router.on.render` method to render a template without assigning a callback to the route.
+You can also use the `router.on().render` method to render a template without assigning a callback to the route.
 
 ```ts
 router.on('/').render('welcome')
+```
+
+### Passing data to the template
+
+You can pass data to the template by passing an object as the second argument to the `view.render` method.
+
+```ts
+router.get('/', async ({ view }) => {
+  return view.render('welcome', { username: 'romainlanz' })
+})
 ```
 
 ## Configuring Edge

@@ -637,7 +637,7 @@ export default class SessionController {
      */
     if (error) {
       session.flashAll()
-      session.flashError({
+      session.flashErrors({
         E_TOO_MANY_REQUESTS: `Too many login requests. Try again after ${error.response.availableIn} seconds`
       })
       return response.redirect().back()

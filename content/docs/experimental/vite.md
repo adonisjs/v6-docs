@@ -86,7 +86,7 @@ export default defineConfig({
 
 The `assetsBundler` property is set to `false` to turn off the assets bundler management done by the AdonisJS Assembler.
 
-The `unstable_assembler` property registers the `@adonisjs/vite/build_hook` to execute the Vite build process. See [Assembler hooks](assembler_hooks.md) for more information.
+The `unstable_assembler` property registers the `@adonisjs/vite/build_hook` to execute the Vite build process. See [Assembler hooks](./assembler_hooks.md) for more information.
 
 
 ## Configuration

@@ -15,7 +15,7 @@ Ally comes with the following inbuilt drivers, alongside an extensible API to [r
 - Discord
 - LinkedIn
 
-Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. You can store that information inside a database and use the [auth](introduction.md) package to login the user within your application.
+Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. You can store that information inside a database and use the [auth](./introduction.md) package to login the user within your application.
 
 ## Installation
 

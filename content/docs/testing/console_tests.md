@@ -32,7 +32,7 @@ export default class Greet extends BaseCommand {
 }
 ```
 
-Let's create a **unit** test inside the `tests/unit` directory. Feel free to [define the unit test suite](introduction.md#suites) if it is not already defined.
+Let's create a **unit** test inside the `tests/unit` directory. Feel free to [define the unit test suite](./introduction.md#suites) if it is not already defined.
 
 ```sh
 node ace make:test commands/greet --suite=unit

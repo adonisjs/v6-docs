@@ -43,7 +43,7 @@ You can login a user using the `guard.login` method. The method accepts an insta
 
 In the following example:
 
-- We use the `verifyCredentials` from the [AuthFinder mixin](verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
+- We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
 
 - The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
 
@@ -214,7 +214,7 @@ router
 ```
 
 ### Access user within Edge templates
-The [InitializeAuthMiddleware](introduction.md#the-initialize-auth-middleware) also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
+The [InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware) also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
 
 ```edge
 @if(auth.isAuthenticated)

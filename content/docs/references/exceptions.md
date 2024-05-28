@@ -172,7 +172,7 @@ if (error instanceof errors.E_HTTP_REQUEST_ABORTED) {
 ```
 
 ## E_INSECURE_APP_KEY
-The exception is raised when the length of `appKey` is smaller than 16 characters. You can use the [generate:key](commands.md#generatekey) ace command to generate a secure app key.
+The exception is raised when the length of `appKey` is smaller than 16 characters. You can use the [generate:key](./commands.md#generatekey) ace command to generate a secure app key.
 
 - **Status code**: 500
 - **Self handled**: No

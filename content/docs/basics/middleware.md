@@ -247,7 +247,7 @@ The middleware layer of AdonisJS is built on top of [Chain of Responsibility](ht
 
 ## Middleware and exception handling
 
-AdonisJS automatically captures the exception raised by the middleware pipeline or the route handler and converts it into an HTTP response using the [global exception handler](exception_handling.md).
+AdonisJS automatically captures the exception raised by the middleware pipeline or the route handler and converts it into an HTTP response using the [global exception handler](./exception_handling.md).
 
 As a result, you do not have to wrap the `next` function calls inside a `try/catch` statement. Also, the automatic exception handling ensures that the upstream logic of middleware is always executed after the `next` function call.
 

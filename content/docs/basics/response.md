@@ -209,7 +209,7 @@ router.get('/posts', async ({ response }) => {
 })
 ```
 
-The redirect class also allows constructing a URL from a pre-registered route. The `redirect.toRoute` method accepts the [route identifier](routing.md#route-identifier) as the first parameter and the route params as the second parameter.
+The redirect class also allows constructing a URL from a pre-registered route. The `redirect.toRoute` method accepts the [route identifier](./routing.md#route-identifier) as the first parameter and the route params as the second parameter.
 
 ```ts
 import router from '@adonisjs/core/services/router'

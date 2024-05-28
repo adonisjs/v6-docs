@@ -8,7 +8,7 @@ HTTP tests refer to testing your application endpoints by making an actual HTTP 
 
 HTTP tests are performed using the [API client plugin](https://japa.dev/docs/plugins/api-client) of Japa. The API client plugin is a stateless request library similar to `Axios` or `fetch` but more suited for testing.
 
-If you want to test your web apps inside a real browser and interact with them programmatically, we recommend using the [Browser client](browser_tests.md) that uses Playwright for testing.
+If you want to test your web apps inside a real browser and interact with them programmatically, we recommend using the [Browser client](./browser_tests.md) that uses Playwright for testing.
 
 ## Setup
 The first step is to install the following packages from the npm packages registry.

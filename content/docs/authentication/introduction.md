@@ -131,7 +131,7 @@ node ace add @adonisjs/auth --guard=basic_auth
 ## The Initialize auth middleware
 During setup, we register the `@adonisjs/auth/initialize_auth_middleware` within your application. The middleware is responsible for creating an instance of the [Authenticator](https://github.com/adonisjs/auth/blob/main/src/authenticator.ts) class and shares it via the `ctx.auth` property with the rest of the request.
 
-Note that the initialize auth middleware does not authenticate the request or protect the routes. It's used only for initializing the authenticator and sharing it with the rest of the request. You must use the [auth](session_guard.md#protecting-routes) middleware for protecting routes.
+Note that the initialize auth middleware does not authenticate the request or protect the routes. It's used only for initializing the authenticator and sharing it with the rest of the request. You must use the [auth](./session_guard.md#protecting-routes) middleware for protecting routes.
 
 Also, the same authenticator instance is shared with Edge templates (if your app is using Edge), and you can access it using the `auth` property. For example:
 
@@ -174,6 +174,6 @@ Also, update the `User` model if you define, rename, or remove columns from the 
 
 ## Next steps
 
-- Learn how to [verify user credentials](verifying_user_credentials.md) without compromising the security of your application.
-- Use [session guard](session_guard.md) for stateful authentication.
-- Use [access tokens guard](access_tokens_guard.md) for tokens based authentication.
+- Learn how to [verify user credentials](./verifying_user_credentials.md) without compromising the security of your application.
+- Use [session guard](./session_guard.md) for stateful authentication.
+- Use [access tokens guard](./access_tokens_guard.md) for tokens based authentication.

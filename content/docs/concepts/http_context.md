@@ -329,7 +329,7 @@ Reference to an instance of the [I18n class](https://github.com/adonisjs/i18n/bl
 
 ## Extending HTTP context
 
-You may add custom properties to the HTTP context class using macros or getters. Make sure to read the [extending AdonisJS guide](extending_the_framework.md) first if you are new to the concept of macros.
+You may add custom properties to the HTTP context class using macros or getters. Make sure to read the [extending AdonisJS guide](./extending_the_framework.md) first if you are new to the concept of macros.
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'

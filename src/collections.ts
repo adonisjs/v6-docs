@@ -21,10 +21,11 @@ const docs = new Collection()
     entry.rendering((mdFile) => {
       mdFile.on('link', (node) => {
         if (
-          node.url &&
-          !node.url.startsWith('http') &&
-          !node.url.startsWith('#') &&
-          !node.url.includes('.md')
+          (node.url &&
+            !node.url.startsWith('http') &&
+            !node.url.startsWith('#') &&
+            !node.url.includes('.md')) ||
+          (node.url.includes('.md') && !node.url.startsWith('.'))
         ) {
           console.log(mdFile.filePath)
           console.log(node)

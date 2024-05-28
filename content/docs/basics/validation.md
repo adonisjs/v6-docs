@@ -160,7 +160,7 @@ That is all! Validating the user input is two lines of code inside your controll
 Also, you do not have to wrap the `validate` method call inside a `try/catch`. Because in the case of an error, AdonisJS will automatically convert the error to an HTTP response.
 
 ## Error handling
-The [HttpExceptionHandler](exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
+The [HttpExceptionHandler](./exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
 
 :::tip
 
@@ -174,7 +174,7 @@ Also, the session middleware [overwrites the `renderValidationErrorAsHTML` metho
 
 - HTTP requests with `Accept=application/vnd.api+json` header will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
 
-- Server rendered forms using the [session package](session.md) will receive the errors via [session flash messages](session.md#validation-errors-and-flash-messages).
+- Server rendered forms using the [session package](./session.md) will receive the errors via [session flash messages](./session.md#validation-errors-and-flash-messages).
 
 - All other requests will receive errors back as plain text.
 

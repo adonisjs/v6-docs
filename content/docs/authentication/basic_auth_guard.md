@@ -37,7 +37,7 @@ The `basicAuthUserProvider` method creates an instance of the [BasicAuthLucidUse
 
 
 ## Preparing the User model
-The model (`User` model in this example) configured with the `basicAuthUserProvider` must use the [AuthFinder](verifying_user_credentials.md#using-the-auth-finder-mixin) mixin to verify the user credentials during authentication.
+The model (`User` model in this example) configured with the `basicAuthUserProvider` must use the [AuthFinder](./verifying_user_credentials.md#using-the-auth-finder-mixin) mixin to verify the user credentials during authentication.
 
 ```ts
 import { DateTime } from 'luxon'

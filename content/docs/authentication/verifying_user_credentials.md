@@ -209,4 +209,4 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 ```
 
 ## Hashing user password
-The `AuthFinder` mixin registers a [beforeSave](https://github.com/adonisjs/auth/blob/main/src/mixins/with_auth_finder.ts#L40-L50) hook to automatically hash the user passwords during `INSERT` and `UPDATE` calls. Therefore, you do not have to manually perform password hashing in your models.
+The `AuthFinder` mixin registers a [beforeSave](https://github.com/adonisjs/auth/blob/main/src/mixins/lucid.ts#L40-L50) hook to automatically hash the user passwords during `INSERT` and `UPDATE` calls. Therefore, you do not have to manually perform password hashing in your models.

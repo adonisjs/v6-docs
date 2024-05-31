@@ -4,7 +4,7 @@ summary: Learn how to use the AdonisJS logger to write logs to the console, file
 
 # Logger
 
-AdonisJS has an inbuilt logger that supports writing logs to a **file**, **standard output**, and **external logging services**. Under the hood, we use [pino](https://getpino.io/#/). Pino is one of the fastest logging libraries in the Node.js ecosystem that generates logs in the [NDJSON format](http://ndjson.org/).
+AdonisJS has an inbuilt logger that supports writing logs to a **file**, **standard output**, and **external logging services**. Under the hood, we use [pino](https://getpino.io/#/). Pino is one of the fastest logging libraries in the Node.js ecosystem that generates logs in the [NDJSON format](https://github.com/ndjson/ndjson-spec).
 
 ## Usage
 

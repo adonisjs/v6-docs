@@ -696,6 +696,60 @@ class UsersController {
 
 You will now have accurate types in your frontend component.
 
+### Shared Props
+
+To have the types of your [shared data](#sharing-data-with-all-views) in your components, ensure you have performed module augmentation in your `config/inertia.ts` file as follows:
+
+```ts
+// file: config/inertia.ts
+const inertiaConfig = defineConfig({
+  sharedData: {
+    appName: 'My App',
+  },
+});
+
+export default inertiaConfig;
+
+declare module '@adonisjs/inertia/types' {
+  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {
+    // If necessary, you can also manually add some shared props,
+    // such as those shared from a middleware for example
+    propsSharedFromAMiddleware: number;
+  }
+}
+```
+
+Also, make sure to add this [reference directive](#reference-directives) in your `inertia/app/app.ts` file:
+
+```ts
+/// <reference path="../../config/inertia.ts" />
+```
+
+Once this is done, you will have access to your shared props in your components via `InferPageProps`. `InferPageProps` will contain the types of your shared props and the props passed by `inertia.render`:
+
+```tsx
+// file: inertia/pages/users/index.tsx
+
+import type { InferPageProps } from '@adonisjs/inertia/types'
+
+export function UsersPage(
+  props: InferPageProps<UsersController, 'index'>
+) {
+  props.appName
+  //     ^? string
+  props.propsSharedFromAMiddleware
+  //     ^? number
+}
+```
+
+If needed, you can access only the types of your shared props via the `SharedProps` type:
+
+```tsx
+import type { SharedProps } from '@adonisjs/inertia/types'
+
+const page = usePage<SharedProps>()
+```
+
 ## CSRF 
 
 If you enabled [CSRF protection](../security/securing_ssr_applications.md#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.

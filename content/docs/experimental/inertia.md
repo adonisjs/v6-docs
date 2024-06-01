@@ -98,7 +98,7 @@ node ace configure @adonisjs/inertia
 
   1. Create a `./resources/views/inertia_layout.edge` file that will be used to render the HTML page used to boot Inertia.
 
-  2. Create a `./inertia/css/app.css` file with the content needed to style the `root.edge` view.
+  2. Create a `./inertia/css/app.css` file with the content needed to style the `inertia_layout.edge` view.
 
   3. Create a `./inertia/tsconfig.json` file to differentiate between the server and client-side TypeScript configuration.
 
@@ -110,7 +110,7 @@ node ace configure @adonisjs/inertia
 
   7. Add the correct vite plugin to compile your frontend framework in the `vite.config.ts` file.
 
-  8. Add a dumb route `/inertia` in your `start/routes.ts` file to render the home page with Inertia
+  8. Add a dumb route at `/` in your `start/routes.ts` file to render the home page with Inertia as an example.
  
 5. Install packages based on the selected frontend framework.
 
@@ -403,7 +403,7 @@ The Root template is a regular Edge template that will be loaded on the first-pa
 
 :::
 
-You can configure the root template path in the `config/inertia.ts` file. By default, it assumes your template is at `resources/views/root.edge`.
+You can configure the root template path in the `config/inertia.ts` file. By default, it assumes your template is at `resources/views/inertia_layout.edge`.
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -412,6 +412,22 @@ export default defineConfig({
   // The path to the root template relative 
   // to the `resources/views` directory
   rootView: 'app_root', 
+})
+```
+
+If needed, you can pass a function to the `rootView` prop to dynamically decide which root template should be used.
+
+```ts
+import { defineConfig } from '@adonisjs/inertia'
+
+export default defineConfig({
+  rootView: (ctx) => {
+    if (ctx.url().startsWith('/admin')) {
+      return 'admin_root'
+    }
+
+    return 'app_root'
+  }
 })
 ```
 

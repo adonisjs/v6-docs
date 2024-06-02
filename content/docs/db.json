@@ -490,11 +490,5 @@
     "title": "Helpers",
     "contentPath": "./references/helpers.md",
     "category": "References"
-  },
-  {
-    "permalink": "experimental-vite",
-    "title": "New Vite integration",
-    "contentPath": "./experimental/vite.md",
-    "category": "Experimental"
   }
 ]

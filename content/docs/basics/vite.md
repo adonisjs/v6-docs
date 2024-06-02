@@ -6,30 +6,34 @@ summary: Learn how to use Vite to bundle frontend assets in AdonisJS application
 
 AdonisJS uses [Vite](https://vitejs.dev/) to bundle the frontend assets of your applications. We provide an official integration that performs all the heavy lifting required to integrate Vite with a backend framework like AdonisJS. It includes:
 
-- Starting the Vite development server alongside the AdonisJS dev server.
+- Embedding the Vite development server inside AdonisJS.
 - A dedicated Vite plugin to simplify configuration options.
 - Edge helpers and tags to generate URLs for assets processed by Vite.
+- Access to the [Vite Runtime API](https://vitejs.dev/guide/api-vite-runtime.html#vite-runtime-api) to perform server-side rendering (SSR).
+
+Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite is proxied to it through an AdonisJS middleware. It allows us to directly access Vite's runtime API to perform server-side rendering (SSR) and manage a single dev server. That also means that assets are served by AdonisJS directly and not by a separate process.
+
+:::tip
+Still using @adonisjs/vite 2.x ? [See the migration guide](https://github.com/adonisjs/vite/releases/tag/v3.0.0) to upgrade to the latest version.
+:::
 
 ## Installation
-Vite comes pre-configured with the [web starter kit](../getting_started/installation.md#web-starter-kit). However, you can follow the below instructions to configure it inside an existing AdonisJS project.
 
-Install and configure the package using the following command :
+First, make sure to have at least the following versions of AdonisJS installed:
+
+- `@adonisjs/core`: 6.9.1 or later
+- `@adonisjs/assembler`: 7.7.0 or later
+
+Then install and configure the `@adonisjs/vite` package. The command below installs the package and `vite`, and configures the project by creating the necessary configuration files.
 
 ```sh
+// title: npm
 node ace add @adonisjs/vite
-
-# Auto-install vite
-node ace add @adonisjs/vite --install
-
-# Do not install vite
-node ace add @adonisjs/vite --no-install
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="See steps performed by the configure command"}
 
-1. Installs the `@adonisjs/vite` package using the detected package manager.
-
-2. Registers the following service provider inside the `adonisrc.ts` file.
+1. Registers the following service provider inside the `adonisrc.ts` file.
 
     ```ts
     {
@@ -40,23 +44,42 @@ node ace add @adonisjs/vite --no-install
     }
     ```
 
-3. Create `vite.config.js` and `config/vite.ts` configuration files.
+2. Create `vite.config.ts` and `config/vite.ts` configuration files.
 
-4. Create the frontend entry point file, i.e. `resources/js/app.js`.
+3. Create the frontend entry point file, i.e. `resources/js/app.js`.
 
 :::
 
-
-## Configuration
-The setup process creates two configuration files. The `vite.config.js` file is used to configure the Vite bundler, and `config/vite.ts` is used by AdonisJS on the backend.
-
-### Vite config file
-The `vite.config.js` file is a regular configuration file used by Vite. Per your project requirements, you can install and register additional Vite plugins inside this file.
-
-By default, the `vite.config.js` file uses the AdonisJS plugin, which accepts the following options.
+Once done, add the following to your `adonisrc.ts` file.
 
 ```ts
-// title: vite.config.js
+import { defineConfig } from '@adonisjs/core/build/standalone'
+
+export default defineConfig({
+  // highlight-start
+  assetsBundler: false,
+  hooks: {
+    onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
+  },
+  // highlight-end
+})
+```
+
+The `assetsBundler` property is set to `false` to turn off the assets bundler management done by the AdonisJS Assembler.
+
+The `hooks` property registers the `@adonisjs/vite/build_hook` to execute the Vite build process. See [Assembler hooks](../concepts/assembler_hooks.md) for more information.
+
+
+## Configuration
+The setup process creates two configuration files. The `vite.config.ts` file is used to configure the Vite bundler, and `config/vite.ts` is used by AdonisJS on the backend.
+
+### Vite config file
+The `vite.config.ts` file is a regular configuration file used by Vite. Per your project requirements, you can install and register additional Vite plugins inside this file.
+
+By default, the `vite.config.ts` file uses the AdonisJS plugin, which accepts the following options.
+
+```ts
+// title: vite.config.ts
 import { defineConfig } from 'vite'
 import adonisjs from '@adonisjs/vite/client'
 
@@ -64,7 +87,7 @@ export default defineConfig({
   plugins: [
     adonisjs({
       entrypoints: ['resources/js/app.js'],
-      reloads: ['resources/views/**/*.edge'],
+      reload: ['resources/views/**/*.edge'],
     }),
   ]
 })
@@ -80,7 +103,7 @@ entrypoints
 
 The `entrypoints` refers to the entry point file of your frontend codebase. Usually, it will be a JavaScript or a TypeScript file with additional imports. Each entry point will result in a separate output bundle.
 
-Also, if needed, you can define multiple entrypoints. For example, An entry point for your user-facing app and another for the admin panel.
+Also, if needed, you can define multiple entrypoints. For example, an entry point for your user-facing app and another for the admin panel.
 
 </dd>
 
@@ -99,24 +122,12 @@ If you decide to change the default value, make sure also to update the `buildDi
 </dd>
 
 <dt>
-hotFile
-</dt>
-
-<dd>
-
-The `hotFile` option defines the path for generating the hot file during development. The hot file contains the URL of the Vite development server, and AdonisJS uses this URL to create asset links.
-
-**Default: public/assets/hot.json**
-
-</dd>
-
-<dt>
 reload
 </dt>
 
 <dd>
 
-An array of glob patterns to watch and reload the browser on file change. By default, we watch for Edge templates. However, you can configure additional patterns as well.
+It contains an array of glob patterns to watch and reload the browser on file change. By default, we watch for Edge templates. However, you can configure additional patterns as well.
 
 </dd>
 
@@ -126,7 +137,7 @@ assetsUrl
 
 <dd>
 
-The URL to prefix when generating links for assets in production. If you upload the Vite output to a CDN, then the value of this property should be the CDN server URL.
+It contains the URL to prefix when generating links for assets in production. If you upload the Vite output to a CDN, then the value of this property should be the CDN server URL.
 
 Ensure you update the backend configuration to use the same `assetsUrl` value.
 
@@ -158,7 +169,7 @@ buildDirectory
 
 <dd>
 
-The path to the Vite's build output directory. You must also update this backend config if you change the default value inside the `vite.config.js` file.
+It contains the path to the Vite's build output directory. You must also update this backend config if you change the default value inside the `vite.config.ts` file.
 
 </dd>
 
@@ -240,31 +251,18 @@ resources
 └── images
 ```
 
-The vite output will be written to the `public/assets` folder. We choose the `/assets` subdirectory so you can continue using the `public` folder for other static files you wish not to process using Vite.
+The vite output will be in the `public/assets` folder. We choose the `/assets` subdirectory so you can continue using the `public` folder for other static files you wish not to process using Vite.
 
 ## Starting the dev server
-You can start your application as usual, and AdonisJS will automatically start the Vite development server alongside it. For example:
+
+You can start your application as usual, and AdonisJS will automatically proxy the needed requests to Vite.
 
 ```sh
 node ace serve --hmr
 ```
 
-![](./vite-dev-server.png)
-
-You may pass CLI arguments to the Vite dev server using the `--assets-args` commandline flag.
-
-```sh
-node ace serve --hmr --assets-args="--debug"
-```
-
-You may turn off the Vite development server using the `--no-assets` commandline flag.
-
-```sh
-node ace serve --hmr --no-assets
-```
-
 ## Including entrypoints in Edge templates
-You can render the script and the style tags for the entrypoints defined inside the `vite.config.js` file using the `@vite` Edge tag. The tag accepts an array of entrypoints and returns the `script` and the `link` tags.
+You can render the script and the style tags for the entrypoints defined inside the `vite.config.ts` file using the `@vite` Edge tag. The tag accepts an array of entrypoints and returns the `script` and the `link` tags.
 
 ```edge
 <!DOCTYPE html>
@@ -399,10 +397,10 @@ After you create the production build using Vite, you can upload the bundled out
 
 However, before you do that, you must register the URL of your CDN server with both Vite and AdonisJS so that the output URLs inside the `manifest.json` file or lazy loaded chunks should point to your CDN server.
 
-You must define the `assetsUrl` inside the `vite.config.js` and `config/vite.ts` files.
+You must define the `assetsUrl` inside the `vite.config.ts` and `config/vite.ts` files.
 
 ```ts
-// title: vite.config.js
+// title: vite.config.ts
 import { defineConfig } from 'vite'
 import adonisjs from '@adonisjs/vite/client'
 
@@ -435,13 +433,15 @@ export default viteBackendConfig
 
 ## Advanced concepts
 
-### Hot file
-The AdonisJS Vite plugin creates a hot file (`public/assets/hot.json`) when you start the Vite dev server, and the file is automatically deleted after the server is stopped.
+### Middleware Mode 
 
-- The existence of the hot file tells AdonisJS that we are running in development mode, and all assets should point to the Vite dev server.
-- The hot file contains the URL of the Vite development server. It is required to generate URLs pointing to the Vite dev server.
+With older versions of AdonisJS, Vite was spawned as a separate process and had its own dev server.
 
-You can customize the output path of the hot file by modifying the `hotFile` option in both the [`vite.config.js`](#vite-config-file) file and the [`config/vite.ts`](#adonisjs-config-file) file.
+With the new experimental version, Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite are proxied to it through an AdonisJS middleware.
+
+The advantages of the middleware mode are that we can directly access Vite's runtime API to perform server-side rendering (SSR) and have a single dev server to manage.
+
+You can read more about the middleware mode in the [Vite documentation](https://vitejs.dev/guide/ssr#setting-up-the-dev-server).
 
 ### Manifest file
 Vite generates the [manifest file](https://vitejs.dev/guide/backend-integration.html) alongside the production build of your assets.

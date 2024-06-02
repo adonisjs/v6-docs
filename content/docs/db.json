@@ -72,6 +72,12 @@
     "category": "Concepts"
   },
   {
+    "permalink": "concepts/assembler-hooks",
+    "title": "Assembler hooks",
+    "contentPath": "./concepts/assembler_hooks.md",
+    "category": "Concepts"
+  },
+  {
     "permalink": "concepts/application",
     "title": "Application",
     "contentPath": "./concepts/application.md",
@@ -336,6 +342,12 @@
     "category": "Views & Templates"
   },
   {
+    "permalink": "views-and-templates/inertia",
+    "title": "Inertia",
+    "contentPath": "./views-and-templates/inertia.md",
+    "category": "Views & Templates"
+  },
+  {
     "permalink": "testing/introduction",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",
@@ -478,23 +490,5 @@
     "title": "Helpers",
     "contentPath": "./references/helpers.md",
     "category": "References"
-  },
-  {
-    "permalink": "experimental-assembler-hooks",
-    "title": "Assembler hooks",
-    "contentPath": "./experimental/assembler_hooks.md",
-    "category": "Experimental"
-  },
-  {
-    "permalink": "experimental-vite",
-    "title": "New Vite integration",
-    "contentPath": "./experimental/vite.md",
-    "category": "Experimental"
-  },
-  {
-    "permalink": "inertia",
-    "title": "Inertia",
-    "contentPath": "./experimental/inertia.md",
-    "category": "Experimental"
   }
 ]

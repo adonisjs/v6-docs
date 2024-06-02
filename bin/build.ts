@@ -84,7 +84,10 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
     .filter(Boolean)
 
   const svg = ogTemplate
-    .replace('{{ category }}', category ? string.titleCase(category[1].replace('-', ' ')) : 'Docs')
+    .replace(
+      '{{ category }}',
+      category ? string.titleCase(category[1].replaceAll('-', ' ')) : 'Docs'
+    )
     .replace('{{ title }}', string.encodeSymbols(entry.title.slice(0, 24)))
     .replace('{{ line1 }}', lines[0])
     .replace('{{ line2 }}', lines[1] || '')

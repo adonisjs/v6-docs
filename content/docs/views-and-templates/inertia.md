@@ -116,7 +116,7 @@ node ace configure @adonisjs/inertia
 
 :::
 
-Once done, you should be ready to use Inertia in your AdonisJS application. Start your development server and visit the `/inertia` route to see the home page rendered using Inertia and your selected frontend framework.
+Once done, you should be ready to use Inertia in your AdonisJS application. Start your development server, and visit `localhost:3333` to see the home page rendered using Inertia with your selected frontend framework.
 
 :::note
 **Read the [Inertia official documentation](https://inertiajs.com/)**.

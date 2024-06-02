@@ -72,6 +72,12 @@
     "category": "Concepts"
   },
   {
+    "permalink": "concepts/assembler-hooks",
+    "title": "Assembler hooks",
+    "contentPath": "./concepts/assembler_hooks.md",
+    "category": "Concepts"
+  },
+  {
     "permalink": "concepts/application",
     "title": "Application",
     "contentPath": "./concepts/application.md",
@@ -478,12 +484,6 @@
     "title": "Helpers",
     "contentPath": "./references/helpers.md",
     "category": "References"
-  },
-  {
-    "permalink": "experimental-assembler-hooks",
-    "title": "Assembler hooks",
-    "contentPath": "./experimental/assembler_hooks.md",
-    "category": "Experimental"
   },
   {
     "permalink": "experimental-vite",

@@ -8,17 +8,17 @@ Assembler hooks are a way of executing code at specific points in the assembler 
 
 These hooks can be helpful for tasks such as file generation, code compilation, or injecting custom build steps.
 
-Assembler hooks were initially introduced for our [new experimental version of Vite](./vite.md). These hooks enable the `adonisjs/vite` package to customize the build process and inject a step where front-end assets are built, and also, if necessary, generate an SSR build.
+For example, the `@adonisjs/vite` package uses the `onBuildStarting` hook to inject a step where front-end assets are built. So, when you run `node ace build`, the `@adonisjs/vite` package will build your front-end assets before the rest of the build process. This is a good example of how hooks can be used to customize the build process.
 
 ## Adding a hook
 
-Assembler hooks are defined in the `adonisrc.ts` file, in the `unstable_assembler` key :
+Assembler hooks are defined in the `adonisrc.ts` file, in the `hooks` key :
 
 ```ts
 import { defineConfig } from '@adonisjs/core/app'
 
 export default defineConfig({
-  unstable_assembler: {
+  hooks: {
     onBuildCompleted: [
       () => import('my-package/hooks/on_build_completed')
     ],
@@ -65,7 +65,7 @@ Once this hook has been defined, all you have to do is add it to the `adonisrc.t
 import { defineConfig } from '@adonisjs/core/app'
 
 export default defineConfig({
-  unstable_assembler: {
+  hooks: {
     onBuildStarting: [
       () => import('./hooks/on_build_starting')
     ],

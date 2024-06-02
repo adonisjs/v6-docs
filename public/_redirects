@@ -114,3 +114,5 @@
 /guides/ace-flags /guides/ace/flags
 /guides/ace-prompts /guides/ace/prompts
 /guides/ace-terminal-ui /guides/ace/terminal-ui
+
+/guides/experimental-assembler-hooks /guides/concepts/assembler-hooks

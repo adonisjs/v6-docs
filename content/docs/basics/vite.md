@@ -437,7 +437,7 @@ export default viteBackendConfig
 
 With older versions of AdonisJS, Vite was spawned as a separate process and had its own dev server.
 
-With the new experimental version, Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite are proxied to it through an AdonisJS middleware.
+With the 3.x version, Vite is embedded inside the AdonisJS dev server, and every request that should be handled by Vite are proxied to it through an AdonisJS middleware.
 
 The advantages of the middleware mode are that we can directly access Vite's runtime API to perform server-side rendering (SSR) and have a single dev server to manage.
 

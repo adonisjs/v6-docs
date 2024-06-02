@@ -342,6 +342,12 @@
     "category": "Views & Templates"
   },
   {
+    "permalink": "views-and-templates/inertia",
+    "title": "Inertia",
+    "contentPath": "./views-and-templates/inertia.md",
+    "category": "Views & Templates"
+  },
+  {
     "permalink": "testing/introduction",
     "title": "Introduction",
     "contentPath": "./testing/introduction.md",
@@ -489,12 +495,6 @@
     "permalink": "experimental-vite",
     "title": "New Vite integration",
     "contentPath": "./experimental/vite.md",
-    "category": "Experimental"
-  },
-  {
-    "permalink": "inertia",
-    "title": "Inertia",
-    "contentPath": "./experimental/inertia.md",
     "category": "Experimental"
   }
 ]

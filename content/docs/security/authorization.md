@@ -61,6 +61,10 @@ node ace add @adonisjs/bouncer
 
 :::
 
+:::tip
+**Are you more of a visual learner?** - Checkout the [AdonisJS Bouncer ](https://adocasts.com/series/adonisjs-bouncer) free screencasts series from our friends at Adocasts.
+:::
+
 ##  The Initialize bouncer middleware
 During setup, we create and register the `#middleware/initialize_bouncer_middleware` middleware within your application. The initialize middleware is responsible for creating an instance of the [Bouncer](https://github.com/adonisjs/bouncer/blob/main/src/bouncer.ts) class for the currently authenticated user and shares it via the `ctx.bouncer` property with the rest of the request.
 

@@ -115,7 +115,7 @@ You may start the production server by running the `node server.js` file. Howeve
 - It will restart the application, if your app crashes while serving requests.
 - Also, PM2 makes it super simple to run your application in [cluster mode](https://nodejs.org/api/cluster.html#cluster)
 
-Following is an example [pm2 ecosystem file](https://pm2.keymetrics.io/docs/usage/application-declaration) you may use as the starting point.
+`cd` into `build/bin` and initialize a pm2 config file with `pm2 init simple`. If your `package.json` has `type: "module"`, you will need to rename the pm2 config file from `ecosystem.config.js` to `ecosystem.config.cjs` because of a package wide ES modules rule.
 
 ```js
 // title: ecosystem.config.js
@@ -132,9 +132,13 @@ module.exports = {
 }
 ```
 
+Here is more info about how to configure a [pm2 ecosystem file](https://pm2.keymetrics.io/docs/usage/application-declaration).
+
 ```sh
 // title: Start server
 pm2 start ecosystem.config.js
+// or 
+pm2 start ecosystem.config.cjs
 ```
 
 ## Migrating database

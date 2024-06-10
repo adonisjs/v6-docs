@@ -54,7 +54,7 @@ defineProps<{
 ## Installation
 
 :::note
-Are you starting a new project and want to use Inertia? Check out the [Inertia starter kit](https://docs.adonisjs.com/guides/installation#starter-kits).
+Are you starting a new project and want to use Inertia? Check out the [Inertia starter kit](https://docs.adonisjs.com/guides/getting-started/installation#inertia-starter-kit).
 :::
 
 Install the package from the npm registry running:

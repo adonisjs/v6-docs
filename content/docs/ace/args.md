@@ -119,7 +119,7 @@ export default class GreetCommand extends BaseCommand {
   @args.string()
   declare name: string
 
-  run() {
+  async run() {
     console.log(this.parsed.args)
   }
 }

@@ -20,7 +20,7 @@ export default class GreetCommand extends BaseCommand {
   @args.string()
   declare name: string
 
-  run() {
+  async run() {
     console.log(this.name)
   }
 }
@@ -40,7 +40,7 @@ export default class GreetCommand extends BaseCommand {
   declare names: string[]
   // highlight-start
 
-  run() {
+  async run() {
     console.log(this.names)
   }
 }

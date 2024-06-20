@@ -11,7 +11,7 @@ You may install Node.js using either the [official installers](https://nodejs.or
 ```sh
 // title: Verify Node.js version
 node -v
-# v21.0.0
+# v22.0.0
 ```
 
 :::tip

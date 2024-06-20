@@ -42,11 +42,19 @@ You may customize the initial project output using one of the following CLI flag
 npm init adonisjs@latest hello-world
 ```
 
+```sh
+// title: pnpm
+pnpm create adonisjs@latest hello-world
+```
+
 :::
 
 When passing CLI flags using the `npm init` command, make sure to use [double dashes twice](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command). Otherwise, `npm init` will not pass the flags to the `create-adonisjs` initializer package. For example:
 
+:::codegroup
+
 ```sh
+// title: npm
 # Create a project with MYSQL
 npm init adonisjs@latest hello-world -- --db=mysql
 
@@ -57,6 +65,19 @@ npm init adonisjs@latest hello-world -- --db=postgres --kit=api
 npm init adonisjs@latest hello-world -- --kit=api --auth-guard=access_tokens
 ```
 
+```sh
+// title: pnpm
+# Create a project with MYSQL
+pnpm create adonisjs@latest hello-world --db=mysql
+
+# Create a project with PostgreSQL and API starter kit
+pnpm create adonisjs@latest hello-world --db=postgres --kit=api
+
+# Create a project with API starter kit and access tokens guard
+pnpm create adonisjs@latest hello-world --kit=api --auth-guard=access_tokens
+```
+
+:::
 ## Starter kits
 
 Starter kits serve as a starting point for creating applications using AdonisJS. They come with an [opinionated folder structure](./folder_structure.md), pre-configured AdonisJS packages, and the necessary tooling you need during development.
@@ -76,13 +97,26 @@ The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.de
 
 Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
+:::codegroup
+
 ```sh
+// title: npm
 npm init adonisjs@latest -- -K=web
 
 # Switch database dialect
 npm init adonisjs@latest -- -K=web --db=mysql
 ```
 
+```sh
+// title: pnpm
+pnpm create adonisjs@latest -K=web
+
+# Switch database dialect
+pnpm create adonisjs@latest -K=web --db=mysql
+```
+
+
+:::
 The web starter kit comes with the following packages.
 
 <table>
@@ -132,12 +166,26 @@ The web starter kit comes with the following packages.
 
 The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
 
+:::codegroup
+
 ```sh
+// title: npm
 npm init adonisjs@latest -- -K=api
 
 # Switch database dialect
 npm init adonisjs@latest -- -K=api --db=mysql
 ```
+
+
+```sh
+// title: pnpm
+pnpm create adonisjs@latest -K=api
+
+# Switch database dialect
+pnpm create adonisjs@latest -K=api --db=mysql
+```
+
+:::
 
 In this starter kit:
 
@@ -150,21 +198,43 @@ The API starter kit is configured with session-based authentication. However, if
 
 See also: [Which authentication guard should I use?](../authentication/introduction.md#choosing-an-auth-guard)
 
+:::codegroup
+
 ```sh
+// title: npm
 npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
 ```
+
+```sh
+// title: pnpm
+pnpm create adonisjs@latest -K=api --auth-guard=access_tokens
+```
+:::
 
 ---
 
 ### Slim starter kit
 For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
 
+:::codegroup
+
 ```sh
+// title: npm
 npm init adonisjs@latest -- -K=slim
 
 # Switch database dialect
 npm init adonisjs@latest -- -K=slim --db=mysql
 ```
+
+```sh
+// title: pnpm
+pnpm create adonisjs@latest -K=slim
+
+# Switch database dialect
+pnpm create adonisjs@latest -K=slim --db=mysql
+```
+
+:::
 
 ---
 
@@ -176,7 +246,10 @@ You can use the `--adapter` flag to choose the frontend framework you want to us
 
 You can also use the `--ssr` and `--no-ssr` flags to turn server-side rendering on or off.
 
+:::codegroup
+
 ```sh
+// title: npm
 # React with server-side rendering
 npm init adonisjs@latest -- -K=inertia --adapter=react --ssr
 
@@ -184,12 +257,25 @@ npm init adonisjs@latest -- -K=inertia --adapter=react --ssr
 npm init adonisjs@latest -- -K=inertia --adapter=vue --no-ssr
 ```
 
+```sh
+// title: pnpm
+# React with server-side rendering
+pnpm create adonisjs@latest -K=inertia --adapter=react --ssr
+
+# Vue without server-side rendering
+pnpm create adonisjs@latest -K=inertia --adapter=vue --no-ssr
+```
+:::
+
 ---
 
 ### Bring your starter kit
 Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
 
+:::codegroup
+
 ```sh
+// title: npm
 npm init adonisjs@latest -- -K="github_user/repo"
 
 # Download from GitLab
@@ -199,15 +285,41 @@ npm init adonisjs@latest -- -K="gitlab:user/repo"
 npm init adonisjs@latest -- -K="bitbucket:user/repo"
 ```
 
+```sh
+// title: pnpm
+pnpm create adonisjs@latest -K="github_user/repo"
+
+# Download from GitLab
+pnpm create adonisjs@latest -K="gitlab:user/repo"
+
+# Download from BitBucket
+pnpm create adonisjs@latest -K="bitbucket:user/repo"
+```
+
+:::
+
 You can download private repos using Git+SSH authentication using the `git` mode.
 
+:::codegroup
+
 ```sh
+// title: npm
 npm init adonisjs@latest -- -K="user/repo" --mode=git
 ```
 
+```sh
+// title: pnpm
+pnpm create adonisjs@latest -K="user/repo" --mode=git
+```
+
+:::
+
 Finally, you can specify a tag, branch, or commit.
 
+:::codegroup
+
 ```sh
+// title: npm
 # Branch
 npm init adonisjs@latest -- -K="user/repo#develop"
 
@@ -215,12 +327,24 @@ npm init adonisjs@latest -- -K="user/repo#develop"
 npm init adonisjs@latest -- -K="user/repo#v2.1.0"
 ```
 
+```sh
+// title: pnpm
+# Branch
+pnpm create adonisjs@latest -K="user/repo#develop"
+
+# Tag
+pnpm create adonisjs@latest -K="user/repo#v2.1.0"
+```
+
+:::
+
 ## Starting the development server
 Once you have created an AdonisJS application, you may start the development server by running the `node ace serve` command.
 
 Ace is a command line framework bundled inside the framework's core. The `--hmr` flag monitors the file system and performs [hot module replacement (HMR)](../concepts/hmr.md) for certain sections of your codebase.
 
 ```sh
+// title: npm
 node ace serve --hmr
 ```
 
@@ -250,7 +374,10 @@ The official starter kits come pre-configured with both ESLint and Prettier and 
 
 Finally, we recommend you install ESLint and Prettier plugins for your code editor so that you have a tighter feedback loop during the application development. Also, you can use the following commands to `lint` and `format` your code from the command line.
 
+:::codegroup
+
 ```sh
+// title: npm
 # Runs ESLint
 npm run lint
 
@@ -260,6 +387,20 @@ npm run lint -- --fix
 # Runs prettier
 npm run format
 ```
+
+```sh
+// title: pnpm
+# Runs ESLint
+pnpm lint
+
+# Run ESLint and auto-fix issues
+pnpm lint --fix
+
+# Runs prettier
+pnpm format
+```
+
+:::
 
 ## VSCode extensions
 You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.

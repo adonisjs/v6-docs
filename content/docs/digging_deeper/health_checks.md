@@ -437,7 +437,7 @@ export const healthChecks = new HealthChecks().register([
   new MemoryHeapCheck(),
   new RedisCheck(redis.connection()),
   // insert-start
-  new RedisMemoryUsageCheck(db.connection())
+  new RedisMemoryUsageCheck(redis.connection())
   // insert-end
 ])
 ```

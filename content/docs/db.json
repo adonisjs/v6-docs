@@ -390,6 +390,12 @@
     "category": "Digging deeper"
   },
   {
+    "permalink": "digging-deeper/health-checks",
+    "title": "Health checks",
+    "contentPath": "./digging_deeper/health_checks.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "digging-deeper/i18n",
     "title": "I18n",
     "contentPath": "./digging_deeper/i18n.md",

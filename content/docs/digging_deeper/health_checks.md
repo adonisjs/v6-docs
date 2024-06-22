@@ -1,3 +1,7 @@
+---
+summary: Learn how to monitor your application in production and ensure it is running smoothly
+---
+
 # Health checks
 
 Health checks are performed to ensure that your application is in a healthy state while running in production. This may include monitoring the **available disk space** on the server, the **memory consumed by your application**, or **testing the database connection**.

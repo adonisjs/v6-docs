@@ -39,7 +39,7 @@ A common approach for performing health checks is to expose an HTTP endpoint tha
 So, let's define a route within the `start/routes.ts` file and bind the `HealthChecksController` to it. The `health_checks_controller.ts` file is created during the initial setup and lives inside the `app/controllers` directory.
 
 ```ts
-// title: start/kernel.ts
+// title: start/routes.ts
 import router from '@adonisjs/core/services/router'
 const HealthChecksController = () => import('#controllers/health_checks_controller')
 
@@ -437,7 +437,7 @@ export const healthChecks = new HealthChecks().register([
   new MemoryHeapCheck(),
   new RedisCheck(redis.connection()),
   // insert-start
-  new RedisMemoryUsageCheck(db.connection())
+  new RedisMemoryUsageCheck(redis.connection())
   // insert-end
 ])
 ```

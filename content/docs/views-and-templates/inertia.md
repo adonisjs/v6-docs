@@ -419,10 +419,11 @@ If needed, you can pass a function to the `rootView` prop to dynamically decide 
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default defineConfig({
-  rootView: (ctx) => {
-    if (ctx.url().startsWith('/admin')) {
+  rootView: ({ request }: HttpContext) => {
+    if (request.url().startsWith('/admin')) {
       return 'admin_root'
     }
 

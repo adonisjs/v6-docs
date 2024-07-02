@@ -179,7 +179,7 @@ Also, the session middleware [overwrites the `renderValidationErrorAsHTML` metho
 - All other requests will receive errors back as plain text.
 
 ## The request.validateUsing method
-The recommended way to perform validations inside controllers is to use the `request.validateUsing` method. When using `request.validateUsing` method, you do not have do define the validation data explicitly; the request body and files are passed as data to the validator.
+The recommended way to perform validations inside controllers is to use the `request.validateUsing` method. When using `request.validateUsing` method, you do not have do define the validation data explicitly; the **request body**, **query string values**, and **the files** are merged together and passed as data to the validator.
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'

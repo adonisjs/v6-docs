@@ -159,11 +159,12 @@ In the following example, we inject the `TokensService` inside the handle method
 // title: Method injection
 import { inject } from '@adonisjs/core'
 import TokensService from '#services/tokens_service'
+import UserRegistered from '#events/user_registered'
 
 export default class SendVerificationEmail {
   @inject()
-  handle(user: User, tokensService: TokensService) {
-    const token = tokensService.generate(user.email)
+  handle(event: UserRegistered, tokensService: TokensService) {
+    const token = tokensService.generate(event.user.email)
   }
 }
 ```

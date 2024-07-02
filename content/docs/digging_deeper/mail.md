@@ -1,5 +1,5 @@
 ---
-summary: Learn how to send emails from your AdonisJS application using the @adonisjs/mail package. 
+summary: Learn how to send emails from your AdonisJS application using the @adonisjs/mail package.
 ---
 
 # Mail
@@ -61,7 +61,7 @@ import { defineConfig, transports } from '@adonisjs/mail'
 
 const mailConfig = defineConfig({
   default: 'smtp',
-  
+
   /**
    * A static address for the "from" property. It will be
    * used unless an explicit from address is set on the
@@ -71,7 +71,7 @@ const mailConfig = defineConfig({
     address: '',
     name: '',
   },
-  
+
   /**
    * A static address for the "reply-to" property. It will be
    * used unless an explicit replyTo address is set on the
@@ -1083,7 +1083,7 @@ test.group('Verify email notification', () => {
      * contents
      */
     await email.buildWithContents()
-    
+
     /**
      * Write assertions to ensure the message is built
      * as expected
@@ -1147,14 +1147,14 @@ test.group('Users | register', () => {
      */
     const { mails } = mail.fake()
     // highlight-end
-    
+
     /**
      * Make an API call
      */
     await client
       .post(route('users.store'))
       .send(userData)
-      
+
     // highlight-start
     /**
      * Assert the controller indeed sent the
@@ -1175,7 +1175,7 @@ Once you are done writing the test, you must restore the fake using the `mail.re
 ```ts
 test('create a new user account', async ({ client, route, cleanup }) => {
   const { mails } = mail.fake()
-  
+
   /**
    * The cleanup hooks are executed after the test
    * finishes successfully or with an error.
@@ -1205,10 +1205,7 @@ The callback function receives an instance of the mail class and you can use the
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {
-  return email.message
-    .hasTo(userData.email)
-    .hasFrom('info@example.org')
-    .hasSubject('Verify your email address')
+  return email.message.hasTo(userData.email)
 })
 ```
 
@@ -1216,9 +1213,9 @@ You may run assertions on the `message` object within the callback. For example:
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {
-  email.message.assertHasTo(userData.email)
-  email.message.assertHasFrom('info@example.org')
-  email.message.assertHasSubject('Verify your email address')
+  email.message.assertTo(userData.email)
+  email.message.assertFrom('info@example.org')
+  email.message.assertSubject('Verify your email address')
 
   /**
    * All assertions passed, so return true to consider the

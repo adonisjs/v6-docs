@@ -17,7 +17,7 @@ Using Inertia will allow you to create a SPA with your favorite frontend framewo
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class UsersController {
-  public async index({ inertia }: HttpContext) {
+  async index({ inertia }: HttpContext) {
     const users = await User.all()
 
     return inertia.render('users/index', { users })
@@ -249,7 +249,7 @@ To render a view using Inertia, use the `inertia.render` method. The method acce
 ```ts
 // title: app/controllers/home_controller.ts
 export default class HomeController {
-  public async index({ inertia }: HttpContext) {
+  async index({ inertia }: HttpContext) {
     // highlight-start
     return inertia.render('home', { user: { name: 'julien' } })
     // highlight-end
@@ -439,7 +439,7 @@ You may want to share data with your root Edge template. For example, for adding
 ```ts
 // title: app/controllers/posts_controller.ts
 export default class PostsController {
-  public async index({ inertia }: HttpContext) {
+  async index({ inertia }: HttpContext) {
     return inertia.render('posts/details', post, {
       // highlight-start
       title: post.title,
@@ -518,7 +518,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 
 export default class MyMiddleware {
-  public async handle({ inertia, auth }: HttpContext, next: NextFn) {
+  async handle({ inertia, auth }: HttpContext, next: NextFn) {
     inertia.share({
       appName: 'My App',
       user: (ctx) => ctx.auth?.user
@@ -535,7 +535,7 @@ About lazy data evaluation, here is how it works in AdonisJS :
 
 ```ts
 export default class UsersController {
-  public async index({ inertia }: HttpContext) {
+  async index({ inertia }: HttpContext) {
     return inertia.render('users/index', {
       // ALWAYS included on first visit.
       // OPTIONALLY included on partial reloads.
@@ -695,7 +695,7 @@ class UsersController {
 class UserDto {
   constructor(private user: User) {}
 
-  public toJson() {
+  toJson() {
     return {
       id: this.user.id,
       name: this.user.name

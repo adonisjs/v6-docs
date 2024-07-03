@@ -206,7 +206,7 @@ import locks from '@adonisjs/lock/services/main'
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class OrderController {
-  public async process({ response, request }: HttpContext) {
+  async process({ response, request }: HttpContext) {
     const orderId = request.input('order_id')
 
     /**
@@ -243,7 +243,7 @@ import locks from '@adonisjs/lock/services/main'
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class OrderController {
-  public async process({ response, request }: HttpContext) {
+  async process({ response, request }: HttpContext) {
     const orderId = request.input('order_id')
 
     /**
@@ -306,7 +306,7 @@ Sometimes, you might want to have one process creating and acquiring a lock, and
 import locks from '@adonisjs/lock/services/main'
 
 export class OrderController {
-  public async process({ response, request }: HttpContext) {
+  async process({ response, request }: HttpContext) {
     const orderId = request.input('order_id')
 
     const lock = locks.createLock(`order.processing.${orderId}`)
@@ -330,7 +330,7 @@ export class OrderController {
 import locks from '@adonisjs/lock/services/main'
 
 export class ProcessOrder {
-  public async handle({ lock }) {
+  async handle({ lock }) {
     /**
      * We are restoring the lock from the serialized version
      */

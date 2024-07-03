@@ -162,7 +162,7 @@ import { HttpContext } from '@adonisjs/core/http'
 const ctx = HttpContext.getOrFail()
 
 export default class UsersController {
-  public async index() {
+  async index() {
     ctx.request
   }
 }
@@ -223,7 +223,7 @@ Event handlers are executed after the HTTP request finishes. Therefore you shoul
 import emitter from '@adonisjs/core/services/emitter'
 
 export default class UsersController {
-  public async index() {
+  async index() {
     const user = await User.create({})
     emitter.emit('new:user', user)
   }

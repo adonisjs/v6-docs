@@ -1,5 +1,82 @@
 [
   {
+    "package": "create-adonisjs",
+    "version": "v2.4.0",
+    "description": "Remove installation prompt and always install packages by default",
+    "released_on": "2024-06-22",
+    "release_notes_link": "https://github.com/adonisjs/create-adonisjs/releases/tag/v2.4.0"
+  },
+  {
+    "package": "@adonisjs/redis",
+    "version": "v9.0.0",
+    "description": "Remove legacy health checks and add new health check classes",
+    "released_on": "2024-06-20",
+    "release_notes_link": "https://github.com/adonisjs/redis/releases/tag/v9.0.0"
+  },
+  {
+    "package": "create-adonisjs",
+    "version": "v2.3.0",
+    "description": "Improve onboarding experience of creating a new application",
+    "released_on": "2024-06-19",
+    "release_notes_link": "https://github.com/adonisjs/create-adonisjs/releases/tag/v2.3.0"
+  },
+  {
+    "package": "@adonisjs/health",
+    "version": "v2.0.0",
+    "description": "Release health checks package",
+    "released_on": "2024-06-19",
+    "release_notes_link": "https://github.com/adonisjs/health/releases/tag/v2.0.0"
+  },
+  {
+    "package": "@adonisjs/ace",
+    "version": "v13.1.0",
+    "description": "Add kernel.hasCommand method",
+    "released_on": "2024-06-19",
+    "release_notes_link": "https://github.com/adonisjs/ace/releases/tag/v13.1.0"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v21.0.0",
+    "description": "Support for libSQL and new health checks",
+    "released_on": "2024-06-18",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v21.0.0"
+  },
+  {
+    "package": "@adonisjs/session",
+    "version": "v7.4.1",
+    "description": "Fix maxAge issue with the file driver",
+    "released_on": "2024-06-05",
+    "release_notes_link": "https://github.com/adonisjs/session/releases/tag/v7.4.1"
+  },
+  {
+    "package": "@adonisjs/vite",
+    "version": "v3.0.0",
+    "description": "Out of experimental phase",
+    "released_on": "2024-06-02",
+    "release_notes_link": "https://github.com/adonisjs/vite/releases/tag/v3.0.0"
+  },
+  {
+    "package": "@adonisjs/ace",
+    "version": "v13.0.1",
+    "description": "Remove absoluteFilePath leaking in the commands metadata json file",
+    "released_on": "2024-06-02",
+    "release_notes_link": "https://github.com/adonisjs/ace/releases/tag/v13.0.1"
+  },
+  {
+    "package": "@adonisjs/http-server",
+    "version": "v7.2.3",
+    "description": "Fix bug with defineConfig helper",
+    "released_on": "2024-05-21",
+    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.2.3"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v20.6.0",
+    "description": "Improvements to the DateTime comparison when using \"orCreate\" methods",
+    "released_on": "2024-05-02",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v20.6.0"
+  },
+  {
     "package": "@adonisjs/core",
     "version": "v6.9.0",
     "description": "Add `env:add` command to define environment variable and its validation rules",

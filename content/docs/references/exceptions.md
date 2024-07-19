@@ -347,7 +347,7 @@ You may access the network request error using the `error.cause` property. The `
 - **Self handled**: No
 
 ```ts
-import { errors as mailErrors } from '@adonisjs/redis'
+import { errors as mailErrors } from '@adonisjs/mail'
 if (error instanceof mailErrors.E_MAIL_TRANSPORT_ERROR) {
   console.log(error.cause)
 }

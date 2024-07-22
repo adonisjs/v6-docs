@@ -116,6 +116,6 @@ Please check the [Edge helpers reference guide](../references/edge.md) to view t
 ## Learn more
 
 - [Edge.js documentation](https://edgejs.dev)
-- [Components](https://edgejs.dev/docs/components)
+- [Components](https://edgejs.dev/docs/components/introduction)
 - [SVG icons](https://edgejs.dev/docs/edge-iconify)
 - [Adocasts Edge Series](https://adocasts.com/topics/edge)

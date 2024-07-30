@@ -190,7 +190,7 @@ node ace make:exception UnAuthorized
 ```
 
 ```ts
-import { Exception } from '@adonisjs/core'
+import { Exception } from '@adonisjs/core/exceptions'
 
 export default class UnAuthorizedException extends Exception {}
 ```
@@ -209,7 +209,7 @@ throw new UnAuthorizedException('You are not authorized', {
 The error and status codes can also be defined as static properties on the exception class. The static values will be used if no custom value is defined when throwing the exception.
 
 ```ts
-import { Exception } from '@adonisjs/core'
+import { Exception } from '@adonisjs/core/exceptions'
 export default class UnAuthorizedException extends Exception {
   static status = 403
   static code = 'E_UNAUTHORIZED'
@@ -223,7 +223,7 @@ To self-handle the exception, you can define the `handle` method on the exceptio
 The `error.handle` method receives an instance of the error as the first argument and the HTTP context as the second argument.
 
 ```ts
-import { Exception } from '@adonisjs/core'
+import { Exception } from '@adonisjs/core/exceptions'
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class UnAuthorizedException extends Exception {
@@ -238,7 +238,7 @@ export default class UnAuthorizedException extends Exception {
 You can implement the `report` method on the exception class to self-handle the exception reporting. The report method receives an instance of the error as the first argument and the HTTP context as the second argument.
 
 ```ts
-import { Exception } from '@adonisjs/core'
+import { Exception } from '@adonisjs/core/exceptions'
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class UnAuthorizedException extends Exception {

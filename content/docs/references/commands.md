@@ -234,7 +234,7 @@ Passed down to the `configure` command. Force overwrite files when configuring t
 
 <dd>
 
-Define the package manager to use for installing the package. The value must be `npm`, `pnpm`, or `yarn`.
+Define the package manager to use for installing the package. The value must be `npm`, `pnpm`, `bun` or `yarn`.
 
 </dd>
 

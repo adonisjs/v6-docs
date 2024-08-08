@@ -33,7 +33,7 @@ You may customize the initial project output using one of the following CLI flag
 
 - `--auth-guard`: Specify the authentication guard of your choice. You can choose between **session**, **access_tokens**, or **basic_auth**. Defaults to `session`.
 
-- `--install`: Skip the prompt to install dependencies. Use the `--no-install` flag to create a project without installing any dependencies.
+- `--install`: Skip the prompt to install dependencies.
 
 :::codegroup
 

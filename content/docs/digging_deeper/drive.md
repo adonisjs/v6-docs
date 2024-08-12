@@ -1,3 +1,7 @@
+---
+summary: Manage user-uploaded files on local filesystem and cloud storage services like S3, GCS, R2 and Digital Ocean spaces. Without any Vendor lock-in.
+---
+
 # Drive
 
 AdonisJS Drive (`@adonisjs/drive`) is a lightweight wrapper on top of [flydrive.dev](https://flydrive.dev/). FlyDrive is a file storage library for Node.js. It provides a unified API to interact with the local file system and cloud storage solutions like S3, R2, and GCS.

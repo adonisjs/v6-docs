@@ -331,3 +331,55 @@ await image.moveToDisk(key, 's3', {
   contentType: 'image/png',
 })
 ```
+
+## Faking Disks during tests
+The fakes API of Drive can be used during testing to prevent interacting with a remote storage. In the fakes mode, the `drive.use()` method will return a fake disk (backed by local filesystem) and all files will be written inside the `./tmp/drive-fakes` directory of your application root.
+
+These files are deleted automatically after you restore a fake using the `drive.restore` method.
+
+See also: [FlyDrive fakes documentation](https://flydrive.dev/docs/drive_manager#using-fakes)
+
+```ts
+// title: tests/functional/users/update.spec.ts
+import { test } from '@japa/runner'
+import drive from '@adonisjs/drive/services/main'
+import fileGenerator from '@poppinss/file-generator'
+
+test.group('Users | update', () => {
+  test('should be able to update my avatar', async ({ client, cleanup }) => {
+    /**
+     * Fake the "spaces" disk and restore the fake
+     * after the test finishes
+     */
+    const fakeDisk = drive.fake('spaces')
+    cleanup(() => drive.restore('spaces'))
+
+    /**
+     * Create user to perform the login and update
+     */
+    const user = await UserFactory.create()
+
+    /**
+     * Generate a fake in-memory png file with size of
+     * 1mb
+     */
+    const { contents, mime, name } = await fileGenerator.generatePng('1mb')
+
+    /**
+     * Make put request and send the file
+     */
+    await client
+      .put('me')
+      .file('avatar', contents, {
+        filename: name,
+        contentType: mime,
+      })
+      .loginAs(user)
+
+    /**
+     * Assert the file exists
+     */
+    fakeDisk.assertExists(user.avatar)
+  })
+})
+```

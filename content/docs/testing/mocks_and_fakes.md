@@ -17,6 +17,7 @@ We provide fake implementations for the following container services. The fakes 
 - [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
 - [Hash fake](../security/hashing.md#faking-hash-service-during-tests)
 - [Fake mailer](../digging_deeper/mail.md#fake-mailer)
+- [Drive fake](../digging_deeper/drive.md#faking-disks)
 
 ## Dependency injection and fakes
 

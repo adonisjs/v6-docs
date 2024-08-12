@@ -8,7 +8,7 @@ AdonisJS has first-class support for processing user-uploaded files sent using t
 
 Later, inside your controllers, you may access the files, validate them and move them to a persistent location or a cloud storage service like S3.
 
-## Working with user-uploaded files
+## Access user-uploaded files
 
 You may access the user-uploaded files using the `request.file` method. The method accepts the field name and returns an instance of [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts).
 
@@ -43,7 +43,7 @@ export default class InvoicesController {
 }
 ```
 
-### Validating files
+## Manually validating files
 
 You may validate files using the [validator](#using-validator) or define the validation rules via the `request.file` method. 
 
@@ -92,7 +92,7 @@ if (invalidDocuments.length) {
 }
 ```
 
-### Using validator
+## Using validator to validate files
 
 Instead of validating files manually (as seen in the previous section), you may use the [validator](./validation.md) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
 
@@ -127,7 +127,6 @@ export default class UserAvatarsController {
 }
 ```
 
-### Using validator to validate multiple files
 An array of files can be validated using the `vine.array` type. For example:
 
 ```ts
@@ -147,7 +146,7 @@ export const createInvoiceValidator = vine.compile(
 )
 ```
 
-### Moving files to a persistent location
+## Moving files to a persistent location
 
 By default, the user-uploaded files are saved in your operating system's `tmp` directory and may get deleted as your computer cleans up the `tmp` directory.
 
@@ -161,17 +160,26 @@ const avatar = request.file('avatar', {
   extnames: ['jpg', 'png', 'jpeg']
 })
 
-await avatar.move(app.makePath('uploads'))
+// highlight-start
+/**
+ * Moving avatar to the "storage/uploads" directory
+ */
+await avatar.move(app.makePath('storage/uploads'))
+// highlight-end
 ```
 
-Also, it is recommended to provide a unique random name to the moved file. For this, you may use the `cuid` helper.
+It is recommended to provide a unique random name to the moved file. For this, you may use the `cuid` helper.
 
 ```ts
+// highlight-start
 import { cuid } from '@adonisjs/core/helpers'
+// highlight-end
 import app from '@adonisjs/core/services/app'
 
-await avatar.move(app.makePath('uploads'), {
+await avatar.move(app.makePath('storage/uploads'), {
+  // highlight-start
   name: `${cuid()}.${avatar.extname}`
+  // highlight-end
 })
 ```
 
@@ -180,7 +188,12 @@ Once the file has been moved, you may store its name inside the database for lat
 ```ts
 await avatar.move(app.makePath('uploads'))
 
-auth.user!.avatarFileName = avatar.fileName!
+/**
+ * Dummy code to save the filename as avatar
+ * on the user model and persist it to the
+ * database.
+ */
+auth.user!.avatar = avatar.fileName!
 await auth.user.save()
 ```
 
@@ -234,25 +247,24 @@ router.get('/uploads/*', ({ request, response }) => {
 - Using the `PATH_TRAVERSAL_REGEX` we protect this route against [path traversal](https://owasp.org/www-community/attacks/Path_Traversal).
 - Finally, we convert the `normalizedPath` to an absolute path inside the `uploads` directory and serve the file using the `response.download` method.
 
-<!--
+
 ## Using Drive to upload and serve files
 
 Drive is a file system abstraction created by the AdonisJS core team. You may use Drive to manage user-uploaded files and store them inside the local file system or move them to a cloud storage service like S3 or GCS.
 
 We recommend using Drive over manually uploading and serving files. Drive handles many security concerns like path traversal and offers a unified API across multiple storage providers.
 
-For usage documentation, visit [drive.adonisjs.com](https://drive.adonisjs.com).
- -->
+[Learn more about Drive](../digging_deeper/drive.md)
 
-## Self-processing multipart stream
+## Advanced - Self-processing multipart stream
 You can turn off the automatic processing of multipart requests and self-process the stream for advanced use cases. Open the `config/bodyparser.ts` file and change one of the following options to disable auto-processing.
 
 ```ts
 {
   multipart: {
     /**
-     * Set to false, if you want to self-process all the
-     * multipart stream
+     * Set to false, if you want to self-process multipart
+     * stream manually for all HTTP requests
      */
     autoProcess: false
   }
@@ -263,8 +275,8 @@ You can turn off the automatic processing of multipart requests and self-process
 {
   multipart: {
     /**
-     * Define an array of route patterns for which you want to self
-     * process the multipart stream
+     * Define an array of route patterns for which you want
+     * to self process the multipart stream.
      */
     processManually: ['/assets']
   }
@@ -320,8 +332,8 @@ export default class AssetsController {
 ### Error handling
 You must listen to the `error` event on the `part` object and handle the errors manually. Usually, the stream reader (the writeable stream) will internally listen for this event and abort the write operation.
 
-### Validating files
-AdonisJS allows you to validate the files even when you process the multipart stream manually. In case of an error, the `error` event is emitted on the `part` object.
+### Validating stream parts
+AdonisJS allows you to validate the stream parts (aka files) even when you process the multipart stream manually. In case of an error, the `error` event is emitted on the `part` object.
 
 The `multipart.onFile` method accepts the validation options as the second parameter. Also, make sure to listen for the `data` event and bind the `reporter` method to it. Otherwise, no validations will occur.
 

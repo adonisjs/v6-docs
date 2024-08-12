@@ -384,6 +384,12 @@
     "category": "Testing"
   },
   {
+    "permalink": "digging-deeper/drive",
+    "title": "Drive",
+    "contentPath": "./digging_deeper/drive.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "digging-deeper/emitter",
     "title": "Emitter",
     "contentPath": "./digging_deeper/emitter.md",

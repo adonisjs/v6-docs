@@ -771,13 +771,13 @@ Moreover, queueing an email will fail if you attach a stream using the `message.
 :::
 
 ```ts
-message.attach(fs.createReadStream('./invoice.pdf'), {
+message.attachData(fs.createReadStream('./invoice.pdf'), {
   filename: 'invoice_october_2023.pdf'
 })
 ```
 
 ```ts
-message.attach(Buffer.from('aGVsbG8gd29ybGQh'), {
+message.attachData(Buffer.from('aGVsbG8gd29ybGQh'), {
   encoding: 'base64',
   filename: 'greeting.txt',
 })

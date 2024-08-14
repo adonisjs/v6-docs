@@ -1077,7 +1077,17 @@ Because, the AdonisJS process that is responsible for restarting the server is w
 
 ### Why my production build is not working ?
 
-A common issue is that you just forgot to set `NODE_ENV=production` when running your production build. 
+If you are facing an error like this one:
+
+```
+X [ERROR] Failed to load url inertia/app/ssr.ts (resolved id: inertia/app/ssr.ts). Does the file exist?
+```
+
+A common issue is that you just forgot to set `NODE_ENV=production` when running your production build.
+
+```shell
+NODE_ENV=production node build/server.js
+```
 
 ### `Top-level await is not available...`
 

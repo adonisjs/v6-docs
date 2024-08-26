@@ -116,11 +116,11 @@ node ace add @adonisjs/auth --guard=basic_auth
     ```
 
     ```ts
-    router.named([
+    router.named({
       auth: () => import('#middleware/auth_middleware'),
       // only if using the session guard
       guest: () => import('#middleware/guest_middleware')
-    ])
+    })
     ```
 
 4. Creates the user model inside the `app/models` directory.

@@ -1,5 +1,5 @@
 ---
-summary: \@adonisjs/mailパッケージを使用して、AdonisJSアプリケーションからメールを送信する方法を学びます。
+summary: '`@adonisjs/mail`パッケージを使用して、AdonisJSアプリケーションからメールを送信する方法を学びます。'
 ---
 
 # メール

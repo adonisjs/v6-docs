@@ -1,55 +1,53 @@
 <!DOCTYPE html>
-  <html
-    lang="en"
-    x-data
-    :class="{ dark: $store.darkMode.enabled, light: !$store.darkMode.enabled }"
-  >
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" x-data :class="{ dark: $store.darkMode.enabled, light: !$store.darkMode.enabled }">
 
-    <title>{{ file.frontmatter.title }}</title>
-    @if(file.frontmatter.summary)
-      <meta name="description" content="{{ file.frontmatter.summary }}">
-    @end
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-    <link rel="manifest" href="/icons/site.webmanifest">
-    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#865bd5">
-    <link rel="shortcut icon" href="/icons/favicon.svg" type="image/svg+xml">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="/icons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <title>{{ file.frontmatter.title }}</title>
+  @if(file.frontmatter.summary)
+  <meta name="description" content="{{ file.frontmatter.summary }}">
+  @end
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://docs.adonisjs.com{{ file.frontmatter.permalink }}">
-    <meta property="og:title" content="{{ file.frontmatter.title }}">
-    @if(file.frontmatter.summary)
-      <meta name="og:description" content="{{ file.frontmatter.summary }}">
-    @end
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#865bd5">
+  <link rel="shortcut icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/icons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
-    <meta property="twitter:url" content="https://docs.adonisjs.com{{ file.frontmatter.permalink }}">
-    <meta property="twitter:title" content="{{ file.frontmatter.title }}">
-    @if(file.frontmatter.summary)
-      <meta name="twitter:description" content="{{ file.frontmatter.summary }}">
-    @end
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://adonisjs-docs-ja.vercel.app{{ file.frontmatter.permalink }}">
+  <meta property="og:title" content="{{ file.frontmatter.title }}">
+  @if(file.frontmatter.summary)
+  <meta name="og:description" content="{{ file.frontmatter.summary }}">
+  @end
 
-    <link rel="canonical" href="https://docs.adonisjs.com{{ file.frontmatter.permalink }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    >
+  <meta property="twitter:url" content="https://adonisjs-docs-ja.vercel.app{{ file.frontmatter.permalink }}">
+  <meta property="twitter:title" content="{{ file.frontmatter.title }}">
+  @if(file.frontmatter.summary)
+  <meta name="twitter:description" content="{{ file.frontmatter.summary }}">
+  @end
 
-    @vite(['assets/app.css', 'assets/app.js'])
-    @include('partials/detect_color_mode')
+  <link rel="canonical" href="https://adonisjs-docs-ja.vercel.app{{ file.frontmatter.permalink }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
 
-  </head>
-  <body>
-    {{{ await $slots.main() }}}
-  </body>
+  @vite(['assets/app.css', 'assets/app.js'])
+  @include('partials/detect_color_mode')
+
+</head>
+
+<body>
+  {{{ await $slots.main() }}}
+</body>
+
 </html>

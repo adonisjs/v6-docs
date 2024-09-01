@@ -1,5 +1,5 @@
 ---
-summary: "AdonisJSは、Node.js向けのTypeScriptファーストのウェブフレームワークです。フルスタックのウェブアプリケーションやJSON APIサーバーを作成することができます。"
+summary: "AdonisJSはNode.js向けのTypeScriptファーストのウェブフレームワークです。フルスタックのウェブアプリケーションやJSON APIサーバーを作成できます。"
 ---
 
 # はじめに

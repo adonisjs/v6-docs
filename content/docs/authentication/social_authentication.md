@@ -1,5 +1,5 @@
 ---
-summary: \`@adonisjs/ally`パッケージを使用して、AdonisJSアプリケーションでソーシャル認証を実装します。
+summary: '`@adonisjs/ally`パッケージを使用して、AdonisJSアプリケーションでソーシャル認証を実装します。'
 ---
 
 # ソーシャル認証

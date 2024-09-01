@@ -1,5 +1,5 @@
 ---
-summary: \`@adonisjs/bouncer`パッケージを使用して、AdonisJSアプリケーションでの認可チェックを行う方法を学びます。
+summary: '`@adonisjs/bouncer`パッケージを使用して、AdonisJSアプリケーションでの認可チェックを行う方法を学びます。'
 ---
 
 # 認可

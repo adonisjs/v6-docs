@@ -1,5 +1,5 @@
 ---
-summary: AdonisJSでカスタムAceコマンドを作成する方法を学びます
+summary: AdonisJSでカスタムAceコマンドを作成する方法を学びます。
 ---
 
 # コマンドの作成

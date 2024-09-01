@@ -74,13 +74,20 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
     shouldGenerateOgImage = false
   }
 
-  /**
-   * Take 3 lines of 40 characters each
-   * insert them in the svg template
-   */
+  // 日本語を30文字ずつに分割
   const lines = description
     .trim()
-    .split(/(.{0,60})(?:\s|$)/g)
+    .split('')
+    .reduce(
+      (acc, curr) => {
+        if (acc[acc.length - 1].length === 30) {
+          acc.push('')
+        }
+        acc[acc.length - 1] += curr
+        return acc
+      },
+      ['']
+    )
     .filter(Boolean)
 
   const svg = ogTemplate
@@ -107,7 +114,7 @@ async function generateOgImage(entry: ReturnType<Collection['all']>[0], htmlOutp
   /**
    * Insert the og:image and twitter:image meta tags
    */
-  const ogImageUrl = output.replace('public/', 'https://docs.adonisjs.com/')
+  const ogImageUrl = output.replace('public/', 'https://adonisjs-docs-ja.vercel.app/')
   const tags = `
     <meta property="og:image" content="${ogImageUrl}">
     <meta name="twitter:image" content="${ogImageUrl}">

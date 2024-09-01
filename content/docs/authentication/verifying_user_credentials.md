@@ -1,5 +1,5 @@
 ---
-$SELECTION_PLACEHOLDER$summary: AuthFinderミックスインを使用して、AdonisJSアプリケーションでユーザーの資格情報を検証できます。
+summary: AuthFinderミックスインを使用して、AdonisJSアプリケーションでユーザーの資格情報を検証できます。
 ---
 
 # ユーザーの資格情報の検証

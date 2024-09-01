@@ -1,5 +1,5 @@
 ---
-summary: \`@adonisjs/redis`パッケージを使用してAdonisJSアプリケーション内でRedisを利用します。
+summary: '`@adonisjs/redis`パッケージを使用してAdonisJSアプリケーション内でRedisを利用します。'
 ---
 
 # Redis

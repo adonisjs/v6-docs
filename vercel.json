@@ -1,0 +1,376 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/guides/introduction"
+    },
+    {
+      "source": "/guides",
+      "destination": "/guides/preface/introduction"
+    },
+    {
+      "source": "/guides/preface",
+      "destination": "/guides/preface/introduction"
+    },
+    {
+      "source": "/guides/introduction",
+      "destination": "/guides/preface/introduction"
+    },
+    {
+      "source": "/guides/faqs",
+      "destination": "/guides/preface/faqs"
+    },
+    {
+      "source": "/guides/releases",
+      "destination": "/guides/preface/releases"
+    },
+    {
+      "source": "/guides/getting-started",
+      "destination": "/guides/getting-started/installation"
+    },
+    {
+      "source": "/guides/installation",
+      "destination": "/guides/getting-started/installation"
+    },
+    {
+      "source": "/guides/config",
+      "destination": "/guides/getting-started/configuration"
+    },
+    {
+      "source": "/guides/environment-variables",
+      "destination": "/guides/getting-started/environment-variables"
+    },
+    {
+      "source": "/guides/folder-structure",
+      "destination": "/guides/getting-started/folder-structure"
+    },
+    {
+      "source": "/guides/concepts",
+      "destination": "/guides/concepts/async-local-storage"
+    },
+    {
+      "source": "/guides/async-local-storage",
+      "destination": "/guides/concepts/async-local-storage"
+    },
+    {
+      "source": "/guides/application",
+      "destination": "/guides/concepts/application"
+    },
+    {
+      "source": "/guides/application-lifecycle",
+      "destination": "/guides/concepts/application-lifecycle"
+    },
+    {
+      "source": "/guides/config-providers",
+      "destination": "/guides/concepts/config-providers"
+    },
+    {
+      "source": "/guides/container-services",
+      "destination": "/guides/concepts/container-services"
+    },
+    {
+      "source": "/guides/ioc-container",
+      "destination": "/guides/concepts/dependency-injection"
+    },
+    {
+      "source": "/guides/extend-adonisjs",
+      "destination": "/guides/concepts/extending-adonisjs"
+    },
+    {
+      "source": "/guides/hmr",
+      "destination": "/guides/concepts/hot-module-replacement"
+    },
+    {
+      "source": "/guides/http",
+      "destination": "/guides/concepts/http-overview"
+    },
+    {
+      "source": "/guides/http-context",
+      "destination": "/guides/concepts/http-context"
+    },
+    {
+      "source": "/guides/adonisrc-file",
+      "destination": "/guides/concepts/adonisrcrc-file"
+    },
+    {
+      "source": "/guides/service-providers",
+      "destination": "/guides/concepts/service-providers"
+    },
+    {
+      "source": "/guides/scaffolding",
+      "destination": "/guides/concepts/scaffolding"
+    },
+    {
+      "source": "/guides/tooling-config",
+      "destination": "/guides/concepts/tooling-config"
+    },
+    {
+      "source": "/guides/typescript-build-process",
+      "destination": "/guides/concepts/typescript-build-process"
+    },
+    {
+      "source": "/guides/basics",
+      "destination": "/guides/basics/routing"
+    },
+    {
+      "source": "/guides/routing",
+      "destination": "/guides/basics/routing"
+    },
+    {
+      "source": "/guides/controllers",
+      "destination": "/guides/basics/controllers"
+    },
+    {
+      "source": "/guides/middleware",
+      "destination": "/guides/basics/middleware"
+    },
+    {
+      "source": "/guides/bodyparser-middleware",
+      "destination": "/guides/basics/body-parser"
+    },
+    {
+      "source": "/guides/request",
+      "destination": "/guides/basics/request"
+    },
+    {
+      "source": "/guides/response",
+      "destination": "/guides/basics/response"
+    },
+    {
+      "source": "/guides/validation",
+      "destination": "/guides/basics/validation"
+    },
+    {
+      "source": "/guides/file-uploads",
+      "destination": "/guides/basics/file-uploads"
+    },
+    {
+      "source": "/guides/session",
+      "destination": "/guides/basics/session"
+    },
+    {
+      "source": "/guides/cookies",
+      "destination": "/guides/basics/cookies"
+    },
+    {
+      "source": "/guides/exception-handling",
+      "destination": "/guides/basics/exception-handling"
+    },
+    {
+      "source": "/guides/assets-bundling",
+      "destination": "/guides/basics/vite"
+    },
+    {
+      "source": "/guides/static-file-server",
+      "destination": "/guides/basics/static-file-server"
+    },
+    {
+      "source": "/guides/url-builder",
+      "destination": "/guides/basics/routing#url-builder"
+    },
+    {
+      "source": "/guides/database",
+      "destination": "/guides/database/introduction"
+    },
+    {
+      "source": "/guides/sql",
+      "destination": "/guides/database/introduction"
+    },
+    {
+      "source": "/guides/redis",
+      "destination": "/guides/database/redis"
+    },
+    {
+      "source": "/guides/authentication",
+      "destination": "/guides/authentication/introduction"
+    },
+    {
+      "source": "/guides/auth",
+      "destination": "/guides/authentication/introduction"
+    },
+    {
+      "source": "/guides/verifying_user_credentials",
+      "destination": "/guides/authentication/verifying-user-credentials"
+    },
+    {
+      "source": "/guides/auth-session-guard",
+      "destination": "/guides/authentication/session-guard"
+    },
+    {
+      "source": "/guides/auth-access-tokens-guard",
+      "destination": "/guides/authentication/access-tokens-guard"
+    },
+    {
+      "source": "/guides/basic-auth-guard",
+      "destination": "/guides/authentication/basic-auth-guard"
+    },
+    {
+      "source": "/guides/auth-custom-guards",
+      "destination": "/guides/authentication/custom-auth-guard"
+    },
+    {
+      "source": "/guides/social-auth",
+      "destination": "/guides/authentication/social-authentication"
+    },
+    {
+      "source": "/guides/security",
+      "destination": "/guides/security/authorization"
+    },
+    {
+      "source": "/guides/authorization",
+      "destination": "/guides/security/authorization"
+    },
+    {
+      "source": "/guides/encryption",
+      "destination": "/guides/security/encryption"
+    },
+    {
+      "source": "/guides/hash",
+      "destination": "/guides/security/hashing"
+    },
+    {
+      "source": "/guides/cors",
+      "destination": "/guides/security/cors"
+    },
+    {
+      "source": "/guides/web-security",
+      "destination": "/guides/security/securing-ssr-applications"
+    },
+    {
+      "source": "/guides/rate-limiter",
+      "destination": "/guides/security/rate-limiting"
+    },
+    {
+      "source": "/guides/views-and-templates",
+      "destination": "/guides/views-and-templates/introduction"
+    },
+    {
+      "source": "/guides/testing",
+      "destination": "/guides/testing/introduction"
+    },
+    {
+      "source": "/guides/http-tests",
+      "destination": "/guides/testing/http-tests"
+    },
+    {
+      "source": "/guides/browser-tests",
+      "destination": "/guides/testing/browser-tests"
+    },
+    {
+      "source": "/guides/command-line-tests",
+      "destination": "/guides/testing/console-tests"
+    },
+    {
+      "source": "/guides/database-tests",
+      "destination": "/guides/testing/database"
+    },
+    {
+      "source": "/guides/mocks-and-fakes",
+      "destination": "/guides/testing/mocks-and-fakes"
+    },
+    {
+      "source": "/guides/digging-deeper",
+      "destination": "/guides/digging-deeper/emitter"
+    },
+    {
+      "source": "/guides/emitter",
+      "destination": "/guides/digging-deeper/emitter"
+    },
+    {
+      "source": "/guides/i18n",
+      "destination": "/guides/digging-deeper/i18n"
+    },
+    {
+      "source": "/guides/locks",
+      "destination": "/guides/digging-deeper/locks"
+    },
+    {
+      "source": "/guides/logger",
+      "destination": "/guides/digging-deeper/logger"
+    },
+    {
+      "source": "/guides/transmit",
+      "destination": "/guides/digging-deeper/transmit"
+    },
+    {
+      "source": "/guides/repl",
+      "destination": "/guides/digging-deeper/repl"
+    },
+    {
+      "source": "/guides/commands-reference",
+      "destination": "/guides/references/commands"
+    },
+    {
+      "source": "/guides/edge-reference",
+      "destination": "/guides/references/edge"
+    },
+    {
+      "source": "/guides/events-reference",
+      "destination": "/guides/references/events"
+    },
+    {
+      "source": "/guides/exceptions-reference",
+      "destination": "/guides/references/exceptions"
+    },
+    {
+      "source": "/guides/helpers-reference",
+      "destination": "/guides/references/helpers"
+    },
+    {
+      "source": "/guides/mail",
+      "destination": "/guides/digging-deeper/mail"
+    },
+    {
+      "source": "/guides/mail-message",
+      "destination": "/guides/digging-deeper/mail#configuring-message"
+    },
+    {
+      "source": "/guides/mail-classes",
+      "destination": "/guides/digging-deeper/mail#class-based-emails"
+    },
+    {
+      "source": "/guides/fake-mailer",
+      "destination": "/guides/digging-deeper/mail#fake-mailer"
+    },
+    {
+      "source": "/guides/mail-custom-transports",
+      "destination": "/guides/digging-deeper/mail#creating-custom-transports"
+    },
+    {
+      "source": "/guides/ace",
+      "destination": "/guides/ace/introduction"
+    },
+    {
+      "source": "/guides/ace-creating-commands",
+      "destination": "/guides/ace/creating-commands"
+    },
+    {
+      "source": "/guides/ace-arguments",
+      "destination": "/guides/ace/arguments"
+    },
+    {
+      "source": "/guides/ace-flags",
+      "destination": "/guides/ace/flags"
+    },
+    {
+      "source": "/guides/ace-prompts",
+      "destination": "/guides/ace/prompts"
+    },
+    {
+      "source": "/guides/ace-terminal-ui",
+      "destination": "/guides/ace/terminal-ui"
+    },
+    {
+      "source": "/guides/experimental-assembler-hooks",
+      "destination": "/guides/concepts/assembler-hooks"
+    },
+    {
+      "source": "/guides/inertia",
+      "destination": "/guides/views-and-templates/inertia"
+    },
+    {
+      "source": "/guides/experimental-vite",
+      "destination": "/guides/basics/vite"
+    }
+  ]
+}

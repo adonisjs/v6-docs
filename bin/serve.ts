@@ -11,10 +11,12 @@
 
 import 'reflect-metadata'
 import { Ignitor } from '@adonisjs/core'
-import { readFile } from 'node:fs/promises'
 import { defineConfig } from '@adonisjs/vite'
 import type { ApplicationService } from '@adonisjs/core/types'
 import { defineConfig as defineHttpConfig } from '@adonisjs/core/http'
+import vercelJson from '../vercel.json' assert { type: 'json' }
+
+const redirectRules = vercelJson.redirects
 
 /**
  * URL to the application root. AdonisJS need it to resolve
@@ -42,11 +44,10 @@ async function defineRoutes(app: ApplicationService) {
   const { default: router } = await import('@adonisjs/core/services/router')
 
   server.use([() => import('@adonisjs/static/static_middleware')])
-  const redirects = await readFile(app.publicPath('_redirects'), 'utf-8')
-  const redirectsCollection = redirects.split('\n').reduce(
-    (result, line) => {
-      const [from, to] = line.split(' ')
-      result[from] = to
+  const redirectsCollection = redirectRules.reduce(
+    (result, rule) => {
+      const { source, destination } = rule
+      result[source] = destination
       return result
     },
     {} as Record<string, string>

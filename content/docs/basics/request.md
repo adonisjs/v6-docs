@@ -1,14 +1,14 @@
 ---
-summary: The Request class holds data for the ongoing HTTP request, including the request body, reference to uploaded files, cookies, request headers, and much more.
+summary: Requestクラスは、リクエストボディ、アップロードされたファイルへの参照、クッキー、リクエストヘッダなど、進行中のHTTPリクエストのデータを保持します。
 ---
 
 # Request
 
-An instance of the [request class](https://github.com/adonisjs/http-server/blob/main/src/request.ts) holds data for the ongoing HTTP request, including the **request body**, **reference to uploaded files**, **cookies**, **request headers**, and much more. The request instance can be accessed using the `ctx.request` property.
+[requestクラス](https://github.com/adonisjs/http-server/blob/main/src/request.ts)のインスタンスは、リクエストボディ、アップロードされたファイルへの参照、クッキー、リクエストヘッダなど、進行中のHTTPリクエストのデータを保持します。requestインスタンスは、`ctx.request`プロパティを使用してアクセスできます。
 
-## Query string and route params
+## クエリ文字列とルートパラメータ
 
-The `request.qs` method returns the parsed query string as an object.
+`request.qs`メソッドは、パースされたクエリ文字列をオブジェクトとして返します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -22,7 +22,7 @@ router.get('posts', async ({ request }) => {
 })
 ```
 
-The `request.params` method returns an object of [Route params](./routing.md#route-params).
+`request.params`メソッドは、[ルートパラメータ](./routing.md#route-params)のオブジェクトを返します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -36,7 +36,7 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 })
 ```
 
-You can access a single parameter using the `request.param` method.
+`request.param`メソッドを使用して、単一のパラメータにアクセスできます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -47,11 +47,11 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 })
 ```
 
-## Request body
+## リクエストボディ
 
-AdonisJS parses the request body using the [body-parser middleware](../basics/body_parser.md) registered inside the `start/kernel.ts` file.
+AdonisJSは、`start/kernel.ts`ファイルに登録された[body-parserミドルウェア](../basics/body_parser.md)を使用して、リクエストボディをパースします。
 
-You can access the request body using the `request.body()` method. It returns the parsed request body as an object.
+`request.body()`メソッドを使用して、リクエストボディにアクセスできます。パースされたリクエストボディがオブジェクトとして返されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -61,7 +61,7 @@ router.post('/', async ({ request }) => {
 })
 ```
 
-The `request.all` method returns a merged copy of both the request body and the query string.
+`request.all`メソッドは、リクエストボディとクエリ文字列の両方をマージしたコピーを返します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -71,11 +71,11 @@ router.post('/', async ({ request }) => {
 })
 ```
 
-### Cherry-picking values
+### 特定の値を選択する
 
-The `request.input`, `request.only`, and the `request.except` methods can cherry-pick specific properties from the request data. All the cherry-picking methods lookup for values inside both the request body and the query string.
+`request.input`、`request.only`、および`request.except`メソッドを使用して、リクエストデータから特定のプロパティを選択できます。すべての選択メソッドは、リクエストボディとクエリ文字列の両方から値を検索します。
 
-The `request.only` method returns an object with only the mentioned properties.
+`request.only`メソッドは、指定されたプロパティのみを持つオブジェクトを返します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -87,7 +87,7 @@ router.post('login', async ({ request }) => {
 })
 ```
 
-The `request.except` method returns an object excluding the mentioned properties.
+`request.except`メソッドは、指定されたプロパティを除外したオブジェクトを返します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -99,7 +99,7 @@ router.post('register', async ({ request }) => {
 })
 ```
 
-The `request.input` method returns the value for a specific property. Optionally, you can pass a default value as the second argument. The default value is returned when the actual value is missing.
+`request.input`メソッドは、特定のプロパティの値を返します。オプションで、2番目の引数としてデフォルト値を渡すこともできます。実際の値が存在しない場合には、デフォルト値が返されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -110,15 +110,15 @@ router.post('comments', async ({ request }) => {
 })
 ```
 
-### Type-safe request body
+### 型安全なリクエストボディ
 
-The `request.all`, `request.body`, or the cherry-picking methods are not type-safe because there is no direct way for AdonisJS to know the expected data types of the request body.
+`request.all`、`request.body`、または選択メソッドは、リクエストボディの期待されるデータ型をAdonisJSが直接知る方法がないため、型安全ではありません。
 
-However, you may use the [validator](./validation.md) to validate the request body and have static type-safety.
+ただし、[バリデータ](./validation.md)を使用してリクエストボディを検証し、静的な型安全性を確保できます。
 
-## Request URL
+## リクエストURL
 
-The `request.url` method returns the request URL relative to the hostname. By default, the return value does not include the query string. However, you can get the URL with query string by calling `request.url(true)`.
+`request.url`メソッドは、ホスト名に対するリクエストURLを返します。デフォルトでは、返される値にはクエリ文字列は含まれません。ただし、`request.url(true)`を呼び出すことで、クエリ文字列を含むURLを取得できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -134,24 +134,24 @@ router.get('/users', async ({ request }) => {
    * URL: /users?page=1&limit=20
    * url: /users?page=1&limit=20
    */
-  request.url(true) // returns query string
+  request.url(true) // クエリ文字列を返す
 })
 ```
 
-The `request.completeUrl` method returns the complete URL, including the hostname. Again, unless explicitly told, the return value does not include the query string.
+`request.completeUrl`メソッドは、ホスト名を含む完全なURLを返します。再度、明示的に指定しない限り、返される値にはクエリ文字列は含まれません。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/users', async ({ request }) => {
   request.completeUrl()
-  request.completeUrl(true) // returns query string
+  request.completeUrl(true) // クエリ文字列を返す
 })
 ```
 
-## Request headers
+## リクエストヘッダ
 
-The `request.headers` method returns the request headers as an object.
+`request.headers`メソッドは、リクエストヘッダをオブジェクトとして返します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -161,7 +161,7 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-You can access the value for an individual header using the `request.header` method.
+`request.header`メソッドを使用して、個々のヘッダの値にアクセスできます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -169,38 +169,38 @@ import router from '@adonisjs/core/services/router'
 router.get('/', async ({ request }) => {
   request.header('x-request-id')
 
-  // Header name is not case sensitive
+  // ヘッダ名は大文字小文字を区別しません
   request.header('X-REQUEST-ID')
 })
 ```
 
-## Request method
+## リクエストメソッド
 
-The `request.method` method returns the HTTP method for the current request. This method returns the spoofed method when [form method spoofing](#form-method-spoofing) is enabled, and you can use the `request.intended` method to get the original request method.
+`request.method`メソッドは、現在のリクエストのHTTPメソッドを返します。このメソッドは、[フォームメソッドスプーフィング](#form-method-spoofing)が有効になっている場合にスプーフィングされたメソッドを返し、元のリクエストメソッドを取得するために`request.intended`メソッドを使用できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.patch('posts', async ({ request }) => {
   /**
-   * The method that was used for route matching
+   * ルートマッチングに使用されたメソッド
    */
   console.log(request.method())
 
   /**
-   * The actual request method
+   * 実際のリクエストメソッド
    */
   console.log(request.intended())
 })
 ```
 
-## User IP Address
+## ユーザーのIPアドレス
 
-The `request.ip` method returns the user IP address for the current HTTP request. This method relies on the [`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) header set by proxy servers like Nginx or Caddy.
+`request.ip`メソッドは、現在のHTTPリクエストのユーザーのIPアドレスを返します。このメソッドは、NginxやCaddyなどのプロキシサーバーが設定した[`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For)ヘッダーに依存しています。
 
 :::note
 
-Read the [trusted proxies](#configuring-trusted-proxies) section to configure the proxies your application should trust.
+アプリケーションが信頼するプロキシを設定するために、[信頼されたプロキシ](#configuring-trusted-proxies)セクションを読んでください。
 
 :::
 
@@ -212,7 +212,7 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-The `request.ips` method returns an array of all the IP addresses set by intermediate proxies. The array is sorted by most trusted to least trusted IP address.
+`request.ips`メソッドは、中間プロキシによって設定されたすべてのIPアドレスの配列を返します。配列は最も信頼性の高いIPアドレスから最も信頼性の低いIPアドレスの順に並べられます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -222,11 +222,11 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-### Defining a custom `getIp` method
+### カスタム`getIp`メソッドの定義
 
-If the trusted proxy settings are insufficient to determine the correct IP address, you can implement your custom `getIp` method.
+信頼されたプロキシの設定が不十分で正しいIPアドレスを判断できない場合は、カスタムの`getIp`メソッドを実装することができます。
 
-The method is defined inside the `config/app.ts` file under the `http` settings object.
+このメソッドは、`config/app.ts`ファイルの`http`設定オブジェクト内に定義されます。
 
 ```ts
 http: {
@@ -241,11 +241,11 @@ http: {
 }
 ```
 
-## Content negotiation
+## コンテンツネゴシエーション
 
-AdonisJS provides several methods for [content-negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation#server-driven_content_negotiation) by parsing all the commonly supported `Accept` headers. For example, you can use the `request.types` method to get a list of all the content types accepted by a given request.
+AdonisJSは、一般的にサポートされているすべての`Accept`ヘッダーをパースすることで、[コンテンツネゴシエーション](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation#server-driven_content_negotiation)を行うためのいくつかのメソッドを提供しています。たとえば、`request.types`メソッドを使用して、特定のリクエストで受け入れられるコンテンツタイプのリストを取得できます。
 
-The return value of the `request.types` method is ordered by the client's preference (most preferred first).
+`request.types`メソッドの戻り値は、クライアントの優先順位に従って並べ替えられたものです（最も優先されるものが最初になります）。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -255,18 +255,18 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-Following is the complete list of content negotiation methods.
+以下は、コンテンツネゴシエーションメソッドの完全なリストです。
 
-| Method    | HTTP header in use                                                                           |
+| メソッド    | 使用されるHTTPヘッダー                                                                           |
 |-----------|----------------------------------------------------------------------------------------------|
 | types     | [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept)                   |
 | languages | [Accept-language](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) |
 | encodings | [Accept-encoding](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) |
 | charsets  | [Accept-charset](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Charset)   |
 
-Sometimes you want to find the preferred content type based on what the server can support.
+サーバーがサポートできるコンテンツタイプに基づいて、最も好ましいコンテンツタイプを見つけたい場合があります。
 
-For the same, you can use the `request.accepts` method. The method takes an array of supported content types and returns the most preferred one after inspecting the `Accept` header. A `null` value is returned when unable to find a match.
+そのために、`request.accepts`メソッドを使用できます。このメソッドは、サポートされているコンテンツタイプの配列を受け取り、`Accept`ヘッダーを調査して最も好ましいコンテンツタイプを返します。一致が見つからない場合は、`null`が返されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -291,26 +291,26 @@ router.get('posts', async ({ request, view }) => {
 })
 ```
 
-Similar to `request.accept`, the following methods can be used to find the preferred value for other `Accept` headers.
+`request.accept`と同様に、次のメソッドを使用して他の`Accept`ヘッダーの最適な値を見つけることができます。
 
 ```ts
-// Preferred language
+// 優先される言語
 const language = request.language(['fr', 'de'])
 
-// Preferred encoding
+// 優先されるエンコーディング
 const encoding = request.encoding(['gzip', 'br'])
 
-// Preferred charset
+// 優先される文字セット
 const charset = request.charset(['utf-8', 'hex', 'ascii'])
 ```
 
-## Generating request ids
+## リクエストIDの生成
 
-Request ids help you [debug and trace application issues](https://blog.heroku.com/http_request_id_s_improve_visibility_across_the_application_stack) from logs by assigning a unique id to every HTTP request. By default, request id creation is disabled. However, you can enable it inside the `config/app.ts` file.
+リクエストIDは、ログからアプリケーションの問題をデバッグおよびトレースするために、各HTTPリクエストに一意のIDを割り当てることで役立ちます。デフォルトでは、リクエストIDの作成は無効になっています。ただし、`config/app.ts`ファイルで有効にできます。
 
 :::note
 
-Request ids are generated using the [cuid2](https://github.com/paralleldrive/cuid2) package. Before generating an id, we check for the `X-Request-Id` request header and use its value (if it exists).
+リクエストIDは、[cuid2](https://github.com/paralleldrive/cuid2)パッケージを使用して生成されます。IDを生成する前に、`X-Request-Id`リクエストヘッダーが存在する場合はその値を使用します。
 
 :::
 
@@ -323,7 +323,7 @@ Request ids are generated using the [cuid2](https://github.com/paralleldrive/cui
 }
 ```
 
-Once enabled, you can access the id using the `request.id` method.
+有効になった場合、`request.id`メソッドを使用してIDにアクセスできます。
 
 ```ts
 router.get('/', ({ request }) => {
@@ -332,7 +332,7 @@ router.get('/', ({ request }) => {
 })
 ```
 
-The same request-id is also added to all the logs generated using the `ctx.logger` instance.
+同じリクエストIDは、`ctx.logger`インスタンスを使用して生成されたすべてのログにも追加されます。
 
 ```ts
 router.get('/', ({ logger }) => {
@@ -341,13 +341,13 @@ router.get('/', ({ logger }) => {
 })
 ```
 
-## Configuring trusted proxies
+## 信頼されたプロキシの設定
 
-Most Node.js applications are deployed behind a proxy server like Nginx or Caddy. Therefore we have to rely on HTTP headers such as `X-Forwarded-Host`, `X-Forwarded-For`, and `X-Forwarded-Proto` to know about the real end-client making an HTTP request.
+ほとんどのNode.jsアプリケーションは、NginxやCaddyなどのプロキシサーバーの背後にデプロイされます。そのため、リクエストURLのクエリ文字列などのHTTPヘッダーを使用して、実際のエンドクライアントがHTTPリクエストを行っていることを知る必要があります。
 
-These headers are only used when your AdonisJS application can trust the source IP address.
+これらのヘッダーは、AdonisJSアプリケーションがソースIPアドレスを信頼できる場合にのみ使用されます。
 
-You can configure which IP addresses to trust within the `config/app.ts` file using the `http.trustProxy` configuration option.
+`config/app.ts`ファイル内の`http.trustProxy`設定オプションを使用して、信頼するIPアドレスを設定できます。
 
 ```ts
 import proxyAddr from 'proxy-addr'
@@ -359,7 +359,7 @@ import proxyAddr from 'proxy-addr'
 }
 ```
 
-The value for `trustProxy` can also be a function. The method should return `true` if the IP address is trusted; otherwise, return `false`.
+`trustProxy`の値は関数にすることもできます。メソッドは、IPアドレスが信頼できる場合は`true`を返し、それ以外の場合は`false`を返す必要があります。
 
 ```ts
 {
@@ -371,7 +371,7 @@ The value for `trustProxy` can also be a function. The method should return `tru
 }
 ```
 
-If you are running Nginx on the same server as your application code, you need to trust the loopback IP addresses, i.e. (127.0.0.1).
+もしNginxをアプリケーションコードと同じサーバーで実行している場合、ループバックIPアドレス（つまり、127.0.0.1）を信頼する必要があります。
 
 ```ts
 import proxyAddr from 'proxy-addr'
@@ -383,7 +383,7 @@ import proxyAddr from 'proxy-addr'
 }
 ```
 
-Suppose your application is only accessible through a load balancer, and you do not have a list of IP addresses for that load balancer. Then, you can trust the proxy server by defining a callback that always returns `true`.
+アプリケーションがロードバランサーを介してのみアクセス可能で、そのロードバランサーのIPアドレスのリストを持っていない場合は、常に`true`を返すコールバックを定義することでプロキシサーバーを信頼できます。
 
 ```ts
 {
@@ -393,11 +393,11 @@ Suppose your application is only accessible through a load balancer, and you do 
 }
 ```
 
-## Configuring query string parser
+## クエリ文字列パーサーの設定
 
-Query strings from the request URL are parsed using the [qs](http://npmjs.com/qs) module. You can configure the parser settings inside the `config/app.ts` file.
+リクエストURLのクエリ文字列は、[qs](http://npmjs.com/qs)モジュールを使用してパースされます。パーサーの設定は`config/app.ts`ファイル内で行うことができます。
 
-[View the list](https://github.com/adonisjs/http-server/blob/main/src/types/qs.ts#L11) of all the available options.
+[利用可能なオプションのリスト](https://github.com/adonisjs/http-server/blob/main/src/types/qs.ts#L11)を参照してください。
 
 ```ts
 http: {
@@ -408,13 +408,13 @@ http: {
 }
 ```
 
-## Form method spoofing
+## フォームメソッドスプーフィング
 
-The form method on an HTML form can only be set to `GET`, or `POST`, making it impossible to leverage [restful HTTP methods](https://restfulapi.net/http-methods/).
+HTMLフォームのフォームメソッドは、`GET`または`POST`にのみ設定できるため、[RESTfulなHTTPメソッド](https://restfulapi.net/http-methods/)を活用することはできません。
 
-However, AdonisJS allows you to workaround this limitation using **form method spoofing**. Form method spoofing is a fancy term for specifying the form method via the `_method` query string.
+ただし、AdonisJSでは**フォームメソッドスプーフィング**を使用してこの制限を回避できます。フォームメソッドスプーフィングとは、`_method`クエリ文字列を使用してフォームメソッドを指定する方法のことです。
 
-For method spoofing to work, you must set the form action to `POST` and enable the feature inside the `config/app.ts` file.
+フォームメソッドスプーフィングを使用するには、フォームのアクションを`POST`に設定し、`config/app.ts`ファイルでこの機能を有効にする必要があります。
 
 ```ts
 // title: config/app.ts
@@ -423,23 +423,23 @@ export const http = defineConfig({
 })
 ```
 
-Once enabled, you can spoof the form method as follows.
+有効になったら、次のようにフォームメソッドをスプーフィングできます。
 
 ```html
 <form method="POST" action="/articles/1?_method=PUT">
-  <!-- Update form -->
+  <!-- 更新フォーム -->
 </form>
 ```
 
 ```html
 <form method="POST" action="/articles/1?_method=DELETE">
-  <!-- Delete form -->
+  <!-- 削除フォーム -->
 </form>
 ```
 
-## Extending Request class
+## Requestクラスの拡張
 
-You can add custom properties to the Request class using macros or getters. Make sure to read the [extending AdonisJS guide](../concepts/extending_the_framework.md) first if you are new to the concept of macros.
+マクロやゲッターを使用して、Requestクラスにカスタムプロパティを追加できます。マクロの概念についてはじめての場合は、[AdonisJSの拡張ガイド](../concepts/extending_the_framework.md)を先に読んでください。
 
 ```ts
 import { Request } from '@adonisjs/core/http'
@@ -452,7 +452,7 @@ Request.getter('property', function (this: Request) {
 })
 ```
 
-Since the macros and getters are added at runtime, you must inform TypeScript about their types.
+マクロやゲッターは実行時に追加されるため、TypeScriptにその型について知らせる必要があります。
 
 ```ts
 declare module '@adonisjs/core/http' {

@@ -1,117 +1,117 @@
 ---
-summary: Contributing to AdonisJS projects is a great way to give back to the community. This guide provides a general overview of how you can contribute to any AdonisJS project.
+summary: AdonisJSプロジェクトへの貢献はコミュニティに還元する素晴らしい方法です。このガイドでは、どのAdonisJSプロジェクトにも貢献する方法の概要を提供します。
 ---
 
-# Contributing
-This is a general contribution guide for all of the [AdonisJS](https://github.com/adonisjs) repos. Please read this guide thoroughly before contributing to any of the repos 🙏
+# 貢献する
+これは[AdonisJS](https://github.com/adonisjs)のすべてのリポジトリに対する一般的な貢献ガイドです。リポジトリに貢献する前に、このガイドを十分に読んでください 🙏
 
-Code is not the only way to contribute. Following are also some ways to contribute and become part of the community.
+コードだけが貢献する方法ではありません。以下は、コミュニティの一員になるためのいくつかの貢献方法です。
 
-- Fixing typos in the documentation
-- Improving existing docs
-- Writing cookbooks or blog posts to educate others in the community
-- Triaging issues
-- Sharing your opinion on existing issues
-- Help the community in discord and the discussions forum
+- ドキュメントのタイポの修正
+- 既存のドキュメントの改善
+- コミュニティ内の他の人々に教えるためのクックブックやブログ記事の執筆
+- 問題のトリアージ
+- 既存の問題に対する意見の共有
+- Discordやディスカッションフォーラムでコミュニティをサポートする
 
-## Reporting bugs
-Many issues reported on open source projects are usually questions or misconfiguration at the reporter's end. Therefore, we highly recommend you properly troubleshoot your issues before reporting them.
+## バグの報告
+オープンソースプロジェクトで報告される多くの問題は、通常、報告者の環境での質問や設定ミスです。そのため、問題を報告する前に、問題を適切にトラブルシューティングすることを強くオススメします。
 
-If you're reporting a bug, include as much information as possible with the code samples you have written. The scale of good to bad issues looks as follows.
+バグを報告する場合は、可能な限り多くの情報と共にコードサンプルを含めてください。良いから悪いまでの問題のスケールは次のようになります。
 
-- **PERFECT ISSUE**: You isolate the underlying bug. Create a failing test in the repo and open a Github issue around it.
-- **GOOD ISSUE**: You isolate the underlying bug and provide a minimal reproduction of it as a Github repo. Antfu has written a great article on [Why Reproductions are Required](https://antfu.me/posts/why-reproductions-are-required).
-- **DECENT ISSUE**: You correctly state your issue. Share the code that produces the issue in the first place. Also, include the related configuration files and the package version you use.
+- **完璧な問題**: 潜在的なバグを分離します。リポジトリで失敗するテストを作成し、それに関するGitHubの問題をオープンします。
+- **良い問題**: 潜在的なバグを分離し、最小限の再現をGitHubリポジトリとして提供します。Antfuさんが書いた[Why Reproductions are Required](https://antfu.me/posts/why-reproductions-are-required)という素晴らしい記事があります。
+- **まずまずの問題**: 問題を正しく説明します。問題を引き起こすコードを共有してください。また、関連する設定ファイルと使用しているパッケージのバージョンも含めてください。
 
-  Last but not least is to format every code block properly by following the [Github markdown syntax guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+  また、すべてのコードブロックを適切にフォーマットするために、[Githubのマークダウン構文ガイド](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)にしたがってください。
 
-- **POOR ISSUE**: You dump the question you have with the hope that the other person will ask the relevant questions and help you. These kinds of issues are closed automatically without any explanation.
+- **貧弱な問題**: 問題を投げて、他の人が関連する質問をして助けてくれることを期待するだけです。このような問題は自動的に説明なしで閉じられます。
 
-## Having a discussion
-You often want to discuss a topic or maybe share some ideas. In that case, create a discussion in the discussions forum under the **💡Ideas** category.
+## ディスカッションを行う
+しばしばトピックを議論したり、アイデアを共有したりしたいと思うことがあります。その場合は、**💡アイデア**カテゴリのディスカッションフォーラムでディスカッションを作成してください。
 
-## Educating others
-Educating others is one of the best ways to contribute to any community and earn recognition.
+## 他の人に教える
+他の人に教えることは、どのコミュニティに貢献し、認識を得るための最良の方法の1つです。
 
-You can use the **📚 Cookbooks** category on our discussion forum to share an article with others. The cookbooks section is NOT strictly moderated, except the shared knowledge should be relevant to the project.
+他の人と共有するために、ディスカッションフォーラムの**📚クックブック**カテゴリを使用できます。クックブックセクションは厳密にはモデレートされていませんが、共有される知識はプロジェクトに関連している必要があります。
 
-## Creating pull requests
-It is never a good experience to have your pull request declined after investing a lot of time and effort in writing the code. Therefore, we highly recommend you to [kick off a discussion](https://github.com/orgs/adonisjs/discussions) before starting any new work on your side.
+## プルリクエストの作成
+コードを書くために多くの時間と労力を投資した後に、プルリクエストが拒否されるのは良い経験ではありません。そのため、新しい作業を開始する前に、[ディスカッションを開始](https://github.com/orgs/adonisjs/discussions)することを強くオススメします。
 
-Just start a discussion and explain what are you planning to contribute?
+ディスカッションを始めて、何を貢献するかを説明してください。
 
-- **Are you trying to create a PR to fix a bug**: PRs for bugs are mostly accepted once the bug has been confirmed.
-- **Are you planning to add a new feature**: Please thoroughly explain why this feature is required and share links to the learning material we can read to educate ourselves.
+- **バグを修正するためのPRを作成しようとしていますか**: バグについての確認が行われた後、PRはほとんど受け入れられます。
+- **新しい機能を追加する予定ですか**: なぜこの機能が必要なのかを詳しく説明し、自己教育のために読むことができる学習資料へのリンクを共有してください。
 
-  For example: If you are adding support for snapshot testing to Japa or AdonisJS. Then share the links I can use to learn more about snapshot testing in general.
+  たとえばJapaやAdonisJSにスナップショットテストのサポートを追加する場合、スナップショットテストについて詳しく学ぶためのリンクを共有してください。
 
-> Note: You should also be available to open additional PRs for documenting the contributed feature or improvement.
+> 注意: 貢献した機能や改善のドキュメント化のために、追加のPRを開くこともできるようにしてください。
 
-## Repository setup
+## リポジトリのセットアップ
 
-1. Start by cloning the repo on your local machine.
+1. ローカルマシンでリポジトリをクローンして開始します。
 
     ```sh
     git clone <REPO_URL>
     ```
 
-2. Install dependencies on your local. Please do not update any dependencies along with a feature request. If you find stale dependencies, create a separate PR to update them.
+2. ローカルで依存関係をインストールします。フィーチャーリクエストと一緒に依存関係を更新しないでください。古い依存関係が見つかった場合は、別のPRを作成して更新してください。
 
-   We use `npm` for managing dependencies, therefore do not use `yarn` or any other tool.
+   依存関係の管理には`npm`を使用していますので、`yarn`や他のツールは使用しないでください。
 
     ```sh
     npm install
     ```
 
-3. Run tests by executing the following command.
+3. 以下のコマンドを実行してテストを実行します。
 
     ```sh
     npm test
     ```
 
-## Tools in use
-Following is the list of tools in use.
+## 使用されているツール
+以下は使用されているツールのリストです。
 
-| Tool                   | Usage                                                                                                                                                                                                                                                                  |
+| ツール                   | 使用法                                                                                                                                                                                                                                                                  |
 |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| TypeScript             | All of the repos are authored in TypeScript. The compiled JavaScript and Type-definitions are published on npm.                                                                                                                                                        |
-| TS Node                | We use [ts-node](https://typestrong.org/ts-node/) to run tests or scripts without compiling TypeScript. The main goal of ts-node is to have a faster feedback loop during development                                                                                  |
-| SWC                    | [SWC](https://swc.rs/) is a Rust based TypeScript compiler. TS Node ships with first-class support for using SWC over the TypeScript official compiler. The main reason for using SWC is the speed gain.                                                               |
-| Release-It             | We use [release-it](https://github.com/release-it/release-it) to publish our packages on npm. It does all the heavy lifting of creating a release and publishes it on npm and Github. Its config is defined within the `package.json` file.                            |
-| ESLint                 | ESLint helps us enforce a consistent coding style across all the repos with multiple contributors. All our ESLint rules are published under the [eslint-plugin-adonis](https://github.com/adonisjs-community/eslint-plugin-adonis) package.                            |
-| Prettier               | We use prettier to format the codebase for consistent visual output. If you are confused about why we are using ESLint and Prettier both, then please read [Prettier vs. Linters](https://prettier.io/docs/en/comparison.html) doc on the Prettier website.            |
-| EditorConfig           | The `.editorconfig` file in the root of every project configures your Code editor to use a set of rules for indentation and whitespace management. Again, Prettier is used for post formatting your code, and Editorconfig is used to configure the editor in advance. |
-| Conventional Changelog | All of the commits across all the repos uses [commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint) to enforce consistent commit messages.                                                                                             |
-| Husky                  | We use [husky](https://typicode.github.io/husky/#/) to enforce commit conventions when committing the code. Husky is a git hooks system written in Node                                                                                                                |
+| TypeScript             | すべてのリポジトリはTypeScriptで作成されています。コンパイルされたJavaScriptと型定義はnpmで公開されます。                                                                                                                                                        |
+| TS Node                | [ts-node](https://typestrong.org/ts-node/)を使用して、TypeScriptをコンパイルせずにテストやスクリプトを実行します。ts-nodeの主な目的は、開発中のフィードバックループを高速化することです。                                                                                  |
+| SWC                    | [SWC](https://swc.rs/)はRustベースのTypeScriptコンパイラです。TS Nodeは、TypeScript公式コンパイラの代わりにSWCを使用するための一流のサポートを提供しています。SWCを使用する主な理由は、速度の向上です。                                                               |
+| Release-It             | [release-it](https://github.com/release-it/release-it)を使用して、パッケージをnpmに公開します。リリースの作成とnpmおよびGitHubへの公開を行う重い作業をすべて行います。設定は`package.json`ファイル内で定義されています。                            |
+| ESLint                 | ESLintは、複数の貢献者がいるすべてのリポジトリで一貫したコーディングスタイルを強制するのに役立ちます。すべてのESLintルールは、[eslint-plugin-adonis](https://github.com/adonisjs-community/eslint-plugin-adonis)パッケージで公開されています。                            |
+| Prettier               | コードベースの一貫したビジュアル出力のためにprettierを使用しています。ESLintとPrettierの両方を使用している理由について混乱している場合は、Prettierのウェブサイトの[Prettier vs. Linters](https://prettier.io/docs/en/comparison.html)ドキュメントを読んでください。            |
+| EditorConfig           | 各プロジェクトのルートにある`.editorconfig`ファイルは、コードエディターをインデントと空白の管理のための一連のルールに設定します。再フォーマットにはPrettierが使用され、エディターの設定にはEditorconfigが使用されます。 |
+| Conventional Changelog | すべてのリポジトリのコミットは、一貫したコミットメッセージを強制するために[commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint)を使用しています。                                                                                             |
+| Husky                  | コードをコミットする際にコミット規約を強制するために[husky](https://typicode.github.io/husky/#/)を使用しています。HuskyはNodeで書かれたGitフックシステムです。                                                                                                                |
 
-## Commands
+## コマンド
 
-| Command | Description |
+| コマンド | 説明 |
 |-------|--------|
-| `npm run test` | Run project tests using `ts-node` |
-| `npm run compile` | Compile the TypeScript project to JavaScript. The compiled output is written inside the `build` directory |
-| `npm run release` | Start the release process using `np` |
-| `npm run lint` | Lint the codebase using ESlint |
-| `npm run format` | Format the codebase using Prettier | 
-| `npm run sync-labels` | Sync the labels defined inside the `.github/labels.json` file with Github. This command is for the project admin only. |
+| `npm run test` | `ts-node`を使用してプロジェクトのテストを実行します |
+| `npm run compile` | TypeScriptプロジェクトをJavaScriptにコンパイルします。コンパイルされた出力は`build`ディレクトリに書き込まれます |
+| `npm run release` | `np`を使用してリリースプロセスを開始します |
+| `npm run lint` | ESlintを使用してコードベースをリントします |
+| `npm run format` | Prettierを使用してコードベースをフォーマットします | 
+| `npm run sync-labels` | `.github/labels.json`ファイルで定義されたラベルをGitHubと同期します。このコマンドはプロジェクト管理者のみが使用できます。 |
 
-## Coding style
-All of our projects are written in TypeScript and are moving to pure ESM.
+## コーディングスタイル
+すべてのプロジェクトはTypeScriptで書かれており、純粋なESMに移行しています。
 
-- You can learn more about [my coding style here](https://github.com/thetutlage/meta/discussions/3)
-- Check out the setup I follow for [ESM and TypeScript here](https://github.com/thetutlage/meta/discussions/2)
+- [ここで私のコーディングスタイルについて詳しく学ぶことができます](https://github.com/thetutlage/meta/discussions/3)
+- [ESMとTypeScriptのセットアップについてはこちらをご覧ください](https://github.com/thetutlage/meta/discussions/2)
 
-Also, make sure to run the following commands before pushing the code.
+また、コードをプッシュする前に以下のコマンドを実行してください。
 
 ```sh
-# Formats using prettier
+# Prettierを使用してフォーマットします
 npm run format
 
-# Lints using Eslint
+# Eslintを使用してリントします
 npm run lint
 ```
 
-## Getting recognized as a contributor
-We rely on GitHub to list all the repo contributors in the right-side panel of the repo. Following is an example of the same.
+## 貢献者として認識される方法
+私たちは、リポジトリの右側パネルにすべてのリポジトリの貢献者を表示するためにGitHubを利用しています。以下はその例です。
 
-Also, we use the [auto generate release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes#about-automatically-generated-release-notes) feature of Github, which adds a reference to the contributor profile within the release notes.
+また、GitHubの[自動生成リリースノート](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes#about-automatically-generated-release-notes)機能を使用しており、リリースノート内に貢献者プロフィールへの参照が追加されます。

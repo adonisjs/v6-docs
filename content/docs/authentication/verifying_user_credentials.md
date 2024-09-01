@@ -1,17 +1,17 @@
 ---
-summary: Verify user credentials in an AdonisJS application using the AuthFinder mixin.
+$SELECTION_PLACEHOLDER$summary: AuthFinderミックスインを使用して、AdonisJSアプリケーションでユーザーの資格情報を検証できます。
 ---
 
-# Verifying user credentials
+# ユーザーの資格情報の検証
 
-In an AdonisJS application, verifying user credentials is decoupled from the authentication layer. This ensures you can continue using the auth guards without limiting the options to verify the user credentials.
+AdonisJSアプリケーションでは、ユーザーの資格情報の検証は認証レイヤーから切り離されています。これにより、認証ガードを使用しながらユーザーの資格情報を検証するオプションが制限されることなく続けることができます。
 
-By default, we provide secure APIs to find users and verify their passwords. However, you can also implement additional ways to verify a user, like sending an OTP to their phone number or using 2FA.
+デフォルトでは、安全なAPIを提供してユーザーを検索し、パスワードを検証できます。ただし、電話番号にOTPを送信したり、2FAを使用したりするなど、ユーザーを検証するための追加の方法も実装できます。
 
-In this guide, we will cover the process of finding a user by a UID and verifying their password before marking them as logged in.
+このガイドでは、UIDでユーザーを検索し、ログイン前にパスワードを検証するプロセスについて説明します。
 
-## Basic example
-You can use the User model directly to find a user and verify their password. In the following example, we find a user by email and use the [hash](../security/hashing.md) service to verify the password hash.
+## 基本的な例
+Userモデルを直接使用してユーザーを検索し、パスワードを検証できます。次の例では、メールアドレスでユーザーを検索し、[hash](../security/hashing.md)サービスを使用してパスワードハッシュを検証しています。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -26,24 +26,23 @@ export default class SessionController {
 
     // highlight-start
     /**
-     * Find a user by email. Return error if a user does
-     * not exists
+     * メールアドレスでユーザーを検索します。ユーザーが存在しない場合はエラーを返します。
      */ 
     const user = await User.findBy('email', email)
     if (!user) {
-      response.abort('Invalid credentials')
+      response.abort('無効な資格情報')
     }
     // highlight-end
 
     // highlight-start
     /**
-     * Verify the password using the hash service
+     * ハッシュサービスを使用してパスワードを検証します。
      */
     await hash.verify(user.password, password)
     // highlight-end
 
     /**
-     * Now login the user or create a token for them
+     * ユーザーをログインさせるか、トークンを作成します。
      */
   }
 }
@@ -51,30 +50,30 @@ export default class SessionController {
 
 :::caption{for="error"}
 
-**Issues with the above approach**
+**上記のアプローチの問題点**
 
 :::
 
 <div class="card">
 
-The code we have written in the above example is prone to [timing attacks](https://en.wikipedia.org/wiki/Timing_attack). In the case of authentication, an attacker can observe the application response time to find whether the email or the password is incorrect in their provided credentials.
+上記の例で書かれたコードは、[タイミング攻撃](https://en.wikipedia.org/wiki/Timing_attack)のリスクがあります。認証の場合、攻撃者はアプリケーションの応答時間を観察して、提供された資格情報のメールアドレスまたはパスワードが正しくないかどうかを判断できます。
 
-As per the above implementation:
+上記の実装により、次のような結果が得られます。
 
-- The request will take less time if the user's email is incorrect. This is because we do not verify the password hash when we cannot find a user.
+- ユーザーのメールアドレスが間違っている場合、リクエストは短時間で完了します。これは、ユーザーが見つからない場合にパスワードハッシュを検証しないためです。
 
-- The request will take longer if the email exists and the password is incorrect. This is because password hashing algorithms are slow in nature.
+- メールアドレスが存在し、パスワードが間違っている場合、リクエストは長時間かかります。これは、パスワードのハッシュ化アルゴリズムが時間がかかるためです。
 
-The difference in response time is enough for an attacker to find a valid email address and try different password combinations.
+応答時間の差は、攻撃者が有効なメールアドレスを見つけ、異なるパスワードの組み合わせを試すのに十分な情報となります。
 
 </div>
 
-## Using the Auth finder mixin
-To prevent the timing attacks, we recommend you use the [AuthFinder mixin](https://github.com/adonisjs/auth/blob/main/src/mixins/lucid.ts) on the User model.
+## Auth finderミックスインの使用
+タイミング攻撃を防ぐために、Userモデルに[AuthFinderミックスイン](https://github.com/adonisjs/auth/blob/main/src/mixins/lucid.ts)を使用することをオススメします。
 
-The Auth finder mixin adds `findForAuth` and `verifyCredentials` methods to the applied model. The `verifyCredentials` method offers a timing attack safe API for finding a user and verifying their password.
+Auth finderミックスインは、適用されたモデルに`findForAuth`メソッドと`verifyCredentials`メソッドを追加します。`verifyCredentials`メソッドは、ユーザーを見つけてパスワードを検証するためのタイミング攻撃に対して安全なAPIを提供します。
 
-You can import and apply the mixin on a model as follows.
+次のように、ミックスインをインポートしてモデルに適用できます。
 
 ```ts
 import { DateTime } from 'luxon'
@@ -115,16 +114,16 @@ export default class User extends compose(BaseModel, AuthFinder) {
 }
 ```
 
-- The `withAuthFinder` method accepts a callback that returns a hasher as the first argument. We use the `scrypt` hasher in the above example. However, you can replace it with a different hasher.
+- `withAuthFinder`メソッドは、最初の引数としてハッシャーを返すコールバックを受け入れます。上記の例では`scrypt`ハッシャーを使用していますが、別のハッシャーに置き換えることもできます。
 
-- Next, it accepts a configuration object with the following properties.
-  - `uids`: An array of model properties that can be used to identify a user uniquely. If you assign a user a username or phone number, you can also use them as a UID.
-  - `passwordColumnName`: The model property name that holds the user password.
+- 次に、以下のプロパティを持つ構成オブジェクトを受け入れます。
+  - `uids`: ユーザーを一意に識別するために使用できるモデルのプロパティの配列です。ユーザーにユーザー名や電話番号を割り当てた場合、それらもUIDとして使用できます。
+  - `passwordColumnName`: ユーザーパスワードを保持するモデルのプロパティ名です。
 
-- Finally, you can use the return value of the `withAuthFinder` method as a [mixin](../references/helpers.md#compose) on the User model.
+- 最後に、`withAuthFinder`メソッドの戻り値をUserモデルの[mixin](../references/helpers.md#compose)として使用できます。
 
-### Verifying credentials
-Once you have applied the Auth finder mixin, you can replace all the code from the `SessionController.store` method with the following code snippet.
+### 資格情報の検証
+Auth finderミックスインを適用した後は、`SessionController.store`メソッドのコードを次のコードスニペットで置き換えることができます。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -144,16 +143,15 @@ export default class SessionController {
 
     // delete-start
     /**
-     * Find a user by email. Return error if a user does
-     * not exists
+     * メールアドレスでユーザーを検索します。ユーザーが存在しない場合はエラーを返します。
      */ 
     const user = await User.findBy('email', email)
     if (!user) {
-      response.abort('Invalid credentials')
+      response.abort('無効な資格情報')
     }
 
     /**
-     * Verify the password using the hash service
+     * ハッシュサービスを使用してパスワードを検証します。
      */
     await hash.verify(user.password, password)
     // delete-end
@@ -162,26 +160,26 @@ export default class SessionController {
     // insert-end
 
     /**
-     * Now login the user or create a token for them
+     * ユーザーをログインさせるか、トークンを作成します。
      */
   }
 }
 ```
 
-### Handling exceptions
-In case of invalid credentials, the `verifyCredentials` method will throw [E_INVALID_CREDENTIALS](../references/exceptions.md#e_invalid_credentials) exception.
+### 例外の処理
+資格情報が無効な場合、`verifyCredentials`メソッドは[E_INVALID_CREDENTIALS](../references/exceptions.md#e_invalid_credentials)例外をスローします。
 
-The exception is self-handled and will be converted to a response using the following content negotiation rules.
+この例外は自動的に処理され、以下のコンテンツネゴシエーションルールにしたがってレスポンスに変換されます。
 
-- HTTP requests with the `Accept=application/json` header will receive an array of error messages. Each array element will be an object with the message property.
+- `Accept=application/json`ヘッダーを持つHTTPリクエストは、エラーメッセージの配列を受け取ります。各配列要素はメッセージプロパティを持つオブジェクトです。
 
-- HTTP requests with the `Accept=application/vnd.api+json` header will receive an array of error messages formatted per the JSON API spec.
+- `Accept=application/vnd.api+json`ヘッダーを持つHTTPリクエストは、JSON API仕様にしたがってフォーマットされたエラーメッセージの配列を受け取ります。
 
-- If you use sessions, the user will be redirected to the form and receive the errors via [session flash messages](../basics/session.md#flash-messages).
+- セッションを使用している場合、ユーザーはフォームにリダイレクトされ、[セッションフラッシュメッセージ](../basics/session.md#flash-messages)を介してエラーを受け取ります。
 
-- All other requests will receive errors back as plain text.
+- その他のリクエストは、プレーンテキストとしてエラーを受け取ります。
 
-However, if needed, you can handle the exception inside the [global exception handler](../basics/exception_handling.md) as follows.
+ただし、必要に応じて、[グローバル例外ハンドラ](../basics/exception_handling.md)内で例外を処理することもできます。
 
 ```ts
 // highlight-start
@@ -208,5 +206,5 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-## Hashing user password
-The `AuthFinder` mixin registers a [beforeSave](https://github.com/adonisjs/auth/blob/main/src/mixins/lucid.ts#L40-L50) hook to automatically hash the user passwords during `INSERT` and `UPDATE` calls. Therefore, you do not have to manually perform password hashing in your models.
+## ユーザーパスワードのハッシュ化
+`AuthFinder`ミックスインは、`INSERT`および`UPDATE`呼び出し時に自動的にユーザーパスワードをハッシュ化するための[beforeSave](https://github.com/adonisjs/auth/blob/main/src/mixins/lucid.ts#L40-L50)フックを登録します。そのため、モデル内でパスワードのハッシュ化を手動で行う必要はありません。

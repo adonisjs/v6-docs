@@ -1,21 +1,21 @@
 ---
-summary: Learn about defining and processing command arguments in Ace commands.
+summary: Aceコマンドでの引数の定義と処理について学びます。
 ---
 
-# Command arguments
+# コマンド引数
 
-Arguments refer to the positional arguments mentioned after the command name. Since arguments are positional, passing them in the correct order is necessary.
+引数は、コマンド名の後に記述される位置引数を指します。引数は位置に依存するため、正しい順序で渡す必要があります。
 
-You must define command arguments as class properties and decorate them using the `args` decorator. The arguments will be accepted in the same order as they are defined in the class.
+引数はクラスのプロパティとして定義し、`args`デコレータを使用してデコレートする必要があります。引数はクラス内で定義された順序で受け入れられます。
 
-In the following example, we use the `@args.string` decorator to define an argument that accepts a string value.
+次の例では、`@args.string`デコレータを使用して、文字列値を受け入れる引数を定義しています。
 
 ```ts
 import { BaseCommand, args, flags } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   static commandName = 'greet'
-  static description = 'Greet a user by name'
+  static description = 'ユーザーを名前で挨拶する'
   
   @args.string()
   declare name: string
@@ -26,14 +26,14 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-To accept multiple values under the same argument name, you may use the `@agrs.spread` decorator. Do note, the spread argument must be the last.
+同じ引数名の下で複数の値を受け入れるには、`@agrs.spread`デコレータを使用できます。ただし、スプレッド引数は最後に配置する必要があります。
 
 ```ts
 import { BaseCommand, args, flags } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   static commandName = 'greet'
-  static description = 'Greet a user by name'
+  static description = 'ユーザーを名前で挨拶する'
   
   // highlight-start
   @args.spread()
@@ -46,9 +46,9 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## Argument name and description
+## 引数名と説明
 
-The argument name is displayed on the help screen. By default, the argument name is a dashed case representation of the class property name. However, you can define a custom value as well.
+引数名はヘルプ画面に表示されます。デフォルトでは、引数名はクラスのプロパティ名のダッシュ区切り表記です。ただし、カスタムの値を定義することもできます。
 
 ```ts
 @args.string({
@@ -57,47 +57,47 @@ The argument name is displayed on the help screen. By default, the argument name
 declare name: string
 ``` 
 
-The argument description is shown on the help screen and can be set using the `description` option. 
+引数の説明はヘルプ画面に表示され、`description`オプションを使用して設定できます。
 
 ```ts
 @args.string({
   argumentName: 'user-name',
-  description: 'Name of the user'
+  description: 'ユーザーの名前'
 })
 declare name: string
 ```
 
-## Optional arguments with a default value
+## デフォルト値を持つオプション引数
 
-By default, all arguments are required. However, you can make them optional by setting the `required` option to `false`. The optional arguments must be at the end.
+デフォルトでは、すべての引数は必須です。ただし、`required`オプションを`false`に設定することでオプション引数にできます。オプション引数は最後に配置する必要があります。
 
 ```ts
 @args.string({
-  description: 'Name of the user',
+  description: 'ユーザーの名前',
   required: false,
 })
 declare name?: string
 ```
 
-You may set the default value of an optional argument using the `default` property.
+オプション引数のデフォルト値は、`default`プロパティを使用して設定できます。
 
 ```ts
 @args.string({
-  description: 'Name of the user',
+  description: 'ユーザーの名前',
   required: false,
   default: 'guest'
 })
 declare name: string
 ```
 
-## Processing argument value
+## 引数値の処理
 
-Using the `parse` method, you can process the argument value before it is defined as the class property.
+`parse`メソッドを使用すると、引数値をクラスのプロパティとして定義する前に処理できます。
 
 ```ts
 @args.string({
   argumentName: 'user-name',
-  description: 'Name of the user',
+  description: 'ユーザーの名前',
   parse (value) {
     return value ? value.toUpperCase() : value
   }
@@ -105,16 +105,16 @@ Using the `parse` method, you can process the argument value before it is define
 declare name: string
 ```
 
-## Accessing all arguments
+## すべての引数へのアクセス
 
-You can access all the arguments mentioned while running the command using the `this.parsed.args` property. 
+`this.parsed.args`プロパティを使用して、コマンドを実行する際に指定されたすべての引数にアクセスできます。
 
 ```ts
 import { BaseCommand, args, flags } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   static commandName = 'greet'
-  static description = 'Greet a user by name'
+  static description = 'ユーザーを名前で挨拶する'
   
   @args.string()
   declare name: string

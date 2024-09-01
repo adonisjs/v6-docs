@@ -1,15 +1,15 @@
 ---
-summary: Learn how to parse request bodies using the BodyParser middleware.
+summary: BodyParserミドルウェアを使用してリクエストボディをパースする方法を学びます。
 ---
 
-# Body parser middleware
+# Body parserミドルウェア
 
-The request data is parsed using the `BodyParser` middleware registered inside the `start/kernel.ts` file.
+リクエストデータは、`start/kernel.ts`ファイル内で登録された`BodyParser`ミドルウェアを使用してパースされます。
 
-The configuration for the middleware is stored inside the `config/bodyparser.ts` file. In this file, you may configure parsers for parsing **JSON payloads**, **multipart forms with file uploads**, and **URL-encoded forms**.
+ミドルウェアの設定は、`config/bodyparser.ts`ファイルに格納されています。このファイルでは、**JSONペイロード**、**ファイルアップロードを伴うマルチパートフォーム**、**URLエンコードされたフォーム**のパーサーを設定できます。
 
-See also: [Reading request body](./request.md#request-body)\
-See also: [File uploads](./file_uploads.md)
+参照も: [リクエストボディの読み取り](./request.md#request-body)\
+参照も: [ファイルアップロード](./file_uploads.md)
 
 ```ts
 import { defineConfig } from '@adonisjs/core/bodyparser'
@@ -18,26 +18,26 @@ export const defineConfig({
   allowedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
 
   form: {
-    // settings for parsing HTML forms
+    // HTMLフォームのパース設定
   },
 
   json: {
-    // Settings for parsing JSON body
+    // JSONボディのパース設定
   },
 
   multipart: {
-    // Settings for multipart parser
+    // マルチパートパーサーの設定
   },
 
   raw: {
-    // Settings for a raw text parser
+    // 生のテキストパーサーの設定
   },
 })
 ```
 
-## Allowed methods
+## 許可されたメソッド
 
-You may define an array of `allowedMethods` for which the bodyparser middleware should attempt to parse the request body. By default, the following methods are configured. However, feel free to remove or add new methods.
+ボディパーサーミドルウェアがリクエストボディをパースしようとするメソッドの配列を定義できます。デフォルトでは、以下のメソッドが設定されています。ただし、メソッドを削除したり追加したりすることも自由です。
 
 ```ts
 {
@@ -45,38 +45,38 @@ You may define an array of `allowedMethods` for which the bodyparser middleware 
 }
 ```
 
-## Converting empty strings to null
+## 空の文字列をnullに変換する
 
-HTML forms send an empty string in the request body when an input field has no value. This behavior of HTML forms makes data normalization at the database layer harder.
+HTMLフォームでは、入力フィールドに値がない場合、リクエストボディに空の文字列が送信されます。このHTMLフォームの動作は、データの正規化をデータベースレイヤーで難しくします。
 
-For example, if you have a database column `country` set to nullable, you would want to store `null` as a value inside this column when the user does not select a country.
+たとえば、`country`という名前のデータベースカラムがnullableに設定されている場合、ユーザーが国を選択しない場合には、このカラムに`null`という値を格納したいと思うでしょう。
 
-However, with HTML forms, the backend receives an empty string, and you might insert an empty string into the database instead of leaving the column as `null`.
+しかし、HTMLフォームでは、バックエンドは空の文字列を受け取り、カラムを`null`のままにせずに空の文字列をデータベースに挿入する可能性があります。
 
-The `BodyParser` middleware can handle this inconsistency by converting all empty string values to `null` when the `convertEmptyStringsToNull` flag is enabled inside the config.
+`BodyParser`ミドルウェアは、この不整合を処理するために、設定内の`convertEmptyStringsToNull`フラグが有効になっている場合、すべての空の文字列値を`null`に変換できます。
 
 ```ts
 {
   form: {
-    // ... rest of the config
+    // ...その他の設定
     convertEmptyStringsToNull: true
   },
 
   json: {
-    // ... rest of the config
+    // ...その他の設定
     convertEmptyStringsToNull: true
   },
 
   multipart: {
-    // ... rest of the config
+    // ...その他の設定
     convertEmptyStringsToNull: true
   }
 }
 ```
 
-## JSON parser
+## JSONパーサー
 
-The JSON parser is used for parsing request body defined as a JSON encoded string with the `Content-type` header matching one of the pre-defined `types` values.
+JSONパーサーは、`Content-type`ヘッダーが事前に定義された`types`のいずれかと一致するJSONエンコードされた文字列として定義されたリクエストボディをパースするために使用されます。
 
 ```ts
 json: {
@@ -103,7 +103,7 @@ encoding
 
 <dd>
 
-The encoding to use when converting the request body Buffer to a string. Most likely, you want to use `utf-8`. However, you can use any encoding supported by the [iconv-lite package](https://www.npmjs.com/package/iconv-lite#readme).
+リクエストボディのバッファを文字列に変換する際に使用するエンコーディングです。おそらく`utf-8`を使用したいと思うでしょう。ただし、[iconv-liteパッケージ](https://www.npmjs.com/package/iconv-lite#readme)でサポートされているエンコーディングを使用することもできます。
 
 </dd>
 
@@ -115,7 +115,7 @@ limit
 
 <dd>
 
-The maximum limit of request body data the parser should allow. A `413` error will be returned if the request body exceeds the configured limit.
+パーサーが許可するリクエストボディデータの最大制限です。リクエストボディが設定された制限を超える場合、`413`エラーが返されます。
 
 </dd>
 
@@ -127,7 +127,7 @@ strict
 
 <dd>
 
-The strict parsing allows only `objects` and `arrays` at the top level of a JSON-encoded string.
+厳密なパースは、JSONエンコードされた文字列のトップレベルでのみ`オブジェクト`と`配列`を許可します。
 
 </dd>
 
@@ -139,15 +139,15 @@ types
 
 <dd>
 
-An array of values for the `Content-type` header should be parsed using the JSON parser.
+`Content-type`ヘッダーの値がJSONパーサーを使用してパースする必要がある場合の値の配列です。
 
 </dd>
 
 </dl>
 
-## URL encoded form parser
+## URLエンコードされたフォームパーサー
 
-The `form` parser is used for parsing URL encoded strings with the `Content-type` header set to `application/x-www-form-urlencoded`. In other words, the HTML forms data is parsed using the `form` parser.
+`form`パーサーは、`Content-type`ヘッダーが`application/x-www-form-urlencoded`に設定されたURLエンコードされた文字列をパースするために使用されます。つまり、HTMLフォームデータは`form`パーサーを使用してパースされます。
 
 ```ts
 form: {
@@ -169,7 +169,7 @@ encoding
 
 <dd>
 
-The encoding to use when converting the request body Buffer to a string. Most likely, you want to use `utf-8`. However, you can use any encoding supported by the [iconv-lite package](https://www.npmjs.com/package/iconv-lite#readme).
+リクエストボディのバッファを文字列に変換する際に使用するエンコーディングです。おそらく`utf-8`を使用したいと思うでしょう。ただし、[iconv-liteパッケージ](https://www.npmjs.com/package/iconv-lite#readme)でサポートされているエンコーディングを使用することもできます。
 
 </dd>
 
@@ -181,7 +181,7 @@ limit
 
 <dd>
 
-The maximum limit of request body data the parser should allow. A `413` error will be returned if the request body exceeds the configured limit.
+マルチパートリクエストを処理する際に、フィールド（ファイルではない）の最大制限です。フィールドサイズが設定された制限を超える場合、`413`エラーが返されます。
 
 </dd>
 
@@ -193,7 +193,7 @@ queryString
 
 <dd>
 
-The URL-encoded request body is parsed using the [qs package](https://www.npmjs.com/package/qs). You can define the options for the package using the `queryString` property.
+URLエンコードされたリクエストボディは、[qsパッケージ](https://www.npmjs.com/package/qs)を使用してパースされます。`queryString`プロパティを使用してパッケージのオプションを定義できます。
 
 ```ts
   form: {
@@ -208,11 +208,11 @@ The URL-encoded request body is parsed using the [qs package](https://www.npmjs.
 
 </dl>
 
-## Multipart parser
+## マルチパートパーサー
 
-The `multipart` parser is used for parsing HTML form requests with file uploads.
+`multipart`パーサーは、ファイルアップロードを伴うHTMLフォームリクエストのパースに使用されます。
 
-See also: [File uploads](./file_uploads.md)
+参照も: [ファイルアップロード](./file_uploads.md)
 
 ```ts
 multipart: {
@@ -236,13 +236,13 @@ autoProcess
 
 <dd>
 
-Enabling `autoProcess` will move all the user-uploaded files to the `tmp` directory of your operating system.
+`autoProcess`を有効にすると、すべてのユーザーがアップロードしたファイルがオペレーティングシステムの`tmp`ディレクトリに移動されます。
 
-Later, inside the controllers, you can validate the files and move them to a persistent location or a cloud service.
+後でコントローラー内でファイルを検証し、永続的な場所やクラウドサービスに移動できます。
 
-If you disable the `autoProcess` flag, then you will have to manually process the stream and read files/fields from the request body. See also: [Self-processing multipart stream](./file_uploads.md#self-processing-multipart-stream).
+`autoProcess`フラグを無効にすると、ストリームを手動で処理し、リクエストボディからファイル/フィールドを読み取る必要があります。参照も: [自己処理マルチパートストリーム](./file_uploads.md#self-processing-multipart-stream)。
 
-You may define an array of routes for which to auto process the files. The values **must be a route pattern** and not the URL.
+`autoProcess`のファイルを自動処理するルートの配列を定義できます。値は**ルートパターン**である必要があり、URLではありません。
 
 ```ts
 {
@@ -263,7 +263,7 @@ processManually
 
 <dd>
 
-The `processManually` array allows you to turn off auto processing of files for selected routes. The values **must be a route pattern** and not the URL.
+`processManually`配列を使用すると、選択したルートのファイルの自動処理をオフにできます。値は**ルートパターン**である必要があり、URLではありません。
 
 ```ts
 multipart: {
@@ -285,7 +285,7 @@ encoding
 
 <dd>
 
-The encoding to use when converting the request body Buffer to a string. Most likely, you want to use `utf-8`. However, you can use any encoding supported by the [iconv-lite package](https://www.npmjs.com/package/iconv-lite#readme).
+リクエストボディのバッファを文字列に変換する際に使用するエンコーディングです。おそらく`utf-8`を使用したいと思うでしょう。ただし、[iconv-liteパッケージ](https://www.npmjs.com/package/iconv-lite#readme)でサポートされているエンコーディングを使用することもできます。
 
 </dd>
 
@@ -297,7 +297,7 @@ limit
 
 <dd>
 
-The maximum limit of bytes to allow when processing all files. You can define the individual file size limit using the [request.file](./file_uploads.md) method.
+すべてのファイルを処理する際に許可されるバイト数の最大制限です。個々のファイルサイズ制限は、[request.file](./file_uploads.md)メソッドを使用して定義できます。
 
 </dd>
 
@@ -309,7 +309,7 @@ fieldsLimit
 
 <dd>
 
-The maximum limit of bytes to allow for the fields (not files) when processing the multipart request. A `413` error will be returned if the field size exceeds the configured limit.
+マルチパートリクエストを処理する際に、フィールド（ファイルではない）のバイト数の最大制限です。フィールドサイズが設定された制限を超える場合、`413`エラーが返されます。
 
 </dd>
 

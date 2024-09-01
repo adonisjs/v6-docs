@@ -1,34 +1,34 @@
 ---
-summary: Ace is a command line framework used by AdonisJS to create and run console commands.
+summary: Aceは、AdonisJSがコンソールコマンドを作成および実行するために使用するコマンドラインフレームワークです。
 ---
 
 
-# Introduction
+# イントロダクション
 
-Ace is a command line framework used by AdonisJS to create and run console commands. The entry point file for Ace is stored in the root of your project, and you can execute it as follows.
+Aceは、AdonisJSがコンソールコマンドを作成および実行するために使用するコマンドラインフレームワークです。プロジェクトのルートにAceのエントリーポイントファイルが保存されており、次のように実行できます。
 
 ```sh
 node ace
 ```
 
-Since the `node` binary cannot run the TypeScript source code directly, we have to keep the ace file in pure JavaScript and use the `.js` extension.
+`node`バイナリはTypeScriptのソースコードを直接実行できないため、aceファイルを純粋なJavaScriptで保持し、`.js`拡張子を使用する必要があります。
 
-Under the hood, the `ace.js` file registers TS Node as an [ESM module loader hook](https://nodejs.org/api/module.html#customization-hooks) to execute the TypeScript code and imports the `bin/console.ts` file.
+内部では、`ace.js`ファイルは[ESMモジュールローダーフック](https://nodejs.org/api/module.html#customization-hooks)としてTS Nodeを登録し、TypeScriptコードを実行し、`bin/console.ts`ファイルをインポートします。
 
-## Help and list commands
+## ヘルプとコマンドの一覧表示
 
-You can view the list of available commands by running the ace entry point file without any arguments or using the `list` command.
+引数なしでaceエントリーポイントファイルを実行するか、`list`コマンドを使用して利用可能なコマンドの一覧を表示できます。
 
 ```sh
 node ace
 
-# Same as above
+# 上記と同じ
 node ace list
 ```
 
 ![](./ace_help_screen.jpeg)
 
-You can view help for a single command by typing the command name with the `--help` flag.
+`--help`フラグを使用して、単一のコマンドのヘルプを表示できます。
 
 ```sh
 node ace make:controller --help
@@ -36,26 +36,26 @@ node ace make:controller --help
 
 :::note
 
-The output of the help screen is formatted as per the [docopt](http://docopt.org/) standard.
+ヘルプ画面の出力は、[docopt](http://docopt.org/)の標準にしたがってフォーマットされています。
 
 :::
 
 
-## Enabling/disabling colors
+## カラーの有効化/無効化
 
-Ace detects the CLI environment in which it is running and disables the colorful output if the terminal does not support colors. However, you can manually enable or disable colors using the `--ansi` flag.
+Aceは、実行環境がカラーをサポートしていない場合、カラフルな出力を無効にします。ただし、`--ansi`フラグを使用して手動でカラーを有効化または無効化することもできます。
 
 ```sh
-# Disable colors
+# カラーを無効にする
 node ace list --no-ansi
 
-# Force enable colors
+# カラーを強制的に有効にする
 node ace list --ansi
 ```
 
-## Creating command aliases
+## コマンドのエイリアス作成
 
-Command aliases provide a convenience layer to define aliases for commonly used commands. For example, if you often create singular resourceful controllers, you may create an alias for it inside the `adonisrc.ts` file.
+コマンドのエイリアスは、よく使用するコマンドのエイリアスを定義する便利なレイヤーを提供します。たとえば、単数のリソースフルなコントローラを頻繁に作成する場合、`adonisrc.ts`ファイル内にエイリアスを作成できます。
 
 ```ts
 {
@@ -65,36 +65,37 @@ Command aliases provide a convenience layer to define aliases for commonly used 
 }
 ```
 
-Once the alias is defined, you can use the alias to run the command.
+エイリアスが定義されると、エイリアスを使用してコマンドを実行できます。
 
 ```sh
 node ace resource admin
 ```
 
-### How alias expansion works?
+### エイリアスの展開方法
 
-- Every time you run a command, Ace will check for aliases inside the `commandsAliases` object. 
-- If an alias exists, the first segment (before the space) will be used to look up the command.
-- If a command exists, the rest of the alias value segments will be appended to the command name.
+- コマンドを実行するたびに、Aceは`commandsAliases`オブジェクト内をエイリアスをチェックします。
+- エイリアスが存在する場合、スペースの前のセグメントがコマンドの検索に使用されます。
+- コマンドが存在する場合、エイリアスの値の残りのセグメントがコマンド名に追加されます。
 
-    For example, if you run the following command
+    たとえば、次のコマンドを実行する場合
 
     ```sh
     node ace resource admin --help
     ```
     
-    It will be expanded to
+    それは展開されます
     
     ```sh
     make:controller --resource --singular admin --help
     ```
 
-## Running commands programmatically
+## プログラムでコマンドを実行する
 
-You can use the `ace` service to execute commands programmatically. The ace service is available after the application has been booted.
+`ace`サービスを使用してプログラムでコマンドを実行できます。aceサービスは、アプリケーションが起動された後に利用可能になります。
 
-The `ace.exec` method accepts the command name as the first parameter and an array of command line arguments as the second parameter. For example:
+`ace.exec`メソッドは、最初のパラメータとしてコマンド名を、2番目のパラメータとしてコマンドライン引数の配列を受け取ります。
 
+例:
 ```ts
 import ace from '@adonisjs/core/services/ace'
 
@@ -108,13 +109,13 @@ console.log(command.result)
 console.log(command.error)
 ```
 
-You may use the `ace.hasCommand` method to check if a command exists before executing it.
+コマンドを実行する前に、`ace.hasCommand`メソッドを使用してコマンドが存在するかどうかを確認できます。
 
 ```ts
 import ace from '@adonisjs/core/services/ace'
 
 /**
- * Boot method will load commands (if not already loaded)
+ * Bootメソッドは、コマンドをロードします（まだロードされていない場合）
  */
 await ace.boot()
 

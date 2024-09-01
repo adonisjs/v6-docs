@@ -1,88 +1,68 @@
 ---
-summary: Prompts are terminal widgets for user input, using the @poppinss/prompts package. They support various types like input, password, and select, and are designed for easy testing integration.
+summary: プロンプトは、@poppinss/promptsパッケージを使用してユーザーの入力を受け付けるためのターミナルウィジェットです。入力、パスワード、選択など、さまざまなタイプをサポートしており、テストの統合が容易になるように設計されています。
 ---
 
 
-# Prompts
+# プロンプト
 
-Prompts are interactive terminal widgets you can use to accept user input. Ace prompts are powered by the [@poppinss/prompts](https://github.com/poppinss/prompts) package, which supports the following prompt types.
+プロンプトは、ユーザーの入力を受け付けるための対話型ターミナルウィジェットです。Aceプロンプトは、[@poppinss/prompts](https://github.com/poppinss/prompts)パッケージによってサポートされており、次のプロンプトタイプをサポートしています。
 
-- input
-- list
-- password
-- confirm
-- toggle
-- select
-- multi-select
-- autocomplete
+- 入力
+- リスト
+- パスワード
+- 確認
+- トグル
+- 選択
+- マルチ選択
+- オートコンプリート
 
-Ace prompts are built with testing in mind. When writing tests, you may trap prompts and respond to them programmatically.
+Aceプロンプトは、テストを考慮して構築されています。テストを作成する際には、プロンプトをトラップしてプログラムで応答できます。
 
-See also: [Testing ace commands](../testing/console_tests.md)
+参考: [Aceコマンドのテスト](../testing/console_tests.md)
 
-## Displaying a prompt
+## プロンプトの表示
 
-You may display prompts using the `this.prompt` property available on all Ace commands.
+すべてのAceコマンドで利用可能な`this.prompt`プロパティを使用して、プロンプトを表示できます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   async run() {
-    const modelName = await this.prompt.ask('Enter the model name')
+    const modelName = await this.prompt.ask('モデル名を入力してください')
     
     console.log(modelName)
   }
 }
 ```
 
-## Prompt options
+## プロンプトオプション
 
-Following is the list of options accepted by prompts. You may reference this table as the single source of truth.
+プロンプトで受け入れられるオプションのリストは次のとおりです。このテーブルを唯一の情報源として参照できます。
 
 
 <table>
 <tr>
-<td width="110px">Option</td>
-<td width="120px">Accepted by</td>
-<td>Description</td>
+<td width="110px">オプション</td>
+<td width="120px">受け入れられるプロンプト</td>
+<td>説明</td>
 </tr>
 <tr>
 <td>
 
-`default` (String) 
+`default`（文字列）
 
 </td>
 
 <td>
 
-All prompts
+すべてのプロンプト
 
 </td>
 
 <td>
 
-The default value to use when no value is entered. In the case of `select`, `multiselect`, and `autocomplete` prompts, the value must be the choices array index.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`name` (String)
-
-</td>
-
-<td>
-
-All prompts
-
-</td>
-
-<td>
-
-The unique name for the prompt
+値が入力されなかった場合に使用するデフォルト値です。`select`、`multiselect`、`autocomplete`プロンプトの場合、値は選択肢の配列インデックスである必要があります。
 
 </td>
 </tr>
@@ -90,33 +70,53 @@ The unique name for the prompt
 <tr>
 <td>
 
-`hint` (String)
+`name`（文字列）
 
 </td>
 
 <td>
 
-All prompts
+すべてのプロンプト
 
 </td>
 
 <td>
 
-The hint text to display next to the prompt
+プロンプトのユニークな名前です。
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`hint`（文字列）
+
+</td>
+
+<td>
+
+すべてのプロンプト
+
+</td>
+
+<td>
+
+プロンプトの横に表示するヒントテキストです。
 
 </td>
 </tr>
 <tr>
 <td>
 
-`result` (Function)
+`result`（関数）
 
 </td>
 
-<td>All prompts</td>
+<td>すべてのプロンプト</td>
 <td>
 
-Transform the prompt return value. The input value of the `result` method depends on the prompt. For example, the `multiselect` prompt value will be an array of selected choices.
+プロンプトの戻り値を変換します。`result`メソッドの入力値はプロンプトによって異なります。たとえば、`multiselect`プロンプトの値は選択された選択肢の配列になります。
 
 ```ts
 {
@@ -132,15 +132,15 @@ Transform the prompt return value. The input value of the `result` method depend
 <tr>
 <td>
 
-`format` (Function)
+`format`（関数）
 
 </td>
 
-<td>All prompts</td>
+<td>すべてのプロンプト</td>
 
 <td>
 
-Live format the input value as the user types. The formatting is only applied to the CLI output, not the return value.
+ユーザーが入力するときに入力値をライブでフォーマットします。フォーマットはCLIの出力にのみ適用され、戻り値には適用されません。
 
 ```ts
 {
@@ -156,22 +156,22 @@ Live format the input value as the user types. The formatting is only applied to
 <tr>
 <td>
 
-`validate` (Function)
+`validate`（関数）
 
 </td>
 
-<td>All prompts</td>
+<td>すべてのプロンプト</td>
 
 <td>
 
-Validate the user input. Returning `true` from the method will pass the validation. Returning `false` or an error message string will be considered a failure.
+ユーザーの入力をバリデーションします。メソッドから`true`を返すとバリデーションが成功します。`false`またはエラーメッセージの文字列を返すと失敗と見なされます。
 
 ```ts
 {
   format(value) {
     return value.length > 6
     ? true
-    : 'Model name must be 6 characters long'
+    : 'モデル名は6文字である必要があります'
   }
 }
 ```
@@ -181,7 +181,7 @@ Validate the user input. Returning `true` from the method will pass the validati
 <tr>
 <td>
 
-`limit` (Number)
+`limit`（数値）
 
 </td>
 
@@ -193,24 +193,24 @@ Validate the user input. Returning `true` from the method will pass the validati
 
 <td>
 
-Limit the number of options to display. You will have to scroll to see the rest of the options.
+表示するオプションの数を制限します。残りのオプションを表示するにはスクロールする必要があります。
 
 </td>
 </tr>
 </table>
 
 
-## Text input
+## テキスト入力
 
-You may render the prompt to accept text input using the `prompt.ask` method. The method accepts the prompt message as the first parameter and the [options object](#prompt-options) as the second parameter.
+`prompt.ask`メソッドを使用して、テキスト入力を受け付けるためのプロンプトをレンダリングできます。メソッドは、最初のパラメータとしてプロンプトメッセージを受け入れ、2番目のパラメータとして[オプションオブジェクト](#prompt-options)を受け入れます。
 
 ```ts
-await this.prompt.ask('Enter the model name')
+await this.prompt.ask('モデル名を入力してください')
 ```
 
 ```ts
-// Validate input
-await this.prompt.ask('Enter the model name', {
+// 入力のバリデーション
+await this.prompt.ask('モデル名を入力してください', {
   validate(value) {
     return value.length > 0
   }
@@ -218,52 +218,52 @@ await this.prompt.ask('Enter the model name', {
 ```
 
 ```ts
-// Default value
-await this.prompt.ask('Enter the model name', {
+// デフォルト値
+await this.prompt.ask('モデル名を入力してください', {
   default: 'User'
 })
 ```
 
-## Masked input
+## マスクされた入力
 
-As the name suggests, the masked input prompt masks the user input in the terminal. You may display the masked prompt using the `prompt.secure` method.
+名前の通り、マスクされた入力プロンプトはターミナルでユーザーの入力をマスクします。`prompt.secure`メソッドを使用してマスクされたプロンプトを表示できます。
 
-The method accepts the prompt message as the first parameter and the [options object](#prompt-options) as the second parameter.
+メソッドは、最初のパラメータとしてプロンプトメッセージを受け入れ、2番目のパラメータとして[オプションオブジェクト](#prompt-options)を受け入れます。
 
 ```ts
-await this.prompt.secure('Enter account password')
+await this.prompt.secure('アカウントのパスワードを入力してください')
 ```
 
 ```ts
-await this.prompt.secure('Enter account password', {
+await this.prompt.secure('アカウントのパスワードを入力してください', {
   validate(value) {
     return value.length < 6
-      ? 'Password must be 6 characters long'
+      ? 'パスワードは6文字である必要があります'
       : true
   }
 })
 ```
 
-## List of choices
+## 選択肢のリスト
 
-You may display a list of choices for a single selection using the `prompt.choice` method. The method accepts the following parameters.
+`prompt.choice`メソッドを使用して、単一の選択肢のリストを表示できます。メソッドは次のパラメータを受け入れます。
 
-1. Prompt message.
-2. An array of choices.
-3. Optional [options object](#prompt-options).
+1. プロンプトメッセージ。
+2. 選択肢の配列。
+3. オプションの[オプションオブジェクト](#prompt-options)。
 
 ```ts
-await this.prompt.choice('Select package manager', [
+await this.prompt.choice('パッケージマネージャーを選択してください', [
   'npm',
   'yarn',
   'pnpm'
 ])
 ```
 
-To mention a different display value, you can define options as objects. The `name` property is returned as the prompt result, and the `message` property is displayed in the terminal.
+異なる表示値を指定するには、オプションをオブジェクトとして定義できます。`name`プロパティがプロンプトの結果として返され、`message`プロパティがターミナルに表示されます。
 
 ```ts
-await this.prompt.choice('Select database driver', [
+await this.prompt.choice('データベースドライバーを選択してください', [
   {
     name: 'sqlite',
     message: 'SQLite'
@@ -279,12 +279,12 @@ await this.prompt.choice('Select database driver', [
 ])
 ```
 
-## Multi-select choices
+## マルチ選択の選択肢
 
-You may use the `prompt.multiple` method to allow multiple selections in the choices list. The accepted parameters are the same as the `choice` prompt.
+`prompt.multiple`メソッドを使用して、選択肢リストで複数の選択を許可できます。パラメータは`choice`プロンプトと同じです。
 
 ```ts
-await this.prompt.multiple('Select database drivers', [
+await this.prompt.multiple('データベースドライバーを選択してください', [
   {
     name: 'sqlite',
     message: 'SQLite'
@@ -300,40 +300,40 @@ await this.prompt.multiple('Select database drivers', [
 ])
 ```
 
-## Confirm action
+## アクションの確認
 
-You can display a confirmation prompt with `Yes/No` options using the `prompt.confirm` method. The method accepts the prompt message as the first parameter and the [options object](#prompt-options) as the second parameter.
+`prompt.confirm`メソッドを使用して、`はい/いいえ`オプションを持つ確認プロンプトを表示できます。メソッドは、最初のパラメータとしてプロンプトメッセージを受け入れ、2番目のパラメータとして[オプションオブジェクト](#prompt-options)を受け入れます。
 
-The `confirm` prompt returns a boolean value.
+`confirm`プロンプトはブール値を返します。
 
 ```ts
 const deleteFiles = await this.prompt.confirm(
-  'Want to delete all files?'
+  'すべてのファイルを削除しますか？'
 )
 
 if (deleteFiles) {
 }
 ```
 
-To customize the `Yes/No` options display value, you may use the `prompt.toggle` method. 
+`はい/いいえ`オプションの表示値をカスタマイズするには、`prompt.toggle`メソッドを使用できます。
 
 ```ts
 const deleteFiles = await this.prompt.toggle(
-  'Want to delete all files?',
-  ['Yup', 'Nope']
+  'すべてのファイルを削除しますか？',
+  ['はい', 'いいえ']
 )
 
 if (deleteFiles) {
 }
 ```
 
-## Autocomplete
+## オートコンプリート
 
-The `autocomplete` prompt is a combination of the select and the multi-select prompt, but with the ability to fuzzy search the choices.
+`autocomplete`プロンプトは、選択とマルチ選択のプロンプトの組み合わせですが、選択肢をフジー検索する機能があります。
 
 ```ts
 const selectedCity = await this.prompt.autocomplete(
-  'Select your city',
+  '都市を選択してください',
   await getCitiesList()
 )
 ```

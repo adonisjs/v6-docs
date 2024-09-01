@@ -1,47 +1,48 @@
 ---
-summary: Learn how to define routes, route params, and route handlers in AdonisJS.
+summary: AdonisJSでルート、ルートパラメータ、およびルートハンドラを定義する方法を学びます。
 ---
 
-# Routing
+# ルーティング
 
-The users of your website or web application can visit different URLs like `/`, `/about`, or `/posts/1`. To make these URLs work, you have to define routes.
+ウェブサイトやウェブアプリケーションのユーザーは、`/`、`/about`、または`/posts/1`など、さまざまなURLにアクセスできます。これらのURLを機能させるには、ルートを定義する必要があります。
 
-In AdonisJS, routes are defined inside the `start/routes.ts` file. A route is a combination of a **URI pattern** and a **handler** to handle requests for that specific route. For example:
+AdonisJSでは、ルートは`start/routes.ts`ファイル内で定義されます。ルートは、**URIパターン**とその特定のルートのリクエストを処理する**ハンドラ**の組み合わせです。
 
+例：
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', () => {
-  return 'Hello world from the home page.'
+  return 'ホームページからこんにちは世界。'
 })
 
 router.get('/about', () => {
-  return 'This is the about page.'
+  return 'これはaboutページです。'
 })
 
 router.get('/posts/:id', ({ params }) => {
-  return `This is post with id ${params.id}`
+  return `この投稿のIDは${params.id}です。`
 })
 ```
 
-The last route in the above example uses a dynamic URI pattern. The `:id` is a way to tell the router to accept any value for the id. We call them **route params**.
+上記の例の最後のルートでは、動的なURIパターンが使用されています。`:id`は、ルーターにIDの任意の値を受け入れるように指示する方法です。これを**ルートパラメータ**と呼びます。
 
-## View list of registered routes
-You can run the `list:routes` command to view the list of routes registered by your application.
+## 登録されたルートの一覧を表示する
+`list:routes`コマンドを実行すると、アプリケーションによって登録されたルートの一覧を表示できます。
 
 ```sh
 node ace list:routes
 ```
 
-Also, you can see the routes list from the VSCode activity bar, if you are using our [official VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension).
+また、[公式のVSCode拡張機能](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension)を使用している場合、VSCodeのアクティビティバーからルートの一覧を表示することもできます。
 
 ![](./vscode_routes_list.png)
 
-## Route params
+## ルートパラメータ
 
-Route params allow you to define URIs that can accept dynamic values. Each param captures the value of a URI segment, and you can access this value within the route handler.
+ルートパラメータを使用すると、動的な値を受け入れることができるURIを定義できます。各パラメータはURIセグメントの値をキャプチャし、ルートハンドラ内でこの値にアクセスすることができます。
 
-A route param always starts with a colon `:`, followed by the param's name.
+ルートパラメータは常にコロン`:`で始まり、その後にパラメータの名前が続きます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -57,7 +58,7 @@ router.get('/posts/:id', ({ params }) => {
 | `/posts/100`     | `100`     |
 | `/posts/foo-bar` | `foo-bar` |
 
-A URI can also accept multiple params. Each param should have a unique name.
+URIは複数のパラメータも受け入れることができます。各パラメータは一意の名前を持つ必要があります。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -73,25 +74,25 @@ router.get('/posts/:id/comments/:commentId', ({ params }) => {
 | `/posts/1/comments/4`        | `1`       | `4`        |
 | `/posts/foo-bar/comments/22` | `foo-bar` | `22`       |
 
-### Optional params
+### オプションのパラメータ
 
-The route params can also be optional by appending a question mark `?` at the end of the param name. The optional params should come after the required params.
+ルートパラメータは、パラメータ名の末尾に疑問符`?`を追加することでオプションにすることもできます。オプションのパラメータは必須のパラメータの後に配置する必要があります。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/posts/:id?', ({ params }) => {
   if (!params.id) {
-    return 'Showing all posts'
+    return 'すべての投稿を表示しています。'
   }
 
-  return `Showing post with id ${params.id}`
+  return `IDが${params.id}の投稿を表示しています。`
 })
 ```
 
-### Wildcard params
+### ワイルドカードパラメータ
 
-To capture all the segments of a URI, you can define a wildcard param. The wildcard param is specified using a special `*` keyword and must be defined at the last position.
+ワイルドカードパラメータを使用すると、URIのすべてのセグメントをキャプチャできます。ワイルドカードパラメータは特別な`*`キーワードを使用して指定され、最後の位置で定義する必要があります。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -107,13 +108,13 @@ router.get('/docs/:category/*', ({ params }) => {
 | `/docs/http/context` | `http`   | `['context']`    |
 | `/docs/api/sql/orm`  | `api`    | `['sql', 'orm']` |
 
-### Params matchers
+### パラメータのマッチャー
 
-The router does not know the format of the param data you want to accept. For example, a request with URI `/posts/foo-bar` and `/posts/1` will match the same route. However, you can explicitly validate the params values using param matchers.
+ルーターは、受け入れるパラメータデータの形式を把握していません。例えば、URIが`/posts/foo-bar`と`/posts/1`の場合、同じルートにマッチします。ただし、パラメータの値を明示的に検証するために、パラメータマッチャーを使用することができます。
 
-A matcher is registered using the `route.where` method. The first argument is the param name, and the second argument is the matcher object.
+マッチャーは`route.where`メソッドを使用して登録されます。最初の引数はパラメータ名であり、2番目の引数はマッチャーオブジェクトです。
 
-In the following example, we define a regex to validate the id to be a valid number. The route will be skipped in case the validation fails.
+次の例では、idが有効な数値であることを検証するための正規表現を定義しています。検証に失敗した場合、ルートはスキップされます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -125,7 +126,7 @@ router
   })
 ```
 
-Alongside the `match` regex, you can also define a `cast` function to convert the param value to its correct data type. In this example, we can convert the id to a number.
+`match`正規表現の他に、パラメータの値を正しいデータ型に変換するための`cast`関数を定義することもできます。この例では、idを数値に変換しています。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -140,87 +141,86 @@ router
   })
 ```
 
-### Inbuilt matchers
+### 組み込みのマッチャー
 
-The router ships with the following helper methods for commonly used data types.
+ルーターには、よく使用されるデータ型に対して以下のヘルパーメソッドが用意されています。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
-// Validate id to be numeric + cast to number data type
+// idを数値として検証 + 数値データ型にキャスト
 router.where('id', router.matchers.number())
 
-// Validate id to be a valid UUID
+// idが有効なUUIDであることを検証
 router.where('id', router.matchers.uuid())
 
-// Validate slug to match a given slug regex: regexr.com/64su0
+// slugが指定されたスラグの正規表現に一致することを検証: regexr.com/64su0
 router.where('slug', router.matchers.slug())
 ```
 
-### Global matchers
+### グローバルなマッチャー
 
-The route matchers can be defined globally on the router instance. Unless explicitly overridden at the route level, a global matcher is applied on all the routes.
+ルートマッチャーは、ルーターインスタンスでグローバルに定義することもできます。ルートレベルで明示的にオーバーライドされない限り、グローバルマッチャーはすべてのルートに適用されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
-// Global matcher
+// グローバルマッチャー
 router.where('id', router.matchers.uuid())
 
 router
   .get('/posts/:id', () => {})
-  // Overridden at route level
+  // ルートレベルでオーバーライド
   .where('id', router.matchers.number())
 ```
 
-## HTTP methods
+## HTTPメソッド
 
-The `router.get` method creates a route that responds to [GET HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET). Similarly, you can use the following methods to register routes for different HTTP methods.
+`router.get`メソッドは、[GET HTTPメソッド](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)に応答するルートを作成します。同様に、異なるHTTPメソッドのためのルートを登録するために以下のメソッドを使用できます。
 
 ```ts
-// GET method
+// GETメソッド
 router.get('users', () => {})
 
-// POST method
+// POSTメソッド
 router.post('users', () => {})
 
-// PUT method
+// PUTメソッド
 router.put('users/:id', () => {})
 
-// PATCH method
+// PATCHメソッド
 router.patch('users/:id', () => {})
 
-// DELETE method
+// DELETEメソッド
 router.delete('users/:id', () => {})
 ```
 
-You can use the `route.any` method to create a route that responds to all standard HTTP methods.
+すべての標準的なHTTPメソッドに応答するルートを作成するには、`route.any`メソッドを使用できます。
 
 ```ts
 router.any('reports', () => {})
 ```
 
-Finally, you can create a route for custom HTTP methods using the `route.route` method.
+最後に、`route.route`メソッドを使用してカスタムHTTPメソッド用のルートを作成することもできます。
 
 ```ts
 router.route('/', ['TRACE'], () => {})
 ```
 
-## Router handler
+## ルーターハンドラ
 
-The route handler handles the request by returning a response or raising an exception to abort the request.
+ルートハンドラは、レスポンスを返すか例外を発生させることでリクエストを処理します。
 
-A handler can be an inline callback (as seen in this guide) or a reference to a controller method.
+ハンドラは、インラインのコールバック（このガイドで見たようなもの）またはコントローラメソッドへの参照であることができます。
 
 ```ts
 router.post('users', async () => {
 })
 ```
 
-In the following example, we import the `UsersController` class and bind it to the route. During an HTTP request, AdonisJS will create an instance of the controller class using the IoC container and execute the `store` method.
+次の例では、`UsersController`クラスをインポートし、ルートにバインドしています。HTTPリクエスト時、AdonisJSはIoCコンテナを使用してコントローラクラスのインスタンスを作成し、`store`メソッドを実行します。
 
-See also: Dedicated guide on [controllers](./controllers.md).
-
+参照：[コントローラに関する専用ガイド](./controllers.md)も参照してください。
 
 ```ts
 import UsersController from '#controllers/users_controller'
@@ -228,30 +228,30 @@ import UsersController from '#controllers/users_controller'
 router.post('users', [UsersController, 'store'])
 ```
 
-## Route middleware
+## ルートミドルウェア
 
-You can define a middleware on a route by calling the `route.use` method. The method accepts an inline callback or a reference to a named middleware.
+`route.use`メソッドを呼び出すことで、ルートにミドルウェアを定義できます。メソッドはインラインのコールバックまたは名前付きミドルウェアへの参照を受け入れます。
 
-Following is a minimal example of defining a route middleware. We recommend reading the [dedicated guide on middleware](./middleware.md) to explore all the available options and the execution flow of middleware.
+以下は、ルートミドルウェアを定義する最小の例です。すべての利用可能なオプションとミドルウェアの実行フローについては、[ミドルウェアの専用ガイド](./middleware.md)を参照してください。
 
 ```ts
 router
   .get('posts', () => {
-    console.log('Inside route handler')
+    console.log('ルートハンドラ内')
 
-    return 'Viewing all posts'
+    return 'すべての投稿を表示しています。'
   })
   .use((_, next) => {
-    console.log('Inside middleware')
+    console.log('ミドルウェア内')
     return next()
   })
 ```
 
-## Route identifier
+## ルート識別子
 
-Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [response.redirect](./response.md#redirects) method.
+すべてのルートには一意の識別子があり、この識別子を使用してアプリケーションの他の場所でルートを参照できます。たとえば、[URLビルダー](#url-builder)を使用してルートへのURLを生成したり、[response.redirect](./response.md#redirects)メソッドを使用してルートにリダイレクトしたりできます。
 
-By default, the route pattern is the route identifier. However, you can assign a unique, memorable name to the route using the `route.as` method.
+デフォルトでは、ルートパターンがルート識別子です。ただし、`route.as`メソッドを使用して一意で覚えやすい名前をルートに割り当てることもできます。
 
 ```ts
 router.get('users', () => {}).as('users.index')
@@ -261,7 +261,7 @@ router.post('users', () => {}).as('users.store')
 router.delete('users/:id', () => {}).as('users.delete')
 ```
 
-You can now construct URLs using the route name within your templates or using the URL builder.
+これで、テンプレート内でルート名を使用してURLを構築したり、URLビルダーを使用してURLを作成したりできます。
 
 ```ts
 const url = router.builder().make('users.delete', [user.id])
@@ -276,22 +276,21 @@ const url = router.builder().make('users.delete', [user.id])
 ></form>
 ```
 
-## Grouping routes
+## ルートグループ
 
-Route groups offer a convenience layer to bulk configure nested inside a group. You may create a group of routes using the `router.group` method.
+ルートグループは、ネストされたルートを一括で設定するための便利な機能を提供します。`router.group`メソッドを使用してルートグループを作成できます。
 
 ```ts
 router.group(() => {
   /**
-   * All routes registered inside the callback
-   * are part of the surrounding group
+   * コールバック内で登録されたすべてのルートは、周囲のグループの一部です
    */
   router.get('users', () => {})
   router.post('users', () => {})
 })
 ```
 
-Route groups can be nested inside each other, and AdonisJS will merge or override properties based on the behavior of the applied setting.
+ルートグループはネストすることもでき、AdonisJSは適用された設定の動作に基づいてプロパティをマージまたはオーバーライドします。
 
 ```ts
 router.group(() => {
@@ -303,9 +302,9 @@ router.group(() => {
 })
 ```
 
-### Prefixing routes inside a group
+### ルートグループ内のプレフィックス
 
-The URI pattern of routes inside a group can be prefixed using the `group.prefix` method. The following example will create routes for the `/api/users` and `/api/payments` URI patterns.
+グループ内のルートのURIパターンにプレフィックスを付けることができます。次の例では、`/api/users`および`/api/payments`のURIパターンのルートが作成されます。
 
 ```ts
 router
@@ -316,7 +315,7 @@ router
   .prefix('/api')
 ```
 
-In the case of nested groups, the prefix will be applied from the outer to the inner group. The following example will create routes for `/api/v1/users` and `/api/v1/payments` URI patterns.
+ネストされたグループの場合、プレフィックスは外側から内側のグループに適用されます。次の例では、`/api/v1/users`および`/api/v1/payments`のURIパターンのルートが作成されます。
 
 ```ts
 router
@@ -331,13 +330,13 @@ router
   .prefix('api')
 ```
 
-### Naming routes inside a group
+### グループ内のルートの名前付け
 
-Similar to prefixing the route pattern, you can also prefix the route names inside a group using the `group.as` method.
+ルートパターンにプレフィックスを付けるだけでなく、group.asメソッドを使用してグループ内のルートの名前にもプレフィックスを付けることができます。
 
 :::note
 
-The routes inside a group must have names before you can prefix them.
+グループ内のルートには、プレフィックスを付ける前に名前を付ける必要があります。
 
 :::
 
@@ -346,13 +345,13 @@ router
   .group(() => {
     route
       .get('users', () => {})
-      .as('users.index') // final name - api.users.index
+      .as('users.index') // 最終的な名前 - api.users.index
   })
   .prefix('api')
   .as('api')
 ```
 
-In the case of nested groups, the names will be prefixed from the outer to the inner group.
+ネストされたグループの場合、名前は外側から内側のグループにプレフィックスが付けられます。
 
 ```ts
 router
@@ -373,13 +372,13 @@ router
   .as('api')
 ```
 
-### Applying middleware to routes inside a group
+### グループ内のルートにミドルウェアを適用する
 
-You can assign middleware to routes inside a group using the `group.use` method. The group middleware are executed before the middleware applied on individual routes within the group.
+`group.use`メソッドを使用して、グループ内のルートにミドルウェアを割り当てることができます。グループのミドルウェアは、グループ内の個々のルートに適用されるミドルウェアよりも先に実行されます。
 
-In the case of nested groups, the middleware from the outermost group will run first. In other words, a group prepends middleware to the route middleware stack.
+ネストされたグループの場合、もっとも外側のグループのミドルウェアが最初に実行されます。つまり、グループのミドルウェアはルートのミドルウェアスタックに先行します。
 
-See also: [Middleware guide](./middleware.md)
+参照：[ミドルウェアガイド](./middleware.md)も参照してください。
 
 ```ts
 router
@@ -387,24 +386,24 @@ router
     router
       .get('posts', () => {})
       .use((_, next) => {
-        console.log('logging from route middleware')
+        console.log('ルートミドルウェアからのログ')
         return next()
       })
   })
   .use((_, next) => {
-    console.log('logging from group middleware')
+    console.log('グループミドルウェアからのログ')
     return next()
   })
 ```
 
-## Registering routes for a specific domain
+## 特定のドメインに対してルートを登録する
 
-AdonisJS allows you to register routes under a specific domain name. This is helpful when you have an application mapped to multiple domains and want different routes for each domain.
+AdonisJSでは、特定のドメイン名の下にルートを登録できます。これは、アプリケーションが複数のドメインにマップされ、各ドメインに異なるルートが必要な場合に便利です。
 
-In the following example, we define two sets of routes.
+次の例では、2つのセットのルートを定義しています。
 
-- Routes that are resolved for any domain/hostname. 
-- Routes that are matched when the domain/hostname matches the pre-defined domain name value.
+- 任意のドメイン/ホスト名に対して解決されるルート。
+- ドメイン/ホスト名が事前に定義されたドメイン名の値と一致する場合に一致するルート。
 
 ```ts
 router.group(() => {
@@ -418,33 +417,33 @@ router.group(() => {
 }).domain('blog.adonisjs.com')
 ```
 
-Once you deploy your application, the routes under the group with an explicit domain will only be matched if the request's hostname is `blog.adonisjs.com`.
+アプリケーションをデプロイすると、明示的なドメインを持つグループ内のルートは、リクエストのホスト名が `blog.adonisjs.com` の場合にのみ一致します。
 
-### Dynamic subdomains
+### ダイナミックなサブドメイン
 
-You can specify dynamic subdomains using the `group.domain` method. Similar to the route params, the dynamic segment of a domain starts with a colon `:`.
+`group.domain`メソッドを使用して、ダイナミックなサブドメインを指定できます。ルートパラメータと同様に、ドメインのダイナミックセグメントはコロン `:` で始まります。
 
-In the following example, the `tenant` segment accepts any subdomain, and you can access its value using the `HttpContext.subdomains` object.
+次の例では、`tenant`セグメントが任意のサブドメインを受け入れるように定義されており、`HttpContext.subdomains`オブジェクトを使用してその値にアクセスできます。
 
 ```ts
 router
  .group(() => {
    router.get('users', ({ subdomains }) => {
-     return `Listing users for ${subdomains.tenant}`
+     return `${subdomains.tenant}のユーザーをリスト表示しています。`
    })
  })
  .domain(':tenant.adonisjs.com')
 ```
 
-## Render view from a route
+## ルートからビューをレンダリングする
 
-You may use the `router.on.render` method if you have a route handler that only renders a view. It is a convenient shortcut to render a view without defining an explicit handler.
+ルートハンドラがビューをレンダリングするだけの場合、`router.on.render`メソッドを使用できます。これは、明示的なハンドラを定義せずにビューをレンダリングするための便利なショートカットです。
 
-The render method accepts the name of the edge template to render. Optionally, you can pass the template data as the second argument.
+レンダリングメソッドは、レンダリングするエッジテンプレートの名前を受け入れます。オプションでテンプレートデータを第二引数として渡すこともできます。
 
 :::warning
 
-The `route.on.render` method only exists when you have configured the [Edge service provider](../views-and-templates/introduction.md#using-edge)
+`route.on.render`メソッドは、[Edgeサービスプロバイダ](../views-and-templates/introduction.md#using-edge)を設定している場合にのみ存在します。
 
 :::
 
@@ -456,25 +455,25 @@ router.on('about').render('about', { title: 'About us' })
 router.on('contact').render('contact', { title: 'Contact us' })
 ```
 
-## Redirect from a route
+## ルートからリダイレクトする
 
-If you are defining a route handler to redirect the request to another path or route, you may use the `router.on.redirect` or `router.on.redirectToPath` methods.
+リクエストを別のパスやルートにリダイレクトするためのルートハンドラを定義する場合、`router.on.redirect`または`router.on.redirectToPath`メソッドを使用できます。
 
-The `redirect` method accepts the route identifier. Whereas the `redirectToPath` method accepts a static path/URL.
+`redirect`メソッドはルート識別子を受け入れます。一方、`redirectToPath`メソッドは静的なパス/URLを受け入れます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
-// Redirect to a route
+// ルートにリダイレクト
 router.on('/posts').redirect('/articles')
 
-// Redirect to a URL
+// URLにリダイレクト
 router.on('/posts').redirectToPath('https://medium.com/my-blog')
 ```
 
-### Forwarding params
+### パラメータの転送
 
-In the following example, the value of `id` from the original request will be used to construct the `/articles/:id` route. So,  if a request comes for `/posts/20`, it will be redirected to `/articles/20`.
+次の例では、元のリクエストの`id`の値を使用して`/articles/:id`ルートを構築します。したがって、`/posts/20`のリクエストは`/articles/20`にリダイレクトされます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -482,22 +481,22 @@ import router from '@adonisjs/core/services/router'
 router.on('/posts/:id').redirect('/articles/:id')
 ```
 
-### Explicitly specifying params
+### パラメータを明示的に指定する
 
-You can also specify the route params explicitly as the second argument. In this case, the params from the current request will be ignored.
+第二引数としてルートパラメータを明示的に指定することもできます。この場合、現在のリクエストのパラメータは無視されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
-// Always redirect to /articles/1
+// 常に/ articles / 1にリダイレクトする
 router.on('/posts/:id').redirect('/articles/:id', {
   id: 1
 })
 ```
 
-### With query string
+### クエリ文字列を含める
 
-The query string for the redirect URL can be defined within the options object.
+リダイレクトURLのクエリ文字列は、オプションオブジェクト内で定義できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -510,9 +509,9 @@ router.on('/posts').redirect('/articles', {
 })
 ```
 
-## Current request route
+## 現在のリクエストのルート
 
-The route of the current request can be accessed using the [`HttpContext.route`](../concepts/http_context.md#http-context-properties) property. It includes the **route pattern**, **name**, **reference to its middleware store**, and **reference to the route handler**.
+現在のリクエストのルートは、[`HttpContext.route`](../concepts/http_context.md#http-context-properties)プロパティを使用してアクセスできます。これには、**ルートパターン**、**名前**、**ミドルウェアストアへの参照**、および**ルートハンドラへの参照**が含まれます。
 
 ```ts
 router.get('payments', ({ route }) => {
@@ -520,7 +519,7 @@ router.get('payments', ({ route }) => {
 })
 ```
 
-You can also check if the current request is for a specific route or not using the `request.matchesRoute` method. The method accepts either the route URI pattern or the route name.
+また、`request.matchesRoute`メソッドを使用して、現在のリクエストが特定のルートかどうかを確認することもできます。メソッドはルートURIパターンまたはルート名を受け入れます。
 
 ```ts
 router.get('/posts/:id', ({ request }) => {
@@ -538,21 +537,21 @@ router
   .as('posts.show')
 ```
 
-You can also match against multiple routes. The method will return true as soon as it finds the first match.
+複数のルートに一致することもできます。メソッドは最初に一致した場合にtrueを返します。
 
 ```ts
 if (request.matchesRoute(['/posts/:id', '/posts/:id/comments'])) {
-  // do something
+  // 何かを実行する
 }
 ```
 
-## How AdonisJS matches routes
+## AdonisJSのルートのマッチング方法
 
-The routes are matched in the same order as they are registered inside the routes file. We begin the match from the topmost route and stop at the first matching route.
+ルートは、ルートファイル内で登録された順序で一致します。一致は、一番上のルートから開始し、最初に一致したルートで停止します。
 
-If you have two similar routes, you must first register the most specific route.
+似たような2つのルートがある場合、もっとも具体的なルートを最初に登録する必要があります。
 
-In the following example, the request for the URL `/posts/archived` will be handled by the first route (i.e., `/posts/:id` ) because the dynamic param `id` will capture the `archived` value.
+次の例では、URL `/posts/archived` のリクエストは、最初のルート（つまり `/posts/:id`）で処理されます。なぜなら、動的パラメータ `id` が `archived` の値をキャプチャするからです。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -561,7 +560,7 @@ router.get('posts/:id', () => {})
 router.get('posts/archived', () => {})
 ```
 
-This behavior can be fixed by re-ordering the routes by placing the most specific route before the route with a dynamic param.
+この動作は、もっとも具体的なルートを動的パラメータを持つルートの前に配置することで修正できます。
 
 ```ts
 router.get('posts/archived', () => {})
@@ -569,11 +568,11 @@ router.get('posts/:id', () => {})
 ```
 
 
-### Handling 404 requests 
+### 404リクエストの処理
 
-AdonisJS raises a 404 exception when no matching route is found for the current request's URL.
+AdonisJSは、現在のリクエストのURLに一致するルートが見つからない場合、404の例外を発生させます。
 
-To display a 404 page to the user, you can catch the `E_ROUTE_NOT_FOUND` exception inside the [global exception handler](./exception_handling.md) and render a template.
+ユーザーに404ページを表示するには、[グローバル例外ハンドラ](./exception_handling.md)で`E_ROUTE_NOT_FOUND`例外をキャッチし、テンプレートをレンダリングできます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -590,11 +589,11 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-## URL builder
+## URLビルダー
 
-You may use the URL builder to create URLs for pre-defined routes in your application. For example, create a form action URL inside Edge templates, or make the URL to redirect the request to another route.
+アプリケーション内の事前定義されたルートのURLを作成するために、URLビルダーを使用できます。たとえば、Edgeテンプレート内のフォームアクションURLを作成したり、リクエストを別のルートにリダイレクトするためのURLを作成したりできます。
 
-The `router.builder` method creates an instance of the [URL builder](https://github.com/adonisjs/http-server/blob/main/src/router/lookup_store/url_builder.ts) class, and you can use the builder's fluent API to lookup a route and create a URL for it.
+`router.builder`メソッドは、[URLビルダー](https://github.com/adonisjs/http-server/blob/main/src/router/lookup_store/url_builder.ts)クラスのインスタンスを作成し、ビルダーのフルエントAPIを使用してルートを検索し、URLを作成できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -605,7 +604,7 @@ router
   .as('posts.show')
 ```
 
-You may generate the URL for the `posts.show` route as follows.
+`posts.show`ルートのURLを生成するには、次のようにします。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -621,7 +620,7 @@ router
  .make('posts.show') // /posts/20
 ```
 
-The params can be specified as an array of positional arguments. Or you can define them as a key-value pair.
+パラメータは、位置引数の配列として指定することも、キーと値のペアとして定義することもできます。
 
 ```ts
 router
@@ -630,9 +629,9 @@ router
  .make('posts.show') // /posts/1
 ```
 
-### Defining query parameters
+### クエリパラメータの定義
 
-The query parameters can be defined using the `builder.qs` method. The method accepts an object of key-value pair and serializes it to a query string.
+クエリパラメータは、`builder.qs`メソッドを使用して定義できます。メソッドはキーと値のペアのオブジェクトを受け入れ、それをクエリ文字列にシリアライズします。
 
 ```ts
 router
@@ -641,7 +640,7 @@ router
   .make('posts.index') // /posts?page=1&sort=asc
 ```
 
-The query string is serialized using the [qs](https://www.npmjs.com/package/qs) npm package. You can [configure its settings](https://github.com/adonisjs/http-server/blob/main/src/define_config.ts#L49-L54) inside the `config/app.ts` file under the `http` object.
+クエリ文字列は、[qs](https://www.npmjs.com/package/qs) npmパッケージを使用してシリアライズされます。`config/app.ts`ファイルの`http`オブジェクトの下にある`qs`を[設定](https://github.com/adonisjs/http-server/blob/main/src/define_config.ts#L49-L54)することができます。
 
 ```ts
 // config/app.js
@@ -654,9 +653,9 @@ http: defineConfig({
 })
 ```
 
-### Prefixing URL
+### URLのプレフィックス
 
-You may prefix a base URL to the output using the `builder.prefixUrl` method.
+`builder.prefixUrl`メソッドを使用して、出力にベースURLをプレフィックスすることができます。
 
 ```ts
 router
@@ -666,61 +665,61 @@ router
   .make('posts.show')
 ```
 
-### Generating signed URLs
+### 署名付きURLの生成
 
-Signed URLs are URLs with a signature query string appended to them. The signature is used to verify if the URL has been tampered after it was generated.
+署名付きURLは、署名クエリ文字列が追加されたURLです。署名は、URLが生成された後に改ざんされていないかを検証するために使用されます。
 
-For example, you have a URL to unsubscribe users from your newsletter. The URL contains the `userId` and might look as follows.
+たとえば、ニュースレターからユーザーの登録解除のためのURLを持っているとします。URLには`userId`が含まれており、次のようになるかもしれません。
 
 ```
 /unsubscribe/231
 ```
 
-To prevent someone from changing the user id from `231` to something else, you can sign this URL and verify the signature when handling requests for this route.
+ユーザーが`231`のユーザーIDを別の値に変更することを防ぐために、このURLに署名を付け、リクエストを処理する際に署名を検証することができます。
 
 ```ts
 router.get('unsubscribe/:id', ({ request, response }) => {
   if (!request.hasValidSignature()) {
-    return response.badRequest('Invalid or expired URL')
+    return response.badRequest('無効または期限切れのURLです')
   }
   
-  // Remove subscription
+  // 登録解除
 }).as('unsubscribe')
 ```
 
-You may use the `makeSigned` method to create a signed URL.
+`makeSigned`メソッドを使用して署名付きURLを作成できます。
 
 ```ts
 router
   .builder()
   .prefixUrl('https://blog.adonisjs.com')
   .params({ id: 231 })
-  // highlight-start
+  // ハイライト開始
   .makeSigned('unsubscribe')
-  // highlight-end
+  // ハイライト終了
 ```
 
-#### Signed URL expiration
+#### 署名付きURLの有効期限
 
-You may generate signed URLs that expire after a given duration using the `expiresIn` option. The value can be a number in milliseconds or a time expression string.
+`expiresIn`オプションを使用して、指定された期間後に期限切れになる署名付きURLを生成することができます。値はミリ秒単位の数値または時間表現文字列で指定できます。
 
 ```ts
 router
   .builder()
   .prefixUrl('https://blog.adonisjs.com')
   .params({ id: 231 })
-  // highlight-start
+  // ハイライト開始
   .makeSigned('unsubscribe', {
     expiresIn: '3 days'
   })
-  // highlight-end
+  // ハイライト終了
 ```
 
-### Disabling route lookup
+### ルートの検索を無効にする
 
-The URL builder performs a route lookup with the route identifier given to the `make` and the `makeSigned` methods.
+URLビルダーは、`make`および`makeSigned`メソッドに与えられたルート識別子でルートの検索を実行します。
 
-If you want to create a URL for routes defined outside of your AdonisJS application, you may disable the route lookup and give the route pattern to the `make` and the `makeSigned` methods.
+AdonisJSアプリケーションの外部で定義されたルートのURLを作成する場合は、ルートの検索を無効にし、`make`および`makeSigned`メソッドにルートパターンを指定することができます。
 
 ```ts
 router
@@ -731,8 +730,8 @@ router
   .make('/email/verify/:token') // /email/verify/foobar
 ```
 
-### Making URL for routes under a domain
-You can make URLs for routes registered under a specific domain using the `router.builderForDomain` method. The method accepts the route pattern you used at the time of defining the routes.
+### ドメインの下のルートのURLを作成する
+特定のドメインに登録されたルートのURLを作成するには、`router.builderForDomain`メソッドを使用できます。このメソッドは、ルートを定義する際に使用したルートパターンを受け入れます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -745,7 +744,7 @@ router.group(() => {
 }).domain('blog.adonisjs.com')
 ```
 
-You can create URL for the `posts.show` route under `blog.adonisjs.com` domain as follows.
+次のようにして、`blog.adonisjs.com`ドメインの`posts.show`ルートのURLを作成できます。
 
 ```ts
 router
@@ -754,15 +753,15 @@ router
   .make('posts.show')
 ```
 
-### Generating URLs inside templates
+### テンプレート内でのURLの生成
 
-You may use the `route` and the `signedRoute` methods inside templates to generate a URL using the URL builder.
+テンプレート内でURLを生成するためには、`route`メソッドと`signedRoute`メソッドを使用できます。これには、URLビルダーを使用してURLを生成するための便利なヘルパーメソッドが含まれます。
 
-See also: [Edge helpers reference](../references/edge.md#routesignedroute)
+参照：[Edgeヘルパーリファレンス](../references/edge.md#routesignedroute)も参照してください。
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">
-  View post
+  投稿を表示する
 </a>
 ```
 
@@ -773,19 +772,19 @@ See also: [Edge helpers reference](../references/edge.md#routesignedroute)
     prefixUrl: 'https://blog.adonisjs.com'    
   })
 }}">
-  Unsubscribe
+  登録解除
 </a>
 ```
 
-## Extending router
+## ルーターの拡張
 
-You can add custom properties to different router classes using macros and getters. Make sure to read the [extending AdonisJS guide](../concepts/extending_the_framework.md) first if you are new to the concept of macros.
+マクロとゲッターを使用して、さまざまなルータークラスにカスタムプロパティを追加することができます。マクロの概念については、[AdonisJSの拡張ガイド](../concepts/extending_the_framework.md)を先に読んでください。
 
-Following is the list of classes you can extend.
+以下は、拡張できるクラスのリストです。
 
 ### Router
 
-The [Router class](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts) contains the top-level methods for creating a route, a route group, or a route resource. An instance of this class is made available via the router service.
+[Routerクラス](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts)には、ルート、ルートグループ、またはルートリソースを作成するためのトップレベルのメソッドが含まれています。このクラスのインスタンスは、ルーターサービスを介して利用可能になります。
 
 ```ts
 import { Router } from '@adonisjs/core/http'
@@ -808,7 +807,7 @@ declare module '@adonisjs/core/http' {
 
 ### Route
 
-The [Route class](https://github.com/adonisjs/http-server/blob/main/src/router/route.ts) represents a single route. An instance of the Route class is created once you call the `router.get`, `router.post`, and other similar methods.
+[Routeクラス](https://github.com/adonisjs/http-server/blob/main/src/router/route.ts)は、単一のルートを表します。Routeクラスのインスタンスは、`router.get`、`router.post`などのメソッドを呼び出すと作成されます。
 
 ```ts
 import { Route } from '@adonisjs/core/http'
@@ -831,9 +830,9 @@ declare module '@adonisjs/core/http' {
 
 ### RouteGroup
 
-The [RouteGroup class](https://github.com/adonisjs/http-server/blob/main/src/router/group.ts) represents a group of routes. An instance of RouteGroup class is created once you call the `router.group` method.
+[RouteGroupクラス](https://github.com/adonisjs/http-server/blob/main/src/router/group.ts)は、複数のルートのグループを表します。`router.group`メソッドを呼び出すと、RouteGroupクラスのインスタンスが作成されます。
 
-You can access the group's routes using the `this.routes` property inside your macro or getter implementation.
+マクロまたはゲッターの実装内で、`this.routes`プロパティを使用してグループのルートにアクセスできます。
 
 ```ts
 import { RouteGroup } from '@adonisjs/core/http'
@@ -856,9 +855,9 @@ declare module '@adonisjs/core/http' {
 
 ### RouteResource
 
-The [RouteResource class](https://github.com/adonisjs/http-server/blob/main/src/router/resource.ts) represents a group of routes for a resource. An instance of RouteResource class is created once you call the `router.resource` method.
+[RouteResourceクラス](https://github.com/adonisjs/http-server/blob/main/src/router/resource.ts)は、リソースの複数のルートのグループを表します。`router.resource`メソッドを呼び出すと、RouteResourceクラスのインスタンスが作成されます。
 
-You can access the routes of the resource using the `this.routes` property inside your macro or getter implementation.
+マクロまたはゲッターの実装内で、`this.routes`プロパティを使用してリソースのルートにアクセスできます。
 
 ```ts
 import { RouteResource } from '@adonisjs/core/http'
@@ -881,9 +880,9 @@ declare module '@adonisjs/core/http' {
 
 ### BriskRoute
 
-The [BriskRoute class](https://github.com/adonisjs/http-server/blob/main/src/router/brisk.ts) represents a route without an explicit handler. An instance of BriskRoute class is created once you call the `router.on` method.
+[BriskRouteクラス](https://github.com/adonisjs/http-server/blob/main/src/router/brisk.ts)は、明示的なハンドラを持たないルートを表します。`router.on`メソッドを呼び出すと、BriskRouteクラスのインスタンスが作成されます。
 
-You can call the `this.setHandler` method inside your macro or getter to assign a route handler.
+マクロまたはゲッターの実装内で、`this.setHandler`メソッドを呼び出してルートハンドラを割り当てることができます。
 
 ```ts
 import { BriskRoute } from '@adonisjs/core/http'

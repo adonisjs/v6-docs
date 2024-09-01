@@ -1,9 +1,9 @@
 ---
-summary: AdonisJS offers an application-aware REPL to interact with your application from the command line. 
+summary: AdonisJSはコマンドラインからアプリケーションと対話するためのアプリケーション対応のREPLを提供しています。
 ---
 
 # REPL
-Like the [Node.js REPL](https://nodejs.org/api/repl.html), AdonisJS offers an application-aware REPL to interact with your application from the command line. You can start the REPL session using the `node ace repl` command.
+[Node.js REPL](https://nodejs.org/api/repl.html)のように、AdonisJSはコマンドラインからアプリケーションと対話するためのアプリケーション対応のREPLを提供しています。`node ace repl`コマンドを使用してREPLセッションを開始できます。
 
 ```sh
 node ace repl
@@ -11,25 +11,25 @@ node ace repl
 
 ![](../ace/ace_repl.png)
 
-On top of a standard Node.js REPL, AdonisJS provides the following features.
+標準のNode.js REPLに加えて、AdonisJSは以下の機能を提供します。
 
-- Import and execute TypeScript files.
-- Shorthand methods to import container services like the `router`, `helpers`, `hash` service, and so on.
-- Shorthand method to make class instances using the [IoC container](../concepts/dependency_injection.md#constructing-a-tree-of-dependencies).
-- Extensible API to add custom methods and REPL commands.
+- TypeScriptファイルのインポートと実行
+- `router`、`helpers`、`hash`サービスなどのコンテナサービスをインポートするための短縮メソッド
+- [IoCコンテナ](../concepts/dependency_injection.md#constructing-a-tree-of-dependencies)を使用してクラスインスタンスを作成するための短縮メソッド
+- カスタムメソッドとREPLコマンドを追加するための拡張可能なAPI
 
-## Interacting with REPL
-Once you start the REPL session, you will see an interactive prompt in which you can write valid JavaScript code and press enter to execute it. The output of the code will be printed on the following line.
+## REPLとの対話
+REPLセッションを開始すると、有効なJavaScriptコードを入力してEnterキーを押すことで対話型のプロンプトが表示されます。コードの出力は次の行に表示されます。
 
-If you want to type multiple lines of code, you can enter into the editor mode by typing the `.editor` command. Press `Ctrl+D` to execute a multiline statement or `Ctrl+C` to cancel and exit the editor mode.
+複数行のコードを入力したい場合は、`.editor`コマンドを入力してエディターモードに入ることができます。複数行のステートメントを実行するには`Ctrl+D`を押し、エディターモードをキャンセルして終了するには`Ctrl+C`を押します。
 
 ```sh
 > (js) .editor
-# // Entering editor mode (Ctrl+D to finish, Ctrl+C to cancel)
+# // エディターモードに入ります (終了するにはCtrl+D、キャンセルするにはCtrl+C)
 ```
 
-### Accessing the result of the last executed command
-If you forget to assign the value of a statement to a variable, you can access it using the `_` variable. For example:
+### 最後に実行されたコマンドの結果にアクセスする
+ステートメントの値を変数に割り当てるのを忘れた場合、`_`変数を使用してアクセスすることができます。例：
 
 ```sh
 > (js) helpers.string.generateRandom(32)
@@ -41,8 +41,8 @@ If you forget to assign the value of a statement to a variable, you can access i
 > (js)
 ```
 
-### Accessing error raised by last executed command
-You can access the exception raised by the previous command using the `_error` variable. For example:
+### 最後に実行されたコマンドで発生したエラーにアクセスする
+前のコマンドで発生した例外には、`_error`変数を使用してアクセスできます。例：
 
 ```sh
 > (js) helpers.string.generateRandom()
@@ -50,53 +50,53 @@ You can access the exception raised by the previous command using the `_error` v
 # 'The value of "size" is out of range. It must be >= 0 && <= 2147483647. Received NaN'
 ```
 
-### Searching through history
-The REPL history is saved in the `.adonisjs_v6_repl_history` file in the user's home directory. 
+### 履歴の検索
+REPLの履歴はユーザーのホームディレクトリにある`.adonisjs_v6_repl_history`ファイルに保存されます。
 
-You can loop through the commands from the history by pressing the up arrow `↑` key or pressing `Ctrl+R` to search within the history.
+履歴のコマンドをループ処理するには、上矢印キー`↑`を押すか、履歴内で検索するには`Ctrl+R`を押します。
 
-### Exiting from REPL session
-You can exit the REPL session by typing `.exit` or press the `Ctrl+C` twice. AdonisJS will perform a graceful shutdown before closing the REPL session.
+### REPLセッションの終了
+REPLセッションを終了するには`.exit`を入力するか、`Ctrl+C`を2回押します。AdonisJSはREPLセッションを閉じる前に正常なシャットダウンを実行します。
 
-Also, if you modify your codebase, you must exit and restart the REPL session for new changes to pick up.
+また、コードベースを変更した場合は、新しい変更を反映するためにREPLセッションを終了して再起動する必要があります。
 
-## Importing modules
-Node.js does not allow using the `import` statements inside the REPL session. Therefore, you must use the dynamic `import` function and assign the output to a variable. For example:
+## モジュールのインポート
+Node.jsではREPLセッション内で`import`ステートメントを使用することはできません。そのため、動的な`import`関数を使用して出力を変数に割り当てる必要があります。例：
 
 ```ts
 const { default: User } = await import('#models/user')
 ```
 
-You can use the `importDefault` method to access default export without destructuring the exports.
+`importDefault`メソッドを使用して、デフォルトエクスポートに分割せずにアクセスすることもできます。
 
 ```ts
 const User = await importDefault('#models/user')
 ```
 
-## Helpers methods
-Helper methods are shortcut functions you can execute to perform specific actions. You can view the list of available methods using the `.ls` command.
+## ヘルパーメソッド
+ヘルパーメソッドは特定のアクションを実行するためのショートカット関数です。`.ls`コマンドを使用して利用可能なメソッドのリストを表示できます。
 
 ```sh
 > (js) .ls
 
-# GLOBAL METHODS:
-importDefault         Returns the default export for a module
-make                  Make class instance using "container.make" method
-loadApp               Load "app" service in the REPL context
-loadEncryption        Load "encryption" service in the REPL context
-loadHash              Load "hash" service in the REPL context
-loadRouter            Load "router" service in the REPL context
-loadConfig            Load "config" service in the REPL context
-loadTestUtils         Load "testUtils" service in the REPL context
-loadHelpers           Load "helpers" module in the REPL context
-clear                 Clear a property from the REPL context
-p                     Promisify a function. Similar to Node.js "util.promisify"
+# グローバルメソッド:
+importDefault         モジュールのデフォルトエクスポートを返します
+make                  "container.make"メソッドを使用してクラスインスタンスを作成します
+loadApp               REPLコンテキストで"app"サービスをロードします
+loadEncryption        REPLコンテキストで"encryption"サービスをロードします
+loadHash              REPLコンテキストで"hash"サービスをロードします
+loadRouter            REPLコンテキストで"router"サービスをロードします
+loadConfig            REPLコンテキストで"config"サービスをロードします
+loadTestUtils         REPLコンテキストで"testUtils"サービスをロードします
+loadHelpers           REPLコンテキストで"helpers"モジュールをロードします
+clear                 REPLコンテキストからプロパティをクリアします
+p                     関数をプロミス化します。Node.jsの"util.promisify"に似ています
 ```
 
-## Adding custom methods to REPL
-You can add custom methods to the REPL using `repl.addMethod`. The method accepts the name as the first argument and the implementation callback as the second argument.
+## REPLにカスタムメソッドを追加する
+`repl.addMethod`を使用してREPLにカスタムメソッドを追加できます。メソッドは第1引数として名前、第2引数として実装のコールバックを受け取ります。
 
-For demonstration, let's create a [preload file](../concepts/adonisrc_file.md#preloads) file and define a method to import all models from the `./app/models` directory.
+デモンストレーションのために、[preloadファイル](../concepts/adonisrc_file.md#preloads)を作成し、`./app/models`ディレクトリからすべてのモデルをインポートするメソッドを定義します。
 
 ```sh
 node ace make:preload repl --env=repl
@@ -112,21 +112,21 @@ repl.addMethod('loadModels', async () => {
   const models = await fsImportAll(app.makePath('app/models'))
   repl.server!.context.models = models
 
-  repl.notify('Imported models. You can access them using the "models" property')
+  repl.notify('モデルをインポートしました。"models"プロパティを使用してアクセスできます')
   repl.server!.displayPrompt()
 })
 ```
 
-You can pass the following options to the `repl.addMethod` method as the third argument.
+`repl.addMethod`メソッドには、第3引数として以下のオプションを渡すこともできます。
 
-- `description`: Human-readable description to display in the help output.
-- `usage`: Define the method usage code snippet. If not set, the method name will be used.
+- `description`: ヘルプ出力に表示する人間が読める説明
+- `usage`: メソッドの使用方法のコードスニペットを定義します。設定しない場合は、メソッド名が使用されます。
 
-Once done, you can restart the REPL session and execute the `loadModels` method to import all the models.
+完了したら、REPLセッションを再起動し、`loadModels`メソッドを実行してすべてのモデルをインポートできます。
 
 ```sh
 node ace repl
 
-# Type ".ls" to a view list of available context methods/properties
+# 利用可能なコンテキストメソッド/プロパティのリストを表示するには".ls"を入力します
 > (js) await loadModels()
 ```

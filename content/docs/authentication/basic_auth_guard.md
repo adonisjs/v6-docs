@@ -1,18 +1,18 @@
 ---
-summary: Learn how to use the basic auth guard to authenticate users using the HTTP authentication framework.
+summary: HTTP認証フレームワークを使用してユーザーを認証するための基本認証ガードの使い方を学びます。
 ---
 
-# Basic authentication guard
+# 基本認証ガード
 
-The basic auth guard is an implementation of the [HTTP authentication framework](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication), in which the client must pass the user credentials as a base64 encoded string via the `Authorization` header. The server allows the request if the credentials are valid. Otherwise, a web-native prompt is displayed to re-enter the credentials.
+基本認証ガードは、[HTTP認証フレームワーク](https://developer.mozilla.org/ja/docs/Web/HTTP/Authentication)の実装です。クライアントはユーザーの資格情報をBase64エンコードされた文字列として`Authorization`ヘッダーを介して送信する必要があります。サーバーは資格情報が有効であればリクエストを許可します。それ以外の場合は、Webネイティブのプロンプトが表示され、資格情報の再入力を求めます。
 
-## Configuring the guard
-The authentication guards are defined inside the `config/auth.ts` file. You can configure multiple guards inside this file under the `guards` object.
+## ガードの設定
+認証ガードは`config/auth.ts`ファイル内で定義されます。このファイルの`guards`オブジェクトの下に複数のガードを設定できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/auth'
 // highlight-start
-import { basicAuthGuard, basicAuthUserProvider } from '@adonisjs/auth/basic_auth'
+import { basicAuthGuard, basicAuthUserProvider } from '@adonisjs/auth/build/src/Providers/BasicAuth'
 // highlight-end
 
 const authConfig = defineConfig({
@@ -31,13 +31,13 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-The `basicAuthGuard` method creates an instance of the [BasicAuthGuard](https://github.com/adonisjs/auth/blob/main/modules/basic_auth_guard/guard.ts) class. It accepts a user provider that can be used to find users during authentication.
+`basicAuthGuard`メソッドは[BasicAuthGuard](https://github.com/adonisjs/auth/blob/main/modules/basic_auth_guard/guard.ts)クラスのインスタンスを作成します。これは認証中にユーザーを検索するために使用できるユーザープロバイダーを受け入れます。
 
-The `basicAuthUserProvider` method creates an instance of the [BasicAuthLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/basic_auth_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for verifying user credentials.
+`basicAuthUserProvider`メソッドは[BasicAuthLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/basic_auth_guard/user_providers/lucid.ts)クラスのインスタンスを作成します。これはユーザーの資格情報を検証するために使用するモデルへの参照を受け入れます。
 
 
-## Preparing the User model
-The model (`User` model in this example) configured with the `basicAuthUserProvider` must use the [AuthFinder](./verifying_user_credentials.md#using-the-auth-finder-mixin) mixin to verify the user credentials during authentication.
+## ユーザーモデルの準備
+`basicAuthUserProvider`で設定されたモデル（この例では`User`モデル）は、認証中にユーザーの資格情報を検証するために[AuthFinder](./verifying_user_credentials.md#using-the-auth-finder-mixin)ミックスインを使用する必要があります。
 
 ```ts
 import { DateTime } from 'luxon'
@@ -78,8 +78,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
 }
 ```
 
-## Protecting routes
-Once you have configured the guard, you can use the `auth` middleware to protect routes from unauthenticated requests. The middleware is registered inside the `start/kernel.ts` file under the named middleware collection.
+## ルートの保護
+ガードを設定したら、`auth`ミドルウェアを使用して未認証のリクエストからルートを保護できます。ミドルウェアは`start/kernel.ts`ファイルの名前付きミドルウェアコレクション内に登録されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -106,12 +106,12 @@ router
   }))
 ```
 
-### Handling authentication exception
+### 認証例外の処理
 
-The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18) if the user is not authenticated. The exception is automatically converted to an HTTP response with the [WWW-Authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate) header in the response. The `WWW-Authenticate` challenges the authentication and triggers a web-native prompt to re-enter the credentials.
+認証ミドルウェアは、ユーザーが認証されていない場合に[E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18)をスローします。この例外は、レスポンスの[WWW-Authenticate](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/WWW-Authenticate)ヘッダーとともに自動的にHTTPレスポンスに変換されます。`WWW-Authenticate`は認証を要求し、資格情報の再入力をトリガーします。
 
-## Getting access to the authenticated user
-You may access the logged-in user instance using the `auth.user` property. Since, you are using the `auth` middleware, the `auth.user` property will always be available.
+## 認証されたユーザーへのアクセス
+`auth.user`プロパティを使用してログイン済みのユーザーインスタンスにアクセスできます。`auth`ミドルウェアを使用しているため、`auth.user`プロパティは常に利用可能です。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -119,15 +119,15 @@ import router from '@adonisjs/core/services/router'
 
 router
   .get('dashboard', ({ auth }) => {
-    return `You are authenticated as ${auth.user!.email}`
+    return `あなたは${auth.user!.email}として認証されています`
   })
   .use(middleware.auth({
     guards: ['basicAuth']
   }))
 ```
 
-### Get authenticated user or fail
-If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+### 認証されたユーザーの取得または失敗
+`auth.user`プロパティに対して[非nullアサーション演算子](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-)を使用することが好きでない場合は、`auth.getUserOrFail`メソッドを使用できます。このメソッドはユーザーオブジェクトを返すか、[E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access)例外をスローします。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -137,7 +137,7 @@ router
   .get('dashboard', ({ auth }) => {
     // highlight-start
     const user = auth.getUserOrFail()
-    return `You are authenticated as ${user.email}`
+    return `あなたは${user.email}として認証されています`
     // highlight-end
   })
   .use(middleware.auth({

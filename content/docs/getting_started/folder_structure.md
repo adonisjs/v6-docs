@@ -1,26 +1,26 @@
 ---
-summary: Take a tour of the important files and folders created by AdonisJS during the installation process.
+summary: AdonisJSのインストールプロセス中に作成される重要なファイルとフォルダのツアーをご紹介します。
 ---
 
-# Folder structure
+# フォルダ構造
 
-In this guide, we will take a tour of the important files and folders created by AdonisJS during the installation process. 
+このガイドでは、AdonisJSのインストールプロセス中に作成される重要なファイルとフォルダのツアーをご紹介します。
 
-We ship with a thoughtful default folder structure that helps you keep your projects tidy and easy to refactor. However, you have all the freedom to diverge and have a folder structure that works great for your team and project.
+私たちは、プロジェクトを整理し、リファクタリングしやすくするための思慮深いデフォルトのフォルダ構造を提供しています。ただし、チームやプロジェクトに最適なフォルダ構造を自由に変更することもできます。
 
-## The `adonisrc.ts` file
+## `adonisrc.ts` ファイル
 
-The `adonisrc.ts` file is used to configure the workspace and some of the runtime settings of your application.
+`adonisrc.ts` ファイルは、アプリケーションのワークスペースとランタイム設定を構成するために使用されます。
 
-In this file, you can register providers, define command aliases, or specify the files to copy to the production build.
+このファイルでは、プロバイダの登録、コマンドのエイリアスの定義、本番ビルドにコピーするファイルの指定などができます。
 
-See also: [AdonisRC file reference guide](../concepts/adonisrc_file.md)
+詳細はこちらを参照してください：[AdonisRCファイルリファレンスガイド](../concepts/adonisrc_file.md)
 
-## The `tsconfig.json` file
+## `tsconfig.json` ファイル
 
-The `tsconfig.json` file stores the TypeScript configuration for your application. Feel free to make changes to this file as per your project or team's requirements.
+`tsconfig.json` ファイルは、アプリケーションのTypeScriptの設定を保存します。プロジェクトやチームの要件に応じて、このファイルを自由に変更してください。
 
-The following configuration options are required for AdonisJS internals to work correctly.
+AdonisJSの内部で正しく動作するためには、次の設定オプションが必要です。
 
 ```json
 {
@@ -37,11 +37,11 @@ The following configuration options are required for AdonisJS internals to work 
 }
 ``` 
 
-## The sub-path imports
+## サブパスのインポート
 
-AdonisJS uses the [sub-path imports](https://nodejs.org/dist/latest-v19.x/docs/api/packages.html#subpath-imports) feature from Node.js to define the import aliases. 
+AdonisJSは、Node.jsの[sub-path imports](https://nodejs.org/dist/latest-v19.x/docs/api/packages.html#subpath-imports)機能を使用して、インポートのエイリアスを定義します。
 
-The following import aliases are pre-configured within the `package.json` file. Feel free to add new aliases or edit the existing ones.
+次のインポートのエイリアスは、`package.json` ファイル内で事前に設定されています。新しいエイリアスを追加したり、既存のエイリアスを編集したりしてください。
 
 ```json
 // title: package.json
@@ -67,7 +67,7 @@ The following import aliases are pre-configured within the `package.json` file. 
 }
 ```
 
-In order for code editors to autocomplete imports using import aliases, you will have to re-define the same aliases inside `tsconfig.json` file as well. We hope, the editors will soon catchup and rely on `package.json` as the single source of truth for aliases.
+コードエディターがインポートの自動補完を行うために、インポートのエイリアスを `tsconfig.json` ファイル内でも再定義する必要があります。エディターが近いうちに `package.json` をエイリアスの唯一の情報源として使用するようになることを期待しています。
 
 ```json
 // title: tsconfig.json
@@ -95,25 +95,26 @@ In order for code editors to autocomplete imports using import aliases, you will
 }
 ```
 
-## The `bin` directory
+## `bin` ディレクトリ
 
-The `bin` directory has the entry point files to load your application in a specific environment. For example:
+`bin` ディレクトリには、特定の環境でアプリケーションをロードするためのエントリーポイントファイルがあります。
 
-- The `bin/server.ts` file boots the application in the web environment to listen for HTTP requests. 
-- The `bin/console.ts` file boots the Ace commandline and executes commands.
-- The `bin/test.ts` file boots the application to run tests.
+例：
+- `bin/server.ts` ファイルは、Web環境でHTTPリクエストを受け付けるためにアプリケーションを起動します。
+- `bin/console.ts` ファイルは、Aceコマンドラインを起動してコマンドを実行します。
+- `bin/test.ts` ファイルは、テストを実行するためにアプリケーションを起動します。
 
-## The `ace.js` file
+## `ace.js` ファイル
 
-The `ace` file boots the command-line framework that is local to your app. So every time you run an ace command, it goes through this file.
+`ace` ファイルは、アプリケーション固有のコマンドラインフレームワークを起動します。したがって、aceコマンドを実行するたびに、このファイルを通過します。
 
-If you notice, the ace file ends with a `.js` extension. This is because we want to run this file using the `node` binary without compiling it.
+`ace` ファイルの拡張子は `.js` で終わっていることに注意してください。これは、このファイルをコンパイルせずに `node` バイナリで実行したいためです。
 
-## The `app` directory
+## `app` ディレクトリ
 
-The `app` directory organizes code for the domain logic of your application. For example, the controllers, models, services, etc., all live within the `app` directory.
+`app` ディレクトリは、アプリケーションのドメインロジックのコードを整理するために使用されます。たとえばコントローラ、モデル、サービスなどはすべて `app` ディレクトリ内にあります。
 
-Feel free to create additional directories to better organize your application code.
+アプリケーションコードをより良く整理するために、追加のディレクトリを作成しても構いません。
 
 ```
 ├── app
@@ -124,10 +125,9 @@ Feel free to create additional directories to better organize your application c
 │  └── validators
 ```
 
+## `resources` ディレクトリ
 
-## The `resources` directory
-
-The `resources` directory contains the Edge templates, alongside the source files of your frontend code. In other words, the code for the presentation layer of your app lives within the `resources` directory.
+`resources` ディレクトリには、Edgeテンプレートとフロントエンドコードのソースファイルが含まれています。つまり、アプリケーションのプレゼンテーション層のコードは `resources` ディレクトリ内にあります。
 
 ```
 ├── resources
@@ -138,9 +138,9 @@ The `resources` directory contains the Edge templates, alongside the source file
 │  └── images
 ```
 
-## The `start` directory
+## `start` ディレクトリ
 
-The `start` directory contains the files you want to import during the boot lifecycle of the application. For example, the files to register routes and define event listeners should live within the `start` directory.
+`start` ディレクトリには、アプリケーションの起動ライフサイクル中にインポートしたいファイルが含まれています。たとえばルートを登録したり、イベントリスナーを定義したりするファイルは、`start` ディレクトリ内に配置する必要があります。
 
 ```
 ├── start
@@ -151,23 +151,23 @@ The `start` directory contains the files you want to import during the boot life
 │  ├── events.ts
 ```
 
-AdonisJS does not auto-import files from the `start` directory. It is merely used as a convention to group similar files.
+AdonisJSは、`start` ディレクトリからファイルを自動的にインポートしません。これは、類似したファイルをグループ化するための規約としてのみ使用されます。
 
-We recommend reading about [preload files](../concepts/adonisrc_file.md#preloads) and the [application boot lifecycle](../concepts/application_lifecycle.md) to have a better understanding of which files to keep under the `start` directory.
+`start` ディレクトリの下にどのファイルを配置するかについては、[preload files](../concepts/adonisrc_file.md#preloads) と [application boot lifecycle](../concepts/application_lifecycle.md) を読むことをオススメします。
 
-## The `public` directory
+## `public` ディレクトリ
 
-The `public` directory hosts static assets like CSS files, images, fonts, or the frontend JavaScript.
+`public` ディレクトリには、CSSファイル、画像、フォント、またはフロントエンドのJavaScriptなどの静的アセットがホストされます。
 
-Do not confuse the `public` directory with the `resources` directory. The resources directory contains the source code of your frontend application, and the public directory has the compiled output.
+`public` ディレクトリと `resources` ディレクトリを混同しないでください。`resources` ディレクトリには、フロントエンドアプリケーションのソースコードが含まれており、`public` ディレクトリにはコンパイルされた出力があります。
 
-When using Vite, you should store the frontend assets inside the `resources/<SUB_DIR>` directories and let the Vite compiler create the output in the `public` directory.
+Viteを使用している場合は、フロントエンドのアセットを `resources/<SUB_DIR>` ディレクトリ内に保存し、Viteコンパイラによって出力が `public` ディレクトリに作成されるようにします。
 
-On the other hand, if you are not using Vite, you can create files directly inside the `public` directory and access them using the filename. For example, you can access the `./public/style.css` file from the `http://localhost:3333/style.css` URL.
+一方、Viteを使用していない場合は、`public` ディレクトリ内に直接ファイルを作成し、ファイル名を使用してアクセスできます。たとえば`./public/style.css` ファイルは `http://localhost:3333/style.css` のURLからアクセスできます。
 
-## The `database` directory
+## `database` ディレクトリ
 
-The `database` directory contains files for database migrations and seeders. 
+`database` ディレクトリには、データベースのマイグレーションとシーディングのためのファイルが含まれています。
 
 ```
 ├── database
@@ -175,19 +175,17 @@ The `database` directory contains files for database migrations and seeders.
 │  └── seeders
 ```
 
+## `commands` ディレクトリ
 
-## The `commands` directory
+[aceコマンド](../ace/introduction.md) は、`commands` ディレクトリ内に格納されます。`node ace make:command` を実行して、このフォルダ内にコマンドを作成できます。
 
-The [ace commands](../ace/introduction.md) are stored within the `commands` directory. You can create commands inside this folder by running `node ace make:command`.
+## `config` ディレクトリ
 
+`config` ディレクトリには、アプリケーションのランタイム設定ファイルが含まれています。
 
-## The `config` directory
+フレームワークのコアと他のインストールされたパッケージは、このディレクトリから設定ファイルを読み込みます。また、このディレクトリ内にアプリケーション固有の設定を保存することもできます。
 
-The `config` directory contains the runtime configuration files for your application.
-
-The framework's core and other installed packages read configuration files from this directory. You can also store config local to your application inside this directory.
-
-Learn more about [configuration management](./configuration.md).
+[設定管理](./configuration.md) について詳しくはこちらをご覧ください。
 
 ```
 ├── config
@@ -203,11 +201,11 @@ Learn more about [configuration management](./configuration.md).
 ```
 
 
-## The `types` directory
+## `types` ディレクトリ
 
-The `types` directory is the house for the TypeScript interfaces or types used within your application. 
+`types` ディレクトリは、アプリケーション内で使用されるTypeScriptのインターフェイスや型を格納する場所です。
 
-The directory is empty by default, however, you can create files and folders within the `types` directory to define custom types and interfaces.
+デフォルトでは、このディレクトリは空ですが、`types` ディレクトリ内にファイルやフォルダを作成して、カスタムの型やインターフェイスを定義できます。
 
 ```
 ├── types
@@ -215,11 +213,11 @@ The directory is empty by default, however, you can create files and folders wit
 │  ├── container.ts
 ```
 
-## The `providers` directory
+## `providers` ディレクトリ
 
-The `providers` directory is used to store the [service providers](../concepts/service_providers.md) used by your application. You can create new providers using the `node ace make:provider` command.
+`providers` ディレクトリは、アプリケーションで使用される [サービスプロバイダ](../concepts/service_providers.md) を格納するために使用されます。`node ace make:provider` コマンドを使用して新しいプロバイダを作成できます。
 
-Learn more about [service providers](../concepts/service_providers.md)
+[サービスプロバイダ](../concepts/service_providers.md) について詳しくはこちらをご覧ください。
 
 ```
 ├── providers
@@ -227,17 +225,17 @@ Learn more about [service providers](../concepts/service_providers.md)
 │  └── http_server_provider.ts
 ```
 
-## The `tmp` directory
+## `tmp` ディレクトリ
 
-The temporary files generated by your application are stored within the `tmp` directory. For example, these could be user-uploaded files (generated during development) or logs written to the disk.
+アプリケーションによって生成される一時ファイルは、`tmp` ディレクトリに保存されます。たとえばユーザがアップロードしたファイル（開発中に生成される）やディスクに書き込まれるログなどがこれに該当します。
 
-The `tmp` directory must be ignored by the `.gitignore` rules, and you should not copy it to the production server either.
+`tmp` ディレクトリは `.gitignore` のルールで無視される必要があり、本番サーバにはコピーしないでください。
 
-## The `tests` directory
+## `tests` ディレクトリ
 
-The `tests` directory organizes your application tests. Further, sub-directories are created for `unit` and `functional` tests.
+`tests` ディレクトリは、アプリケーションのテストを整理します。さらに、`unit` と `functional` のサブディレクトリが作成されます。
 
-See also: [Testing](../testing/introduction.md)
+詳細はこちらを参照してください：[テスト](../testing/introduction.md)
 
 ```
 ├── tests

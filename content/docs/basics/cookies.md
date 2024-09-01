@@ -1,13 +1,13 @@
 ---
-summary: Learn how to read, write, and clear cookies in AdonisJS.
+summary: AdonisJSでクッキーの読み取り、書き込み、クリア方法を学びます。
 ---
 
-# Cookies
+# クッキー
 
-The request cookies are parsed automatically during an HTTP request. You can read cookies using the [request](./request.md) object and set/clear cookies using the [response](./response.md) object.
+リクエストのクッキーは、HTTPリクエスト中に自動的に解析されます。[request](./request.md)オブジェクトを使用してクッキーを読み取り、[response](./response.md)オブジェクトを使用してクッキーを設定/クリアできます。
 
 ```ts
-// title: Read cookies
+// title: クッキーの読み取り
 import router from '@adonisjs/core/services/router'
 
 router.get('cart', async ({ request }) => {
@@ -19,7 +19,7 @@ router.get('cart', async ({ request }) => {
 ```
 
 ```ts
-// title: Set cookies
+// title: クッキーの設定
 import router from '@adonisjs/core/services/router'
 
 router.post('cart', async ({ request, response }) => {
@@ -31,7 +31,7 @@ router.post('cart', async ({ request, response }) => {
 ```
 
 ```ts
-// title: Clear cookies
+// title: クッキーのクリア
 import router from '@adonisjs/core/services/router'
 
 router.delete('cart', async ({ request, response }) => {
@@ -41,9 +41,9 @@ router.delete('cart', async ({ request, response }) => {
 })
 ```
 
-## Configuration
+## 設定
 
-The default configuration for setting cookies is defined inside the `config/app.ts` file. Feel free to tweak the options as per your application requirements.
+クッキーの設定のデフォルト値は、`config/app.ts`ファイル内で定義されています。アプリケーションの要件に応じてオプションを調整してください。
 
 ```ts
 http: {
@@ -55,7 +55,7 @@ http: {
     secure: true,
     sameSite: 'lax',
     /**
-     * Experimental properties
+     * 実験的なプロパティ
      * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#partitioned
      */
     partitioned: false,
@@ -64,9 +64,9 @@ http: {
 }
 ```
 
-The options are converted to [set-cookie attributes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes). The `maxAge` property accepts a string-based time expression, and its value will be converted to seconds.
+これらのオプションは、[set-cookie属性](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes)に変換されます。`maxAge`プロパティは、文字列形式の時間表現を受け入れ、その値は秒に変換されます。
 
-The same set of options can be overridden when setting the cookies. 
+クッキーを設定する際には、同じオプションセットを上書きすることもできます。
 
 ```ts
 response.cookie('key', value, {
@@ -79,51 +79,51 @@ response.cookie('key', value, {
 })
 ```
 
-## Supported data types
+## サポートされるデータ型
 
-The cookie values are serialized to a string using `JSON.stringify`; therefore, you can use the following JavaScript data types as cookie values.
+クッキーの値は、`JSON.stringify`を使用して文字列にシリアライズされます。したがって、次のJavaScriptのデータ型をクッキーの値として使用できます。
 
-- string
-- number
+- 文字列
+- 数値
 - bigInt
-- boolean
+- ブール値
 - null
-- object
-- array 
+- オブジェクト
+- 配列
 
 ```ts
-// Object
+// オブジェクト
 response.cookie('user', {
   id: 1,
   fullName: 'virk',
 })
 
-// Array
+// 配列
 response.cookie('product_ids', [1, 2, 3, 4])
 
-// Boolean
+// ブール値
 response.cookie('is_logged_in', true)
 
-// Number
+// 数値
 response.cookie('visits', 10)
 
-// BigInt
+// bigInt
 response.cookie('visits', BigInt(10))
 
-// Data objects are converted to ISO string
+// 日付オブジェクトはISO文字列に変換されます
 response.cookie('visits', new Date())
 ```
 
-## Signed cookies
+## 署名付きクッキー
 
-The cookies set using the `response.cookie` method are signed. A signed cookie is tamper-proof, meaning changing its contents will invalidate its signature, and the cookie will be ignored.
+`response.cookie`メソッドを使用して設定されたクッキーは署名付きです。署名付きクッキーは改ざん防止されており、内容を変更すると署名が無効になり、クッキーは無視されます。
 
-The cookies are signed using the `appKey` defined inside the `config/app.ts` file.
+クッキーは、`config/app.ts`ファイルで定義された`appKey`を使用して署名されます。
 
 
 :::note
 
-The signed cookies are still readable by Base64 decoding them. You can use encrypted cookies if you want the cookie value to be unreadable.
+署名付きクッキーはBase64でデコードすることで読み取ることができます。クッキーの値を読み取れないようにするには、暗号化されたクッキーを使用できます。
 
 
 :::
@@ -133,55 +133,55 @@ The signed cookies are still readable by Base64 decoding them. You can use encry
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ request, response }) => {
-  // set signed cookie
+  // 署名付きクッキーを設定する
   response.cookie('user_id', 1)
 
-  // read signed cookie
+  // 署名付きクッキーを読み取る
   request.cookie('user_id')
 })
 ```
 
-## Encrypted cookies
+## 暗号化されたクッキー
 
-Unlike signed cookies, the encrypted cookie value cannot be decoded to plain text. Therefore, you can use encrypted cookies for values containing sensitive information that should not be readable by anyone.
+署名付きクッキーとは異なり、暗号化されたクッキーの値は平文に復号化することはできません。そのため、誰にも読み取れないような機密情報を含む値に対して暗号化されたクッキーを使用できます。
 
-Encrypted cookies are set using the `response.encryptedCookie` method and read using the `request.encryptedCookie` method. Under the hood, these methods use the [Encryption module](../security/encryption.md).
+暗号化されたクッキーは、`response.encryptedCookie`メソッドを使用して設定し、`request.encryptedCookie`メソッドを使用して読み取ります。これらのメソッドは、[Encryptionモジュール](../security/encryption.md)を使用しています。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ request, response }) => {
-  // set encrypted cookie
+  // 暗号化されたクッキーを設定する
   response.encryptedCookie('user_id', 1)
 
-  // read encrypted cookie
+  // 暗号化されたクッキーを読み取る
   request.encryptedCookie('user_id')
 })
 ```
 
-## Plain cookies
+## 通常のクッキー
 
-Plain cookies are meant to be used when you want the cookie to be accessed by your frontend code using the `document.cookie` value. 
+通常のクッキーは、`document.cookie`の値を使用してフロントエンドのコードからアクセスする場合に使用されます。
 
-By default, we call `JSON.stringify` on raw values and convert them to a base64 encoded string. It is done so that you can use `objects` and `arrays` for the cookie value. However, the encoding can be turned off.
+デフォルトでは、生の値に対して`JSON.stringify`を呼び出し、それらをBase64エンコードされた文字列に変換します。これは、クッキーの値に`オブジェクト`や`配列`を使用できるようにするためです。ただし、エンコーディングをオフにすることもできます。
 
-Plain cookies are defined using the `response.plainCookie` method and can be read using the `request.plainCookie` method.
+通常のクッキーは、`response.plainCookie`メソッドを使用して定義し、`request.plainCookie`メソッドを使用して読み取ることができます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ request, response }) => {
-  // set plain cookie
+  // 通常のクッキーを設定する
   response.plainCookie('user', { id: 1 }, {
     httpOnly: true
   })
 
-  // read plain cookie
+  // 通常のクッキーを読み取る
   request.plainCookie('user')
 })
 ``` 
 
-To turn off encoding, set `encoding: false` in the options object.
+エンコーディングをオフにするには、オプションオブジェクト内で`encoding: false`を設定します。
 
 ```ts
 response.plainCookie('token', tokenValue, {
@@ -189,14 +189,14 @@ response.plainCookie('token', tokenValue, {
   encoding: false,
 })
 
-// Read plain cookie with encoding off
+// エンコーディングをオフにして通常のクッキーを読み取る
 request.plainCookie('token', {
   encoded: false
 })
 ```
 
-## Setting cookies during tests
-The following guides cover the usage of cookies when writing tests.
+## テスト中のクッキーの設定
+以下のガイドでは、テストを書く際にクッキーの使用方法について説明しています。
 
-- Defining cookies with [Japa API client](../testing/http_tests.md#readingwriting-cookies).
-- Defining cookie with [Japa browser client](../testing/browser_tests.md#readingwriting-cookies).
+- [Japa APIクライアントでクッキーを定義する](../testing/http_tests.md#readingwriting-cookies)。
+- [Japaブラウザクライアントでクッキーを定義する](../testing/browser_tests.md#readingwriting-cookies)。

@@ -1,22 +1,22 @@
 ---
-summary: Encrypt and decrypt values in your application using the encryption service.
+summary: アプリケーション内で暗号化サービスを使用して値を暗号化および復号化します。
 ---
 
-# Encryption
+# 暗号化
 
-Using the encryption service, you may encrypt and decrypt values in your application. The encryption is based on the [aes-256-cbc algorithm](https://www.n-able.com/blog/aes-256-encryption-algorithm), and we append an integrity hash (HMAC) to the final output to prevent value tampering.
+暗号化サービスを使用すると、アプリケーション内で値を暗号化および復号化できます。暗号化は[aes-256-cbcアルゴリズム](https://www.n-able.com/blog/aes-256-encryption-algorithm)に基づいており、最終出力に整合性ハッシュ（HMAC）を追加して値の改ざんを防止します。
 
-The `encryption` service uses the `appKey` stored inside the `config/app.ts` file as the secret to encrypt the values.
+`encryption`サービスは、`config/app.ts`ファイル内に格納されている`appKey`を秘密鍵として値を暗号化します。
 
-- It is recommended to keep the `appKey` secure and inject it into your application using [environment variables](../getting_started/environment_variables.md). Anyone with access to this key can decrypt values.
+- `appKey`を安全に保持し、[環境変数](../getting_started/environment_variables.md)を使用してアプリケーションに注入することをオススメします。このキーにアクセスできる人は値を復号化できます。
 
-- The key should be at least 16 characters long and have a cryptographically secure random value. You may generate the key using the `node ace generate:key` command.
+- キーは少なくとも16文字以上であり、暗号的に安全なランダムな値を持つ必要があります。`node ace generate:key`コマンドを使用してキーを生成できます。
 
-- If you decide to change the key later, you will not be able to decrypt existing values. This will result in invalidating existing cookies and user sessions. 
+- 後でキーを変更することを決定した場合、既存の値を復号化することはできません。これにより、既存のクッキーやユーザーセッションが無効になります。
 
-## Encrypting values
+## 値の暗号化
 
-You may encrypt values using the `encryption.encrypt` method. The method accepts the value to encrypt and an optional time duration after which to consider the value expired.
+`encryption.encrypt`メソッドを使用して値を暗号化できます。メソッドは暗号化する値と、値の有効期限として考慮するオプションの時間間隔を受け入れます。
 
 ```ts
 import encryption from '@adonisjs/core/services/encryption'
@@ -24,15 +24,15 @@ import encryption from '@adonisjs/core/services/encryption'
 const encrypted = encryption.encrypt('hello world')
 ```
 
-Define a time duration after which the value will be considered expired and cannot be decrypted.
+値が期限切れとなり、復号化できなくなるまでの時間間隔を定義します。
 
 ```ts
 const encrypted = encryption.encrypt('hello world', '2 hours')
 ```
 
-## Decrypting values
+## 値の復号化
 
-Encrypted values can be decrypted using the `encryption.decrypt` method. The method accepts the encrypted value as the first argument.
+`encryption.decrypt`メソッドを使用して暗号化された値を復号化できます。メソッドは暗号化された値を最初の引数として受け入れます。
 
 ```ts
 import encryption from '@adonisjs/core/services/encryption'
@@ -40,46 +40,46 @@ import encryption from '@adonisjs/core/services/encryption'
 encryption.decrypt(encryptedValue)
 ```
 
-## Supported data types
+## サポートされるデータ型
 
-The value given to the `encrypt` method is serialized to a string using `JSON.stringify`. Therefore, you can use the following JavaScript data types.
+`encrypt`メソッドに与えられる値は、`JSON.stringify`を使用して文字列にシリアライズされます。したがって、次のJavaScriptのデータ型を使用できます。
 
-- string
-- number
+- 文字列
+- 数値
 - bigInt
-- boolean
+- ブール値
 - null
-- object
-- array
+- オブジェクト
+- 配列
 
 ```ts
 import encryption from '@adonisjs/core/services/encryption'
 
-// Object
+// オブジェクト
 encryption.encrypt({
   id: 1,
   fullName: 'virk',
 })
 
-// Array
+// 配列
 encryption.encrypt([1, 2, 3, 4])
 
-// Boolean
+// ブール値
 encryption.encrypt(true)
 
-// Number
+// 数値
 encryption.encrypt(10)
 
-// BigInt
+// bigInt
 encryption.encrypt(BigInt(10))
 
-// Data objects are converted to ISO string
+// データオブジェクトはISO文字列に変換されます
 encryption.encrypt(new Date())
 ```
 
-## Using custom secret keys
+## カスタム秘密鍵の使用
 
-You can create an [instance of the Encryption class](https://github.com/adonisjs/encryption/blob/main/src/encryption.ts) directly to use custom secret keys.
+カスタム秘密鍵を使用するためには、[Encryptionクラスのインスタンス](https://github.com/adonisjs/encryption/blob/main/src/encryption.ts)を直接作成できます。
 
 ```ts
 import { Encryption } from '@adonisjs/core/encryption'

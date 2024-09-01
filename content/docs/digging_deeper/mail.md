@@ -1,59 +1,59 @@
 ---
-summary: Learn how to send emails from your AdonisJS application using the @adonisjs/mail package.
+summary: \@adonisjs/mailパッケージを使用して、AdonisJSアプリケーションからメールを送信する方法を学びます。
 ---
 
-# Mail
+# メール
 
-You can send emails from your AdonisJS application using the `@adonisjs/mail` package. The mail package is built on top of [Nodemailer](https://nodemailer.com/), bringing the following quality of life improvements over Nodemailer.
+`@adonisjs/mail`パッケージを使用して、AdonisJSアプリケーションからメールを送信できます。このメールパッケージは、[Nodemailer](https://nodemailer.com/)をベースにしており、以下のような利便性の向上をもたらします。
 
-- Fluent API to configure mail messages.
-- Ability to define emails as classes for better organization and easier testing.
-- An extensive suite of officially maintained transports. It includes `smtp`, `ses`, `mailgun`, `sparkpost`, `resend`, and `brevo`.
-- Improved testing experience using the Fakes API.
-- Mail messenger to queue emails.
-- Functional APIs to generate calendar events.
+- メールメッセージを設定するためのフルエントAPI。
+- より良い組織とテストのために、メールをクラスとして定義する機能。
+- 公式にメンテナンスされているトランスポートの包括的なスイート。`smtp`、`ses`、`mailgun`、`sparkpost`、`resend`、`brevo`を含みます。
+- Fakes APIを使用したテストの改善。
+- メールをキューに入れるためのメールメッセンジャー。
+- カレンダーイベントを生成するための機能API。
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+次のコマンドを使用してパッケージをインストールし、設定します：
 
 ```sh
 node ace add @adonisjs/mail
 
-# Pre-define transports to use via CLI flag
+# CLIフラグを使用して使用するトランスポートを事前に定義する
 node ace add @adonisjs/mail --transports=resend --transports=smtp
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを参照"}
 
-1. Installs the `@adonisjs/mail` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`@adonisjs/mail`パッケージをインストールします。
 
-2. Registers the following service provider and command inside the `adonisrc.ts` file.
+2. 次のサービスプロバイダとコマンドを`adonisrc.ts`ファイル内に登録します。
 
     ```ts
     {
       commands: [
-        // ...other commands
+        // ...他のコマンド
         () => import('@adonisjs/mail/commands')
       ],
       providers: [
-        // ...other providers
+        // ...他のプロバイダ
         () => import('@adonisjs/mail/mail_provider')
       ]
     }
     ```
-3. Create the `config/mail.ts` file.
+3. `config/mail.ts`ファイルを作成します。
 
-4. Defines the environment variables and their validations for the selected mail services
+4. 選択したメールサービスの環境変数とそのバリデーションを定義します。
 
 :::
 
 
-## Configuration
+## 設定
 
-The configuration for the mail package is stored inside the `config/mail.ts` file. Inside this file, you may configure multiple email services as `mailers` to use them within your application.
+メールパッケージの設定は`config/mail.ts`ファイルに保存されます。このファイル内で、複数のメールサービスを`mailers`として設定できます。
 
-See also: [Config stub](https://github.com/adonisjs/mail/blob/main/stubs/config/mail.stub)
+詳細はこちら：[Config stub](https://github.com/adonisjs/mail/blob/main/stubs/config/mail.stub)
 
 ```ts
 import env from '#start/env'
@@ -63,9 +63,7 @@ const mailConfig = defineConfig({
   default: 'smtp',
 
   /**
-   * A static address for the "from" property. It will be
-   * used unless an explicit from address is set on the
-   * Email
+   * "from"プロパティのための静的なアドレス。メールで明示的なfromアドレスが設定されていない場合に使用されます。
    */
   from: {
     address: '',
@@ -73,9 +71,7 @@ const mailConfig = defineConfig({
   },
 
   /**
-   * A static address for the "reply-to" property. It will be
-   * used unless an explicit replyTo address is set on the
-   * Email
+   * "reply-to"プロパティのための静的なアドレス。メールで明示的なreplyToアドレスが設定されていない場合に使用されます。
    */
   replyTo: {
     address: '',
@@ -83,9 +79,7 @@ const mailConfig = defineConfig({
   },
 
   /**
-   * The mailers object can be used to configure multiple mailers
-   * each using a different transport or the same transport with a different
-   * options.
+   * mailersオブジェクトは、異なるトランスポートまたは異なるオプションを使用する同じトランスポートを使用して複数のメーラーを設定するために使用できます。
    */
   mailers: {
     smtp: transports.smtp({
@@ -111,7 +105,7 @@ default
 
 <dd>
 
-The name of the mailer to use by default for sending emails.
+デフォルトでメールを送信するために使用するメーラーの名前。
 
 </dd>
 
@@ -123,7 +117,7 @@ from
 
 <dd>
 
-A static global address to use for the `from` property. The global address will be used unless an explicit `from` address is defined on the email.
+`from`プロパティに使用する静的なグローバルアドレス。メールで明示的な`from`アドレスが定義されていない場合に使用されます。
 
 </dd>
 
@@ -135,7 +129,7 @@ replyTo
 
 <dd>
 
-A static global address to use for the `reply-to` property. The global address will be used unless an explicit `replyTo` address is defined on the email.
+`reply-to`プロパティに使用する静的なグローバルアドレス。メールで明示的な`replyTo`アドレスが定義されていない場合に使用されます。
 
 </dd>
 
@@ -147,23 +141,23 @@ mailers
 
 <dd>
 
-The `mailers` object is used to configure one or more mailers you want to use for sending emails. You can switch between the mailers at runtime using the `mail.use` method.
+`mailers`オブジェクトは、メールを送信するために使用する1つ以上のメーラーを設定するために使用されます。`mail.use`メソッドを使用してメーラーを実行時に切り替えることができます。
 
 </dd>
 
 </dl>
 
-## Transports config
-Following is a complete reference of configuration options accepted by the officially supported transports.
+## トランスポートの設定
+公式にサポートされているトランスポートが受け入れる設定オプションの完全なリファレンスは次のとおりです。
 
-See also: [TypeScript types for config object](https://github.com/adonisjs/mail/blob/main/src/types.ts#L261)
+詳細はこちら：[TypeScript types for config object](https://github.com/adonisjs/mail/blob/main/src/types.ts#L261)
 
 <div class="disclosure_wrapper">
 
-:::disclosure{title="Mailgun config"}
+:::disclosure{title="Mailgunの設定"}
 <br />
 
-The following configuration options are sent to the Mailgun's [`/messages.mime`](https://documentation.mailgun.com/en/latest/api-sending.html#sending) API endpoint.
+次の設定オプションは、Mailgunの[`/messages.mime`](https://documentation.mailgun.com/en/latest/api-sending.html#sending)APIエンドポイントに送信されます。
 
 ```ts
 {
@@ -174,8 +168,7 @@ The following configuration options are sent to the Mailgun's [`/messages.mime`]
       domain: env.get('MAILGUN_DOMAIN'),
 
       /**
-       * The following options can be overridden at
-       * runtime when calling the `mail.send` method.
+       * メールの`mail.send`メソッドを呼び出す際にランタイムでオーバーライドできる次のオプション。
        */
       oDkim: true,
       oTags: ['transactional', 'adonisjs_app'],
@@ -185,12 +178,12 @@ The following configuration options are sent to the Mailgun's [`/messages.mime`]
       oTrackingClick: false,
       oTrackingOpens: false,
       headers: {
-        // h:prefixed headers
+        // h:プレフィックス付きヘッダー
       },
       variables: {
         appId: '',
         userId: '',
-        // v:prefixed variables
+        // v:プレフィックス付き変数
       }
     })
   }
@@ -199,10 +192,10 @@ The following configuration options are sent to the Mailgun's [`/messages.mime`]
 
 :::
 
-:::disclosure{title="SMTP config"}
+:::disclosure{title="SMTPの設定"}
 <br />
 
-The following configuration options are forwarded to Nodemailer as it is. So please check the [Nodemailer documentation](https://nodemailer.com/smtp/) as well.
+次の設定オプションは、Nodemailerにそのまま転送されます。そのため、[Nodemailerのドキュメント](https://nodemailer.com/smtp/)も参照してください。
 
 ```ts
 {
@@ -233,19 +226,19 @@ The following configuration options are forwarded to Nodemailer as it is. So ple
 
 :::
 
-:::disclosure{title="SES config"}
+:::disclosure{title="SESの設定"}
 <br />
 
-The following configuration options are forwarded to Nodemailer as it is. So please check the [Nodemailer documentation](https://nodemailer.com/transports/ses/) as well.
+次の設定オプションは、Nodemailerにそのまま転送されます。そのため、[Nodemailerのドキュメント](https://nodemailer.com/transports/ses/)も参照してください。
 
-Make sure to install the `@aws-sdk/client-ses` package to use the SES transport.
+SESトランスポートを使用するには、`@aws-sdk/client-ses`パッケージをインストールする必要があります。
 
 ```ts
 {
   mailers: {
     ses: transports.ses({
       /**
-       * Forwarded to aws sdk
+       * aws sdkに転送されます
        */
       apiVersion: '2010-12-01',
       region: 'us-east-1',
@@ -255,7 +248,7 @@ Make sure to install the `@aws-sdk/client-ses` package to use the SES transport.
       },
 
       /**
-       * Nodemailer specific
+       * Nodemailer固有の設定
        */
       sendingRate: 10,
       maxConnections: 5,
@@ -266,11 +259,11 @@ Make sure to install the `@aws-sdk/client-ses` package to use the SES transport.
 
 :::
 
-:::disclosure{title="SparkPost config"}
+:::disclosure{title="SparkPostの設定"}
 
 <br />
 
-The following configuration options are sent to the SparkPost's [`/transmissions`](https://developers.sparkpost.com/api/transmissions/#header-request-body) API endpoint.
+次の設定オプションは、SparkPostの[`/transmissions`](https://developers.sparkpost.com/api/transmissions/#header-request-body)APIエンドポイントに送信されます。
 
 ```ts
 {
@@ -280,8 +273,7 @@ The following configuration options are sent to the SparkPost's [`/transmissions
       key: env.get('SPARKPOST_API_KEY'),
 
       /**
-       * The following options can be overridden at
-       * runtime when calling the `mail.send` method.
+       * メールの`mail.send`メソッドを呼び出す際にランタイムでオーバーライドできる次のオプション。
        */
       startTime: new Date(),
       openTracking: false,
@@ -298,10 +290,10 @@ The following configuration options are sent to the SparkPost's [`/transmissions
 
 :::
 
-:::disclosure{title="Resend config"}
+:::disclosure{title="Resendの設定"}
 <br />
 
-The following configuration options are sent to the Resend's [`/emails`](https://resend.com/docs/api-reference/emails/send-email) API endpoint.
+次の設定オプションは、Resendの[`/emails`](https://resend.com/docs/api-reference/emails/send-email)APIエンドポイントに送信されます。
 
 ```ts
 {
@@ -311,8 +303,7 @@ The following configuration options are sent to the Resend's [`/emails`](https:/
       key: env.get('RESEND_API_KEY'),
 
       /**
-       * The following options can be overridden at
-       * runtime when calling the `mail.send` method.
+       * メールの`mail.send`メソッドを呼び出す際にランタイムでオーバーライドできる次のオプション。
        */
       tags: [
         {
@@ -328,13 +319,13 @@ The following configuration options are sent to the Resend's [`/emails`](https:/
 
 </div>
 
-## Basic example
+## 基本的な例
 
-Once the initial configuration is completed, you may send emails using the `mail.send` method. The mail service is a singleton instance of the [MailManager](https://github.com/adonisjs/mail/blob/main/src/mail_manager.ts) class created using the config file.
+初期設定が完了したら、`mail.send`メソッドを使用してメールを送信できます。メールサービスは、設定ファイルで構成された`default`メーラーのシングルトンインスタンスであり、[MailManager](https://github.com/adonisjs/mail/blob/main/src/mail_manager.ts)クラスのインスタンスです。
 
-The `mail.send` method passes an instance of the [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) class to the callback and delivers the email using the `default` mailer configured inside the config file.
+`mail.send`メソッドは、[Message](https://github.com/adonisjs/mail/blob/main/src/message.ts)クラスのインスタンスをコールバックに渡し、メールを`config`ファイルで構成された`default`メーラーを使用して配信します。
 
-In the following example, we trigger an email from the controller after creating a new user account.
+次の例では、新しいユーザーアカウントを作成した後、コントローラーからメールをトリガーしています。
 
 ```ts
 import User from '#models/user'
@@ -346,8 +337,7 @@ import mail from '@adonisjs/mail/services/main'
 export default class UsersController {
   async store({ request }: HttpContext) {
     /**
-     * For demonstration only. You should validate the data
-     * before storing it inside the database.
+     * デモンストレーションのためだけです。データをデータベースに保存する前にデータをバリデーションする必要があります。
      */
     const user = await User.create(request.all())
 
@@ -356,7 +346,7 @@ export default class UsersController {
       message
         .to(user.email)
         .from('info@example.org')
-        .subject('Verify your email address')
+        .subject('メールアドレスの確認')
         .htmlView('emails/verify_email', { user })
     })
     // highlight-end
@@ -364,10 +354,10 @@ export default class UsersController {
 }
 ```
 
-## Queueing emails
-Since sending emails can be time-consuming, you might want to push them to a queue and send emails in the background. You can do the same using the `mail.sendLater` method.
+## メールのキューイング
+メールの送信には時間がかかる場合があるため、キューに入れてバックグラウンドでメールを送信あります。`mail.sendLater`メソッドを使用して同じことができます。
 
-The `sendLater` method accepts the same parameters as the `send` method. However, instead of sending the email immediately, it will use the **Mail messenger** to queue it.
+`sendLater`メソッドは、`send`メソッドと同じパラメーターを受け入れます。ただし、メールを即座に送信する代わりに、**Mailメッセンジャー**を使用してキューに入れます。
 
 ```ts
 // delete-start
@@ -379,22 +369,22 @@ await mail.sendLater((message) => {
   message
     .to(user.email)
     .from('info@example.org')
-    .subject('Verify your email address')
+    .subject('メールアドレスの確認')
     .htmlView('emails/verify_email', { user })
 })
 ```
 
-By default, the **mail messenger uses an in-memory queue**, meaning the queue will drop the jobs if your process dies with pending jobs. This might not be a huge deal if your application UI allows re-sending emails with manual actions. However, you can always configure a custom messenger and use a database-backed queue.
+デフォルトでは、**mailメッセンジャーはインメモリキュー**を使用します。つまり、プロセスが保留中のジョブで終了すると、キューはジョブを破棄します。アプリケーションのUIが手動のアクションでメールの再送信を許可している場合、これは大きな問題ではありません。ただし、カスタムメッセンジャーを設定し、データベースをバックエンドキューとして使用することもできます。
 
-### Using bullmq for queueing emails
+### メールのキューイングにBullMQを使用する
 
 ```sh
 npm i bullmq
 ```
 
-In the following example, we use the `mail.setMessenger` method to configure a custom queue that uses `bullmq` under the hood for storing jobs.
+次の例では、`mail.setMessenger`メソッドを使用して、ジョブを保存するために`bullmq`を使用するカスタムキューを設定します。
 
-We store the compiled email, runtime configuration, and the mailer name inside the job. Later, we will use this data to send emails inside a worker process.
+ジョブにはコンパイルされたメール、ランタイム設定、およびメーラー名が含まれます。後でこれらのデータを使用してワーカープロセス内でメールを送信します。
 
 ```ts
 import { Queue } from 'bullmq'
@@ -419,13 +409,13 @@ mail.setMessenger((mailer) => {
 // highlight-end
 ```
 
-Finally, let's write the code for the queue Worker. Depending on your application workflow, you may have to start another process for the workers to process the jobs.
+最後に、キューワーカーのコードを記述します。アプリケーションのワークフローに応じて、ジョブを処理するために別のプロセスを起動する必要があるかもしれません。
 
-In the following example:
+次の例では：
 
-- We process jobs named `send_email` from the `emails` queue.
-- Access compiled mail message, runtime config, and the mailer name from the job data.
-- And send the email using the `mailer.sendCompiled` method.
+- `emails`キューから`send_email`という名前のジョブを処理します。
+- ジョブデータからコンパイルされたメール、ランタイム設定、およびメーラー名にアクセスします。
+- `mailer.sendCompiled`メソッドを使用してメールを送信します。
 
 ```ts
 import { Worker } from 'bullmq'
@@ -446,10 +436,10 @@ new Worker('emails', async (job) => {
 })
 ```
 
-That's all! You may continue using the `mail.sendLater` method. However, the emails will be queued inside a redis database this time.
+以上です！`mail.sendLater`メソッドを引き続き使用できます。ただし、今回はメールがredisデータベースにキューイングされます。
 
-## Switching between mailers
-You may switch between the configured mailers using the `mail.use` method. The `mail.use` method accepts the name of the mailer (as defined inside the config file) and returns an instance of the [Mailer](https://github.com/adonisjs/mail/blob/main/src/mailer.ts) class.
+## メーラーの切り替え
+`mail.use`メソッドを使用して、設定ファイルで定義されたメーラー間を切り替えることができます。`mail.use`メソッドは、メーラーの名前（設定ファイルで定義された名前）を受け入れ、[Mailer](https://github.com/adonisjs/mail/blob/main/src/mailer.ts)クラスのインスタンスを返します。
 
 ```ts
 import mail from '@adonisjs/mail/services/main'
@@ -457,8 +447,7 @@ import mail from '@adonisjs/mail/services/main'
 mail.use() // Instance of default mailer
 mail.use('mailgun') // Mailgun mailer instance
 ```
-
-You may call the `mailer.send` or `mailer.sendLater` methods to send email using a mailer instance. For example:
+以下の例では、メーラーインスタンスを使用してメールを送信するために `mailer.send` または `mailer.sendLater` メソッドを呼び出すことができます。
 
 ```ts
 await mail
@@ -474,29 +463,28 @@ await mail
   })
 ```
 
-The mailer instances are cached for the lifecycle of the process. You may use the `mail.close` method to destroy an existing instance and re-create a new instance from scratch.
+メーラーインスタンスはプロセスのライフサイクルの間キャッシュされます。既存のインスタンスを破棄し、新しいインスタンスをゼロから作成するために `mail.close` メソッドを使用できます。
 
 ```ts
 import mail from '@adonisjs/mail/services/main'
 
 /**
- * Close transport and remove instance from
- * cache
+ * トランスポートを閉じてインスタンスをキャッシュから削除します
  */
 await mail.close('mailgun')
 
 /**
- * Create a fresh instance
+ * 新しいインスタンスを作成します
  */
 mail.use('mailgun')
 ```
 
-## Configuring the template engine
-By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.§
+## テンプレートエンジンの設定
+デフォルトでは、メールパッケージはメールの **HTML** および **プレーンテキスト** コンテンツを定義するために [Edge テンプレートエンジン](../views-and-templates/introduction.md#configuring-edge) を使用するように設定されています。
 
-However, as shown in the following example, you may also register a custom template engine by overriding the `Message.templateEngine` property.
+ただし、次の例に示すように、`Message.templateEngine` プロパティをオーバーライドしてカスタムテンプレートエンジンを登録することもできます。
 
-See also: [Defining email contents](#defining-email-contents)
+参照: [メールコンテンツの定義](#defining-email-contents)
 
 ```ts
 import { Message } from '@adonisjs/mail'
@@ -508,12 +496,12 @@ Message.templateEngine = {
 }
 ```
 
-## Events
-Please check the [events reference guide](../references/events.md#mailsending) to view the list of events dispatched by the `@adonisjs/mail` package.
+## イベント
+`@adonisjs/mail` パッケージによってディスパッチされるイベントのリストを表示するには、[イベントリファレンスガイド](../references/events.md#mailsending)を参照してください。
 
-## Configuring message
+## メッセージの設定
 
-The properties of an email are defined using the [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) class. An instance of this class is provided to the callback function created using the `mail.send`, or `mail.sendLater` methods.
+メールのプロパティは、`mail.send` または `mail.sendLater` メソッドを使用して作成されたコールバック関数に提供される [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) クラスを使用して定義されます。
 
 ```ts
 import { Message } from '@adonisjs/mail'
@@ -532,20 +520,20 @@ await mail.sendLater((message) => {
 })
 ```
 
-### Defining subject and sender
-You may define the email subject using the `message.subject` method and the email's sender using the `message.from` method.
+### 件名と送信元の定義
+`message.subject` メソッドを使用してメールの件名を定義し、`message.from` メソッドを使用してメールの送信元を定義できます。
 
 ```ts
 await mail.send((message) => {
   message
   // highlight-start
-    .subject('Verify your email address')
+    .subject('メールアドレスの確認')
     .from('info@example.org')
   // highlight-end
 })
 ```
 
-The `from` method accepts the email address as a string or an object with the sender name and the email address.
+`from` メソッドは、メールアドレスを文字列または送信者名とメールアドレスのオブジェクトとして受け入れます。
 
 ```ts
 message
@@ -555,7 +543,7 @@ message
   })
 ```
 
-The sender can also be defined globally within the config file. The global sender will be used if no explicit sender is defined for an individual message.
+送信者は、個々のメッセージに明示的な送信者が定義されていない場合に、グローバルに定義された設定ファイル内の送信者が使用されます。
 
 ```ts
 const mailConfig = defineConfig({
@@ -566,8 +554,8 @@ const mailConfig = defineConfig({
 })
 ```
 
-### Defining recipients
-You may define the email recipients using the `message.to`, `message.cc`, and the `message.bcc` methods. These methods accept the email address as a string or an object with the recipient name and the email address.
+### 受信者の定義
+`message.to`、`message.cc`、および `message.bcc` メソッドを使用してメールの受信者を定義できます。これらのメソッドは、メールアドレスを文字列または受信者名とメールアドレスのオブジェクトとして受け入れます。
 
 ```ts
 await mail.send((message) => {
@@ -596,7 +584,7 @@ await mail.send((message) => {
 })
 ```
 
-You can define multiple `cc` and `bcc` recipients as an array of email addresses or an object with email addresses and the recipient name.
+複数の `cc` および `bcc` 受信者を、メールアドレスの配列またはメールアドレスと受信者名のオブジェクトの配列として定義できます。
 
 ```ts
 await mail.send((message) => {
@@ -615,7 +603,7 @@ await mail.send((message) => {
 })
 ```
 
-You may also define the `replyTo` email address using the `message.replyTo` method.
+`message.replyTo` メソッドを使用して `replyTo` メールアドレスを定義することもできます。
 
 ```ts
 await mail.send((message) => {
@@ -627,61 +615,61 @@ await mail.send((message) => {
 })
 ```
 
-### Defining email contents
-You may define the **HTML** and **Plain text** contents for an email using `message.html` or `message.text` methods.
+### メールのコンテンツの定義
+`message.html` または `message.text` メソッドを使用してメールの **HTML** および **プレーンテキスト** コンテンツを定義できます。
 
 ```ts
 await mail.send((message) => {
   /**
-   * HTML contents
+   * HTML コンテンツ
    */
   message.html(`
-    <h1> Verify email address </h1>
-    <p> <a href="https://myapp.com">Click here</a> to verify your email address </a>
+    <h1> メールアドレスの確認 </h1>
+    <p> <a href="https://myapp.com">こちらをクリック</a>してメールアドレスを確認してください</a>
   `)
 
   /**
-   * Plain text contents
+   * プレーンテキストコンテンツ
    */
   message.text(`
-    Verify email address
-    Please visit https://myapp.com to verify your email address
+    メールアドレスの確認
+    メールアドレスを確認するには、https://myapp.com にアクセスしてください
   `)
 })
 ```
 
-#### Using Edge templates
+#### Edge テンプレートの使用
 
-Since writing inline content could be cumbersome, you may use Edge templates instead. If you have already [configured Edge](../views-and-templates/introduction.md#configuring-edge), you may use the `message.htmlView` and `message.textView` methods to render templates.
+インラインコンテンツを記述することは煩雑な場合があるため、代わりにEdgeテンプレートを使用することもできます。すでに [Edge の設定](../views-and-templates/introduction.md#configuring-edge) を行っている場合は、`message.htmlView` および `message.textView` メソッドを使用してテンプレートをレンダリングできます。
 
 ```sh
-// title: Create templates
+// title: テンプレートの作成
 node ace make:view emails/verify_email_html
 node ace make:view emails/verify_email_text
 ```
 
 ```ts
-// title: Use them for defining contents
+// title: コンテンツの定義に使用する
 await mail.send((message) => {
   message.htmlView('emails/verify_email_html', stateToShare)
   message.textView('emails/verify_email_text', stateToShare)
 })
 ```
 
-#### Using MJML for email markup
-MJML is a markup language for creating emails without writing all the complex HTML to make your emails look good in every email client.
+#### メールマークアップのための MJML の使用
+MJMLは、すべてのメールクライアントでメールが見栄え良く表示されるようにするための複雑なHTMLを書かずにメールを作成するためのマークアップ言語です。
 
-The first step is to install the [mjml](https://npmjs.com/mjml) package from npm.
+まず、[mjml](https://npmjs.com/mjml) パッケージをnpmからインストールします。
 
 ```sh
 npm i mjml
 ```
 
-Once done, you can write MJML markup inside your Edge templates by wrapping it inside the `@mjml` tag.
+インストールが完了したら、Edgeテンプレート内でMJMLマークアップを記述するために`@mjml`タグで囲むことができます。
 
 :::note
 
-Since the output of MJML contains the `html`, `head`, and `body` tags, it is unnecessary to define them within your Edge templates.
+MJMLの出力には`html`、`head`、および`body`タグが含まれているため、Edgeテンプレート内でこれらを定義する必要はありません。
 
 :::
 
@@ -701,7 +689,7 @@ Since the output of MJML contains the `html`, `head`, and `body` tags, it is unn
 @end
 ```
 
-You may pass the [MJML configuration options](https://documentation.mjml.io/#inside-node-js) as props to the `@mjml` tag.
+`@mjml` タグに [MJML の設定オプション](https://documentation.mjml.io/#inside-node-js) をプロップスとして渡すこともできます。
 
 ```edge
 @mjml({
@@ -712,8 +700,8 @@ You may pass the [MJML configuration options](https://documentation.mjml.io/#ins
 })
 ```
 
-### Attaching files
-You may use the `message.attach` method to send attachments in an email. The `attach` method accepts an absolute path or a file system URL of a file you want to send as an attachment.
+### ファイルの添付
+`message.attach` メソッドを使用して、メールに添付ファイルを送信できます。`attach` メソッドは、添付ファイルの絶対パスまたはファイルシステムのURLを受け入れます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -723,7 +711,7 @@ await mail.send((message) => {
 })
 ```
 
-You may define the filename for the attachment using the `options.filename` property.
+`options.filename` プロパティを使用して添付ファイルのファイル名を定義することもできます。
 
 ```ts
 message.attach(app.makePath('uploads/invoice.pdf'), {
@@ -731,43 +719,43 @@ message.attach(app.makePath('uploads/invoice.pdf'), {
 })
 ```
 
-The complete list of options accepted by the `message.attach` method follows.
+`message.attach` メソッドが受け入れるオプションの完全なリストは次のとおりです。
 
 <table>
 <thead>
 <tr>
-<th>Option</th>
-<th>Description</th>
+<th>オプション</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><code>filename</code></td>
-<td>The display name for the attachment. Defaults to the basename of the attachment path.</td>
+<td>添付ファイルの表示名。デフォルトは添付ファイルパスのベース名です。</td>
 </tr>
 <tr>
 <td><code>contentType</code></td>
-<td>The content type for the attachment. If not set, the <code>contentType</code> will be inferred from the file extension.</td>
+<td>添付ファイルのコンテンツタイプ。設定されていない場合、<code>contentType</code> はファイルの拡張子から推測されます。</td>
 </tr>
 <tr>
 <td><code>contentDisposition</code></td>
-<td>Content disposition type for the attachment. Defaults to <code>attachment</code></td>
+<td>添付ファイルのコンテンツディスポジションタイプ。デフォルトは <code>attachment</code> です</td>
 </tr>
 <tr>
 <td><code>headers</code></td>
 <td>
-<p>Custom headers for the attachment node. The headers property is a key-value pair</p>
+<p>添付ファイルノードのカスタムヘッダー。ヘッダープロパティはキーと値のペアです</p>
 </td>
 </tr>
 </tbody></table>
 
-#### Attaching files from streams and buffers
-You may create email attachments from streams and buffers using the `message.attachData` method. The method accepts a readable stream or the buffer as the first argument and the options object as the second argument.
+#### ストリームとバッファからのファイルの添付
+`message.attachData` メソッドを使用して、ストリームとバッファからメール添付ファイルを作成できます。メソッドは、読み込み可能なストリームまたはバッファを第1引数として、オプションオブジェクトを第2引数として受け入れます。
 
 :::note
 
-The `message.attachData` method should not be used when queueing emails using the `mail.sendLater` method. Since queued jobs are serialized and persisted inside a database, attaching raw data will increase the storage size.
+`message.attachData` メソッドは、`mail.sendLater` メソッドを使用してメールをキューに入れる場合には使用しないでください。キューに入れられたジョブはシリアライズされ、データベース内に永続化されるため、生データを添付するとストレージサイズが増加します。
 
-Moreover, queueing an email will fail if you attach a stream using the `message.attachData` method.
+また、`message.attachData` メソッドを使用してストリームを添付すると、メールのキューイングが失敗します。
 :::
 
 ```ts
@@ -783,8 +771,8 @@ message.attach(Buffer.from('aGVsbG8gd29ybGQh'), {
 })
 ```
 
-### Embedding images
-You may embed images within the contents of your email using the `embedImage` view helper. The `embedImage` method under the hood uses [CID](https://sendgrid.com/en-us/blog/embedding-images-emails-facts#1-cid-embedded-images-inline-images) to mark the image as an attachment and uses its content id as the source of the image.
+### 画像の埋め込み
+`embedImage` ビューヘルパーを使用して、メールのコンテンツ内に画像を埋め込むことができます。`embedImage` メソッドは、画像を添付ファイルとしてマークし、そのコンテンツIDを画像のソースとして使用します。
 
 ```edge
 <img src="{{
@@ -792,13 +780,13 @@ You may embed images within the contents of your email using the `embedImage` vi
 }}" />
 ```
 
-Following will be the output HTML
+以下が出力されるHTMLです。
 
 ```html
 <img src="cid:a-random-content-id" />
 ```
 
-The following attachment will be defined automatically on the email payload.
+次の添付ファイルが自動的にメールペイロードに定義されます。
 
 ```ts
 {
@@ -810,9 +798,9 @@ The following attachment will be defined automatically on the email payload.
 }
 ```
 
-#### Embedding images from buffers
+#### バッファから画像を埋め込む
 
-Like the `embedImage` method, you may use the `embedImageData` method to embed an image from raw data.
+`embedImage` メソッドと同様に、`embedImageData` メソッドを使用して生データから画像を埋め込むことができます。
 
 ```edge
 <img src="{{
@@ -820,8 +808,8 @@ Like the `embedImage` method, you may use the `embedImageData` method to embed a
 }}" />
 ```
 
-### Attaching calendar events
-You may attach calendar events to an email using the `message.icalEvent` method. The `icalEvent` method accepts the event contents as the first parameter and the `options` object as the second parameter.
+### カレンダーイベントの添付
+`message.icalEvent` メソッドを使用して、メールにカレンダーイベントを添付できます。`icalEvent` メソッドは、最初のパラメータとしてイベントの内容、2番目のパラメータとして `options` オブジェクトを受け入れます。
 
 ```ts
 const contents = 'BEGIN:VCALENDAR\r\nPRODID:-//ACME/DesktopCalendar//EN\r\nMETHOD:REQUEST\r\n...'
@@ -834,16 +822,16 @@ await mail.send((message) => {
 })
 ```
 
-Since defining the event file contents manually can be cumbersome, you may pass a callback function to the `icalEvent` method and generate the invite contents using JavaScript API.
+イベントファイルの内容を手動で定義するのは煩雑な場合があるため、`icalEvent` メソッドにコールバック関数を渡し、JavaScript APIを使用して招待内容を生成することもできます。
 
-The `calendar` object provided to the callback function is a reference of the [ical-generator](https://www.npmjs.com/package/ical-generator) npm package, so make sure to go through the package's README file as well.
+コールバック関数に提供される `calendar` オブジェクトは、[ical-generator](https://www.npmjs.com/package/ical-generator)npmパッケージの参照ですので、パッケージのREADMEファイルも参照してください。
 
 ```ts
 message.icalEvent((calendar) => {
   // highlight-start
   calendar
     .createEvent({
-      summary: 'Adding support for ALS',
+      summary: 'ALS のサポートを追加',
       start: DateTime.local().plus({ minutes: 30 }),
       end: DateTime.local().plus({ minutes: 60 }),
     })
@@ -854,8 +842,8 @@ message.icalEvent((calendar) => {
 })
 ```
 
-#### Reading invite contents from a file or a URL
-You may define the invite contents from a file or an HTTP URL using the `icalEventFromFile` or `icalEventFromUrl` methods.
+#### ファイルまたは URL からの招待内容の読み取り
+`icalEventFromFile` メソッドまたは `icalEventFromUrl` メソッドを使用して、ファイルまたは HTTP URL から招待内容を定義できます。
 
 ```ts
 message.icalEventFromFile(
@@ -877,29 +865,29 @@ message.icalEventFromFile(
 )
 ```
 
-### Defining email headers
-You may define additional email headers using the `message.header` method. The method accepts the header key as the first parameter and the value as the second parameter.
+### メールヘッダの定義
+`message.header` メソッドを使用して、追加のメールヘッダを定義できます。メソッドは、第1パラメータとしてヘッダキー、第2パラメータとして値を受け入れます。
 
 ```ts
-message.header('x-my-key', 'header value')
+message.header('x-my-key', 'ヘッダの値')
 
 /**
- * Define an array of values
+ * 値の配列を定義することもできます
  */
-message.header('x-my-key', ['header value', 'another value'])
+message.header('x-my-key', ['ヘッダの値', '別の値'])
 ```
 
-By default, the email headers are encoded and folded to meet the requirement of having plain ASCII messages with lines no longer than 78 bytes. However, if you want to bypass the encoding rules, you may set a header using the `message.preparedHeader` method.
+デフォルトでは、メールヘッダはエンコードされ、78バイトを超えないプレーンASCIIメッセージの要件を満たすために折り返されます。ただし、エンコーディングルールをバイパスしたい場合は、`message.preparedHeader` メソッドを使用してヘッダを設定することもできます。
 
 ```ts
 message.preparedHeader(
   'x-unprocessed',
-  'a really long header or value with non-ascii characters 👮',
+  '非ASCII文字を含む非常に長いヘッダまたは値 👮',
 )
 ```
 
-### Defining `List` headers
-The message class includes helper methods to define complex headers like [List-Unsubscribe](https://sendgrid.com/en-us/blog/list-unsubscribe) or [List-Help](https://support.optimizely.com/hc/en-us/articles/4413200569997-Setting-up-the-List-Help-header#heading-2) with ease. You can learn about the encoding rules for `List` headers on the [nodemailer website](https://nodemailer.com/message/list-headers/).
+### `List` ヘッダの定義
+メッセージクラスには、[List-Unsubscribe](https://sendgrid.com/en-us/blog/list-unsubscribe)や[List-Help](https://support.optimizely.com/hc/en-us/articles/4413200569997-Setting-up-the-List-Help-header#heading-2) のような複雑なヘッダを簡単に定義するためのヘルパーメソッドが用意されています。`List`ヘッダのエンコーディングルールについては、[nodemailerのウェブサイト](https://nodemailer.com/message/list-headers/)を参照してください。
 
 ```ts
 message.listHelp('admin@example.com?subject=help')
@@ -909,44 +897,44 @@ message.listHelp('admin@example.com?subject=help')
 ```ts
 message.listUnsubscribe({
   url: 'http://example.com',
-  comment: 'Comment'
+  comment: 'コメント'
 })
-// List-Unsubscribe: <http://example.com> (Comment)
+// List-Unsubscribe: <http://example.com> (コメント)
 ```
 
 ```ts
 /**
- * Repeating header multiple times
+ * ヘッダを複数回繰り返す
  */
 message.listSubscribe('admin@example.com?subject=subscribe')
 message.listSubscribe({
   url: 'http://example.com',
-  comment: 'Subscribe'
+  comment: '購読'
 })
 // List-Subscribe: <mailto:admin@example.com?subject=subscribe>
-// List-Subscribe: <http://example.com> (Subscribe)
+// List-Subscribe: <http://example.com> (購読)
 ```
 
-For all other arbitrary `List` headers, you may use the `addListHeader` method.
+その他の任意の `List` ヘッダについては、`addListHeader` メソッドを使用できます。
 
 ```ts
 message.addListHeader('post', 'http://example.com/post')
 // List-Post: <http://example.com/post>
 ```
 
-## Class-based emails
+## クラスベースのメール
 
-Instead of writing emails inside the `mail.send` method closure, you may move them to dedicated mail classes for better organization and [easier testing](#testing-mail-classes).
+`mail.send` メソッドのクロージャ内でメールを記述する代わりに、より良い組織化と[簡単なテスト](#テストメールクラス)のために、専用のメールクラスに移動できます。
 
-The mail classes are stored inside the `./app/mails` directory, and each file represents a single email. You may create a mail class by running the `make:mail` ace command.
+メールクラスは `./app/mails` ディレクトリに保存され、各ファイルが1つのメールを表します。`make:mail` aceコマンドを実行してメールクラスを作成できます。
 
-See also: [Make mail command](../references/commands.md#makemail)
+参照: [メール作成コマンド](../references/commands.md#makemail)
 
 ```sh
 node ace make:mail verify_email
 ```
 
-The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts) class and is scaffolded with following properties and methods. You may configure the mail message inside the `prepare` method using the `this.message` property.
+メールクラスは [BaseMail](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts) クラスを拡張し、以下のプロパティとメソッドが用意されています。`prepare` メソッド内で `this.message` プロパティを使用してメールメッセージを設定できます。
 
 ```ts
 import User from '#models/user'
@@ -972,7 +960,7 @@ from
 
 <dd>
 
-Configure the sender's email address. If you omit this property, you must call the `message.from` method to define the sender.
+送信者のメールアドレスを設定します。このプロパティを省略する場合は、送信者を定義するために `message.from` メソッドを呼び出す必要があります。
 
 </dd>
 
@@ -984,7 +972,7 @@ subject
 
 <dd>
 
-Configure the email subject. If you omit this property, you must use the `message.subject` method to define the email subject.
+メールの件名を設定します。このプロパティを省略する場合は、`message.subject` メソッドを使用してメールの件名を定義する必要があります。
 
 </dd>
 
@@ -996,7 +984,7 @@ replyTo
 
 <dd>
 
-Configure the `replyTo` email address.
+`replyTo` のメールアドレスを設定します。
 
 </dd>
 
@@ -1008,33 +996,33 @@ prepare
 
 <dd>
 
-The `prepare` method is called automatically by the `build` method to prepare the mail message for sending.
+`prepare` メソッドは、`build` メソッドによって自動的に呼び出され、メールメッセージの送信の準備をします。
 
-You must define the email contents, attachments, recipients, etc, within this method.
+このメソッド内でメールの内容、添付ファイル、受信者などを定義する必要があります。
 
 </dd>
 
 <dt>
 
-build :span[Inherited]{class="badge"}
+build :span[継承]{class="badge"}
 
 </dt>
 
 <dd>
 
-The `build` method is inherited from the `BaseMail` class. The method is called automatically at the time of sending the email.
+`build` メソッドは `BaseMail` クラスから継承されたメソッドです。このメソッドはメールの送信時に自動的に呼び出されます。
 
-Make sure to reference the [original implementation](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts#L81) if you decide to override this method.
+このメソッドをオーバーライドする場合は、[元の実装](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts#L81)を参照してください。
 
 </dd>
 
 </dl>
 
-### Sending email using the mail class
-You may call the `mail.send` method and pass it an instance of the mail class to send the email. For example:
+### メールクラスを使用してメールを送信する
+`mail.send` メソッドを呼び出し、メールクラスのインスタンスを渡すことでメールを送信できます。例:
 
 ```ts
-// title: Send mail
+// title: メールを送信する
 import mail from '@adonisjs/mail/services/main'
 import VerifyEmailNotification from '#mails/verify_email'
 
@@ -1042,32 +1030,32 @@ await mail.send(new VerifyEmailNotification())
 ```
 
 ```ts
-// title: Queue mail
+// title: メールをキューに入れる
 import mail from '@adonisjs/mail/services/main'
 import VerifyEmailNotification from '#mails/verify_email'
 
 await mail.sendLater(new VerifyEmailNotification())
 ```
 
-You may share data with the mail class using constructor arguments. For example:
+メールクラスにデータを共有する場合は、コンストラクタ引数を使用してデータを渡すことができます。例:
 
 ```ts
 /**
- * Creating a user
+ * ユーザーを作成する
  */
 const user = await User.create(payload)
 
 await mail.send(
   /**
-   * Passing user to the mail class
+   * メールクラスにユーザーを渡す
    */
   new VerifyEmailNotification(user)
 )
 ```
 
-### Testing mail classes
+### メールクラスのテスト
 
-One of the primary benefits of using [Mail classes](#class-based-emails) is a better testing experience. You can build mail classes without sending them and write assertions for the message properties.
+[メールクラス](#クラスベースのメール)を使用する主な利点の1つは、テストの経験が向上することです。メールを送信せずにメールクラスをビルドし、メッセージのプロパティに対してアサーションを記述できます。
 
 ```ts
 import { test } from '@japa/runner'
@@ -1078,15 +1066,13 @@ test.group('Verify email notification', () => {
     const email = new VerifyEmailNotification()
 
     /**
-     * Build email message and render templates to
-     * compute the email HTML and plain text
-     * contents
+     * メールメッセージをビルドし、テンプレートをレンダリングして
+     * メールのHTMLとプレーンテキストの内容を計算します
      */
     await email.buildWithContents()
 
     /**
-     * Write assertions to ensure the message is built
-     * as expected
+     * メッセージが期待どおりにビルドされたことを確認するためのアサーションを記述します
      */
     email.message.assertTo('user@example.org')
     email.message.assertFrom('info@example.org')
@@ -1096,7 +1082,7 @@ test.group('Verify email notification', () => {
 })
 ```
 
-You may write assertions for the message contents as follows.
+次のようにメッセージの内容に対してアサーションを記述することもできます。
 
 ```ts
 const email = new VerifyEmailNotification()
@@ -1104,13 +1090,13 @@ await email.buildWithContents()
 
 // highlight-start
 email.message.assertHtmlIncludes(
-  `<a href="/emails/1/verify"> Verify email address </a>`
+  `<a href="/emails/1/verify"> メールアドレスを確認する </a>`
 )
-email.message.assertTextIncludes('Verify email address')
+email.message.assertTextIncludes('メールアドレスを確認する')
 // highlight-end
 ```
 
-Also, you may write assertions for the attachments. The assertions only work with file-based attachments and not for streams or raw content.
+また、添付ファイルに対してもアサーションを記述できます。アサーションはファイルベースの添付ファイルに対してのみ機能し、ストリームや生データには対応していません。
 
 ```ts
 const email = new VerifyEmailNotification()
@@ -1123,16 +1109,16 @@ email.message.assertAttachment(
 // highlight-end
 ```
 
-Feel free to look at the [Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) class source code for all the available assertion methods.
+利用可能なアサーションメソッドの一覧については、[Message](https://github.com/adonisjs/mail/blob/main/src/message.ts) クラスのソースコードを参照してください。
 
-## Fake mailer
-You may want to use the Fake mailer during testing to prevent your application from sending emails. The Fake mailer collects all outgoing emails within memory and offers an easy-to-use API for writing assertions against them.
+## フェイクメーラー
+テスト中にメールを送信しないようにするために、フェイクメーラーを使用できます。フェイクメーラーは、メモリ内で送信されたすべてのメールを収集し、それらに対してアサーションを行うための使いやすいAPIを提供します。
 
-In the following example:
+次の例では、以下の手順でフェイクメーラーを使用します。
 
-- We start by creating an instance of the [FakeMailer](https://github.com/adonisjs/mail/blob/main/src/fake_mailer.ts) using the `mail.fake` method.
-- Next, we call the `/register` endpoint API.
-- Finally, we use the `mails` property from the fake mailer to assert the `VerifyEmailNotification` was sent.
+- `mail.fake` メソッドを使用して [FakeMailer](https://github.com/adonisjs/mail/blob/main/src/fake_mailer.ts) のインスタンスを作成します。
+- `/register` エンドポイントAPIを呼び出します。
+- フェイクメーラーの `mails` プロパティを使用して `VerifyEmailNotification` が送信されたことをアサートします。
 
 ```ts
 import { test } from '@japa/runner'
@@ -1143,13 +1129,13 @@ test.group('Users | register', () => {
   test('create a new user account', async ({ client, route }) => {
     // highlight-start
     /**
-     * Turn on the fake mode
+     * フェイクモードをオンにする
      */
     const { mails } = mail.fake()
     // highlight-end
 
     /**
-     * Make an API call
+     * APIコールを行う
      */
     await client
       .post(route('users.store'))
@@ -1157,28 +1143,26 @@ test.group('Users | register', () => {
 
     // highlight-start
     /**
-     * Assert the controller indeed sent the
-     * VerifyEmailNotification mail
+     * コントローラが VerifyEmailNotification メールを送信したことをアサートする
      */
     mails.assertSent(VerifyEmailNotification, ({ message }) => {
       return message
         .hasTo(userData.email)
-        .hasSubject('Verify email address')
+        .hasSubject('メールアドレスの確認')
     })
     // highlight-end
   })
 })
 ```
 
-Once you are done writing the test, you must restore the fake using the `mail.restore` method.
+テストの記述が終わったら、`mail.restore` メソッドを使用してフェイクを元に戻す必要があります。
 
 ```ts
 test('create a new user account', async ({ client, route, cleanup }) => {
   const { mails } = mail.fake()
 
   /**
-   * The cleanup hooks are executed after the test
-   * finishes successfully or with an error.
+   * cleanupフックは、テストが正常に終了するかエラーが発生すると実行されます。
    */
   cleanup(() => {
     mail.restore()
@@ -1186,22 +1170,22 @@ test('create a new user account', async ({ client, route, cleanup }) => {
 })
 ```
 
-### Writing assertions
+### アサーションの記述
 
-The `mails.assertSent` method accepts the mail class constructor as the first argument and throws an exception when unable to find any emails for the expected class.
+`mails.assertSent` メソッドは、メールクラスのコンストラクタを最初の引数として受け入れ、期待されるクラスのメールが見つからない場合に例外をスローします。
 
 ```ts
 const { mails } = mail.fake()
 
 /**
- * Asser the email was sent
+ * メールが送信されたことをアサートする
  */
 mails.assertSent(VerifyEmailNotification)
 ```
 
-You may pass a callback function to the `assertSent` method to further check if the email was sent to the expected recipient or has correct subject.
+`assertSent` メソッドにコールバック関数を渡すことで、メールが期待される受信者に送信されたか、正しい件名を持っているかなどをさらにチェックできます。
 
-The callback function receives an instance of the mail class and you can use the `.message` property to get access to the [message](#configuring-message) object.
+コールバック関数はメールクラスのインスタンスを受け取り、`.message` プロパティを使用して [message](#configuring-message) オブジェクトにアクセスできます。
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {
@@ -1209,25 +1193,24 @@ mails.assertSent(VerifyEmailNotification, (email) => {
 })
 ```
 
-You may run assertions on the `message` object within the callback. For example:
+コールバック内で `message` オブジェクトに対してアサーションを実行できます。例:
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {
   email.message.assertTo(userData.email)
   email.message.assertFrom('info@example.org')
-  email.message.assertSubject('Verify your email address')
+  email.message.assertSubject('メールアドレスの確認')
 
   /**
-   * All assertions passed, so return true to consider the
-   * email as sent.
+   * すべてのアサーションがパスしたため、メールが送信されたとみなすために true を返します。
    */
   return true
 })
 ```
 
-#### Assert email was not sent
+#### 送信されなかったことをアサートする
 
-You may use the `mails.assertNotSent` method to assert an email was not sent during the test. This method is the opposite of the `assertSent` method and accepts the same arguments.
+`mails.assertNotSent` メソッドを使用して、メールが送信されなかったことをアサートできます。このメソッドは `assertSent` メソッドの逆であり、同じ引数を受け入れます。
 
 ```ts
 const { mails } = mail.fake()
@@ -1235,68 +1218,65 @@ const { mails } = mail.fake()
 mails.assertNotSent(PasswordResetNotification)
 ```
 
-#### Assert emails count
+#### 送信されたメールの数をアサートする
 
-Finally, you can assert the count of sent emails using the `assertSentCount` and `assertNoneSent` methods.
+最後に、`assertSentCount` メソッドと `assertNoneSent` メソッドを使用して送信されたメールの数をアサートできます。
 
 ```ts
 const { mails } = mail.fake()
 
-// Assert 2 emails were sent in total
+// 2通のメールが合計で送信されたことをアサートする
 mails.assertSentCount(2)
 
-// Assert only one VerifyEmailNotification was sent
+// VerifyEmailNotification が1回だけ送信されたことをアサートする
 mails.assertSentCount(VerifyEmailNotification, 1)
 ```
 
 ```ts
 const { mails } = mail.fake()
 
-// Assert zero emails were sent
+// 送信されたメールがないことをアサートする
 mails.assertNoneSent()
 ```
 
-### Writing assertions for queued emails
+### キューに入れられたメールのアサート
 
-If you have queued emails using the `mail.sendLater` method, you may use the following methods to write assertions for them.
+`mail.sendLater` メソッドを使用してキューに入れられたメールがある場合、次のメソッドを使用してアサーションを記述できます。
 
 ```ts
 const { mails } = mail.fake()
 
 /**
- * Assert "VerifyEmailNotification" email was queued
- * Optionally, you may pass the finder function to
- * narrow down the email
+ * VerifyEmailNotification メールがキューに入れられたことをアサートする
+ * オプションで、メールを絞り込むためのファインダ関数を渡すこともできます
  */
 mails.assertQueued(VerifyEmailNotification)
 
 /**
- * Assert "VerifyEmailNotification" email was not queued
- * Optionally, you may pass the finder function to
- * narrow down the email
+ * PasswordResetNotification メールがキューに入れられなかったことをアサートする
+ * オプションで、メールを絞り込むためのファインダ関数を渡すこともできます
  */
 mails.assertNotQueued(PasswordResetNotification)
 
 /**
- * Assert two emails were queued in total.
+ * 合計2通のメールがキューに入れられたことをアサートする
  */
 mails.assertQueuedCount(2)
 
 /**
- * Assert "VerifyEmailNotification" email was queued
- * only once
+ * VerifyEmailNotification メールが1回だけキューに入れられたことをアサートする
  */
 mails.assertQueuedCount(VerifyEmailNotification , 1)
 
 /**
- * Assert nothing was queued
+ * キューに何も入っていないことをアサートする
  */
 mails.assertNoneQueued()
 ```
 
-### Getting a list of sent or queued emails
+### 送信またはキューに入れられたメールのリストを取得する
 
-You may use the `mails.sent` or `mails.queued` methods to get an array of emails sent/queued during tests.
+テスト中に送信/キューに入れられたメールの配列を取得するには、`mails.sent`または`mails.queued`メソッドを使用できます。
 
 ```ts
 const { mails } = mail.fake()
@@ -1311,21 +1291,21 @@ const email = sentEmails.find((email) => {
 if (email) {
   email.message.assertTo(userData.email)
   email.message.assertFrom(userData.email)
-  email.message.assertHtmlIncludes('<a href="/verify/email"> Verify your email address</a>')
+  email.message.assertHtmlIncludes('<a href="/verify/email"> メールアドレスを確認する</a>')
 }
 ```
 
-## Creating custom transports
+## カスタムトランスポートの作成
 
-AdonisJS Mail transports are built on top of [Nodemailer transports](https://nodemailer.com/plugins/create/#transports); therefore, you must create/use a nodemailer transport before you can register it with the Mail package.
+AdonisJSメールトランスポートは、[Nodemailerトランスポート](https://nodemailer.com/plugins/create/#transports)を基にして構築されているため、Mailパッケージに登録する前にNodemailerトランスポートを作成/使用する必要があります。
 
-In this guide, we will wrap the [nodemailer-postmark-transport](https://www.npmjs.com/package/nodemailer-postmark-transport) to an AdonisJS Mail transport.
+このガイドでは、[nodemailer-postmark-transport](https://www.npmjs.com/package/nodemailer-postmark-transport)をAdonisJSメールトランスポートにラップします。
 
 ```sh
 npm i nodemailer nodemailer-postmark-transport
 ```
 
-As you can see in the following example, the heavy lifting of sending an email is done by the `nodemailer`. The AdonisJS transport acts as an adapter forwarding the message to nodemailer and normalizing its response to an instance of [MailResponse](https://github.com/adonisjs/mail/blob/main/src/mail_response.ts).
+以下の例では、メールの送信は`nodemailer`によって行われます。AdonisJSトランスポートは、メッセージをnodemailerに転送し、その応答を[MailResponse](https://github.com/adonisjs/mail/blob/main/src/mail_response.ts)のインスタンスに正規化します。
 
 ```ts
 import nodemailer from 'nodemailer'
@@ -1338,7 +1318,7 @@ import type {
 } from '@adonisjs/mail/types'
 
 /**
- * Configuration accepted by the transport
+ * トランスポートが受け入れる設定
  */
 export type PostMarkConfig = {
   auth: {
@@ -1347,7 +1327,7 @@ export type PostMarkConfig = {
 }
 
 /**
- * Transport implementation
+ * トランスポートの実装
  */
 export class PostMarkTransport implements MailTransportContract {
   #config: PostMarkConfig
@@ -1364,7 +1344,7 @@ export class PostMarkTransport implements MailTransportContract {
     config?: PostMarkConfig
   ): Promise<MailResponse> {
     /**
-     * Create nodemailer transport
+     * Nodemailerトランスポートを作成する
      */
     const transporter = this.#createNodemailerTransport({
       ...this.#config,
@@ -1372,22 +1352,22 @@ export class PostMarkTransport implements MailTransportContract {
     })
 
     /**
-     * Send email
+     * メールを送信する
      */
     const response = await transporter.sendMail(message)
 
     /**
-     * Normalize response to an instance of the "MailResponse" class
+     * 応答を「MailResponse」クラスのインスタンスに正規化する
      */
     return new MailResponse(response.messageId, response.envelope, response)
   }
 }
 ```
 
-### Creating the config factory function
-To reference the above transport inside the `config/mail.ts` file, you must create a factory function that returns an instance of the transport.
+### 設定ファクトリ関数の作成
+トランスポートを`config/mail.ts`ファイル内で参照するためには、トランスポートの実装を返すファクトリ関数を作成する必要があります。
 
-You may write the following code within the same file as your transport's implementation.
+トランスポートの実装と同じファイルに以下のコードを書くことができます。
 
 ```ts
 import type {
@@ -1407,8 +1387,8 @@ export function postMarkTransport(
 }
 ```
 
-### Using the transport
-Finally, you can reference the transport inside your config file using the `postMarkTransport` helper.
+### トランスポートの使用
+最後に、`postMarkTransport`ヘルパーを使用して設定ファイル内でトランスポートを参照できます。
 
 ```ts
 import env from '#start/env'

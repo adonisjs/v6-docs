@@ -1,49 +1,49 @@
 ---
-summary: Learn how to use Edge.js for templating in AdonisJS
+summary: AdonisJSでテンプレートエンジンのEdge.jsを使い方を学びます
 ---
 
 # EdgeJS
 
-Edge is a **simple**, **Modern**, and **batteries included** template engine created and maintained by the AdonisJS core team for Node.js. Edge is similar to writing JavaScript. If you know JavaScript, you know Edge.
+Edgeは、Node.js向けにAdonisJSのコアチームによって作成およびメンテナンスされている、**シンプル**で**モダン**かつ**機能満載**のテンプレートエンジンです。EdgeはJavaScriptのように書くことができます。JavaScriptを知っていれば、Edgeも知っています。
 
 :::note
-The documentation for Edge is available on [https://edgejs.dev](https://edgejs.dev)
+Edgeのドキュメントは[https://edgejs.dev](https://edgejs.dev)で利用できます。
 :::
 
-## Installation
+## インストール
 
-Install and configure Edge using the following command.
+以下のコマンドを使用してEdgeをインストールおよび設定します。
 
 ```sh
 node ace add edge
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを確認"}
 
-1. Installs the `edge.js` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`edge.js`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のサービスプロバイダを登録します。
 
-    ```ts
-    {
-      providers: [
-        // ...other providers
-        () => import('@adonisjs/core/providers/edge_provider')
-      ]
-    }
-    ```
+  ```ts
+  {
+    providers: [
+    // ...other providers
+    () => import('@adonisjs/core/providers/edge_provider')
+    ]
+  }
+  ```
 
 :::
 
-## Rendering your first template
+## 最初のテンプレートのレンダリング
 
-Once the configuration is completed, you can use Edge to render templates. Let's create a `welcome.edge` file inside the `resources/views` directory.
+設定が完了したら、Edgeを使用してテンプレートをレンダリングすることができます。`resources/views`ディレクトリ内に`welcome.edge`ファイルを作成しましょう。
 
 ```sh
 node ace make:view welcome
 ```
 
-Open the newly created file and write the following markup inside it.
+新しく作成されたファイルを開き、以下のマークアップを記述します。
 
 ```edge
 <!DOCTYPE html>
@@ -53,13 +53,13 @@ Open the newly created file and write the following markup inside it.
 </head>
 <body>
   <h1>
-    Hello world from {{ request.url() }} endpoint
+  Hello world from {{ request.url() }} endpoint
   </h1>
 </body>
 </html>
 ```
 
-Finally, let's register a route to render the template.
+最後に、テンプレートをレンダリングするためのルートを登録しましょう。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -69,15 +69,15 @@ router.get('/', async ({ view }) => {
 })
 ```
 
-You can also use the `router.on().render` method to render a template without assigning a callback to the route.
+また、`router.on().render`メソッドを使用して、コールバックをルートに割り当てずにテンプレートをレンダリングすることもできます。
 
 ```ts
 router.on('/').render('welcome')
 ```
 
-### Passing data to the template
+### テンプレートへのデータの渡し方
 
-You can pass data to the template by passing an object as the second argument to the `view.render` method.
+`view.render`メソッドの第2引数としてオブジェクトを渡すことで、テンプレートにデータを渡すことができます。
 
 ```ts
 router.get('/', async ({ view }) => {
@@ -85,8 +85,8 @@ router.get('/', async ({ view }) => {
 })
 ```
 
-## Configuring Edge
-You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory.
+## Edgeの設定
+Edgeにはプラグインを使用したり、グローバルヘルパーを追加したりすることができます。`start`ディレクトリ内に[preloadファイル](../concepts/adonisrc_file.md#preloads)を作成することで設定できます。
 
 ```sh
 node ace make:preload view
@@ -99,23 +99,23 @@ import env from '#start/env'
 import { edgeIconify } from 'edge-iconify'
 
 /**
- * Register a plugin
+ * プラグインを登録する
  */
 edge.use(edgeIconify)
 
 /**
- * Define a global property
+ * グローバルプロパティを定義する
  */
 edge.global('appUrl', env.get('APP_URL'))
 ```
 
-## Global helpers
+## グローバルヘルパー
 
-Please check the [Edge helpers reference guide](../references/edge.md) to view the list of helpers contributed by AdonisJS.
+AdonisJSが提供するヘルパーのリストは、[Edgeヘルパーのリファレンスガイド](../references/edge.md)を参照してください。
 
-## Learn more
+## 詳細を学ぶ
 
-- [Edge.js documentation](https://edgejs.dev)
-- [Components](https://edgejs.dev/docs/components/introduction)
-- [SVG icons](https://edgejs.dev/docs/edge-iconify)
-- [Adocasts Edge Series](https://adocasts.com/topics/edge)
+- [Edge.jsのドキュメント](https://edgejs.dev)
+- [コンポーネント](https://edgejs.dev/docs/components/introduction)
+- [SVGアイコン](https://edgejs.dev/docs/edge-iconify)
+- [Adocasts Edgeシリーズ](https://adocasts.com/topics/edge)

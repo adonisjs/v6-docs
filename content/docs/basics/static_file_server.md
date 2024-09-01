@@ -1,40 +1,39 @@
 ---
-summary: Serve static files from a given directory using the @adonisjs/static package.
+summary: \@adonisjs/staticパッケージを使用して指定されたディレクトリから静的ファイルを提供します。
 ---
 
-# Static files server
+# 静的ファイルサーバー
 
-You can serve static files from a given directory using the `@adonisjs/static` package. The package ships with a middleware that you must register in the [server middleware stack](./middleware.md#server-middleware-stack) to intercept the HTTP requests and serve files.
+`@adonisjs/static`パッケージを使用して、指定されたディレクトリから静的ファイルを提供できます。このパッケージには、HTTPリクエストをインターセプトしてファイルを提供するために、[サーバーミドルウェアスタック](./middleware.md#server-middleware-stack)に登録する必要があるミドルウェアが付属しています。
 
-## Installation
+## インストール
 
-The package comes pre-configured with the `web` starter kit. However, you can install and configure it as follows with other starter kits.
+パッケージは`web`スターターキットとして事前に設定されています。ただし、他のスターターキットでも以下のコマンドを使用してインストールおよび設定できます。
 
-
-Install and configure the package using the following command :
+以下のコマンドを使用してパッケージをインストールおよび設定します：
 
 ```sh
 node ace add @adonisjs/static
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行される手順を確認する"}
 
-1. Installs the `@adonisjs/static` package using the detected package manager.
+1. 検出されたパッケージマネージャーを使用して`@adonisjs/static`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のサービスプロバイダーを登録します。
 
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...他のプロバイダー
         () => import('@adonisjs/static/static_provider')
       ]
     }
     ```
 
-3. Create the `config/static.ts` file.
+3. `config/static.ts`ファイルを作成します。
 
-4. Registers the following middleware inside the `start/kernel.ts` file.
+4. `start/kernel.ts`ファイル内に以下のミドルウェアを登録します。
 
     ```ts
     server.use([
@@ -44,9 +43,9 @@ node ace add @adonisjs/static
 
 :::
 
-## Configuration
+## 設定
 
-The configuration for the static middleware is stored inside the `config/static.ts` file.
+静的ミドルウェアの設定は`config/static.ts`ファイルに保存されます。
 
 ```ts
 import { defineConfig } from '@adonisjs/static'
@@ -71,7 +70,7 @@ export default staticServerConfig
 
 <dd>
 
-Enable or disable the middleware temporarily without removing it from the middleware stack.
+ミドルウェアを一時的に有効または無効にすることなく、ミドルウェアスタックから一時的に削除するかどうかを設定します。
 
 </dd>
 
@@ -83,9 +82,9 @@ Enable or disable the middleware temporarily without removing it from the middle
 
 <dd>
 
-The `Accept-Range` header allows browsers to resume an interrupted file download instead of trying to restart the download. You can disable resumable downloads by setting `acceptsRanges` to `false`.
+`Accept-Range`ヘッダーは、ブラウザがダウンロードを再開する代わりにダウンロードを再開しようとする代わりに、中断されたファイルのダウンロードを再開することを許可します。`acceptsRanges`を`false`に設定することで、再開可能なダウンロードを無効にできます。
 
-Defaults to `true`.
+デフォルトは`true`です。
 
 </dd>
 
@@ -97,7 +96,7 @@ Defaults to `true`.
 
 <dd>
 
-Enable or disable the [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) header. The `immutable` and `maxAge` properties will be ignored when `cacheControl` is disabled.
+[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)ヘッダーを有効または無効にします。`cacheControl`が無効になっている場合、`immutable`および`maxAge`プロパティは無視されます。
 
 
 ```ts
@@ -116,11 +115,11 @@ Enable or disable the [Cache-Control](https://developer.mozilla.org/en-US/docs/W
 
 <dd>
 
-Define how to treat requests for dot files inside the `public` directory. You can set one of the following options.
+`public`ディレクトリ内のドットファイルのリクエストの扱い方を定義します。次のオプションのいずれかを設定できます。
 
-- `allow`: Serve the dot-file same as the other files.
-- `deny`: Deny the request with the `403` status code.
-- `ignore`: Pretend the file does not exist and respond with a `404` status code.
+- `allow`：他のファイルと同じようにドットファイルを提供します。
+- `deny`：`403`ステータスコードでリクエストを拒否します。
+- `ignore`：ファイルが存在しないかのように見せかけて`404`ステータスコードで応答します。
 
 ```ts
 {
@@ -140,7 +139,7 @@ Define how to treat requests for dot files inside the `public` directory. You ca
 <dd>
 
 
-Enable or disable [etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) generation.
+[etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)の生成を有効または無効にします。
 
 ```ts
 {
@@ -159,7 +158,7 @@ Enable or disable [etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Heade
 <dd>
 
 
-Enable or disable the [Last-Modified](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified) header. The file [stat.mtime](https://nodejs.org/api/fs.html#statsmtime) property is used as the value for the header.
+[Last-Modified](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified)ヘッダーを有効または無効にします。ファイルの[stat.mtime](https://nodejs.org/api/fs.html#statsmtime)プロパティがヘッダーの値として使用されます。
 
 ```ts
 {
@@ -179,9 +178,9 @@ Enable or disable the [Last-Modified](https://developer.mozilla.org/en-US/docs/W
 <dd>
 
 
-Enable or disable the [immutable](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#immutable) directive for the `Cache-Control` header. By default, the `immutable` property is disabled.
+`Cache-Control`ヘッダーの[immutable](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#immutable)ディレクティブを有効または無効にします。デフォルトでは、`immutable`プロパティは無効になっています。
 
-If the `immutable` property is enabled, you must define the `maxAge` property to enable caching.
+`immutable`プロパティが有効になっている場合、キャッシュを有効にするために`maxAge`プロパティを定義する必要があります。
 
 ```ts
 {
@@ -199,7 +198,7 @@ If the `immutable` property is enabled, you must define the `maxAge` property to
 
 <dd>
 
-Define the [max-age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#max-age) directive for the `Cache-Control` header. The value should be either in milliseconds or a time expression string.
+`Cache-Control`ヘッダーの[max-age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#max-age)ディレクティブを定義します。値はミリ秒または時間表現文字列である必要があります。
 
 ```ts
 {
@@ -217,7 +216,7 @@ Define the [max-age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/C
 
 <dd>
 
-A function that returns an object of headers to set on the response. The function receives the file path as the first argument and the [file stats](https://nodejs.org/api/fs.html#class-fsstats) object as the second argument.
+レスポンスに設定するヘッダーのオブジェクトを返す関数です。関数は第1引数としてファイルパス、第2引数として[file stats](https://nodejs.org/api/fs.html#class-fsstats)オブジェクトを受け取ります。
 
 ```ts
 {
@@ -236,16 +235,16 @@ A function that returns an object of headers to set on the response. The functio
 
 </dl>
 
-## Serving static files
+## 静的ファイルの提供
 
-Once the middleware is registered, you may create files inside the `public` directory and access them in the browser using the file path. For example, the `./public/css/style.css` file can be accessed using the `http://localhost:3333/css/style.css` URL.
+ミドルウェアが登録されると、`public`ディレクトリ内にファイルを作成し、ブラウザからファイルパスを使用してアクセスできます。たとえば、`./public/css/style.css`ファイルは`http://localhost:3333/css/style.css`のURLを使用してアクセスできます。
 
-The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](../basics/vite.md).
+`public`ディレクトリ内のファイルはアセットバンドラーを使用してコンパイルまたはビルドされません。フロントエンドのアセットをコンパイルする場合は、それらを`resources`ディレクトリに配置し、[アセットバンドラー](../basics/vite.md)を使用する必要があります。
 
-## Copying static files to production build
-The static files stored inside the `/public` directory are automatically copied to the `build` folder when you run `node ace build` command.
+## 静的ファイルの本番ビルドへのコピー
+`/public`ディレクトリ内に格納されている静的ファイルは、`node ace build`コマンドを実行すると自動的に`build`フォルダにコピーされます。
 
-The rule for copying public files is defined inside the `adonisrc.ts` file.
+パブリックファイルのコピーのルールは`adonisrc.ts`ファイルで定義されています。
 
 ```ts
 {

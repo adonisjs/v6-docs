@@ -1,18 +1,18 @@
 ---
-summary: "Learn how to test code that interacts with your databases in AdonisJS: simple steps for setting up, resetting, and keeping databases clean during tests."
+summary: "AdonisJSでデータベースとのやり取りをテストする方法を学びましょう：テスト中にデータベースをセットアップ、リセット、クリーンに保つための簡単な手順。"
 ---
 
-# Database tests
+# データベースのテスト
 
-Database tests refer to testing how your application interacts with the database. This includes testing what is written to the database, how to run migrations before the tests, and how to keep the database clean between tests.
+データベースのテストとは、アプリケーションがデータベースとやり取りする方法をテストすることを指します。これには、データベースに書き込まれる内容のテスト、テストの前にマイグレーションを実行する方法、テスト間でデータベースをクリーンに保つ方法などが含まれます。
 
-## Migrating the database
+## データベースのマイグレーション
 
-Before executing your tests that interact with the database, you would want to run your migrations first. We have two hooks available in the `testUtils` service for that, which you can configure inside the `tests/bootstrap.ts` file.
+データベースとやり取りするテストを実行する前に、まずマイグレーションを実行する必要があります。これには、`tests/bootstrap.ts`ファイル内で設定できる`testUtils`サービスの2つのフックがあります。
 
-### Reset database after each run cycle
+### テスト実行後にデータベースをリセット
 
-The first option we have is `testUtils.db().migrate()`. This hook will first run all your migrations, and then rollback everything.
+最初のオプションは`testUtils.db().migrate()`です。このフックは、まずすべてのマイグレーションを実行し、その後すべてをロールバックします。
 
 ```ts
 // title: tests/bootstrap.ts
@@ -26,19 +26,18 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
 }
 ```
 
-By configuring the hook here, what will happen is:
+ここでフックを設定すると、次のようなことが起こります。
 
-- Before running our tests, the migrations will be executed.
-- At the end of our tests, the database will be rolled back.
+- テストを実行する前に、マイグレーションが実行されます。
+- テストの最後に、データベースがロールバックされます。
 
-So, each time we run our tests, we will have a fresh and empty database.
+したがって、テストを実行するたびに、新しい空のデータベースが得られます。
 
-### Truncate tables after each run cycle
+### テスト実行後にテーブルを切り捨てる
 
-Resetting the database after each run cycle is a good option, but it can be slow if you have a lot of migrations. Another option is to truncate the tables after each run cycle. This option will be faster, as the migrations will only be executed once : the very first time you run your tests on a fresh database.
+テスト実行後にデータベースをリセットするのは良いオプションですが、マイグレーションが多い場合は遅くなる可能性があります。もう1つのオプションは、テスト実行後にテーブルを切り捨てることです。このオプションは、マイグレーションが最初に実行されるときにのみ実行されるため、速くなります。
 
-
-At the end of each run cycle, the tables will just be truncated, but our schema will be kept. So, the next time we run our tests, we will have an empty database, but the schema will already be in place, so there's no need to run every migration again.
+実行後、テーブルは切り捨てられますが、スキーマは保持されます。したがって、次にテストを実行するときには空のデータベースが得られますが、スキーマはすでに存在しているため、すべてのマイグレーションを再実行する必要はありません。
 
 ```ts
 // title: tests/bootstrap.ts
@@ -51,9 +50,9 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
 }
 ```
 
-## Seeding the database
+## データベースのシーディング
 
-If you need to seed your database, you can use the `testUtils.db().seed()` hook. This hook will run all your seeds before running your tests.
+データベースにシードを追加する必要がある場合は、`testUtils.db().seed()`フックを使用できます。このフックは、テストを実行する前にすべてのシードを実行します。
 
 ```ts
 // title: tests/bootstrap.ts
@@ -66,11 +65,11 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
 }
 ```
 
-## Keeping the database clean between tests
+## テスト間でデータベースをクリーンに保つ
 
-### Global transaction
+### グローバルトランザクション
 
-When running tests, you may want to keep your database clean between each test. For that, you can use the `testUtils.db().withGlobalTransaction()` hook. This hook will start a transaction before each test and roll it back at the end of the test.
+テストを実行する際に、各テストの間でデータベースをクリーンに保ちたい場合は、`testUtils.db().withGlobalTransaction()`フックを使用できます。このフックは、各テストの前にトランザクションを開始し、テストの終わりにロールバックします。
 
 ```ts
 // title: tests/unit/user.spec.ts
@@ -82,11 +81,11 @@ test.group('User', (group) => {
 })
 ```
 
-Note that if you are using any transactions in your tested code, this will not work as transactions cannot be nested. In this case, you can use the `testUtils.db().migrate()` or `testUtils.db().truncate()` hook instead.
+なお、テスト対象のコードでトランザクションを使用している場合、これは動作しません。トランザクションはネストできないためです。この場合は、代わりに`testUtils.db().migrate()`または`testUtils.db().truncate()`フックを使用できます。
 
-### Truncate tables
+### テーブルを切り捨てる
 
-As mentioned above, the global transaction will not work if you are using transactions in your tested code. In this case, you can use the `testUtils.db().truncate()` hook. This hook will truncate all your tables after each test.
+前述のように、テスト対象のコードでトランザクションを使用している場合、グローバルトランザクションは機能しません。この場合は、`testUtils.db().truncate()`フックを使用できます。このフックは、各テストの後にすべてのテーブルを切り捨てます。
 
 ```ts
 // title: tests/unit/user.spec.ts

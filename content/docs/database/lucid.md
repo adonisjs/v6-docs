@@ -1,49 +1,49 @@
 ---
-summary: Quick overview of Lucid ORM, a SQL query builder and Active Record ORM built on top of Knex.
+summary: Lucid ORMのクイックな概要。Knexをベースに構築されたSQLクエリビルダーおよびActive Record ORM。
 ---
 
 # Lucid ORM
 
-Lucid is a SQL query builder, and an Active Record ORM built on top of [Knex](https://knexjs.org) created and maintained by the AdonisJS core team. Lucid strives to leverage SQL to its full potential and offers clean API for many advanced SQL operations.
+Lucidは、AdonisJSコアチームによって作成およびメンテナンスされている、Knexをベースに構築されたSQLクエリビルダーおよびActive Record ORMです。LucidはSQLを最大限に活用し、多くの高度なSQL操作に対してクリーンなAPIを提供することを目指しています。
 
 :::note
-The documentation for Lucid is available on [https://lucid.adonisjs.com](https://lucid.adonisjs.com)
+Lucidのドキュメントは[https://lucid.adonisjs.com](https://lucid.adonisjs.com)で利用できます。
 :::
 
-## Why Lucid
+## Lucidの利点
 
-Following are some of the hand-picked Lucid features.
+以下は、選りすぐりのLucidの特徴です。
 
-- A fluent query builder built on top of Knex.
-- Support for read-write replicas and multiple connection management.
-- Class-based models that adhere to the active record pattern (handling relations, serialization and hooks).
-- Migration system to modify database schema using incremental changesets.
-- Model factories to generate fake data for testing.
-- Database seeders to insert initial/dummy data into the database.
+- Knexをベースにした流暢なクエリビルダー。
+- 読み書き可能なレプリカと複数の接続管理のサポート。
+- 関連、シリアライズ、フックの処理を含む、アクティブレコードパターンに準拠したクラスベースのモデル。
+- マイグレーションシステムによるデータベーススキーマの変更。
+- テスト用のフェイクデータを生成するためのモデルファクトリ。
+- データベースに初期/ダミーデータを挿入するためのデータベースシーダ。
 
-Apart from those, the following are additional reasons for using Lucid inside an AdonisJS application.
+これらに加えて、AdonisJSアプリケーション内でLucidを使用する理由として、以下の点が挙げられます。
 
-- We ship first-class integrations for Lucid with the Auth package and validator. Therefore, you do not have to write these integrations yourself.
+- LucidはAuthパッケージとバリデータとの間で一流の統合を提供しています。そのため、これらの統合を自分で書く必要はありません。
 
-- Lucid comes pre-configured with the `api` and the `web` starter kits, providing a head start to your applications.
+- Lucidは、`api`と`web`のスターターキットと共に事前に設定されており、アプリケーションのスタートに役立ちます。
 
-- One of the primary goals of Lucid is to leverage SQL to its full potential and support many advanced SQL operations like **window functions**, **recursive CTEs**, **JSON operations**, **row-based locks**, and much more.
+- Lucidの主な目標の1つは、SQLを最大限に活用し、**ウィンドウ関数**、**再帰CTE**、**JSON操作**、**行ベースのロック**など、多くの高度なSQL操作をサポートすることです。
 
-- Both Lucid and Knex have been around for many years. Hence, they are mature and battle-tested compared to many other new ORMs.
+- LucidとKnexは長年にわたって存在しています。そのため、他の新しいORMと比較して、成熟しており、実戦での使用に耐えています。
 
-With that said, AdonisJS does not force you to use Lucid. Just uninstall the package and install the ORM of your choice.
+ただし、AdonisJSはLucidの使用を強制しません。パッケージをアンインストールし、お好みのORMをインストールできます。
 
-## Installation
+## インストール
 
-Install and configure Lucid using the following command.
+次のコマンドを使用して、Lucidをインストールおよび設定します。
 
 ```sh
 node ace add @adonisjs/lucid
 ```
 
-:::disclosure{title="See steps performed by the configure command"}
+:::disclosure{title="configureコマンドによって実行される手順を参照"}
 
-1. Registers the following service provider inside the `adonisrc.ts` file.
+1. `adonisrc.ts`ファイル内に以下のサービスプロバイダを登録します。
 
    ```ts
    {
@@ -54,7 +54,7 @@ node ace add @adonisjs/lucid
    }
    ```
 
-2. Register the following command inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のコマンドを登録します。
 
    ```ts
    {
@@ -65,24 +65,24 @@ node ace add @adonisjs/lucid
    }
    ```
 
-3. Create the `config/database.ts` file.
+3. `config/database.ts`ファイルを作成します。
 
-4. Define the environment variables and their validations for the selected dialect.
+4. 選択した方言の環境変数とそのバリデーションを定義します。
 
-5. Install required peer dependencies.
+5. 必要なピア依存関係をインストールします。
 
 :::
 
 
-## Creating your first model
+## 最初のモデルの作成
 
-Once the configuration is completed, you can create your first model using the following command.
+設定が完了したら、次のコマンドを使用して最初のモデルを作成できます。
 
 ```sh
 node ace make:model User
 ```
 
-This command creates a new file inside the `app/models` directory with the following content.
+このコマンドは、`app/models`ディレクトリ内に新しいファイルを作成し、以下の内容を含めます。
 
 ```ts
 import { DateTime } from 'luxon'
@@ -100,17 +100,17 @@ export default class User extends BaseModel {
 }
 ```
 
-Learn more about models by visiting the [official documentation](https://lucid.adonisjs.com/docs/models).
+モデルについての詳細は、[公式ドキュメント](https://lucid.adonisjs.com/docs/models)を参照してください。
 
-## Migrations
+## マイグレーション
 
-Migrations are a way to modify the database schema and data using incremental changesets. You can create a new migration using the following command.
+マイグレーションは、増分の変更セットを使用してデータベースのスキーマとデータを変更する方法です。次のコマンドを使用して新しいマイグレーションを作成できます。
 
 ```sh
 node ace make:migration users
 ```
 
-This command creates a new file inside the `database/migrations` directory with the following content.
+このコマンドは、`database/migrations`ディレクトリ内に新しいファイルを作成し、以下の内容を含めます。
 
 ```ts
 import { BaseSchema } from '@adonisjs/lucid/schema'
@@ -132,34 +132,33 @@ export default class extends BaseSchema {
 }
 ```
 
-You can run all the pending migrations using the following command.
+次のコマンドを使用して、保留中のすべてのマイグレーションを実行できます。
 
 ```sh
 node ace migration:run
 ```
 
-Learn more about migrations by visiting the [official documentation](https://lucid.adonisjs.com/docs/migrations).
+マイグレーションについての詳細は、[公式ドキュメント](https://lucid.adonisjs.com/docs/migrations)を参照してください。
 
-## Query Builder
+## クエリビルダー
 
-Lucid ships with a fluent query builder built on top of Knex. You can use the query builder to perform CRUD operations on your database.
+Lucidには、Knexをベースにした流暢なクエリビルダーが付属しています。クエリビルダーを使用してデータベース上でCRUD操作を実行できます。
 
 ```ts
 import db from '@adonisjs/lucid/services/db'
 
 /**
- * Creates query builder instance
+ * クエリビルダーインスタンスを作成します
  */
 const query = db.query()
 
 /**
- * Creates query builder instance and also selects
- * the table
+ * クエリビルダーインスタンスを作成し、テーブルも選択します
  */
 const queryWithTableSelection = db.from('users')
 ```
 
-The query builder can also be scoped to a model instance.
+クエリビルダーは、モデルインスタンスにスコープを設定することもできます。
 
 ```ts
 import User from '#models/user'
@@ -167,17 +166,17 @@ import User from '#models/user'
 const user = await User.query().where('username', 'rlanz').first()
 ```
 
-Learn more about the query builder by visiting the [official documentation](https://lucid.adonisjs.com/docs/select-query-builder).
+クエリビルダーについての詳細は、[公式ドキュメント](https://lucid.adonisjs.com/docs/select-query-builder)を参照してください。
 
-## CRUD operations
+## CRUD操作
 
-Lucid models have built-in methods to perform CRUD operations on the database.
+Lucidモデルには、データベース上でCRUD操作を実行するための組み込みメソッドがあります。
 
 ```ts
 import User from '#models/user'
 
 /**
- * Create a new user
+ * 新しいユーザーを作成します
  */
 const user = await User.create({
   username: 'rlanz',
@@ -185,12 +184,12 @@ const user = await User.create({
 })
 
 /**
- * Find a user by primary key
+ * プライマリキーでユーザーを検索します
  */
 const user = await User.find(1)
 
 /**
- * Update a user
+ * ユーザーを更新します
  */
 
 const user = await User.find(1)
@@ -198,19 +197,19 @@ user.username = 'romain'
 await user.save()
 
 /**
- * Delete a user
+ * ユーザーを削除します
  */
 const user = await User.find(1)
 await user.delete()
 ```
 
-Learn more about CRUD operations by visiting the [official documentation](https://lucid.adonisjs.com/docs/crud-operations).
+CRUD操作についての詳細は、[公式ドキュメント](https://lucid.adonisjs.com/docs/crud-operations)を参照してください。
 
-## Learn more
+## 詳細情報
 
-- [Lucid documentation](https://lucid.adonisjs.com)
-- [Installation & Usage](https://lucid.adonisjs.com/docs/installation)
-- [CRUD Operations](https://lucid.adonisjs.com/docs/crud-operations)
-- [Model Hooks](https://lucid.adonisjs.com/docs/model-hooks)
-- [Relations](https://lucid.adonisjs.com/docs/relationships)
-- [Adocasts Lucid Series](https://adocasts.com/topics/lucid)
+- [Lucidドキュメント](https://lucid.adonisjs.com)
+- [インストールと使用方法](https://lucid.adonisjs.com/docs/installation)
+- [CRUD操作](https://lucid.adonisjs.com/docs/crud-operations)
+- [モデルフック](https://lucid.adonisjs.com/docs/model-hooks)
+- [リレーション](https://lucid.adonisjs.com/docs/relationships)
+- [Adocasts Lucidシリーズ](https://adocasts.com/topics/lucid)

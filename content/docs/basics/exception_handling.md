@@ -1,12 +1,12 @@
 ---
-summary: Exception are errors raised during the HTTP request lifecycle. AdonisJS provides a robust exception handling mechanism to convert exceptions to HTTP responses and report them to the logger.
+summary: 例外はHTTPリクエストのライフサイクル中に発生するエラーです。AdonisJSは、例外をHTTPレスポンスに変換し、ロガーに報告するための堅牢な例外処理メカニズムを提供しています。
 ---
 
-# Exception handling
+# 例外処理
 
-Exceptions raised during an HTTP request are handled by the `HttpExceptionHandler` defined inside the `./app/exceptions/handler.ts` file. Inside this file, you can decide how to convert exceptions to responses and log them using the logger or report them to an external logging provider.
+HTTPリクエスト中に発生した例外は、`./app/exceptions/handler.ts`ファイル内で定義された`HttpExceptionHandler`によって処理されます。このファイル内では、例外をレスポンスに変換し、ロガーを使用してログに記録するか、外部のログプロバイダに報告する方法を決定できます。
 
-The `HttpExceptionHandler` extends the [ExceptionHandler](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts) class, which does all the heavy lifting of handling errors and provides you with high-level APIs to tweak the reporting and rendering behavior.
+`HttpExceptionHandler`は[ExceptionHandler](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts)クラスを拡張しており、エラーの処理とレンダリングの振る舞いを調整するための高レベルのAPIを提供しています。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -26,23 +26,23 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-## Assigning error handler to the server
+## サーバーにエラーハンドラを割り当てる
 
-The error handler is registered with the AdonisJS HTTP server inside the `start/kernel.ts` file. We lazily import the HTTP handler using the `#exceptions` alias defined in the `package.json` file.
+エラーハンドラは、AdonisJSのHTTPサーバーに`start/kernel.ts`ファイル内で登録されます。`package.json`ファイルで定義された`#exceptions`エイリアスを使用して、HTTPハンドラを遅延読み込みしています。
 
 ```ts
 server.errorHandler(() => import('#exceptions/handler'))
 ```
 
-## Handling exceptions
+## 例外の処理
 
-The exceptions are handled by the `handle` method on the exceptions handler class. By default, the following steps are performed while handling an error.
+例外は例外ハンドラクラスの`handle`メソッドによって処理されます。デフォルトでは、エラーの処理中には次のステップが実行されます。
 
-- Check if the error instance has a `handle` method. If yes, call the [error.handle](#defining-the-handle-method) method and return its response.
-- Check if a status page is defined for the `error.status` code. If yes, render the status page.
-- Otherwise, render the exception using content negotiation renderers.
+- エラーインスタンスに`handle`メソッドがあるかどうかをチェックします。ある場合は、[error.handle](#handle%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E5%AE%9A%E7%BE%A9)メソッドを呼び出してそのレスポンスを返します。
+- `error.status`コードに対してステータスページが定義されているかどうかをチェックします。ある場合は、ステータスページをレンダリングします。
+- それ以外の場合は、コンテンツネゴシエーションレンダラを使用して例外をレンダリングします。
 
-If you want to handle a specific exception differently, you can do that inside the `handle` method. Make sure to use the `ctx.response.send` method to send a response, since the return value from the `handle` method is discarded.
+特定の例外を異なる方法で処理したい場合は、`handle`メソッド内でそれを行うことができます。ただし、`handle`メソッドの戻り値は破棄されるため、レスポンスを送信するために`ctx.response.send`メソッドを使用することを確認してください。
 
 ```ts
 import { errors } from '@vinejs/vine'
@@ -59,13 +59,13 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Status pages
+### ステータスページ
 
-Status pages are a collection of templates you want to render for a given or a range of status codes. 
+ステータスページは、特定のステータスコードまたはステータスコードの範囲に対してレンダリングするテンプレートのコレクションです。
 
-The range of status codes can be defined as a string expression. Two dots separate the starting and the ending status codes (`..`).
+ステータスコードの範囲は文字列式で定義できます。開始と終了のステータスコードは2つのドット（`..`）で区切られます。
 
-If you are creating a JSON server, you may not need status pages.
+JSONサーバーを作成している場合は、ステータスページは必要ありません。
 
 ```ts
 import { StatusPageRange, StatusPageRenderer } from '@adonisjs/http-server/types'
@@ -78,13 +78,13 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Debug mode
+### デバッグモード
 
-The content negotiation renderers handle exceptions that are not self-handled and not converted to a status page.
+コンテンツネゴシエーションレンダラは、自己処理されずステータスページに変換されない例外を処理します。
 
-The content negotiation renderers have support for debug mode. They can parse and pretty-print errors in debug mode using the [Youch](https://www.npmjs.com/package/youch) npm package.
+コンテンツネゴシエーションレンダラはデバッグモードをサポートしています。[Youch](https://www.npmjs.com/package/youch) npmパッケージを使用して、デバッグモードでエラーを解析し、きれいに表示できます。
 
-You can toggle the debug mode using the `debug` property on the exceptions handler class. However, turning off the debug mode in production is recommended, as it exposes sensitive information about your app.
+デバッグモードは、例外ハンドラクラスの`debug`プロパティを使用して切り替えることができます。ただし、本番環境ではデバッグモードをオフにすることをオススメします。なぜなら、アプリに関する機密情報が公開されるためです。
 
 ```ts
 export default class HttpExceptionHandler extends ExceptionHandler {
@@ -92,21 +92,21 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-## Reporting exceptions
+## 例外の報告
 
-The `report` method on the exceptions handler class handles reporting of exceptions. 
+例外ハンドラクラスの`report`メソッドは、例外の報告を処理します。
 
-The method receives the error as the first argument and the [HTTP context](../concepts/http_context.md) as the second argument. You should not write a response from the `report` method and use the context only to read the request information.
+このメソッドは、最初の引数としてエラー、2番目の引数として[HTTPコンテキスト](../concepts/http_context.md)を受け取ります。`report`メソッドからレスポンスを書き込むことはせず、リクエスト情報を読み取るためにコンテキストのみを使用するようにしてください。
 
-### Logging exceptions
+### 例外のログ記録
 
-All exceptions are reported using the [logger](../digging_deeper/logger.md) by default.
+デフォルトでは、すべての例外は[ロガー](../digging_deeper/logger.md)を使用して報告されます。
 
-- Exceptions with status codes in the `400..499` range are logged in the `warning` level.
-- Exceptions with the status code `>=500` are logged in the `error` level.
-- All other exceptions are logged in the `info` level.
+- `400..499`のステータスコードを持つ例外は`warning`レベルでログに記録されます。
+- `500`以上のステータスコードを持つ例外は`error`レベルでログに記録されます。
+- その他のすべての例外は`info`レベルでログに記録されます。
 
-You can add custom properties to the log messages by returning an object from the `context` method.
+`context`メソッドからオブジェクトを返すことで、ログメッセージにカスタムプロパティを追加できます。
 
 ```ts
 export default class HttpExceptionHandler extends ExceptionHandler {
@@ -120,9 +120,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Ignoring status codes
+### ステータスコードの無視
 
-You can ignore exceptions from being reported by defining an array of status codes via the `ignoreStatuses` property.
+`ignoreStatuses`プロパティを使用して、報告を無視するステータスコードの配列を定義できます。
 
 ```ts
 export default class HttpExceptionHandler extends ExceptionHandler {
@@ -135,9 +135,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Ignoring errors
+### エラーの無視
 
-You can also ignore exceptions by defining an array of error codes or error classes to ignore.
+`ignoreCodes`プロパティを使用して、無視するエラーコードまたはエラークラスの配列を定義することもできます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -151,7 +151,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-An array of exception classes can be ignored using the `ignoreExceptions` property.
+`ignoreExceptions`プロパティを使用して、例外クラスの配列を無視することもできます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -165,25 +165,25 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Custom shouldReport method
+### カスタムな`shouldReport`メソッド
 
-The logic to ignore status codes or exceptions is written inside the [`shouldReport` method](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts#L155). If needed, you can override this method and define your custom logic for ignoring exceptions.
+例外を無視するためのロジックは、[`shouldReport`メソッド](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts#L155)内に記述されています。必要に応じて、このメソッドをオーバーライドして、例外を無視するためのカスタムロジックを定義できます。
 
 ```ts
 import { HttpError } from '@adonisjs/core/types/http'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   protected shouldReport(error: HttpError) {
-    // return a boolean
+    // booleanを返す
   }
 }
 ```
 
-## Custom exceptions
+## カスタム例外
 
-You can create an exception class using the `make:exception` ace command. An exception extends the `Exception` class from the `@adonisjs/core` package.
+`make:exception`エースコマンドを使用して、例外クラスを作成できます。例外は`@adonisjs/core`パッケージの`Exception`クラスを拡張します。
 
-See also: [Make exception command](../references/commands.md#makeexception)
+参照: [例外の作成コマンド](../references/commands.md#makeexception)
 
 ```sh
 node ace make:exception UnAuthorized
@@ -195,7 +195,7 @@ import { Exception } from '@adonisjs/core/exceptions'
 export default class UnAuthorizedException extends Exception {}
 ```
 
-You can raise the exception by creating a new instance of it. When raising the exception, you can assign a custom **error code** and **status code** to the exception.
+例外のインスタンスを作成することで例外を発生させることができます。例外を発生させる際に、カスタムの**エラーコード**と**ステータスコード**を例外に割り当てることができます。
 
 ```ts
 import UnAuthorizedException from '#exceptions/unauthorized_exception'
@@ -206,7 +206,7 @@ throw new UnAuthorizedException('You are not authorized', {
 })
 ```
 
-The error and status codes can also be defined as static properties on the exception class. The static values will be used if no custom value is defined when throwing the exception.
+エラーコードとステータスコードは、例外クラス上の静的プロパティとしても定義できます。例外をスローする際にカスタムの値が定義されていない場合は、静的な値が使用されます。
 
 ```ts
 import { Exception } from '@adonisjs/core/exceptions'
@@ -216,11 +216,11 @@ export default class UnAuthorizedException extends Exception {
 }
 ```
 
-### Defining the `handle` method
+### `handle`メソッドの定義
 
-To self-handle the exception, you can define the `handle` method on the exception class. This method should convert an error to an HTTP response using the `ctx.response.send` method.
+例外を自己処理するためには、例外クラス上に`handle`メソッドを定義できます。このメソッドは、`ctx.response.send`メソッドを使用してエラーをHTTPレスポンスに変換する必要があります。
 
-The `error.handle` method receives an instance of the error as the first argument and the HTTP context as the second argument.
+`error.handle`メソッドは、最初の引数としてエラーのインスタンス、2番目の引数としてHTTPコンテキストを受け取ります。
 
 ```ts
 import { Exception } from '@adonisjs/core/exceptions'
@@ -233,9 +233,9 @@ export default class UnAuthorizedException extends Exception {
 }
 ```
 
-### Define the `report` method
+### `report`メソッドの定義
 
-You can implement the `report` method on the exception class to self-handle the exception reporting. The report method receives an instance of the error as the first argument and the HTTP context as the second argument.
+例外の報告を自己処理するためには、例外クラス上に`report`メソッドを実装できます。`report`メソッドは、最初の引数としてエラーのインスタンス、2番目の引数としてHTTPコンテキストを受け取ります。
 
 ```ts
 import { Exception } from '@adonisjs/core/exceptions'
@@ -248,8 +248,8 @@ export default class UnAuthorizedException extends Exception {
 }
 ```
 
-## Narrowing down the error type
-The framework core and other official packages exports the exceptions raised by them. You can verify if an error is an instance of a specific exception using the `instanceof` check. For example:
+## エラータイプの絞り込み
+フレームワークのコアおよびその他の公式パッケージは、それらによって発生する例外をエクスポートしています。`instanceof`チェックを使用して、エラーが特定の例外のインスタンスであるかどうかを確認できます。例:
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -258,10 +258,10 @@ try {
   router.builder().make('articles.index')
 } catch (error: unknown) {
   if (error instanceof errors.E_CANNOT_LOOKUP_ROUTE) {
-    // handle error
+    // エラーを処理する
   }
 }
 ```
 
-## Known errors
-Please check the [exceptions reference guide](../references/exceptions.md) to view the list of known errors.
+## 既知のエラー
+既知のエラーのリストについては、[例外リファレンスガイド](../references/exceptions.md)を参照してください。

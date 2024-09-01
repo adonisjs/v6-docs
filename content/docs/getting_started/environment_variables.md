@@ -1,20 +1,20 @@
 ---
-summary: Learn how to use environment variables inside an AdonisJS application.
+summary: AdonisJSアプリケーション内で環境変数を使用する方法を学びます。
 ---
 
-# Environment variables
+# 環境変数
 
-Environment variables serve the purpose of storing secrets like the database password, the app secret, or an API key outside of your application codebase.
+環境変数は、データベースのパスワード、アプリケーションのシークレット、またはAPIキーなどの秘密情報をアプリケーションのコードベースの外部に保存するためのものです。
 
-Also, environment variables can be used to have different configurations for different environments. For example, you may use a memory mailer during tests, an SMTP mailer during development, and a third-party service in production.
+また、環境変数は、異なる環境に対して異なる設定を持つことができます。たとえば、テスト中にはメモリメーラーを使用し、開発中にはSMTPメーラーを使用し、本番環境ではサードパーティのサービスを使用できます。
 
-Since environment variables are supported by all operating systems, deployment platforms, and CI/CD pipelines, they have become a de-facto standard for storing secrets and environment-specific config.
+環境変数は、すべてのオペレーティングシステム、デプロイメントプラットフォーム、CI/CDパイプラインでサポートされているため、シークレットや環境固有の設定を保存するための事実上の標準となっています。
 
-In this guide, we will learn how to leverage environment variables inside an AdonisJS application.
+このガイドでは、AdonisJSアプリケーション内で環境変数を活用する方法を学びます。
 
-## Reading environment variables
+## 環境変数の読み取り
 
-Node.js natively exposes all the environment variables as an object through the [`process.env` global property](https://nodejs.org/dist/latest-v8.x/docs/api/process.html#process_process_env), and you may access them as follows. 
+Node.jsは、すべての環境変数を[`process.env`グローバルプロパティ](https://nodejs.org/dist/latest-v8.x/docs/api/process.html#process_process_env)としてオブジェクトとして公開しており、次のようにアクセスできます。
 
 ```dotenv
 process.env.NODE_ENV
@@ -22,15 +22,15 @@ process.env.HOST
 process.env.PORT
 ```
 
-## Using the AdonisJS env module
+## AdonisJSのenvモジュールの使用
 
-Reading environment variables via the `process.env` object requires no setup on the AdonisJS side, as the Node.js runtime supports it. However, in the rest of this document, we will use the AdonisJS env module for the following reasons.
+`process.env`オブジェクトを介して環境変数を読み取ることは、AdonisJS側でのセットアップは必要ありません。ただし、このドキュメントの残りの部分では、次の理由からAdonisJSのenvモジュールを使用します。
 
-- Ability to store and parse environment variables from multiple `.env` files.
-- Validate environment variables as soon as the application starts.
-- Have static-type safety for validated environment variables.
+- 複数の`.env`ファイルから環境変数を保存および解析する機能。
+- アプリケーションの起動時に環境変数を検証する機能。
+- 検証された環境変数に対する静的型の安全性。
 
-The env module is instantiated inside the `start/env.ts` file, and you may access it elsewhere inside your application as follows.
+envモジュールは、`start/env.ts`ファイル内でインスタンス化され、アプリケーション内の他の場所から次のようにアクセスできます。
 
 ```ts
 import env from '#start/env'
@@ -39,14 +39,14 @@ env.get('NODE_ENV')
 env.get('HOST')
 env.get('PORT')
 
-// Returns 3333 when PORT is undefined
+// PORTが未定義の場合は3333を返します
 env.get('PORT', 3333)
 ```
 
-### Sharing env module with Edge templates
-If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
+### Edgeテンプレートでのenvモジュールの共有
+Edgeテンプレート内で環境変数にアクセスする場合は、`env`モジュールをEdgeテンプレートとのグローバル変数として共有する必要があります。
 
-You can [create `view.ts` as a preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory and write the following lines of code inside it.
+`start`ディレクトリ内に[preloadファイルとして`view.ts`を作成](../concepts/adonisrc_file.md#preloads)し、次のコードを記述します。
 
 ```ts
 // title: start/view.ts
@@ -56,16 +56,16 @@ import edge from 'edge.js'
 edge.global('env', env)
 ```
 
-## Validating environment variables
+## 環境変数の検証
 
-The validation rules for environment variables are defined inside the `start/env.ts` file using the `Env.create` method. 
+環境変数の検証ルールは、`start/env.ts`ファイル内で`Env.create`メソッドを使用して定義されます。
 
-The validation is performed automatically when you first import this file. Typically, the `start/env.ts` file is imported by one of the config files in your project. If not, then AdonisJS will import this file implicitly [before booting the application](https://github.com/adonisjs/slim-starter-kit/blob/main/bin/server.ts#L34-L36).
+このファイルを最初にインポートすると、検証が自動的に実行されます。通常、`start/env.ts`ファイルはプロジェクトの構成ファイルの1つによってインポートされます。そうでない場合は、AdonisJSがアプリケーションの起動[前にこのファイルを暗黙的にインポート](https://github.com/adonisjs/slim-starter-kit/blob/main/bin/server.ts#L34-L36)します。
 
-The `Env.create` method accepts the validation schema as a key-value pair.
+`Env.create`メソッドは、検証スキーマをキーと値のペアとして受け入れます。
 
-- The key is the name of the environment variable.
-- The value is the function that performs the validation. It can be a custom inline function or a reference to pre-defined schema methods like `schema.string` or `schema.number`.
+- キーは環境変数の名前です。
+- 値は検証を実行する関数です。カスタムのインライン関数または`schema.string`や`schema.number`などの事前定義されたスキーマメソッドへの参照などが使用できます。
 
 ```ts
 import Env from '@adonisjs/core/env'
@@ -91,32 +91,32 @@ export default await Env.create(APP_ROOT, {
 })
 ```
 
-### Static-type information
-The same validation rules are used to infer the static-type information. The type information is available when using the env module.
+### 静的型情報
+同じ検証ルールは、envモジュールを使用する場合に静的型情報を推論するために使用されます。環境変数を使用する際に型情報が利用できます。
 
 ![](./env_intellisense.jpeg)
 
-## Validator schema API
+## バリデータスキーマAPI
 
 ### schema.string
 
-The `schema.string` method ensures the value is a valid string. Empty strings fail the validation, and you must use the optional variant to allow empty strings.
+`schema.string`メソッドは、値が有効な文字列であることを保証します。空の文字列は検証に失敗し、空の文字列を許可するためにオプションのバリエーションを使用する必要があります。
 
 ```ts
 {
   APP_KEY: Env.schema.string()
 }
 
-// Mark APP_KEY to be optional
+// APP_KEYをオプションにする
 {
   APP_KEY: Env.schema.string.optional()
 }
 ```
 
-The string value can be validated for its formatting. Following is the list of available formats.
+文字列の値は、そのフォーマットに対して検証できます。次に、使用可能なフォーマットのリストを示します。
 
 #### host
-Validate the value to be a valid URL or an IP address.
+値が有効なURLまたはIPアドレスであることを検証します。
 
 ```ts
 {
@@ -125,22 +125,22 @@ Validate the value to be a valid URL or an IP address.
 ```
 
 #### url
-Validate the value to be a valid URL. Optionally, you can make the validation less strict by allowing URLs not to have `protocol` or `tld`.
+値が有効なURLであることを検証します。オプションで、`protocol`または`tld`を持たないURLを許可することもできます。
 
 ```ts
 {
   S3_ENDPOINT: Env.schema.string({ format: 'url' })
 
-  // Allow URLs without protocol
+  // プロトコルなしのURLを許可
   S3_ENDPOINT: Env.schema.string({ format: 'url', protocol: false })
 
-  // Allow URLs without tld
+  // TLDなしのURLを許可
   S3_ENDPOINT: Env.schema.string({ format: 'url', tld: false })
 }
 ```
   
 #### email
-Validate the value to be a valid email address.
+値が有効なメールアドレスであることを検証します。
 
 ```ts
 {
@@ -150,16 +150,16 @@ Validate the value to be a valid email address.
 
 ### schema.boolean
 
-The `schema.boolean` method ensures the value is a valid boolean. Empty values fail the validation, and you must use the optional variant to allow empty values.
+`schema.boolean`メソッドは、値が有効なブール値であることを保証します。空の値は検証に失敗し、空の値を許可するためにオプションのバリエーションを使用する必要があります。
 
-The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to the boolean data type.
+文字列の表現`'true'`、`'1'`、`'false'`、および`'0'`は、ブール型にキャストされます。
 
 ```ts
 {
   CACHE_VIEWS: Env.schema.boolean()
 }
 
-// Mark it as optional
+// オプションにする
 {
   CACHE_VIEWS: Env.schema.boolean.optional()
 }
@@ -167,14 +167,14 @@ The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to 
 
 ### schema.number
 
-The `schema.number` method ensures the value is a valid number. The string representation of a number value is cast to the number data type.
+`schema.number`メソッドは、値が有効な数値であることを保証します。数値の文字列表現は数値データ型にキャストされます。
 
 ```ts
 {
   PORT: Env.schema.number()
 }
 
-// Mark it as optional
+// オプションにする
 {
   PORT: Env.schema.number.optional()
 }
@@ -182,7 +182,7 @@ The `schema.number` method ensures the value is a valid number. The string repre
 
 ### schema.enum
 
-The `schema.enum` method validates the environment variable against one of the pre-defined values. The enum options can be specified as an array of values or a TypeScript native enum type.
+`schema.enum`メソッドは、環境変数を事前定義された値のいずれかと照合します。列挙型のオプションは、値の配列またはTypeScriptのネイティブな列挙型として指定できます。
 
 ```ts
 {
@@ -191,7 +191,7 @@ The `schema.enum` method validates the environment variable against one of the p
     .enum(['development', 'production'] as const)
 }
 
-// Mark it as optional
+// オプションにする
 {
   NODE_ENV: Env
     .schema
@@ -199,7 +199,7 @@ The `schema.enum` method validates the environment variable against one of the p
     .optional(['development', 'production'] as const)
 }
 
-// Using native enums
+// ネイティブな列挙型の使用
 enum NODE_ENV {
   development = 'development',
   production = 'production'
@@ -210,20 +210,20 @@ enum NODE_ENV {
 }
 ```
 
-### Custom functions
-Custom functions can perform validations not covered by the schema API. 
+### カスタム関数
+カスタム関数は、スキーマAPIではカバーされていない検証を実行できます。
 
-The function receives the name of the environment variable as the first argument and the value as the second argument. It must return the final value post-validation.
+関数は、環境変数の名前を第1引数として、値を第2引数として受け取ります。検証後の最終値を返す必要があります。
 
 ```ts
 {
   PORT: (name, value) => {
     if (!value) {
-      throw new Error('Value for PORT is required')
+      throw new Error('PORTの値が必要です')
     }
     
     if (isNaN(Number(value))) {
-      throw new Error('Value for PORT must be a valid number')
+      throw new Error('PORTの値は有効な数値である必要があります')
     }
 
     return Number(value)
@@ -231,10 +231,10 @@ The function receives the name of the environment variable as the first argument
 }
 ```
 
-## Defining environment variables
+## 環境変数の定義
 
-### In development
-The environment variables are defined inside the `.env` file during development. The env module looks for this file within the project's root and automatically parses it (if it exists).
+### 開発環境で
+環境変数は、開発中に`.env`ファイル内に定義されます。envモジュールは、このファイルをプロジェクトのルート内で検索し、自動的に解析します（存在する場合）。
 
 ```dotenv
 // title: .env
@@ -246,23 +246,23 @@ SESSION_DRIVER=cookie
 CACHE_VIEWS=false
 ```
 
-### In production
-Using your deployment platform to define the environment variables is recommended in production. Most modern-day deployment platforms have first-class support for defining environment variables from their web UI.
+### 本番環境で
+本番環境では、デプロイメントプラットフォームを使用して環境変数を定義することをオススメします。ほとんどの現代のデプロイメントプラットフォームは、Web UIから環境変数の定義をサポートしています。
 
-Suppose your deployment platform provides no means for defining environment variables. You can create a `.env` file in the project root or at some different location on your production server.
+デプロイメントプラットフォームが環境変数の定義手段を提供していない場合は、プロジェクトのルートまたは本番サーバーの別の場所に`.env`ファイルを作成できます。
 
-AdonisJS will automatically read the `.env` file from the project root. However, you must set the `ENV_PATH` variable when the `.env` file is stored at some different location.
+AdonisJSは、プロジェクトのルートから`.env`ファイルを自動的に読み取ります。ただし、`.env`ファイルが別の場所に保存されている場合は、`ENV_PATH`変数を設定する必要があります。
 
 ```sh
-# Attempts to read .env file from project root
+# プロジェクトのルートから.envファイルを読み取ろうとします
 node server.js
 
-# Reads the .env file from the "/etc/secrets" directory
+# "/etc/secrets"ディレクトリから.envファイルを読み取ります
 ENV_PATH=/etc/secrets node server.js
 ```
 
-### During tests
-The environment variables specific to the test environment must be defined within the `.env.test` file. The values from this file override the values from the `.env` file.
+### テスト中に
+テスト環境固有の環境変数は、`.env.test`ファイル内で定義する必要があります。このファイルの値は、`.env`ファイルの値を上書きします。
 
 ```dotenv
 // title: .env
@@ -279,59 +279,59 @@ ASSETS_DRIVER=fake
 ```
 
 ```ts
-// During tests
+// テスト中
 import env from '#start/env'
 
 env.get('SESSION_DRIVER') // memory
 ```
 
-## All other dot-env files
+## その他のdot-envファイル
 
-Alongside the `.env` file, AdonisJS processes the environment variables from the following dot-env files. Therefore, you can optionally create these files (if needed).
+`.env`ファイルと並行して、AdonisJSは次のdot-envファイルから環境変数を処理します。したがって、これらのファイルを作成することもできます（必要な場合）。
 
-The file with the top-most rank overrides the values from the bottom rank files.
+上位ランクのファイルが下位ランクのファイルの値を上書きします。
 
 <table>
     <thead>
         <tr>
-            <th width="40px">Rank</th>
-            <th width="220px">Filename</th>
-            <th>Notes</th>
+            <th width="40px">ランク</th>
+            <th width="220px">ファイル名</th>
+            <th>ノート</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>1st</td>
+            <td>1位</td>
             <td><code>.env.[NODE_ENV].local</code></td>
             <td>
-            Loaded for the current <code>NODE_ENV</code>. For example, if the <code>NODE_ENV</code> is set to <code>development</code>, then the <code>.env.development.local</code> file will be loaded.
+            現在の<code>NODE_ENV</code>に対してロードされます。たとえば、<code>NODE_ENV</code>が<code>development</code>に設定されている場合、<code>.env.development.local</code>ファイルがロードされます。
             </td>
         </tr>
         <tr>
-            <td>2nd</td>
+            <td>2位</td>
             <td><code>.env.local</code></td>
-            <td>Loaded in all the environments except the <code>test</code> and <code>testing</code> environments</td>
+            <td><code>test</code>および<code>testing</code>以外のすべての環境でロードされます</td>
         </tr>
         <tr>
-            <td>3rd</td>
+            <td>3位</td>
             <td><code>.env.[NODE_ENV]</code></td>
             <td>
-            Loaded for the current <code>NODE_ENV</code>. For example, if the <code>NODE_ENV</code> is set to <code>development</code>, then the <code>.env.development</code> file will be loaded.
+            現在の<code>NODE_ENV</code>に対してロードされます。たとえば、<code>NODE_ENV</code>が<code>development</code>に設定されている場合、<code>.env.development</code>ファイルがロードされます。
             </td>
         </tr>
         <tr>
-            <td>4th</td>
+            <td>4位</td>
             <td><code>.env</code></td>
-            <td>Loaded in all the environments. You should add this file to <code>.gitignore</code> when storing secrets inside it.</td>
+            <td>すべての環境でロードされます。このファイルにはシークレットを格納する場合は<code>.gitignore</code>に追加する必要があります。</td>
         </tr>
     </tbody>
 </table>
 
-## Using variables inside the dot-env files
+## dot-envファイル内での変数の使用
 
-Within dot-env files, you can reference other environment variables using the variable substitution syntax. 
+dot-envファイル内では、変数の置換構文を使用して他の環境変数を参照できます。
 
-We compute the `APP_URL` from the `HOST` and the `PORT` properties in the following example.
+次の例では、`HOST`と`PORT`のプロパティから`APP_URL`を計算しています。
 
 ```dotenv
 HOST=localhost
@@ -341,16 +341,16 @@ URL=$HOST:$PORT
 // highlight-end
 ```
 
-All **letter**, **numbers**, and the **underscore (_)** after the `$` sign are used to form a variable name. You must wrap the variable name inside curly braces `{}` if the name has special characters other than an underscore.
+`$`記号の後に続く**文字**、**数字**、**アンダースコア (_)**は、変数名を形成するために使用されます。アンダースコア以外の特殊文字を含む場合は、変数名を中括弧 `{}`で囲む必要があります。
 
 ```dotenv
 REDIS-USER=admin
 REDIS-URL=localhost@${REDIS-USER}
 ```
 
-### Escaping the `$` sign
+### `$`記号のエスケープ
 
-To use the `$` sign as a value, you must escape it to prevent variable substitution.
+`$`記号を値として使用する場合は、変数の置換を防ぐためにエスケープする必要があります。
 
 ```dotenv
 PASSWORD=pa\$\$word

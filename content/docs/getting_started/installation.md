@@ -1,39 +1,39 @@
 ---
-summary: How to create and configure a new AdonisJS application.
+summary: 新しいAdonisJSアプリケーションを作成して設定する方法。
 ---
 
-# Installation
+# インストール
 
-Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. AdonisJS needs `Node.js >= 20.6`.
+新しいアプリケーションを作成する前に、コンピュータにNode.jsとnpmがインストールされていることを確認してください。AdonisJSは`Node.js >= 20.6`が必要です。
 
-You may install Node.js using either the [official installers](https://nodejs.org/en/download/) or [Volta](https://docs.volta.sh/guide/getting-started). Volta is a cross-platform package manager that installs and runs multiple Node.js versions on your computer.
+Node.jsは[公式のインストーラー](https://nodejs.org/en/download/)または[Volta](https://docs.volta.sh/guide/getting-started)を使用してインストールできます。Voltaはクロスプラットフォームのパッケージマネージャーであり、コンピュータに複数のNode.jsバージョンをインストールして実行できます。
 
 ```sh
-// title: Verify Node.js version
+// title: Node.jsのバージョンを確認する
 node -v
 # v22.0.0
 ```
 
 :::tip
-**Are you more of a visual learner?** - Checkout the [Let's Learn AdonisJS 6](https://adocasts.com/series/lets-learn-adonisjs-6) free screencasts series from our friends at Adocasts.
+**視覚的な学習が好きですか？** - Adocastsの友達たちが提供する[Let's Learn AdonisJS 6](https://adocasts.com/series/lets-learn-adonisjs-6)無料のスクリーンキャストシリーズをチェックしてみてください。
 :::
 
 
-## Creating a new application
+## 新しいアプリケーションの作成
 
-You may create a new project using [npm init](https://docs.npmjs.com/cli/v7/commands/npm-init). These commands will download the [create-adonisjs](http://npmjs.com/create-adonisjs) initializer package and begin the installation process.
+[npm init](https://docs.npmjs.com/cli/v7/commands/npm-init)を使用して新しいプロジェクトを作成できます。これらのコマンドは[create-adonisjs](http://npmjs.com/create-adonisjs)イニシャライザーパッケージをダウンロードし、インストールプロセスを開始します。
 
-You may customize the initial project output using one of the following CLI flags.
+次のCLIフラグのいずれかを使用して、初期プロジェクトの出力をカスタマイズできます。
 
-- `--kit`: Select the [starter kit](#starter-kits) for the project. You can choose between **web**, **api**, **slim** or **inertia**.
+- `--kit`: プロジェクトの[スターターキット](#starter-kits)を選択します。**web**、**api**、**slim**、または**inertia**のいずれかを選択できます。
 
-- `--db`: Specify the database dialect of your choice. You can choose between **sqlite**, **postgres**, **mysql**, or **mssql**. Defaults to `sqlite`.
+- `--db`: 使用するデータベースの方言を指定します。**sqlite**、**postgres**、**mysql**、または**mssql**のいずれかを選択できます。デフォルトは`sqlite`です。
 
-- `--git-init`: Initiate the git repository. Defaults to `false`.
+- `--git-init`: Gitリポジトリを初期化します。デフォルトは`false`です。
 
-- `--auth-guard`: Specify the authentication guard of your choice. You can choose between **session**, **access_tokens**, or **basic_auth**. Defaults to `session`.
+- `--auth-guard`: 使用する認証ガードを指定します。**session**、**access_tokens**、または**basic_auth**のいずれかを選択できます。デフォルトは`session`です。
 
-- `--install`: Skip the prompt to install dependencies.
+- `--install`: 依存関係のインストールのプロンプトをスキップします。
 
 :::codegroup
 
@@ -44,111 +44,112 @@ npm init adonisjs@latest hello-world
 
 :::
 
-When passing CLI flags using the `npm init` command, make sure to use [double dashes twice](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command). Otherwise, `npm init` will not pass the flags to the `create-adonisjs` initializer package. For example:
+`npm init`コマンドを使用してCLIフラグを渡す場合は、[二重ダッシュを2回使用する](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command)必要があります。そうしないと、`npm init`はフラグを`create-adonisjs`イニシャライザーパッケージに渡さないため、正しく動作しません。
 
+例:
 ```sh
-# Create a project with MYSQL
+# MYSQLでプロジェクトを作成する
 npm init adonisjs@latest hello-world -- --db=mysql
 
-# Create a project with PostgreSQL and API starter kit
+# PostgreSQLとAPIスターターキットでプロジェクトを作成する
 npm init adonisjs@latest hello-world -- --db=postgres --kit=api
 
-# Create a project with API starter kit and access tokens guard
+# APIスターターキットとアクセストークンガードでプロジェクトを作成する
 npm init adonisjs@latest hello-world -- --kit=api --auth-guard=access_tokens
 ```
 
-## Starter kits
+## スターターキット
 
-Starter kits serve as a starting point for creating applications using AdonisJS. They come with an [opinionated folder structure](./folder_structure.md), pre-configured AdonisJS packages, and the necessary tooling you need during development.
+スターターキットはAdonisJSを使用してアプリケーションを作成するための出発点となります。これらには、[意見のあるフォルダ構造](./folder_structure.md)、事前に設定されたAdonisJSパッケージ、および開発中に必要なツールが含まれています。
 
 
 :::note
 
-The official starter kits use ES modules and TypeScript. This combination allows you to use modern JavaScript constructs and leverage static-type safety.
+公式のスターターキットはESモジュールとTypeScriptを使用しています。この組み合わせにより、モダンなJavaScriptの構造を使用し、静的型の安全性を活用できます。
 
 :::
 
-### Web starter kit
+### Webスターターキット
 
-The Web starter kit is tailored for creating traditional server renderer web apps. Do not let the keyword **"traditional"** discourage you. We recommend this starter kit if you make a web app with limited frontend interactivity.
+Webスターターキットは、従来のサーバーレンダラーウェブアプリケーションを作成するためにカスタマイズされています。キーワード**"traditional"**に惑わされないでください。限られたフロントエンドの相互作用を持つWebアプリを作成する場合は、このスターターキットをオススメします。
 
-The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.dev) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
+[Edge.js](https://edgejs.dev)を使用してサーバー上でHTMLをレンダリングするシンプルさは、いくつかのHTMLをレンダリングするための複雑なビルドシステムに対処する必要がないため、生産性を向上させます。
 
-Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
+後で、[Hotwire](https://hotwired.dev)、[HTMX](http://htmx.org)、または[Unpoly](http://unpoly.com)を使用してアプリケーションをSPAのようにナビゲートし、[Alpine.js](http://alpinejs.dev)を使用してドロップダウンやモーダルなどのインタラクティブなウィジェットを作成できます。
 
 ```sh
 npm init adonisjs@latest -- -K=web
 
-# Switch database dialect
+# データベースの方言を切り替える
 npm init adonisjs@latest -- -K=web --db=mysql
 ```
 
-The web starter kit comes with the following packages.
+Webスターターキットには、次のパッケージが含まれています。
 
 <table>
 <thead>
 <tr>
-<th width="180px">Package</th>
-<th>Description</th>
+<th width="180px">パッケージ</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><code>@adonisjs/core</code></td>
-<td>The framework&#39;s core has the baseline features you might reach for when creating backend applications.</td>
+<td>バックエンドアプリケーションを作成する際に必要な基本機能を提供するフレームワークのコアです。</td>
 </tr>
 <tr>
 <td><code>edge.js</code></td>
-<td>The <a href="https://edgejs.dev">edge</a> template engine for composing HTML pages.</td>
+<td>HTMLページを構成するための<a href="https://edgejs.dev">edge</a>テンプレートエンジンです。</td>
 </tr>
 <tr>
 <td><code>@vinejs/vine</code></td>
-<td><a href="https://vinejs.dev">VineJS</a> is one of the fastest validation libraries in the Node.js ecosystem.</td>
+<td><a href="https://vinejs.dev">VineJS</a>は、Node.jsエコシステムで最も高速なバリデーションライブラリの1つです。</td>
 </tr>
 <tr>
 <td><code>@adonisjs/lucid</code></td>
-<td>Lucid is a SQL ORM maintained by the AdonisJS core team.</td>
+<td>Lucidは、AdonisJSコアチームによってメンテナンスされているSQL ORMです。</td>
 </tr>
 <tr>
 <td><code>@adonisjs/auth</code></td>
-<td>The authentication layer of the framework. It is configured to use sessions.</td>
+<td>フレームワークの認証レイヤーです。セッションを使用するように設定されています。</td>
 </tr>
 <tr>
 <td><code>@adonisjs/shield</code></td>
-<td>A set of security primitives to keep your web apps safe from attacks like <strong>CSRF</strong> and <strong>‌ XSS</strong>.</td>
+<td><strong>CSRF</strong>や<strong>‌XSS</strong>などの攻撃からWebアプリを安全に保つためのセキュリティプリミティブのセットです。</td>
 </tr>
 <tr>
 <td><code>@adonisjs/static</code></td>
-<td>Middleware to serve static assets from the <code>/public</code> directory of your application.</td>
+<td>アプリケーションの<code>/public</code>ディレクトリから静的アセットを提供するミドルウェアです。</td>
 </tr>
 <tr>
 <td><code>vite</code></td>
-<td><a href="https://vitejs.dev/">Vite</a> is used for compiling the frontend assets.</td>
+<td><a href="https://vitejs.dev/">Vite</a>は、フロントエンドアセットをコンパイルするために使用されます。</td>
 </tr>
 </tbody></table>
 
 ---
 
-### API starter kit
+### APIスターターキット
 
-The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
+APIスターターキットは、JSON APIサーバーを作成するためにカスタマイズされています。これは`web`スターターキットの簡略版です。ReactやVueを使用してフロントエンドアプリを構築する予定の場合は、APIスターターキットを使用してAdonisJSバックエンドを作成できます。
 
 ```sh
 npm init adonisjs@latest -- -K=api
 
-# Switch database dialect
+# データベースの方言を切り替える
 npm init adonisjs@latest -- -K=api --db=mysql
 ```
 
-In this starter kit:
+このスターターキットでは、次のことを行っています。
 
-- We remove support for serving static files.
-- Do not configure the views layer and vite.
-- Turn off XSS and CSRF protection and enable CORS protection.
-- Use the ContentNegotiation middleware to send HTTP responses in JSON.
+- 静的ファイルの提供をサポートしません。
+- ビューレイヤーとviteの設定を行いません。
+- XSSとCSRFの保護をオフにし、CORSの保護を有効にします。
+- ContentNegotiationミドルウェアを使用してJSONでHTTPレスポンスを送信します。
 
-The API starter kit is configured with session-based authentication. However, if you wish to use tokens-based authentication, you can use the `--auth-guard` flag.
+APIスターターキットはセッションベースの認証で構成されています。ただし、トークンベースの認証を使用する場合は、`--auth-guard`フラグを使用できます。
 
-See also: [Which authentication guard should I use?](../authentication/introduction.md#choosing-an-auth-guard)
+参照: [どの認証ガードを使用すべきですか？](../authentication/introduction.md#choosing-an-auth-guard)
 
 ```sh
 npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
@@ -156,116 +157,116 @@ npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
 
 ---
 
-### Slim starter kit
-For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
+### Slimスターターキット
+最小限主義者のために、`slim`スターターキットを作成しました。これにはフレームワークのコアとデフォルトのフォルダ構造のみが含まれています。AdonisJSの余分な機能は必要ない場合に使用できます。
 
 ```sh
 npm init adonisjs@latest -- -K=slim
 
-# Switch database dialect
+# データベースの方言を切り替える
 npm init adonisjs@latest -- -K=slim --db=mysql
 ```
 
 ---
 
-### Inertia Starter kit
+### Inertiaスターターキット
 
-[Inertia](https://inertiajs.com/) is a way to build server-driven single-page applications. You can use your favorite frontend framework ( React, Vue, Solid, Svelte ) to build the frontend of your application.
+[Inertia](https://inertiajs.com/)は、サーバードリブンのシングルページアプリケーションを構築する方法です。お気に入りのフロントエンドフレームワーク（React、Vue、Solid、Svelte）を使用して、アプリケーションのフロントエンドを構築できます。
 
-You can use the `--adapter` flag to choose the frontend framework you want to use. The available options are `react`, `vue`, `solid`, and `svelte`.
+`--adapter`フラグを使用して使用するフロントエンドフレームワークを選択できます。利用可能なオプションは`react`、`vue`、`solid`、`svelte`です。
 
-You can also use the `--ssr` and `--no-ssr` flags to turn server-side rendering on or off.
+また、サーバーサイドレンダリングをオンまたはオフにするために`--ssr`および`--no-ssr`フラグを使用することもできます。
 
 ```sh
-# React with server-side rendering
+# サーバーサイドレンダリングを使用したReact
 npm init adonisjs@latest -- -K=inertia --adapter=react --ssr
 
-# Vue without server-side rendering
+# サーバーサイドレンダリングを使用しないVue
 npm init adonisjs@latest -- -K=inertia --adapter=vue --no-ssr
 ```
 
 ---
 
-### Bring your starter kit
-Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
+### 独自のスターターキットを持ち込む
+スターターキットは、GitHub、Bitbucket、またはGitlabなどのGitリポジトリプロバイダでホストされた事前に構築されたプロジェクトです。また、次のようにして独自のスターターキットを作成してダウンロードすることもできます。
 
 ```sh
 npm init adonisjs@latest -- -K="github_user/repo"
 
-# Download from GitLab
+# GitLabからダウンロード
 npm init adonisjs@latest -- -K="gitlab:user/repo"
 
-# Download from BitBucket
+# BitBucketからダウンロード
 npm init adonisjs@latest -- -K="bitbucket:user/repo"
 ```
 
-You can download private repos using Git+SSH authentication using the `git` mode.
+`git`モードを使用してGit+SSH認証でプライベートリポジトリをダウンロードすることもできます。
 
 ```sh
 npm init adonisjs@latest -- -K="user/repo" --mode=git
 ```
 
-Finally, you can specify a tag, branch, or commit.
+最後に、タグ、ブランチ、またはコミットを指定することもできます。
 
 ```sh
-# Branch
+# ブランチ
 npm init adonisjs@latest -- -K="user/repo#develop"
 
-# Tag
+# タグ
 npm init adonisjs@latest -- -K="user/repo#v2.1.0"
 ```
 
-## Starting the development server
-Once you have created an AdonisJS application, you may start the development server by running the `node ace serve` command.
+## 開発サーバーの起動
+AdonisJSアプリケーションを作成したら、`node ace serve`コマンドを実行して開発サーバーを起動できます。
 
-Ace is a command line framework bundled inside the framework's core. The `--hmr` flag monitors the file system and performs [hot module replacement (HMR)](../concepts/hmr.md) for certain sections of your codebase.
+Aceは、フレームワークのコアにバンドルされたコマンドラインフレームワークです。`--hmr`フラグはファイルシステムを監視し、コードベースの一部に対して[ホットモジュールリプレースメント（HMR）](../concepts/hmr.md)を実行します。
 
 ```sh
 node ace serve --hmr
 ```
 
-Once the development server runs, you may visit [http://localhost:3333](http://localhost:3333) to view your application in a browser.
+開発サーバーが実行されると、ブラウザでアプリケーションを表示するために[http://localhost:3333](http://localhost:3333)にアクセスできます。
 
-## Building for production
+## 本番用のビルド
 
-Since AdonisJS applications are written in TypeScript, they must be compiled into JavaScript before running in production.
+AdonisJSアプリケーションはTypeScriptで書かれているため、本番で実行する前にJavaScriptにコンパイルする必要があります。
 
-You may create the JavaScript output using the `node ace build` command. The JavaScript output is written to the `build` directory.
+`node ace build`コマンドを使用してJavaScriptの出力を作成できます。JavaScriptの出力は`build`ディレクトリに書き込まれます。
 
-When Vite is configured, this command also compiles the frontend assets using Vite and writes the output to the `build/public` folder.
+Viteが設定されている場合、このコマンドはViteを使用してフロントエンドアセットをコンパイルし、出力を`build/public`フォルダに書き込みます。
 
-See also: [TypeScript build process](../concepts/typescript_build_process.md).
+参照: [TypeScriptのビルドプロセス](../concepts/typescript_build_process.md)。
 
 ```sh
 node ace build
 ```
 
-## Configuring the development environment
+## 開発環境の設定
 
-While AdonisJS takes care of building the end-user applications, you may need additional tools to enjoy the development process and have consistency in your coding style.
+AdonisJSはエンドユーザーアプリケーションのビルドを担当してくれますが、開発プロセスを楽しむために追加のツールが必要になる場合があります。また、コーディングスタイルの一貫性を保つために、コードのリントに**[ESLint](https://eslint.org/)**を使用し、コードのフォーマットに**[Prettier](https://prettier.io)**を使用することを強くオススメします。
 
-We strongly recommend you use **[ESLint](https://eslint.org/)** to lint your code and use **[Prettier](https://prettier.io)** to re-format your code for consistency.
+コードのリントには**[ESLint](https://eslint.org/)**を使用し、コードのフォーマットのために**[Prettier](https://prettier.io)**を使用することを強くオススメします。
 
-The official starter kits come pre-configured with both ESLint and Prettier and use the opinionated presets from the AdonisJS core team. You can learn more about them in the [Tooling config](../concepts/tooling_config.md) section of the docs.
+公式のスターターキットには、ESLintとPrettierの両方が事前に設定されており、AdonisJSコアチームの意見に基づいたプリセットが使用されています。これについては、ドキュメントの[ツール設定](../concepts/tooling_config.md)セクションで詳しく説明しています。
 
-Finally, we recommend you install ESLint and Prettier plugins for your code editor so that you have a tighter feedback loop during the application development. Also, you can use the following commands to `lint` and `format` your code from the command line.
+最後に、コードエディタにESLintとPrettierのプラグインをインストールすることをオススメします。これにより、アプリケーション開発中のフィードバックループがより密になります。また、次のコマンドを使用してコマンドラインからコードを「リント」および「フォーマット」することもできます。
 
 ```sh
-# Runs ESLint
+# ESLintを実行
 npm run lint
 
-# Run ESLint and auto-fix issues
+# ESLintを実行し、問題を自動修正
 npm run lint -- --fix
 
-# Runs prettier
+# Prettierを実行
 npm run format
 ```
 
-## VSCode extensions
-You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
+## VSCode拡張機能
+AdonisJSアプリケーションはTypeScriptをサポートする任意のコードエディタで開発できます。ただし、開発体験をさらに向上させるために、いくつかのVSCode拡張機能を開発しました。
 
-- [**AdonisJS**](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) - View application routes, run ace commands, migrate the database, and read documentation directly from your code editor.
+- [**AdonisJS**](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) - アプリケーションのルートを表示し、aceコマンドを実行し、データベースをマイグレーションし、コードエディタから直接ドキュメントを読むことができます。
 
-- [**Edge**](https://marketplace.visualstudio.com/items?itemName=AdonisJS.vscode-edge) - Supercharge your development workflow with support for syntax highlighting, autocompletion, and code snippets.
+- [**Edge**](https://marketplace.visualstudio.com/items?itemName=AdonisJS.vscode-edge) - 構文のハイライト、自動補完、コードスニペットのサポートを備えた開発ワークフローを強化します。
 
-- [**Japa**](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) - Run tests without leaving your code editor using Keyboard shortcuts or run them directly from the activity sidebar.
+- [**Japa**](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) - キーボードショートカットを使用してコードエディタを離れずにテストを実行するか、アクティビティサイドバーから直接実行します。

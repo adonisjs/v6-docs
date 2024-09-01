@@ -1,12 +1,12 @@
 ---
-summary: AdonisJS bundles its utilities into the `helpers` module and makes them available to your application code. 
+summary: AdonisJSはユーティリティを`helpers`モジュールにまとめ、アプリケーションコードで利用できるようにします。
 ---
 
-# Helpers reference
+# ヘルパーリファレンス
 
-AdonisJS bundles its utilities into the `helpers` module and makes them available to your application code. Since these utilities are already installed and used by the framework, the `helpers` module does not add any additional bloat to your `node_modules`.
+AdonisJSはユーティリティを`helpers`モジュールにまとめ、アプリケーションコードで利用できるようにします。これらのユーティリティはすでにフレームワークにインストールされて使用されているため、`helpers`モジュールは`node_modules`に追加の膨張をもたらしません。
 
-The helper methods are exported from the following modules.
+ヘルパーメソッドは次のモジュールからエクスポートされます。
 
 ```ts
 import is from '@adonisjs/core/helpers/is'
@@ -16,7 +16,7 @@ import string from '@adonisjs/core/helpers/string'
 
 ## escapeHTML
 
-Escape HTML entities in a string value. Under the hood, we use the [he](https://www.npmjs.com/package/he#heescapetext) package.
+文字列の値内のHTMLエンティティをエスケープします。内部では、[he](https://www.npmjs.com/package/he#heescapetext)パッケージを使用しています。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -25,7 +25,7 @@ string.escapeHTML('<p> foo © bar </p>')
 // &lt;p&gt; foo © bar &lt;/p&gt;
 ```
 
-Optionally, you can encode non-ASCII symbols using the `encodeSymbols` option.
+オプションで、`encodeSymbols`オプションを使用して非ASCIIシンボルをエンコードすることもできます。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -38,7 +38,7 @@ string.escapeHTML('<p> foo © bar </p>', {
 
 ## encodeSymbols
 
-You may encode non-ASCII symbols in a string value using the `encodeSymbols` helper. Under the hood, we use [he.encode](https://www.npmjs.com/package/he#heencodetext-options) method.
+`encodeSymbols`ヘルパーを使用して、文字列の値内の非ASCIIシンボルをエンコードできます。内部では、[he.encode](https://www.npmjs.com/package/he#heencodetext-options)メソッドを使用しています。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -49,7 +49,7 @@ string.encodeSymbols('foo © bar ≠ baz 𝌆 qux')
 
 ## prettyHrTime
 
-Pretty print the diff of [process.hrtime](https://nodejs.org/api/process.html#processhrtimetime) method.
+[process.hrtime](https://nodejs.org/api/process.html#processhrtimetime)メソッドの差分を見やすく表示します。
 
 ```ts
 import { hrtime } from 'node:process'
@@ -64,7 +64,7 @@ console.log(string.prettyHrTime(endTime))
 
 ## isEmpty
 
-Check if a string value is empty.
+文字列の値が空かどうかをチェックします。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -75,37 +75,37 @@ string.isEmpty('      ') // true
 
 ## truncate
 
-Truncate a string at a given number of characters.
+指定された文字数で文字列を切り詰めます。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
 string.truncate('This is a very long, maybe not that long title', 12)
-// Output: This is a ve...
+// 出力: This is a ve...
 ```
 
-By default, the string is truncated exactly at the given index. However, you can instruct the method to wait for the words to complete.
+デフォルトでは、文字列は指定されたインデックスで正確に切り詰められます。ただし、メソッドに単語の完了を待つように指示することもできます。
 
 ```ts
 string.truncate('This is a very long, maybe not that long title', 12, {
   completeWords: true,
 })
-// Output: This is a very...
+// 出力: This is a very...
 ```
 
-You can customize the suffix using the `suffix` option.
+`suffix`オプションを使用して、接尾辞をカスタマイズすることもできます。
 
 ```ts
 string.truncate('This is a very long, maybe not that long title', 12, {
   completeWords: true,
   suffix: '... <a href="/1"> Read more </a>',
 })
-// Output: This is a very... <a href="/1"> Read more </a>
+// 出力: This is a very... <a href="/1"> Read more </a>
 ```
 
 ## excerpt
 
-The `excerpt` method is identical to the `truncate` method. However, it strips the HTML tags from the string.
+`excerpt`メソッドは`truncate`メソッドと同じですが、文字列からHTMLタグを削除します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -113,12 +113,12 @@ import string from '@adonisjs/core/helpers/string'
 string.excerpt('<p>This is a <strong>very long</strong>, maybe not that long title</p>', 12, {
   completeWords: true,
 })
-// Output: This is a very...
+// 出力: This is a very...
 ```
 
 ## slug
 
-Generate slug for a string value. The method is exported from the [slugify package](https://www.npmjs.com/package/slugify); therefore, consult its documentation for available options.
+文字列の値のスラッグを生成します。このメソッドは[slugifyパッケージ](https://www.npmjs.com/package/slugify)からエクスポートされているため、使用可能なオプションについてはそのドキュメントを参照してください。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -127,7 +127,7 @@ console.log(string.slug('hello ♥ world'))
 // hello-love-world
 ```
 
-You can add custom replacements for Unicode values as follows.
+次のようにUnicode値のカスタム置換を追加できます。
 
 ```ts
 string.slug.extend({ '☢': 'radioactive' })
@@ -138,7 +138,7 @@ console.log(string.slug('unicode ♥ is ☢'))
 
 ## interpolate
 
-Interpolate variables inside a string. The variables must be inside double curly braces.
+文字列内の変数を補間します。変数は二重の中括弧内にある必要があります。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -151,7 +151,7 @@ string.interpolate('hello {{ user.username }}', {
 // hello virk
 ```
 
-Curly braces can be escaped using the `\\` prefix.
+中括弧は`\\`接頭辞を使用してエスケープできます。
 
 ```ts
 string.interpolate('hello \\{{ users.0 }}', {})
@@ -160,7 +160,7 @@ string.interpolate('hello \\{{ users.0 }}', {})
 
 ## plural
 
-Convert a word to its plural form. The method is exported from the [pluralize package](https://www.npmjs.com/package/pluralize).
+単語を複数形に変換します。このメソッドは[pluralizeパッケージ](https://www.npmjs.com/package/pluralize)からエクスポートされています。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -171,7 +171,7 @@ string.plural('test')
 
 ## isPlural
 
-Find if a word already is in plural form.
+単語がすでに複数形かどうかを調べます。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -181,8 +181,9 @@ string.isPlural('tests') // true
 
 ## pluralize
 
-This method combines the `singular` and the `plural` methods and uses one or the other based on the count. For example:
+このメソッドは`singular`メソッドと`plural`メソッドを組み合わせ、カウントに基づいてどちらかを使用します。
 
+例:
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
@@ -195,7 +196,7 @@ string.pluralize('boxes', 2) // boxes
 string.pluralize('boxes', 0) // boxes
 ```
 
-The `pluralize` property exports [additional methods](https://www.npmjs.com/package/pluralize) to register custom uncountable, irregular, plural, and singular rules.
+`pluralize`プロパティは、カスタムの不可算、不規則、複数形、単数形のルールを登録するための[追加のメソッド](https://www.npmjs.com/package/pluralize)をエクスポートします。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -206,7 +207,7 @@ string.pluralize.addSingularRule(/singles$/i, 'singular')
 
 ## singular
 
-Convert a word to its singular form. The method is exported from the [pluralize package](https://www.npmjs.com/package/pluralize).
+単語を単数形に変換します。このメソッドは[pluralizeパッケージ](https://www.npmjs.com/package/pluralize)からエクスポートされています。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -217,7 +218,7 @@ string.singular('tests')
 
 ## isSingular
 
-Find if a word is already in a singular form.
+単語がすでに単数形かどうかを調べます。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -227,7 +228,7 @@ string.isSingular('test') // true
 
 ## camelCase
 
-Convert a string value to camelcase.
+文字列の値をキャメルケースに変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -235,9 +236,9 @@ import string from '@adonisjs/core/helpers/string'
 string.camelCase('user_name') // userName
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output        |
+| 入力            | 出力        |
 | ---------------- | ------------- |
 | 'test'           | 'test'        |
 | 'test string'    | 'testString'  |
@@ -249,7 +250,7 @@ Following are some of the conversion examples.
 
 ## capitalCase
 
-Convert a string value to a capital case.
+文字列の値をキャピタルケースに変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -257,9 +258,9 @@ import string from '@adonisjs/core/helpers/string'
 string.capitalCase('helloWorld') // Hello World
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output           |
+| 入力            | 出力           |
 | ---------------- | ---------------- |
 | 'test'           | 'Test'           |
 | 'test string'    | 'Test String'    |
@@ -270,7 +271,7 @@ Following are some of the conversion examples.
 
 ## dashCase
 
-Convert a string value to a dash case.
+文字列の値をダッシュケースに変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -278,15 +279,15 @@ import string from '@adonisjs/core/helpers/string'
 string.dashCase('helloWorld') // hello-world
 ```
 
-Optionally, you can capitalize the first letter of each word.
+オプションで、各単語の最初の文字を大文字にすることもできます。
 
 ```ts
 string.dashCase('helloWorld', { capitalize: true }) // Hello-World
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output         |
+| 入力            | 出力         |
 | ---------------- | -------------- |
 | 'test'           | 'test'         |
 | 'test string'    | 'test-string'  |
@@ -298,7 +299,7 @@ Following are some of the conversion examples.
 
 ## dotCase
 
-Convert a string value to a dot case.
+文字列の値をドットケースに変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -306,15 +307,15 @@ import string from '@adonisjs/core/helpers/string'
 string.dotCase('helloWorld') // hello.World
 ```
 
-Optionally, you can convert the first letter of all the words to lowercase.
+オプションで、すべての単語の最初の文字を小文字に変換することもできます。
 
 ```ts
 string.dotCase('helloWorld', { lowerCase: true }) // hello.world
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output         |
+| 入力            | 出力         |
 | ---------------- | -------------- |
 | 'test'           | 'test'         |
 | 'test string'    | 'test.string'  |
@@ -327,7 +328,7 @@ Following are some of the conversion examples.
 
 ## noCase
 
-Remove all sorts of casing from a string value.
+文字列の値からすべてのケースを削除します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -335,9 +336,9 @@ import string from '@adonisjs/core/helpers/string'
 string.noCase('helloWorld') // hello world
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input                  | Output                 |
+| 入力                  | 出力                 |
 | ---------------------- | ---------------------- |
 | 'test'                 | 'test'                 |
 | 'TEST'                 | 'test'                 |
@@ -368,7 +369,7 @@ Following are some of the conversion examples.
 
 ## pascalCase
 
-Convert a string value to a Pascal case. Great for generating JavaScript class names.
+文字列の値をパスカルケースに変換します。JavaScriptのクラス名を生成するのに最適です。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -376,9 +377,9 @@ import string from '@adonisjs/core/helpers/string'
 string.pascalCase('user team') // UserTeam
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output        |
+| 入力            | 出力        |
 | ---------------- | ------------- |
 | 'test'           | 'Test'        |
 | 'test string'    | 'TestString'  |
@@ -389,7 +390,7 @@ Following are some of the conversion examples.
 
 ## sentenceCase
 
-Convert a value to a sentence.
+値を文に変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -398,9 +399,9 @@ string.sentenceCase('getting_started-with-adonisjs')
 // Getting started with adonisjs
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output           |
+| 入力            | 出力           |
 | ---------------- | ---------------- |
 | 'test'           | 'Test'           |
 | 'test string'    | 'Test string'    |
@@ -411,7 +412,7 @@ Following are some of the conversion examples.
 
 ## snakeCase
 
-Convert value to snake case.
+値をスネークケースに変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -419,9 +420,9 @@ import string from '@adonisjs/core/helpers/string'
 string.snakeCase('user team') // user_team
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input            | Output         |
+| 入力            | 出力         |
 | ---------------- | -------------- |
 | '\_id'           | 'id'           |
 | 'test'           | 'test'         |
@@ -434,7 +435,7 @@ Following are some of the conversion examples.
 
 ## titleCase
 
-Convert a string value to the title case.
+文字列の値をタイトルケースに変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -443,9 +444,9 @@ string.titleCase('small word ends on')
 // Small Word Ends On
 ```
 
-Following are some of the conversion examples.
+以下はいくつかの変換の例です。
 
-| Input                              | Output                             |
+| 入力                              | 出力                             |
 | ---------------------------------- | ---------------------------------- |
 | 'one. two.'                        | 'One. Two.'                        |
 | 'a small word starts'              | 'A Small Word Starts'              |
@@ -458,9 +459,9 @@ Following are some of the conversion examples.
 | 'newcastle upon tyne'              | 'Newcastle upon Tyne'              |
 | 'newcastle \*upon\* tyne'          | 'Newcastle \*upon\* Tyne'          |
 
-## random
+## ランダム
 
-Generate a cryptographically secure random string of a given length. The output value is a URL-safe base64 encoded string.
+指定された長さの暗号的に安全なランダムな文字列を生成します。出力値はURLセーフなBase64エンコードされた文字列です。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -469,40 +470,40 @@ string.random(32)
 // 8mejfWWbXbry8Rh7u8MW3o-6dxd80Thk
 ```
 
-## sentence
+## 文
 
-Convert an array of words to a comma-separated sentence.
+単語の配列をコンマ区切りの文に変換します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
 
 string.sentence(['routes', 'controllers', 'middleware'])
-// routes, controllers, and middleware
+// routes, controllers, そして middleware
 ```
 
-You can replace the `and` with an `or` by specifying the `options.lastSeparator` property.
+`options.lastSeparator`プロパティを指定することで、`and`を`or`に置き換えることができます。
 
 ```ts
 string.sentence(['routes', 'controllers', 'middleware'], {
-  lastSeparator: ', or ',
+  lastSeparator: ', または ',
 })
 ```
 
-In the following example, the two words are combined using the `and` separator, not the comma (usually advocated in English). However, you can use a custom separator for a pair of words.
+次の例では、2つの単語はカスタムのセパレーターではなく、`and`セパレーターを使用して結合されます（通常は英語で推奨されるカンマではありません）。ただし、単語のペアにカスタムのセパレーターを使用することもできます。
 
 ```ts
 string.sentence(['routes', 'controllers'])
-// routes and controllers
+// routes そして controllers
 
 string.sentence(['routes', 'controllers'], {
-  pairSeparator: ', and ',
+  pairSeparator: ', そして ',
 })
-// routes, and controllers
+// routes, そして controllers
 ```
 
-## condenseWhitespace
+## 空白の圧縮
 
-Remove multiple whitespaces from a string to a single whitespace.
+文字列内の複数の空白を単一の空白に削除します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -514,9 +515,9 @@ string.condenseWhitespace('  hello  world  ')
 // hello world
 ```
 
-## seconds
+## 秒
 
-Parse a string-based time expression to seconds.
+文字列ベースの時間表現を秒に解析します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -525,22 +526,22 @@ string.seconds.parse('10h') // 36000
 string.seconds.parse('1 day') // 86400
 ```
 
-Passing a numeric value to the `parse` method is returned as it is, assuming the value is already in seconds.
+`parse`メソッドに数値を渡すと、秒単位であると仮定してそのまま返されます。
 
 ```ts
 string.seconds.parse(180) // 180
 ```
 
-You can format seconds to a pretty string using the `format` method.
+`format`メソッドを使用すると、秒を見やすい文字列にフォーマットできます。
 
 ```ts
 string.seconds.format(36000) // 10h
-string.seconds.format(36000, true) // 10 hours
+string.seconds.format(36000, true) // 10 時間
 ```
 
-## milliseconds
+## ミリ秒
 
-Parse a string-based time expression to milliseconds.
+文字列ベースの時間表現をミリ秒に解析します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -549,22 +550,22 @@ string.milliseconds.parse('1 h') // 3.6e6
 string.milliseconds.parse('1 day') // 8.64e7
 ```
 
-Passing a numeric value to the `parse` method is returned as it is, assuming the value is already in milliseconds.
+`parse`メソッドに数値を渡すと、ミリ秒単位であると仮定してそのまま返されます。
 
 ```ts
 string.milliseconds.parse(180) // 180
 ```
 
-Using the `format` method, you can format milliseconds to a pretty string.
+`format`メソッドを使用すると、ミリ秒を見やすい文字列にフォーマットできます。
 
 ```ts
 string.milliseconds.format(3.6e6) // 1h
-string.milliseconds.format(3.6e6, true) // 1 hour
+string.milliseconds.format(3.6e6, true) // 1 時間
 ```
 
-## bytes
+## バイト
 
-Parse a string-based unit expression to bytes.
+文字列ベースの単位表現をバイトに解析します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -573,13 +574,13 @@ string.bytes.parse('1KB') // 1024
 string.bytes.parse('1MB') // 1048576
 ```
 
-Passing a numeric value to the `parse` method is returned as it is, assuming the value is already in bytes.
+`parse`メソッドに数値を渡すと、バイト単位であると仮定してそのまま返されます。
 
 ```ts
 string.bytes.parse(1024) // 1024
 ```
 
-Using the `format` method, you can format bytes to a pretty string. The method is exported directly from the [bytes](https://www.npmjs.com/package/bytes) package. Please reference the package README for available options.
+`format`メソッドを使用すると、バイトを見やすい文字列にフォーマットできます。このメソッドは、[bytes](https://www.npmjs.com/package/bytes)パッケージから直接エクスポートされています。使用可能なオプションについては、パッケージのREADMEを参照してください。
 
 ```ts
 string.bytes.format(1048576) // 1MB
@@ -587,9 +588,9 @@ string.bytes.format(1024 * 1024 * 1000) // 1000MB
 string.bytes.format(1024 * 1024 * 1000, { thousandsSeparator: ',' }) // 1,000MB
 ```
 
-## ordinal
+## 序数
 
-Get the ordinal letter for a given number.
+指定された数値の序数を取得します。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -603,34 +604,34 @@ string.ordinal(23) // '23rd'
 string.ordinal(24) // '24th'
 ```
 
-## safeEqual
+## 安全な等価性
 
-Check if two buffer or string values are the same. This method does not leak any timing information and prevents [timing attack](https://javascript.plainenglish.io/what-are-timing-attacks-and-how-to-prevent-them-using-nodejs-158cc7e2d70c).
+2つのバッファまたは文字列の値が同じかどうかをチェックします。このメソッドは、タイミング情報を漏洩させず、[タイミング攻撃](https://javascript.plainenglish.io/what-are-timing-attacks-and-how-to-prevent-them-using-nodejs-158cc7e2d70c)を防止します。
 
-Under the hood, this method uses Node.js [crypto.timeSafeEqual](https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b) method, with support for comparing string values. _(crypto.timeSafeEqual does not support string comparison)_
+内部的には、このメソッドはNode.jsの[crypto.timeSafeEqual](https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b)メソッドを使用しており、文字列の比較もサポートしています（crypto.timeSafeEqualは文字列の比較をサポートしていません）。
 
 ```ts
 import { safeEqual } from '@adonisjs/core/helpers'
 
 /**
- * The trusted value, it might be saved inside the db
+ * 信頼できる値、おそらくdbに保存されている値
  */
 const trustedValue = 'hello world'
 
 /**
- * Untrusted user input
+ * 信頼できないユーザー入力
  */
 const userInput = 'hello'
 
 if (safeEqual(trustedValue, userInput)) {
-  // both are the same
+  // 両方が同じです
 } else {
-  // value mismatch
+  // 値が一致しません
 }
 ```
 
 ## cuid
-Create a secure, collision-resistant ID optimized for horizontal scaling and performance. This method uses the [@paralleldrive/cuid2](https://github.com/paralleldrive/cuid2) package under the hood.
+水平スケーリングとパフォーマンスに最適化された、衝突しないセキュアなIDを作成します。このメソッドは、[@paralleldrive/cuid2](https://github.com/paralleldrive/cuid2)パッケージを内部で使用しています。
 
 ```ts
 import { cuid } from '@adonisjs/core/helpers'
@@ -639,7 +640,7 @@ const id = cuid()
 // tz4a98xxat96iws9zmbrgj3a
 ```
 
-You can use the `isCuid` method to check if a value is a valid CUID.
+`isCuid`メソッドを使用して、値が有効なCUIDかどうかをチェックできます。
 
 ```ts
 import { cuid, isCuid } from '@adonisjs/core/helpers'
@@ -650,16 +651,16 @@ isCuid(id) // true
 
 ## compose
 
-The `compose` helper allows you to use TypeScript class mixins with a cleaner API. Following is an example of mixin usage without the `compose` helper.
+`compose`ヘルパーを使用すると、よりシンプルなAPIでTypeScriptクラスのミックスインを使用できます。以下は、`compose`ヘルパーを使用せずにミックスインを使用する例です。
 
 ```ts
 class User extends UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail(BaseModel)))) {}
 ```
 
-Following is an example with the `compose` helper.
+以下は、`compose`ヘルパーを使用した例です。
 
-- There is no nesting.
-- The order of mixins is from (left to right/top to bottom). Whereas earlier, it was inside out.
+- ネストはありません。
+- ミックスインの順序は（左から右/上から下）です。以前は内側から外側でした。
 
 ```ts
 import { compose } from '@adonisjs/core/helpers'
@@ -675,7 +676,7 @@ class User extends compose(
 
 ## base64
 
-Utility methods to base64 encode and decode values.
+値をBase64エンコードおよびデコードするためのユーティリティメソッドです。
 
 ```ts
 import { base64 } from '@adonisjs/core/helpers'
@@ -684,20 +685,20 @@ base64.encode('hello world')
 // aGVsbG8gd29ybGQ=
 ```
 
-Like the `encode` method, you can use the `urlEncode` to generate a base64 string safe to pass in a URL.
+`encode`メソッドと同様に、`urlEncode`を使用してURLに安全なBase64文字列を生成することもできます。
 
-The `urlEncode` method performs the following replacements.
+`urlEncode`メソッドは、次の置換を実行します。
 
-- Replace `+` with `-`.
-- Replace `/` with `_`.
-- And remove the `=` sign from the end of the string.
+- `+`を`-`に置き換えます。
+- `/`を`_`に置き換えます。
+- 文字列の末尾の`=`を削除します。
 
 ```ts
 base64.urlEncode('hello world')
 // aGVsbG8gd29ybGQ
 ```
 
-You can use the `decode` and the `urlDecode` methods to decode a previously encoded base64 string.
+`decode`メソッドと`urlDecode`メソッドを使用して、以前にエンコードされたBase64文字列をデコードすることもできます。
 
 ```ts
 base64.decode(base64.encode('hello world'))
@@ -707,16 +708,16 @@ base64.urlDecode(base64.urlEncode('hello world'))
 // hello world
 ```
 
-The `decode` and the `urlDecode` methods return `null` when the input value is an invalid base64 string. You can turn on the `strict` mode to raise an exception instead.
+`decode`メソッドと`urlDecode`メソッドは、入力値が無効なBase64文字列の場合は`null`を返します。例外を発生させるために`strict`モードをオンにすることもできます。
 
 ```ts
 base64.decode('hello world') // null
-base64.decode('hello world', 'utf-8', true) // raises exception
+base64.decode('hello world', 'utf-8', true) // 例外を発生させる
 ```
 
 ## fsReadAll
 
-Get a list of all the files from a directory. The method recursively fetches files from the main and the sub-folders. The dotfiles are ignored implicitly.
+ディレクトリからすべてのファイルのリストを取得します。このメソッドは、メインとサブフォルダからファイルを再帰的に取得します。ドットファイルは暗黙的に無視されます。
 
 ```ts
 import { fsReadAll } from '@adonisjs/core/helpers'
@@ -725,7 +726,7 @@ const files = await fsReadAll(new URL('./config', import.meta.url), { pathType: 
 await Promise.all(files.map((file) => import(file)))
 ```
 
-You can also pass the options along with the directory path as the second argument.
+ディレクトリパスと一緒にオプションを渡すこともできます。
 
 ```ts
 type Options = {
@@ -739,16 +740,16 @@ const options: Partial<Options> = {}
 await fsReadAll(location, options)
 ```
 
-| Argument | Description |
+| 引数 | 説明 |
 |------------|------------|
-| `ignoreMissingRoot` | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error, and an empty array is returned. |
-| `filter` | Define a filter to ignore certain paths. The method is called on the final list of files. |
-| `sort` | Define a custom method to sort file paths. By default, the files are sorted using natural sort. |
-| `pathType` | Define how to return the collected paths. By default, OS-specific relative paths are returned. If you want to import the collected files, you must set the`pathType = 'url'` |
+| `ignoreMissingRoot` | ルートディレクトリが存在しない場合、デフォルトでは例外が発生します。`ignoreMissingRoot`をtrueに設定すると、エラーが発生せず、空の配列が返されます。 |
+| `filter` | 特定のパスを無視するためのフィルタを定義します。メソッドは最終的なファイルリストで呼び出されます。 |
+| `sort` | ファイルパスをソートするためのカスタムメソッドを定義します。デフォルトでは、ファイルは自然なソートを使用してソートされます。 |
+| `pathType` | 収集されたパスをどのように返すかを定義します。デフォルトでは、OS固有の相対パスが返されます。収集したファイルをインポートする場合は、`pathType = 'url'`に設定する必要があります。 |
 
 ## fsImportAll
 
-The `fsImportAll` method imports all the files recursively from a given directory and sets the exported value from each module on an object.
+`fsImportAll`メソッドは、指定されたディレクトリから再帰的にすべてのファイルをインポートし、各モジュールのエクスポート値をオブジェクトに設定します。
 
 ```ts
 import { fsImportAll } from '@adonisjs/core/helpers'
@@ -757,11 +758,11 @@ const collection = await fsImportAll(new URL('./config', import.meta.url))
 console.log(collection)
 ```
 
-- Collection is an object with a tree of key-value pairs.
-- The key is the nested object created from the file path.
-- Value is the exported values from the module. Only the default export is used if a module has both `default` and `named` exports.
+- コレクションは、キーと値のペアのツリーを持つオブジェクトです。
+- キーはファイルパスから作成されたネストされたオブジェクトです。
+- 値はモジュールからエクスポートされた値です。モジュールに`default`と`named`の両方のエクスポートがある場合、デフォルトエクスポートのみが使用されます。
 
-The second param is the option to customize the import behavior.
+2番目のパラメータは、インポートの動作をカスタマイズするためのオプションです。
 
 ```ts
 type Options = {
@@ -775,16 +776,16 @@ const options: Partial<Options> = {}
 await fsImportAll(location, options)
 ```
 
-| Argument | Description |
+| 引数 | 説明 |
 |------------|------------|
-| `ignoreMissingRoot` | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error, and an empty object will be returned. |
-| `filter` | Define a filter to ignore certain paths. By default, only files ending with `.js`, `.ts`, `.json`, `.cjs`, and `.mjs` are imported. |
-| `sort` | Define a custom method to sort file paths. By default, the files are sorted using natural sort. |
-| `transformKeys` | Define a callback method to transform the keys for the final object. The method receives an array of nested keys and must return an array. |
+| `ignoreMissingRoot` | ルートディレクトリが存在しない場合、デフォルトでは例外が発生します。`ignoreMissingRoot`をtrueに設定すると、エラーが発生せず、空のオブジェクトが返されます。 |
+| `filter` | 特定のパスを無視するためのフィルタを定義します。デフォルトでは、`.js`、`.ts`、`.json`、`.cjs`、`.mjs`で終わるファイルのみがインポートされます。 |
+| `sort` | ファイルパスをソートするためのカスタムメソッドを定義します。デフォルトでは、ファイルは自然なソートを使用してソートされます。 |
+| `transformKeys` | 最終的なオブジェクトのキーを変換するためのコールバックメソッドを定義します。メソッドはネストされたキーの配列を受け取り、配列を返さなければなりません。 |
 
-## String builder
+## 文字列ビルダー
 
-The `StringBuilder` class offers a fluent API to perform transformations on a string value. You may get an instance of string builder using the `string.create` method.
+`StringBuilder`クラスは、文字列の値に対して変換を行うためのフルエンドAPIを提供します。`string.create`メソッドを使用して、文字列ビルダーのインスタンスを取得できます。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -799,11 +800,11 @@ const value = string
   .toString()
 ```
 
-## Message builder
+## メッセージビルダー
 
-The `MessageBuilder` class offers an API to serialize JavaScript data types with an expiry and purpose. You can either store the serialized output in safe storage like your application database or encrypt it (to avoid tampering) and share it publicly.
+`MessageBuilder`クラスは、有効期限と目的を持つJavaScriptのデータ型をシリアライズするためのAPIを提供します。シリアライズされた出力をアプリケーションのデータベースなどの安全なストレージに保存するか、暗号化して（改ざんを防ぐために）公開できます。
 
-In the following example, we serialize an object with the `token` property and set its expiry to be `1 hour`.
+次の例では、`token`プロパティを持つオブジェクトをシリアライズし、有効期限を「1時間」に設定します。
 
 ```ts
 import { MessageBuilder } from '@adonisjs/core/helpers'
@@ -828,9 +829,9 @@ const encoded = builder.build(
  */
 ```
 
-Once you have the JSON string with the expiry and the purpose, you can encrypt it (to prevent tampering) and share it with the client.
+JSON文字列に有効期限と目的が含まれている場合、それを暗号化して（改ざんを防ぐために）クライアントと共有できます。
 
-During the token verification, you can decrypt the previously encrypted value and use the `MessageBuilder` to verify the payload and convert it to a JavaScript object.
+トークンの検証中に、以前に暗号化された値を復号化し、`MessageBuilder`を使用してペイロードを検証し、JavaScriptオブジェクトに変換できます。
 
 ```ts
 import { MessageBuilder } from '@adonisjs/core/helpers'
@@ -838,18 +839,18 @@ import { MessageBuilder } from '@adonisjs/core/helpers'
 const builder = new MessageBuilder()
 const decoded = builder.verify(value, 'email_verification')
 if (!decoded) {
-  return 'Invalid payload'
+  return '無効なペイロードです'
 }
 
 console.log(decoded.token)
 ```
 
 ## Secret
-The `Secret` class lets you hold sensitive values within your application without accidentally leaking them inside logs and console statements.
+`Secret`クラスを使用すると、ログやコンソールのステートメント内で誤って漏洩することなく、アプリケーション内に機密情報を保持できます。
 
-For example, the `appKey` value defined inside the `config/app.ts` file is an instance of the `Secret` class. If you try to log this value to the console, you will see `[redacted]` and not the original value.
+たとえば、`config/app.ts`ファイル内で定義された`appKey`の値は、`Secret`クラスのインスタンスです。この値をコンソールにログ出力しようとすると、元の値ではなく`[redacted]`が表示されます。
 
-For demonstration, let's fire up a REPL session and try it.
+デモンストレーションのために、REPLセッションを起動して試してみましょう。
 
 ```sh
 node ace repl
@@ -873,10 +874,10 @@ node ace repl
 # [redacted]
 ```
 
-You can call the `config.appKey.release` method to read the original value. The purpose of the Secret class is not to prevent your code from accessing the original value. Instead, it provides a safety net from exposing sensitive data inside logs.
+`config.appKey.release`メソッドを呼び出すと、元の値を読み取ることができます。Secretクラスの目的は、コードが元の値にアクセスできなくすることではありません。代わりに、機密データがログ内で公開されることを防ぐ安全装置を提供します。
 
-### Using the Secret class
-You can wrap custom values inside the Secret class as follows.
+### Secretクラスの使用方法
+次のように、カスタムの値をSecretクラスでラップできます。
 
 ```ts
 import { Secret } from '@adonisjs/core/helpers'
@@ -886,9 +887,9 @@ console.log(value) // [redacted]
 console.log(value.release()) // some-secret-value
 ```
 
-## Types detection
+## タイプの検出
 
-We export the [@sindresorhus/is](https://github.com/sindresorhus/is) module from the `helpers/is` import path, and you may use it to perform the type detection in your apps.
+`helpers/is`のインポートパスから[@sindresorhus/is](https://github.com/sindresorhus/is)モジュールをエクスポートしており、アプリケーションでタイプの検出を行うために使用できます。
 
 ```ts
 import is from '@adonisjs/core/helpers/is'

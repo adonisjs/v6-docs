@@ -1,25 +1,25 @@
 ---
-summary: Available options for rendering views and templates in AdonisJS
+summary: AdonisJSでビューとテンプレートをレンダリングするための利用可能なオプション
 ---
 
-# Views and Templates
+# ビューとテンプレート
 
-AdonisJS is an excellent fit for creating traditional server-rendered applications in Node.js. If you enjoy the simplicity of using a backend template engine that outputs HTML without any overhead of Virtual DOM and build tools, then this guide is for you.
+AdonisJSは、Node.jsで従来のサーバーレンダリングアプリケーションを作成するのに非常に適しています。バックエンドのテンプレートエンジンを使用して、仮想DOMやビルドツールのオーバーヘッドなしにHTMLを出力するシンプルさを楽しむ場合は、このガイドが役立ちます。
 
-The typical workflow of a server-rendered application in AdonisJS looks as follows.
+AdonisJSにおけるサーバーレンダリングアプリケーションの典型的なワークフローは次のようになります。
 
-- Choose a template engine to render HTML dynamically.
-- Use [Vite](../basics/vite.md) for bundling CSS and frontend JavaScript.
-- Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like an SPA.
+- HTMLを動的にレンダリングするためのテンプレートエンジンを選択します。
+- CSSとフロントエンドのJavaScriptをバンドルするために[Vite](../basics/vite.md)を使用します。
+- オプションとして、[HTMX](https://htmx.org/)や[Unpoly](https://unpoly.com/)のようなライブラリを選択して、アプリケーションを進化させ、SPAのようにナビゲートすることもできます。
 
 :::note
-The AdonisJS core team has created a framework-agnostic template engine called [Edge.js](https://edgejs.dev) but does not force you to use it. You can use any other template engine you would like inside an AdonisJS application.
+AdonisJSのコアチームは、[Edge.js](https://edgejs.dev)というフレームワークに依存しないテンプレートエンジンを作成しましたが、強制的に使用することはありません。AdonisJSアプリケーション内で好きなテンプレートエンジンを使用することができます。
 :::
 
-## Popular options
+## 人気のあるオプション
 
-Following is the list of popular template engines you can use inside an AdonisJS application (just like any other Node.js application).
+以下は、AdonisJSアプリケーション内で使用できる人気のあるテンプレートエンジンのリストです（他のNode.jsアプリケーションと同様です）。
 
-- [**EdgeJS**](https://edgejs.dev) is a simple, modern, and batteries included template engine created and maintained by the AdonisJS core team for Node.js.
-- [**Pug**](https://pugjs.org) is a template engine heavily influenced by Haml.
-- [**Nunjucks**](https://mozilla.github.io/nunjucks) is a rich feature template engine inspired by Jinja2.
+- [**EdgeJS**](https://edgejs.dev)は、Node.js向けにAdonisJSコアチームによって作成およびメンテナンスされているシンプルでモダンなテンプレートエンジンです。
+- [**Pug**](https://pugjs.org)は、Hamlに強く影響を受けたテンプレートエンジンです。
+- [**Nunjucks**](https://mozilla.github.io/nunjucks)は、Jinja2に触発された豊富な機能を備えたテンプレートエンジンです。

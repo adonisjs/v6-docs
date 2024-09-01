@@ -1,78 +1,78 @@
 ---
-summary: Ace Terminal UI utilizes the @poppinss/cliui package, offering tools to display logs, tables, and animations. Designed for testing, it includes a 'raw' mode to simplify log collection and assertions.
+summary: Ace Terminal UIは、@poppinss/cliuiパッケージを利用してログ、テーブル、アニメーションを表示するツールを提供します。テスト用に設計されており、「raw」モードを使用してログの収集とアサーションを簡素化できます。
 ---
 
-# Terminal UI
+# ターミナルUI
 
-Ace terminal UI is powered by the [@poppinss/cliui](https://github.com/poppinss/cliui) package. The package exports helpers to display logs, render tables, render animated tasks UI, and much more.
+AceターミナルUIは、[@poppinss/cliui](https://github.com/poppinss/cliui)パッケージによって提供されます。このパッケージは、ログの表示、テーブルのレンダリング、アニメーションタスクUIのレンダリングなどのヘルパーをエクスポートします。
 
-The terminal UI primitives are built with testing in mind. When writing tests, you may turn on the `raw` mode to disable colors and formatting and collect all logs in memory to write assertions against them.
+ターミナルUIのプリミティブは、テストを意識して構築されています。テストを書く際には、`raw`モードをオンにして色やフォーマットを無効にし、すべてのログをメモリに収集してアサーションを行うことができます。
 
-See also: [Testing Ace commands](../testing/console_tests.md)
+参考: [Aceコマンドのテスト](../testing/console_tests.md)
 
-## Displaying log messages
+## ログメッセージの表示
 
-You may display log messages using the CLI logger. Following is the list of available log methods.
+CLIロガーを使用してログメッセージを表示できます。以下は利用可能なログメソッドのリストです。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   async run() {
-    this.logger.debug('Something just happened')
-    this.logger.info('This is an info message')
-    this.logger.success('Account created')
-    this.logger.warning('Running out of disk space')
+    this.logger.debug('何かが起こりました')
+    this.logger.info('これは情報メッセージです')
+    this.logger.success('アカウントが作成されました')
+    this.logger.warning('ディスク容量が不足しています')
 
-    // Writes to stderr
-    this.logger.error(new Error('Unable to write. Disk full'))
-    this.logger.fatal(new Error('Unable to write. Disk full'))
+    // stderrに書き込みます
+    this.logger.error(new Error('書き込めません。ディスクがいっぱいです'))
+    this.logger.fatal(new Error('書き込めません。ディスクがいっぱいです'))
   }
 }
 ```
 
-### Adding prefix and suffix
+### プレフィックスとサフィックスの追加
 
-Using the options object, you may define the `prefix` and `suffix` for the log message. The prefix and suffix are displayed with lower opacity.
+オプションオブジェクトを使用して、ログメッセージの`prefix`と`suffix`を定義できます。プレフィックスとサフィックスは、低い不透明度で表示されます。
 
 ```ts
-this.logger.info('installing packages', {
+this.logger.info('パッケージをインストールしています', {
   suffix: 'npm i --production'
 })
 
-this.logger.info('installing packages', {
+this.logger.info('パッケージをインストールしています', {
   prefix: process.pid
 })
 ```
 
-### Loading animation
+### ローディングアニメーション
 
-A log message with loading animation appends animated three dots (...) to the message. You may update the log message using the `animation.update` method and stop the animation using the `animation.stop` method.
+ローディングアニメーション付きのログメッセージは、メッセージの末尾にアニメーション化された3つのドット（...）が追加されます。`animation.update`メソッドを使用してログメッセージを更新し、`animation.stop`メソッドを使用してアニメーションを停止できます。
 
 ```ts
-const animation = this.logger.await('installing packages', {
+const animation = this.logger.await('パッケージをインストールしています', {
   suffix: 'npm i'
 })
 
 animation.start()
 
-// Update the message
-animation.update('unpacking packages', {
+// メッセージを更新
+animation.update('パッケージを展開しています', {
   suffix: undefined
 })
 
-// Stop animation
+// アニメーションを停止
 animation.stop()
 ```
 
-### Logger actions
+### ロガーアクション
 
-Logger actions can display the state of action with consistent styling and colors. 
+ロガーアクションは、一貫したスタイルと色でアクションの状態を表示できます。
 
-You may create an action using the `logger.action` method. The method accepts the action title as the first parameter.
+`logger.action`メソッドを使用してアクションを作成できます。メソッドはアクションのタイトルを第一パラメータとして受け入れます。
 
 ```ts
-const createFile = this.logger.action('creating config/auth.ts')
+const createFile = this.logger.action('config/auth.tsを作成しています')
 
 try {
   await performTasks()
@@ -82,26 +82,26 @@ try {
 }
 ```
 
-You can mark an action as either `succeeded`, `failed`, or `skipped`.
+アクションを`succeeded`、`failed`、または`skipped`としてマークできます。
 
 ```ts
 action.succeeded()
-action.skipped('Skip reason')
+action.skipped('スキップの理由')
 action.failed(new Error())
 ```
 
-## Formatting text with ANSI colors
+## ANSIカラーでテキストをフォーマットする
 
-Ace uses [kleur](https://www.npmjs.com/package/kleur) for formatting text with ANSI colors. Using the `this.colors` property, you can access kleur's chained API.
+Aceは、テキストをANSIカラーでフォーマットするために[kleur](https://www.npmjs.com/package/kleur)を使用しています。`this.colors`プロパティを使用することで、kleurのチェインAPIにアクセスできます。
 
 ```ts
 this.colors.red('[ERROR]')
 this.colors.bgGreen().white(' CREATED ')
 ```
 
-## Rendering tables
+## テーブルのレンダリング
 
-A table can be created using the `this.ui.table` method. The method returns an instance of the `Table` class that you can use to define the table head and rows.
+`this.ui.table`メソッドを使用してテーブルを作成できます。このメソッドは`Table`クラスのインスタンスを返し、テーブルのヘッダーと行を定義するために使用できます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -112,46 +112,47 @@ export default class GreetCommand extends BaseCommand {
     
     table
       .head([
-        'Migration',
-        'Duration',
-        'Status',
+        'マイグレーション',
+        '実行時間',
+        'ステータス',
       ])
       .row([
         '1590591892626_tenants.ts',
         '2ms',
-        'DONE'
+        '完了'
       ])
       .row([
         '1590595949171_entities.ts',
         '2ms',
-        'DONE'
+        '完了'
       ])
       .render()
   }
 }
 ```
 
-You may apply color transforms to any value when rendering the table. For example:
+テーブルのレンダリング時に任意の値にカラートランスフォームを適用できます。
 
+例:
 ```ts
 table.row([
   '1590595949171_entities.ts',
   '2',
-  this.colors.green('DONE')
+  this.colors.green('完了')
 ])
 ```
 
-### Right-align columns
+### 列を右揃えにする
 
-You may right-align the columns by defining them as objects and using the hAlign property. Make sure to also right-align the header column.
+列を右揃えにするには、オブジェクトとして定義し、`hAlign`プロパティを使用します。ヘッダーの列も右揃えにすることを忘れないでください。
 
 ```ts
 table
   .head([
-    'Migration',
-    'Batch'
+    'マイグレーション',
+    'バッチ',
     {
-      content: 'Status',
+      content: 'ステータス',
       hAlign: 'right'
     },
   ])
@@ -160,26 +161,26 @@ table.row([
   '1590595949171_entities.ts',
   '2',
   {
-    content: this.colors.green('DONE'),
+    content: this.colors.green('完了'),
     hAlign: 'right'
   }
 ])
 ```
 
-### Full-width rendering
+### フル幅のレンダリング
 
-By default, tables are rendered with width `auto`, taking only the space required by the contents of each column.
+デフォルトでは、テーブルは`auto`の幅でレンダリングされ、各列の内容に応じたスペースのみを取ります。
 
-However, you may render tables at full-width (taking all the terminal space) using the `fullWidth` method. In full-width mode:
+ただし、`fullWidth`メソッドを使用してテーブルをフル幅でレンダリングできます（ターミナルのすべてのスペースを使用します）。フル幅モードでは:
 
-- We will render all columns as per the size of the content.
-- Except for the first column, which takes all the available space.
+- コンテンツのサイズに応じてすべての列がレンダリングされます。
+- 最初の列を除いて、利用可能なスペースをすべて取ります。
 
 ```ts
 table.fullWidth().render()
 ```
 
-You may change the column index for the fluid column (the one that takes all the space) by calling the `table.fluidColumnIndex` method.
+フル幅モードで流体カラム（すべてのスペースを取るカラム）の列インデックスを変更するには、`table.fluidColumnIndex`メソッドを呼び出します。
 
 ```ts
 table
@@ -187,11 +188,11 @@ table
   .fluidColumnIndex(1)
 ```
 
-## Printing stickers
+## ステッカーの印刷
 
-Stickers allow you to render content inside a box with a border. They are helpful when you want to draw the user's attention to an essential piece of information.
+ステッカーを使用すると、ボーダー付きのボックス内にコンテンツをレンダリングできます。重要な情報をユーザーの注意を引くために使用すると便利です。
 
-You can create an instance of a sticker using the `this.ui.sticker` method.
+`this.ui.sticker`メソッドを使用してステッカーのインスタンスを作成できます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -201,25 +202,25 @@ export default class GreetCommand extends BaseCommand {
     const sticker = this.ui.sticker()
 
     sticker
-      .add('Started HTTP server')
+      .add('HTTPサーバーを起動しました')
       .add('')
-      .add(`Local address:   ${this.colors.cyan('http://localhost:3333')}`)
-      .add(`Network address: ${this.colors.cyan('http://192.168.1.2:3333')}`)
+      .add(`ローカルアドレス:   ${this.colors.cyan('http://localhost:3333')}`)
+      .add(`ネットワークアドレス: ${this.colors.cyan('http://192.168.1.2:3333')}`)
       .render()
   }
 }
 ```
 
-If you want to display a set of instructions inside a box, you can use the `this.ui.instructions` method. Each line in the instructions output will be prefixed with an arrow sign `>`.
+ボックス内に一連の手順を表示したい場合は、`this.ui.instructions`メソッドを使用できます。指示の出力の各行は矢印記号`>`で接頭辞が付けられます。
 
-## Rendering tasks
+## タスクのレンダリング
 
-The tasks widget provides an excellent UI for sharing the progress of multiple time-taking tasks. The widget has the following two rendering modes:
+タスクウィジェットは、複数の時間のかかるタスクの進捗状況を共有するための優れたUIを提供します。ウィジェットには次の2つのレンダリングモードがあります。
 
-- In `minimal` mode, the UI for the currently running task is expanded to show one log line at a time.
-- In `verbose` mode, each log statement is rendered in its line. The verbose renderer must be used for debugging tasks.
+- `minimal`モードでは、現在実行中のタスクのUIが展開され、1つのログ行が表示されます。
+- `verbose`モードでは、各ログステートメントが独自の行にレンダリングされます。デバッグタスクには、verboseレンダラを使用する必要があります。
 
-You can create an instance of the tasks widget using the `this.ui.tasks` method. 
+`this.ui.tasks`メソッドを使用してタスクウィジェットのインスタンスを作成できます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -228,14 +229,14 @@ export default class GreetCommand extends BaseCommand {
   async run() {
     const tasks = this.ui.tasks()
     
-    // ... rest of the code to follow
+    // ... コードの残り部分を記述
   }
 }
 ```
 
-Individual tasks are added using the `tasks.add` method. The method accepts the task title as the first parameter and the implementation callback as the second parameter.
+個々のタスクは、`tasks.add`メソッドを使用して追加されます。メソッドはタスクのタイトルを第一パラメータとして受け入れ、実装コールバックを第二パラメータとして受け入れます。
 
-You must return the status of the task from the callback. All return values are considered success messages until you wrap them inside the `task.error` method or throw an exception inside the callback.
+コールバックからタスクのステータスを返す必要があります。すべての戻り値は、`task.error`メソッドでラップするか、コールバック内で例外をスローするまで、成功メッセージとして扱われます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -246,14 +247,14 @@ export default class GreetCommand extends BaseCommand {
 
     // highlight-start
     await tasks
-      .add('clone repo', async (task) => {
-        return 'Completed'
+      .add('リポジトリをクローンする', async (task) => {
+        return '完了'
       })
-      .add('update package file', async (task) => {
-        return task.error('Unable to update package file')
+      .add('パッケージファイルを更新する', async (task) => {
+        return task.error('パッケージファイルを更新できません')
       })
-      .add('install dependencies', async (task) => {
-        return 'Installed'
+      .add('依存関係をインストールする', async (task) => {
+        return 'インストール済み'
       })
       .run()
     // highlight-end
@@ -261,29 +262,29 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-### Reporting task progress
+### タスクの進捗報告
 
-Instead of writing the task progress messages to the console, it is recommended to call the `task.update` method.
+タスクの進捗メッセージをコンソールに書き込む代わりに、`task.update`メソッドを呼び出すことをオススメします。
 
-The `update` method displays the latest log message using the `minimal` renderer and logs all messages using the `verbose` renderer.
+`update`メソッドは、`minimal`レンダラを使用して最新のログメッセージを表示し、すべてのメッセージを`verbose`レンダラを使用してログに記録します。
 
 ```ts
 const sleep = () => new Promise<void>((resolve) => setTimeout(resolve, 50))
 
 tasks
-  .add('clone repo', async (task) => {
+  .add('リポジトリをクローンする', async (task) => {
     for (let i = 0; i <= 100; i = i + 2) {
       await sleep()
-      task.update(`Downloaded ${i}%`)
+      task.update(`ダウンロード中 ${i}%`)
     }
 
-    return 'Completed'
+    return '完了'
   })
 ```
 
-### Switching to the verbose renderer
+### verboseレンダラに切り替える
 
-You may switch to a verbose renderer when creating the tasks widget. You might consider allowing the command's user to pass a flag to turn on the `verbose` mode.
+タスクウィジェットを作成する際に、verboseレンダラに切り替えることができます。`verbose`モードをオンにするためのフラグをコマンドのユーザーに渡すことを検討すると良いでしょう。
 
 ```ts
 import { BaseCommand, flags } from '@adonisjs/core/ace'

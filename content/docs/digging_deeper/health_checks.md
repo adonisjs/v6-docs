@@ -1,20 +1,20 @@
 ---
-summary: Learn how to monitor your application in production and ensure it is running smoothly
+summary: プロダクション環境でアプリケーションを監視し、スムーズに動作していることを確認する方法を学びます
 ---
 
-# Health checks
+# ヘルスチェック
 
-Health checks are performed to ensure that your application is in a healthy state while running in production. This may include monitoring the **available disk space** on the server, the **memory consumed by your application**, or **testing the database connection**.
+ヘルスチェックは、プロダクション環境でアプリケーションが健全な状態で実行されていることを確認するために行われます。これには、サーバー上の**利用可能なディスクスペース**、アプリケーションが消費する**メモリ**、または**データベース接続のテスト**などが含まれる場合があります。
 
-AdonisJS provides a handful of built-in [health checks](#available-health-checks) and the ability to create and register [custom health checks](#creating-a-custom-health-check).
+AdonisJSでは、いくつかの組み込みの[ヘルスチェック](#利用可能なヘルスチェック)と[カスタムヘルスチェック](#カスタムヘルスチェックの作成)の作成と登録の機能が提供されています。
 
-## Configuring health checks
+## ヘルスチェックの設定
 
-You may configure health checks in your application by executing the following command. The command will create a `start/health.ts` file and configures health checks for **memory usage** and **used disk space**. Feel free to modify this file and remove/add additional health checks.
+次のコマンドを実行することで、アプリケーションでヘルスチェックを設定できます。このコマンドは`start/health.ts`ファイルを作成し、**メモリ使用量**と**使用済みディスクスペース**のヘルスチェックを設定します。このファイルを自由に編集して、追加のヘルスチェックを削除または追加してください。
 
 :::note
 
-Make sure you have installed `@adonisjs/core@6.12.1` before using the following command.
+以下のコマンドを使用する前に、`@adonisjs/core@6.12.1`がインストールされていることを確認してください。
 
 :::
 
@@ -32,11 +32,11 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-## Exposing an endpoint
+## エンドポイントの公開
 
-A common approach for performing health checks is to expose an HTTP endpoint that an external monitoring service can ping to collect the health check results.
+ヘルスチェックを実行するための一般的な方法は、外部のモニタリングサービスがヘルスチェック結果を収集するためにpingできるHTTPエンドポイントを公開することです。
 
-So, let's define a route within the `start/routes.ts` file and bind the `HealthChecksController` to it. The `health_checks_controller.ts` file is created during the initial setup and lives inside the `app/controllers` directory.
+そこで、`start/routes.ts`ファイル内にルートを定義し、`HealthChecksController`をバインドしましょう。`health_checks_controller.ts`ファイルは初期セットアップ時に作成され、`app/controllers`ディレクトリ内に存在します。
 
 ```ts
 // title: start/routes.ts
@@ -46,9 +46,9 @@ const HealthChecksController = () => import('#controllers/health_checks_controll
 router.get('/health', [HealthChecksController])
 ```
 
-### Sample report
+### サンプルレポート
 
-The `healthChecks.run` method will execute all the checks and return a detailed [report as a JSON object](https://github.com/adonisjs/health/blob/develop/src/types.ts#L36). The report has the following properties:
+`healthChecks.run`メソッドは、すべてのチェックを実行し、詳細な[JSONオブジェクトとしてのレポート](https://github.com/adonisjs/health/blob/develop/src/types.ts#L36)を返します。レポートには以下のプロパティが含まれます。
 
 ```json
 {
@@ -64,9 +64,9 @@ The `healthChecks.run` method will execute all the checks and return a detailed 
   },
   "checks": [
     {
-      "name": "Disk space check",
+      "name": "ディスクスペースチェック",
       "isCached": false,
-      "message": "Disk usage is 76%, which is above the threshold of 75%",
+      "message": "ディスク使用量は75%を超えており、しきい値を超えています",
       "status": "warning",
       "finishedAt": "2024-06-20T07:09:35.275Z",
       "meta": {
@@ -78,9 +78,9 @@ The `healthChecks.run` method will execute all the checks and return a detailed 
       }
     },
     {
-      "name": "Memory heap check",
+      "name": "メモリヒープチェック",
       "isCached": false,
-      "message": "Heap usage is under defined thresholds",
+      "message": "ヒープ使用量は定義されたしきい値を下回っています",
       "status": "ok",
       "finishedAt": "2024-06-20T07:09:35.265Z",
       "meta": {
@@ -105,7 +105,7 @@ isHealthy
 
 <dd>
 
-A boolean to know if all the checks have passed. The value will be set to `false` if one or more checks fail.
+すべてのチェックが成功したかどうかを示すブール値です。1つ以上のチェックが失敗した場合、値は`false`に設定されます。
 
 </dd>
 
@@ -117,11 +117,11 @@ status
 
 <dd>
 
-Report status after performing all the checks. It will be one of the following.
+すべてのチェックを実行した後のレポートのステータスです。次のいずれかになります。
 
-- `ok`: All checks have passed successfully.
-- `warning`: One or more checks have reported a warning.
-- `error`: One or more checks have failed.
+- `ok`：すべてのチェックが正常に完了しました。
+- `warning`：1つ以上のチェックが警告を報告しました。
+- `error`：1つ以上のチェックが失敗しました。
 
 </dd>
 
@@ -133,7 +133,7 @@ finishedAt
 
 <dd>
 
-The DateTime at which the tests were completed.
+テストが完了した日時。
 
 </dd>
 
@@ -145,7 +145,7 @@ checks
 
 <dd>
 
-An array of objects containing the detailed report of all the performed checks.
+実行されたすべてのチェックの詳細なレポートを含むオブジェクトの配列です。
 
 </dd>
 
@@ -157,21 +157,22 @@ debugInfo
 
 <dd>
 
-Debug info can be used to identify the process and the duration for which it has been running. It includes the following properties.
+デバッグ情報は、プロセスとその実行時間を識別するために使用できます。次のプロパティが含まれます。
 
-- `pid`: The process ID.
-- `ppid`: The process ID of the parent process managing your AdonisJS app process.
-- `platform`: The platform on which the application is running.
-- `uptime`: The duration (in seconds) for which the application is running.
-- `version`: Node.js version.
+- `pid`：プロセスID。
+- `ppid`：AdonisJSアプリケーションプロセスを管理する親プロセスのプロセスID。
+- `platform`：アプリケーションが実行されているプラットフォーム。
+- `uptime`：アプリケーションの実行時間（秒単位）。
+- `version`：Node.jsのバージョン。
 
 </dd>
 
 </dl>
 
-### Protecting the endpoint
-You may protect the `/health` endpoint from public access using either the auth middleware or creating a custom middleware that checks for a particular API secret inside the request header. For example:
+### エンドポイントの保護
+`/health`エンドポイントを公開アクセスから保護するには、認証ミドルウェアを使用するか、リクエストヘッダー内の特定のAPIシークレットをチェックするカスタムミドルウェアを作成できます。
 
+例:
 ```ts
 import router from '@adonisjs/core/services/router'
 const HealthChecksController = () => import('#controllers/health_checks_controller')
@@ -188,13 +189,13 @@ router
   // insert-end
 ```
 
-## Available health checks
+## 利用可能なヘルスチェック
 
-Following is the list of available health checks you can configure within the `start/health.ts` file.
+`start/health.ts`ファイル内で設定できる利用可能なヘルスチェックのリストは以下の通りです。
 
-### DiskSpaceCheck
+### ディスクスペースチェック
 
-The `DiskSpaceCheck` calculates the used disk space on your server and reports a warning/error when a certain threshold has been exceeded.
+`DiskSpaceCheck`は、サーバー上の使用済みディスクスペースを計算し、特定のしきい値を超えた場合に警告/エラーを報告します。
 
 ```ts
 import { HealthChecks, DiskSpaceCheck } from '@adonisjs/core/health'
@@ -204,21 +205,21 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-By default, the warning threshold is set to 75%, and the failure threshold is set to 80%. However, you may also define custom thresholds.
+デフォルトでは、警告のしきい値は75%に設定され、エラーのしきい値は80%に設定されています。ただし、カスタムのしきい値を定義することもできます。
 
 ```ts
 export const healthChecks = new HealthChecks().register([
   new DiskSpaceCheck()
     // highlight-start
-    .warnWhenExceeds(80) // warn when used over 80%
-    .failWhenExceeds(90), // fail when used over 90%
+    .warnWhenExceeds(80) // 80%を超えた場合に警告
+    .failWhenExceeds(90), // 90%を超えた場合にエラー
   // highlight-end
 ])
 ```
 
-### MemoryHeapCheck
+### メモリヒープチェック
 
-The `MemoryHeapCheck` monitors the heap size reported by the [process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage) method and reports a warning/error when a certain threshold has been exceeded.
+`MemoryHeapCheck`は、[process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage)メソッドによって報告されるヒープサイズを監視し、特定のしきい値を超えた場合に警告/エラーを報告します。
 
 ```ts
 import { HealthChecks, MemoryHeapCheck } from '@adonisjs/core/health'
@@ -228,7 +229,7 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-By default, the warning threshold is set to **250MB** and the failure threshold is set to **300MB**. However, you may define custom thresholds as well.
+デフォルトでは、警告のしきい値は**250MB**に設定され、エラーのしきい値は**300MB**に設定されています。ただし、カスタムのしきい値を定義することもできます。
 
 ```ts
 export const healthChecks = new HealthChecks().register([
@@ -240,9 +241,9 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-### MemoryRSSCheck
+### メモリRSSチェック
 
-The `MemoryRSSCheck` monitors the Resident Set Size reported by the [process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage) method and reports a warning/error when a certain threshold has been exceeded.
+`MemoryRSSCheck`は、[process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage)メソッドによって報告されるResident Set Sizeを監視し、特定のしきい値を超えた場合に警告/エラーを報告します。
 
 ```ts
 import { HealthChecks, MemoryRSSCheck } from '@adonisjs/core/health'
@@ -252,7 +253,7 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-By default, the warning threshold is set to **320MB**, and the failure threshold is set to **350MB**. However, you may also define custom thresholds.
+デフォルトでは、警告のしきい値は**320MB**に設定され、エラーのしきい値は**350MB**に設定されています。ただし、カスタムのしきい値を定義することもできます。
 
 ```ts
 export const healthChecks = new HealthChecks().register([
@@ -265,7 +266,7 @@ export const healthChecks = new HealthChecks().register([
 ```
 
 ### DbCheck
-The `DbCheck` is provided by the `@adonisjs/lucid` package to monitor the connection with a SQL database. You can import and use it as follows.
+`DbCheck`は、SQLデータベースとの接続を監視するために`@adonisjs/lucid`パッケージによって提供されます。以下のようにインポートして使用できます。
 
 ```ts
 // insert-start
@@ -283,14 +284,14 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the database health check.
+以下は、データベースヘルスチェックの例のレポートです。
 
 ```json
-// title: Report sample
+// title: サンプルレポート
 {
-  "name": "Database health check (postgres)",
+  "name": "データベースヘルスチェック (postgres)",
   "isCached": false,
-  "message": "Successfully connected to the database server",
+  "message": "データベースサーバーへの接続に成功しました",
   "status": "ok",
   "finishedAt": "2024-06-20T07:18:23.830Z",
   "meta": {
@@ -302,10 +303,10 @@ Following is an example report from the database health check.
 }
 ```
 
-The `DbCheck` class accepts a database connection for monitoring. Register this check multiple times for each connection if you want to monitor multiple connections. For example:
+`DbCheck`クラスは、監視するためのデータベース接続を受け入れます。複数の接続を監視する場合は、各接続ごとにこのチェックを複数回登録してください。例:
 
 ```ts
-// title: Monitoring multiple connections
+// title: 複数の接続の監視
 export const healthChecks = new HealthChecks().register([
   new DiskSpaceCheck(),
   new MemoryHeapCheck(),
@@ -318,7 +319,7 @@ export const healthChecks = new HealthChecks().register([
 ```
 
 ### DbConnectionCountCheck
-The `DbConnectionCountCheck` monitors the active connections on the database server and reports a warning/error when a certain threshold has been exceeded. This check is only supported for **PostgreSQL** and **MySQL** databases.
+`DbConnectionCountCheck`は、データベースサーバー上のアクティブな接続を監視し、特定のしきい値を超えた場合に警告/エラーを報告します。このチェックは**PostgreSQL**と**MySQL**データベースのみサポートされています。
 
 ```ts
 import db from '@adonisjs/lucid/services/db'
@@ -337,14 +338,14 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the database connection count health check.
+以下は、データベース接続数のヘルスチェックの例のレポートです。
 
 ```json
-// title: Report sample
+// title: サンプルレポート
 {
-  "name": "Connection count health check (postgres)",
+  "name": "接続数ヘルスチェック (postgres)",
   "isCached": false,
-  "message": "There are 6 active connections, which is under the defined thresholds",
+  "message": "アクティブな接続は6つあり、定義されたしきい値を下回っています",
   "status": "ok",
   "finishedAt": "2024-06-20T07:30:15.840Z",
   "meta": {
@@ -361,7 +362,7 @@ Following is an example report from the database connection count health check.
 }
 ```
 
-By default, the warning threshold is set to **10 connections**, and the failure threshold is set to **15 connections**. However, you may also define custom thresholds.
+デフォルトでは、警告のしきい値は**10接続**に設定され、エラーのしきい値は**15接続**に設定されています。ただし、カスタムのしきい値を定義することもできます。
 
 ```ts
 new DbConnectionCountCheck(db.connection())
@@ -370,7 +371,7 @@ new DbConnectionCountCheck(db.connection())
 ```
 
 ### RedisCheck
-The `RedisCheck` is provided by the `@adonisjs/redis` package to monitor the connection with a Redis database (including Cluster). You can import and use it as follows.
+`RedisCheck`は、Redisデータベース（クラスターを含む）との接続を監視するために`@adonisjs/redis`パッケージによって提供されます。以下のようにインポートして使用できます。
 
 ```ts
 // insert-start
@@ -388,14 +389,14 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the database health check.
+以下は、Redisデータベースのヘルスチェックの例のレポートです。
 
 ```json
-// title: Report sample
+// title: サンプルレポート
 {
-  "name": "Redis health check (main)",
+  "name": "Redisヘルスチェック (main)",
   "isCached": false,
-  "message": "Successfully connected to the redis server",
+  "message": "Redisサーバーへの接続に成功しました",
   "status": "ok",
   "finishedAt": "2024-06-22T05:37:11.718Z",
   "meta": {
@@ -407,10 +408,10 @@ Following is an example report from the database health check.
 }
 ```
 
-The `RedisCheck` class accepts a redis connection to monitor. Register this check multiple times for each connection if you want to monitor multiple connections. For example:
+`RedisCheck`クラスは、モニタリングするためのredis接続を受け入れます。複数の接続を監視する場合は、各接続ごとにこのチェックを複数回登録してください。例:
 
 ```ts
-// title: Monitoring multiple connections
+// title: 複数の接続の監視
 export const healthChecks = new HealthChecks().register([
   new DiskSpaceCheck(),
   new MemoryHeapCheck(),
@@ -423,7 +424,7 @@ export const healthChecks = new HealthChecks().register([
 ```
 
 ### RedisMemoryUsageCheck
-The `RedisMemoryUsageCheck` monitors the memory consumption of the redis server and reports a warning/error when a certain threshold has been exceeded.
+`RedisMemoryUsageCheck`は、redisサーバーのメモリ消費量を監視し、特定のしきい値を超えた場合に警告/エラーを報告します。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -442,14 +443,14 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the redis memory usage health check.
+以下は、redisメモリ使用量のヘルスチェックの例のレポートです。
 
 ```json
-// title: Report sample
+// title: サンプルレポート
 {
-  "name": "Redis memory consumption health check (main)",
+  "name": "Redisメモリ消費量のヘルスチェック (main)",
   "isCached": false,
-  "message": "Redis memory usage is 1.06MB, which is under the defined thresholds",
+  "message": "Redisメモリ使用量は1.06MBで、定義されたしきい値を下回っています",
   "status": "ok",
   "finishedAt": "2024-06-22T05:36:32.524Z",
   "meta": {
@@ -466,7 +467,7 @@ Following is an example report from the redis memory usage health check.
 }
 ```
 
-By default, the warning threshold is set to **100MB**, and the failure threshold is set to **120MB**. However, you may also define custom thresholds.
+デフォルトでは、警告のしきい値は**100MB**に設定され、エラーのしきい値は**120MB**に設定されています。ただし、カスタムのしきい値を定義することもできます。
 
 ```ts
 new RedisMemoryUsageCheck(db.connection())
@@ -474,14 +475,15 @@ new RedisMemoryUsageCheck(db.connection())
   .failWhenExceeds('240MB')
 ```
 
-## Caching results
+## 結果のキャッシュ
 
-Health checks are performed every time you call the `healthChecks.run` method (aka visit the `/health` endpoint). You might want to ping the `/health` endpoint frequently, but avoid performing certain checks on every visit.
+ヘルスチェックは、`healthChecks.run`メソッド（つまり`/health`エンドポイントへのアクセス）を呼び出すたびに実行されます。`/health`エンドポイントを頻繁にpingしたい場合でも、特定のチェックを毎回実行するのを避けることができます。
 
-For example, monitoring disk space every minute is not very useful, but tracking memory every minute can be helpful.
+たとえば、ディスクスペースを1分ごとに監視することはあまり役に立ちませんが、メモリを1分ごとに追跡することは役に立ちます。
 
-Therefore, we allow you to cache the results of individual health checks when you register them. For example:
+したがって、登録する個々のヘルスチェックの結果をキャッシュできます。
 
+例:
 ```ts
 import {
   HealthChecks,
@@ -494,14 +496,14 @@ export const healthChecks = new HealthChecks().register([
   // highlight-start
   new DiskSpaceCheck().cacheFor('1 hour'),
   // highlight-end
-  new MemoryHeapCheck(), // do not cache
-  new MemoryRSSCheck(), // do not cache
+  new MemoryHeapCheck(), // キャッシュしない
+  new MemoryRSSCheck(), // キャッシュしない
 ])
 ```
 
-## Creating a custom health check
+## カスタムヘルスチェックの作成
 
-You may create a custom health check as a JavaScript class that adheres to the [HealthCheckContract](https://github.com/adonisjs/health/blob/develop/src/types.ts#L98) interface. You can define a health check anywhere inside your project or package and import it within the `start/health.ts` file to register it.
+`HealthCheckContract`インターフェイスに準拠するJavaScriptクラスとしてカスタムヘルスチェックを作成できます。プロジェクトまたはパッケージ内の任意の場所でヘルスチェックを定義し、`start/health.ts`ファイル内でインポートして登録できます。
 
 ```ts
 import { Result, BaseCheck } from '@adonisjs/core/health'
@@ -510,25 +512,25 @@ import type { HealthCheckResult } from '@adonisjs/core/types/health'
 export class ExampleCheck extends BaseCheck {
   async run(): Promise<HealthCheckResult> {
     /**
-     * The following checks are for reference purposes only
+     * 以下のチェックは参考用です
      */
     if (checkPassed) {
-      return Result.ok('Success message to display')
+      return Result.ok('表示する成功メッセージ')
     }
     if (checkFailed) {
-      return Result.failed('Error message', errorIfAny)
+      return Result.failed('エラーメッセージ', errorIfAny)
     }
     if (hasWarning) {
-      return Result.warning('Warning message')
+      return Result.warning('警告メッセージ')
     }
   }
 }
 ```
 
-As shown in the above example, you may use the [Result](https://github.com/adonisjs/health/blob/develop/src/result.ts) class to create Health check results. Optionally, you may merge meta-data for the result as follows.
+上記の例のように、[Result](https://github.com/adonisjs/health/blob/develop/src/result.ts)クラスを使用してヘルスチェック結果を作成できます。オプションで、以下のように結果のメタデータをマージすることもできます。
 
 ```ts
-Result.ok('Database connection is healthy').mergeMetaData({
+Result.ok('データベース接続は正常です').mergeMetaData({
   connection: {
     dialect: 'pg',
     activeCount: connections,
@@ -536,8 +538,8 @@ Result.ok('Database connection is healthy').mergeMetaData({
 })
 ```
 
-### Registering custom health check
-You may import your custom health check class within the `start/health.ts` file and register it by creating a new class instance.
+### カスタムヘルスチェックの登録
+`start/health.ts`ファイル内でカスタムヘルスチェッククラスをインポートし、新しいクラスインスタンスを作成して登録できます。
 
 ```ts
 // highlight-start

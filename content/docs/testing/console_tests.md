@@ -1,16 +1,16 @@
 ---
-summary: Command-line testing in AdonisJS using the Ace command framework.
+summary: Aceコマンドフレームワークを使用したAdonisJSのコマンドラインテスト。
 ---
 
-# Console tests
+# コンソールテスト
 
-Command-line tests refer to testing custom Ace commands that are part of your application or the package codebase.
+コンソールテストは、アプリケーションまたはパッケージのコードベースに含まれるカスタムAceコマンドのテストを指します。
 
-In this guide, we will learn how to write tests for a command, mock the logger output, and trap CLI prompts.
+このガイドでは、コマンドのテスト方法、ロガーの出力のモック、CLIのプロンプトのトラップ方法について学びます。
 
-## Basic example
+## 基本的な例
 
-Let's start by creating a new command named `greet`.
+まず、`greet`という新しいコマンドを作成しましょう。
 
 ```sh
 node ace make:command greet
@@ -22,7 +22,7 @@ import { CommandOptions } from '@adonisjs/core/types/ace'
 
 export default class Greet extends BaseCommand {
   static commandName = 'greet'
-  static description = 'Greet a username by name'
+  static description = 'ユーザー名でユーザーに挨拶する'
 
   static options: CommandOptions = {}
 
@@ -32,7 +32,7 @@ export default class Greet extends BaseCommand {
 }
 ```
 
-Let's create a **unit** test inside the `tests/unit` directory. Feel free to [define the unit test suite](./introduction.md#suites) if it is not already defined.
+`tests/unit`ディレクトリ内に**ユニット**テストを作成しましょう。すでに定義されていない場合は、[ユニットテストスイートを定義](./introduction.md#suites)してください。
 
 ```sh
 node ace make:test commands/greet --suite=unit
@@ -40,7 +40,7 @@ node ace make:test commands/greet --suite=unit
 # DONE:    create tests/unit/commands/greet.spec.ts
 ```
 
-Let's open the newly created file and write the following test. We will use the `ace` service to create an instance of the `Greet` command and assert that it exits successfully.
+新しく作成されたファイルを開き、次のテストを書きましょう。`ace`サービスを使用して`Greet`コマンドのインスタンスを作成し、正常に終了することをアサートします。
 
 ```ts
 import { test } from '@japa/runner'
@@ -48,38 +48,38 @@ import Greet from '#commands/greet'
 import ace from '@adonisjs/core/services/ace'
 
 test.group('Commands greet', () => {
-  test('should greet the user and finish with exit code 1', async () => {
+  test('ユーザーに挨拶し、終了コード1で終了することをアサートする', async () => {
     /**
-     * Create an instance of the Greet command class
+     * Greetコマンドクラスのインスタンスを作成する
      */
     const command = await ace.create(Greet, [])
 
     /**
-     * Execute command
+     * コマンドを実行する
      */
     await command.exec()
 
     /**
-     * Assert command exited with status code 0
+     * 終了コードが0であることをアサートする
      */
     command.assertSucceeded()
   })
 })
 ```
 
-Let's run the test using the following ace command.
+次のaceコマンドを使用してテストを実行しましょう。
 
 ```sh
 node ace test --files=commands/greet
 ```
 
-## Testing logger output
+## ロガーの出力のテスト
 
-The `Greet` command currently writes the log message to the terminal. To capture this message and write an assertion for it, we will have to switch the UI library of ace into `raw` mode.
+`Greet`コマンドは現在、ログメッセージをターミナルに書き込んでいます。このメッセージをキャプチャし、アサーションを行うために、aceのUIライブラリを`raw`モードに切り替える必要があります。
 
-In `raw` mode, the ace will not write any logs to the terminal. Instead, keep them within memory for writing assertions.
+`raw`モードでは、aceはログをターミナルに書き込まず、アサーションのためにメモリ内に保持します。
 
-We will use the Japa `each.setup` hook to switch into and out of the `raw` mode.
+Japaの`each.setup`フックを使用して、`raw`モードに切り替えることができます。
 
 ```ts
 test.group('Commands greet', (group) => {
@@ -90,41 +90,41 @@ test.group('Commands greet', (group) => {
   })
   // highlight-end
   
-  // test goes here
+  // テストはここに記述します
 })
 ```
 
-Once the hook has been defined, you can update your test as follows.
+フックが定義されたら、テストを次のように更新できます。
 
 ```ts
-test('should greet the user and finish with exit code 1', async () => {
+test('ユーザーに挨拶し、終了コード1で終了することをアサートする', async () => {
   /**
-   * Create an instance of the Greet command class
+   * Greetコマンドクラスのインスタンスを作成する
    */
   const command = await ace.create(Greet, [])
 
   /**
-   * Execute command
+   * コマンドを実行する
    */
   await command.exec()
 
   /**
-   * Assert command exited with status code 0
+   * 終了コードが0であることをアサートする
    */
   command.assertSucceeded()
 
   // highlight-start
   /**
-   * Assert the command printed the following log message
+   * コマンドが次のログメッセージを出力したことをアサートする
    */
   command.assertLog('[ blue(info) ] Hello world from "Greet"')
   // highlight-end
 })
 ```
 
-## Testing tables output
+## テーブルの出力のテスト
 
-Similar to testing the log messages, you can write assertions for the table output by switching the UI library into `raw` mode.
+ログメッセージのテストと同様に、UIライブラリを`raw`モードに切り替えることで、テーブルの出力に対してアサーションを行うことができます。
 
 ```ts
 async run() {
@@ -140,7 +140,7 @@ async run() {
 }
 ```
 
-Given the above table, you can write an assertion for it as follows.
+上記のテーブルを使用して、次のようにアサーションを行うことができます。
 
 ```ts
 const command = await ace.create(Greet, [])
@@ -154,15 +154,15 @@ command.assertTableRows([
 ])
 ```
 
-## Trapping prompts
+## プロンプトのトラップ
 
-Since [prompts](../ace/prompts.md) blocks the terminal waiting for manual input, you must trap and respond to them programmatically when writing tests.
+[プロンプト](../ace/prompts.md)は、手動での入力を待つため、テストを書く際にはプログラムでトラップして応答する必要があります。
 
-Prompts are trapped using the `prompt.trap` method. The method accepts the prompt title (case sensitive) and offers a chainable API for configuring additional behavior.
+プロンプトは`prompt.trap`メソッドを使用してトラップされます。このメソッドはプロンプトのタイトル（大文字と小文字を区別）を受け入れ、追加の動作を設定するためのチェーン可能なAPIを提供します。
 
-The traps are removed automatically after the prompt gets triggered. An error will be thrown if the test finishes without triggering the prompt with a trap.
+トラップは、プロンプトがトリガーされると自動的に解除されます。トラップがトリガーされずにテストが終了した場合、エラーがスローされます。
 
-In the following example, we place a trap on a prompt titled `"What is your name?"` and answer it using the `replyWith` method.
+次の例では、「What is your name?」というタイトルのプロンプトにトラップを設定し、`replyWith`メソッドを使用して回答します。
 
 ```ts
 const command = await ace.create(Greet, [])
@@ -178,9 +178,9 @@ await command.exec()
 command.assertSucceeded()
 ```
 
-### Choosing options
+### オプションの選択
 
-You can choose options with a select or a multi-select prompt using the `chooseOption` and `chooseOptions` methods.
+セレクトまたはマルチセレクトのプロンプトでオプションを選択するには、`chooseOption`および`chooseOptions`メソッドを使用します。
 
 ```ts
 command.prompt
@@ -194,9 +194,9 @@ command.prompt
   .chooseOptions([1, 2])
 ```
 
-### Accepting or rejecting confirmation prompts
+### 確認プロンプトの承認または拒否
 
-You can accept or reject prompts displayed using the `toggle` and the `confirm` methods.
+`toggle`メソッドと`confirm`メソッドを使用して表示されるプロンプトを承認または拒否できます。
 
 ```ts
 command.prompt
@@ -210,14 +210,14 @@ command.prompt
   .reject()
 ```
 
-### Asserting against validations
+### バリデーションのアサーション
 
-To test the validation behavior of a prompt, you can use the `assertPasses` and `assertFails` methods. These methods accept the value of the prompt and test it against the [prompt's validate](../ace/prompts.md#prompt-options) method.
+プロンプトのバリデーションの動作をテストするために、`assertPasses`メソッドと`assertFails`メソッドを使用できます。これらのメソッドは、プロンプトの値を受け入れ、[プロンプトのvalidate](../ace/prompts.md#prompt-options)メソッドに対してテストを行います。
 
 ```ts
 command.prompt
   .trap('What is your name?')
-  // assert the prompt fails when an empty value is provided
+  // 空の値が提供された場合にプロンプトが失敗することをアサートする
   .assertFails('', 'Please enter your name')
   
 command.prompt
@@ -225,7 +225,7 @@ command.prompt
   .assertPasses('Virk')
 ```
 
-Following is an example of using assertions and replying to a prompt together.
+次の例は、アサーションとプロンプトへの回答を組み合わせた例です。
 
 ```ts
 command.prompt
@@ -235,13 +235,13 @@ command.prompt
   .replyWith('Romain')
 ```
 
-## Available assertions
+## 利用可能なアサーション
 
-Following is the list of assertion methods available on a command instance.
+コマンドインスタンスで利用可能なアサーションメソッドのリストは次のとおりです。
 
 ### assertSucceeded
 
-Assert the command exited with `exitCode=0`.
+コマンドが`exitCode=0`で終了したことをアサートします。
 
 ```ts
 await command.exec()
@@ -250,7 +250,7 @@ command.assertSucceeded()
 
 ### assertFailed
 
-Assert the command exited with non-zero `exitCode`.
+コマンドが非ゼロの`exitCode`で終了したことをアサートします。
 
 ```ts
 await command.exec()
@@ -259,7 +259,7 @@ command.assertSucceeded()
 
 ### assertExitCode
 
-Assert the command exited with a specific `exitCode`.
+コマンドが特定の`exitCode`で終了したことをアサートします。
 
 ```ts
 await command.exec()
@@ -268,7 +268,7 @@ command.assertExitCode(2)
 
 ### assertNotExitCode
 
-Assert the command exited with any `exitCode`, but not the given exit code.
+コマンドが任意の`exitCode`で終了したことをアサートしますが、指定された終了コードではないことをアサートします。
 
 ```ts
 await command.exec()
@@ -277,7 +277,7 @@ command.assertNotExitCode(0)
 
 ### assertLog
 
-Assert the command writes a log message using the `this.logger` property. You can optionally assert the output stream as `stdout` or `stderr`.
+コマンドが`this.logger`プロパティを使用してログメッセージを書き込んだことをアサートします。オプションで出力ストリームを`stdout`または`stderr`としてアサートすることもできます。
 
 ```ts
 await command.exec()
@@ -288,7 +288,7 @@ command.assertLog('Hello world from "Greet"', 'stdout')
 
 ### assertLogMatches
 
-Assert the command writes a log message that matches the given regular expression.
+コマンドが指定された正規表現に一致するログメッセージを書き込んだことをアサートします。
 
 ```ts
 await command.exec()
@@ -298,7 +298,7 @@ command.assertLogMatches(/Hello world/)
 
 ### assertTableRows
 
-Assert the command prints a table to the `stdout`. You can provide the table rows as an array of columns. The columns are represented as an array of cells.
+コマンドがテーブルを`stdout`に出力したことをアサートします。テーブルの行を、列の配列として提供できます。列はセルの配列として表されます。
 
 ```ts
 await command.exec()

@@ -1,26 +1,26 @@
 ---
-summary: Learn about the Application class and how to access the environment, state, and make URLs and paths to project files.
+summary: アプリケーションクラスについて学び、環境、状態、プロジェクトファイルへのURLとパスを取得する方法を学びます。
 ---
 
-# Application
+# アプリケーション
 
-The [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
+[Application](https://github.com/adonisjs/application/blob/main/src/application.ts)クラスは、AdonisJSアプリケーションを組み立てるための重要な役割を果たします。このクラスを使用して、アプリケーションが実行されている環境について知ることや、アプリケーションの現在の状態を取得すること、特定のディレクトリへのパスを作成できます。
 
-See also: [Application lifecycle](./application_lifecycle.md)
+参考: [アプリケーションライフサイクル](./application_lifecycle.md)
 
-## Environment 
+## 環境
 
-The environment refers to the application runtime environment. The application is always booted in one of the following known environments. 
+環境はアプリケーションの実行環境を指します。アプリケーションは常に以下のいずれかの環境で起動されます。
 
-- `web` environment refers to the process started for the HTTP server.
+- `web`環境は、HTTPサーバーのために起動されたプロセスを指します。
 
-- `console` environment refers to the Ace commands except for the REPL command.
+- `console`環境は、REPLコマンドを除くAceコマンドを指します。
 
-- `repl` environment refers to the process started using the `node ace repl` command.
+- `repl`環境は、`node ace repl`コマンドを使用して起動されたプロセスを指します。
 
-- Finally, the `test` environment refers to the process started using the `node ace test` command.
+- 最後に、`test`環境は、`node ace test`コマンドを使用して起動されたプロセスを指します。
 
-You can access the application environment using the `getEnvironment` method.
+`getEnvironment`メソッドを使用してアプリケーションの環境にアクセスできます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -28,19 +28,19 @@ import app from '@adonisjs/core/services/app'
 console.log(app.getEnvironment())
 ```
 
-You can also switch the application environment before it has been booted. A great example of this is the REPL command. 
+アプリケーションの環境を起動前に切り替えることもできます。これの素晴らしい例は、REPLコマンドです。
 
-The `node ace repl` command starts the application in the `console` environment, but the command internally switches the environment to `repl` before presenting the REPL prompt.
+`node ace repl`コマンドはアプリケーションを`console`環境で起動しますが、コマンドは内部的にREPLプロンプトを表示する前に環境を`repl`に切り替えます。
 
 ```ts
 if (!app.isBooted) {
-	app.setEnvironment('repl')
+  app.setEnvironment('repl')
 }
 ```
 
-## Node environment
+## Node環境
 
-You can access the Node.js environment using the `nodeEnvironment` property. The value is a reference to the `NODE_ENV` environment variable. However, the value is further normalized to be consistent.
+`nodeEnvironment`プロパティを使用して、Node.jsの環境にアクセスできます。この値は`NODE_ENV`環境変数への参照です。ただし、値は一貫性を持たせるために正規化されます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -48,7 +48,7 @@ import app from '@adonisjs/core/services/app'
 console.log(app.nodeEnvironment)
 ```
 
-| NODE_ENV | Normalized to |
+| NODE_ENV | 正規化された値 |
 |----------|---------------|
 | dev      | development   |
 | develop  | development   |
@@ -56,43 +56,43 @@ console.log(app.nodeEnvironment)
 | prod     | production    |
 | testing  | test          |
 
-Also, you can use the following properties as a shorthand to know the current environment.
+また、以下のプロパティを使用して現在の環境を簡潔に知ることもできます。
 
-- `inProduction`: Check if the application is running in the production environment.
-- `inDev`: Check if the application is running in the development environment.
-- `inTest`: Check if the application is running in the test environment.
+- `inProduction`: アプリケーションが本番環境で実行されているかどうかをチェックします。
+- `inDev`: アプリケーションが開発環境で実行されているかどうかをチェックします。
+- `inTest`: アプリケーションがテスト環境で実行されているかどうかをチェックします。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
-// Is in production
+// 本番環境で実行されているかどうか
 app.inProduction
 app.nodeEnvironment === 'production'
 
-// Is in development
+// 開発環境で実行されているかどうか
 app.inDev
 app.nodeEnvironment === 'development'
 
-// Is in the test
+// テスト環境で実行されているかどうか
 app.inTest
 app.nodeEnvironment === 'test'
 ```
 
-## State
+## 状態
 
-The state refers to the current state of the application. The framework features you can access significantly depend upon the current state of the application. For example, you cannot access the [container bindings](./dependency_injection.md#container-bindings) or [container services](./container_services.md) until the app is in a `booted` state.
+状態はアプリケーションの現在の状態を指します。アプリケーションの現在の状態によって、利用可能なフレームワークの機能が大きく異なります。たとえば、アプリケーションが`booted`状態でない限り、[コンテナバインディング](./dependency_injection.md#container-bindings)や[コンテナサービス](./container_services.md)にアクセスすることはできません。
 
-The application is always in one of the following known states.
+アプリケーションは常に以下のいずれかの状態にあります。
 
-- `created`: It is the default state of the application.
+- `created`: アプリケーションのデフォルトの状態です。
 
-- `initiated`: In this state, we parse/validate the environment variables and process the `adonisrc.ts` file.
+- `initiated`: この状態では、環境変数を解析/検証し、`adonisrc.ts`ファイルを処理します。
 
-- `booted`: The application service providers are registered and booted at this state.
+- `booted`: この状態では、アプリケーションのサービスプロバイダが登録および起動されます。
 
-- `ready`: The ready state varies between different environments. For example, in the `web` environment, the ready state means the application is ready to accept new HTTP requests.
+- `ready`: ready状態は環境によって異なります。たとえば、`web`環境では、ready状態は新しいHTTPリクエストを受け付ける準備ができていることを意味します。
 
-- `terminated`: The application has been terminated, and the process will exit shortly. The application will not accept new HTTP requests in the `web` environment.
+- `terminated`: アプリケーションが終了し、プロセスがまもなく終了します。`web`環境では新しいHTTPリクエストを受け付けません。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -100,46 +100,46 @@ import app from '@adonisjs/core/services/app'
 console.log(app.getState())
 ```
 
-You can also use the following shorthand properties to know whether the application is in a given state.
+また、以下の短縮プロパティを使用して、アプリケーションが特定の状態にあるかどうかを知ることもできます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
-// App is booted
+// アプリケーションがbooted状態かどうか
 app.isBooted
 app.getState() !== 'created' && app.getState() !== 'initiated'
 
-// App is ready
+// アプリケーションがready状態かどうか
 app.isReady
 app.getState() === 'ready'
 
 // gracefully attempting to terminate the app
 app.isTerminating
 
-// App has been terminated
+// アプリケーションがterminated状態かどうか
 app.isTerminated
 app.getState() === 'terminated'
 ```
 
-## Listening for process signals
+## プロセスシグナルのリスニング
 
-You can listen for [POSIX signals](https://man7.org/linux/man-pages/man7/signal.7.html) using the `app.listen`, or `app.listenOnce` methods. Under the hood, we register the listener with the Node.js `process` object.
+`app.listen`または`app.listenOnce`メソッドを使用して、[POSIXシグナル](https://man7.org/linux/man-pages/man7/signal.7.html)をリスンできます。内部的には、Node.jsの`process`オブジェクトにリスナーが登録されます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
-// Listen for a SIGTERM signal
+// SIGTERMシグナルのリスニング
 app.listen('SIGTERM', () => {
 })
 
-// Listen once for a SIGTERM signal
+// SIGTERMシグナルのリスニング（一度だけ）
 app.listenOnce('SIGTERM', () => {
 })
 ```
 
-At times, you might want to register the listeners conditionally. For example, listen to the `SIGINT` signal when running inside the pm2 environment.
+場合によっては、リスナーを条件付きで登録したい場合があります。たとえば、pm2環境内で`SIGINT`シグナルをリスンする場合があります。
 
-You can use the `listenIf` or `listenOnceIf` methods to register a listener conditionally. The listener is only registered when the first argument's value is truthy.
+`listenIf`または`listenOnceIf`メソッドを使用して、リスナーを条件付きで登録できます。最初の引数の値がtruthyである場合にのみリスナーが登録されます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -151,9 +151,9 @@ app.listenOnceIf(app.managedByPm2, 'SIGTERM', () => {
 })
 ```
 
-## Notifying parent process
+## 親プロセスへの通知
 
-If your application starts as a child process, you can send messages to the parent process using the `app.notify` method. Under the hood, we use the `process.send` method.
+アプリケーションが子プロセスとして起動する場合、`app.notify`メソッドを使用して親プロセスにメッセージを送信できます。内部的には、`process.send`メソッドを使用しています。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -167,13 +167,13 @@ app.notify({
 })
 ```
 
-## Making URLs and paths to project files
+## プロジェクトファイルへのURLとパスの作成
 
-Instead of self-constructing absolute URLs or paths to project files, we highly recommend using the following helpers.
+絶対URLやプロジェクトファイルへのパスを自己構築する代わりに、以下のヘルパーを使用することを強くオススメします。
 
 ### makeURL
 
-The make URL method returns a file URL to a given file or directory within the project root. For example, you may generate a URL when importing a file.
+makeURLメソッドは、プロジェクトルート内の指定されたファイルまたはディレクトリへのファイルURLを返します。たとえば、ファイルをインポートする際にURLを生成できます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -190,7 +190,7 @@ await Promise.all(files.map((file) => {
 
 ### makePath
 
-The `makePath` method returns an absolute path to a given file or directory within the project root.
+`makePath`メソッドは、プロジェクトルート内の指定されたファイルまたはディレクトリへの絶対パスを返します。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -200,7 +200,7 @@ app.makePath('app/middleware/auth.ts')
 
 ### configPath
 
-Returns path to a file inside the project's config directory.
+プロジェクトのconfigディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.configPath('shield.ts')
@@ -212,7 +212,7 @@ app.configPath()
 
 ### publicPath
 
-Returns path to a file inside the project's public directory.
+プロジェクトのpublicディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.publicPath('style.css')
@@ -224,7 +224,7 @@ app.publicPath()
 
 ### providersPath
 
-Returns path to a file inside the provider's directory.
+プロバイダディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.providersPath('app_provider')
@@ -236,7 +236,7 @@ app.providersPath()
 
 ### factoriesPath
 
-Returns path to a file inside the database factories directory.
+データベースファクトリディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.factoriesPath('user.ts')
@@ -247,7 +247,8 @@ app.factoriesPath()
 ```
 
 ### migrationsPath
-Returns path to a file inside the database migrations directory.
+
+データベースマイグレーションディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.migrationsPath('user.ts')
@@ -258,7 +259,7 @@ app.migrationsPath()
 ```
 
 ### seedersPath
-Returns path to a file inside the database seeders directory.
+データベースシーダディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.seedersPath('user.ts')
@@ -269,7 +270,7 @@ app.seedersPath()
 ```
 
 ### languageFilesPath
-Returns path to a file inside languages directory.
+言語ファイルディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.languageFilesPath('en/messages.json')
@@ -280,7 +281,7 @@ app.languageFilesPath()
 ```
 
 ### viewsPath
-Returns path to a file inside the views directory.
+ビューディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.viewsPath('welcome.edge')
@@ -291,7 +292,7 @@ app.viewsPath()
 ```
 
 ### startPath
-Returns path to a file inside the start directory.
+startディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.startPath('routes.ts')
@@ -303,7 +304,7 @@ app.startPath()
 
 ### tmpPath
 
-Returns path to a file inside the `tmp` directory within the project root.
+プロジェクトルート内の`tmp`ディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.tmpPath('logs/mail.txt')
@@ -315,7 +316,7 @@ app.tmpPath()
 
 ### httpControllersPath
 
-Returns path to a file inside the HTTP controllers directory.
+HTTPコントローラディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.httpControllersPath('users_controller.ts')
@@ -327,7 +328,7 @@ app.httpControllersPath()
 
 ### modelsPath
 
-Returns path to a file inside the model's directory.
+モデルディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.modelsPath('user.ts')
@@ -339,7 +340,7 @@ app.modelsPath()
 
 ### servicesPath
 
-Returns path to a file inside the services directory.
+サービスディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.servicesPath('user.ts')
@@ -351,7 +352,7 @@ app.servicesPath()
 
 ### exceptionsPath
 
-Returns path to a file inside the exceptions directory.
+例外ディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.exceptionsPath('handler.ts')
@@ -363,7 +364,7 @@ app.exceptionsPath()
 
 ### mailsPath
 
-Returns path to a file inside the mails directory.
+メールディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.mailsPath('verify_email.ts')
@@ -375,7 +376,7 @@ app.mailsPath()
 
 ### middlewarePath
 
-Returns path to a file inside the middleware directory.
+ミドルウェアディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.middlewarePath('auth.ts')
@@ -387,7 +388,7 @@ app.middlewarePath()
 
 ### policiesPath
 
-Returns path to a file inside the policies directory.
+ポリシーディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.policiesPath('posts.ts')
@@ -399,7 +400,7 @@ app.policiesPath()
 
 ### validatorsPath
 
-Returns path to a file inside the validators directory.
+バリデータディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.validatorsPath('create_user.ts')
@@ -411,7 +412,7 @@ app.validatorsPath()
 
 ### commandsPath
 
-Returns path to a file inside the commands directory.
+コマンドディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.commandsPath('greet.ts')
@@ -423,7 +424,7 @@ app.commandsPath()
 
 ### eventsPath
 
-Return path to a file inside the events directory.
+イベントディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.eventsPath('user_created.ts')
@@ -435,7 +436,7 @@ app.eventsPath()
 
 ### listenersPath
 
-Return path to a file inside the listeners directory.
+リスナーディレクトリ内のファイルへのパスを返します。
 
 ```ts
 app.listenersPath('send_invoice.ts')
@@ -445,18 +446,18 @@ app.listenersPath()
 // /project_root/app/listeners
 ```
 
-## Generators
+## ジェネレーター
 
-Generators are used to create class names and file names for different entities. For example, you may use the `generators.controllerFileName` method to generate the filename for a controller.
+ジェネレーターは、さまざまなエンティティのクラス名やファイル名を作成するために使用されます。たとえば、`generators.controllerFileName`メソッドを使用して、コントローラのファイル名を生成できます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
 app.generators.controllerFileName('user')
-// output - users_controller.ts
+// 出力 - users_controller.ts
 
 app.generators.controllerName('user')
-// output - UsersController
+// 出力 - UsersController
 ```
 
-Please [reference the `generators.ts` source code](https://github.com/adonisjs/application/blob/main/src/generators.ts) to view the list of available generators.
+[利用可能なジェネレーターのリストを表示するには、`generators.ts`のソースコードを参照してください。](https://github.com/adonisjs/application/blob/main/src/generators.ts)

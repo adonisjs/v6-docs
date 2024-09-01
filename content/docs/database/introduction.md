@@ -1,21 +1,21 @@
 ---
-summary: Available options for SQL libraries and ORMs in AdonisJS applications.
+summary: AdonisJSアプリケーションでのSQLライブラリとORMの利用可能なオプション。
 ---
 
-# SQL and ORMs
+# SQLとORM
 
-SQL databases are popular for storing the application's data in persistent storage. You can use any libraries and ORMs to make SQL queries inside an AdonisJS application.
+SQLデータベースは、アプリケーションのデータを永続的なストレージに保存するためによく使われます。AdonisJSアプリケーション内でSQLクエリを実行するために、任意のライブラリやORMを使用できます。
 
 :::note
-The AdonisJS core team built the [Lucid ORM](./lucid.md) but does not force you to use it. You can use any other SQL libraries and ORMs you would like inside an AdonisJS application.
+AdonisJSコアチームは[Lucid ORM](./lucid.md)を開発しましたが、強制的に使用することはありません。AdonisJSアプリケーション内で他のSQLライブラリやORMを使用することもできます。
 :::
 
-## Popular options
+## 人気のあるオプション
 
-Following is the list of other popular SQL libraries and ORMs you can use inside an AdonisJS application (just like any other Node.js application).
+以下は、AdonisJSアプリケーション内で他の人気のあるSQLライブラリやORMを使用することができるリストです（他のNode.jsアプリケーションと同様です）。
 
-- [**Lucid**](./lucid.md) is a SQL query builder and an **Active Record ORM** built on top of [Knex](https://knexjs.org) created and maintained by the AdonisJS core team.
-- [**Prisma**](https://prisma.io/orm) Prisma ORM is another popular ORM in the Node.js ecosystem. It has a large community following. It offers intuitive data models, automated migrations, type-safety & auto-completion.
-- [**Kysely**](https://kysely.dev/docs/getting-started) is an end-to-end type safe query builder for Node.js. Kysely is a great fit if you need a lean query builder without any models. We have written an article explaining [how you can integrate Kysely inside an AdonisJS application](https://adonisjs.com/blog/kysely-with-adonisjs).
-- [**Drizzle ORM**](https://orm.drizzle.team/) is used by many AdonisJS developers in our community. We do not have any experience using this ORM, but you might want to check it out and see if it's an excellent fit for your use case.
-- [**Mikro ORM**](https://mikro-orm.io/docs/guide/first-entity) is an underrated ORM in the Node.js ecosystem. MikroORM is a little verbose in comparison to Lucid. However, it is actively maintained and also built on top of Knex.
+- [**Lucid**](./lucid.md)は、[Knex](https://knexjs.org)をベースにしたSQLクエリビルダーおよび**Active Record ORM**で、AdonisJSコアチームによって作成およびメンテナンスされています。
+- [**Prisma**](https://prisma.io/orm)は、Node.jsエコシステムで人気のある別のORMです。大規模なコミュニティがあります。直感的なデータモデル、自動マイグレーション、型安全性、自動補完を提供します。
+- [**Kysely**](https://kysely.dev/docs/getting-started)は、Node.js向けのエンドツーエンドのタイプセーフなクエリビルダーです。モデルなしでスリムなクエリビルダーが必要な場合には、Kyselyが適しています。[AdonisJSアプリケーション内でKyselyを統合する方法について説明した記事](https://adonisjs.com/blog/kysely-with-adonisjs)もあります。
+- [**Drizzle ORM**](https://orm.drizzle.team/)は、多くのAdonisJS開発者によって使用されています。私たちはこのORMを使用した経験はありませんが、あなたのユースケースに適しているかどうかを確認するためにチェックしてみる価値があります。
+- [**Mikro ORM**](https://mikro-orm.io/docs/guide/first-entity)は、Node.jsエコシステムで評価が低いORMです。MikroORMはLucidに比べてやや冗長ですが、積極的にメンテナンスされており、Knexをベースにしています。

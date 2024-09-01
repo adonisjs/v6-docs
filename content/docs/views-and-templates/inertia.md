@@ -1,14 +1,14 @@
 ---
-summary: Learn how to use Inertia with AdonisJS to create server-rendered applications with your favorite frontend framework.
+summary: おすすめのフロントエンドフレームワークを使用して、AdonisJSとInertiaを組み合わせてサーバーレンダリングアプリケーションを作成する方法を学びます。
 ---
 
 # Inertia
 
-[Inertia](https://inertiajs.com/) is a framework-agnostic way to create single-page applications without much of the complexity of modern SPAs.
+[Inertia](https://inertiajs.com/)は、モダンなSPAの複雑さを排除しつつ、フレームワークに依存しない方法でシングルページアプリケーションを作成するための手段です。
 
-It is a great middle ground between traditional server-rendered applications (with templating engines) and modern SPAs (with client-side routing and state management).
+したがって、テンプレートエンジンを使用した従来のサーバーレンダリングアプリケーションと、クライアントサイドのルーティングと状態管理を備えたモダンなSPAの中間地点となります。
 
-Using Inertia will allow you to create a SPA with your favorite frontend framework (Vue.js, React, Svelte or Solid.js) without creating a separate API.
+Inertiaを使用することで、お気に入りのフロントエンドフレームワーク（Vue.js、React、Svelte、またはSolid.js）でSPAを作成できますが、別個のAPIを作成する必要はありません。
 
 :::codegroup
 
@@ -37,7 +37,7 @@ defineProps<{
 </script>
 
 <template>
-  <Head title="Users" />
+  <Head title="ユーザー" />
 
   <div v-for="user in users" :key="user.id">
     <Link :href="`/users/${user.id}`">
@@ -51,13 +51,13 @@ defineProps<{
 :::
 
 
-## Installation
+## インストール
 
 :::note
-Are you starting a new project and want to use Inertia? Check out the [Inertia starter kit](https://docs.adonisjs.com/guides/getting-started/installation#inertia-starter-kit).
+新しいプロジェクトを開始し、Inertiaを使用したい場合は、[Inertiaスターターキット](https://docs.adonisjs.com/guides/getting-started/installation#inertia-starter-kit)をチェックしてください。
 :::
 
-Install the package from the npm registry running:
+npmレジストリからパッケージをインストールするには、次のコマンドを実行します。
 
 :::codegroup
 
@@ -68,15 +68,15 @@ npm i @adonisjs/inertia
 
 :::
 
-Once done, run the following command to configure the package.
+完了したら、次のコマンドを実行してパッケージを設定します。
 
 ```sh
 node ace configure @adonisjs/inertia
 ```
 
-:::disclosure{title="See steps performed by the configure command"}
+:::disclosure{title="configureコマンドで実行されるステップを参照"}
 
-1. Registers the following service provider and command inside the `adonisrc.ts` file.
+1. `adonisrc.ts`ファイル内に以下のサービスプロバイダとコマンドを登録します。
 
     ```ts
     {
@@ -86,51 +86,49 @@ node ace configure @adonisjs/inertia
       ]
     }
     ```
-2. Registers the following middleware inside the `start/kernel.ts` file 
+2. `start/kernel.ts`ファイル内に以下のミドルウェアを登録します。
 
    ```ts
    router.use([() => import('@adonisjs/inertia/inertia_middleware')])
    ```
 
-3. Create the `config/inertia.ts` file.
+3. `config/inertia.ts`ファイルを作成します。
 
-4. Copy a few stubs into your application to help you start quickly. Each copied file is adapted to the frontend framework previously selected.
+4. アプリケーションを素早く開始するために、いくつかのスタブファイルをアプリケーションにコピーします。コピーされる各ファイルは、事前に選択したフロントエンドフレームワークに適応されます。
 
-  1. Create a `./resources/views/inertia_layout.edge` file that will be used to render the HTML page used to boot Inertia.
+  1. `./resources/views/inertia_layout.edge`ファイルを作成し、Inertiaの起動に使用されるHTMLページをレンダリングします。
 
-  2. Create a `./inertia/css/app.css` file with the content needed to style the `inertia_layout.edge` view.
+  2. `./inertia/css/app.css`ファイルを作成し、`inertia_layout.edge`ビューのスタイルに必要なコンテンツを追加します。
 
-  3. Create a `./inertia/tsconfig.json` file to differentiate between the server and client-side TypeScript configuration.
+  3. `./inertia/tsconfig.json`ファイルを作成し、サーバーサイドとクライアントサイドのTypeScriptの設定を区別します。
 
-  4. Create a `./inertia/app/app.ts` for bootstrapping Inertia and your frontend framework.
+  4. Inertiaとフロントエンドフレームワークをブートストラップするための`./inertia/app/app.ts`を作成します。
 
-  5. Create a `./inertia/pages/home.{tsx|vue|svelte}` file to render the home page of your application.
+  5. `./inertia/pages/home.{tsx|vue|svelte}`ファイルを作成し、アプリケーションのホームページをレンダリングします。
 
-  6. Create a `./inertia/pages/server_error.{tsx|vue|svelte}` and `./inertia/pages/not_found.{tsx|vue|svelte}` files to render the error pages.
+  6. `./inertia/pages/server_error.{tsx|vue|svelte}`および`./inertia/pages/not_found.{tsx|vue|svelte}`ファイルを作成し、エラーページをレンダリングします。
 
-  7. Add the correct vite plugin to compile your frontend framework in the `vite.config.ts` file.
+  7. `vite.config.ts`ファイルに正しいViteプラグインを追加します。
 
-  8. Add a dumb route at `/` in your `start/routes.ts` file to render the home page with Inertia as an example.
+  8. `start/routes.ts`ファイルに`/`のダミールートを追加し、Inertiaを使用してホームページをレンダリングします。
  
-5. Install packages based on the selected frontend framework.
+5. 選択したフロントエンドフレームワークに基づいてパッケージをインストールします。
 
 :::
 
-Once done, you should be ready to use Inertia in your AdonisJS application. Start your development server, and visit `localhost:3333` to see the home page rendered using Inertia with your selected frontend framework.
+これで、AdonisJSアプリケーションでInertiaを使用する準備が整いました。開発サーバーを起動し、`localhost:3333`にアクセスして、選択したフロントエンドフレームワークを使用してInertiaでレンダリングされたホームページを表示できます。
 
 :::note
-**Read the [Inertia official documentation](https://inertiajs.com/)**.
+**[Inertia公式ドキュメント](https://inertiajs.com/)**をお読みください。
 
-Inertia is a backend-agnostic library. We just created an adapter to make it work with AdonisJS. You should be familiar with the Inertia concepts before reading this documentation.
-
-**We will only cover AdonisJS's specific parts in this documentation.**
+Inertiaはバックエンドに依存しないライブラリです。AdonisJSで動作するようにアダプターを作成しました。このドキュメントでは、Inertiaの特定の部分について説明します。
 :::
 
-## Client-side entrypoint
+## クライアントサイドのエントリーポイント
 
-If you used the `configure` or `add` command, the package will have created an entrypoint file at `inertia/app/app.ts` so you can skip this step. 
+`configure`コマンドまたは`add`コマンドを使用した場合、パッケージは`inertia/app/app.ts`にエントリーポイントファイルを作成します。そのため、このステップはスキップできます。 
 
-Basically, this file will be the main entrypoint for your frontend application and will be used to bootstrap Inertia and your frontend framework. This file should be the entrypoint loaded by your root Edge template with the `@vite` tag.
+基本的に、このファイルはInertiaアプリケーションを作成し、ページコンポーネントを解決するために使用されます。`inertia.render`を使用するときに作成したページコンポーネントは、`resolve`関数に渡され、この関数の役割はレンダリングする必要のあるコンポーネントを返すことです。
 
 :::codegroup
 
@@ -240,11 +238,11 @@ createInertiaApp({
 
 The role of this file is to create an Inertia app and to resolve the page component. The page component you write when using `inertia.render` will be passed down the the `resolve` function and the role of this function is to return the component that need to be rendered.
 
-## Rendering pages
+## ページのレンダリング
 
-While configuring your package, a `inertia_middleware` has been registered inside the `start/kernel.ts` file. This middleware is responsible for setting up the `inertia` object on the [`HttpContext`](../concepts/http_context.md).
+パッケージの設定中に、`start/kernel.ts`ファイル内に`inertia_middleware`が登録されています。このミドルウェアは、[`HttpContext`](../concepts/http_context.md)上の`inertia`オブジェクトを設定するための役割を果たします。
 
-To render a view using Inertia, use the `inertia.render` method. The method accepts the view name and the data to be passed to the component as props.
+Inertiaを使用してビューをレンダリングするには、`inertia.render`メソッドを使用します。このメソッドは、ビュー名とコンポーネントに渡すデータ（プロップ）を受け取ります。
 
 ```ts
 // title: app/controllers/home_controller.ts
@@ -257,9 +255,9 @@ export default class HomeController {
 }
 ```
 
-Do you see the `home` passed to the `inertia.render` method? It should be the path to the component file relative to the `inertia/pages` directory. We render the `inertia/pages/home.(vue,tsx)` file here.
+`inertia.render`メソッドに渡される`home`は、`inertia/pages`ディレクトリに対するコンポーネントファイルのパスである必要があります。ここでは、`inertia/pages/home.(vue,tsx)`ファイルをレンダリングしています。
 
-Your frontend component will receive the `user` object as a prop : 
+フロントエンドコンポーネントは、`user`オブジェクトをプロップとして受け取ります。
 
 :::codegroup
 
@@ -303,15 +301,15 @@ export default function Home(props: { user: { name: string } }) {
 
 :::
 
-As simple as that.
+これで完了です。
 
 :::warning
-While passing data to the frontend, everything is serialized to JSON. Do not expect to pass instances of models, dates, or other complex objects. 
+フロントエンドにデータを渡す際、すべてのデータはJSONにシリアライズされます。モデルのインスタンス、日付、その他の複雑なオブジェクトを渡すことはできません。
 :::
 
-### Root Edge template
+### ルートEdgeテンプレート
 
-The Root template is a regular Edge template that will be loaded on the first-page visit of your application. It is the place where you should include your CSS and Javascript files and also where you should include the `@inertia` tag. A typical root template looks like this :
+ルートテンプレートは、通常のEdgeテンプレートであり、最初のページ訪問時に読み込まれます。CSSやJavaScriptファイルを含める場所であり、`@inertia`タグも含める場所です。典型的なルートテンプレートは次のようになります。
 
 :::codegroup
 
@@ -403,7 +401,7 @@ The Root template is a regular Edge template that will be loaded on the first-pa
 
 :::
 
-You can configure the root template path in the `config/inertia.ts` file. By default, it assumes your template is at `resources/views/inertia_layout.edge`.
+`config/inertia.ts`ファイルでルートテンプレートのパスを設定する必要があります。デフォルトでは、テンプレートは`resources/views/inertia_layout.edge`にあると想定されています。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -415,7 +413,7 @@ export default defineConfig({
 })
 ```
 
-If needed, you can pass a function to the `rootView` prop to dynamically decide which root template should be used.
+必要に応じて、`rootView`プロパティに関数を渡して、動的に使用するルートテンプレートを決定することもできます。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -432,9 +430,9 @@ export default defineConfig({
 })
 ```
 
-### Root template data
+### ルートテンプレートデータ
 
-You may want to share data with your root Edge template. For example, for adding a meta title or open graph tags. You can do so by using the 3rd argument of the `inertia.render` method :
+ルートEdgeテンプレートとデータを共有する場合は、次のように行います。メタタイトルやオープングラフタグを追加するために、ルートテンプレートとデータを共有する必要がある場合があります。これを行うには、`inertia.render`メソッドの3番目の引数を使用します。
 
 ```ts
 // title: app/controllers/posts_controller.ts
@@ -450,7 +448,7 @@ export default class PostsController {
 }
 ```
 
-The `title` and `description` will now be available to the root Edge template : 
+`title`と`description`は、ルートEdgeテンプレートで使用できるようになります。
 
 ```edge
 // title: resources/views/root.edge
@@ -464,54 +462,54 @@ The `title` and `description` will now be available to the root Edge template :
 </html
 ```
 
-## Redirects
+## リダイレクト
 
-It is how you should do it in AdonisJS : 
+リダイレクトを行う場合は、次のようにします。
 
 ```ts
 export default class UsersController {
   async store({ response }: HttpContext) {
     await User.create(request.body())
 
-    // 👇 You can use standard AdonisJS redirections
+    // 👇 標準のAdonisJSのリダイレクトを使用できます
     return response.redirect().toRoute('users.index')
   }
 
   async externalRedirect({ inertia }: HttpContext) {
-    // 👇 Or use the inertia.location for external redirects
+    // 👇 または、inertia.locationを使用して外部リダイレクトを行うこともできます
     return inertia.location('https://adonisjs.com')
   }
 }
 ```
 
-See the [official documentation](https://inertiajs.com/redirects) for more information.
+詳細については、[公式ドキュメント](https://inertiajs.com/redirects)を参照してください。
 
-## Sharing data with all views
+## すべてのビューでデータを共有する
 
-Sometimes, you may need to share the same data across multiple views. For instance, we are sharing the current user information with all views. Having to do this for every controller can become tedious. Fortunately, we have two solutions for this issue.
+複数のビューで同じデータを共有する必要がある場合があります。たとえば、現在のユーザー情報をすべてのビューで共有する必要がある場合があります。各コントローラでこれを行うのは手間がかかる場合があります。幸いなことに、この問題に対してはいくつかの解決策があります。
 
 ### `sharedData` 
 
-In the `config/inertia.ts` file, you can define a `sharedData` object. This object allows you to define data that should be shared with all views.
+`config/inertia.ts`ファイルで`sharedData`オブジェクトを定義できます。このオブジェクトは、すべてのビューで共有するデータを定義するために使用できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
 
 export default defineConfig({
   sharedData: {
-    // 👇 This will be available in all views
+    // 👇 すべてのビューで使用できます
     appName: 'My App' ,
-    // 👇 Scoped to the current request
+    // 👇 現在のリクエストに対してスコープが限定されます
     user: (ctx) => ctx.auth?.user, 
-    // 👇 Scoped to the current request
+    // 👇 現在のリクエストに対してスコープが限定されます
     errors: (ctx) => ctx.session.flashMessages.get('errors'),
   },
 })
 ```
 
-### Share from a middleware
+### ミドルウェアから共有
 
-Sometimes, sharing data from a middleware rather than the `config/inertia.ts` file might be more convenient. You can do so by using the `inertia.share` method :
+ミドルウェアからデータを共有する方が便利な場合もあります。`inertia.share`メソッドを使用してデータを共有できます。
 
 ```ts
 import type { HttpContext } from '@adonisjs/core/http'
@@ -527,38 +525,38 @@ export default class MyMiddleware {
 }
 ```
 
-## Partial reloads & Lazy data evaluation 
+## 部分的な再読み込みと遅延データ評価
 
-First read the [official documentation](https://inertiajs.com/partial-reloads) to understand what partial reloads are and how they work.
+部分的な再読み込みとは何か、そしてそれがどのように機能するかを理解するために、[公式ドキュメント](https://inertiajs.com/partial-reloads)を最初に読んでください。
 
-About lazy data evaluation, here is how it works in AdonisJS :
+AdonisJSにおける遅延データ評価については、次のように機能します：
 
 ```ts
 export default class UsersController {
   async index({ inertia }: HttpContext) {
     return inertia.render('users/index', {
-      // ALWAYS included on first visit.
-      // OPTIONALLY included on partial reloads.
-      // ALWAYS evaluated
+      // 最初の訪問時には常に含まれます。
+      // 部分的な再読み込み時にオプションで含まれます。
+      // 常に評価されます。
       users: await User.all(),
 
-      // ALWAYS included on first visit.
-      // OPTIONALLY included on partial reloads.
-      // ONLY evaluated when needed
+      // 最初の訪問時には常に含まれます。
+      // 部分的な再読み込み時にオプションで含まれます。
+      // 必要な時にのみ評価されます。
       users: () => User.all(),
 
-      // NEVER included on first visit.
-      // OPTIONALLY included on partial reloads.
-      // ONLY evaluated when needed
+      // 最初の訪問時には含まれません。
+      // 部分的な再読み込み時にオプションで含まれます。
+      // 必要な時にのみ評価されます。
       users: inertia.lazy(() => User.all())
     }),
   }
 }
 ```
 
-## Types sharing
+## タイプの共有
 
-Usually, you will want to share the types of the data you are passing to your frontend pages components. A simple way to do this is to use the `InferPageProps` type.
+通常、フロントエンドのページコンポーネントに渡すデータのタイプを共有したいと思うでしょう。これを行うための簡単な方法は、`InferPageProps`型を使用することです。
 
 :::codegroup
 
@@ -583,9 +581,7 @@ import { InferPageProps } from '@adonisjs/inertia/types'
 import type { UsersController } from '../../controllers/users_controller.ts'
 
 export function UsersPage(
-  // 👇 It will be correctly typed based
-  // on what you passed to inertia.render
-  // in your controller
+  // 👇 これにより、コントローラでinertia.renderに渡した内容に基づいて正しく型付けされます
   props: InferPageProps<UsersController, 'index'>
 ) {
   return (
@@ -596,14 +592,14 @@ export function UsersPage(
 
 :::
 
-If you're using Vue, you'll have to manually define each property in your `defineProps`. This is an annoying limitation of Vue, see [this issue](https://github.com/vitejs/vite-plugin-vue/issues/167) for more information.
+Vueを使用している場合、`defineProps`で各プロパティを手動で定義する必要があります。これはVueの面倒な制限です。詳細については、[このissue](https://github.com/vitejs/vite-plugin-vue/issues/167)を参照してください。
 
 ```vue
 <script setup lang="ts">
 import { InferPageProps } from '@adonisjs/inertia'
 
 defineProps<{
-  // 👇 You will have to manually define each prop
+  // 👇 各プロパティを手動で定義する必要があります
   users: InferPageProps<UsersController, 'index'>['users'],
   posts: InferPageProps<PostsController, 'index'>['posts'],
 }>()
@@ -612,19 +608,19 @@ defineProps<{
 ```
 
 
-### Reference Directives
+### リファレンスディレクティブ
 
-Since your Inertia Application is a separate TypeScript project (with its own `tsconfig.json`), you will need to help TypeScript understand some types. Many of our official packages use [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation) to add certain types to your AdonisJS project.
+Inertiaアプリケーションは、独自のTypeScriptプロジェクト（独自の`tsconfig.json`を持つ）であるため、TypeScriptに特定の型を理解させるためにリファレンスディレクティブを使用する必要があります。公式パッケージの多くは、モジュール拡張を使用してAdonisJSプロジェクトに特定の型を追加します。
 
-For example, the `auth` property on the `HttpContext` and its typing will only be available when you import `@adonisjs/auth/initialize_auth_middleware` into your project. Now, the issue is that we don't import this module in our Inertia project, so if you try to infer the page props from a controller that uses `auth`, then you will likely receive a TypeScript error or an invalid type.
+たとえば、`HttpContext`の`auth`プロパティとその型は、`@adonisjs/auth/initialize_auth_middleware`をプロジェクトにインポートすることでのみ利用できます。ただし、Inertiaプロジェクトではこのモジュールをインポートしていないため、`auth`を使用するコントローラからページプロップスを推論しようとすると、TypeScriptエラーまたは無効な型が返される可能性があります。
 
-To resolve this issue, you can use [reference directives](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-path-) to help TypeScript understand certain types. To do this, you need to add the following line in your `inertia/app/app.ts` file:
+この問題を解決するには、リファレンスディレクティブを使用してTypeScriptに特定の型を理解させる必要があります。これを行うには、`inertia/app/app.ts`ファイルに次の行を追加します。
 
 ```ts
 /// <reference path="../../adonisrc.ts" />
 ```
 
-Depending on the types you use, you may need to add other reference directives, such as references to certain configuration files that also use module augmentation.
+使用する型に応じて、モジュール拡張を使用する他の参照ディレクティブを追加する必要がある場合もあります。これには、モジュール拡張を使用する特定の設定ファイルへの参照も含まれます。
 
 ```ts
 /// <reference path="../../adonisrc.ts" />
@@ -632,9 +628,9 @@ Depending on the types you use, you may need to add other reference directives, 
 /// <reference path="../../config/auth.ts" />
 ```
 
-### Type-level Serialization
+### 型レベルのシリアライズ
 
-An important thing to know about `InferPageProps` is that it will "serialize at the type level" the data you pass. For example, if you pass a `Date` object to `inertia.render`, the resulting type from `InferPageProps` will be `string`:
+`InferPageProps`について重要なことは、渡したデータが型レベルでシリアライズされるということです。たとえば、`Date`オブジェクトを`inertia.render`に渡すと、`InferPageProps`からの結果の型は`string`になります。
 
 :::codegroup
 
@@ -665,19 +661,19 @@ export function UsersPage(
 
 :::
 
-This makes total sense, as dates are serialized to string when they are passed over the network in JSON.
+これは、日付がJSONでネットワーク経由で送信される際に文字列にシリアライズされるため、完全に理にかなっています。
 
-### Model Serialization
+### モデルのシリアライズ
 
-Keeping the last point in mind, another important thing to know is that if you pass an AdonisJS model to `inertia.render`, then the resulting type from `InferPageProps` will be a `ModelObject`: a type that contains almost no information. This can be problematic. To solve this issue, you have several options:
+前述のポイントを念頭に置いて、もう1つ重要なことは、AdonisJSモデルを`inertia.render`に渡すと、`InferPageProps`からの結果の型が`ModelObject`になることです。これは、ほとんど情報を含まない型です。これは問題です。この問題を解決するためには、いくつかのオプションがあります。
 
-- Cast your model to a simple object before passing it to `inertia.render`:
-- Use a DTO (Data Transfer Object) system to transform your models into simple objects before passing them to `inertia.render`.
+- `inertia.render`に渡す前にモデルを単純なオブジェクトにキャストする。
+- モデルを単純なオブジェクトに変換するためのDTO（データ転送オブジェクト）システムを使用する。
 
 :::codegroup
 
 ```ts
-// title: Casting
+// title: キャスト
 class UsersController {
   async edit({ inertia, params }: HttpContext) {
     const user = users.serialize() as {
@@ -691,7 +687,7 @@ class UsersController {
 ```
 
 ```ts
-// title: DTOs
+// title: DTO
 class UserDto {
   constructor(private user: User) {}
 
@@ -713,11 +709,11 @@ class UsersController {
 
 :::
 
-You will now have accurate types in your frontend component.
+これで、フロントエンドコンポーネントで正確な型を使用できるようになります。
 
-### Shared Props
+### 共有プロパティ
 
-To have the types of your [shared data](#sharing-data-with-all-views) in your components, ensure you have performed module augmentation in your `config/inertia.ts` file as follows:
+コンポーネント内で[共有データ](#sharing-data-with-all-views)の型を使用するには、`config/inertia.ts`ファイルでモジュール拡張を行っていることを確認してください。
 
 ```ts
 // file: config/inertia.ts
@@ -731,20 +727,19 @@ export default inertiaConfig;
 
 declare module '@adonisjs/inertia/types' {
   export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {
-    // If necessary, you can also manually add some shared props,
-    // such as those shared from a middleware for example
+    // 必要に応じて、ミドルウェアから共有されるプロパティなど、いくつかの共有プロパティを手動で追加することもできます
     propsSharedFromAMiddleware: number;
   }
 }
 ```
 
-Also, make sure to add this [reference directive](#reference-directives) in your `inertia/app/app.ts` file:
+また、`inertia/app/app.ts`ファイルにこの[リファレンスディレクティブ](#reference-directives)を追加することも忘れないでください。
 
 ```ts
 /// <reference path="../../config/inertia.ts" />
 ```
 
-Once this is done, you will have access to your shared props in your components via `InferPageProps`. `InferPageProps` will contain the types of your shared props and the props passed by `inertia.render`:
+これが完了すると、コンポーネント内で共有プロパティにアクセスできるようになります。`InferPageProps`には、共有プロパティの型と`inertia.render`で渡されるプロパティの型が含まれます。
 
 ```tsx
 // file: inertia/pages/users/index.tsx
@@ -761,7 +756,7 @@ export function UsersPage(
 }
 ```
 
-If needed, you can access only the types of your shared props via the `SharedProps` type:
+必要に応じて、`SharedProps`型を使用して共有プロパティの型のみにアクセスすることもできます。
 
 ```tsx
 import type { SharedProps } from '@adonisjs/inertia/types'
@@ -769,21 +764,21 @@ import type { SharedProps } from '@adonisjs/inertia/types'
 const page = usePage<SharedProps>()
 ```
 
-## CSRF 
+## CSRF
 
-If you enabled [CSRF protection](../security/securing_ssr_applications.md#csrf-protection) for your application, enable the `enableXsrfCookie` option in the `config/shield.ts` file.
+アプリケーションで[CSRF保護](../security/securing_ssr_applications.md#csrf-protection)を有効にした場合は、`config/shield.ts`ファイルで`enableXsrfCookie`オプションを有効にする必要があります。
 
-Enabling this option will ensure that the `XSRF-TOKEN` cookie is set on the client side and sent back to the server with every request.
+このオプションを有効にすると、`XSRF-TOKEN`クッキーがクライアント側に設定され、すべてのリクエストと共にサーバーに送信されるようになります。
 
-No additional configuration is needed to make Inertia work with CSRF protection.
+InertiaとCSRF保護を連携させるためには、追加の設定は必要ありません。
 
-## Asset versioning
+## アセットのバージョニング
 
-When re-deploying your application, your users should always get the latest version of your client-side assets. It is something supported out-of-the-box by the Inertia protocol and AdonisJS.
+アプリケーションを再デプロイする際に、ユーザーは常に最新バージョンのクライアントサイドアセットを取得する必要があります。これは、InertiaプロトコルとAdonisJSでデフォルトでサポートされている機能です。
 
-By default, the `@adonisjs/inertia` package will compute a hash for the `public/assets/manifest.json` file and use it as the version of your assets.
+デフォルトでは、`@adonisjs/inertia`パッケージは`public/assets/manifest.json`ファイルのハッシュを計算し、それをアセットのバージョンとして使用します。
 
-If you want to tweak this behavior, you can edit the `config/inertia.ts` file. The `version` prop defines the version of your assets and can be a string or a function.
+この動作をカスタマイズする場合は、`config/inertia.ts`ファイルを編集します。`version`プロパティはアセットのバージョンを定義し、文字列または関数のいずれかを指定できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -793,21 +788,21 @@ export default defineConfig({
 })
 ```
 
-Read the [official documentation](https://inertiajs.com/asset-versioning) for more information.
+詳細については、[公式ドキュメント](https://inertiajs.com/asset-versioning)を参照してください。
 
 ## SSR
 
-### Enabling SSR
+### SSRの有効化
 
-[Inertia Starter Kit](../getting_started/installation.md#starter-kits) comes with server-side rendering (SSR) support out of the box. So make sure to use it if you want to enable SSR for your application. 
+[Inertia Starter Kit](../getting_started/installation.md#starter-kits)には、サーバーサイドレンダリング（SSR）のサポートがデフォルトで組み込まれています。したがって、アプリケーションでSSRを有効にする場合は、それを使用するようにしてください。
 
-If you started your application without enabling SSR, you can always enable it later by following the following steps : 
+SSRを有効にしていないでアプリケーションを開始した場合でも、以下の手順にしたがって後から有効にできます。
 
-#### Adding a server entrypoint
+#### サーバーエントリーポイントの追加
 
-We need to add a server entrypoint that looks super similar to the client entrypoint. This entrypoint will render the first-page visit on the server and not on the browser.
+まず、クライアントエントリーポイントと非常に似たサーバーエントリーポイントを追加する必要があります。このエントリーポイントは、最初のページ訪問をサーバー上でレンダリングし、ブラウザではなくサーバー上で行います。
 
-You must create a `inertia/app/ssr.ts` that default export a function like this :
+`inertia/app/ssr.ts`というファイルを作成し、次のような関数をデフォルトエクスポートしてください。
 
 :::codegroup
 
@@ -887,9 +882,9 @@ export default function render(page: any) {
 ```
 :::
 
-#### Update the config file
+#### 設定ファイルの更新
 
-Head over to the `config/inertia.ts` file and update the `ssr` prop to enable it. Also, point to your server entrypoint if you use a different path.
+`config/inertia.ts`ファイルに移動し、`ssr`プロパティを更新して有効にします。また、別のパスを使用している場合は、サーバーエントリーポイントへのパスを指定してください。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -903,9 +898,9 @@ export default defineConfig({
 })
 ```
 
-#### Update the Vite config
+#### Viteの設定の更新
 
-First, make sure you have registered the `inertia` vite plugin. Once done, you should update the path to the server entrypoint in the `vite.config.ts` file if you use a different path.
+まず、`inertia` viteプラグインを登録していることを確認してください。次に、`vite.config.ts`ファイルでサーバーエントリーポイントへのパスを更新します（別のパスを使用している場合）。
 
 ```ts
 import { defineConfig } from 'vite'
@@ -923,13 +918,13 @@ export default defineConfig({
 })
 ```
 
-You should now be able to render the first-page visit on the server and then continue with the client-side rendering.
+サーバー上で最初のページ訪問をレンダリングし、その後クライアントサイドのレンダリングを続けることができます。
 
-### SSR Allowlist
+### SSRの許可リスト
 
-When using SSR, you may want to not server-side render all your components. For example, you are building an admin dashboard gated by authentication, so these routes have no reason to be rendered on the server. But on the same application, you may have a landing page that could benefit from SSR to improve SEO.
+SSRを使用する場合、すべてのコンポーネントをサーバーサイドでレンダリングする必要はありません。たとえば、認証によって制限された管理ダッシュボードを構築している場合、これらのルートはサーバーでレンダリングする理由はありません。ただし、同じアプリケーションでは、SEOを向上させるためにSSRを活用できるランディングページがあるかもしれません。
 
-So, you can add the pages that should be rendered on the server in the `config/inertia.ts` file.
+したがって、サーバーでレンダリングする必要があるページを`config/inertia.ts`ファイルに追加できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -942,7 +937,7 @@ export default defineConfig({
 })
 ```
 
-You can also pass a function to the `pages` prop to dynamically decide which pages should be rendered on the server.
+また、`pages`プロパティに関数を渡すこともできます。これにより、動的にサーバーでレンダリングするページを決定できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
@@ -955,16 +950,16 @@ export default defineConfig({
 })
 ```
 
-## Testing
+## テスト
 
-There are several ways to test your frontend code:
+フロントエンドコードをテストするためには、いくつかの方法があります。
 
-- End-to-end testing. You can use the [Browser Client](https://docs.adonisjs.com/guides/browser-tests), a seamless integration between Japa and Playwright.
-- Unit testing. We recommend using testing tools adapted for the frontend ecosystem, particularly [Vitest](https://vitest.dev).
+- E2Eテスト。[Browser Client](https://docs.adonisjs.com/guides/browser-tests)を使用して、JapaとPlaywrightをシームレスに統合できます。
+- ユニットテスト。フロントエンドエコシステムに適したテストツールを使用することをおすすめします。特に[Vitest](https://vitest.dev)があります。
 
-And finally, you can also test your Inertia endpoints to ensure they return the correct data. For that, we have a few test helpers available in Japa.
+さらに、正しいデータが返されることを確認するためにInertiaエンドポイントをテストすることもできます。そのためには、Japaで使用できるいくつかのテストヘルパーがあります。
 
-First, make sure to configure the `inertiaApiClient` and `apiClient` plugins in your `test/bootsrap.ts` file if you haven't already done so:
+まず、`test/bootstrap.ts`ファイルで`inertiaApiClient`と`apiClient`プラグインを設定していることを確認してください。
 
 ```ts
 // title: tests/bootstrap.ts
@@ -986,7 +981,7 @@ export const plugins: Config['plugins'] = [
 ]
 ```
 
-Next, we can request our Inertia endpoint using `withInertia()` to ensure the data is correctly returned in JSON format.
+次に、`withInertia()`を使用してInertiaエンドポイントをリクエストし、データが正しくJSON形式で返されることを確認します。
 
 ```ts
 test('returns correct data', async ({ client }) => {
@@ -998,15 +993,15 @@ test('returns correct data', async ({ client }) => {
 })
 ```
 
-Let's take a look at the various assertions available to test your endpoints: 
+エンドポイントをテストするために利用できるさまざまなアサーションを見てみましょう。
 
 ### `withInertia()`
 
-Adds the `X-Inertia` header to the request. It ensures that data is correctly returned in JSON format.
+リクエストに`X-Inertia`ヘッダーを追加します。データが正しくJSON形式で返されることを保証します。
 
 ### `assertInertiaComponent()`
 
-Checks that the component returned by the server is the one expected.
+サーバーが返すコンポーネントが予想どおりであることを確認します。
 
 ```ts
 test('returns correct data', async ({ client }) => {
@@ -1018,7 +1013,7 @@ test('returns correct data', async ({ client }) => {
 
 ### `assertInertiaProps()`
 
-Checks that the props returned by the server are exactly those passed as parameters.
+サーバーが返すプロパティが、パラメータとして渡されたものと完全に一致することを確認します。
 
 ```ts
 test('returns correct data', async ({ client }) => {
@@ -1030,7 +1025,7 @@ test('returns correct data', async ({ client }) => {
 
 ### `assertInertiaPropsContains()`
 
-Checks that the props returned by the server contain some of the props passed as parameters. It uses [`containsSubset`](https://japa.dev/docs/plugins/assert#containssubset) under the hood.
+サーバーが返すプロパティが、パラメータとして渡されたものの一部を含んでいることを確認します。
 
 ```ts
 test('returns correct data', async ({ client }) => {
@@ -1040,29 +1035,29 @@ test('returns correct data', async ({ client }) => {
 })
 ```
 
-### Additional properties
+### 追加のプロパティ
 
-In addition to this, you can access the following properties on `ApiResponse` :
+これらのアサーションに加えて、`ApiResponse`オブジェクトで以下のプロパティにアクセスできます。
 
 ```ts
 test('returns correct data', async ({ client }) => {
   const { body } = await client.get('/home').withInertia()
 
-  // 👇 The component returned by the server
+  // サーバーが返すコンポーネント
   console.log(response.inertiaComponent) 
 
-  // 👇 The props returned by the server
+  // サーバーが返すプロパティ
   console.log(response.inertiaProps)
 })
 ```
 
 ## FAQ
 
-### Why my server is constantly reloading when updating my frontend code?
+### フロントエンドコードを更新すると、サーバーが常にリロードされるのはなぜですか？
 
-Let's say you are using React. Every time you update your frontend code, the server will reload and the browser will refresh. You are not benefiting from the hot module replacement (HMR) feature. 
+Reactを使用していると仮定しましょう。フロントエンドコードを更新するたびに、サーバーがリロードされ、ブラウザがリフレッシュされます。ホットモジュールリプレースメント（HMR）の機能を活用できていません。
 
-You need to exclude `inertia/**/*` from your root `tsconfig.json` file to make it work. 
+これを解決するには、ルートの`tsconfig.json`ファイルから`inertia/**/*`を除外する必要があります。
 
 ```jsonc
 {
@@ -1073,25 +1068,25 @@ You need to exclude `inertia/**/*` from your root `tsconfig.json` file to make i
 }
 ```
 
-Because, the AdonisJS process that is responsible for restarting the server is watching files included in the `tsconfig.json` file.
+なぜなら、サーバーの再起動を担当するAdonisJSプロセスは、`tsconfig.json`ファイルに含まれるファイルを監視しているからです。
 
-### Why my production build is not working ?
+### プロダクションビルドが機能しないのはなぜですか？
 
-If you are facing an error like this one:
+次のようなエラーが発生している場合：
 
 ```
 X [ERROR] Failed to load url inertia/app/ssr.ts (resolved id: inertia/app/ssr.ts). Does the file exist?
 ```
 
-A common issue is that you just forgot to set `NODE_ENV=production` when running your production build.
+一般的な問題は、プロダクションビルドを実行する際に`NODE_ENV=production`を設定し忘れていることです。
 
 ```shell
 NODE_ENV=production node build/server.js
 ```
 
-### `Top-level await is not available...`
+### `Top-level await is not available...`というエラーが発生します。
 
-If you are facing an error like this one:
+次のようなエラーが発生している場合：
 
 ```
 X [ERROR] Top-level await is not available in the configured target environment ("chrome87", "edge88", "es2020", "firefox78", "safari14" + 2 overrides)
@@ -1101,14 +1096,14 @@ X [ERROR] Top-level await is not available in the configured target environment 
          ╵ ~~~~~
 ```
 
-Then it's highly likely that you're importing backend code into your frontend. Taking a closer look at the error, which is generated by Vite, we see that it's trying to compile code from `node_modules/@adonisjs/core`. So, this means our backend code will end up in the frontend bundle. That's probably not what you want.
+おそらく、バックエンドのコードをフロントエンドにインポートしているためです。エラーメッセージをよく見ると、Viteによって生成されたエラーであることがわかります。Viteは、`node_modules/@adonisjs/core`からコードをコンパイルしようとしています。したがって、バックエンドのコードがフロントエンドのバンドルに含まれることになります。これはおそらく望ましくない状況です。
 
-Generally, this error occurs when you try to share a type with your frontend. If this what you are trying to achieve, make sure to always import this type only via `import type` rather than `import`:
+一般的に、このエラーは、フロントエンドで型を共有しようとしている場合に発生します。これを実現したい場合は、常に`import type`を使用してこの型をインポートするようにしてください。
 
 ```ts
-// ✅ Correct
+// ✅ 正しい
 import type { User } from '#models/user'
 
-// ❌ Incorrect
+// ❌ 間違っている
 import { User } from '#models/user'
-``
+```

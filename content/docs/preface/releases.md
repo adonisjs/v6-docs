@@ -1,5 +1,5 @@
 ---
-summary: Notable changes and new features in AdonisJS releases
+summary: AdonisJSのリリースでの注目すべき変更と新機能
 ---
 
 ::include{template="partials/releases"}

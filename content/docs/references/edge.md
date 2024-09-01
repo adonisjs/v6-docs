@@ -1,13 +1,13 @@
 ---
-summary: Learn about the helpers and tags contributed by the AdonisJS official packages to the Edge templating engine.
+summary: AdonisJS 公式パッケージによって提供される Edge テンプレートエンジンへのヘルパーとタグについて学びましょう。
 ---
 
-# Edge helpers and tags
+# Edge ヘルパーとタグ
 
-In this guide, we will learn about the **helpers and the tags** contributed to Edge by the AdonisJS official packages. The helpers shipped with Edge are not covered in this guide and must reference [Edge](https://edgejs.dev/docs/helpers) documentation for the same.
+このガイドでは、AdonisJS公式パッケージによってEdgeに貢献された **ヘルパーとタグ** について学びます。Edgeに同梱されているヘルパーについては、このガイドではカバーされていませんので、同じものについては [Edge](https://edgejs.dev/docs/helpers) のドキュメントを参照してください。
 
 ## request
-Reference to the instance of ongoing [HTTP request](../basics/request.md). The property is only available when a template is rendered using the `ctx.view.render` method.
+進行中の [HTTP リクエスト](../basics/request.md) のインスタンスへの参照です。このプロパティは、`ctx.view.render` メソッドを使用してテンプレートをレンダリングする場合にのみ利用できます。
 
 ```edge
 {{ request.url() }}
@@ -15,30 +15,30 @@ Reference to the instance of ongoing [HTTP request](../basics/request.md). The p
 ```
 
 ## route/signedRoute
-Helper functions to create URL for a route using the [URL builder](../basics/routing.md#url-builder). Unlike the URL builder, the view helpers do not have a fluent API and accept the following parameters.
+[URL ビルダー](../basics/routing.md#url-builder) を使用してルートのURLを作成するためのヘルパー関数です。URLビルダーとは異なり、ビューヘルパーにはフルエントAPIはありません。以下のパラメータを受け入れます。
 
 <table>
     <tr>
-        <td>Position</td>
-        <td>Description</td>
+        <td>位置</td>
+        <td>説明</td>
     </tr>
     <tr>
-        <td>1st</td>
-        <td>The route identifier or the route pattern</td>
+        <td>1番目</td>
+        <td>ルート識別子またはルートパターン</td>
     </tr>
     <tr>
-        <td>2nd</td>
-        <td>Route params are defined as an array or an object.</td>
+        <td>2番目</td>
+        <td>ルートパラメータは配列またはオブジェクトとして定義されます。</td>
     </tr>
     <tr>
-        <td>3rd</td>
+        <td>3番目</td>
         <td>
-          <p>The options object with the following properties.</p>
+          <p>以下のプロパティを持つオプションオブジェクト。</p>
           <ul>
-            <li><code>qs</code>: Define query string parameters as an object.</li>
-            <li><code>domain</code>: Search for routes under a specific domain.</li>
-            <li><code>prefixUrl</code>: Prefix a URL to the output.</li>
-            <li><code>disableRouteLookup</code>: Enable/disable routes lookup.</li>
+            <li><code>qs</code>: クエリ文字列パラメータをオブジェクトとして定義します。</li>
+            <li><code>domain</code>: 特定のドメインの下でルートを検索します。</li>
+            <li><code>prefixUrl</code>: 出力に URL をプレフィックスします。</li>
+            <li><code>disableRouteLookup</code>: ルートの検索を有効化/無効化します。</li>
           </ul>
         </td>
     </tr>
@@ -46,7 +46,7 @@ Helper functions to create URL for a route using the [URL builder](../basics/rou
 
 ```edge
 <a href="{{ route('posts.show', [post.id]) }}">
-  View post
+  投稿を表示
 </a>
 ```
 
@@ -57,37 +57,37 @@ Helper functions to create URL for a route using the [URL builder](../basics/rou
     prefixUrl: 'https://blog.adonisjs.com'    
   })
 }}">
- Unsubscribe
+  退会する
 </a>
 ```
 
 ## app
-Reference to the [Application instance](../concepts/application.md).
+[Application インスタンス](../concepts/application.md) への参照です。
 
 ```edge
 {{ app.getEnvironment() }}
 ```
 
 ## config
-A [helper function](../getting_started/configuration.md#reading-config-inside-edge-templates) to reference configuration values inside Edge templates. You may use the `config.has` method to check if the value for a key exists.
+Edgeテンプレート内で設定値を参照するための [ヘルパー関数](../getting_started/configuration.md#reading-config-inside-edge-templates) です。`config.has` メソッドを使用してキーの値が存在するかどうかを確認できます。
 
 ```edge
 @if(config.has('app.appUrl'))
-  <a href="{{ config('app.appUrl') }}"> Home </a>
+  <a href="{{ config('app.appUrl') }}"> ホーム </a>
 @else
-  <a href="/"> Home </a>
+  <a href="/"> ホーム </a>
 @end
 ```
 
 ## session
-A read-only copy of the [session object](../basics/session.md#reading-and-writing-data). You cannot mutate session data within Edge templates. The `session` property is only available when the template is rendered using the `ctx.view.render` method.
+[セッションオブジェクト](../basics/session.md#reading-and-writing-data) の読み取り専用コピーです。Edgeテンプレート内ではセッションデータを変更することはできません。`session` プロパティは、`ctx.view.render` メソッドを使用してテンプレートをレンダリングする場合にのみ利用できます。
 
 ```edge
-Post views: {{ session.get(`post.${post.id}.visits`) }}
+投稿の閲覧数: {{ session.get(`post.${post.id}.visits`) }}
 ```
 
 ## flashMessages
-A read-only copy of [session flash messages](../basics/session.md#flash-messages). The `flashMessages` property is only available when the template is rendered using the `ctx.view.render` method.
+[セッションフラッシュメッセージ](../basics/session.md#flash-messages) の読み取り専用コピーです。`flashMessages` プロパティは、`ctx.view.render` メソッドを使用してテンプレートをレンダリングする場合にのみ利用できます。
 
 ```edge
 @if(flashMessages.has('inputErrorsBag.title'))
@@ -102,7 +102,7 @@ A read-only copy of [session flash messages](../basics/session.md#flash-messages
 ```
 
 ## old
-The `old` method is a shorthand for the `flashMessages.get` method.
+`old` メソッドは `flashMessages.get` メソッドの省略形です。
 
 ```edge
 <input
@@ -113,21 +113,21 @@ The `old` method is a shorthand for the `flashMessages.get` method.
 ```
 
 ## t
-The `t` method is contributed by the `@adonisjs/i18n` package to display translations using the [i18n class](../digging_deeper/i18n.md#resolving-translations). The method accepts the translation key identifier, message data and a fallback message as the parameters.
+`@adonisjs/i18n` パッケージによって提供される `t` メソッドは、[i18n クラス](../digging_deeper/i18n.md#resolving-translations) を使用して翻訳を表示するためのものです。このメソッドは、翻訳キーの識別子、メッセージデータ、およびフォールバックメッセージをパラメータとして受け入れます。
 
 ```edge
 <h1> {{ t('messages.greeting') }} </h1>
 ```
 
 ## i18n
-Reference to an instance of the I18n class configured using the application's default locale. However, the [`DetectUserLocaleMiddleware`](../digging_deeper/i18n.md#detecting-user-locale-during-an-http-request) overrides this property with an instance created for the current HTTP request locale.
+アプリケーションのデフォルトロケールで構成されたI18nクラスのインスタンスへの参照です。ただし、[`DetectUserLocaleMiddleware`](../digging_deeper/i18n.md#detecting-user-locale-during-an-http-request) は、現在のHTTPリクエストのロケール用に作成されたインスタンスでこのプロパティをオーバーライドします。
 
 ```edge
 {{ i18n.formatCurrency(200, { currency: 'USD' }) }}
 ```
 
 ## auth
-Reference to the [ctx.auth](../concepts/http_context.md#http-context-properties) property shared by the [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/main/src/auth/middleware/initialize_auth_middleware.ts#L14). You may use this property to access information about the logged-in user.
+[InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/main/src/auth/middleware/initialize_auth_middleware.ts#L14) によって共有される [ctx.auth](../concepts/http_context.md#http-context-properties) プロパティへの参照です。このプロパティを使用して、ログインユーザーに関する情報にアクセスできます。
 
 ```edge
 @if(auth.isAuthenticated)
@@ -135,10 +135,10 @@ Reference to the [ctx.auth](../concepts/http_context.md#http-context-properties)
 @end
 ```
 
-If you are displaying the logged-in user info on a public page (not protected by the auth middleware), then you may want to first silently check if the user is logged-in or not.
+ログインユーザーの情報を公開ページ（認証ミドルウェアで保護されていない）で表示する場合は、まずユーザーがログインしているかどうかをサイレントにチェックすることをオススメします。
 
 ```edge
-{{-- Check if user is logged-in --}}
+{{-- ユーザーがログインしているかどうかをチェック --}}
 @eval(await auth.use('web').check())
 
 @if(auth.use('web').isAuthenticated)
@@ -147,14 +147,14 @@ If you are displaying the logged-in user info on a public page (not protected by
 ```
 
 ## asset
-Resolve the URL of an asset processed by Vite. Learn more about [referencing assets inside Edge templates](../basics/vite.md#referencing-assets-inside-edge-templates).
+Viteによって処理されたアセットのURLを解決します。Edgeテンプレート内で [アセットの参照](../basics/vite.md#referencing-assets-inside-edge-templates) について詳しく学びましょう。
 
 ```edge
 <img src="{{ asset('resources/images/hero.jpg') }}" />
 ```
 
 ## embedImage / embedImageData
-The `embedImage` and the `embedImageData` helpers are added by the [mail](../digging_deeper/mail.md#embedding-images) package and are only available when rendering a template to send an email.
+`embedImage` と `embedImageData` ヘルパーは [mail](../digging_deeper/mail.md#embedding-images) パッケージによって追加され、メールを送信するためにテンプレートをレンダリングする場合にのみ利用できます。
 
 ```edge
 <img src="{{
@@ -163,10 +163,10 @@ The `embedImage` and the `embedImageData` helpers are added by the [mail](../dig
 ```
 
 ## @flashMessage
-The `@flashMessage` tag provides a better DX for reading flash messages for a given key conditionally.
+`@flashMessage` タグは、特定のキーに基づいて条件付きでフラッシュメッセージを読み取るためのより良いDXを提供します。
 
 :::caption{for="error"}
-**Instead of writing conditionals**
+**条件文を書く代わりに**
 :::
 
 ```edge
@@ -178,7 +178,7 @@ The `@flashMessage` tag provides a better DX for reading flash messages for a gi
 ```
 
 :::caption{for="success"}
-**You may prefer using the tag**
+**タグを使用することをオススメします**
 :::
 
 ```edge
@@ -190,10 +190,10 @@ The `@flashMessage` tag provides a better DX for reading flash messages for a gi
 ```
 
 ## @error
-The `@error` tag provides a better DX for reading error messages stored inside the `errorsBag` key in `flashMessages`.
+`@error` タグは、`flashMessages` の `errorsBag` キーに格納されたエラーメッセージを読み取るためのより良いDXを提供します。
 
 :::caption{for="error"}
-**Instead of writing conditionals**
+**条件文を書く代わりに**
 :::
 
 ```edge
@@ -203,7 +203,7 @@ The `@error` tag provides a better DX for reading error messages stored inside t
 ```
 
 :::caption{for="success"}
-**You may prefer using the tag**
+**タグを使用することをオススメします**
 :::
 
 ```edge
@@ -213,10 +213,10 @@ The `@error` tag provides a better DX for reading error messages stored inside t
 ```
 
 ## @inputError
-The `@inputError` tag provides a better DX for reading validation error messages stored inside the `inputErrorsBag` key in `flashMessages`.
+`@inputError` タグは、`flashMessages` の `inputErrorsBag` キーに格納されたバリデーションエラーメッセージを読み取るためのより良いDXを提供します。
 
 :::caption{for="error"}
-**Instead of writing conditionals**
+**条件文を書く代わりに**
 :::
 
 ```edge
@@ -228,7 +228,7 @@ The `@inputError` tag provides a better DX for reading validation error messages
 ```
 
 :::caption{for="success"}
-**You may prefer using the tag**
+**タグを使用することをオススメします**
 :::
 
 ```edge
@@ -240,7 +240,7 @@ The `@inputError` tag provides a better DX for reading validation error messages
 ```
 
 ## @vite
-The `@vite` tag accepts an array of entry point paths and returns the `script` and the `link` tags for the same. The path you provide to the `@vite` tag should match exactly the path registered inside the `vite.config.js` file.
+`@vite` タグは、エントリーポイントのパスの配列を受け入れ、それに対応する `script` タグと `link` タグを返します。`@vite` タグに指定するパスは、`vite.config.js` ファイルに登録されているパスと完全に一致する必要があります。
 
 ```ts
 export default defineConfig({
@@ -258,7 +258,7 @@ export default defineConfig({
 @vite(['resources/js/app.js'])
 ```
 
-You can define the script tag attributes as the 2nd argument. For example:
+2番目の引数としてスクリプトタグの属性を定義することもできます。例:
 
 ```edge
 @vite(['resources/js/app.js'], {
@@ -267,13 +267,13 @@ You can define the script tag attributes as the 2nd argument. For example:
 ```
 
 ## @viteReactRefresh
-The `@viteReactRefresh` tag returns a [script tag to enable React HMR](https://vitejs.dev/guide/backend-integration.html#:~:text=you%27ll%20also%20need%20to%20add%20this%20before%20the%20above%20scripts) for project using the [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react) package.
+`@viteReactRefresh` タグは、[@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react) パッケージを使用しているプロジェクトに対して [React HMR を有効にするためのスクリプトタグ](https://vitejs.dev/guide/backend-integration.html#:~:text=you%27ll%20also%20need%20to%20add%20this%20before%20the%20above%20scripts) を返します。
 
 ```edge
 @viteReactRefresh()
 ```
 
-Output HTML
+出力されるHTML
 
 ```html
 <script type="module">
@@ -286,28 +286,28 @@ Output HTML
 ```
 
 ## @can/@cannot
-The `@can` and `@cannot` tags allows you write authorization checks in Edge templates by referencing the ability name or the policy name as a string.
+`@can` および `@cannot` タグを使用すると、文字列として能力名またはポリシー名を参照することで、Edgeテンプレート内で認可チェックを行うことができます。
 
-The first argument is the ability or the policy reference followed by the arguments accepted by the check.
+最初の引数は能力またはポリシーの参照であり、それに続く引数はチェックで受け入れられる引数です。
 
-See also: [Pre-registering abilities and policies](../security/authorization.md#pre-registering-abilities-and-policies)
+参考: [能力とポリシーの事前登録](../security/authorization.md#pre-registering-abilities-and-policies)
 
 ```edge
 @can('editPost', post)
-  {{-- Can edit post --}}
+  {{-- 投稿を編集できます。 --}}
 @end
 
 @can('PostPolicy.edit', post)
-  {{-- Can edit post --}}
+  {{-- 投稿を編集できます。 --}}
 @end
 ```
 
 ```edge
 @cannot('editPost', post)
-  {{-- Cannot edit post --}}
+  {{-- 投稿を編集できません。 --}}
 @end
 
 @cannot('editPost', post)
-  {{-- Cannot edit post --}}
+  {{-- 投稿を編集できません。 --}}
 @end
 ```

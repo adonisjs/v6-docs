@@ -1,23 +1,23 @@
 ---
-summary: Learn how to use the access tokens guard to authenticate HTTP requests using access tokens.
+summary: アクセストークンガードを使用して、アクセストークンを使用してHTTPリクエストを認証する方法を学びます。
 ---
 
-# Access tokens guard
-Access tokens authenticate HTTP requests in API contexts where the server cannot persist cookies on the end-user device, for example, third-party access to an API or authentication for a mobile app.
+# アクセストークンガード
+アクセストークンガードは、エンドユーザデバイスにクッキーを永続化できないAPIコンテキストで、HTTPリクエストを認証します。例えば、APIへのサードパーティのアクセスやモバイルアプリの認証などです。
 
-Access tokens can be generated in any format; for instance, the tokens that conform to the JWT standard are known as JWT access tokens, and tokens in a proprietary format are known as opaque access tokens.
+アクセストークンは任意の形式で生成できます。たとえば、JWT標準に準拠したトークンはJWTアクセストークンと呼ばれ、プロプライエタリな形式のトークンは不透明なアクセストークンと呼ばれます。
 
-AdonisJS uses opaque access tokens that are structured and stored as follows.
+AdonisJSでは、次のように構造化され、保存される不透明なアクセストークンを使用しています。
 
-- A token is represented by a cryptographically secure random value suffixed with a CRC32 checksum.
-- A hash of the token value is persisted in the database. This hash is used to verify the token at the time of authentication.
-- The final token value is base64 encoded and prefixed with `oat_`. The prefix can be customized.
-- The prefix and the CRC32 checksum suffix help [secret scanning tools](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) identify a token and prevent them from leaking inside a codebase. 
+- トークンは、CRC32チェックサムで終わる暗号的に安全なランダムな値で表されます。
+- トークン値のハッシュはデータベースに永続化されます。このハッシュは認証時にトークンを検証するために使用されます。
+- 最終的なトークン値はbase64エンコードされ、`oat_`で接頭辞が付けられます。接頭辞はカスタマイズ可能です。
+- 接頭辞とCRC32チェックサムの接尾辞は、[シークレットスキャンツール](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning)がトークンを識別し、コードベース内での漏洩を防止するのに役立ちます。
 
-## Configuring the user model
-Before using the access tokens guard, you must set up a tokens provider with the User model. **The tokens provider is used to create, list, and verify access tokens**.
+## ユーザーモデルの設定
+アクセストークンガードを使用する前に、ユーザーモデルにトークンプロバイダを設定する必要があります。**トークンプロバイダは、アクセストークンの作成、リスト、および検証に使用されます**。
 
-The auth package comes with a database tokens provider, which persists tokens inside an SQL database. You can configure it as follows.
+authパッケージには、トークンをSQLデータベースに永続化するデータベーストークンプロバイダが付属しています。次のように設定できます。
 
 ```ts
 import { BaseModel } from '@adonisjs/lucid/orm'
@@ -26,7 +26,7 @@ import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 // highlight-end
 
 export default class User extends BaseModel {
-  // ...rest of the model properties
+  // ...モデルの残りのプロパティ
 
   // highlight-start
   static accessTokens = DbAccessTokensProvider.forModel(User)
@@ -34,11 +34,11 @@ export default class User extends BaseModel {
 }
 ```
 
-The `DbAccessTokensProvider.forModel` accepts the User model as the first argument and an options object as the second argument.
+`DbAccessTokensProvider.forModel`は、最初の引数としてUserモデル、2番目の引数としてオプションオブジェクトを受け入れます。
 
 ```ts
 export default class User extends BaseModel {
-  // ...rest of the model properties
+  // ...モデルの残りのプロパティ
 
   static accessTokens = DbAccessTokensProvider.forModel(User, {
     expiresIn: '30 days',
@@ -60,9 +60,9 @@ expiresIn
 
 <dd>
 
-The duration after which the token will expire. You can pass a numeric value in seconds or a [time expression](https://github.com/poppinss/utils?tab=readme-ov-file#secondsparseformat) as a string.
+トークンの有効期限。秒単位の数値または[時間表現](https://github.com/poppinss/utils?tab=readme-ov-file#secondsparseformat)の文字列を渡すことができます。
 
-By default, tokens are long-lived and do not expire. Also, you can specify the expiry of a token at the time it is generated.
+デフォルトでは、トークンは長寿命で期限切れになりません。また、トークンの有効期限は生成時に指定することもできます。
 
 </dd>
 
@@ -74,11 +74,11 @@ prefix
 
 <dd>
 
-The prefix for the publicly shared token value. Defining a prefix helps [secret scanning tools](https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/#identifiable-prefixes) identify a token and prevent it from leaking inside the codebases.
+公開共有トークン値の接頭辞。接頭辞を定義することで、[シークレットスキャンツール](https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/#identifiable-prefixes)がトークンを識別し、コードベース内での漏洩を防止できます。
 
-Changing the prefix after issuing tokens will make them invalid. Therefore, choose the prefix carefully and do not change them often.
+トークンを発行したあとで接頭辞を変更すると、トークンは無効になります。したがって、接頭辞を慎重に選択し、頻繁に変更しないでください。
 
-Defaults to `oat_`.
+デフォルトは`oat_`です。
 
 </dd>
 
@@ -90,7 +90,7 @@ table
 
 <dd>
 
-The database table name for storing the access tokens. Defaults to `auth_access_tokens`. 
+アクセストークンを保存するためのデータベーステーブル名。デフォルトは`auth_access_tokens`です。
 
 </dd>
 
@@ -102,9 +102,9 @@ type
 
 <dd>
 
-A unique type to identify a bucket of tokens. If you issue multiple types of tokens within a single application, you must define a unique type for all of them.
+トークンのバケットを識別するための一意のタイプ。単一のアプリケーション内で複数のタイプのトークンを発行する場合、それぞれに一意のタイプを定義する必要があります。
 
-Defaults to `auth_token`.
+デフォルトは`auth_token`です。
 
 </dd>
 
@@ -116,7 +116,7 @@ tokenSecretLength
 
 <dd>
 
-The length (in characters) of the random token value. Defaults to `40`.
+ランダムなトークン値の長さ（文字数）。デフォルトは`40`です。
 
 </dd>
 
@@ -124,18 +124,18 @@ The length (in characters) of the random token value. Defaults to `40`.
 
 ---
 
-Once you have configured a token provider, you can start [issuing tokens](#issuing-a-token) on behalf of a user. You do not have to set up an authentication guard for issuing tokens. The guard is needed to verify tokens.
+トークンプロバイダを設定したら、ユーザーの代わりに[トークンを発行](#issuing-a-token)できます。トークンを発行するためには、トークンの発行には認証ガードの設定は必要ありません。ガードはトークンを検証するために必要です。
 
-## Creating the access tokens database table
-We create the migration file for the `auth_access_tokens` table during the initial setup. The migration file is stored inside the `database/migrations` directory.
+## アクセストークンデータベーステーブルの作成
+初期設定時に`auth_access_tokens`テーブルのマイグレーションファイルを作成します。マイグレーションファイルは`database/migrations`ディレクトリに保存されます。
 
-You may create the database table by executing the `migration:run` command.
+`migration:run`コマンドを実行してデータベーステーブルを作成できます。
 
 ```sh
 node ace migration:run
 ```
 
-However, if you are configuring the auth package manually for some reason, you can create a migration file manually and copy-paste the following code snippet inside it.
+ただし、何らかの理由でauthパッケージを手動で設定している場合は、マイグレーションファイルを手動で作成し、次のコードスニペットをコピーして貼り付けることもできます。
 
 ```sh
 node ace make:migration auth_access_tokens
@@ -175,14 +175,14 @@ export default class extends BaseSchema {
 }
 ```
 
-## Issuing tokens
-Depending upon your application, you might issue a token during login or after login from the application dashboard. In either case, issuing a token requires a user object (for whom the token will be generated), and you can generate them directly using the `User` model.
+## トークンの発行
+アプリケーションに応じて、ログイン時またはログイン後にトークンを発行する場合があります。いずれの場合でも、トークンを発行するためにはユーザーオブジェクト（トークンが生成されるユーザー）が必要であり、`User`モデルを直接使用して生成できます。
 
-In the following example, we **find a user by id** and **issue them an access token** using the `User.accessTokens.create` method. Of course, in a real-world application, you will have this endpoint guarded by authentication, but let's keep it simple for now.
+次の例では、**idでユーザーを検索**し、`User.accessTokens.create`メソッドを使用してアクセストークンを発行しています。もちろん、実際のアプリケーションでは、このエンドポイントは認証によって保護されているでしょうが、今はシンプルにしておきましょう。
 
-The `.create` method accepts an instance of the User model and returns an instance of the [AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts) class. 
+`.create`メソッドはUserモデルのインスタンスを受け入れ、[AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts)クラスのインスタンスを返します。
 
-The `token.value` property contains the value (wrapped as a [Secret](../references/helpers.md#secret)) that must be shared with the user. The value is only available when generating the token, and the user will not be able to see it again.
+`token.value`プロパティには、ユーザーと共有する必要のある値（[Secret](../references/helpers.md#secret)としてラップされた値）が含まれています。この値はトークンを生成する際にのみ利用可能であり、ユーザーはそれを再度見ることはできません。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -199,7 +199,7 @@ router.post('users/:id/tokens', ({ params }) => {
 })
 ```
 
-You can also return the `token` directly in response, which will be serialized to the following JSON object.
+また、レスポンスで`token`を直接返すこともできます。これにより、次のJSONオブジェクトにシリアル化されます。
 
 ```ts
 router.post('users/:id/tokens', ({ params }) => {
@@ -226,32 +226,32 @@ router.post('users/:id/tokens', ({ params }) => {
  */
 ```
 
-### Defining abilities
-Depending upon the application you are building, you might want to limit access tokens to only perform specific tasks. For example, issue a token that allows reading and listing projects without creating or deleting them.
+### アビリティの定義
+構築中のアプリケーションに応じて、アクセストークンを特定のタスクのみに制限したい場合があります。たとえば、プロジェクトの作成や削除なしで読み取りやリストのみを許可するトークンを発行する場合です。
 
-In the following example, we define an array of abilities as the second parameter. The abilities are serialized to a JSON string and persisted inside the database.
+次の例では、2番目のパラメータとしてアビリティの配列を定義しています。アビリティはJSON文字列にシリアル化され、データベース内に保存されます。
 
-For the auth package, the abilities have no real meaning. It is up to your application to check for token abilities before performing a given action.
+authパッケージでは、アビリティには実際の意味はありません。アクションを実行する前に、アプリケーションがトークンのアビリティをチェックする必要があります。
 
 ```ts
 await User.accessTokens.create(user, ['server:create', 'server:read'])
 ```
 
-### Token abilities vs. Bouncer abilities
+### トークンアビリティとBouncerアビリティの比較
 
-You should not confuse token abilities with [bouncer authorization checks](../security/authorization.md#defining-abilities). Let's try to understand the difference with a practical example.
+トークンアビリティと[bouncerの認可チェック](../security/authorization.md#defining-abilities)を混同しないでください。実際の例を使用して、その違いを理解しましょう。
 
-- Let's say you define a **bouncer ability that allows admin users to create new projects**.
+- 管理者ユーザーが新しいプロジェクトを作成できるようにする**bouncerアビリティを定義**します。
 
-- The same admin user creates a token for themselves, but to prevent token abuse, they limit the token abilities to **read projects**.
+- 同じ管理者ユーザーが自分自身のためにトークンを作成しますが、トークンの乱用を防ぐために、トークンのアビリティを**プロジェクトの読み取り**に制限します。
 
-- Now, within your application, you will have to implement access control, which allows the admin users to create new projects while disallowing the token from creating new projects.
+- さて、アプリケーション内でアクセス制御を実装する必要があります。これにより、管理者ユーザーは新しいプロジェクトを作成できる一方、トークンは新しいプロジェクトの作成を許可されません。
 
-You can write a bouncer ability for this use case as follows.
+このようなユースケースのために、次のようなbouncerアビリティを作成できます。
 
 :::note
 
-The `user.currentAccessToken` refers to the access token used for authentication during the current HTTP request. You can learn more about it inside the [authenticating requests](#the-current-access-token) section.
+`user.currentAccessToken`は、現在のHTTPリクエストの認証に使用されるアクセストークンを参照します。詳細については、[リクエストの認証](#the-current-access-token)セクションを参照してください。
 
 :::
 
@@ -262,40 +262,39 @@ import { Bouncer } from '@adonisjs/bouncer'
 export const createProject = Bouncer.ability(
   (user: User & { currentAccessToken?: AccessToken }) => {
     /**
-     * If there is no "currentAccessToken" token property, it means
-     * the user authenticated without an access token
+     * "currentAccessToken"トークンプロパティが存在しない場合、
+     * ユーザーはアクセストークンなしで認証されたことを意味します
      */
     if (!user.currentAccessToken) {
       return user.isAdmin
     }
 
     /**
-     * Otherwise, check the user isAdmin and the token they
-     * used for authentication allows "project:create"
-     * ability.
+     * それ以外の場合、ユーザーがisAdminであり、
+     * 認証に使用されたトークンが"project:create"アビリティを許可しているかどうかを確認します。
      */
     return user.isAdmin && user.currentAccessToken.allows('project:create')
   }
 )
 ```
 
-### Expiring tokens
-By default, the tokens are long-lived, and they never expire. However, you define the expiration at the time of [configuring the tokens provider](#configuring-the-user-model) or when generating a token.
+### トークンの有効期限
+デフォルトでは、トークンは長寿命で期限切れになりません。ただし、トークンプロバイダの設定時またはトークンの生成時に有効期限を定義できます。
 
-The expiry can be defined as a numeric value representing seconds or a string-based time expression.
+有効期限は、秒単位の数値または文字列形式の時間表現として定義できます。
 
 ```ts
 await User.accessTokens.create(
-  user, // for user
-  ['*'], // with all abilities
+  user, // ユーザー
+  ['*'], // すべてのアビリティを持つ
   {
-    expiresIn: '30 days' // expires in 30 days
+    expiresIn: '30 days' // 30日後に期限切れになる
   }
 )
 ```
 
-### Naming tokens
-By default, the tokens are not named. However, you can assign them a name when generating the token. For example, if you allow the users of your application to self-generate tokens, you may ask them also to specify a recognizable name.
+### トークンの名前付け
+デフォルトでは、トークンには名前がありません。ただし、トークンを生成する際に名前を割り当てることもできます。たとえば、アプリケーションのユーザーがトークンを自己生成できる場合、認識しやすい名前も指定するように求めることができます。
 
 ```ts
 await User.accessTokens.create(
@@ -308,8 +307,8 @@ await User.accessTokens.create(
 )
 ```
 
-## Configuring the guard
-Now that we can issue tokens, let's configure an authentication guard to verify requests and authenticate users. The guard must be configured inside the `config/auth.ts` file under the `guards` object.
+## ガードの設定
+トークンを検証し、リクエストを認証するための認証ガードを設定しましょう。ガードは`config/auth.ts`ファイルの`guards`オブジェクトの下に設定する必要があります。
 
 ```ts
 // title: config/auth.ts
@@ -323,6 +322,7 @@ const authConfig = defineConfig({
   guards: {
     // highlight-start
     api: tokensGuard({
+    api: tokensGuard({
       provider: tokensUserProvider({
         tokens: 'accessTokens',
         model: () => import('#models/user'),
@@ -335,35 +335,35 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-The `tokensGuard` method creates an instance of the [AccessTokensGuard](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/guard.ts) class. It accepts a user provider that can be used for verifying tokens and finding users.
+`tokensGuard`メソッドは、[AccessTokensGuard](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/guard.ts)クラスのインスタンスを作成します。トークンの検証とユーザーの検索に使用するユーザープロバイダを受け入れます。
 
-The `tokensUserProvider` method accepts the following options and returns an instance of the [AccessTokensLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/user_providers/lucid.ts) class.
+`tokensUserProvider`メソッドは、次のオプションを受け入れ、[AccessTokensLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/user_providers/lucid.ts)クラスのインスタンスを返します。
 
-- `model`: The Lucid model to use for finding users.
-- `tokens`: The static property name of the model to reference the tokens provider.
+- `model`: ユーザーの検索に使用するLucidモデル。
+- `tokens`: モデルでトークンプロバイダを参照するための静的プロパティ名。
 
-## Authenticating requests
-Once the guard has been configured, you can start authenticating requests using the `auth` middleware or manually calling the `auth.authenticate` method.
+## リクエストの認証
+ガードが設定されたら、`auth`ミドルウェアを使用するか、`auth.authenticate`メソッドを手動で呼び出すことで、リクエストの認証を開始できます。
 
-The `auth.authenticate` method returns an instance of the User model for the authenticated user, or it throws an [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception when unable to authenticate the request.
+`auth.authenticate`メソッドは、認証されたユーザーのUserモデルのインスタンスを返します。認証できない場合は[E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access)例外がスローされます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.post('projects', async ({ auth }) => {
-  // Authenticate using the default guard
+  // デフォルトのガードを使用して認証する
   const user = await auth.authenticate()
 
-  // Authenticate using a named guard
+  // 名前付きガードを使用して認証する
   const user = await auth.authenticateUsing(['api'])
 })
 ```
 
-### Using the auth middleware
+### authミドルウェアの使用
 
-Instead of manually calling the `authenticate` method. You can use the `auth` middleware to authenticate the request or throw an exception.
+`authenticate`メソッドを手動で呼び出す代わりに、`auth`ミドルウェアを使用してリクエストを認証するか、例外をスローできます。
 
-The auth middleware accepts an array of guards to use for authenticating the request. The authentication process stops after one of the mentioned guards authenticates the request.
+authミドルウェアは、リクエストの認証に使用するガードの配列を受け入れます。指定したガードのいずれかがリクエストを認証すると、認証プロセスは停止します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -380,8 +380,8 @@ router
   }))
 ```
 
-### Check if the request is authenticated
-You can check if a request has been authenticated using the `auth.isAuthenticated` flag. The value of `auth.user` will always be defined for an authenticated request.
+### リクエストが認証されているかどうかの確認
+`auth.isAuthenticated`フラグを使用して、リクエストが認証されているかどうかを確認できます。`auth.user`の値は、認証されたリクエストでは常に定義されています。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -395,9 +395,9 @@ class PostsController {
 }
 ```
 
-### Get authenticated user or fail
+### 認証されたユーザーの取得または失敗
 
-If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+`auth.user`プロパティに対して[non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-)を使用するのが好きではない場合は、`auth.getUserOrFail`メソッドを使用できます。このメソッドは、ユーザーオブジェクトを返すか、[E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access)例外をスローします。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -410,16 +410,16 @@ class PostsController {
 }
 ```
 
-## The current access token
-The access token guard defines the `currentAccessToken` property on the user object after successfully authenticating the request. The `currentAccessToken` property is an instance of the [AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts) class. 
+## 現在のアクセストークン
+アクセストークンガードは、リクエストの認証に成功した後、ユーザーオブジェクトに`currentAccessToken`プロパティを定義します。`currentAccessToken`プロパティは[AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts)クラスのインスタンスです。
 
-You may use the `currentAccessToken` object to get the token's abilities or check the expiration of the token. Also, during authentication, the guard will update the `last_used_at` column to reflect the current timestamp.
+`currentAccessToken`オブジェクトを使用して、トークンのアビリティを取得したり、トークンの有効期限をチェックしたりできます。また、認証中にガードは`last_used_at`カラムを現在のタイムスタンプに更新します。
 
-If you reference the User model with `currentAccessToken` as a type in the rest of the codebase, you may want to declare this property on the model itself.
+コードベースの他の部分で`currentAccessToken`を型として参照する場合は、モデル自体でこのプロパティを宣言できます。
 
 :::caption{for="error"}
 
-**Instead of merging `currentAccessToken`**
+**`currentAccessToken`をマージする代わりに**
 
 :::
 
@@ -434,7 +434,7 @@ Bouncer.ability((
 
 :::caption{for="success"}
 
-**Declare it as a property on the model**
+**モデルでプロパティとして宣言する**
 
 :::
 
@@ -451,8 +451,8 @@ Bouncer.ability((user: User) => {
 })
 ```
 
-## Listing all tokens
-You may use the tokens provider to get a list of all the tokens using the `accessTokens.all` method. The return value will be an array of `AccessToken` class instances.
+## すべてのトークンのリスト表示
+`accessTokens.all`メソッドを使用して、トークンのリストを取得できます。戻り値は`AccessToken`クラスのインスタンスの配列です。
 
 ```ts
 router
@@ -466,25 +466,26 @@ router
   )
 ```
 
-The `all` method also returns expired tokens. You may want to filter them before rendering the list or display a **"Token expired"** message next to the token. For example
+`all`メソッドは期限切れのトークンも返します。リストをレンダリングする前にそれらをフィルタリングしたり、トークンの横に**「トークンの有効期限が切れました」**というメッセージを表示したりできます。
 
+例:
 ```edge
 @each(token in tokens)
   <h2> {{ token.name }} </h2>
   @if(token.isExpired())
-    <p> Expired </p>
+    <p> 有効期限切れ </p>
   @end
 
-  <p> Abilities: {{ token.abilities.join(',') }} </p>
+  <p> アビリティ: {{ token.abilities.join(',') }} </p>
 @end
 ```
 
-## Deleting tokens
-You may delete a token using the `accessTokens.delete` method. The method accepts the user as the first parameter and the token id as the second parameter.
+## トークンの削除
+`accessTokens.delete`メソッドを使用して、トークンを削除できます。メソッドは最初のパラメータとしてユーザー、2番目のパラメータとしてトークンのIDを受け入れます。
 
 ```ts
 await User.accessTokens.delete(user, token.identifier)
 ```
 
-## Events
-Please check the [events reference guide](../references/events.md#access_tokens_authauthentication_attempted) to view the list of available events emitted by the access tokens guard.
+## イベント
+アクセストークンガードで発行される利用可能なイベントのリストを表示するには、[イベントリファレンスガイド](../references/events.md#access_tokens_authauthentication_attempted)を参照してください。

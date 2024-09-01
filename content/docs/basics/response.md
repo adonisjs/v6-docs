@@ -1,67 +1,67 @@
 ---
-summary: Response class is used to send HTTP responses. It supports sending HTML fragments, JSON objects, streams, and much more.
+summary: Responseクラスは、HTTPレスポンスを送信するために使用されます。HTMLフラグメント、JSONオブジェクト、ストリームなどの送信をサポートしています。
 ---
 
-# Response
+# レスポンス
 
-An instance of the [response class](https://github.com/adonisjs/http-server/blob/main/src/response.ts) is used to respond to HTTP requests. AdonisJS supports sending **HTML fragments**, **JSON objects**, **streams**, and much more. The response instance can be accessed using the `ctx.response` property.
+[responseクラス](https://github.com/adonisjs/http-server/blob/main/src/response.ts)のインスタンスは、HTTPリクエストに対してレスポンスを返すために使用されます。AdonisJSは、**HTMLフラグメント**、**JSONオブジェクト**、**ストリーム**などの送信をサポートしています。レスポンスインスタンスは、`ctx.response`プロパティを使用してアクセスできます。
 
-## Sending response
+## レスポンスの送信
 
-The simplest way to send a response is to return a value from the route handler.
+レスポンスを送信するもっとも簡単な方法は、ルートハンドラから値を返すことです。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
-  /** Plain string */
-  return 'This is the homepage.'
+  /** プレーンな文字列 */
+  return 'これはホームページです。'
 
-  /** Html fragment */
-  return '<p> This is the homepage </p>'
+  /** HTMLフラグメント */
+  return '<p>これはホームページです。</p>'
 
-  /** JSON response */
+  /** JSONレスポンス */
   return { page: 'home' }
 
-  /** Converted to ISO string */
+  /** ISO文字列に変換 */
   return new Date()
 })
 ```
 
-Along with returning a value from the route handler, you can use the `response.send` method to explicitly set the response body. However, calling the `response.send` method multiple times will overwrite the old body and only keep the latest one.
+ルートハンドラから値を返すだけでなく、`response.send`メソッドを使用して明示的にレスポンスボディを設定することもできます。ただし、`response.send`メソッドを複数回呼び出すと、古いボディは上書きされ、最新のボディのみが保持されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ response }) => {
-  /** Plain string */
-  response.send('This is the homepage')
+  /** プレーンな文字列 */
+  response.send('これはホームページです。')
 
-  /** Html fragment */
-  response.send('<p> This is the homepage </p>')
+  /** HTMLフラグメント */
+  response.send('<p>これはホームページです。</p>')
 
-  /** JSON response */
+  /** JSONレスポンス */
   response.send({ page: 'home' })
 
-  /** Converted to ISO string */
+  /** ISO文字列に変換 */
   response.send(new Date())
 })
 ```
 
-A custom status code for the response can be set using the `response.status` method.
+レスポンスのカスタムステータスコードは、`response.status`メソッドを使用して設定できます。
 
 ```ts
 response.status(200).send({ page: 'home' })
 
-// Send empty 201 response
+// 空の201レスポンスを送信
 response.status(201).send('')
 ```
 
-## Streaming content
+## コンテンツのストリーミング
 
-The `response.stream` method allows piping a stream to the response. The method internally destroys the stream after it finishes.
+`response.stream`メソッドを使用すると、ストリームをレスポンスにパイプできます。このメソッドは、ストリームを内部的に破棄します。
 
-The `response.stream` method does not set the `content-type` and the `content-length` headers; you must set them explicitly before streaming the content.
+`response.stream`メソッドは、`content-type`ヘッダと`content-length`ヘッダを設定しません。ストリーミングコンテンツをストリーミングする前に、これらのヘッダを明示的に設定する必要があります。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -72,22 +72,22 @@ router.get('/', async ({ response }) => {
 })
 ```
 
-A 500 status code is sent to the client in case of an error. However, you can customize the error code and message by defining a callback as the second parameter.
+エラーが発生した場合、500ステータスコードがクライアントに送信されます。ただし、2番目のパラメータとしてコールバックを定義することで、エラーコードとメッセージをカスタマイズできます。
 
 ```ts
 const image = fs.createReadStream('./some-file.jpg')
 
 response.stream(image, () => {
-  const message = 'Unable to serve file. Try again'
+  const message = 'ファイルの提供に失敗しました。もう一度お試しください。'
   const status = 400
 
   return [message, status]
 })
 ```
 
-## Downloading files
+## ファイルのダウンロード
 
-We recommend using the `response.download` method over the `response.stream` method when you want to stream files from the disk. This is because the `download` method automatically sets the `content-type` and the `content-length` headers.
+ディスクからファイルをストリーミングする場合は、`response.download`メソッドを`response.stream`メソッドよりも使用することをオススメします。これは、`download`メソッドが自動的に`content-type`ヘッダと`content-length`ヘッダを設定するためです。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -100,7 +100,7 @@ router.get('/uploads/:file', async ({ response, params }) => {
 })
 ```
 
-Optionally, you can generate an [Etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) for the file contents. Using Etags will help the browser re-use the cached response from the previous request (if any).
+オプションとして、ファイルの内容に対して[Etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)を生成することもできます。Etagを使用すると、ブラウザは前回のリクエストからのキャッシュされたレスポンスを再利用するのに役立ちます。
 
 ```ts
 const filePath = app.makePath(`uploads/${params.file}`)
@@ -109,7 +109,7 @@ const generateEtag = true
 response.download(filePath, generateEtag)
 ```
 
-Similar to the `response.stream` method, you can send a custom error message and status code by defining a callback as the last parameter.
+`response.stream`メソッドと同様に、最後のパラメータとしてコールバックを定義することで、カスタムエラーメッセージとステータスコードを送信することもできます。
 
 ```ts
 const filePath = app.makePath(`uploads/${params.file}`)
@@ -117,16 +117,16 @@ const generateEtag = true
 
 response.download(filePath, generateEtag, (error) => {
   if (error.code === 'ENOENT') {
-    return ['File does not exists', 404]
+    return ['ファイルが存在しません', 404]
   }
 
-  return ['Cannot download file', 400]
+  return ['ファイルをダウンロードできません', 400]
 })
 ```
 
-### Force downloading files
+### ファイルの強制ダウンロード
 
-The `response.attachment` method is similar to the `response.download` method, but it forces the browsers to save the file on the user's computer by setting the [Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) header.
+`response.attachment`メソッドは、`response.download`メソッドと似ていますが、[Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition)ヘッダを設定することで、ブラウザにファイルをユーザーのコンピュータに保存させるように強制します。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -139,67 +139,65 @@ router.get('/uploads/:file', async ({ response, params }) => {
 })
 ```
 
-## Setting response status and headers
+## レスポンスのステータスとヘッダの設定
 
-### Setting status
+### ステータスの設定
 
-You may set the response status using the `response.status` method. Calling this method will override the existing response status (if any). However, you may use the `response.safeStatus` method to set the status only when it is `undefined`.
+`response.status`メソッドを使用してレスポンスのステータスを設定できます。このメソッドを呼び出すと、既存のレスポンスステータスが上書きされます（すでに設定されている場合）。ただし、ステータスが`undefined`の場合にのみ、`response.safeStatus`メソッドを使用してステータスを設定できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ response }) => {
   /**
-   * Sets the status to 200
+   * ステータスを200に設定します
    */
   response.safeStatus(200)
 
   /**
-   * Does not set the status since it
-   * is already set
+   * 既に設定されているため、ステータスは設定されません
    */
   response.safeStatus(201)
 })
 ```
 
-### Setting headers
+### ヘッダの設定
 
-You may set the response headers using the `response.header` method. This method overrides the existing header value (if it already exists). However, you may use the `response.safeHeader` method to set the header only when it is `undefined`.
+`response.header`メソッドを使用してレスポンスヘッダを設定できます。このメソッドは、既存のヘッダ値を上書きします（すでに存在する場合）。ただし、ヘッダが`undefined`の場合にのみ、`response.safeHeader`メソッドを使用してヘッダを設定できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ response }) => {
   /**
-   * Defines the content-type header
+   * content-typeヘッダを定義します
    */
   response.safeHeader('Content-type', 'text/html')
 
   /**
-   * Does not set the content-type header since it
-   * is already set
+   * 既に設定されているため、content-typeヘッダは設定されません
    */
   response.safeHeader('Content-type', 'text/html')
 })
 ```
 
-You can use the `response.append` method to append values to existing header values.
+`response.append`メソッドを使用して既存のヘッダ値に値を追加できます。
 
 ```ts
 response.append('Set-cookie', 'cookie-value')
 ```
 
-The `response.removeHeader` method removes the existing header.
+`response.removeHeader`メソッドを使用して既存のヘッダを削除できます。
 
 ```ts
 response.removeHeader('Set-cookie')
 ```
 
-## Redirects
+## リダイレクト
 
-The `response.redirect` method returns an instance of the [Redirect](https://github.com/adonisjs/http-server/blob/main/src/redirect.ts) class. The redirect class uses fluent API to construct the redirect URL.
+`response.redirect`メソッドは、[Redirect](https://github.com/adonisjs/http-server/blob/main/src/redirect.ts)クラスのインスタンスを返します。リダイレクトクラスは、フルエントAPIを使用してリダイレクトURLを構築します。
 
-The simplest way to perform a redirect is to call the `redirect.toPath` method with the redirection path.
+リダイレクトを実行するもっとも簡単な方法は、`redirect.toPath`メソッドをリダイレクトパスとともに呼び出すことです。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -209,7 +207,7 @@ router.get('/posts', async ({ response }) => {
 })
 ```
 
-The redirect class also allows constructing a URL from a pre-registered route. The `redirect.toRoute` method accepts the [route identifier](./routing.md#route-identifier) as the first parameter and the route params as the second parameter.
+リダイレクトクラスは、事前に登録されたルートからURLを構築することもできます。`redirect.toRoute`メソッドは、[ルート識別子](./routing.md#route-identifier)を第1パラメータとして、ルートパラメータを第2パラメータとして受け入れます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -221,81 +219,81 @@ router.get('/posts/:id', async ({ response, params }) => {
 })
 ```
 
-### Redirect back to the previous page
+### 前のページにリダイレクトする
 
-You might want to redirect the user to the previous page during form submissions in case of validation errors. You can do that using the `redirect.back` method.
+バリデーションエラーの場合にフォームの送信時にユーザーを前のページにリダイレクトしたい場合は、`redirect.back`メソッドを使用できます。
 
 ```ts
 response.redirect().back()
 ```
 
-### Redirection status code
+### リダイレクトステータスコード
 
-The default status for redirect responses is `302`; you can change it by calling the `redirect.status` method.
+リダイレクトレスポンスのデフォルトステータスは`302`です。`redirect.status`メソッドを呼び出すことで、ステータスを変更できます。
 
 ```ts
 response.redirect().status(301).toRoute('articles.show', { id: params.id })
 ```
 
-### Redirect with query string
+### クエリ文字列付きのリダイレクト
 
-You can use the `withQs` method to append a query string to the redirect URL. The method accepts an object of a key-value pair and converts it to a string.
+`withQs`メソッドを使用してリダイレクトURLにクエリ文字列を追加できます。このメソッドは、キーと値のペアのオブジェクトを受け入れ、それを文字列に変換します。
 
 ```ts
 response.redirect().withQs({ page: 1, limit: 20 }).toRoute('articles.index')
 ```
 
-To forward the query string from the current request URL, call the `withQs` method without any parameters.
+現在のリクエストURLのクエリ文字列を転送するには、パラメータなしで`withQs`メソッドを呼び出します。
 
 ```ts
-// Forward current URL query string
+// 現在のURLのクエリ文字列を転送
 response.redirect().withQs().toRoute('articles.index')
 ```
 
-When redirecting back to the previous page, the `withQs` method will forward the query string of the previous page.
+前のページにリダイレクトする場合、`withQs`メソッドは前のページのクエリ文字列を転送します。
 
 ```ts
-// Forward current URL query string
+// 現在のURLのクエリ文字列を転送
 response.redirect().withQs().back()
 ```
 
-## Aborting request with an error
+## エラーによるリクエストの中止
 
-You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and trigger the [exception handling](./exception_handling.md) flow.
+`response.abort`メソッドを使用して、例外を発生させることでリクエストを終了できます。このメソッドは、`E_HTTP_REQUEST_ABORTED`例外をスローし、[例外処理](./exception_handling.md)フローをトリガーします。
 
 ```ts
 router.get('posts/:id/edit', async ({ response, auth, params }) => {
   const post = await Post.findByOrFail(params.id)
 
   if (!auth.user.can('editPost', post)) {
-    response.abort({ message: 'Cannot edit post' })
+    response.abort({ message: '投稿を編集することはできません' })
   }
 
-  // continue with the rest of the logic
+  // 残りのロジックを続行する
 })
 ```
 
-By default, the exception will create an HTTP response with a `400` status code. However, you can specify a custom status code as the second parameter.
+デフォルトでは、例外は`400`ステータスコードを持つHTTPレスポンスを作成します。ただし、2番目のパラメータとしてカスタムステータスコードを指定することもできます。
 
 ```ts
-response.abort({ message: 'Cannot edit post' }, 403)
+response.abort({ message: '投稿を編集することはできません' }, 403)
 ```
 
-## Running actions after response finishes
+## レスポンスの書き込み完了後のアクションの実行
 
-You may listen for the event when Node.js finishes writing the response to the TCP socket using the `response.onFinish` method. Under the hood, we use the [on-finished](https://github.com/jshttp/on-finished) package, so feel free to consult the package README file for an in-depth technical explanation.
+`response.onFinish`メソッドを使用すると、Node.jsがレスポンスをTCPソケットに書き込み終了したときのイベントをリッスンできます。内部的には、[on-finished](https://github.com/jshttp/on-finished)パッケージを使用していますので、詳細な技術的な説明についてはパッケージのREADMEファイルを参照してください。
 
 ```ts
 router.get('posts', ({ response }) => {
   response.onFinish(() => {
-    // cleanup logic
+    // クリーンアップロジック
   })
 })
 ```
 
-## Accessing Node.js `res` object
+## Node.jsの`res`オブジェクトへのアクセス
 
-You can access the [Node.js res object](https://nodejs.org/dist/latest-v19.x/docs/api/http.html#class-httpserverresponse) using the `response.response` property.
+`response.response`プロパティを使用すると、[Node.jsのresオブジェクト](https://nodejs.org/dist/latest-v19.x/docs/api/http.html#class-httpserverresponse)にアクセスできます。
 
 ```ts
 router.get('posts', ({ response }) => {
@@ -303,32 +301,32 @@ router.get('posts', ({ response }) => {
 })
 ```
 
-## Response body serialization
+## レスポンスボディのシリアライズ
 
-The response body set using the `response.send` method gets serialized to a string before it is [written as response](https://nodejs.org/dist/latest-v18.x/docs/api/http.html#responsewritechunk-encoding-callback) to the outgoing message stream.
+`response.send`メソッドで設定されたレスポンスボディは、出力メッセージストリームに[書き込まれる前に](https://nodejs.org/dist/latest-v18.x/docs/api/http.html#responsewritechunk-encoding-callback)文字列にシリアライズされます。
 
-Following is the list of supported data types and their serialization rules.
+以下は、サポートされているデータ型とそのシリアライズルールのリストです。
 
-- Arrays and Objects are stringified using the [safe stringify function](https://github.com/poppinss/utils/blob/main/src/json/safe_stringify.ts). The method is similar to `JSON.stringify` but removes the circular references and serializes `BigInt(s)`.
-- The number and boolean values are converted to a string.
-- The instance of the Date class is converted to a string by calling the `toISOString` method.
-- Regular expressions and error objects are converted to a string by calling the `toString` method.
-- Any other data type results in an exception.
+- 配列とオブジェクトは、[安全な文字列化関数](https://github.com/poppinss/utils/blob/main/src/json/safe_stringify.ts)を使用して文字列化されます。このメソッドは、`JSON.stringify`と似ていますが、循環参照を削除し、`BigInt`をシリアライズします。
+- 数値とブール値は文字列に変換されます。
+- Dateクラスのインスタンスは、`toISOString`メソッドを呼び出して文字列に変換されます。
+- 正規表現とエラーオブジェクトは、`toString`メソッドを呼び出して文字列に変換されます。
+- その他のデータ型は例外が発生します。
 
-### Content type inference
+### コンテンツタイプの推論
 
-After serializing the response, the response class automatically infers and sets the `content-type` and the `content-length` headers.
+レスポンスをシリアライズした後、レスポンスクラスは自動的に`content-type`ヘッダと`content-length`ヘッダを推論して設定します。
 
-Following is the list of rules we follow to set the `content-type` header.
+以下は、`content-type`ヘッダを設定するために私たちが従うルールのリストです。
 
-- Content type is set to `application/json` for arrays and objects.
-- It is set to `text/html` for HTML fragments.
-- JSONP responses are sent with the `text/javascript` content type.
-- The content type is set to `text/plain` for everything else.
+- 配列とオブジェクトの場合、`content-type`は`application/json`に設定されます。
+- HTMLフラグメントの場合、`content-type`は`text/html`に設定されます。
+- JSONPレスポンスは`text/javascript`のコンテンツタイプで送信されます。
+- それ以外の場合、`content-type`は`text/plain`に設定されます。
 
-## Extending Response class
+## Responseクラスの拡張
 
-You can add custom properties to the Response class using macros or getters. Make sure to read the [extending AdonisJS guide](../concepts/extending_the_framework.md) first if you are new to the concept of macros.
+マクロやゲッターを使用して、Responseクラスにカスタムプロパティを追加できます。マクロの概念についてはじめての場合は、[AdonisJSの拡張ガイド](../concepts/extending_the_framework.md)を先に読んでください。
 
 ```ts
 import { Response } from '@adonisjs/core/http'
@@ -341,7 +339,7 @@ Response.getter('property', function (this: Response) {
 })
 ```
 
-Since the macros and getters are added at runtime, you must inform TypeScript about their types.
+マクロとゲッターは実行時に追加されるため、TypeScriptにその型について通知する必要があります。
 
 ```ts
 declare module '@adonisjs/core/http' {

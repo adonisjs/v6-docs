@@ -1,20 +1,20 @@
 ---
-summary: Learn how to extend the AdonisJS framework using macros and getters.
+summary: マクロとゲッターを使用してAdonisJSフレームワークを拡張する方法を学びます。
 ---
 
-# Extending the framework
+# フレームワークの拡張
 
-The architecture of AdonisJS makes it very easy to extend the framework. We dogfood framework's core APIs to build an ecosystem of first-party packages.
+AdonisJSのアーキテクチャは、フレームワークを拡張非常に簡単になっています。私たちは、フレームワークのコアAPIを使用して、第一級のパッケージのエコシステムを構築しています。
 
-In this guide, we will explore different APIs you can use to extend the framework through a package or within your application codebase.
+このガイドでは、パッケージまたはアプリケーションのコードベース内でフレームワークを拡張するために使用できるさまざまなAPIを探っていきます。
 
-## Macros and getters
+## マクロとゲッター
 
-Macros and getters offer an API to add properties to the prototype of a class. You can think of them as Syntactic sugar for `Object.defineProperty`. Under the hood, we use [macroable](https://github.com/poppinss/macroable) package, and you can refer to its README for an in-depth technical explanation.
+マクロとゲッターは、クラスのプロトタイプにプロパティを追加するためのAPIを提供します。これらは、`Object.defineProperty`のシンタックスシュガーと考えることができます。内部的には、[macroable](https://github.com/poppinss/macroable)パッケージを使用しており、詳細な技術的な説明については、そのREADMEを参照してください。
 
-Since macros and getters are added at runtime, you will have to inform TypeScript about the type information for the added property using [declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html).
+マクロとゲッターは実行時に追加されるため、追加されたプロパティの型情報をTypeScriptに伝えるために[declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)を使用する必要があります。
 
-You can write the code for adding macros inside a dedicated file (like the `extensions.ts`) and import it inside the service provider's `boot` method.
+マクロを追加するためのコードは、専用のファイル（`extensions.ts`のような）に記述し、サービスプロバイダの`boot`メソッド内でそれをインポートできます。
 
 ```ts
 // title: providers/app_provider.ts
@@ -25,7 +25,7 @@ export default class AppProvider {
 }
 ```
 
-In the following example, we add the `wantsJSON` method to the [Request](../basics/request.md) class and define its types simultaneously.
+次の例では、[Request](../basics/request.md)クラスに`wantsJSON`メソッドを追加し、同時にその型を定義しています。
 
 ```ts
 // title: src/extensions.ts
@@ -50,14 +50,14 @@ declare module '@adonisjs/core/http' {
 }
 ```
 
-- The module path during the `declare module` call must be the same as the path you use to import the class.
-- The `interface` name must be the same as the class name to which you add the macro or the getter.
+- `declare module`の呼び出し時のモジュールパスは、クラスをインポートする際に使用するパスと同じである必要があります。
+- `interface`の名前は、マクロまたはゲッターを追加するクラスの名前と同じである必要があります。
 
-### Getters
+### ゲッター
 
-Getters are lazily evaluated properties added to a class. You can add a getter using the `Class.getter` method. The first argument is the getter name, and the second argument is the callback function to compute the property value.
+ゲッターは、クラスに追加される遅延評価されるプロパティです。`Class.getter`メソッドを使用してゲッターを追加できます。第一引数はゲッターの名前であり、第二引数はプロパティの値を計算するためのコールバック関数です。
 
-Getter callbacks cannot be async because [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) in JavaScript cannot be asynchronous.
+ゲッターのコールバック関数は非同期にすることはできません。なぜなら、JavaScriptの[getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)は非同期にできないからです。
 
 ```ts
 import { Request } from '@adonisjs/core/http'
@@ -66,12 +66,12 @@ Request.getter('hasRequestId', function (this: Request) {
   return this.header('x-request-id')
 })
 
-// you can use the property as follows.
+// プロパティは次のように使用できます。
 if (ctx.request.hasRequestId) {
 }
 ```
 
-Getters can be a singleton, meaning the function to compute the getter value will be called once, and the return value will be cached for an instance of the class.
+ゲッターはシングルトンにすることもできます。つまり、ゲッターの値を計算する関数は一度だけ呼び出され、返り値はクラスのインスタンスごとにキャッシュされます。
 
 ```ts
 const isSingleton = true
@@ -81,12 +81,12 @@ Request.getter('hasRequestId', function (this: Request) {
 }, isSingleton)
 ```
 
-### Macroable classes
+### マクロ可能なクラス
 
-Following is the list of classes that can be extended using Macros and getters.
+以下は、マクロとゲッターを使用して拡張できるクラスのリストです。
 
-| Class                                                                                          | Import path                 |
-|------------------------------------------------------------------------------------------------|-----------------------------|
+| クラス                                                                                         | インポートパス              |
+|-----------------------------------------------------------------------------------------------|-----------------------------|
 | [Application](https://github.com/adonisjs/application/blob/main/src/application.ts)            | `@adonisjs/core/app`        |
 | [Request](https://github.com/adonisjs/http-server/blob/main/src/request.ts)                    | `@adonisjs/core/http`       |
 | [Response](https://github.com/adonisjs/http-server/blob/main/src/response.ts)                  | `@adonisjs/core/http`       |
@@ -99,12 +99,12 @@ Following is the list of classes that can be extended using Macros and getters.
 | [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts)        | `@adonisjs/core/bodyparser` |
 
 
-## Extending modules
-Most of the AdonisJS modules provide extensible APIs to register custom implementations. Following is an aggregated list of the same.
+## モジュールの拡張
+ほとんどのAdonisJSモジュールは、カスタムの実装を登録するための拡張可能なAPIを提供しています。以下は、同じものの集約されたリストです。
 
-- [Creating Hash driver](../security/hashing.md#creating-a-custom-hash-driver)
-- [Creating Session driver](../basics/session.md#creating-a-custom-session-store)
-- [Creating Social auth driver](../authentication/social_authentication.md#creating-a-custom-social-driver)
-- [Extending REPL](../digging_deeper/repl.md#adding-custom-methods-to-repl)
-- [Creating i18n translations loader](../digging_deeper/i18n.md#creating-a-custom-translation-loader)
-- [Creating i18n translations formatter](../digging_deeper/i18n.md#creating-a-custom-translation-formatter)
+- [ハッシュドライバーの作成](../security/hashing.md#creating-a-custom-hash-driver)
+- [セッションドライバーの作成](../basics/session.md#creating-a-custom-session-store)
+- [ソーシャル認証ドライバーの作成](../authentication/social_authentication.md#creating-a-custom-social-driver)
+- [REPLの拡張](../digging_deeper/repl.md#adding-custom-methods-to-repl)
+- [i18nの翻訳ローダーの作成](../digging_deeper/i18n.md#creating-a-custom-translation-loader)
+- [i18nの翻訳フォーマッターの作成](../digging_deeper/i18n.md#creating-a-custom-translation-formatter)

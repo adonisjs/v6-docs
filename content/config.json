@@ -2,11 +2,11 @@
   "menu": [
     {
       "href": "https://v6-migration.adonisjs.com",
-      "title": "Migration Guide"
+      "title": "マイグレーションガイド"
     },
     {
       "href": "https://v5-docs.adonisjs.com",
-      "title": "V5 Documentation"
+      "title": "V5ドキュメント"
     }
   ],
   "links": {

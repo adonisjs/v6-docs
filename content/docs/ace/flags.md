@@ -1,12 +1,12 @@
 ---
-summary: Learn how to define and process command flags in Ace commands.
+summary: Aceコマンドでコマンドフラグを定義して処理する方法を学びます。
 ---
 
-# Command flags
+# コマンドフラグ
 
-Flags are named parameters mentioned with either two hyphens (`--`) or a single hyphen (`-`) (known as the flag alias). The flags can be mentioned in any order.
+フラグは、ハイフン2つ（`--`）またはハイフン1つ（`-`）（フラグのエイリアスとして知られる）で指定される名前付きパラメータです。フラグは任意の順序で指定できます。
 
-You must define flags as class properties and decorate them using the `@flags` decorator. In the following example, we define `resource` and `singular` flags, and both represent a boolean value.
+フラグはクラスのプロパティとして定義し、`@flags`デコレータを使用してデコレートする必要があります。次の例では、`resource`と`singular`のフラグを定義し、両方がブール値を表します。
 
 ```ts
 import { BaseCommand, flags } from '@adonisjs/core/ace'
@@ -20,13 +20,13 @@ export default class MakeControllerCommand extends BaseCommands {
 }
 ```
 
-## Flag types
+## フラグの種類
 
-Ace allows defining flags for one of the following types.
+Aceでは、次のいずれかのタイプのフラグを定義できます。
 
-### Boolean flag
+### ブールフラグ
 
-A boolean flag is defined using the `@flags.boolean` decorator. Mentioning the flag will set its value to `true`. Otherwise, the flag value is `undefined`.
+ブールフラグは、`@flags.boolean`デコレータを使用して定義されます。フラグを指定すると、その値が`true`に設定されます。それ以外の場合、フラグの値は`undefined`です。
 
 ```sh
 make:controller --resource
@@ -46,9 +46,9 @@ make:controller --no-resource
 # this.resource === false
 ```
 
-The last example shows that the boolean flags can be negated with the `--no-` prefix. 
+最後の例では、ブールフラグは`--no-`接頭辞で否定することができることを示しています。
 
-By default, the negated option is not shown in the help output. However, you may enable it using the `showNegatedVariantInHelp` option.
+デフォルトでは、否定されたオプションはヘルプ出力に表示されません。ただし、`showNegatedVariantInHelp`オプションを使用して有効にすることもできます。
 
 ```ts
 export default class MakeControllerCommand extends BaseCommands {
@@ -59,9 +59,9 @@ export default class MakeControllerCommand extends BaseCommands {
 }
 ```
 
-### String flag
+### 文字列フラグ
 
-A string flag accepts a value after the flag name. You may define a string flag using the `@flags.string` method.
+文字列フラグは、フラグ名の後に値を受け入れます。`@flags.string`メソッドを使用して文字列フラグを定義できます。
 
 ```ts
 import { BaseCommand, flags } from '@adonisjs/core/ace'
@@ -78,7 +78,7 @@ make:controller --model user
 # this.model = 'user'
 ```
 
-If the flag value has spaces or special characters, it must be wrapped inside the quotes `""`.
+フラグの値にスペースや特殊文字が含まれる場合は、引用符`""`で囲む必要があります。
 
 ```sh
 make:controller --model blog user
@@ -88,21 +88,21 @@ make:controller --model "blog user"
 # this.model = 'blog user'
 ```
 
-An error is displayed if the flag is mentioned but no value is provided (even when the flag is optional).
+フラグが指定されているが値が提供されていない場合（フラグがオプションの場合でも）、エラーが表示されます。
 
 ```sh
 make:controller
-# Works! The optional flag is not mentioned
+# できます！オプションのフラグは指定されていません
 
 make:controller --model
-# Error! Missing value
+# エラー！値が不足しています
 ```
 
-### Number flag
+### 数値フラグ
 
-The parsing of a number flag is similar to the string flag. However, the value is validated to ensure it is a valid number.
+数値フラグの解析は文字列フラグと似ています。ただし、値が有効な数値であることを検証します。
 
-You can create a number flag using the `@flags.number` decorator.
+`@flags.number`デコレータを使用して数値フラグを作成できます。
 
 ```ts
 import { BaseCommand, flags } from '@adonisjs/core/ace'
@@ -113,9 +113,9 @@ export default class MakeUserCommand extends BaseCommands {
 }
 ```
 
-### Array flag
+### 配列フラグ
 
-The array flag allows the usage of the flag multiple times when running a command. You can define an array flag using the `@flags.array` method.
+配列フラグは、コマンドを実行する際にフラグを複数回使用できるようにします。`@flags.array`メソッドを使用して配列フラグを定義できます。
 
 ```ts
 import { BaseCommand, flags } from '@adonisjs/core/ace'
@@ -132,9 +132,9 @@ make:user --groups=admin --groups=moderators --groups=creators
 # this.groups = ['admin', 'moderators', 'creators']
 ```
 
-## Flag name and description
+## フラグ名と説明
 
-By default, the flag name is a dashed case representation of the class property name. However, you can define a custom name via the `flagName` option.
+デフォルトでは、フラグ名はクラスのプロパティ名のダッシュケース表記です。ただし、`flagName`オプションを使用してカスタム名を定義できます。
 
 ```ts
 @flags.boolean({
@@ -143,19 +143,19 @@ By default, the flag name is a dashed case representation of the class property 
 declare startServer: boolean
 ```
 
-The flag description is displayed on the help screen. You can define it using the `description` option.
+フラグの説明はヘルプ画面に表示されます。`description`オプションを使用して定義できます。
 
 ```ts
 @flags.boolean({
   flagName: 'server',
-  description: 'Starts the application server'
+  description: 'アプリケーションサーバーを起動します'
 })
 declare startServer: boolean
 ```
 
-## Flag aliases
+## フラグのエイリアス
 
-Aliases the shorthand names for a flag mentioned using a single hyphen (`-`). An alias must be a single character.
+エイリアスは、単一のハイフン（`-`）を使用して指定されるフラグの省略名です。エイリアスは1文字である必要があります。
 
 ```ts
 @flags.boolean({
@@ -169,18 +169,18 @@ declare resource: boolean
 declare singular: boolean
 ```
 
-Flag aliases can be combined when running the command.
+フラグのエイリアスは、コマンドを実行する際に組み合わせることができます。
 
 ```ts
 make:controller -rs
 
-# Same as
+# 以下と同じです
 make:controller --resource --singular
 ```
 
-## Default value
+## デフォルト値
 
-You can define the default value for a flag using the `default` option. The default value is used when the flag is not mentioned or mentioned without a value.
+`default`オプションを使用してフラグのデフォルト値を定義できます。デフォルト値は、フラグが指定されていないか値がない場合に使用されます。
 
 ```ts
 @flags.boolean({
@@ -195,9 +195,9 @@ declare connection: string
 ```
 
 
-## Processing flag value
+## フラグ値の処理
 
-Using the `parse` method, you can process the flag value before it is defined as the class property.
+`parse`メソッドを使用すると、フラグの値をクラスのプロパティとして定義する前に処理できます。
 
 ```ts
 @flags.string({
@@ -208,9 +208,9 @@ Using the `parse` method, you can process the flag value before it is defined as
 declare connection: string
 ```
 
-## Accessing all flags
+## すべてのフラグへのアクセス
 
-You can access all flags mentioned while running the command using the `this.parsed.flags` property. The flags property is an object of key-value pair.
+`this.parsed.flags`プロパティを使用すると、コマンドを実行する際に指定されたすべてのフラグにアクセスできます。フラグプロパティはキーと値のペアのオブジェクトです。
 
 ```ts
 import { BaseCommand, flags } from '@adonisjs/core/ace'
@@ -226,8 +226,8 @@ export default class MakeControllerCommand extends BaseCommands {
     console.log(this.parsed.flags)
     
     /**
-     * Names of flags mentioned but not
-     * accepted by the command
+     * コマンドに指定されたが
+     * コマンドで受け入れられなかったフラグの名前
      */
     console.log(this.parsed.unknownFlags)
   }

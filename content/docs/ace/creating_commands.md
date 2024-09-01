@@ -1,22 +1,22 @@
 ---
-summary: Learn how to create custom Ace commands in AdonisJS
+summary: AdonisJSでカスタムAceコマンドを作成する方法を学びます
 ---
 
-# Creating commands
+# コマンドの作成
 
-Alongside using Ace commands, you may also create custom commands as part of your application codebase. The commands are stored inside the `commands` directory (at the root level). You may create a command by running the following command.
+Aceコマンドを使用するだけでなく、アプリケーションのコードベースの一部としてカスタムコマンドを作成することもできます。コマンドは`commands`ディレクトリ（ルートレベル）に格納されます。次のコマンドを実行してコマンドを作成できます。
 
-See also: [Make command](../references/commands.md#makecommand)
+参考：[makeコマンド](../references/commands.md#makecommand)
 
 ```sh
 node ace make:command greet
 ```
 
-The above command will create a `greet.ts` file inside the `commands` directory. Ace commands are represented by a class and must implement the `run` method to execute the command instructions.
+上記のコマンドは`commands`ディレクトリ内に`greet.ts`ファイルを作成します。Aceコマンドはクラスで表され、コマンドの指示を実行するために`run`メソッドを実装する必要があります。
 
-## Command metadata
+## コマンドのメタデータ
 
-The command metadata consists of the **command name**, **description**, **help text**, and the **options** to configure the command behavior.
+コマンドのメタデータには、**コマンド名**、**説明**、**ヘルプテキスト**、およびコマンドの動作を設定する**オプション**が含まれます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -24,7 +24,7 @@ import { CommandOptions } from '@adonisjs/core/types/ace'
 
 export default class GreetCommand extends BaseCommand {
   static commandName = 'greet'
-  static description = 'Greet a user by name'
+  static description = 'ユーザーを名前で挨拶する'
 
   static options: CommandOptions = {
     startApp: false,
@@ -41,9 +41,9 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-The `commandName` property is used to define the command name. A command name should not contain spaces. Also, it is recommended to avoid using unfamiliar special characters like `*`, `&`, or slashes in the command name.
+`commandName`プロパティはコマンド名を定義するために使用されます。コマンド名にはスペースを含めることはできません。また、コマンド名に`*`、`&`、またはスラッシュなどの不慣れな特殊文字を使用しないことをオススメします。
 
-The command names can be under a namespace. For example, to define a command under the `make` namespace, you may prefix it with `make:`.
+コマンド名はネームスペースの下に配置することもできます。たとえば、`make`ネームスペースの下にコマンドを定義するには、`make:`を接頭辞として付けることができます。
 
 </dd>
 
@@ -53,7 +53,7 @@ The command names can be under a namespace. For example, to define a command und
 
 <dd>
 
-The command description is shown inside the commands list and on the command help screen. You must keep the description short and use the **help text** for longer descriptions.
+コマンドの説明はコマンドリストとコマンドのヘルプ画面に表示されます。説明は短く保ち、より長い説明には**ヘルプテキスト**を使用してください。
 
 </dd>
 
@@ -63,20 +63,20 @@ The command description is shown inside the commands list and on the command hel
 
 <dd>
 
-The help text is used to write a longer description or show usage examples.
+ヘルプテキストはより長い説明や使用例を表示するために使用されます。
 
 ```ts
 export default class GreetCommand extends BaseCommand {
   static help = [
-    'The greet command is used to greet a user by name',
+    '挨拶コマンドはユーザーを名前で挨拶するために使用されます',
     '',
-    'You can also send flowers to a user, if they have an updated address',
+    'ユーザーに花を送ることもできます。更新された住所がある場合は',
     '{{ binaryName }} greet --send-flowers',
   ]
 }
 ```
 
-> The `{{ binaryName }}` variable substitution is a reference to the binary used to execute ace commands.
+> `{{ binaryName }}`変数の置換は、aceコマンドを実行するために使用されるバイナリへの参照です。
 
 </dd>
 
@@ -86,7 +86,7 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-You may define one or more aliases for the command name using the `aliases` property.
+`aliases`プロパティを使用して、コマンド名に1つ以上のエイリアスを定義できます。
 
 ```ts
 export default class GreetCommand extends BaseCommand {
@@ -103,9 +103,9 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-By default, AdonisJS does not boot the application when running an Ace command. This ensures that the commands are quick to run and do not go through the application boot phase to perform simple tasks.
+デフォルトでは、AdonisJSはAceコマンドを実行する際にアプリケーションを起動しません。これにより、コマンドの実行が迅速に行われ、シンプルなタスクにアプリケーションの起動フェーズを経由しないようになります。
 
-However, if your command relies on the application state, you can tell Ace to start the app before executing the command.
+ただし、コマンドがアプリケーションの状態に依存する場合は、Aceにコマンドを実行する前にアプリを起動するように指示できます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -128,7 +128,7 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-By default, Ace prints an error if you pass an unknown flag to the command. However, you can disable strict flags parsing at the command level using the `options.allowUnknownFlags` property.
+デフォルトでは、Aceはコマンドに未知のフラグを渡すとエラーを表示します。ただし、`options.allowUnknownFlags`プロパティを使用して、コマンドレベルで厳密なフラグの解析を無効にできます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -151,9 +151,9 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-AdonisJS implicitly terminates the app after executing the command's `run` command. However, if you want to start a long-running process in a command, you must tell Ace not to kill the process.
+AdonisJSは、コマンドの`run`メソッドを実行した後にアプリを終了します。ただし、コマンド内で長時間実行されるプロセスを開始する場合は、プロセスを終了しないようにAceに指示する必要があります。
 
-See also: [Terminating app](#terminating-application) and [cleaning up before the app terminates](#cleaning-up-before-the-app-terminates) sections.
+参考：[アプリの終了](#アプリの終了)および[アプリの終了前のクリーンアップ](#アプリの終了前のクリーンアップ)セクション。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -170,28 +170,28 @@ export default class GreetCommand extends BaseCommand {
 </dd>
 </dl>
 
-## Command lifecycle methods
+## コマンドのライフサイクルメソッド
 
-You may define the following lifecycle methods on a command class, and Ace will execute them in a pre-defined order.
+コマンドクラスで以下のライフサイクルメソッドを定義でき、Aceはそれらを事前に定義された順序で実行します。
 
 ```ts
 import { BaseCommand, args, flags } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   async prepare() {
-    console.log('preparing')
+    console.log('準備中')
   }
 
   async interact() {
-    console.log('interacting')
+    console.log('対話中')
   }
   
   async run() {
-    console.log('running')
+    console.log('実行中')
   }
 
   async completed() {
-    console.log('completed')
+    console.log('完了')
   }
 }
 ```
@@ -199,8 +199,8 @@ export default class GreetCommand extends BaseCommand {
 <table>
   <thead>
     <tr>
-      <th width="120px">Method</th>
-      <th>Description</th>
+      <th width="120px">メソッド</th>
+      <th>説明</th>
     </tr>
   </thead>
   <tbody>
@@ -208,34 +208,34 @@ export default class GreetCommand extends BaseCommand {
       <td>
         <code>prepare</code>
       </td>
-      <td>This is the first method Ace executes on a command. This method can set up the state or data needed to run the command.</td>
+      <td>これはコマンドで最初に実行されるメソッドです。このメソッドでは、コマンドを実行するために必要な状態やデータを設定できます。</td>
     </tr>
     <tr>
       <td>
         <code>interact</code>
       </td>
-      <td>The interact method is executed after the <code>prepare</code> method. It can be used to display prompts to the user. </td>
+      <td><code>prepare</code>メソッドの後に実行される<code>interact</code>メソッドです。ユーザーにプロンプトを表示するために使用できます。</td>
     </tr>
     <tr>
       <td>
         <code>run</code>
       </td>
-      <td>The command main logic goes inside the <code>run</code> method. This method is called after the <code>interact</code> method. </td>
+      <td>コマンドのメインロジックは<code>run</code>メソッドに記述します。このメソッドは<code>interact</code>メソッドの後に呼び出されます。</td>
     </tr>
     <tr>
       <td>
         <code>completed</code>
       </td>
-      <td>The completed method is called after running all other lifecycle methods. This method can be used to perform cleanup or handle/display thrown raised by other methods.</td>
+      <td>他のライフサイクルメソッドの実行後に<code>completed</code>メソッドが呼び出されます。このメソッドはクリーンアップを実行したり、他のメソッドで発生したエラーを処理したりするために使用できます。</td>
     </tr>
   </tbody>
 </table>
 
-## Dependency injection
+## 依存性の注入
 
-Ace commands are constructed and executed using the [IoC container](../concepts/dependency_injection.md). Therefore, you can type-hint dependencies on command lifecycle methods and use the `@inject` decorator to resolve them.
+Aceコマンドは[IoCコンテナ](../concepts/dependency_injection.md)を使用して構築および実行されます。そのため、コマンドのライフサイクルメソッドに依存関係を型指定し、`@inject`デコレータを使用して解決できます。
 
-For demonstration, let's inject the `UserService` class in all the lifecycle methods.
+デモンストレーションのために、すべてのライフサイクルメソッドに`UserService`クラスを注入してみましょう。
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -261,13 +261,13 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## Handling errors and exit code
+## エラーの処理と終了コード
 
-Exceptions raised by commands are displayed using the CLI logger, and the command `exitCode` is set to `1` (a non-zero error code means the command failed).
+コマンドで発生した例外はCLIロガーを使用して表示され、コマンドの`exitCode`は`1`に設定されます（非ゼロのエラーコードはコマンドが失敗したことを意味します）。
 
-However, you may also capture errors by wrapping your code inside a `try/catch` block or using the `completed` lifecycle method to handle errors. In either situation, remember to update the command `exitCode` and `error` properties.
+ただし、`try/catch`ブロックでコードをラップするか、`completed`ライフサイクルメソッドを使用してエラーを処理することで、エラーをキャプチャすることもできます。いずれの場合でも、コマンドの`exitCode`と`error`プロパティを更新することを忘れないでください。
 
-### Handling errors with try/catch
+### try/catchでエラーを処理する
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -285,7 +285,7 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-### Handling errors inside the completed method
+### completedメソッド内でエラーを処理する
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -300,7 +300,7 @@ export default class GreetCommand extends BaseCommand {
       this.logger.error(this.error.message)
       
       /**
-       * Notify Ace that error has been handled
+       * エラーが処理されたことをAceに通知します
        */
       return true
     }
@@ -308,11 +308,11 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## Terminating application
+## アプリの終了
 
-By default, Ace will terminate the application after executing the command. However, if you have enabled the `staysAlive` option, you will have to explicitly terminate the application using the `this.terminate` method.
+デフォルトでは、Aceはコマンドの実行後にアプリケーションを終了します。ただし、`staysAlive`オプションを有効にしている場合は、`this.terminate`メソッドを使用して明示的にアプリケーションを終了する必要があります。
 
-Let's assume we make a redis connection to monitor the server memory. We listen for the `error` event on the redis connection and terminate the app when the connection fails.
+たとえば、サーバーメモリを監視するためにRedis接続を作成し、接続が失敗した場合にアプリを終了するとします。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -336,11 +336,11 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## Cleaning up before the app terminates
+## アプリの終了前のクリーンアップ
 
-Multiple events can trigger an application to terminate, including the [`SIGTERM` signal](https://www.howtogeek.com/devops/linux-signals-hacks-definition-and-more/). Therefore, you must listen for the `terminating` hook in your commands to perform the cleanup.
+アプリケーションの終了は、[`SIGTERM`シグナル](https://www.howtogeek.com/devops/linux-signals-hacks-definition-and-more/)を含む複数のイベントによってトリガーされる場合があります。そのため、コマンド内で`terminating`フックをリッスンしてクリーンアップを実行する必要があります。
 
-You can listen for the terminating hook inside the `prepare` lifecycle method.
+`prepare`ライフサイクルメソッド内で`terminating`フックをリッスンできます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -353,7 +353,7 @@ export default class GreetCommand extends BaseCommand {
   
   prepare() {
     this.app.terminating(() => {
-      // perform the cleanup
+      // クリーンアップを実行する
     })
   }
   

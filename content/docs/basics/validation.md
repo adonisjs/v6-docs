@@ -1,45 +1,45 @@
 ---
-summary: Learn how to validate user input in AdonisJS using VineJS.
+summary: VineJSを使用してAdonisJSでユーザー入力をバリデーションする方法を学びます。
 ---
 
-# Validation
+# バリデーション
 
-The data validation in AdonisJS is usually performed at the controller level. This ensures you validate the user input as soon as your application handles the request and send errors in the response that can be displayed next to the form fields.
+AdonisJSでのデータバリデーションは通常、コントローラーレベルで行われます。これにより、アプリケーションがリクエストを処理し、フォームフィールドの横に表示できるエラーをレスポンスで送信する前に、ユーザー入力をバリデーションできるようになります。
 
-Once the validation is completed, you can use the trusted data to perform the rest of the operations, like database queries, scheduling queue jobs, sending emails, etc.
+バリデーションが完了したら、信頼できるデータを使用してデータベースクエリ、スケジュールされたキュージョブ、メールの送信など、他の操作を実行できます。
 
-## Choosing the validation library
-The AdonisJS core team has created a framework agnostic data validation library called [VineJS](https://vinejs.dev/docs/introduction). Following are some of the reasons for using VineJS.
+## バリデーションライブラリの選択
+AdonisJSのコアチームは、フレームワークに依存しないデータバリデーションライブラリである[VineJS](https://vinejs.dev/docs/introduction)を作成しました。VineJSを使用する理由のいくつかは以下の通りです。
 
-- It is **one of the fastest validation libraries** in the Node.js ecosystem.
+- Node.jsエコシステムで**最速のバリデーションライブラリ**の1つです。
 
-- Provides **static type safety** alongside the runtime validations.
+- 実行時のバリデーションとともに**静的な型安全性**を提供します。
 
-- It comes pre-configured with the `web` and the `api` starter kits.
+- `web`および`api`のスターターキットには事前に構成されています。
 
-- Official AdonisJS packages extend VineJS with custom rules. For example, Lucid contributes `unique` and `exists` rules to VineJS.
+- 公式のAdonisJSパッケージは、VineJSにカスタムルール（例：Lucidは`unique`と`exists`ルールを提供）を追加します。
 
-However, AdonisJS does not technically force you to use VineJS. You can use any validation library that fits great for you or your team. Just uninstall the `@vinejs/vine` package and install the package you want to use.
+ただし、AdonisJSは厳密にVineJSの使用を強制しません。自分やチームに最適なバリデーションライブラリを使用できます。単に`@vinejs/vine`パッケージをアンインストールし、使用したいパッケージをインストールしてください。
 
-## Configuring VineJS
-Install and configure VineJS using the following command.
+## VineJSの設定
+次のコマンドを使用してVineJSをインストールおよび設定します。
 
-See also: [VineJS documentation](https://vinejs.dev)
+参照も: [VineJSのドキュメント](https://vinejs.dev)
 
 ```sh
 node ace add vinejs
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを参照"}
 
-1. Installs the `@vinejs/vine` package using the detected package manager.
+1. 検出されたパッケージマネージャーを使用して`@vinejs/vine`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のサービスプロバイダーを登録します。
 
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...他のプロバイダー
         () => import('@adonisjs/core/providers/vinejs_provider')
       ]
     }
@@ -47,13 +47,13 @@ node ace add vinejs
 
 :::
 
-## Using validators
-VineJS uses the concept of validators. You create one validator for each action your application can perform. For example: Define a validator for **creating a new post**, another for **updating the post**, and maybe a validator for **deleting a post**.
+## バリデータの使用
+VineJSでは、バリデータのコンセプトを使用します。アプリケーションが実行できる各アクションごとにバリデータを作成します。たとえば、**新しい投稿の作成**のためのバリデータ、**投稿の更新**のための別のバリデータ、および**投稿の削除**のためのバリデータを定義します。
 
-We will use a blog as an example and define validators to create/update a post. Let's start by registering a couple of routes and the `PostsController`.
+ブログを例にして、投稿の作成/更新のためのバリデータを定義します。まず、いくつかのルートと`PostsController`を登録しましょう。
 
 ```ts
-// title: Define routes
+// title: ルートの定義
 import router from '@adonisjs/core/services/router'
 
 const PostsController = () => import('#controllers/posts_controller')
@@ -63,12 +63,12 @@ router.put('posts/:id', [PostsController, 'update'])
 ```
 
 ```sh
-// title: Create controller
+// title: コントローラーの作成
 node ace make:controller post store update
 ```
 
 ```ts
-// title: Scaffold controller
+// title: コントローラーのスキャフォールド
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class PostsController {
@@ -78,23 +78,23 @@ export default class PostsController {
 }
 ```
 
-### Creating validators
+### バリデータの作成
 
-Once you have created the `PostsController` and defined the routes, you may use the following ace command to create a validator.
+`PostsController`を作成し、ルートを定義したら、次のaceコマンドを使用してバリデータを作成できます。
 
-See also: [Make validator command](../references/commands.md#makevalidator)
+参照も: [バリデータの作成コマンド](../references/commands.md#makevalidator)
 
 ```sh
 node ace make:validator post
 ```
 
-The validators are created inside the `app/validators` directory. The validator file is empty by default, and you can use it to export multiple validators from it. Each validator is a `const` variable holding the result of [`vine.compile`](https://vinejs.dev/docs/getting_started#pre-compiling-schema) method.
+バリデータは`app/validators`ディレクトリ内に作成されます。バリデータファイルはデフォルトでは空であり、複数のバリデータをエクスポートするために使用できます。各バリデータは、[`vine.compile`](https://vinejs.dev/docs/getting_started#pre-compiling-schema)メソッドの結果を保持する`const`変数です。
 
-In the following example, we define `createPostValidator` and `updatePostValidator`. Both validators have a slight variation in their schemas. During creation, we allow the user to provide a custom slug for the post, whereas we disallow updating it.
+次の例では、`createPostValidator`と`updatePostValidator`を定義しています。両方のバリデータはスキーマにわずかな違いがあります。作成時には、ユーザーが投稿のためにカスタムスラッグを提供できるようにしますが、更新時には許可しません。
 
 :::note
 
-Do not worry too much about the duplication within the validator schemas. We recommend you opt for easy-to-understand schemas vs. avoiding duplication at all costs. The [wet codebase analogy](https://www.deconstructconf.com/2019/dan-abramov-the-wet-codebase) might help you embrace duplication.
+バリデータスキーマ内の重複についてはあまり心配しないでください。重複を避けるためにすべてのコストを払う代わりに、理解しやすいスキーマを選択することをオススメします。[WETコードベースの類推](https://www.deconstructconf.com/2019/dan-abramov-the-wet-codebase)は、重複を受け入れるのに役立つかもしれません。
 
 :::
 
@@ -103,7 +103,7 @@ Do not worry too much about the duplication within the validator schemas. We rec
 import vine from '@vinejs/vine'
 
 /**
- * Validates the post's creation action
+ * 投稿の作成アクションをバリデーションします
  */
 export const createPostValidator = vine.compile(
   vine.object({
@@ -114,7 +114,7 @@ export const createPostValidator = vine.compile(
 )
 
 /**
- * Validates the post's update action
+ * 投稿の更新アクションをバリデーションします
  */
 export const updatePostValidator = vine.compile(
   vine.object({
@@ -124,8 +124,8 @@ export const updatePostValidator = vine.compile(
 )
 ```
 
-### Using validators inside controllers
-Let's go back to the `PostsController` and use the validators to validate the request body. You can access the request body using the `request.all()` method.
+### コントローラー内でバリデータを使用する
+`PostsController`に戻り、バリデータを使用してリクエストボディをバリデーションします。`request.all()`メソッドを使用してリクエストボディにアクセスできます。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -155,31 +155,31 @@ export default class PostsController {
 }
 ```
 
-That is all! Validating the user input is two lines of code inside your controllers. The validated output has static-type information inferred from the schema.
+以上です！ユーザー入力のバリデーションは、コントローラー内の2行のコードです。バリデーションされた出力には、スキーマから推論された静的な型情報が含まれています。
 
-Also, you do not have to wrap the `validate` method call inside a `try/catch`. Because in the case of an error, AdonisJS will automatically convert the error to an HTTP response.
+また、`validate`メソッド呼び出しを`try/catch`でラップする必要はありません。エラーの場合、AdonisJSは自動的にエラーをHTTPレスポンスに変換します。
 
-## Error handling
-The [HttpExceptionHandler](./exception_handling.md) will convert the validation errors to an HTTP response automatically. The exception handler uses content negotiation and returns a response based upon the [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header value.
+## エラーハンドリング
+[HttpExceptionHandler](./exception_handling.md)は、バリデーションエラーを自動的にHTTPレスポンスに変換します。例外ハンドラはコンテンツネゴシエーションを使用し、[Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept)ヘッダーの値に基づいてレスポンスを返します。
 
 :::tip
 
-You might want to peek through the [ExceptionHandler codebase](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts#L343-L345) and see how the validation exceptions are converted to an HTTP response.
+[ExceptionHandlerのコードベース](https://github.com/adonisjs/http-server/blob/main/src/exception_handler.ts#L343-L345)をのぞいて、バリデーション例外がHTTPレスポンスに変換される方法を確認してください。
 
-Also, the session middleware [overwrites the `renderValidationErrorAsHTML` method](https://github.com/adonisjs/session/blob/main/src/session_middleware.ts#L30-L37) and uses flash messages to share the validation errors with the form.
+また、セッションミドルウェアは、[renderValidationErrorAsHTMLメソッド](https://github.com/adonisjs/session/blob/main/src/session_middleware.ts#L30-L37)を上書きし、フラッシュメッセージを使用してフォームとバリデーションエラーを共有します。
 
 :::
 
-- HTTP requests with `Accept=application/json` header will receive an array of error messages created using the [SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts).
+- `Accept=application/json`ヘッダーを持つHTTPリクエストは、[SimpleErrorReporter](https://github.com/vinejs/vine/blob/main/src/reporters/simple_error_reporter.ts)を使用して作成されたエラーメッセージの配列を受け取ります。
 
-- HTTP requests with `Accept=application/vnd.api+json` header will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+- `Accept=application/vnd.api+json`ヘッダーを持つHTTPリクエストは、[JSON API](https://jsonapi.org/format/#errors)仕様にしたがってフォーマットされたエラーメッセージの配列を受け取ります。
 
-- Server rendered forms using the [session package](./session.md) will receive the errors via [session flash messages](./session.md#validation-errors-and-flash-messages).
+- セッションパッケージを使用したサーバーレンダリングされたフォームは、[セッションフラッシュメッセージ](./session.md#validation-errors-and-flash-messages)を介してエラーを受け取ります。
 
-- All other requests will receive errors back as plain text.
+- その他のリクエストは、エラーをプレーンテキストで受け取ります。
 
-## The request.validateUsing method
-The recommended way to perform validations inside controllers is to use the `request.validateUsing` method. When using `request.validateUsing` method, you do not have do define the validation data explicitly; the **request body**, **query string values**, and **the files** are merged together and passed as data to the validator.
+## request.validateUsingメソッド
+コントローラー内でバリデーションを実行する推奨される方法は、`request.validateUsing`メソッドを使用することです。`request.validateUsing`メソッドを使用する場合、バリデーションデータを明示的に定義する必要はありません。**リクエストボディ**、**クエリ文字列の値**、**ファイル**がマージされ、データがバリデータに渡されます。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -211,25 +211,25 @@ export default class PostsController {
 }
 ```
 
-### Validating cookies, headers and route params
-When using the `request.validateUsing` method you can validate cookies, headers and route params as follows.
+### クッキー、ヘッダー、ルートパラメータのバリデーション
+`request.validateUsing`メソッドを使用する場合、クッキー、ヘッダー、ルートパラメータを次のようにバリデーションできます。
 
 ```ts
 const validator = vine.compile(
   vine.object({
-    // Fields in request body
+    // リクエストボディのフィールド
     username: vine.string(),
     password: vine.string(),
 
-    // Validate cookies
+    // クッキーのバリデーション
     cookies: vine.object({
     }),
 
-    // Validate headers
+    // ヘッダーのバリデーション
     headers: vine.object({
     }),
 
-    // Validate route params
+    // ルートパラメータのバリデーション
     params: vine.object({
     }),
   })
@@ -238,12 +238,12 @@ const validator = vine.compile(
 await request.validateUsing(validator)
 ```
 
-## Passing metadata to validators
-Since validators are defined outside the request lifecycle, they do not have direct access to the request data. This is usually good because it makes validators reusable outside an HTTP request lifecycle.
+## バリデータへのメタデータの渡し方
+バリデータはリクエストライフサイクルの外部で定義されているため、バリデータはリクエストデータに直接アクセスできません。これは通常良いことですが、ランタイムデータにアクセスする必要がある場合は、`validate`メソッド呼び出し中にメタデータとして渡す必要があります。
 
-However, if a validator needs access to some runtime data, you must pass it as metadata during the `validate` method call.
+ただし、バリデータがランタイムデータにアクセスする必要がある場合は、`validate`メソッド呼び出し中にメタデータとして渡す必要があります。
 
-Let's take an example of the `unique` validation rule. We want to ensure the user email is unique in the database but skip the row for the currently logged-in user.
+`unique`バリデーションルールの例を見てみましょう。データベース内でユーザーのメールアドレスが一意であることを確認したいが、現在ログインしているユーザーの行はスキップしたい場合です。
 
 ```ts
 export const updateUserValidator = vine
@@ -263,7 +263,7 @@ export const updateUserValidator = vine
   )
 ```
 
-In the above example, we access the currently logged-in user via the `meta.userId` property. Let's see how we can pass the `userId` during an HTTP request.
+上記の例では、`meta.userId`プロパティを介して現在ログインしているユーザーにアクセスしています。HTTPリクエストで`userId`を渡す方法を見てみましょう。
 
 ```ts
 async update({ request, auth }: HttpContext) {
@@ -278,10 +278,10 @@ async update({ request, auth }: HttpContext) {
 }
 ```
 
-### Making metadata type-safe
-In the previous example, we must remember to pass the `meta.userId` during the validation. It would be great if we could make TypeScript remind us of the same.
+### メタデータの型安全性
+前の例では、バリデーション時に`meta.userId`を渡すことを覚えておく必要があります。TypeScriptにそれを思い出させてもらえると素晴らしいです。
 
-In the following example, we use the `vine.withMetaData` function to define the static type of the metadata we expect to use in our schema.
+次の例では、`vine.withMetaData`関数を使用して、スキーマで使用するメタデータの静的な型を定義しています。
 
 ```ts
 export const updateUserValidator = vine
@@ -302,39 +302,41 @@ export const updateUserValidator = vine
   )
 ```
 
-Do note, VineJS does not validate the metadata at runtime. However, if you want to do that, you can pass a callback to the `withMetaData` method and perform the validation manually.
+注意してください、VineJSはランタイムでメタデータをバリデーションしません。ただし、それを行いたい場合は、`withMetaData`メソッドにコールバックを渡し、手動でバリデーションを行うことができます。
 
 ```ts
 vine.withMetaData<{ userId: number }>((meta) => {
-  // validate metadata
+  // メタデータをバリデーションする
 })
 ```
 
-## Configuring VineJS
-You may create a [preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory to configure VineJS with custom error messages or use a custom error reporter.
+## VineJSの設定
+`start`ディレクトリ内に[プリロードファイル](../concepts/adonisrc_file.md#preloads)を作成して、VineJSをカスタムエラーメッセージで設定するか、カスタムエラーレポーターを使用できます。
 
 ```sh
 node ace make:preload validator
 ```
 
-In the following example, we [define custom error messages](https://vinejs.dev/docs/custom_error_messages).
+次の例では、[カスタムエラーメッセージ](https://vinejs.dev/docs/custom_error_messages)を定義しています。
 
 ```ts
 // title: start/validator.ts
 import vine, { SimpleMessagesProvider } from '@vinejs/vine'
 
 vine.messagesProvider = new SimpleMessagesProvider({
-  // Applicable for all fields
-  'required': 'The {{ field }} field is required',
-  'string': 'The value of {{ field }} field must be a string',
-  'email': 'The value is not a valid email address',
+  // すべてのフィールドに適用される
+  'required': '{{ field }}フィールドは必須です',
+  // すべてのフィールドに適用される
+  'string': '{{ field }}フィールドの値は文字列である必要があります',
+  // すべてのフィールドに適用される
+  'email': '有効なメールアドレスではありません',
 
-  // Error message for the username field
-  'username.required': 'Please choose a username for your account',
+  // usernameフィールドのエラーメッセージ
+  'username.required': 'アカウントのユーザー名を選択してください',
 })
 ```
 
-In the following example, we [register a custom error reporter](https://vinejs.dev/docs/error_reporter).
+以下の例では、[カスタムエラーレポーター](https://vinejs.dev/docs/error_reporter)を登録しています。
 
 ```ts
 // title: start/validator.ts
@@ -344,14 +346,14 @@ import { JSONAPIErrorReporter } from '../app/validation_reporters.js'
 vine.errorReporter = () => new JSONAPIErrorReporter()
 ```
 
-## Rules contributed by AdonisJS
-Following is the list of VineJS rules contributed by AdonisJS.
+## AdonisJSによって提供されるルール
+以下は、AdonisJSによって提供されるVineJSルールのリストです。
 
-- The [`vine.file`](https://github.com/adonisjs/core/blob/main/providers/vinejs_provider.ts) schema type is added by the AdonisJS core package.
+- AdonisJSのコアパッケージによって追加された[`vine.file`](https://github.com/adonisjs/core/blob/main/providers/vinejs_provider.ts)スキーマタイプ。
 
-## What's next?
+## 次は何ですか？
 
-- Learn more about using [custom messages](https://vinejs.dev/docs/custom_error_messages) in VineJS.
-- Learn more about using [error reporters](https://vinejs.dev/docs/error_reporter) in VineJS.
-- Read the VineJS [schema API](https://vinejs.dev/docs/schema_101) documentation.
-- Use [i18n translations](../digging_deeper/i18n.md#translating-validation-messages) to define validation error messages.
+- VineJSでの[カスタムメッセージ](https://vinejs.dev/docs/custom_error_messages)の使用方法について詳しく学びます。
+- VineJSでの[エラーレポーター](https://vinejs.dev/docs/error_reporter)の使用方法について詳しく学びます。
+- VineJSの[スキーマAPI](https://vinejs.dev/docs/schema_101)ドキュメントを読みます。
+- [i18n翻訳](../digging_deeper/i18n.md#translating-validation-messages)を使用して、バリデーションエラーメッセージを定義します。

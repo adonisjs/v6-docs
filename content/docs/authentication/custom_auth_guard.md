@@ -1,28 +1,28 @@
 ---
-summary: Learn to create a custom authentication guard for AdonisJS.
+summary: AdonisJSのカスタム認証ガードを作成する方法を学びます。
 ---
 
-# Creating a custom auth guard
+# カスタム認証ガードの作成
 
-The auth package enables you to create custom authentication guards for use cases not served by the built-in guards. In this guide, we will create a guard for using JWT tokens for authentication.
+authパッケージを使用すると、組み込みのガードでは対応できないユースケースのためのカスタム認証ガードを作成できます。このガイドでは、JWTトークンを使用した認証のためのガードを作成します。
 
-The authentication guard revolves around the following concepts.
+認証ガードは次の概念を中心に展開されます。
 
-- **User Provider**: Guards must be user agnostic. They should not hardcode the functions to query and find users from the database. Instead, a guard should rely on a User Provider and accept its implementation as a constructor dependency.
+- **ユーザープロバイダー**: ガードはユーザーに依存しないようにする必要があります。データベースからユーザーをクエリして検索するための関数をハードコードすべきではありません。代わりに、ガードはユーザープロバイダーに依存し、その実装をコンストラクタの依存関係として受け入れるべきです。
 
-- **Guard implementation**: The guard implementation must adhere to the `GuardContract` interface. This interface describes the APIs needed to integrate the guard with the rest of the Auth layer.
+- **ガードの実装**: ガードの実装は`GuardContract`インターフェイスに準拠する必要があります。このインターフェイスは、ガードをAuthレイヤーの他の部分と統合するために必要なAPIを記述しています。
 
-## Creating the `UserProvider` interface
+## `UserProvider`インターフェイスの作成
 
-A guard is responsible for defining the `UserProvider` interface and the methods/properties it should contain. For example, the UserProvider accepted by the [Session guard](https://github.com/adonisjs/auth/blob/develop/modules/session_guard/types.ts#L153-L166) is far simpler than the UserProvider accepted by the [Access tokens guard](https://github.com/adonisjs/auth/blob/develop/modules/access_tokens_guard/types.ts#L192-L222).
+ガードは`UserProvider`インターフェイスと、それが含むべきメソッド/プロパティを定義する責任があります。たとえば、[セッションガード](https://github.com/adonisjs/auth/blob/develop/modules/session_guard/types.ts#L153-L166)が受け入れるUserProviderは、[アクセストークンガード](https://github.com/adonisjs/auth/blob/develop/modules/access_tokens_guard/types.ts#L192-L222)が受け入れるUserProviderよりもはるかにシンプルです。
 
-So, there is no need to create User Providers that satisfy every guard implementation. Each guard can dictate the requirements for the User provider they accept.
+したがって、すべてのガードの実装に準拠するUser Providerを作成する必要はありません。各ガードは、受け入れるUserプロバイダーの要件を指定できます。
 
-For this example, we need a provider to look up users inside the database using the `user ID`. We do not care which database is used or how the query is performed. That's the responsibility of the developer implementing the User provider.
+この例では、`user ID`を使用してデータベース内のユーザーを検索するためのプロバイダーが必要です。使用するデータベースやクエリの方法は問いません。それは、Userプロバイダーを実装する開発者の責任です。
 
 :::note
 
-All the code we will write in this guide can initially live inside a single file stored within the `app/auth/guards` directory.
+このガイドで書くすべてのコードは、最初は`app/auth/guards`ディレクトリ内に格納された単一のファイルに記述することができます。
 
 :::
 
@@ -31,63 +31,59 @@ All the code we will write in this guide can initially live inside a single file
 import { symbols } from '@adonisjs/auth'
 
 /**
- * The bridge between the User provider and the
- * Guard
+ * ユーザープロバイダーとガードの橋渡し
  */
 export type JwtGuardUser<RealUser> = {
   /**
-   * Returns the unique ID of the user
+   * ユーザーの一意のIDを返します
    */
   getId(): string | number | BigInt
 
   /**
-   * Returns the original user object
+   * オリジナルのユーザーオブジェクトを返します
    */
   getOriginal(): RealUser
 }
 
 /**
- * The interface for the UserProvider accepted by the
- * JWT guard.
+ * JWTガードが受け入れるUserProviderのインターフェイス
  */
 export interface JwtUserProviderContract<RealUser> {
   /**
-   * A property the guard implementation can use to infer
-   * the data type of the actual user (aka RealUser)
+   * ガードの実装が実際のユーザーのデータ型（RealUser）を推論するために使用できるプロパティ
    */
   [symbols.PROVIDER_REAL_USER]: RealUser
 
   /**
-   * Create a user object that acts as an adapter between
-   * the guard and real user value.
+   * ガードと実際のユーザー値の間のアダプターとして機能するユーザーオブジェクトを作成します
    */
   createUserForGuard(user: RealUser): Promise<JwtGuardUser<RealUser>>
 
   /**
-   * Find a user by their id.
+   * IDによってユーザーを検索します
    */
   findById(identifier: string | number | BigInt): Promise<JwtGuardUser<RealUser> | null>
 }
 ```
 
-In the above example, the `JwtUserProviderContract` interface accepts a generic user property named `RealUser`. Since this interface does not know what the actual user (the one we fetch from the database) looks like, it accepts it as a generic. For example:
+上記の例では、`JwtUserProviderContract`インターフェイスは、`RealUser`というジェネリックユーザープロパティを受け入れます。このインターフェイスは、実際のユーザー（データベースから取得するユーザー）の形式を知りませんので、ジェネリックとして受け入れます。
 
-- An implementation using Lucid models will return an instance of the Model. Hence, the value of `RealUser` will be that instance.
+例：
+- Lucidモデルを使用する実装では、Modelのインスタンスを返します。したがって、`RealUser`の値はそのインスタンスになります。
 
-- An implementation using Prisma will return a user object with specific properties; therefore, the value of `RealUser` will be that object.
+- Prismaを使用する実装では、特定のプロパティを持つユーザーオブジェクトを返します。したがって、`RealUser`の値はそのオブジェクトになります。
 
-To summarize, the `JwtUserProviderContract` leaves it to the User Provider implementation to decide the User's data type.
+要約すると、`JwtUserProviderContract`は、ユーザープロバイダーの実装にユーザーのデータ型を決定する権限を委ねています。
 
-### Understanding the `JwtGuardUser` type
-The `JwtGuardUser` type acts as a bridge between the User provider and the guard. The guard uses the `getId` method to get the user's unique ID and the `getOriginal` method to get the user's object after authenticating the request.
+### `JwtGuardUser`タイプの理解
+`JwtGuardUser`タイプは、ユーザープロバイダーとガードの間の橋渡しとして機能します。ガードは`getId`メソッドを使用してユーザーの一意のIDを取得し、`getOriginal`メソッドを使用してリクエストの認証後のユーザーオブジェクトを取得します。
 
-## Implementing the guard
-Let's create the `JwtGuard` class and define the methods/properties needed by the [`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/types.ts#L30) interface. Initially, we will have many errors in this file, but that's okay; as we progress, all the errors will disappear.
+## ガードの実装
+`JwtGuard`クラスを作成し、[`GuardContract`](https://github.com/adonisjs/auth/blob/main/src/types.ts#L30)インターフェイスで必要なメソッド/プロパティを定義しましょう。最初はこのファイルには多くのエラーがありますが、進めるにつれてすべてのエラーが消えていきます。
 
 :::note
 
-Please take some time and read the comments next to every property/method in
-the following example.
+次の例のすべてのプロパティ/メソッドの横にあるコメントを読んでください。
 
 :::
 
@@ -99,62 +95,56 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
 {
   /**
-   * A list of events and their types emitted by
-   * the guard.
+   * ガードによって発行されるイベントとそのタイプのリスト
    */
   declare [symbols.GUARD_KNOWN_EVENTS]: {}
 
   /**
-   * A unique name for the guard driver
+   * ガードドライバーの一意の名前
    */
   driverName: 'jwt' = 'jwt'
 
   /**
-   * A flag to know if the authentication was an attempt
-   * during the current HTTP request
+   * 現在のHTTPリクエスト中に認証が試行されたかどうかを知るためのフラグ
    */
   authenticationAttempted: boolean = false
 
   /**
-   * A boolean to know if the current request has
-   * been authenticated
+   * 現在のリクエストが認証されたかどうかを知るためのブール値
    */
   isAuthenticated: boolean = false
 
   /**
-   * Reference to the currently authenticated user
+   * 現在認証されたユーザーへの参照
    */
   user?: UserProvider[typeof symbols.PROVIDER_REAL_USER]
 
   /**
-   * Generate a JWT token for a given user.
+   * 指定されたユーザーのためにJWTトークンを生成します。
    */
   async generate(user: UserProvider[typeof symbols.PROVIDER_REAL_USER]) {
   }
 
   /**
-   * Authenticate the current HTTP request and return
-   * the user instance if there is a valid JWT token
-   * or throw an exception
+   * 現在のHTTPリクエストを認証し、有効なJWTトークンがある場合はユーザーインスタンスを返し、それ以外の場合は例外をスローします。
    */
   async authenticate(): Promise<UserProvider[typeof symbols.PROVIDER_REAL_USER]> {
   }
 
   /**
-   * Same as authenticate, but does not throw an exception
+   * authenticateと同じですが、例外をスローしません
    */
   async check(): Promise<boolean> {
   }
 
   /**
-   * Returns the authenticated user or throws an error
+   * 認証されたユーザーを返すか、エラーをスローします
    */
   getUserOrFail(): UserProvider[typeof symbols.PROVIDER_REAL_USER] {
   }
 
   /**
-   * This method is called by Japa during testing when "loginAs"
-   * method is used to login the user.
+   * このメソッドは、テスト中に「loginAs」メソッドを使用してユーザーをログインするときにJapaによって呼び出されます。
    */
   async authenticateAsClient(
     user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
@@ -163,8 +153,8 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-## Accepting a user provider
-A guard must accept a user provider to look up users during authentication. You can accept it as a constructor parameter and store a private reference.
+## ユーザープロバイダーの受け入れ
+ガードは認証中にユーザープロバイダーを受け入れる必要があります。コンストラクタパラメータとして受け入れ、プライベートな参照を保存します。
 
 ```ts
 export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
@@ -182,14 +172,14 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-## Generating a token
-Let's implement the `generate` method and create a token for a given user. We will install and use the `jsonwebtoken` package from npm to generate a token.
+## トークンの生成
+`generate`メソッドを実装し、指定されたユーザーのためにトークンを生成しましょう。トークンを生成するために、npmから`jsonwebtoken`パッケージをインストールして使用します。
 
 ```sh
 npm i jsonwebtoken @types/jsonwebtoken
 ```
 
-Also, we will have to use a **secret key** to sign a token, so let's update the `constructor` method and accept the secret key as an option via the options object.
+また、トークンに署名するために**シークレットキー**を使用する必要があるため、`constructor`メソッドを更新し、オプションオブジェクトを介してシークレットキーを受け入れるようにします。
 
 ```ts
 // insert-start
@@ -221,7 +211,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   }
 
   /**
-   * Generate a JWT token for a given user.
+   * 指定されたユーザーのためにJWTトークンを生成します。
    */
   async generate(
     user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
@@ -239,19 +229,18 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-- First, we use the `userProvider.createUserForGuard` method to create an instance of the provider user (aka the bridge between the real user and the guard).
+- まず、`userProvider.createUserForGuard`メソッドを使用してプロバイダーユーザーのインスタンス（実際のユーザーとガードの間のブリッジ）を作成します。
 
-- Next, we use the `jwt.sign` method to create a signed token with the `userId` in the payload and return it.
+- 次に、`jwt.sign`メソッドを使用してペイロード内の`userId`を持つ署名付きトークンを作成し、それを返します。
 
-## Authenticating a request
+## リクエストの認証
 
-Authenticating a request includes:
+リクエストの認証には次の手順が含まれます。
 
-- Reading the JWT token from the request header or cookie.
-- Verifying its authenticity.
-- Fetching the user for whom the token was generated.
-
-Our guard will need access to the [HttpContext](../concepts/http_context.md) to read request headers and cookies, so let's update the class `constructor` and accept it as an argument.
+- リクエストヘッダーまたはクッキーからJWTトークンを読み取る。
+- トークンの正当性を検証する。
+- トークンが生成されたユーザーを取得する。
+私たちのガードは、[HttpContext](../concepts/http_context.md)にアクセスする必要がありますので、クラスの`constructor`を更新して引数として受け入れましょう。
 
 ```ts
 // insert-start
@@ -283,7 +272,8 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-We will read the token from the `authorization` header for this example. However, you can adjust the implementation to support cookies as well.
+この例では、トークンを`authorization`ヘッダーから読み取ります。ただし、実装を調整してクッキーもサポートするようにすることもできます。
+
 
 ```ts
 import {
@@ -297,14 +287,11 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
 {
   /**
-   * Authenticate the current HTTP request and return
-   * the user instance if there is a valid JWT token
-   * or throw an exception
+   * 現在のHTTPリクエストを認証し、有効なJWTトークンがある場合はユーザーインスタンスを返し、それ以外の場合は例外をスローします。
    */
   async authenticate(): Promise<UserProvider[typeof symbols.PROVIDER_REAL_USER]> {
     /**
-     * Avoid re-authentication when it has been done already
-     * for the given request
+     * すでに指定されたリクエストに対して認証が行われている場合は、再認証を回避します
      */
     if (this.authenticationAttempted) {
       return this.getUserOrFail()
@@ -312,7 +299,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
     this.authenticationAttempted = true
 
     /**
-     * Ensure the auth header exists
+     * authヘッダーが存在することを確認します
      */
     const authHeader = this.#ctx.request.header('authorization')
     if (!authHeader) {
@@ -322,7 +309,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
     }
 
     /**
-     * Split the header value and read the token from it
+     * ヘッダーの値を分割し、トークンを読み取ります
      */
     const [, token] = authHeader.split('Bearer ')
     if (!token) {
@@ -332,7 +319,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
     }
 
     /**
-     * Verify token
+     * トークンを検証します
      */
     const payload = jwt.verify(token, this.#options.secret)
     if (typeof payload !== 'object' || !('userId' in payload)) {
@@ -342,7 +329,7 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
     }
 
     /**
-     * Fetch the user by user ID and save a reference to it
+     * ユーザーIDでユーザーを検索し、それに対する参照を保存します
      */
     const providerUser = await this.#userProvider.findById(payload.userId)
     if (!providerUser) {
@@ -357,8 +344,8 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-## Implementing the `check` method
-The `check` method is a silent version of the `authenticate` method, and you can implement it as follows.
+## `check`メソッドの実装
+`check`メソッドは`authenticate`メソッドのサイレントバージョンであり、次のように実装できます。
 
 ```ts
 export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
@@ -380,15 +367,15 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-## Implementing the `getUserOrFail` method
-Finally, let's implement the `getUserOrFail` method. It should return the user instance or throw an error (if the user does not exist).
+## `getUserOrFail`メソッドの実装
+最後に、`getUserOrFail`メソッドを実装しましょう。ユーザーのインスタンスを返すか、エラーをスローします（ユーザーが存在しない場合）。
 
 ```ts
 export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
 {
   /**
-   * Returns the authenticated user or throws an error
+   * 認証されたユーザーを返すか、エラーをスローします
    */
   getUserOrFail(): UserProvider[typeof symbols.PROVIDER_REAL_USER] {
     // insert-start
@@ -404,16 +391,15 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-## Implementing the `authenticateAsClient` method
-The `authenticateAsClient` method is used during tests when you want to login a user during tests via the [`loginAs` method](../testing/http_tests.md#authenticating-users). For the JWT implementation, this method should return the `authorization` header containing the JWT token.
+## `authenticateAsClient`メソッドの実装
+`authenticateAsClient`メソッドは、テスト中に[`loginAs`メソッド](../testing/http_tests.md#authenticating-users)を使用してユーザーをログインする場合に使用されます。JWTの実装では、このメソッドはJWTトークンを含む`authorization`ヘッダーを返す必要があります。
 
 ```ts
 export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
   implements GuardContract<UserProvider[typeof symbols.PROVIDER_REAL_USER]>
 {
   /**
-   * This method is called by Japa during testing when "loginAs"
-   * method is used to login the user.
+   * このメソッドは、テスト中に「loginAs」メソッドを使用してユーザーをログインするときにJapaによって呼び出されます。
    */
   async authenticateAsClient(
     user: UserProvider[typeof symbols.PROVIDER_REAL_USER]
@@ -430,8 +416,8 @@ export class JwtGuard<UserProvider extends JwtUserProviderContract<unknown>>
 }
 ```
 
-## Using the guard
-Let's head over to the `config/auth.ts` and register the guard within the `guards` list.
+## ガードの使用
+`config/auth.ts`に移動し、`guards`リスト内でガードを登録しましょう。
 
 ```ts
 import { defineConfig } from '@adonisjs/auth'
@@ -464,12 +450,12 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-As you can notice, we are using the `sessionUserProvider` with our `JwtGuard` implementation. This is because the `JwtUserProviderContract` interface is compatible with the User Provider created by the Session guard.
+ご覧のように、`sessionUserProvider`を`JwtGuard`の実装と共に使用しています。これは、`JwtUserProviderContract`インターフェイスがセッションガードで作成されたユーザープロバイダーと互換性があるためです。
 
-So, instead of creating our own implementation of a User Provider, we re-use one from the Session guard.
+したがって、独自のユーザープロバイダーの実装を作成する代わりに、セッションガードから作成されたものを再利用しています。
 
-## Final example
-Once the implementation is completed, you can use the `jwt` guard like other inbuilt guards. The following is an example of how to generate and verify JWT tokens.
+## 最終的な例
+実装が完了したら、`jwt`ガードを他の組み込みガードと同様に使用できます。以下は、JWTトークンの生成と検証の例です。
 
 ```ts
 import User from '#models/user'

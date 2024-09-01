@@ -1,18 +1,18 @@
 ---
-summary: Assembler hooks are a way of executing code at specific points in the assembler lifecycle. 
+summary: アセンブラフックは、アセンブラライフサイクルの特定のポイントでコードを実行する方法です。
 ---
 
-# Assembler hooks
+# アセンブラフック
 
-Assembler hooks are a way of executing code at specific points in the assembler lifecycle. As a reminder, the Assembler is a part of AdonisJS that enables you to launch your dev server, build your application, and run your tests. 
+アセンブラフックは、アセンブラライフサイクルの特定のポイントでコードを実行する方法です。アセンブラーは、AdonisJSの一部であり、開発サーバーの起動、アプリケーションのビルド、テストの実行を可能にします。
 
-These hooks can be helpful for tasks such as file generation, code compilation, or injecting custom build steps.
+これらのフックは、ファイルの生成、コードのコンパイル、カスタムビルドステップの注入などのタスクに役立ちます。
 
-For example, the `@adonisjs/vite` package uses the `onBuildStarting` hook to inject a step where front-end assets are built. So, when you run `node ace build`, the `@adonisjs/vite` package will build your front-end assets before the rest of the build process. This is a good example of how hooks can be used to customize the build process.
+たとえば、`@adonisjs/vite`パッケージは、`onBuildStarting`フックを使用して、フロントエンドのアセットがビルドされるステップを注入します。したがって、`node ace build`を実行すると、`@adonisjs/vite`パッケージは、ビルドプロセスの残りの部分よりも前にフロントエンドのアセットをビルドします。これは、フックを使用してビルドプロセスをカスタマイズする方法の良い例です。
 
-## Adding a hook
+## フックの追加
 
-Assembler hooks are defined in the `adonisrc.ts` file, in the `hooks` key :
+アセンブラフックは、`adonisrc.ts`ファイルの`hooks`キーで定義されます：
 
 ```ts
 import { defineConfig } from '@adonisjs/core/app'
@@ -35,20 +35,20 @@ export default defineConfig({
 })
 ```
 
-Several hooks can be defined for each stage of the assembly lifecycle. Each hook is an array of functions to be executed.
+アセンブラライフサイクルの各ステージに対して複数のフックを定義できます。各フックは、実行する関数の配列です。
 
-We recommend using dynamic imports to load hooks. It ensures that hooks are not loaded unnecessarily but only when needed. If you write your hook code directly in the `adonisrc.ts` file, this may slow down the start-up of your application.
+フックを読み込むためには、動的インポートを使用することをオススメします。これにより、フックが不必要に読み込まれることなく、必要な時にのみ読み込まれます。フックコードを`adonisrc.ts`ファイルに直接書くと、アプリケーションの起動が遅くなる可能性があります。
 
-## Create a hook
+## フックの作成
 
-A hook is just a simple function. Let's take an example of a hook that is supposed to execute a custom build task.
+フックは単純な関数です。カスタムビルドタスクを実行するフックの例を見てみましょう。
 
 ```ts
 // title: hooks/on_build_starting.ts
 import type { AssemblerHookHandler } from '@adonisjs/core/types/app'
 
 const buildHook: AssemblerHookHandler = async ({ logger }) => {
-  logger.info('Generating some files...')
+  logger.info('ファイルを生成しています...')
 
   await myCustomLogic()
 }
@@ -56,9 +56,9 @@ const buildHook: AssemblerHookHandler = async ({ logger }) => {
 export default buildHook
 ```
 
-Note that the hook must be exported by default.
+フックはデフォルトでエクスポートする必要があることに注意してください。
 
-Once this hook has been defined, all you have to do is add it to the `adonisrc.ts` file like this:
+このフックが定義されたら、`adonisrc.ts`ファイルに次のように追加するだけです：
 
 ```ts
 // title: adonisrc.ts
@@ -73,24 +73,24 @@ export default defineConfig({
 })
 ```
 
-And now, every time you run `node ace build`, the `onBuildStarting` hook will be executed with the custom logic you defined.
+これで、`node ace build`を実行するたびに、定義したカスタムロジックを持つ`onBuildStarting`フックが実行されます。
 
-## Hooks list
+## フックの一覧
 
-Here's the list of available hooks:
+利用可能なフックの一覧は次のとおりです：
 
 ### onBuildStarting
 
-This hook is executed before the build starts. It is helpful for tasks such as file generation or for injecting custom build steps.
+このフックはビルドが開始される前に実行されます。ファイルの生成やカスタムビルドステップの注入などのタスクに役立ちます。
 
 ### onBuildCompleted
 
-This hook is executed once the build is complete. It can also be used to customize the build process.
+このフックはビルドが完了した後に実行されます。ビルドプロセスをカスタマイズするためにも使用できます。
 
 ### onDevServerStarted
 
-This hook is executed once the Adonis dev server is started. 
+このフックはAdonisの開発サーバーが起動した後に実行されます。
 
 ### onSourceFileChanged
 
-This hook is executed each time a source file (included by your `tsconfig.json` ) is modified. Your hook will receive the path of the modified file as an argument.
+このフックは、`tsconfig.json`で指定されたソースファイルが変更されるたびに実行されます。変更されたファイルのパスが引数としてフックに渡されます。

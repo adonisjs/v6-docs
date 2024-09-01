@@ -1,31 +1,31 @@
 ---
-summary: Learn about the tooling configuration presets used by AdonisJS for TypeScript, Prettier, and ESLint.
+summary: AdonisJSによって使用されるTypeScript、Prettier、ESLintのツーリング設定プリセットについて学びましょう。
 ---
 
-# Tooling config
+# ツール設定
 
-AdonisJS relies heavily on TypeScript, Prettier, and ESLint to have consistency in code, check for errors at build time, and more importantly, have a joyful development experience.
+AdonisJSは、コードの一貫性を持ち、ビルド時にエラーをチェックし、より楽しい開発体験をするためにTypeScript、Prettier、ESLintを大いに活用しています。
 
-We have abstracted all our choices inside ready-to-use configuration presets used by all the official packages and by the official starter kits.
+公式パッケージと公式スターターキットのすべてで使用される、使用準備ができた設定プリセットの中に、私たちの選択肢を抽象化しています。
 
-Continue reading this guide if you want to use the same configuration presets in your Node.js applications written in TypeScript.
+TypeScriptで書かれたNode.jsアプリケーションで同じ設定プリセットを使用したい場合は、このガイドを読み続けてください。
 
 ## TSConfig
 
-The [`@adonisjs/tsconfig`](https://github.com/adonisjs/tooling-config/tree/main/packages/typescript-config) package contains the base configuration for TypeScript projects. We set the TypeScript module system to `NodeNext` and use `TS Node + SWC` for Just-in-Time compilation.
+[`@adonisjs/tsconfig`](https://github.com/adonisjs/tooling-config/tree/main/packages/typescript-config)パッケージには、TypeScriptプロジェクトの基本設定が含まれています。TypeScriptのモジュールシステムを`NodeNext`に設定し、Just-in-Timeコンパイルには`TS Node + SWC`を使用しています。
 
-Feel free to explore options inside the [base config file](https://github.com/adonisjs/tooling-config/blob/main/packages/typescript-config/tsconfig.base.json), [application config file](https://github.com/adonisjs/tooling-config/blob/main/packages/typescript-config/tsconfig.app.json), and [package development config file](https://github.com/adonisjs/tooling-config/blob/main/packages/typescript-config/tsconfig.package.json).
+[ベース設定ファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/typescript-config/tsconfig.base.json)、[アプリケーション設定ファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/typescript-config/tsconfig.app.json)、および[パッケージ開発設定ファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/typescript-config/tsconfig.package.json)内のオプションを自由に探索してください。
 
-You can install the package and use it as follows.
+パッケージをインストールし、次のように使用できます。
 
 ```sh
 npm i -D @adonisjs/tsconfig
 
-# Make sure also to install the following packages
+# 以下のパッケージもインストールすることを忘れないでください
 npm i -D typescript ts-node @swc/core
 ```
 
-Extend from the `tsconfig.app.json` file when creating an AdonisJS application. (Comes pre-configured with starter kits).
+AdonisJSアプリケーションを作成する際には、`tsconfig.app.json`ファイルから拡張します（スターターキットで事前に設定済み）。
 
 ```jsonc
 {
@@ -37,7 +37,7 @@ Extend from the `tsconfig.app.json` file when creating an AdonisJS application. 
 }
 ```
 
-Extend from the `tsconfig.package.json` file when creating a package for the AdonisJS ecosystem.
+AdonisJSエコシステムのパッケージを作成する際には、`tsconfig.package.json`ファイルから拡張します。
 
 ```jsonc
 {
@@ -49,19 +49,19 @@ Extend from the `tsconfig.package.json` file when creating a package for the Ado
 }
 ```
 
-## Prettier config
-The [`@adonisjs/prettier-config`](https://github.com/adonisjs/tooling-config/tree/main/packages/prettier-config) package contains the base configuration to auto-format the source code for consistent styling. Feel free to explore configuration options inside the [index.json file](https://github.com/adonisjs/tooling-config/blob/main/packages/prettier-config/index.json).
+## Prettier設定
+[`@adonisjs/prettier-config`](https://github.com/adonisjs/tooling-config/tree/main/packages/prettier-config)パッケージには、ソースコードを一貫したスタイルで自動フォーマットするための基本設定が含まれています。[index.jsonファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/prettier-config/index.json)内の設定オプションを自由に探索してください。
 
-You can install the package and use it as follows.
+パッケージをインストールし、次のように使用できます。
 
 ```sh
 npm i -D @adonisjs/prettier-config
 
-# Make sure also to install prettier
+# prettierもインストールすることを忘れないでください
 npm i -D prettier
 ```
 
-Define the following property inside the `package.json` file.
+`package.json`ファイル内に次のプロパティを定義します。
 
 ```jsonc
 {
@@ -69,7 +69,7 @@ Define the following property inside the `package.json` file.
 }
 ```
 
-Also, create a `.prettierignore` file to ignore specific files and directories.
+また、特定のファイルやディレクトリを無視するために`.prettierignore`ファイルを作成します。
 
 ```
 // title: .prettierignore
@@ -77,25 +77,25 @@ build
 node_modules
 ```
 
-## ESLint config
-The [`@adonisjs/eslint-config`](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-config) package contains the base configuration to apply the linting rules.  Feel free to explore options inside the [base config file](https://github.com/adonisjs/tooling-config/blob/main/packages/eslint-config/presets/ts_base.js), [application config file](https://github.com/adonisjs/tooling-config/blob/main/packages/eslint-config/presets/ts_app.js), and [package development config file](https://github.com/adonisjs/tooling-config/blob/main/packages/eslint-config/presets/ts_package.js).
+## ESLint設定
+[`@adonisjs/eslint-config`](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-config)パッケージには、リンティングルールを適用するための基本設定が含まれています。[ベース設定ファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/eslint-config/presets/ts_base.js)、[アプリケーション設定ファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/eslint-config/presets/ts_app.js)、および[パッケージ開発設定ファイル](https://github.com/adonisjs/tooling-config/blob/main/packages/eslint-config/presets/ts_package.js)内のオプションを自由に探索してください。
 
-You can install the package and use it as follows.
+パッケージをインストールし、次のように使用できます。
 
 :::note
 
-Our config preset uses the [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier) to ensure ESLint and Prettier can work together without stepping over each other.
+私たちの設定プリセットは、[eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier)を使用して、ESLintとPrettierが互いに干渉しないようにしています。
 
 :::
 
 ```sh
 npm i -D @adonisjs/eslint-config
 
-# Make sure also to install eslint
+# eslintもインストールすることを忘れないでください
 npm i -D eslint
 ```
 
-Extend from the `eslint-config/app` file when creating an AdonisJS application. (Comes pre-configured with starter kits).
+AdonisJSアプリケーションを作成する際には、`eslint-config/app`ファイルから拡張します（スターターキットで事前に設定済み）。
 
 ```json
 // title: package.json
@@ -106,7 +106,7 @@ Extend from the `eslint-config/app` file when creating an AdonisJS application. 
 }
 ```
 
-Extend from the `eslint-config/package` file when creating a package for the AdonisJS ecosystem.
+AdonisJSエコシステムのパッケージを作成する際には、`eslint-config/package`ファイルから拡張します。
 
 ```json
 // title: package.json

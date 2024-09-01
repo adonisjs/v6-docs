@@ -1,506 +1,506 @@
 [
   {
     "permalink": "preface/introduction",
-    "title": "Introduction",
+    "title": "はじめに",
     "contentPath": "./preface/introduction.md",
-    "category": "Preface"
+    "category": "前書き"
   },
   {
     "permalink": "preface/faqs",
-    "title": "FAQs",
+    "title": "よくある質問",
     "contentPath": "./preface/faqs.md",
-    "category": "Preface"
+    "category": "前書き"
   },
   {
     "permalink": "preface/governance",
-    "title": "Governance",
+    "title": "ガバナンス",
     "contentPath": "./preface/governance.md",
-    "category": "Preface"
+    "category": "前書き"
   },
   {
     "permalink": "preface/releases",
-    "title": "Releases",
+    "title": "リリース",
     "contentPath": "./preface/releases.md",
-    "category": "Preface"
+    "category": "前書き"
   },
   {
     "permalink": "preface/contribution-guide",
-    "title": "Contribution Guide",
+    "title": "貢献ガイド",
     "contentPath": "./preface/contribution_guide.md",
-    "category": "Preface"
+    "category": "前書き"
   },
   {
     "permalink": "getting-started/installation",
-    "title": "Installation",
+    "title": "インストール",
     "contentPath": "./getting_started/installation.md",
-    "category": "Getting started"
+    "category": "はじめに"
   },
   {
     "permalink": "getting-started/configuration",
-    "title": "Configuration",
+    "title": "設定",
     "contentPath": "./getting_started/configuration.md",
-    "category": "Getting started"
+    "category": "はじめに"
   },
   {
     "permalink": "getting-started/environment-variables",
-    "title": "Environment variables",
+    "title": "環境変数",
     "contentPath": "./getting_started/environment_variables.md",
-    "category": "Getting started"
+    "category": "はじめに"
   },
   {
     "permalink": "getting-started/folder-structure",
-    "title": "Folder structure",
+    "title": "フォルダ構造",
     "contentPath": "./getting_started/folder_structure.md",
-    "category": "Getting started"
+    "category": "はじめに"
   },
   {
     "permalink": "getting-started/deployment",
-    "title": "Deployment",
+    "title": "デプロイ",
     "contentPath": "./getting_started/deployment.md",
-    "category": "Getting started"
+    "category": "はじめに"
   },
   {
     "permalink": "concepts/adonisrc-file",
-    "title": "AdonisRC file",
+    "title": "AdonisRC ファイル",
     "contentPath": "./concepts/adonisrc_file.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/async-local-storage",
-    "title": "Async local storage",
+    "title": "非同期ローカルストレージ",
     "contentPath": "./concepts/async_local_storage.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/assembler-hooks",
-    "title": "Assembler hooks",
+    "title": "アセンブラフック",
     "contentPath": "./concepts/assembler_hooks.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/application",
-    "title": "Application",
+    "title": "アプリケーション",
     "contentPath": "./concepts/application.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/application-lifecycle",
-    "title": "Application lifecycle",
+    "title": "アプリケーションライフサイクル",
     "contentPath": "./concepts/application_lifecycle.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/config-providers",
-    "title": "Config providers",
+    "title": "コンフィグプロバイダ",
     "contentPath": "./concepts/config_providers.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/container-services",
-    "title": "Container services",
+    "title": "コンテナサービス",
     "contentPath": "./concepts/container_services.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/dependency-injection",
-    "title": "Dependency injection (DI)",
+    "title": "依存性注入（DI）",
     "contentPath": "./concepts/dependency_injection.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/extending-adonisjs",
-    "title": "Extending the framework",
+    "title": "フレームワークの拡張",
     "contentPath": "./concepts/extending_the_framework.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/hot-module-replacement",
-    "title": "Hot module replacement (HMR)",
+    "title": "Hot module replacement（HMR）",
     "contentPath": "./concepts/hmr.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/http-overview",
-    "title": "HTTP overview",
+    "title": "HTTP 概要",
     "contentPath": "./concepts/http_overview.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/http-context",
-    "title": "HTTP context",
+    "title": "HTTP コンテキスト",
     "contentPath": "./concepts/http_context.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/service-providers",
-    "title": "Service providers",
+    "title": "サービスプロバイダ",
     "contentPath": "./concepts/service_providers.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/scaffolding",
     "title": "Scaffolding",
     "contentPath": "./concepts/scaffolding.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/tooling-config",
-    "title": "Tooling config",
+    "title": "ツール設定",
     "contentPath": "./concepts/tooling_config.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "concepts/typescript-build-process",
-    "title": "TypeScript build process",
+    "title": "TypeScript ビルドプロセス",
     "contentPath": "./concepts/typescript_build_process.md",
-    "category": "Concepts"
+    "category": "コンセプト"
   },
   {
     "permalink": "basics/routing",
-    "title": "Routing",
+    "title": "ルーティング",
     "contentPath": "./basics/routing.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/controllers",
-    "title": "Controllers",
+    "title": "コントローラ",
     "contentPath": "./basics/controllers.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/middleware",
-    "title": "Middleware",
+    "title": "ミドルウェア",
     "contentPath": "./basics/middleware.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/body-parser",
-    "title": "Body parser",
+    "title": "Body パーサー",
     "contentPath": "./basics/body_parser.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/request",
-    "title": "Request",
+    "title": "リクエスト",
     "contentPath": "./basics/request.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/response",
-    "title": "Response",
+    "title": "レスポンス",
     "contentPath": "./basics/response.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/validation",
-    "title": "Validation",
+    "title": "バリデーション",
     "contentPath": "./basics/validation.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/file-uploads",
-    "title": "File uploads",
+    "title": "ファイルのアップロード",
     "contentPath": "./basics/file_uploads.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/session",
-    "title": "Session",
+    "title": "セッション",
     "contentPath": "./basics/session.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/cookies",
-    "title": "Cookies",
+    "title": "クッキー",
     "contentPath": "./basics/cookies.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/exception-handling",
-    "title": "Exception handling",
+    "title": "例外処理",
     "contentPath": "./basics/exception_handling.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/vite",
     "title": "Vite",
     "contentPath": "./basics/vite.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "basics/static-file-server",
-    "title": "Static file server",
+    "title": "静的ファイルサーバー",
     "contentPath": "./basics/static_file_server.md",
-    "category": "Basics"
+    "category": "基本"
   },
   {
     "permalink": "database/introduction",
-    "title": "Introduction",
+    "title": "はじめに",
     "contentPath": "./database/introduction.md",
-    "category": "Database"
+    "category": "データベース"
   },
   {
     "permalink": "database/lucid",
     "title": "Lucid",
     "contentPath": "./database/lucid.md",
-    "category": "Database"
+    "category": "データベース"
   },
   {
     "permalink": "database/redis",
     "title": "Redis",
     "contentPath": "./database/redis.md",
-    "category": "Database"
+    "category": "データベース"
   },
   {
     "permalink": "authentication/introduction",
-    "title": "Introduction",
+    "title": "はじめに",
     "contentPath": "./authentication/introduction.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "authentication/verifying-user-credentials",
-    "title": "Verifying user credentials",
+    "title": "ユーザーの資格情報の検証",
     "contentPath": "./authentication/verifying_user_credentials.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "authentication/session-guard",
-    "title": "Session guard",
+    "title": "セッションガード",
     "contentPath": "./authentication/session_guard.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "authentication/access-tokens-guard",
-    "title": "Access tokens guard",
+    "title": "アクセストークンガード",
     "contentPath": "./authentication/access_tokens_guard.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "authentication/basic-auth-guard",
-    "title": "Basic auth guard",
+    "title": "基本認証ガード",
     "contentPath": "./authentication/basic_auth_guard.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "authentication/custom-auth-guard",
-    "title": "Custom auth guard",
+    "title": "カスタム認証ガード",
     "contentPath": "./authentication/custom_auth_guard.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "authentication/social-authentication",
-    "title": "Social authentication",
+    "title": "ソーシャル認証",
     "contentPath": "./authentication/social_authentication.md",
-    "category": "Authentication"
+    "category": "認証"
   },
   {
     "permalink": "security/authorization",
-    "title": "Authorization",
+    "title": "認可",
     "contentPath": "./security/authorization.md",
-    "category": "Security"
+    "category": "セキュリティ"
   },
   {
     "permalink": "security/encryption",
-    "title": "Encryption",
+    "title": "暗号化",
     "contentPath": "./security/encryption.md",
-    "category": "Security"
+    "category": "セキュリティ"
   },
   {
     "permalink": "security/hashing",
-    "title": "Hashing",
+    "title": "ハッシュ化",
     "contentPath": "./security/hashing.md",
-    "category": "Security"
+    "category": "セキュリティ"
   },
   {
     "permalink": "security/cors",
     "title": "CORS",
     "contentPath": "./security/cors.md",
-    "category": "Security"
+    "category": "セキュリティ"
   },
   {
     "permalink": "security/securing-ssr-applications",
-    "title": "Securing SSR apps",
+    "title": "SSR アプリケーションのセキュリティ",
     "contentPath": "./security/securing_ssr_applications.md",
-    "category": "Security"
+    "category": "セキュリティ"
   },
   {
     "permalink": "security/rate-limiting",
-    "title": "Rate limiting",
+    "title": "レート制限",
     "contentPath": "./security/rate_limiting.md",
-    "category": "Security"
+    "category": "セキュリティ"
   },
   {
     "permalink": "views-and-templates/introduction",
-    "title": "Introduction",
+    "title": "はじめに",
     "contentPath": "./views-and-templates/introduction.md",
-    "category": "Views & Templates"
+    "category": "ビューとテンプレート"
   },
   {
     "permalink": "views-and-templates/edgejs",
     "title": "EdgeJS",
     "contentPath": "./views-and-templates/edgejs.md",
-    "category": "Views & Templates"
+    "category": "ビューとテンプレート"
   },
   {
     "permalink": "views-and-templates/inertia",
     "title": "Inertia",
     "contentPath": "./views-and-templates/inertia.md",
-    "category": "Views & Templates"
+    "category": "ビューとテンプレート"
   },
   {
     "permalink": "testing/introduction",
-    "title": "Introduction",
+    "title": "はじめに",
     "contentPath": "./testing/introduction.md",
-    "category": "Testing"
+    "category": "テスト"
   },
   {
     "permalink": "testing/http-tests",
-    "title": "HTTP tests",
+    "title": "HTTP テスト",
     "contentPath": "./testing/http_tests.md",
-    "category": "Testing"
+    "category": "テスト"
   },
   {
     "permalink": "testing/browser-tests",
-    "title": "Browser tests",
+    "title": "ブラウザテスト",
     "contentPath": "./testing/browser_tests.md",
-    "category": "Testing"
+    "category": "テスト"
   },
   {
     "permalink": "testing/console-tests",
-    "title": "Console tests",
+    "title": "コンソールテスト",
     "contentPath": "./testing/console_tests.md",
-    "category": "Testing"
+    "category": "テスト"
   },
   {
     "permalink": "testing/database",
-    "title": "Database",
+    "title": "データベース",
     "contentPath": "./testing/database.md",
-    "category": "Testing"
+    "category": "テスト"
   },
   {
     "permalink": "testing/mocks-and-fakes",
-    "title": "Mocks & Fakes",
+    "title": "モックとフェイク",
     "contentPath": "./testing/mocks_and_fakes.md",
-    "category": "Testing"
+    "category": "テスト"
   },
   {
     "permalink": "digging-deeper/drive",
     "title": "Drive",
     "contentPath": "./digging_deeper/drive.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/emitter",
     "title": "Emitter",
     "contentPath": "./digging_deeper/emitter.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/health-checks",
-    "title": "Health checks",
+    "title": "ヘルスチェック",
     "contentPath": "./digging_deeper/health_checks.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/i18n",
     "title": "I18n",
     "contentPath": "./digging_deeper/i18n.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/locks",
-    "title": "Locks",
+    "title": "ロック",
     "contentPath": "./digging_deeper/locks.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/logger",
     "title": "Logger",
     "contentPath": "./digging_deeper/logger.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/mail",
-    "title": "Mail",
+    "title": "メール",
     "contentPath": "./digging_deeper/mail.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/transmit",
     "title": "Transmit",
     "contentPath": "./digging_deeper/transmit.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "digging-deeper/repl",
-    "title": "Repl",
+    "title": "REPL",
     "contentPath": "./digging_deeper/repl.md",
-    "category": "Digging deeper"
+    "category": "さらに深く"
   },
   {
     "permalink": "ace/introduction",
-    "title": "Introduction",
+    "title": "はじめに",
     "contentPath": "./ace/introduction.md",
-    "category": "Ace commands"
+    "category": "Aceコマンド"
   },
   {
     "permalink": "ace/creating-commands",
-    "title": "Creating commands",
+    "title": "コマンドの作成",
     "contentPath": "./ace/creating_commands.md",
-    "category": "Ace commands"
+    "category": "Aceコマンド"
   },
   {
     "permalink": "ace/arguments",
-    "title": "Command arguments",
+    "title": "コマンド引数",
     "contentPath": "./ace/args.md",
-    "category": "Ace commands"
+    "category": "Aceコマンド"
   },
   {
     "permalink": "ace/flags",
-    "title": "Command flags",
+    "title": "コマンドフラグ",
     "contentPath": "./ace/flags.md",
-    "category": "Ace commands"
+    "category": "Aceコマンド"
   },
   {
     "permalink": "ace/prompts",
-    "title": "Prompts",
+    "title": "プロンプト",
     "contentPath": "./ace/prompts.md",
-    "category": "Ace commands"
+    "category": "Aceコマンド"
   },
   {
     "permalink": "ace/terminal-ui",
-    "title": "Terminal UI",
+    "title": "ターミナル UI",
     "contentPath": "./ace/tui.md",
-    "category": "Ace commands"
+    "category": "Aceコマンド"
   },
   {
     "permalink": "references/commands",
-    "title": "Commands",
+    "title": "コマンド",
     "contentPath": "./references/commands.md",
-    "category": "References"
+    "category": "リファレンス"
   },
   {
     "permalink": "references/edge",
-    "title": "Edge helpers and tags",
+    "title": "Edge ヘルパーとタグ",
     "contentPath": "./references/edge.md",
-    "category": "References"
+    "category": "リファレンス"
   },
   {
     "permalink": "references/events",
-    "title": "Events",
+    "title": "イベント",
     "contentPath": "./references/events.md",
-    "category": "References"
+    "category": "リファレンス"
   },
   {
     "permalink": "references/exceptions",
-    "title": "Exceptions",
+    "title": "例外",
     "contentPath": "./references/exceptions.md",
-    "category": "References"
+    "category": "リファレンス"
   },
   {
     "permalink": "references/helpers",
-    "title": "Helpers",
+    "title": "ヘルパー",
     "contentPath": "./references/helpers.md",
-    "category": "References"
+    "category": "リファレンス"
   }
 ]

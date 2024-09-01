@@ -1,36 +1,36 @@
 ---
-summary: Learn how to write authorization checks in your AdonisJS application using the `@adonisjs/bouncer` package.
+summary: \`@adonisjs/bouncer`パッケージを使用して、AdonisJSアプリケーションでの認可チェックを行う方法を学びます。
 ---
 
-# Authorization
+# 認可
 
-You can write authorization checks in your AdonisJS application using the `@adonisjs/bouncer` package. Bouncer provides a JavaScript first API for writing authorization checks as **abilities** and **policies**.
+`@adonisjs/bouncer`パッケージを使用して、AdonisJSアプリケーションで認可チェックを行うことができます。Bouncerは、**アビリティ**と**ポリシー**としての認可チェックを書くためのJavaScriptファーストのAPIを提供します。
 
-The goal of abilities and policies is to abstract the logic of authorizing an action to a single place and reuse it across the rest of the codebase.
+アビリティとポリシーの目的は、アクションの認可ロジックを1つの場所に抽象化し、コードベース全体で再利用することです。
 
-- [Abilities](#defining-abilities) are defined as functions and can be a great fit if your application has fewer and simpler authorization checks.
+- [アビリティ](#アビリティの定義)は関数として定義され、アプリケーションに少なくかつシンプルな認可チェックがある場合に適しています。
 
-- [Policies](#defining-policies) are defined as classes, and you must create one policy for every resource in your application. Policies can also benefit from [automatic dependency injection](#dependency-injection).
+- [ポリシー](#ポリシーの定義)はクラスとして定義され、アプリケーションの各リソースごとに1つのポリシーを作成する必要があります。ポリシーはまた、[依存性の自動注入](#依存性の注入)の恩恵を受けることもできます。
 
 :::note
 
-Bouncer is not an implementation of RBAC or ACL. Instead, it provides a low-level API with fine-grained control to authorize actions in your AdonisJS applications.
+BouncerはRBACやACLの実装ではありません。代わりに、AdonisJSアプリケーションでアクションを認可するための細かい制御を持つ低レベルのAPIを提供しています。
 
 :::
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+次のコマンドを使用してパッケージをインストールして設定します：
 
 ```sh
 node ace add @adonisjs/bouncer
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行される手順を参照"}
 
-1. Installs the `@adonisjs/bouncer` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`@adonisjs/bouncer`パッケージをインストールします。
 
-2. Registers the following service provider and command inside the `adonisrc.ts` file.
+2. 次のサービスプロバイダとコマンドを`adonisrc.ts`ファイル内に登録します。
 
     ```ts
     {
@@ -45,13 +45,13 @@ node ace add @adonisjs/bouncer
     }
     ```
 
-3. Creates the `app/abilities/main.ts` file to define and export abilities.
+3. `app/abilities/main.ts`ファイルを作成し、アビリティを定義してエクスポートします。
 
-4. Creates the `app/policies/main.ts` file to export all policies as a collection.
+4. `app/policies/main.ts`ファイルを作成し、すべてのポリシーをコレクションとしてエクスポートします。
 
-5. Creates `initialize_bouncer_middleware` inside the `middleware` directory.
+5. `middleware`ディレクトリ内に`initialize_bouncer_middleware`を作成します。
 
-6. Register the following middleware inside the `start/kernel.ts` file.
+6. `start/kernel.ts`ファイル内に次のミドルウェアを登録します。
 
     ```ts
     router.use([
@@ -62,17 +62,17 @@ node ace add @adonisjs/bouncer
 :::
 
 :::tip
-**Are you more of a visual learner?** - Checkout the [AdonisJS Bouncer ](https://adocasts.com/series/adonisjs-bouncer) free screencasts series from our friends at Adocasts.
+**視覚的な学習者の方へ** - Adocastsの友達からの[AdonisJS Bouncer](https://adocasts.com/series/adonisjs-bouncer)無料スクリーンキャストシリーズをチェックしてみてください。
 :::
 
-##  The Initialize bouncer middleware
-During setup, we create and register the `#middleware/initialize_bouncer_middleware` middleware within your application. The initialize middleware is responsible for creating an instance of the [Bouncer](https://github.com/adonisjs/bouncer/blob/main/src/bouncer.ts) class for the currently authenticated user and shares it via the `ctx.bouncer` property with the rest of the request.
+## Bouncerの初期化ミドルウェア
+セットアップ中に、アプリケーション内に`#middleware/initialize_bouncer_middleware`ミドルウェアを作成して登録します。初期化ミドルウェアは、現在の認証済みユーザーのために[Bouncer](https://github.com/adonisjs/bouncer/blob/main/src/bouncer.ts)クラスのインスタンスを作成し、リクエストの残りの部分で`ctx.bouncer`プロパティを介して共有します。
 
-Also, we share the same Bouncer instance with Edge templates using the `ctx.view.share` method. Feel free to remove the following lines of code from the middleware if you are not using Edge inside your application.
+また、`ctx.view.share`メソッドを使用してEdgeテンプレートとも同じBouncerインスタンスを共有します。アプリケーション内でEdgeを使用していない場合は、ミドルウェアから次のコードを削除しても構いません。
 
 :::note
 
-You own your application's source code, including the files created during the initial setup. So, do not hesitate to change them and make them work with your application environment.
+初期セットアップ時に作成されるファイルを含め、アプリケーションのソースコードはすべてあなたのものです。そのため、それらを変更してアプリケーション環境に合わせて動作させることに躊躇しないでください。
 
 :::
 
@@ -86,7 +86,7 @@ async handle(ctx: HttpContext, next: NextFn) {
 
   // delete-start
   /**
-   * Remove if not using Edge
+   * Edgeを使用していない場合は削除してください
    */
   if ('view' in ctx) {
     ctx.view.share(ctx.bouncer.edgeHelpers)
@@ -97,15 +97,15 @@ async handle(ctx: HttpContext, next: NextFn) {
 }
 ```
 
-## Defining abilities
+## アビリティの定義
 
-Abilities are JavaScript functions usually written inside the `./app/abilities/main.ts` file. You may export multiple abilities from this file.
+アビリティは通常`./app/abilities/main.ts`ファイル内に記述されるJavaScript関数です。このファイルから複数のアビリティをエクスポートできます。
 
-In the following example, we define an ability called `editPost` using the `Bouncer.ability` method. The implementation callback must return `true` to authorize the user and return `false` to deny access.
+次の例では、`Bouncer.ability`メソッドを使用して`editPost`というアビリティを定義しています。実装コールバックは、ユーザーを認可するために`true`を返し、アクセスを拒否するために`false`を返す必要があります。
 
 :::note
 
-An ability should always accept the `User` as the first parameter, followed by additional parameters needed for the authorization check.
+アビリティは常に認可チェックに必要な追加のパラメーターに続いて、最初のパラメーターとして`User`を受け入れるべきです。
 
 :::
 
@@ -120,10 +120,10 @@ export const editPost = Bouncer.ability((user: User, post: Post) => {
 })
 ```
 
-### Performing authorization
-Once you have defined an ability, you may perform an authorization check using the `ctx.bouncer.allows` method. 
+### 認可の実行
+アビリティを定義したら、`ctx.bouncer.allows`メソッドを使用して認可チェックを実行できます。
 
-Bouncer will automatically pass the currently logged-in user to the ability callback as the first parameter, and you must supply the rest of the parameters manually. 
+Bouncerは、アビリティコールバックに現在ログインしているユーザーを自動的に最初のパラメーターとして渡し、残りのパラメーターは手動で指定する必要があります。
 
 ```ts
 import Post from '#models/post'
@@ -134,39 +134,38 @@ import router from '@adonisjs/core/services/router'
 
 router.put('posts/:id', async ({ bouncer, params, response }) => {
   /**
-   * Find a post by ID so that we can perform an
-   * authorization check for it.
+   * 認可チェックを行うために、IDで投稿を検索します。
    */
   const post = await Post.findOrFail(params.id)
 
   /**
-   * Use the ability to see if the logged-in user
-   * is allowed to perform the action.
+   * アビリティを使用して、ログインしているユーザーが
+   * アクションを実行できるかどうかを確認します。
    */
   // highlight-start
   if (await bouncer.allows(editPost, post)) {
-    return 'You can edit the post'
+    return '投稿を編集できます。'
   }
   // highlight-end
 
-  return response.forbidden('You cannot edit the post')
+  return response.forbidden('投稿を編集することはできません。')
 })
 ```
 
-The opposite of `bouncer.allows` method is the `bouncer.denies` method. You may prefer this method instead of writing an `if not` statement.
+`bouncer.allows`メソッドの反対は`bouncer.denies`メソッドです。`if not`ステートメントを書く代わりに、このメソッドを使用することもできます。
 
 ```ts
 if (await bouncer.denies(editPost, post)) {
-  response.abort('Your cannot edit the post', 403)
+  response.abort('投稿を編集することはできません。', 403)
 }
 ```
 
-### Allowing guest users
-By default, Bouncer denies authorization checks for non-logged-in users without invoking the ability callback. 
+### ゲストユーザーの許可
+デフォルトでは、Bouncerはログインしていないユーザーに対して認可チェックを拒否し、アビリティコールバックを呼び出しません。
 
-However, you may want to define certain abilities that can work with a guest user. For example, allow guests to view published posts but allow the creator of the post to view drafts as well.
+ただし、ゲストユーザーでも動作する特定のアビリティを定義する場合があります。たとえば、ゲストには公開された投稿を表示することを許可し、投稿の作成者には下書きも表示することを許可します。
 
-You may define an ability that allows guest users using the `allowGuest` option. In this case, the options will be defined as the first parameter, and callback will be the second parameter.
+`allowGuest`オプションを使用して、ゲストユーザーを許可するアビリティを定義できます。この場合、オプションは最初のパラメーターとして定義され、コールバックは2番目のパラメーターとして定義されます。
 
 ```ts
 export const viewPost = Bouncer.ability(
@@ -175,30 +174,29 @@ export const viewPost = Bouncer.ability(
   // highlight-end
   (user: User | null, post: Post) => {
     /**
-     * Allow everyone to access published posts
+     * 公開された投稿には誰でもアクセスできるようにします。
      */
     if (post.isPublished) {
       return true
     }
 
     /**
-     * Guest cannot view non-published posts
+     * ゲストは非公開の投稿を表示できません。
      */
     if (!user) {
       return false
     }
 
     /**
-     * The creator of the post can view non-published posts
-     * as well.
+     * 投稿の作成者は非公開の投稿も表示できます。
      */
     return user.id === post.userId
   }
 )
 ```
 
-### Authorizing users other than the logged-in user
-If you want to authorize a user other than the logged-in user, you may use the `Bouncer` constructor to create a new bouncer instance for a given user.
+### ログインしているユーザー以外のユーザーの認可
+ログインしているユーザー以外のユーザーを認可する場合は、`Bouncer`コンストラクタを使用して指定されたユーザーのために新しいBouncerインスタンスを作成できます。
 
 ```ts
 import User from '#models/user'
@@ -213,18 +211,18 @@ if (await bouncer.allows(editPost, post)) {
 }
 ```
 
-## Defining policies
-Policies offer an abstraction layer to organize the authorization checks as classes. It is recommended to create one policy per resource. For example, if your application has a Post model, you must create a `PostPolicy` class to authorize actions such as creating or updating posts.
+## ポリシーの定義
+ポリシーは、認可チェックをクラスとして組織化するための抽象化レイヤーを提供します。通常、リソースごとに1つのポリシーを作成することをオススメします。たとえば、アプリケーションに`Post`モデルがある場合、投稿の作成や更新などのアクションを認可するために`PostPolicy`クラスを作成する必要があります。
 
-The policies are stored inside the `./app/policies` directory, and each file represents a single policy. You may create a new policy by running the following command.
+ポリシーは`./app/policies`ディレクトリ内に格納され、各ファイルが単一のポリシーを表します。次のコマンドを実行して新しいポリシーを作成できます。
 
-See also: [Make policy command](../references/commands.md#makepolicy)
+参照：[ポリシーの作成コマンド](../references/commands.md#makepolicy)
 
 ```sh
 node ace make:policy post
 ```
 
-The policy class extends the [BasePolicy](https://github.com/adonisjs/bouncer/blob/main/src/base_policy.ts) class, and you may implement methods for the authorization checks you want to perform. In the following example, we define authorization checks to `create`, `edit`, and `delete` a post.
+ポリシークラスは[BasePolicy](https://github.com/adonisjs/bouncer/blob/main/src/base_policy.ts)クラスを拡張し、実行したい認可チェックのためのメソッドを実装できます。次の例では、`create`、`edit`、`delete`の投稿に対する認可チェックを定義しています。
 
 ```ts
 // title: app/policies/post_policy.ts
@@ -235,21 +233,21 @@ import { AuthorizerResponse } from '@adonisjs/bouncer/types'
 
 export default class PostPolicy extends BasePolicy {
   /**
-   * Every logged-in user can create a post
+   * すべてのログインユーザーは投稿を作成できます。
    */
   create(user: User): AuthorizerResponse {
     return true
   }
 
   /**
-   * Only the post creator can edit the post
+   * 投稿の作成者のみが投稿を編集できます。
    */
   edit(user: User, post: Post): AuthorizerResponse {
     return user.id === post.userId
   }
 
   /**
-   * Only the post creator can delete the post
+   * 投稿の作成者のみが投稿を削除できます。
    */
   delete(user: User, post: Post): AuthorizerResponse {
     return user.id === post.userId
@@ -257,12 +255,12 @@ export default class PostPolicy extends BasePolicy {
 }
 ```
 
-### Performing authorization
-Once you have created a policy, you may use the `bouncer.with` method to specify the policy you want to use for authorization and then chain the `bouncer.allows` or `bouncer.denies` methods to perform the authorization check.
+### 認可の実行
+ポリシーを作成したら、`bouncer.with`メソッドを使用して認可に使用するポリシーを指定し、`bouncer.allows`または`bouncer.denies`メソッドをチェーンして認可チェックを実行できます。
 
 :::note
 
-The `allows` and `denies` methods chained after the `bouncer.with` methods are type-safe and will show a list of completions based on the methods you have defined on the policy class.
+`bouncer.with`メソッドの後にチェーンされた`allows`メソッドと`denies`メソッドは型安全であり、ポリシークラスで定義したメソッドに基づいて補完リストが表示されます。
 
 :::
 
@@ -275,11 +273,11 @@ export default class PostsController {
   async create({ bouncer, response }: HttpContext) {
     // highlight-start
     if (await bouncer.with(PostPolicy).denies('create')) {
-      return response.forbidden('Cannot create a post')
+      return response.forbidden('投稿を作成することはできません。')
     }
     // highlight-end
 
-    //Continue with the controller logic
+    //コントローラのロジックを続行します
   }
 
   async edit({ bouncer, params, response }: HttpContext) {
@@ -287,11 +285,11 @@ export default class PostsController {
 
     // highlight-start
     if (await bouncer.with(PostPolicy).denies('edit', post)) {
-      return response.forbidden('Cannot edit the post')
+      return response.forbidden('投稿を編集することはできません。')
     }
     // highlight-end
 
-    //Continue with the controller logic
+    //コントローラのロジックを続行します
   }
 
   async delete({ bouncer, params, response }: HttpContext) {
@@ -299,18 +297,19 @@ export default class PostsController {
 
     // highlight-start
     if (await bouncer.with(PostPolicy).denies('delete', post)) {
-      return response.forbidden('Cannot delete the post')
+      return response.forbidden('投稿を削除することはできません。')
     }
     // highlight-end
 
-    //Continue with the controller logic
+    //コントローラのロジックを続行します
   }
 }
 ```
 
-### Allowing guest users
-[Similar to abilities](#allowing-guest-users), policies can also define authorization checks for guest users using the `@allowGuest` decorator. For example:
+### ゲストユーザーの許可
+[アビリティと同様に](#ゲストユーザーの許可)、ポリシーも`@allowGuest`デコレータを使用してゲストユーザーのための認可チェックを定義できます。
 
+例：
 ```ts
 import User from '#models/user'
 import Post from '#models/post'
@@ -321,48 +320,47 @@ export default class PostPolicy extends BasePolicy {
   @allowGuest()
   view(user: User | null, post: Post): AuthorizerResponse {
     /**
-     * Allow everyone to access published posts
+     * 公開された投稿には誰でもアクセスできるようにします。
      */
     if (post.isPublished) {
       return true
     }
 
     /**
-     * Guest cannot view non-published posts
+     * ゲストは非公開の投稿を表示できません。
      */
     if (!user) {
       return false
     }
 
     /**
-     * The creator of the post can view non-published posts
-     * as well.
+     * 投稿の作成者は非公開の投稿も表示できます。
      */
     return user.id === post.userId
   }
 }
 ```
 
-### Policy hooks
-You may define the `before` and the `after` template methods on a policy class to run actions around an authorization check. A common use case is always allowing or denying access to a certain user.
+### ポリシーフック
+`before`メソッドと`after`メソッドをポリシークラスに定義することで、認可チェックの周りでアクションを実行できます。一般的な使用例は、特定のユーザーに常にアクセスを許可または拒否することです。
 
 :::note
 
-The `before` and the `after` methods are always invoked, regardless of a logged-in user. So make sure to handle the case where the value of `user` will be `null`.
+`before`メソッドと`after`メソッドは、ログインしているユーザーの有無に関係なく常に呼び出されます。そのため、`user`の値が`null`になる場合を扱う必要があります。
 
 :::
 
-The response from the `before` is interpreted as follows.
+`before`メソッドの応答は次のように解釈されます。
 
-- The `true` value will be considered successful authorization, and the action method will not be called.
-- The `false` value will be considered access denied, and the action method will not be called.
-- With an `undefined` return value, the bouncer will execute the action method to perform the authorization check.
+- `true`の値は成功した認可と見なされ、アクションメソッドは呼び出されません。
+- `false`の値はアクセスが拒否されたと見なされ、アクションメソッドは呼び出されません。
+- `undefined`の戻り値の場合、バウンサーはアクションメソッドを実行して認可チェックを行います。
 
 ```ts
 export default class PostPolicy extends BasePolicy {
   async before(user: User | null, action: string, ...params: any[]) {
     /**
-     * Always allow an admin user without performing any check
+     * 管理者ユーザーは常にチェックを行わずに許可します。
      */
     if (user && user.isAdmin) {
       return true
@@ -371,11 +369,11 @@ export default class PostPolicy extends BasePolicy {
 }
 ```
 
-The `after` method receives the raw response from the action method and can override the previous response by returning a new value. The response from the `after` is interpreted as follows.
+`after`メソッドはアクションメソッドからの生の応答を受け取り、新しい値を返すことで以前の応答を上書きできます。`after`からの応答は次のように解釈されます。
 
-- The `true` value will be considered successful authorization, and the old response will be discarded.
-- The `false` value will be considered access denied, and the old response will be discarded.
-- With an `undefined` return value, the bouncer will continue to use the old response.
+- `true`の値は成功した認可と見なされ、以前の応答は破棄されます。
+- `false`の値はアクセスが拒否されたと見なされ、以前の応答は破棄されます。
+- `undefined`の戻り値の場合、バウンサーは以前の応答を引き続き使用します。
 
 ```ts
 import { AuthorizerResponse } from '@adonisjs/bouncer/types'
@@ -394,8 +392,8 @@ export default class PostPolicy extends BasePolicy {
 }
 ```
 
-### Dependency injection
-The policy classes are created using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint and inject dependencies inside the policy constructor using the `@inject` decorator.
+### 依存性の注入
+ポリシークラスは[IoCコンテナ](../concepts/dependency_injection.md)を使用して作成されるため、`@inject`デコレータを使用してポリシーコンストラクタ内で依存関係を型指定して注入できます。
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -415,7 +413,7 @@ export class PostPolicy extends BasePolicy {
 }
 ```
 
-If a Policy class is created during an HTTP request, you may also inject an instance of [HttpContext](../concepts/http_context.md) inside it.
+ポリシークラスがHTTPリクエスト中に作成される場合は、[HttpContext](../concepts/http_context.md)のインスタンスも注入できます。
 
 ```ts
 // highlight-start
@@ -433,8 +431,8 @@ export class PostPolicy extends BasePolicy {
 }
 ```
 
-## Throwing AuthorizationException
-Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](https://github.com/adonisjs/bouncer/blob/main/src/errors.ts#L19) when the check fails.
+## AuthorizationExceptionのスロー
+`allows`メソッドと`denies`メソッドの代わりに、`bouncer.authorize`メソッドを使用して認可チェックを実行することもできます。このメソッドは、チェックが失敗した場合に[AuthorizationException](https://github.com/adonisjs/bouncer/blob/main/src/errors.ts#L19)をスローします。
 
 ```ts
 router.put('posts/:id', async ({ bouncer, params }) => {
@@ -444,21 +442,20 @@ router.put('posts/:id', async ({ bouncer, params }) => {
   // highlight-end
 
   /**
-   * If no exception was raised, you can consider the user
-   * is allowed to edit the post.
+   * 例外が発生しなかった場合、ユーザーは投稿を編集できると見なすことができます。
    */
 })
 ```
 
-AdonisJS will convert the `AuthorizationException` to a `403 - Forbidden` HTTP response using the following content negotiation rules.
+AdonisJSは、`AuthorizationException`を使用して、次のコンテンツネゴシエーションルールにしたがって`403 - Forbidden`のHTTPレスポンスに変換します。
 
-- HTTP requests with the `Accept=application/json` header will receive an array of error messages. Each array element will be an object with the `message` property.
+- `Accept=application/json`ヘッダーを持つHTTPリクエストは、エラーメッセージの配列を受け取ります。各配列要素は`message`プロパティを持つオブジェクトです。
 
-- HTTP requests with `Accept=application/vnd.api+json` header will receive an array of error messages formatted as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+- `Accept=application/vnd.api+json`ヘッダーを持つHTTPリクエストは、[JSON API](https://jsonapi.org/format/#errors)仕様にしたがってフォーマットされたエラーメッセージの配列を受け取ります。
 
-- All other requests will receive a plain text response message. However, you may use [status pages](../basics/exception_handling.md#status-pages) to show a custom error page for authorization errors.
+- その他のリクエストは、プレーンテキストの応答メッセージを受け取ります。ただし、[ステータスページ](../basics/exception_handling.md#status-pages)を使用して、認可エラーのカスタムエラーページを表示することもできます。
 
-You may also self-handle `AuthorizationException` errors within the [global exception handler](../basics/exception_handling.md).
+また、[グローバル例外ハンドラ](../basics/exception_handling.md)内で`AuthorizationException`エラーを自己処理することもできます。
 
 ```ts
 import { errors } from '@adonisjs/bouncer'
@@ -483,10 +480,10 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-## Customizing Authorization response
-Instead of returning a boolean value from abilities and policies, you may construct an error response using the [AuthorizationResponse](https://github.com/adonisjs/bouncer/blob/main/src/response.ts) class. 
+## カスタム認可応答のカスタマイズ
+アビリティやポリシーから真偽値を返す代わりに、[AuthorizationResponse](https://github.com/adonisjs/bouncer/blob/main/src/response.ts)クラスを使用してカスタムのエラーレスポンスを構築することもできます。
 
-The `AuthorizationResponse` class gives you fine grained control to define a custom HTTP status code and the error message.
+`AuthorizationResponse`クラスを使用すると、カスタムのHTTPステータスコードとエラーメッセージを定義できます。
 
 ```ts
 import User from '#models/user'
@@ -499,12 +496,12 @@ export const editPost = Bouncer.ability((user: User, post: Post) => {
   }
 
   // highlight-start
-  return AuthorizationResponse.deny('Post not found', 404)
+  return AuthorizationResponse.deny('投稿が見つかりません', 404)
   // highlight-end
 })
 ```
 
-If you are using the [@adonisjs/i18n](../digging_deeper/i18n.md) package, you may return a localized response using the `.t` method. The translation message will be used over the default message during an HTTP request based on the user's language.
+[@adonisjs/i18n](../digging_deeper/i18n.md)パッケージを使用している場合は、`.t`メソッドを使用してローカライズされた応答を返すこともできます。HTTPリクエストに基づいてユーザーの言語に応じて、デフォルトのメッセージよりも翻訳メッセージが使用されます。
 
 ```ts
 export const editPost = Bouncer.ability((user: User, post: Post) => {
@@ -514,17 +511,17 @@ export const editPost = Bouncer.ability((user: User, post: Post) => {
 
   // highlight-start
   return AuthorizationResponse
-    .deny('Post not found', 404) // default message
-    .t('errors.not_found') // translation identifier
+    .deny('投稿が見つかりません', 404) // デフォルトのメッセージ
+    .t('errors.not_found') // 翻訳識別子
   // highlight-end
 })
 ```
 
-### Using a custom response builder
+### カスタム応答ビルダの使用
 
-The flexibility to define custom error messages for individual authorization checks is great. However, if you always want to return the same response, it might be cumbersome to repeat the same code everytime.
+個々の認可チェックごとにカスタムエラーメッセージを定義する柔軟性は素晴らしいです。ただし、常に同じ応答を返す場合は、同じコードを繰り返すことになります。
 
-Therefore, you can override the default response builder for Bouncer as follows.
+そのため、Bouncerのデフォルトの応答ビルダを次のようにオーバーライドできます。
 
 ```ts
 import { Bouncer, AuthorizationResponse } from '@adonisjs/bouncer'
@@ -539,43 +536,43 @@ Bouncer.responseBuilder = (response: boolean | AuthorizationResponse) => {
   }
 
   return AuthorizationResponse
-    .deny('Resource not found', 404)
+    .deny('リソースが見つかりません', 404)
     .t('errors.not_found')
 }
 ```
 
-## Pre-registering abilities and policies
-So far, in this guide, we explicitly import an ability or a policy whenever we want to use it. However, once you pre-register them, you can reference an ability or a policy by its name as a string.
+## アビリティとポリシーの事前登録
+これまでのガイドでは、使用するたびに明示的にアビリティやポリシーをインポートしています。ただし、事前に登録すると、名前の文字列としてアビリティやポリシーを参照できます。
 
-Pre-registering abilities and policies might be less useful within your TypeScript codebase than just cleaning up the imports. However, they offer far better DX within Edge templates.
+アビリティとポリシーを事前に登録することは、TypeScriptのコードベース内でのみ使用するよりもインポートを整理するために役立ちます。ただし、Edgeテンプレート内ではDXが向上します。
 
-Look at the following code examples of Edge templates with and without pre-registering a policy.
+次のコード例は、ポリシーを事前に登録しない場合と登録する場合のEdgeテンプレートの比較です。
 
 :::caption{for="error"}
-**Without pre-registering. No, not super clean**
+**事前登録しない場合。あまりきれいではありません**
 :::
 
 ```edge
-{{-- First import the ability --}}
+{{-- 最初にアビリティをインポートします --}}
 @let(editPost = (await import('#abilities/main')).editPost)
 
 @can(editPost, post)
-  {{-- Can edit post --}}
+  {{-- 投稿を編集できます --}}
 @end
 ```
 
 :::caption{for="success"}
-**With pre-registering**
+**事前登録する場合**
 :::
 
 ```edge
-{{-- Reference ability name as a string --}}
+{{-- アビリティ名を文字列として参照します --}}
 @can('editPost', post)
-  {{-- Can edit post --}}
+  {{-- 投稿を編集できます --}}
 @end
 ```
 
-If you open the `initialize_bouncer_middleware.ts` file, you will find us already importing and pre-registering abilities and policies when creating the Bouncer instance.
+`initialize_bouncer_middleware.ts`ファイルを開くと、Bouncerインスタンスを作成する際にすでにアビリティとポリシーをインポートして事前に登録していることがわかります。
 
 ```ts
 // highlight-start
@@ -596,11 +593,11 @@ export default InitializeBouncerMiddleware {
 }
 ```
 
-### Points to note
+### 注意点
 
-- If you decide to define abilities in other parts of your codebase, then make sure to import and pre-register them inside the middleware.
+- コードベースの他の部分でアビリティを定義することを決定した場合は、ミドルウェア内でインポートして事前に登録するようにしてください。
 
-- In the case of policies, every time you run the `make:policy` command, make sure to accept the prompt to register the policy inside the policies collection. The policies collection is defined inside the `./app/policies/main.ts` file.
+- ポリシーの場合、`make:policy`コマンドを実行するたびに、ポリシーをポリシーコレクション内に登録するようにプロンプトを受け入れることを確認してください。ポリシーコレクションは`./app/policies/main.ts`ファイル内で定義されています。
 
   ```ts
   // title: app/policies/main.ts
@@ -610,11 +607,11 @@ export default InitializeBouncerMiddleware {
   }
   ```
 
-### Referencing pre-registered abilities and policies
-In the following example, we get rid of the imports and reference abilities and policies by their name. Do note **the string-based API is also type-safe**, but your code editor's "Go to Definition" feature may not work.
+### 事前登録されたアビリティとポリシーの参照
+次の例では、インポートを削除し、アビリティとポリシーを名前の文字列として参照しています。ただし、**文字列ベースのAPIも型安全ですが、コードエディタの「定義に移動」機能は機能しない場合があります**。
 
 ```ts
-// title: Ability usage example
+// title: アビリティの使用例
 // delete-start
 import { editPost } from '#abilities/main'
 // delete-end
@@ -628,13 +625,13 @@ router.put('posts/:id', async ({ bouncer, params, response }) => {
   // insert-start
   if (await bouncer.allows('editPost', post)) {
   // insert-end
-    return 'You can edit the post'
+    return '投稿を編集できます。'
   }
 })
 ```
 
 ```ts
-// title: Policy usage example
+// title: ポリシーの使用例
 // delete-start
 import PostPolicy from '#policies/post_policy'
 // delete-end
@@ -647,40 +644,40 @@ export default class PostsController {
     // insert-start
     if (await bouncer.with('PostPolicy').denies('create')) {
     // insert-end
-      return response.forbidden('Cannot create a post')
+      return response.forbidden('投稿を作成することはできません。')
     }
 
-    //Continue with the controller logic
+    //コントローラのロジックを続行します
   }
 }
 ```
 
-## Authorization checks inside Edge templates
-Before you can perform authorization checks inside Edge templates, make sure to [pre-register abilities and policies](#pre-registering-abilities-and-policies). Once done, you may use the `@can` and `@cannot` tags to perform the authorization checks.
+## インターフェイス内の認可チェック
+Edgeテンプレート内で認可チェックを実行するには、[アビリティとポリシーを事前に登録](#事前登録されたアビリティとポリシーの参照)する必要があります。登録が完了したら、`@can`タグと`@cannot`タグを使用して認可チェックを実行できます。
 
-These tags accept the `ability` name or the `policy.method` name as the first parameter, followed by the rest of the parameters accepted by the ability or a policy.
+これらのタグは、最初のパラメーターとして`ability`名または`policy.method`名を受け入れ、アビリティまたはポリシーが受け入れる残りのパラメーターを続けます。
 
 ```edge
-// title: Usage with ability
+// title: アビリティを使用した例
 @can('editPost', post)
-  {{-- Can edit post --}}
+  {{-- 投稿を編集できます --}}
 @end
 
 @cannot('editPost', post)
-  {{-- Cannot edit post --}}
+  {{-- 投稿を編集できません --}}
 @end
 ```
 
 ```edge
-// title: Usage with policy
+// title: ポリシーを使用した例
 @can('PostPolicy.edit', post)
-  {{-- Can edit post --}}
+  {{-- 投稿を編集できます --}}
 @end
 
 @cannot('PostPolicy.edit', post)
-  {{-- Cannot edit post --}}
+  {{-- 投稿を編集できません --}}
 @end
 ```
 
-## Events
-Please check the [events reference guide](../references/events.md#authorizationfinished) to view the list of events dispatched by the `@adonisjs/bouncer` package.
+## イベント
+`@adonisjs/bouncer`パッケージがディスパッチするイベントのリストを表示するには、[イベントリファレンスガイド](../references/events.md#authorizationfinished)を参照してください。

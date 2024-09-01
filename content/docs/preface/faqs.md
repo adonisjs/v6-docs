@@ -1,48 +1,50 @@
 ---
-summary: Frequently asked questions about AdonisJS, the framework, and its ecosystem.
+summary: AdonisJSに関するよくある質問、フレームワーク、およびそのエコシステムについて。
 ---
 
-# FAQs
+# よくある質問
 
-## Who maintains AdonisJS?
+## AdonisJSは誰がメンテナンスしていますか？
 
-AdonisJS is an independent project created by [Harminder Virk](https://twitter.com/AmanVirk1) in 2015. The framework is actively maintained by the [core team](https://github.com/orgs/adonisjs/people) and community contributors.
+AdonisJSは2015年に[Harminder Virk](https://twitter.com/AmanVirk1)によって作成された独立したプロジェクトです。フレームワークは[コアチーム](https://github.com/orgs/adonisjs/people)とコミュニティの貢献者によって積極的にメンテナンスされています。
 
-The framework creator (Harminder Virk) is the project lead and works full-time on the framework.
+フレームワークの作成者であるHarminder Virkはプロジェクトリーダーとしてフレームワークに全力で取り組んでいます。
 
-The project is funded through GitHub Sponsors. If you or your business benefit from AdonisJS, consider [sponsoring us to support the framework development](https://github.com/sponsors/thetutlage).
+このプロジェクトはGitHub Sponsorsによって資金提供されています。もしAdonisJSを利用している場合は、[フレームワークの開発をサポートするためにスポンサーになることを検討してください](https://github.com/sponsors/thetutlage)。
 
-## How is AdonisJS licensed?
+## AdonisJSはどのようにライセンスされていますか？
 
-AdonisJS (the framework) and the official packages are distributed under the [MIT License](https://opensource.org/license/mit/). In addition, the source code is publicly available on [GitHub](https://github.com/adonisjs).
+AdonisJS（フレームワーク）と公式パッケージは[MITライセンス](https://opensource.org/license/mit/)の下で配布されています。さらに、ソースコードは[GitHub](https://github.com/adonisjs)で公開されています。
 
-## Is AdonisJS reliable and well-maintained?
+## AdonisJSは信頼性があり、メンテナンスが行き届いていますか？
 
-AdonisJS is used in production by [Marie Claire](https://www.marieclaire.com/), [Cleavr](https://cleavr.io), [Ledger](https://www.ledger.com/), [Cavai](https://cavai.com), [Kayako](https://kayako.com), [Renault Group](https://www.renaultgroup.com/en/), [Zakodium](https://www.zakodium.com/), [FIVB](https://www.fivb.com), and many more companies in varying capacities.
+AdonisJSは[Marie Claire](https://www.marieclaire.com/)、[Cleavr](https://cleavr.io)、[Ledger](https://www.ledger.com/)、[Cavai](https://cavai.com)、[Kayako](https://kayako.com)、[Renault Group](https://www.renaultgroup.com/en/)、[Zakodium](https://www.zakodium.com/)、[FIVB](https://www.fivb.com)など、さまざまな企業で本番環境で使用されています。
 
-The framework creator works full-time on AdonisJS and ensures the framework is actively improved and maintained.
+フレームワークの作成者はAdonisJSに全力で取り組み、フレームワークの改善とメンテナンスを積極的に行っています。
 
-- During the v6 release, we migrated to the ES module system.
-- Officially maintained packages have zero security vulnerabilities reported by Snyk’s security scan.
-- We continuously work towards writing better documentation, releasing new features, and improving the existing codebase. 
+- v6リリース時にESモジュールシステムに移行しました。
+- 公式にメンテナンスされているパッケージは、Snykのセキュリティスキャンによるセキュリティの脆弱性がゼロです。
+- より良いドキュメントの作成、新機能のリリース、既存のコードベースの改善に取り組んでいます。
 
-## Is AdonisJS fast?
+## AdonisJSは高速ですか？
 
-When creating the framework or adding new features, we primarily focus on solving real-world problems rather than cutting down the functionality to make AdonisJS win the benchmark Olympics.
+フレームワークの作成や新機能の追加時には、AdonisJSをベンチマークオリンピックで勝つために機能を削減するのではなく、現実世界の問題を解決することに主眼を置いています。
 
-However, we look closer at the performance metrics and fine-tune the framework performance wherever it matters. For example:
+ただし、パフォーマンスのメトリクスには注意を払い、必要な場所でフレームワークのパフォーマンスを微調整しています。たとえば：
 
-- The AdonisJS HTTP server in standalone mode is [on par with Fastify in performance](https://github.com/adonisjs/http-server/blob/main/benchmarks.md). 
-- The validation layer of the framework [outperforms other popular validation libraries](https://github.com/vinejs/vine/blob/main/benchmarks.md) in the Node.js ecosystem.
+- スタンドアロンモードのAdonisJS HTTPサーバーは、[Fastifyと同等のパフォーマンス](https://github.com/adonisjs/http-server/blob/main/benchmarks.md)を持っています。
+- フレームワークのバリデーションレイヤーは、Node.jsエコシステムの他の人気のあるバリデーションライブラリよりも[優れたパフォーマンスを発揮](https://github.com/vinejs/vine/blob/main/benchmarks.md)しています。
 
-## Do you offer paid support?
-Yes! On our website, you can learn more about the [priority support program](https://adonisjs.com/support_program).
+## 有料のサポートは提供していますか？
 
-## How do I stay up to date with AdonisJS?
-Check out the following links to stay connected and up-to-date.
+はい！ウェブサイトで[優先サポートプログラム](https://adonisjs.com/support_program)について詳しくご覧いただけます。
 
-- [Discord server](https://discord.gg/vDcEjq6)
-- [X (Formerly Twitter)](https://twitter.com/adonisframework)
-- [GitHub discussions](https://github.com/orgs/adonisjs/discussions)
-- [Blog and Newsletter](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
+## AdonisJSの最新情報はどのように入手できますか？
+
+以下のリンクをチェックして、最新の情報についてつながりを保ちましょう。
+
+- [Discordサーバー](https://discord.gg/vDcEjq6)
+- [X（元Twitter）](https://twitter.com/adonisframework)
+- [GitHubディスカッション](https://github.com/orgs/adonisjs/discussions)
+- [ブログとニュースレター](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
 - [Adocasts](https://adocasts.com/?referrer=adonisjs_docs_faq)

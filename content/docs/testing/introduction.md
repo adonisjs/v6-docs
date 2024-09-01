@@ -1,30 +1,30 @@
 ---
-summary: Learn how to write and run tests in AdonisJS using Japa, our in-built testing framework.
+summary: Japaを使用してAdonisJSでテストを書き、実行する方法を学びます。
 ---
 
-# Testing
+# テスト
 
-AdonisJS has in-built support for writing tests. You do not have to install additional packages or wire up your application to be ready for testing - All the hard work has already been done.
+AdonisJSにはテストを書くための組み込みサポートがあります。追加のパッケージをインストールしたり、アプリケーションをテストの準備のために設定する必要はありません - すべての重要な作業はすでに完了しています。
 
-You can run the application tests using the following ace command.
+次のaceコマンドを使用してアプリケーションのテストを実行できます。
 
 ```sh
 node ace test
 ```
 
-The tests are stored inside the `tests` directory and we further organize tests by their type. For example, the functional tests are stored inside the `tests/functional` directory, and the unit tests are stored inside the `tests/unit` directory.
+テストは`tests`ディレクトリに格納され、さらにタイプごとにテストが整理されています。たとえば、機能テストは`tests/functional`ディレクトリに格納され、ユニットテストは`tests/unit`ディレクトリに格納されます。
 
-Functional tests refer to outside-in testing in which you will make real HTTP requests to your application to test the functionality of a given flow or an endpoint. For example, you may have a collection of functional tests for creating a user.
+機能テストは、実際のHTTPリクエストを使用してアプリケーションをテストし、特定のフローやエンドポイントの機能をテストします。たとえば、ユーザーの作成に関する機能テストのコレクションがあるかもしれません。
 
-Some communities might refer to functional tests as feature tests or end-to-end tests. AdonisJS is flexible about what you call them. We decided to settle on the term **functional tests**.
+一部のコミュニティでは、機能テストをフィーチャーテストまたはエンドツーエンドテストと呼ぶこともあります。AdonisJSでは、それらをどのように呼ぶかについて柔軟です。私たちは「機能テスト」という用語を採用することにしました。
 
-## Configuring the tests runner
+## テストランナーの設定
 
-AdonisJS uses [Japa](https://japa.dev/docs) for writing and running tests. Therefore, we recommend reading the Japa documentation to understand its APIs and configuration options better.
+AdonisJSは、テストの作成と実行に[Japa](https://japa.dev/docs)を使用しています。そのため、Japaのドキュメントを読んでAPIと設定オプションをよりよく理解することをお勧めします。
 
-### Suites
+### スイート
 
-The test suites are defined inside the `adonisrc.ts` file. By default, we register the `functional` and the `unit` test suites. If needed, you can remove the existing suites and start from scratch.
+テストスイートは`adonisrc.ts`ファイルで定義されます。デフォルトでは、`functional`と`unit`のテストスイートが登録されています。必要に応じて、既存のスイートを削除してから新しく作成することができます。
 
 ```ts
 {
@@ -43,10 +43,10 @@ The test suites are defined inside the `adonisrc.ts` file. By default, we regist
 }
 ```
 
-- A suite combines the suite's unique name and the file's glob pattern.
-- When you run tests for a specific suite, files only related to that suite are imported.
+- スイートは、スイートの一意の名前とファイルのグロブパターンを組み合わせたものです。
+- 特定のスイートのテストを実行すると、そのスイートに関連するファイルのみがインポートされます。
 
-You can configure a suite at runtime using the `configureSuite` hook defined inside the `tests/bootstrap.ts` file. For example, when running functional tests, you can register suite-level hooks to start the HTTP server.
+`tests/bootstrap.ts`ファイルで定義された`configureSuite`フックを使用して、実行時にスイートを設定することもできます。たとえば、機能テストを実行するときに、スイートレベルのフックを登録してHTTPサーバーを起動することができます。
 
 ```ts
 export const configureSuite: Config['configureSuite'] = (suite) => {
@@ -56,9 +56,9 @@ export const configureSuite: Config['configureSuite'] = (suite) => {
 }
 ```
 
-### Runner hooks
+### ランナーフック
 
-Runner hooks are global actions you can run before and after all the tests. The hooks are defined using the `runnerHooks` property inside the `tests/boostrap.ts` file.
+ランナーフックは、すべてのテストの前後に実行されるグローバルなアクションです。フックは`tests/boostrap.ts`ファイル内の`runnerHooks`プロパティを使用して定義されます。
 
 ```ts
 export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
@@ -75,11 +75,11 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
 }
 ```
 
-### Plugins
+### プラグイン
 
-Japa has a plugin system you can use to extend its functionality. Plugins are registered inside the `tests/bootstrap.ts` file.
+Japaには機能を拡張するためのプラグインシステムがあります。プラグインは`tests/bootstrap.ts`ファイルに登録されます。
 
-See also: [Creating Japa plugins](https://japa.dev/docs/creating-plugins)
+参考: [Japaプラグインの作成](https://japa.dev/docs/creating-plugins)
 
 ```ts
 export const plugins: Config['plugins'] = [
@@ -88,11 +88,11 @@ export const plugins: Config['plugins'] = [
 ]
 ```
 
-### Reporters
+### レポーター
 
-Reporters are used for reporting/displaying the progress of tests as they run. The reporters are registered inside the `tests/bootstrap.ts` file.
+レポーターは、テストの進行状況を報告/表示するために使用されます。レポーターは`tests/bootstrap.ts`ファイルに登録されます。
 
-See also: [Creating Japa reporters](https://japa.dev/docs/creating-reporters)
+参考: [Japaレポーターの作成](https://japa.dev/docs/creating-reporters)
 
 ```ts
 export const reporters: Config['reporters'] = {
@@ -100,23 +100,23 @@ export const reporters: Config['reporters'] = {
 }
 ```
 
-## Creating tests
+## テストの作成
 
-You may create a new test using the `make:test` command. The command needs the suite's name to create the test file.
+`make:test`コマンドを使用して新しいテストを作成できます。コマンドにはスイートの名前が必要です。
 
-See also: [Make test command](../references/commands.md#maketest)
+参考: [テスト作成コマンド](../references/commands.md#maketest)
 
 ```sh
 node ace make:test posts/create --suite=functional
 ```
 
-The file will be created inside the directory configured using the `files` glob property.
+ファイルは`files`グロブプロパティで設定されたディレクトリ内に作成されます。
 
-## Writing tests
+## テストの記述
 
-The tests are defined using the `test` method imported from the `@japa/runner` package. A test accepts a title as the first parameter and the implementation callback as the second parameter.
+テストは`@japa/runner`パッケージからインポートされた`test`メソッドを使用して定義されます。テストは、最初のパラメータとしてタイトル、2番目のパラメータとして実装のコールバックを受け入れます。
 
-In the following example, we create a new user account and use the [`assert`](https://japa.dev/docs/plugins/assert) object to ensure the password hashed correctly.
+次の例では、新しいユーザーアカウントを作成し、[`assert`](https://japa.dev/docs/plugins/assert)オブジェクトを使用してパスワードが正しくハッシュ化されていることを確認しています。
 
 ```ts
 import { test } from '@japa/runner'
@@ -124,7 +124,7 @@ import { test } from '@japa/runner'
 import User from '#models/User'
 import hash from '@adonisjs/core/services/hash'
 
-test('hashes user password when creating a new user', async ({ assert }) => {
+test('新しいユーザーを作成するときにユーザーパスワードをハッシュ化する', async ({ assert }) => {
   const user = new User()
   user.password = 'secret'
   
@@ -135,11 +135,11 @@ test('hashes user password when creating a new user', async ({ assert }) => {
 })
 ```
 
-### Using test groups
+### テストグループの使用
 
-Test groups are created using the `test.group` method. Groups add structure to your tests and allow you to run [lifecycle hooks](https://japa.dev/docs/lifecycle-hooks) around your tests.
+テストグループは`test.group`メソッドを使用して作成されます。グループはテストに構造を追加し、テストの周りで[lifecycle hooks](https://japa.dev/docs/lifecycle-hooks)を実行することができます。
 
-Continuing the previous example, let's move the password hashing test inside a group. 
+前の例を続けて、パスワードのハッシュ化テストをグループ内に移動させましょう。
 
 ```ts
 import { test } from '@japa/runner'
@@ -148,9 +148,9 @@ import User from '#models/User'
 import hash from '@adonisjs/core/services/hash'
 
 // highlight-start
-test.group('creating user', () => {
+test.group('ユーザーの作成', () => {
 // highlight-end
-  test('hashes user password', async ({ assert }) => {
+  test('ユーザーパスワードをハッシュ化する', async ({ assert }) => {
     const user = new User()
     user.password = 'secret'
     
@@ -164,35 +164,35 @@ test.group('creating user', () => {
 // highlight-end
 ```
 
-If you have noticed, we remove the **"when creating a new user"** fragment from our test title. This is because the group title clarifies that all tests under this group are scoped to **creating a new user**.
+気づいたかもしれませんが、テストタイトルから「新しいユーザーを作成するとき」のフラグメントを削除しました。これは、グループのタイトルがこのグループのすべてのテストが「新しいユーザーの作成」に関連していることを明確にしているためです。
 
-### Lifecycle hooks
+### ライフサイクルフック
 
-Lifecycle hooks are used to perform actions around tests. You can define hooks using the `group` object.
+ライフサイクルフックは、テストの周りでアクションを実行するために使用されます。フックは`group`オブジェクトを使用して定義することができます。
 
-See also - [Japa docs for Lifecycle hooks](https://japa.dev/docs/lifecycle-hooks)
+参考 - [ライフサイクルフックのJapaドキュメント](https://japa.dev/docs/lifecycle-hooks)
 
 ```ts
-test.group('creating user', (group) => {
+test.group('ユーザーの作成', (group) => {
   // highlight-start
   group.each.setup(async () => {
-    console.log('runs before every test')
+    console.log('すべてのテストの前に実行されます')
   })
 
   group.each.teardown(async () => {
-    console.log('runs after every test')
+    console.log('すべてのテストの後に実行されます')
   })
 
   group.setup(async () => {
-    console.log('runs once before all the tests')
+    console.log('すべてのテストの前に一度だけ実行されます')
   })
 
   group.teardown(async () => {
-    console.log('runs once after all the tests')
+    console.log('すべてのテストの後に一度だけ実行されます')
   })
   // highlight-end
 
-  test('hashes user password', async ({ assert }) => {
+  test('ユーザーパスワードをハッシュ化する', async ({ assert }) => {
     const user = new User()
     user.password = 'secret'
     
@@ -204,17 +204,17 @@ test.group('creating user', (group) => {
 })
 ```
 
-### Next steps
+### 次のステップ
 
-Now that you know the basics of creating and writing tests. We recommend you explore the following topics in the Japa documentation.
+テストの作成と記述の基本を学んだので、Japaドキュメントで以下のトピックを探索することをお勧めします。
 
-- [Explore the `test` function API](https://japa.dev/docs/underlying-test-class)
-- [Learn how to test asynchronous code effectively](https://japa.dev/docs/testing-async-code)
-- [Using datasets to avoid repetitive tests](https://japa.dev/docs/datasets)
+- [`test`関数のAPIの詳細](https://japa.dev/docs/underlying-test-class)
+- 非同期コードを効果的にテストする方法の学習](https://japa.dev/docs/testing-async-code)
+- 繰り返しテストを避けるためのデータセットの使用](https://japa.dev/docs/datasets)
 
-## Running tests
+## テストの実行
 
-You may run tests using the `test` command. By default, the tests for all the suites are executed. However, you can run tests for a specific suite by passing the name.
+`test`コマンドを使用してテストを実行できます。デフォルトでは、すべてのスイートのテストが実行されます。ただし、名前を渡すことで特定のスイートのテストを実行することもできます。
 
 ```sh
 node ace test
@@ -225,71 +225,71 @@ node ace test functional
 node ace test unit
 ```
 
-### Watching for file changes and re-running tests
+### ファイルの変更を監視してテストを再実行する
 
-You may use the `--watch` command to watch the file system and re-run tests. If a test file is changed, then tests inside the changed file will run. Otherwise, all tests will be re-run.
+`--watch`コマンドを使用してファイルシステムを監視し、テストを再実行することができます。テストファイルが変更された場合、変更されたファイル内のテストが実行されます。それ以外の場合は、すべてのテストが再実行されます。
 
 ```sh
 node ace test --watch
 ```
 
-### Filtering tests
+### テストのフィルタリング
 
-You can apply filters using the command-line flags when running the tests. Following is the list of available options.
+テストを実行する際にコマンドラインフラグを使用してフィルタを適用することができます。以下に利用可能なオプションのリストを示します。
 
-See also: [Japa filtering tests guide](https://japa.dev/docs/filtering-tests)
+参考: [Japaテストのフィルタリングガイド](https://japa.dev/docs/filtering-tests)
 
 :::tip
 
-**Using VSCode?** Use the [Japa extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode) to run selected tests within your code editor using keyboard shortcuts or the activity sidebar.
+**VSCodeを使用していますか？** キーボードショートカットやアクティビティサイドバーを使用して、コードエディタ内で選択したテストを実行するために[Japa拡張機能](https://marketplace.visualstudio.com/items?itemName=jripouteau.japa-vscode)を使用できます。
 
 :::
 
-| Flag         | Description                                                                                                                                                                                            |
+| フラグ         | 説明                                                                                                                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--tests`    | Filter test by the test title. This filter matches against the exact test title.                                                                                                                       |
-| `--files`    | Filter tests by subset of test file name. The match is performed against the end of the filename without `.spec.ts`. You can run tests for a complete folder using the wildcard expression. `folder/*` |
-| `--groups`   | Filter test by group name. This filter matches against the exact group name.                                                                                                                           |
-| `--tags`     | Filter tests by tags. You can prefix the tag name with tilde `~` to ignore tests with the given tag                                                                                                    |
-| `--matchAll` | By default, Japa will run tests that matches any of the mentioned tags. If you want all tags to match, then use the `--matchAll` flag                                                                  |
+| `--tests`    | テストタイトルでテストをフィルタリングします。このフィルタは、完全なテストタイトルに一致します。                                                                                                                       |
+| `--files`    | テストファイル名の一部でテストをフィルタリングします。マッチは、`.spec.ts`を除いたファイル名の末尾で行われます。ワイルドカード式を使用して、完全なフォルダのテストを実行することもできます。 `folder/*` |
+| `--groups`   | グループ名でテストをフィルタリングします。このフィルタは、完全なグループ名に一致します。                                                                                                                           |
+| `--tags`     | タグでテストをフィルタリングします。タグ名の前にチルダ`~`を付けると、指定したタグを持つテストを無視します。                                                                                                    |
+| `--matchAll` | デフォルトでは、Japaは指定されたタグに一致するテストを実行します。すべてのタグを一致させたい場合は、`--matchAll`フラグを使用します。                                                                  |
 
-### Force exiting tests
+### テストの強制終了
 
-Japa waits for the process to gracefully shut down after completing all the tests. The graceful shutdown process means exiting all long-lived connections and emptying the Node.js event loop.
+Japaは、すべてのテストが完了した後、プロセスが正常にシャットダウンするのを待ちます。正常なシャットダウンプロセスとは、すべての長寿命の接続を終了し、Node.jsのイベントループを空にすることを意味します。
 
-If needed, you can force Japa to exit the process and not wait for a graceful shutdown using the `--force-exit` flag.
+必要に応じて、`--force-exit`フラグを使用してJapaにプロセスを終了させ、正常なシャットダウンを待たないようにすることができます。
 
 ```sh
 node ace test --force-exit
 ```
 
-### Retrying tests
-You can retry failing tests for multiple times using the `--retries` flag. The flag will be applied to all the tests without an explicit retries count defined at the test level.
+### テストのリトライ
+`--retries`フラグを使用して、複数回の失敗したテストをリトライすることができます。このフラグは、テストレベルで明示的なリトライ回数が定義されていないすべてのテストに適用されます。
 
 ```sh
-# Retry failing tests 2 times
+# 失敗したテストを2回リトライする
 node ace test --retries=2
 ```
 
-### Running failed tests from the last run
-You can re-run tests failed from the last run using the `--failed` commandline flag.
+### 前回の実行からの失敗したテストの実行
+`--failed`コマンドラインフラグを使用して、前回の実行から失敗したテストを再実行することができます。
 
 ```sh
 node ace test --failed
 ```
 
-### Switching between reporters
-Japa allows you register multiple test reporters inside the config file, but does not activate them by default. You can activate reporters either inside the config file, or using the `--reporter` commandline flag.
+### レポーターの切り替え
+Japaでは、複数のテストレポーターを設定ファイルに登録することができますが、デフォルトではそれらはアクティブ化されません。レポーターをアクティブ化するには、設定ファイル内または`--reporter`コマンドラインフラグを使用します。
 
 ```sh
-# Activate spec reporter
+# specレポーターをアクティブ化する
 node ace test --reporter=spec
 
-# Activate spec and json reporters
+# specとjsonレポーターをアクティブ化する
 node ace test --reporter=spec,json
 ```
 
-You may also activate reporters inside the config file.
+設定ファイル内でもレポーターをアクティブ化することができます。
 
 ```ts
 export const reporters: Config['reporters'] = {
@@ -297,18 +297,18 @@ export const reporters: Config['reporters'] = {
 }
 ```
 
-### Passing options to the Node.js commandline
-The `test` command runs tests `(bin/test.ts file)` as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+### Node.jsコマンドラインにオプションを渡す
+`test`コマンドは、`(bin/test.ts file)`を子プロセスとして実行します。子プロセスに[node引数](https://nodejs.org/api/cli.html#options)を渡す場合は、コマンド名の前にそれらを定義することができます。
 
 ```sh
 node ace --no-warnings --trace-exit test
 ```
 
-## Environment variables
+## 環境変数
 
-You may use the `.env.test` file to define the environment variables required during testing. The values inside the `.env.test` takes precedence over those inside the `.env` file.
+テスト中に必要な環境変数を定義するために、`.env.test`ファイルを使用することができます。`.env`ファイル内の値よりも`.env.test`内の値が優先されます。
 
-The `SESSION_DRIVER` during testing must be set to `memory`.
+テスト中の`SESSION_DRIVER`は`memory`に設定する必要があります。
 
 ```dotenv
 // title: .env.test

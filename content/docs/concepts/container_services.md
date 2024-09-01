@@ -1,47 +1,47 @@
 ---
-summary: Learn about container services and how they help in keeping your codebase clean and testable.
+summary: コンテナサービスについて学び、コードベースをクリーンでテスト可能に保つ方法を知りましょう。
 ---
 
-# Container services
+# コンテナサービス
 
-As we discussed in the [IoC container guide](./dependency_injection.md#container-bindings), the container bindings are one of the primary reasons for the IoC container to exists in AdonisJS.
+[IoCコンテナガイド](./dependency_injection.md#container-bindings)で説明したように、コンテナバインディングはAdonisJSのIoCコンテナが存在する主な理由の1つです。
 
-Container bindings keep your codebase clean from boilerplate code required to construct objects before they can be used.
+コンテナバインディングは、オブジェクトを使用する前に構築するために必要なボイラープレートコードからコードベースをクリーンに保ちます。
 
-In the following example before you can use the `Database` class, you will have to create an instance of it. Depending the class you are constructing, you might have write a lot of boilerplate code to get all of its dependencies.
+次の例では、`Database`クラスを使用する前に、そのインスタンスを作成する必要があります。構築するクラスによっては、すべての依存関係を取得するために多くのボイラープレートコードを記述する必要があります。
 
 ```ts
 import { Database } from '@adonisjs/lucid'
 export const db = new Database(
-  // inject config and other dependencies
+  // configやその他の依存関係を注入
 )
 ```
 
-However, when using an IoC container, you can offload the task of constructing a class to the container and fetch a pre-built instance.
+しかし、IoCコンテナを使用すると、クラスの構築タスクをコンテナにオフロードし、事前に構築されたインスタンスを取得できます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 const db = await app.container.make('lucid.db')
 ```
 
-## The need for container services
+## コンテナサービスの必要性
 
-Using the container to resolve pre-configured objects is great. However, using the `container.make` method has its own downsides.
+コンテナを使用して事前に設定済みのオブジェクトを解決することは素晴らしいことです。ただし、`container.make`メソッドを使用することにはいくつかのデメリットがあります。
 
-- Editors are good with auto imports. If you attempt to use a variable and the editor can guess the import path of the variable, then it will write the import statement for you. **However, this cannot work with `container.make` calls.**
+- エディターは自動インポートに優れています。変数を使用しようとすると、エディターが変数のインポートパスを推測できれば、インポートステートメントを自動的に書き込んでくれます。**ただし、これは`container.make`呼び出しでは機能しません。**
 
-- Using a mix of import statements and `container.make` calls feels unintuitive compared to having a unified syntax for importing/using modules.
+- インポートステートメントと`container.make`呼び出しの組み合わせは、モジュールのインポート/使用に統一された構文がないため、直感的ではありません。
 
-To overcome these downsides, we wrap `container.make` calls inside a regular JavaScript module, so you can fetch them using the `import` statement.
+これらのデメリットを克服するために、`container.make`呼び出しを通常のJavaScriptモジュール内にラップし、`import`ステートメントを使用してそれらを取得できるようにします。
 
-For example, the `@adonisjs/lucid` package has a file called `services/db.ts` and this file has roughly the following contents.
+たとえば、`@adonisjs/lucid`パッケージには、`services/db.ts`というファイルがあり、このファイルにはおおよそ以下の内容が含まれています。
 
 ```ts
 const db = await app.container.make('lucid.db')
 export { db as default }
 ```
 
-Within your application, you can replace the `container.make` call with an import pointing to the `services/db.ts` file.
+アプリケーション内では、`container.make`呼び出しを`services/db.ts`ファイルを指すインポートに置き換えることができます。
 
 ```ts
 // delete-start
@@ -53,15 +53,15 @@ import db from '@adonisjs/lucid/services/db'
 // insert-end
 ```
 
-As you can see, we are still relying on the container to resolve an instance of the Database class for us. However, with a layer of indirection, we can replace the `container.make` call with a regular `import` statement.
+ご覧のように、私たちはまだコンテナに依存してDatabaseクラスのインスタンスを解決しています。ただし、間接的なレイヤーを追加することで、`container.make`呼び出しを通常の`import`ステートメントで置き換えることができます。
 
-**The JavaScript module wrapping the `container.make` calls is known as a Container service.** Almost every package that interacts with the container ships with one or more container services.
+**`container.make`呼び出しをラップするJavaScriptモジュールは、コンテナサービスとして知られています。** コンテナとやり取りするほとんどのパッケージには、1つ以上のコンテナサービスが含まれています。
 
-## Container services vs. Dependency injection
+## コンテナサービスと依存性の注入
 
-Container services are an alternative to dependency injection. For example, instead of accepting the `Disk` class as a dependency, you ask the `drive` service to give you a disk instance. Let's look at some code examples.
+コンテナサービスは依存性の注入の代替手段です。たとえば、`Disk`クラスを依存関係として受け入れる代わりに、`drive`サービスにディスクインスタンスを要求します。いくつかのコード例を見てみましょう。
 
-In the following example, we use the `@inject` decorator to inject an instance of the `Disk` class.
+次の例では、`@inject`デコレータを使用して`Disk`クラスのインスタンスを注入しています。
 
 ```ts
 import { Disk } from '@adonisjs/drive'
@@ -87,7 +87,7 @@ export default class PostService {
 }
 ```
 
-When using the `drive` service, we call the `drive.use` method to get an instance of `Disk` with `s3` driver.
+`drive`サービスを使用する場合、`drive.use`メソッドを呼び出して`s3`ドライバーを使用した`Disk`のインスタンスを取得します。
 
 ```ts
 import drive from '@adonisjs/drive/services/main'
@@ -107,17 +107,17 @@ export default class PostService {
 }
 ```
 
-Container services are great for keeping your code terse. Whereas, dependency injection creates a loose coupling between different application parts.
+コンテナサービスはコードを簡潔に保つために優れています。一方、依存性の注入は異なるアプリケーションパーツ間の緩い結合を作成します。
 
-Choosing one over the other comes down to your personal choice and the approach you want to take to structure your code.
+どちらを選ぶかは、個人の選択とコードの構造を決めるアプローチによります。
 
-## Testing with container services
+## コンテナサービスを使用したテスト
 
-The outright benefit of dependency injection is the ability to swap dependencies at the time of writing tests.
+依存性の注入の明白な利点は、テストを書く際に依存関係を交換できる能力です。
 
-To provide a similar testing experience with container services, AdonisJS provides first-class APIs for faking implementations when writing tests.
+コンテナサービスと同様のテストエクスペリエンスを提供するために、AdonisJSはテストを書く際に実装をフェイクするための一流のAPIを提供しています。
 
-In the following example, we call the `drive.fake` method to swap drive disks with an in-memory driver. After a fake is created, any call to the `drive.use` method will receive the fake implementation.
+次の例では、`drive.fake`メソッドを呼び出してドライブディスクをインメモリドライバーで置き換えます。フェイクが作成されると、`drive.use`メソッドへのすべての呼び出しはフェイクの実装を受け取ります。
 
 ```ts
 import drive from '@adonisjs/drive/services/main'
@@ -144,16 +144,16 @@ test('save post', async ({ assert }) => {
 })
 ```
 
-## Container bindings and services
+## コンテナバインディングとサービス
 
-The following table outlines a list of container bindings and their related services exported by the framework core and first-party packages.
+以下の表は、フレームワークコアとファーストパーティパッケージがエクスポートするコンテナバインディングと関連するサービスの一覧です。
 
 <table>
   <thead>
     <tr>
-      <th width="100px">Binding</th>
-      <th width="140px">Class</th>
-      <th>Service</th>
+      <th width="100px">バインディング</th>
+      <th width="140px">クラス</th>
+      <th>サービス</th>
     </tr>
   </thead>
   <tbody>

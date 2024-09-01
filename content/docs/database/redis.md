@@ -1,37 +1,37 @@
 ---
-summary: Use Redis inside your AdonisJS applications using the `@adonisjs/redis` package. 
+summary: \`@adonisjs/redis`パッケージを使用してAdonisJSアプリケーション内でRedisを利用します。
 ---
 
 # Redis
 
-You can use Redis inside your AdonisJS applications using the `@adonisjs/redis` package. The package is a thin wrapper on top of [ioredis](https://github.com/redis/ioredis) with better DX around Pub/Sub and automatic management of multiple redis connections.
+`@adonisjs/redis`パッケージを使用してAdonisJSアプリケーション内でRedisを利用できます。このパッケージは、Pub/SubのDXの向上と複数のRedis接続の自動管理を提供する[ioredis](https://github.com/redis/ioredis)の薄いラッパーです。
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+以下のコマンドを使用してパッケージをインストールし、設定します：
 
 ```sh
 node ace add @adonisjs/redis
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを確認する"}
 
-1. Installs the `@adonisjs/redis` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`@adonisjs/redis`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に次のサービスプロバイダを登録します。
 
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...他のプロバイダ
         () => import('@adonisjs/redis/redis_provider')
       ]
     }
     ```
 
-3. Create `config/redis.ts` file. This file contains the connection configuration for your redis server.
+3. `config/redis.ts`ファイルを作成します。このファイルにはRedisサーバーの接続設定が含まれます。
 
-4. Define following environment variables and their validation rules.
+4. 次の環境変数とそのバリデーションルールを定義します。
 
     ```dotenv
     REDIS_HOST=127.0.0.1
@@ -42,11 +42,11 @@ node ace add @adonisjs/redis
 :::
 
 
-## Configuration
+## 設定
 
-The configuration for the Redis package is stored inside the `config/redis.ts` file.
+Redisパッケージの設定は`config/redis.ts`ファイルに保存されます。
 
-See also: [Config file stub](https://github.com/adonisjs/redis/blob/main/stubs/config/redis.stub)
+参照：[Config file stub](https://github.com/adonisjs/redis/blob/main/stubs/config/redis.stub)
 
 ```ts
 import env from '#start/env'
@@ -77,7 +77,7 @@ connection
 
 <dd>
 
-The `connection` property defines the connection to use by default. When you run redis commands without choosing an explicit connection, they will be executed against the default connection.
+`connection`プロパティはデフォルトで使用する接続を定義します。明示的な接続を選択せずにRedisコマンドを実行すると、デフォルトの接続に対して実行されます。
 
 </dd>
 
@@ -89,24 +89,24 @@ connections
 
 <dd>
 
-The `connections` property is a collection of multiple named connections. You can define one or more connections inside this object and switch between them using the `redis.connection()` method.
+`connections`プロパティは複数の名前付き接続のコレクションです。このオブジェクト内で1つ以上の接続を定義し、`redis.connection()`メソッドを使用してそれらの間を切り替えることができます。
 
-Every named connection config is identical to the [config accepted by ioredis](https://redis.github.io/ioredis/index.html#RedisOptions).
+名前付き接続の設定は、[ioredisが受け入れる設定](https://redis.github.io/ioredis/index.html#RedisOptions)と同じです。
 
 </dd>
 </dl>
 
 ---
 
-### Configuring clusters
+### クラスタの設定
 
-The `@adonisjs/redis` package will create a [cluster connection](https://github.com/redis/ioredis#cluster) if you define an array of hosts inside the connection config. For example:
+`@adonisjs/redis`パッケージは、接続設定内にホストの配列を定義すると[クラスタ接続](https://github.com/redis/ioredis#cluster)を作成します。例：
 
 ```ts
 const redisConfig = defineConfig({
   connections: {
     main: {
-      // highlight-start
+      // ハイライト開始
       clusters: [
         { host: '127.0.0.1', port: 6380 },
         { host: '127.0.0.1', port: 6381 },
@@ -115,40 +115,40 @@ const redisConfig = defineConfig({
         scaleReads: 'slave',
         slotsRefreshTimeout: 10 * 1000,
       },
-      // highlight-end
+      // ハイライト終了
     },
   },
 })
 ```
 
-### Configuring sentinels
-You can configure a redis connection to use sentinels by defining an array of sentinel nodes within the connection config. For example:
+### Sentinelの設定
+接続設定内にセンチネルノードの配列を定義することで、Redis接続をセンチネルを使用するように設定できます。例：
 
-See also: [IORedis docs on Sentinels config](https://github.com/redis/ioredis?tab=readme-ov-file#sentinel)
+参照：[IORedis docs on Sentinels config](https://github.com/redis/ioredis?tab=readme-ov-file#sentinel)
 
 ```ts
 const redisConfig = defineConfig({
   connections: {
     main: {
-      // highlight-start
+      // ハイライト開始
       sentinels: [
         { host: 'localhost', port: 26379 },
         { host: 'localhost', port: 26380 },
       ],
       name: 'mymaster',
-      // highlight-end
+      // ハイライト終了
     },
   },
 })
 ```
 
-## Usage
+## 使用方法
 
-You can run redis commands using the `redis` service exported by the package. The redis service is a singleton object configured using the configuration you have defined inside the `config/redis.ts` file.
+`config/redis.ts`ファイルで定義した設定を使用して、`redis`サービスを介してRedisコマンドを実行できます。`redis`サービスは、シングルトンオブジェクトであり、`config/redis.ts`ファイルで定義した設定を使用して構成されます。
 
 :::note
 
-Consult the [ioredis](https://redis.github.io/ioredis/classes/Redis.html) documentation to view the list of available methods. Since we are a wrapper on top of IORedis, the commands API is identical.
+利用可能なメソッドのリストを表示するには、[ioredis](https://redis.github.io/ioredis/classes/Redis.html)のドキュメントを参照してください。IORedisのラッパーであるため、コマンドAPIは同じです。
 
 :::
 
@@ -159,49 +159,49 @@ await redis.set('username', 'virk')
 const username = await redis.get('username')
 ```
 
-### Switching between connections
-Commands executed using the `redis` service are invoked against the **default connection** defined inside the config file. However, you can execute commands on a specific connection by first getting an instance of it.
+### 接続の切り替え
+`redis`サービスを使用して実行されるコマンドは、設定ファイルで定義された**デフォルトの接続**に対して実行されます。ただし、特定の接続でコマンドを実行するには、まずその接続のインスタンスを取得する必要があります。
 
-The `.connection()` method creates and caches a connection instance for the process's lifetime.
+`.connection()`メソッドは、プロセスのライフタイムにわたって接続インスタンスを作成してキャッシュします。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
 
-// highlight-start
-// Get connection instance
+// ハイライト開始
+// 接続インスタンスを取得
 const redisMain = redis.connection('main')
-// highlight-end
+// ハイライト終了
 
 await redisMain.set('username', 'virk')
 const username = await redisMain.get('username')
 ```
 
-### Quitting connections
+### 接続の終了
 
-The connections are long-lived, and you will get the same instance every time you call the `.connection()` method. You can quit the connection using the `quit` method. Use the `disconnect` method to end the connection forcefully.
+接続は長寿命であり、`.connection()`メソッドを呼び出すたびに同じインスタンスが返されます。`quit`メソッドを使用して接続を終了し、`disconnect`メソッドを使用して接続を強制的に終了できます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
 
-await redis.quit('main') // Quit the main connection
-await redis.disconnect('main') // Force quit the main connection
+await redis.quit('main') // メイン接続を終了
+await redis.disconnect('main') // メイン接続を強制的に終了
 ```
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
 
 const redisMain = redis.connection('main')
-redisMain.quit() // Quit using connection instance
-redisMain.disconnect() // Force quit using connection instance
+redisMain.quit() // 接続インスタンスを使用して終了
+redisMain.disconnect() // 接続インスタンスを使用して強制終了
 ```
 
-## Error handling
+## エラーハンドリング
 
-Redis connections can fail anytime during the lifecycle of your application. Therefore it is essential to capture the errors and have a retry strategy.
+Redis接続は、アプリケーションのライフサイクル中にいつでも失敗する可能性があります。そのため、エラーをキャプチャし、リトライ戦略を持つことが重要です。
 
-By default, AdonisJS will log the redis connection errors using the [application logger](../digging_deeper/logger.md) and retry a connection ten times before closing it permanently. The retry strategy is defined for every connection within the `config/redis.ts` file.
+デフォルトでは、AdonisJSはRedis接続エラーを[アプリケーションロガー](../digging_deeper/logger.md)を使用してログに記録し、接続を永久に閉じる前に10回のリトライを行います。リトライ戦略は、`config/redis.ts`ファイル内の各接続に定義されています。
 
-See also: [IORedis docs on auto reconnect](https://github.com/redis/ioredis#auto-reconnect)
+参照：[IORedis docs on auto reconnect](https://github.com/redis/ioredis#auto-reconnect)
 
 ```ts
 // title: config/redis.ts
@@ -210,41 +210,41 @@ See also: [IORedis docs on auto reconnect](https://github.com/redis/ioredis#auto
     host: env.get('REDIS_HOST'),
     port: env.get('REDIS_PORT'),
     password: env.get('REDIS_PASSWORD', ''),
-    // highlight-start
+    // ハイライト開始
     retryStrategy(times) {
       return times > 10 ? null : times * 50
     },
-    // highlight-end
+    // ハイライト終了
   },
 }
 ```
 
-You can disable the default error reporter using the `.doNotLogErrors` method. Doing so will remove the `error` event listener from the redis connection.
+`.doNotLogErrors`メソッドを使用して、デフォルトのエラーレポーターを無効にできます。これにより、Redis接続から`error`イベントリスナーが削除されます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
 
 /**
- * Disable default error reporter
+ * デフォルトのエラーレポーターを無効にする
  */
 redis.doNotLogErrors()
 
 redis.on('connection', (connection) => {
   /**
-   * Make sure always to have an error listener defined.
-   * Otherwise, the app will crash
+   * 常にエラーリスナーが定義されていることを確認してください。
+   * そうしないと、アプリケーションがクラッシュします
    */
   connection.on('error', (error) => {
-    console.log(error)
+  console.log(error)
   })
 })
 ```
 
 ## Pub/Sub
 
-Redis needs multiple connections to publish and subscribe to channels. The subscriber connection cannot perform operations other than subscribing to new channels/patterns and unsubscribing.
+Redisは、チャネルにパブリッシュおよびサブスクライブするために複数の接続が必要です。サブスクライバ接続は、新しいチャネル/パターンの購読と購読解除以外の操作を実行することはできません。
 
-When using the `@adonisjs/redis` package, you do not have to create a subscriber connection manually; we will handle that for you. When you call the `subscribe` method for the first time, we will automatically create a new subscriber connection.
+`@adonisjs/redis`パッケージを使用する場合、サブスクライバ接続を手動で作成する必要はありません。最初に`subscribe`メソッドを呼び出すと、自動的に新しいサブスクライバ接続が作成されます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -254,12 +254,12 @@ redis.subscribe('user:add', function (message) {
 })
 ```
 
-### API differences between IORedis and AdonisJS
+### IORedisとAdonisJSのAPIの違い
 
-When using `ioredis`, you must use two different APIs to subscribe to a channel and listen for new messages. However, with the AdonisJS wrapper, the `subscribe` method takes care of both.
+`ioredis`を使用する場合、チャネルにサブスクライブして新しいメッセージを受信するために2つの異なるAPIを使用する必要があります。しかし、AdonisJSのラッパーでは、`subscribe`メソッドが両方を処理します。
 
 :::caption{for="info"}
-**With IORedis**
+**IORedisを使用する場合**
 :::
 
 ```ts
@@ -275,7 +275,7 @@ redis.subscribe('user:add', (error, count) => {
 ```
 
 :::caption{for="info"}
-**With AdonisJS**
+**AdonisJSを使用する場合**
 :::
 
 ```ts
@@ -292,9 +292,9 @@ redis.subscribe('user:add', (message) => {
 })
 ```
 
-### Publishing messages
+### メッセージのパブリッシュ
 
-You can publish messages using the `publish` method. The method accepts the channel name as the first parameter and the data to publish as the second parameter.
+`publish`メソッドを使用してメッセージをパブリッシュできます。最初のパラメータにチャネル名、2番目のパラメータにパブリッシュするデータを指定します。
 
 ```ts
 redis.publish(
@@ -306,9 +306,9 @@ redis.publish(
 )
 ```
 
-### Subscribing to patterns
+### パターンの購読
 
-You can subscribe to patterns using the `psubscribe` method. Similar to the `subscribe` method, it will create a subscriber connection (if one does not exist).
+`psubscribe`メソッドを使用してパターンに購読できます。`subscribe`メソッドと同様に、サブスクライバ接続が作成されます（存在しない場合）。
 
 ```ts
 redis.psubscribe('user:*', (channel, message) => {
@@ -325,20 +325,20 @@ redis.publish(
 )
 ```
 
-### Unsubscribing
+### 購読の解除
 
-You can unsubscribe from channels or patterns using the `unsubscribe` and `punsubscribe` methods.
+`unsubscribe`メソッドおよび`punsubscribe`メソッドを使用してチャネルまたはパターンの購読を解除できます。
 
 ```ts
 await redis.unsubscribe('user:add')
 await redis.punsubscribe('user:*add*')
 ```
 
-## Using Lua scripts
+## Luaスクリプトの使用
 
-You can register Lua Scripts as commands with the redis service, and they will be applied to all the connections.
+RedisサービスにLuaスクリプトをコマンドとして登録し、すべての接続に適用できます。
 
-See also: [IORedis docs on Lua Scripting](https://github.com/redis/ioredis#lua-scripting)
+参照：[IORedis docs on Lua Scripting](https://github.com/redis/ioredis#lua-scripting)
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -353,31 +353,31 @@ redis.defineCommand('release', {
 })
 ```
 
-Once you have defined a command, you can execute it using the `runCommand` method. First, all the keys are defined, and then the arguments.
+コマンドを定義したら、`runCommand`メソッドを使用して実行できます。まず、すべてのキーを定義し、次に引数を指定します。
 
 ```ts
 redis.runCommand(
-  'release', // command name
-  'jobs:completed', // key 1
-  'jobs:running', // key 2
+  'release', // コマンド名
+  'jobs:completed', // キー1
+  'jobs:running', // キー2
   '11023', // argv 1
   100 // argv 2
 )
 ```
 
-The same command can be executed on an explicit connection.
+同じコマンドを明示的な接続で実行することもできます。
 
 ```ts
 redis.connection('jobs').runCommand(
-  'release', // command name
-  'jobs:completed', // key 1
-  'jobs:running', // key 2
+  'release', // コマンド名
+  'jobs:completed', // キー1
+  'jobs:running', // キー2
   '11023', // argv 1
   100 // argv 2
 )
 ```
 
-Finally, you can also define commands with a specific connection instance. For example:
+最後に、特定の接続インスタンスでコマンドを定義することもできます。例：
 
 ```ts
 redis.on('connection', (connection) => {
@@ -394,18 +394,18 @@ redis.on('connection', (connection) => {
 })
 ```
 
-## Transforming arguments and replies
+## 引数と応答の変換
 
-You can define the arguments transformer and the reply transformer using the `redis.Command` property. The API is identical to the [IORedis API](https://github.com/redis/ioredis#transforming-arguments--replies).
+`redis.Command`プロパティを使用して、引数の変換関数と応答の変換関数を定義できます。APIは、[IORedis API](https://github.com/redis/ioredis#transforming-arguments--replies)と同じです。
 
 ```ts
-// title: Argument transformer
+// title: 引数の変換関数
 import redis from '@adonisjs/redis/services/main'
 
 redis.Command.setArgumentTransformer('hmset', (args) => {
   if (args.length === 2) {
     if (args[1] instanceof Map) {
-      // utils is an internal module of ioredis
+      // utilsはioredisの内部モジュールです
       return [args[0], ...utils.convertMapToArray(args[1])]
     }
     if (typeof args[1] === 'object' && args[1] !== null) {
@@ -417,7 +417,7 @@ redis.Command.setArgumentTransformer('hmset', (args) => {
 ```
 
 ```ts
-// title: Reply transformer
+// title: 応答の変換関数
 import redis from '@adonisjs/redis/services/main'
 
 redis.Command.setReplyTransformer('hgetall', (result) => {
@@ -432,12 +432,12 @@ redis.Command.setReplyTransformer('hgetall', (result) => {
 })
 ```
 
-## Events
+## イベント
 
-Following is the list of events emitted by a Redis connection instance.
+以下は、Redis接続インスタンスによって発行されるイベントのリストです。
 
 ### connect / subscriber\:connect
-The event is emitted when a connection is made. The `subscriber:connect` event is emitted when a subscriber connection is made.
+接続が確立されたときにイベントが発行されます。`subscriber:connect`イベントは、サブスクライバ接続が確立されたときに発行されます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -449,7 +449,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### wait
-Emitted when the connection is in `wait` mode because the `lazyConnect` option is set inside the config. After executing the first command, the connection will be moved from the `wait` state.
+`lazyConnect`オプションが設定されているため、接続が`wait`モードになっているときに発行されます。最初のコマンドを実行すると、接続は`wait`状態から移動します。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -460,7 +460,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### ready / subscriber\:ready
-The event will be emitted immediately after the `connect` event unless you have enabled the `enableReadyCheck` flag inside the config. In that case, we will wait for the Redis server to report it is ready to accept commands.
+`enableReadyCheck`フラグが有効になっている場合を除き、`connect`イベントの直後に発行されます。その場合、Redisサーバーがコマンドを受け付ける準備ができたと報告するまで待機します。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -472,7 +472,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### error / subscriber\:error
-The event is emitted when unable to connect to the redis server. See [error handling](#error-handling) to learn how AdonisJS handles connection errors.
+Redisサーバーに接続できない場合に発行されます。接続エラーの処理方法については、[エラーハンドリング](#エラーハンドリング)を参照してください。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -484,7 +484,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### close / subscriber\:close
-The event is emitted when a connection is closed. IORedis might retry establishing a connection after emitting the `close` event, depending upon the retry strategy.
+接続が閉じられたときに発行されます。IORedisは、`close`イベントを発行した後、再接続を試みる場合があります（再接続戦略による）。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -496,7 +496,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### reconnecting / subscriber\:reconnecting
-The event is emitted when trying to reconnect to the redis server after the `close` event.
+`close`イベントの後、Redisサーバーに再接続しようとしているときに発行されます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -512,7 +512,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### end / subscriber\:end
-The event is emitted when the connection has been closed, and no further reconnections will be made. It should be the end of the connection lifecycle.
+接続が閉じられ、さらなる再接続は行われないときに発行されます。接続ライフサイクルの終了です。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -524,7 +524,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### node\:added
-The event is emitted when connected to a new cluster node (Applicable to cluster instances only).
+新しいクラスターノードに接続されたときに発行されます（クラスターインスタンスにのみ適用されます）。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -535,7 +535,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### node\:removed
-The event is emitted when a cluster node is removed (Applicable to cluster instances only).
+クラスターノードが削除されたときに発行されます（クラスターインスタンスにのみ適用されます）。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -546,7 +546,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### node\:error
-The event is emitted when unable to connect to a cluster node (Applicable to cluster instances only).
+クラスターノードに接続できない場合に発行されます（クラスターインスタンスにのみ適用されます）。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -559,7 +559,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### subscription\:ready / psubscription\:ready
-The event is emitted when a subscription on a given channel or a pattern has been established.
+指定されたチャネルまたはパターンの購読が確立されたときに発行されます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -575,7 +575,7 @@ redis.on('connection', (connection) => {
 ```
 
 ### subscription\:error / psubscription\:error
-The event is emitted when unable to subscribe to a channel or a pattern.
+チャネルまたはパターンの購読に失敗したときに発行されます。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'

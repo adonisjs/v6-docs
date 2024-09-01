@@ -1,32 +1,32 @@
 ---
-summary: Learn about the exceptions raised by the AdonisJS framework core and official packages.
+summary: AdonisJSフレームワークコアと公式パッケージによって発生する例外について学びましょう。
 ---
 
-# Exceptions reference
+# 例外リファレンス
 
-In this guide we will go through the list of known exceptions raised by the framework core and the official packages. Some of the exceptions are marked as **self-handled**. [Self-handled exceptions](../basics/exception_handling.md#defining-the-handle-method) can convert themselves to an HTTP response.
+このガイドでは、フレームワークコアと公式パッケージによって発生する既知の例外のリストを説明します。いくつかの例外は**自己処理**としてマークされています。[自己処理例外](../basics/exception_handling.md#defining-the-handle-method)は、HTTPレスポンスに自身を変換できます。
 
 <div style="--prose-h2-font-size: 22px;">
 
 ## E_ROUTE_NOT_FOUND
-The exception is raised when the HTTP server receives a request for a non-existing route. By default, the client will get a 404 response, and optionally, you may render an HTML page using [status pages](../basics/exception_handling.md#status-pages).
+この例外は、HTTPサーバーが存在しないルートに対するリクエストを受け取った場合に発生します。デフォルトでは、クライアントは404のレスポンスを受け取り、オプションで[ステータスページ](../basics/exception_handling.md#status-pages)をレンダリングすることもできます。
 
-- **Status code**: 404
-- **Self handled**: No
+- **ステータスコード**: 404
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
 if (error instanceof errors.E_ROUTE_NOT_FOUND) {
-  // handle error
+  // エラーを処理する
 }
 ```
 
 ## E_AUTHORIZATION_FAILURE
-The exception is raised when a bouncer authorization check fails. The exception is self-handled and [uses content-negotiation](../security/authorization.md#throwing-authorizationexception) to return an appropriate error response to the client.
+この例外は、バウンサーの認証チェックが失敗した場合に発生します。この例外は自己処理であり、[コンテンツネゴシエーション](../security/authorization.md#throwing-authorizationexception)を使用してクライアントに適切なエラーレスポンスを返します。
 
-- **Status code**: 403
-- **Self handled**: Yes
-- **Translation identifier**: `errors.E_AUTHORIZATION_FAILURE`
+- **ステータスコード**: 403
+- **自己処理**: オススメ
+- **翻訳識別子**: `errors.E_AUTHORIZATION_FAILURE`
 
 ```ts
 import { errors as bouncerErrors } from '@adonisjs/bouncer'
@@ -35,11 +35,11 @@ if (error instanceof bouncerErrors.E_AUTHORIZATION_FAILURE) {
 ```
 
 ## E_TOO_MANY_REQUESTS
-The exception is raised by the [@adonisjs/rate-limiter](../security/rate_limiting.md) package when a request exhausts all the requests allowed during a given duration. The exception is self-handled and [uses content-negotiation](../security/rate_limiting.md#handling-throttleexception) to return an appropriate error response to the client.
+この例外は、[@adonisjs/rate-limiter](../security/rate_limiting.md)パッケージが指定された期間内に許可されたリクエストを使い果たした場合に発生します。この例外は自己処理であり、[コンテンツネゴシエーション](../security/rate_limiting.md#handling-throttleexception)を使用してクライアントに適切なエラーレスポンスを返します。
 
-- **Status code**: 429
-- **Self handled**: Yes
-- **Translation identifier**: `errors.E_TOO_MANY_REQUESTS`
+- **ステータスコード**: 429
+- **自己処理**: オススメ
+- **翻訳識別子**: `errors.E_TOO_MANY_REQUESTS`
 
 ```ts
 import { errors as limiterErrors } from '@adonisjs/limiter'
@@ -48,11 +48,11 @@ if (error instanceof limiterErrors.E_TOO_MANY_REQUESTS) {
 ```
 
 ## E_BAD_CSRF_TOKEN
-The exception is raised when a form using [CSRF protection](../security/securing_ssr_applications.md#csrf-protection) is submitted without the CSRF token, or the CSRF token is invalid.
+この例外は、[CSRF保護](../security/securing_ssr_applications.md#csrf-protection)を使用しているフォームがCSRFトークンなしで送信された場合、またはCSRFトークンが無効な場合に発生します。
 
-- **Status code**: 403
-- **Self handled**: Yes
-- **Translation identifier**: `errors.E_BAD_CSRF_TOKEN`
+- **ステータスコード**: 403
+- **自己処理**: オススメ
+- **翻訳識別子**: `errors.E_BAD_CSRF_TOKEN`
 
 ```ts
 import { errors as shieldErrors } from '@adonisjs/shield'
@@ -60,7 +60,7 @@ if (error instanceof shieldErrors.E_BAD_CSRF_TOKEN) {
 }
 ```
 
-The `E_BAD_CSRF_TOKEN` exception is [self-handled](https://github.com/adonisjs/shield/blob/main/src/errors.ts#L20), and the user will be redirected back to the form, and you can access the error using the flash messages.
+`E_BAD_CSRF_TOKEN`例外は[自己処理](https://github.com/adonisjs/shield/blob/main/src/errors.ts#L20)され、ユーザーはフォームにリダイレクトされ、フラッシュメッセージを使用してエラーにアクセスできます。
 
 ```edge
 @error('E_BAD_CSRF_TOKEN')
@@ -69,12 +69,12 @@ The `E_BAD_CSRF_TOKEN` exception is [self-handled](https://github.com/adonisjs/s
 ```
 
 ## E_OAUTH_MISSING_CODE
-The `@adonisjs/ally` package raises the exception when the OAuth service does not provide the OAuth code during the redirect.
+`@adonisjs/ally`パッケージは、OAuthサービスがリダイレクト時にOAuthコードを提供しない場合にこの例外を発生させます。
 
-You can avoid this exception if you [handle the errors](../authentication/social_authentication.md#handling-callback-response) before calling the `.accessToken` or `.user` methods.
+`.accessToken`または`.user`メソッドを呼び出す前に、[エラーを処理](../authentication/social_authentication.md#handling-callback-response)することで、この例外を回避できます。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors as allyErrors } from '@adonisjs/bouncer'
@@ -83,12 +83,12 @@ if (error instanceof allyErrors.E_OAUTH_MISSING_CODE) {
 ```
 
 ## E_OAUTH_STATE_MISMATCH
-The `@adonisjs/ally` package raises the exception when the CSRF state defined during the redirect is missing.
+`@adonisjs/ally`パッケージは、リダイレクト時に定義されたCSRFステートが欠落している場合にこの例外を発生させます。
 
-You can avoid this exception if you [handle the errors](../authentication/social_authentication.md#handling-callback-response) before calling the `.accessToken` or `.user` methods.
+`.accessToken`または`.user`メソッドを呼び出す前に、[エラーを処理](../authentication/social_authentication.md#handling-callback-response)することで、この例外を回避できます。
 
-- **Status code**: 400
-- **Self handled**: No
+- **ステータスコード**: 400
+- **自己処理**: できます。
 
 ```ts
 import { errors as allyErrors } from '@adonisjs/bouncer'
@@ -97,11 +97,11 @@ if (error instanceof allyErrors.E_OAUTH_STATE_MISMATCH) {
 ```
 
 ## E_UNAUTHORIZED_ACCESS
-The exception is raised when one of the authentication guards is not able to authenticate the request. The exception is self-handled and uses [content-negotiation](../authentication/session_guard.md#handling-authentication-exception) to return an appropriate error response to the client.
+この例外は、認証ガードのいずれかがリクエストを認証できない場合に発生します。この例外は自己処理であり、[コンテンツネゴシエーション](../authentication/session_guard.md#handling-authentication-exception)を使用してクライアントに適切なエラーレスポンスを返します。
 
-- **Status code**: 401
-- **Self handled**: Yes
-- **Translation identifier**: `errors.E_UNAUTHORIZED_ACCESS`
+- **ステータスコード**: 401
+- **自己処理**: オススメ
+- **翻訳識別子**: `errors.E_UNAUTHORIZED_ACCESS`
 
 ```ts
 import { errors as authErrors } from '@adonisjs/auth'
@@ -110,11 +110,11 @@ if (error instanceof authErrors.E_UNAUTHORIZED_ACCESS) {
 ```
 
 ## E_INVALID_CREDENTIALS
-The exception is raised when the auth finder is not able to verify the user credentials. The exception is handled and use [content-negotiation](../authentication/verifying_user_credentials.md#handling-exceptions)  to return an appropriate error response to the client.
+この例外は、認証ファインダーがユーザーの資格情報を検証できない場合に発生します。この例外は処理され、[コンテンツネゴシエーション](../authentication/verifying_user_credentials.md#handling-exceptions)を使用してクライアントに適切なエラーレスポンスを返します。
 
-- **Status code**: 400
-- **Self handled**: Yes
-- **Translation identifier**: `errors.E_INVALID_CREDENTIALS`
+- **ステータスコード**: 400
+- **自己処理**: オススメ
+- **翻訳識別子**: `errors.E_INVALID_CREDENTIALS`
 
 ```ts
 import { errors as authErrors } from '@adonisjs/auth'
@@ -123,85 +123,85 @@ if (error instanceof authErrors.E_INVALID_CREDENTIALS) {
 ```
 
 ## E_CANNOT_LOOKUP_ROUTE
-The exception is raised when you attempt to create a URL for a route using the [URL builder](../basics/routing.md#url-builder).
+この例外は、[URLビルダー](../basics/routing.md#url-builder)を使用してルートのURLを作成しようとした場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
 if (error instanceof errors.E_CANNOT_LOOKUP_ROUTE) {
-  // handle error
+  // エラーを処理する
 }
 ```
 
 ## E_HTTP_EXCEPTION
-The `E_HTTP_EXCEPTION` is a generic exception for throwing errors during an HTTP request. You can use this exception directly or create a custom exception extending it.
+`E_HTTP_EXCEPTION`は、HTTPリクエスト中にエラーをスローするための汎用的な例外です。この例外を直接使用するか、それを拡張したカスタム例外を作成できます。
 
-- **Status code**: Defined at the time of raising the exception
-- **Self handled**: Yes
+- **ステータスコード**: 例外発生時に定義されます
+- **自己処理**: オススメ
 
 ```ts
-// title: Throw exception
+// タイトル: 例外をスローする
 import { errors } from '@adonisjs/core'
 
 throw errors.E_HTTP_EXCEPTION.invoke(
   {
-    errors: ['Cannot process request']
+    errors: ['リクエストを処理できません']
   },
   422
 )
 ```
 
 ```ts
-// title: Handle exception
+// タイトル: 例外を処理する
 import { errors } from '@adonisjs/core'
 if (error instanceof errors.E_HTTP_EXCEPTION) {
-  // handle error
+  // エラーを処理する
 }
 ```
 
 ## E_HTTP_REQUEST_ABORTED
-The `E_HTTP_REQUEST_ABORTED` is a sub-class of the `E_HTTP_EXCEPTION` exception. This exception is raised by the [response.abort](../basics/response.md#aborting-request-with-an-error) method.
+`E_HTTP_REQUEST_ABORTED`は、`E_HTTP_EXCEPTION`例外のサブクラスです。この例外は、[response.abort](../basics/response.md#aborting-request-with-an-error)メソッドによって発生します。
 
 ```ts
 import { errors } from '@adonisjs/core'
 if (error instanceof errors.E_HTTP_REQUEST_ABORTED) {
-  // handle error
+  // エラーを処理する
 }
 ```
 
 ## E_INSECURE_APP_KEY
-The exception is raised when the length of `appKey` is smaller than 16 characters. You can use the [generate:key](./commands.md#generatekey) ace command to generate a secure app key.
+この例外は、`appKey`の長さが16文字未満の場合に発生します。セキュアなアプリキーを生成するために[generate:key](./commands.md#generatekey)エースコマンドを使用できます。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
 if (error instanceof errors.E_INSECURE_APP_KEY) {
-  // handle error
+  // エラーを処理する
 }
 ```
 
 ## E_MISSING_APP_KEY
-The exception is raised when the `appKey` property is not defined inside the `config/app.ts` file. By default, the value of the `appKey` is set using the `APP_KEY` environment variable.
+この例外は、`config/app.ts`ファイル内で`appKey`プロパティが定義されていない場合に発生します。デフォルトでは、`appKey`の値は`APP_KEY`環境変数を使用して設定されます。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
 if (error instanceof errors.E_MISSING_APP_KEY) {
-  // handle error
+  // エラーを処理する
 }
 ```
 
 ## E_INVALID_ENV_VARIABLES
-The exception is raised when one or more environment variables fail the validation. The detailed validation errors can be accessed using the `error.help` property.
+この例外は、1つ以上の環境変数がバリデーションに失敗した場合に発生します。詳細なバリデーションエラーは、`error.help`プロパティを使用してアクセスできます。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -211,10 +211,10 @@ if (error instanceof errors.E_INVALID_ENV_VARIABLES) {
 ```
 
 ## E_MISSING_COMMAND_NAME
-The exception is raised when a command does not define the `commandName` property or its value is an empty string.
+この例外は、コマンドが`commandName`プロパティを定義していないか、その値が空の文字列である場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -224,10 +224,10 @@ if (error instanceof errors.E_MISSING_COMMAND_NAME) {
 ```
 
 ## E_COMMAND_NOT_FOUND
-The exception is raised by Ace when unable to find a command.
+この例外は、Aceがコマンドを見つけることができない場合に発生します。
 
-- **Status code**: 404
-- **Self handled**: No
+- **ステータスコード**: 404
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -237,10 +237,10 @@ if (error instanceof errors.E_COMMAND_NOT_FOUND) {
 ```
 
 ## E_MISSING_FLAG
-The exception is raised when executing a command without passing a required CLI flag.
+この例外は、必須のCLIフラグを指定せずにコマンドを実行した場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -250,10 +250,10 @@ if (error instanceof errors.E_MISSING_FLAG) {
 ```
 
 ## E_MISSING_FLAG_VALUE
-The exception is raised when trying to execute a command without providing any value to a non-boolean CLI flag.
+この例外は、非ブール型のCLIフラグに値を指定せずにコマンドを実行しようとした場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -263,10 +263,10 @@ if (error instanceof errors.E_MISSING_FLAG_VALUE) {
 ```
 
 ## E_MISSING_ARG
-The exception is raised when executing a command without defining the required arguments.
+この例外は、必須の引数を定義せずにコマンドを実行した場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -276,10 +276,10 @@ if (error instanceof errors.E_MISSING_ARG) {
 ```
 
 ## E_MISSING_ARG_VALUE
-The exception is raised when executing a command without defining the value for a required argument.
+この例外は、必須の引数に値を定義せずにコマンドを実行しようとした場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -289,10 +289,10 @@ if (error instanceof errors.E_MISSING_ARG_VALUE) {
 ```
 
 ## E_UNKNOWN_FLAG
-The exception is raised when executing a command with an unknown CLI flag.
+この例外は、未知のCLIフラグを使用してコマンドを実行した場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -302,10 +302,10 @@ if (error instanceof errors.E_UNKNOWN_FLAG) {
 ```
 
 ## E_INVALID_FLAG
-The exception is raised when the value provided for a CLI flag is invalid—for example, passing a string value to a flag that accepts numeric values.
+この例外は、CLIフラグに提供された値が無効な場合に発生します。たとえば、数値を受け入れるフラグに文字列値を渡す場合などです。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors } from '@adonisjs/core'
@@ -315,10 +315,10 @@ if (error instanceof errors.E_INVALID_FLAG) {
 ```
 
 ## E_MULTIPLE_REDIS_SUBSCRIPTIONS
-The `@adonisjs/redis` package raises the exception when you attempt to [subscribe to a given pub/sub channel](../database/redis.md#pubsub) multiple times.
+`@adonisjs/redis`パッケージは、[指定されたパブ/サブチャネルに購読](../database/redis.md#pubsub)しようとすると、この例外を発生させます。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors as redisErrors } from '@adonisjs/redis'
@@ -327,10 +327,10 @@ if (error instanceof redisErrors.E_MULTIPLE_REDIS_SUBSCRIPTIONS) {
 ```
 
 ## E_MULTIPLE_REDIS_PSUBSCRIPTIONS
-The `@adonisjs/redis` package raises the exception when you attempt to [subscribe to a given pub/sub pattern](../database/redis.md#pubsub) multiple times.
+`@adonisjs/redis`パッケージは、[指定されたパブ/サブパターンに購読](../database/redis.md#pubsub)しようとすると、この例外を発生させます。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors as redisErrors } from '@adonisjs/redis'
@@ -339,12 +339,12 @@ if (error instanceof redisErrors.E_MULTIPLE_REDIS_PSUBSCRIPTIONS) {
 ```
 
 ## E_MAIL_TRANSPORT_ERROR
-The exception is raised by the `@adonisjs/mail` package when unable to send the email using a given transport. Usually, this will happen when the HTTP API of the email service returns a non-200 HTTP response.
+`@adonisjs/mail`パッケージは、指定されたトランスポートを使用してメールを送信できない場合にこの例外を発生させます。通常、これはメールサービスのHTTP APIが非200のHTTPレスポンスを返した場合に発生します。
 
-You may access the network request error using the `error.cause` property. The `cause` property is the [error object](https://github.com/sindresorhus/got/blob/main/documentation/8-errors.md) returned by `got` (npm package).
+`error.cause`プロパティを使用してネットワークリクエストエラーにアクセスできます。`cause`プロパティは、`got`（npmパッケージ）によって返される[エラーオブジェクト](https://github.com/sindresorhus/got/blob/main/documentation/8-errors.md)です。
 
-- **Status code**: 400
-- **Self handled**: No
+- **ステータスコード**: 400
+- **自己処理**: できます。
 
 ```ts
 import { errors as mailErrors } from '@adonisjs/mail'
@@ -354,10 +354,10 @@ if (error instanceof mailErrors.E_MAIL_TRANSPORT_ERROR) {
 ```
 
 ## E_SESSION_NOT_MUTABLE
-The exception is raised by the `@adonisjs/session` package when the session store is initiated in the read-only mode. 
+この例外は、セッションストアが読み取り専用モードで初期化された場合に、`@adonisjs/session`パッケージによって発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors as sessionErrors } from '@adonisjs/session'
@@ -367,10 +367,10 @@ if (error instanceof sessionErrors.E_SESSION_NOT_MUTABLE) {
 ```
 
 ## E_SESSION_NOT_MUTABLE
-The exception is raised by the `@adonisjs/session` package when the session store is initiated in the read-only mode.
+この例外は、セッションストアが読み取り専用モードで初期化された場合に、`@adonisjs/session`パッケージによって発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors as sessionErrors } from '@adonisjs/session'
@@ -380,10 +380,10 @@ if (error instanceof sessionErrors.E_SESSION_NOT_MUTABLE) {
 ```
 
 ## E_SESSION_NOT_READY
-The exception is raised by the `@adonisjs/session` package when the session store has not been initiated yet. This will be the case when you are not using the session middleware.
+この例外は、セッションストアがまだ初期化されていない場合に、`@adonisjs/session`パッケージによって発生します。これは、セッションミドルウェアを使用していない場合に発生します。
 
-- **Status code**: 500
-- **Self handled**: No
+- **ステータスコード**: 500
+- **自己処理**: できます。
 
 ```ts
 import { errors as sessionErrors } from '@adonisjs/session'

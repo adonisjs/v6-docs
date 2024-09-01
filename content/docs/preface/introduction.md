@@ -1,41 +1,41 @@
 ---
-summary: "AdonisJS is a TypeScript-first web framework for Node.js. You can use it to create a full-stack web application or a JSON API server."
+summary: "AdonisJSは、Node.js向けのTypeScriptファーストのウェブフレームワークです。フルスタックのウェブアプリケーションやJSON APIサーバーを作成することができます。"
 ---
 
-# Introduction
+# はじめに
 
 ::include{template="partials/introduction_cards"}
 
-## What is AdonisJS?
+## AdonisJSとは？
 
-AdonisJS is a TypeScript-first web framework for Node.js. You can use it to create a full-stack web application or a JSON API server.
+AdonisJSは、Node.js向けのTypeScriptファーストのウェブフレームワークです。これを使用して、フルスタックのウェブアプリケーションやJSON APIサーバーを作成できます。
 
-At the fundamental level, AdonisJS [provides structure to your applications](../getting_started/folder_structure.md), configures a [seamless TypeScript development environment](../concepts/typescript_build_process.md), configures [HMR](../concepts/hmr.md) for your backend code, and offers a vast collection of well-maintained and extensively documented packages.
+基本レベルでは、AdonisJSはアプリケーションに構造を提供し、シームレスなTypeScript開発環境を設定し、バックエンドコードのHMRを設定しメンテナンスが行き届いて詳細にドキュメント化されたパッケージの広範なコレクションを提供します。
 
-We envision teams using AdonisJS **spending less time** on trivial decisions like cherry-picking npm packages for every minor feature, writing glue code, debating for the perfect folder structure, and **spending more time** delivering real-world features critical for the business needs.
+私たちは、AdonisJSを使用するチームが、npmパッケージの細かい機能ごとの選択やグルーコードの作成、完璧なフォルダ構造の議論などの些細な決定に時間を費やすことなく、ビジネスニーズに重要な実世界の機能を提供するためにより多くの時間を費やすことを想定しています。
 
-### Frontend agnostic 
+### フロントエンドに対してはフレキシブル
 
-AdonisJS focuses on the backend and lets you choose the frontend stack of your choice.
+AdonisJSはバックエンドに焦点を当て、フロントエンドスタックを選択できるようにします。
 
-If you like to keep things simple, pair AdonisJS with a [traditional template engine](../views-and-templates/introduction.md) to generate static HTML on the server. Or create a JSON API for your frontend Vue/React application.
+シンプルにする場合は、AdonisJSを[従来のテンプレートエンジン](../views-and-templates/introduction.md)と組み合わせてサーバー上で静的なHTMLを生成します。または、フロントエンドのVue/Reactアプリケーションに対してJSON APIを作成します。
 
-AdonisJS aims to provide you with batteries to create a robust backend application from scratch. Be it sending emails, validating user input, performing CRUD operations, or authenticating users. We take care of it all.
+AdonisJSは、電子メールの送信、ユーザー入力の検証、CRUD操作の実行、ユーザーの認証など、ゼロから堅牢なバックエンドアプリケーションを作成するためのバッテリーを提供することを目指しています。すべてを私たちが世話します。
 
-### Modern and Type-safe
+### モダンで型安全
 
-AdonisJS is built on top of modern JavaScript primitives. We use ES modules, Node.js sub-path import aliases, SWC for executing TypeScript source, and Vite for assets bundling.
+AdonisJSは、モダンなJavaScriptプリミティブの上に構築されています。ESモジュール、Node.jsのサブパスインポートエイリアス、TypeScriptソースの実行にはSWC、アセットのバンドリングにはViteを使用しています。
 
 
-Also, TypeScript plays a considerable role when designing the framework's APIs. For example, AdonisJS has:
+また、TypeScriptはフレームワークのAPIを設計する際に重要な役割を果たしています。たとえば、AdonisJSには次のようなものがあります。
 
-- [Type-safe event emitter](../digging_deeper/emitter.md#making-events-type-safe)
-- [Type-safe environment variables](../getting_started/environment_variables.md)
-- [Type-safe validation library](../basics/validation.md)
+- [型安全なイベントエミッター](../digging_deeper/emitter.md#making-events-type-safe)
+- [型安全な環境変数](../getting_started/environment_variables.md)
+- [型安全なバリデーションライブラリ](../basics/validation.md)
 
-### Embracing MVC
+### MVCを採用
 
-AdonisJS embraces the classic MVC design pattern. You start by defining the routes using the functional JavaScript API, bind controllers to them and write logic to handle the HTTP requests within the controllers.
+AdonisJSは、クラシックなMVCデザインパターンを採用しています。まず、JavaScriptの関数型APIを使用してルートを定義し、それらにコントローラをバインドし、コントローラ内でHTTPリクエストを処理するためのロジックを記述します。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -44,7 +44,7 @@ import PostsController from '#controllers/posts_controller'
 router.get('posts', [PostsController, 'index'])
 ```
 
-Controllers can use models to fetch data from the database and render a view (aka template) as a response.
+コントローラはモデルを使用してデータベースからデータを取得し、ビュー（テンプレート）をレスポンスとしてレンダリングできます。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -58,7 +58,7 @@ export default class PostsController {
 }
 ```
 
-If you are building an API server, you can replace the view layer with a JSON response. But, the flow of handling and responding to the HTTP requests remains the same.
+APIサーバーを構築している場合は、ビューレイヤーをJSONレスポンスに置き換えることができます。ただし、HTTPリクエストの処理と応答のフローは同じままです。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -72,8 +72,7 @@ export default class PostsController {
     // delete-end
     // insert-start
     /**
-     * Posts array will be serialized to JSON
-     * automatically.
+     * 投稿配列は自動的にJSONにシリアライズされます。
      */
     return posts
     // insert-end
@@ -81,19 +80,19 @@ export default class PostsController {
 }
 ```
 
-## Guides assumptions
+## ガイドの前提条件
 
-The AdonisJS documentation is written as a reference guide, covering the usage and the API of several packages and modules maintained by the core team.
+AdonisJSのドキュメントは、コアチームがメンテナンスしているいくつかのパッケージとモジュールの使用方法とAPIをカバーするリファレンスガイドとして書かれています。
 
-**The guide does not teach you how to build an application from scratch**. If you are looking for a tutorial, we recommend starting your journey with [Adocasts](https://adocasts.com/). Tom (the creator of Adocasts) has created some highly quality screencasts, helping you to take the first steps with AdonisJS.
+**このガイドでは、ゼロからアプリケーションを構築する方法を教えるものではありません**。チュートリアルをお探しの場合は、[Adocasts](https://adocasts.com/)からの旅を始めることをオススメします。Tom（Adocastsの作成者）は、AdonisJSの最初のステップを踏み出すのに役立つ、非常に質の高いスクリーンキャストを作成しています。
 
-With that said, the documentation extensively covers the usage of available modules and the inner workings of the framework.
+それにもかかわらず、ドキュメントは利用可能なモジュールの使用方法とフレームワークの内部動作について詳細に説明しています。
 
-## Recent releases
-Following is the list of recent releases. [Click here](./releases.md) to view all the releases.
+## 最近のリリース
+以下は最近のリリースのリストです。[ここをクリックして](./releases.md)すべてのリリースを表示します。
 
 ::include{template="partials/recent_releases"}
 
-## Sponsors
+## スポンサー
 
 ::include{template="partials/sponsors"}

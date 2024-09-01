@@ -1,150 +1,150 @@
 ---
-summary: Learn about the Typescript build process in AdonisJS 
+summary: AdonisJSにおけるTypeScriptのビルドプロセスについて学びましょう
 ---
 
-# TypeScript build process
+# TypeScriptのビルドプロセス
 
-Applications written in TypeScript must be compiled into JavaScript before you can run them in production.
+TypeScriptで書かれたアプリケーションは、本番環境で実行する前にJavaScriptにコンパイルする必要があります。
 
-Compiling TypeScript source files can be performed using many different build tools. However, with AdonisJS, we stick to the most straightforward approach and use the following time-tested tools.
+TypeScriptのソースファイルのコンパイルは、さまざまなビルドツールを使用して行うことができます。しかし、AdonisJSでは、最もシンプルなアプローチを採用し、以下の信頼性のあるツールを使用しています。
 
 
 :::note
 
-All the below-mentioned tools come pre-installed as development dependencies with official starter kits.
+以下に挙げるすべてのツールは、公式のスターターキットとして開発依存関係として事前にインストールされています。
 
 
 :::
 
 
-- **[TSC](https://www.typescriptlang.org/docs/handbook/compiler-options.html)** is the TypeScript's official compiler. We use TSC to perform type-checking and create the production build.
+- **[TSC](https://www.typescriptlang.org/docs/handbook/compiler-options.html)** は、TypeScriptの公式コンパイラです。TSCを使用して型チェックを行い、本番ビルドを作成します。
 
-- **[TS Node](https://typestrong.org/ts-node/)** is a Just-in-Time compiler for TypeScript. It allows you to execute TypeScript files without compiling them to JavaScript and proves to be a great tool for development.
+- **[TS Node](https://typestrong.org/ts-node/)** は、TypeScriptのJust-in-Timeコンパイラです。これにより、TypeScriptファイルをコンパイルせずに実行することができ、開発には非常に便利なツールです。
 
-- **[SWC](https://swc.rs/)** is a TypeScript compiler written in Rust. We use it during development with TS Node to make the JIT process extremely fast.
+- **[SWC](https://swc.rs/)** は、Rustで書かれたTypeScriptコンパイラです。開発時にTS Nodeと組み合わせて使用し、JITプロセスを非常に高速化します。
 
-| Tool      | Used for                  | Type checking |
+| ツール      | 用途                  | 型チェック |
 |-----------|---------------------------|---------------|
-| `TSC`     | Creating production build | Yes           |
-| `TS Node` | Development               | No            |
-| `SWC`     | Development               | No            |
+| `TSC`     | 本番ビルドの作成 | はい           |
+| `TS Node` | 開発               | いいえ            |
+| `SWC`     | 開発               | いいえ            |
 
-## Executing TypeScript files without compilation
+## コンパイルせずにTypeScriptファイルを実行する
 
-You may execute the TypeScript files without compiling them using the `ts-node/esm` loader. For example, you may start the HTTP server by running the following command.
+`ts-node/esm`ローダーを使用して、TypeScriptファイルをコンパイルせずに実行できます。たとえば次のコマンドを実行することで、HTTPサーバーを起動できます。
 
 ```sh
 node --loader="ts-node/esm" bin/server.js
 ```
 
-- `--loader`: The loader flag registers the module loader hooks with the ES module system. Loader hooks are part of the [Node.js API](https://nodejs.org/dist/latest-v21.x/docs/api/esm.html#loaders).
+- `--loader`：ローダーフラグは、ESモジュールシステムにモジュールローダーフックを登録します。ローダーフックは、[Node.js API](https://nodejs.org/dist/latest-v21.x/docs/api/esm.html#loaders)の一部です。
 
-- `ts-node/esm`: The path to the `ts-node/esm` script that registers lifecycle hooks to perform Just-in-Time compilation of TypeScript source to JavaScript.
+- `ts-node/esm`：TypeScriptソースをJavaScriptにJust-in-Timeコンパイルするためのライフサイクルフックを登録する`ts-node/esm`スクリプトへのパスです。
 
-- `bin/server.js`: The path to the AdonisJS HTTP server entry point file. **See also: [A note on file extensions](#a-note-on-file-extensions)**
+- `bin/server.js`：AdonisJSのHTTPサーバーエントリーポイントファイルへのパスです。**詳細はこちらを参照してください：[ファイル拡張子に関する注意事項](#a-note-on-file-extensions)**
 
-You may repeat this process for other TypeScript files as well. For example:
+同様に、他のTypeScriptファイルに対してもこのプロセスを繰り返すことができます。例えば：
 
 ```sh
-// title: Run tests
+// title: テストを実行する
 node --loader ts-node/esm bin/test.js
 ```
 
 
 ```sh
-// title: Run ace commands
+// title: Aceコマンドを実行する
 node --loader ts-node/esm bin/console.js
 ```
 
 ```sh
-// title: Run some other TypeScript file
+// title: 他のTypeScriptファイルを実行する
 node --loader ts-node/esm path/to/file.js
 ```
 
-### A note on file extensions
+### ファイル拡張子に関する注意事項
 
-You might have noticed us using the `.js` file extension everywhere, even though the file on disk is saved with the `.ts` file extension.
+ディスク上のファイルは`.ts`の拡張子で保存されているにもかかわらず、私たちはいたるところで`.js`の拡張子を使用していることに気付いたかもしれません。
 
-This is because, with ES modules, TypeScript forces you to use the `.js` extension in imports and when running scripts. You can learn about the thesis behind this choice in [TypeScript documentation](https://www.typescriptlang.org/docs/handbook/modules/theory.html#typescript-imitates-the-hosts-module-resolution-but-with-types).
+これは、ESモジュールでは、インポートやスクリプトの実行時に`.js`拡張子を使用するようにTypeScriptが強制されるためです。この選択の背後にある理論については、[TypeScriptのドキュメント](https://www.typescriptlang.org/docs/handbook/modules/theory.html#typescript-imitates-the-hosts-module-resolution-but-with-types)で学ぶことができます。
 
-## Running the development server
-Instead of running the `bin/server.js` file directly, we recommend using the `serve` command for the following reasons.
+## 開発サーバーの実行
+`bin/server.js`ファイルを直接実行する代わりに、以下の理由から`serve`コマンドの使用をオススメします。
 
-- The command includes a file watcher and restarts the development server on file change.
-- The `serve` command detects the frontend assets bundler your app is using and starts its development server. For example, If you have a `vite.config.js` file in your project root, the `serve` command will start the `vite` dev server.
+- コマンドにはファイルウォッチャーが含まれており、ファイルの変更時に開発サーバーを再起動します。
+- `serve`コマンドは、アプリケーションで使用しているフロントエンドアセットバンドラーを検出し、その開発サーバーを起動します。たとえば、プロジェクトのルートに`vite.config.js`ファイルがある場合、`serve`コマンドは`vite`の開発サーバーを起動します。
 
 ```sh
 node ace serve --watch
 ```
 
-You may pass arguments to the Vite dev server using the `--assets-args` command line flag.
+`--assets-args`コマンドラインフラグを使用して、Viteの開発サーバーコマンドに引数を渡すことができます。
 
 ```sh
 node ace serve --watch --assets-args="--debug --base=/public"
 ```
 
-You may use the `--no-assets` flag to disable the Vite dev server.
+Viteの開発サーバーを無効にするには、`--no-assets`フラグを使用します。
 
 ```sh
 node ace serve --watch --no-assets
 ```
 
-### Passing options to the Node.js commandline
-The `serve` command starts the development server `(bin/server.ts file)` as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+### Node.jsコマンドラインにオプションを渡す
+`serve`コマンドは、開発サーバー（`bin/server.ts`ファイル）を子プロセスとして起動します。子プロセスに[nodeの引数](https://nodejs.org/api/cli.html#options)を渡したい場合は、コマンド名の前にそれらを定義することができます。
 
 ```sh
 node ace --no-warnings --inspect serve --watch
 ```
 
-## Creating production build
+## 本番ビルドの作成
 
-The production build of your AdonisJS application is created using the `node ace build` command. The `build` command performs the following operations to create a [**standalone JavaScript application**](#what-is-a-standalone-build) inside the `./build` directory.
+AdonisJSアプリケーションの本番ビルドは、`node ace build`コマンドを使用して作成されます。`build`コマンドは、以下の操作を実行して、`./build`ディレクトリ内に[**スタンドアロンのJavaScriptアプリケーション**](#what-is-a-standalone-build)を作成します。
 
-- Remove the existing `./build` folder (if any).
-- Rewrite the `ace.js` file **from scratch** to remove the `ts-node/esm` loader. 
-- Compile frontend assets using Vite (if configured).
-- Compile TypeScript source code to JavaScript using [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html).
-- Copy non-TypeScript files registered under the [`metaFiles`](../concepts/adonisrc_file.md#metafiles) array to the `./build` folder.
-- Copy the `package.json` and `package-lock.json/yarn.lock` files to the `./build` folder.
+- 既存の`./build`フォルダを削除します（存在する場合）。
+- `ace.js`ファイルを**ゼロから**書き直して、`ts-node/esm`ローダーを削除します。
+- Viteを使用してフロントエンドアセットをコンパイルします（設定されている場合）。
+- [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html)を使用してTypeScriptのソースコードをJavaScriptにコンパイルします。
+- [`metaFiles`](../concepts/adonisrc_file.md#metafiles)配列に登録されている非TypeScriptファイルを`./build`フォルダにコピーします。
+- `package.json`および`package-lock.json/yarn.lock`ファイルを`./build`フォルダにコピーします。
 
 :::warning
-Any modifications to the `ace.js` file will be lost during the build process since the file is rewritten from scratch. If you want to have any additional code that runs before Ace starts, you should instead do it inside the `bin/console.ts` file.
+`ace.js`ファイルへの変更はビルドプロセス中に失われます。ビルドの前にAceが開始される前に実行する追加のコードがある場合は、代わりに`bin/console.ts`ファイル内で行うべきです。
 :::
 
-And that is all!
+以上です！
 
 ```sh
 node ace build
 ```
 
-Once the build has been created, you can `cd` into the `build` folder, install production dependencies, and run your application.
+ビルドが作成されたら、`build`フォルダに移動し、本番依存関係をインストールしてアプリケーションを実行できます。
 
 ```sh
 cd build
 
-# Install production dependencies
+# 本番依存関係のインストール
 npm i --omit=dev
 
-# Run server
+# サーバーの実行
 node bin/server.js
 ```
 
-You may pass arguments to the Vite build command using the `--assets-args` command line flag.
+`--assets-args`コマンドラインフラグを使用して、Viteビルドコマンドに引数を渡すことができます。
 
 ```sh
 node ace build --assets-args="--debug --base=/public"
 ```
 
-You may use the `--no-assets` flag to avoid compiling the frontend assets.
+フロントエンドアセットのコンパイルを回避するには、`--no-assets`フラグを使用します。
 
 ```sh
 node ace build --no-assets
 ```
 
-### What is a standalone build?
+### スタンドアロンビルドとは何ですか？
 
-Standalone build refers to the JavaScript output of your application that you can run without the original TypeScript source. 
+スタンドアロンビルドとは、元のTypeScriptソースなしで実行できるアプリケーションのJavaScript出力を指します。
 
-Creating a standalone build helps reduce the size of the code you deploy on your production server, as you do not have to copy both the source files and the JavaScript output.
+スタンドアロンビルドを作成することで、デプロイするコードのサイズを削減できます。ソースファイルとJavaScript出力の両方をコピーする必要がないためです。
 
-After creating the production build, you can copy the `./build` to your production server, install dependencies, define environment variables, and run the application.
+本番ビルドを作成した後、`./build`を本番サーバーにコピーし、依存関係をインストールし、環境変数を定義してアプリケーションを実行できます。

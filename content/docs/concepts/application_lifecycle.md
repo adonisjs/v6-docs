@@ -1,63 +1,63 @@
 ---
-summary: Learn how AdonisJS boots your application and what lifecycle hooks you can use to change the application state before it is considered ready.
+summary: AdonisJSがアプリケーションを起動する方法と、アプリケーションが準備完了とみなされる前にアプリケーションの状態を変更するために使用できるライフサイクルフックについて学びましょう。
 ---
 
-# Application lifecycle
+# アプリケーションのライフサイクル
 
-In this guide, we will learn how AdonisJS boots your application and what lifecycle hooks you can use to change the application state before it is considered ready.
+このガイドでは、AdonisJSがアプリケーションを起動する方法と、アプリケーションが準備完了とみなされる前にアプリケーションの状態を変更するために使用できるライフサイクルフックについて学びます。
 
-The lifecycle of an application depends upon the environment in which it is running. For example, a long-lived process started to serve HTTP requests is managed differently from a short-lived ace command.
+アプリケーションのライフサイクルは、実行される環境によって異なります。たとえば、HTTPリクエストを処理するために起動される長時間実行されるプロセスは、短時間実行されるaceコマンドとは異なる方法で管理されます。
 
-So, let's understand the application lifecycle for every supported environment.
+それでは、サポートされているすべての環境についてアプリケーションのライフサイクルを理解しましょう。
 
-## How an AdonisJS application gets started
-An AdonisJS application has multiple entry points, and each entry point boots the application in a specific environment. The following entrypoint files are stored inside the `bin` directory.
+## AdonisJSアプリケーションの起動方法
+AdonisJSアプリケーションには複数のエントリーポイントがあり、各エントリーポイントは特定の環境でアプリケーションを起動します。次のエントリーポイントファイルは、`bin`ディレクトリ内に格納されています。
 
-- The `bin/server.ts` entry point boots the AdonisJS application to handle HTTP requests. When you run the `node ace serve` command, behind the scenes we run this file as a child process.
-- The `bin/console.ts` entry point boots the AdonisJS application to handle CLI commands. This file uses [Ace](../ace/introduction.md) under the hood.
-- The `bin/test.ts` entrypoint boots the AdonisJS application to run tests using Japa.
+- `bin/server.ts`エントリーポイントは、HTTPリクエストを処理するためにAdonisJSアプリケーションを起動します。`node ace serve`コマンドを実行すると、このファイルがバックグラウンドで子プロセスとして実行されます。
+- `bin/console.ts`エントリーポイントは、CLIコマンドを処理するためにAdonisJSアプリケーションを起動します。このファイルは、[Ace](../ace/introduction.md)を使用しています。
+- `bin/test.ts`エントリーポイントは、Japaを使用してテストを実行するためにAdonisJSアプリケーションを起動します。
 
-If you open any of these files, you will find us using the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/main.ts#L23) module to wire things up and then start the application.
+これらのファイルのいずれかを開くと、[Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/main.ts#L23)モジュールを使用して設定を行い、アプリケーションを起動していることがわかります。
 
-The Ignitor module encapsulates the logic of starting an AdonisJS application. Under the hood, it performs the following actions.
+Ignitorモジュールは、AdonisJSアプリケーションの起動ロジックをカプセル化しています。内部では、次のアクションを実行します。
 
-- Create an instance of the [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class.
-- Initiate/boot the application.
-- Perform the main action to start the application. For example, in the case of an HTTP server, the `main` action involves starting the HTTP server. Whereas, in the case of tests, the `main` action involves running the tests.
+- [Application](https://github.com/adonisjs/application/blob/main/src/application.ts)クラスのインスタンスを作成します。
+- アプリケーションを初期化/起動します。
+- アプリケーションを起動するための主なアクションを実行します。たとえば、HTTPサーバーの場合、`main`アクションはHTTPサーバーの起動を行います。テストの場合、`main`アクションはテストの実行を行います。
 
-The [Ignitor codebase](https://github.com/adonisjs/core/tree/main/src/ignitor) is relatively straightforward, so browse the source code to understand it better.
+[Ignitorのコードベース](https://github.com/adonisjs/core/tree/main/src/ignitor)は比較的シンプルなので、ソースコードを参照して詳細を理解してください。
 
-## The boot phase
+## 起動フェーズ
 
-The boot phase remains the same for all the environments except the `console` environment. In the `console` environment, the executed command decides whether to boot the application.
+起動フェーズは、`console`環境を除いてすべての環境で同じです。`console`環境では、実行されるコマンドによってアプリケーションの起動が決まります。
 
-You can only use the container bindings and services once the application is booted.
+アプリケーションが起動された後にのみ、コンテナのバインディングとサービスを使用できます。
 
 ![](./boot_phase_flow_chart.png)
 
-## The start phase
+## 開始フェーズ
 
-The start phase varies between all the environments. Also, the execution flow is further divided into the following sub-phases
+開始フェーズは、すべての環境で異なります。また、実行フローは以下のサブフェーズにさらに分割されます。
 
-- The `pre-start` phase refers to the actions performed before starting the app. 
+- `pre-start`フェーズは、アプリケーションの開始前に実行されるアクションを指します。
 
-- The `post-start` phase refers to the actions performed after starting the app. In the case of an HTTP server, the actions will be executed after the HTTP server is ready to accept new connections.
+- `post-start`フェーズは、アプリケーションの開始後に実行されるアクションを指します。HTTPサーバーの場合、アクションはHTTPサーバーが新しい接続を受け付ける準備ができた後に実行されます。
 
 ![](./start_phase_flow_chart.png)
 
-### During the web environment
+### Web環境での動作
 
-In the web environment, a long-lived HTTP connection is created to listen for incoming requests, and the application stays in the `ready` state until the server crashes or the process receives a signal to shut down.
+Web環境では、長時間実行されるHTTP接続が作成され、着信リクエストを待機し、アプリケーションはサーバーがクラッシュするかプロセスがシャットダウンするシグナルを受け取るまで`ready`状態になります。
 
-### During the test environment
+### テスト環境での動作
 
-The **pre-start** and the **post-start** actions are executed in the test environment. After that, we import the test files and execute the tests.
+テスト環境では、**pre-start**フェーズと**post-start**フェーズが実行されます。その後、テストファイルをインポートしてテストを実行します。
 
-### During the console environment
+### コンソール環境での動作
 
-In the `console` environment, the executed command decides whether to start the application.
+`console`環境では、実行されるコマンドによってアプリケーションの起動が決まります。
 
-A command can start the application by enabling the `options.startApp` flag. As a result, the **pre-start** and the **post-start** actions will run before the command's `run` method.
+コマンドは、`options.startApp`フラグを有効にすることでアプリケーションを起動できます。その結果、**pre-start**フェーズと**post-start**フェーズは、コマンドの`run`メソッドの前に実行されます。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -73,33 +73,33 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## The termination phase
+## 終了フェーズ
 
-The termination of the application varies greatly between short-lived and long-lived processes. 
+アプリケーションの終了は、短時間実行されるプロセスと長時間実行されるプロセスでは大きく異なります。
 
-A short-lived command or the test process begins the termination after the main operation ends.
+短時間実行されるコマンドまたはテストプロセスは、メインの操作が終了した後に終了処理を開始します。
 
-A long-lived HTTP server process waits for exit signals like `SIGTERM` to begin the termination process.
+長時間実行されるHTTPサーバープロセスは、`SIGTERM`などの終了シグナルを待機して終了処理を開始します。
 
 ![](./termination_phase_flow_chart.png)
 
-### Responding to process signals
+### プロセスシグナルへの応答
 
-In all the environments, we begin a graceful shutdown process when the application receives a `SIGTERM` signal. If you have started your application using [pm2](https://pm2.keymetrics.io/docs/usage/signals-clean-restart/), the graceful shutdown will happen after receiving the `SIGINT` event.
+すべての環境で、アプリケーションが`SIGTERM`シグナルを受け取ると、優雅なシャットダウンプロセスが開始されます。[pm2](https://pm2.keymetrics.io/docs/usage/signals-clean-restart/)を使用してアプリケーションを起動した場合、優雅なシャットダウンは`SIGINT`イベントを受け取った後に行われます。
 
-### During the web environment
+### Web環境での動作
 
-In the web environment, the application keeps running until the underlying HTTP server crashes with an error. In that case, we begin terminating the app.
+Web環境では、アンダーラインのHTTPサーバーがエラーでクラッシュするまでアプリケーションは実行され続けます。その場合、アプリケーションの終了処理が開始されます。
 
-### During the test environment
+### テスト環境での動作
 
-The graceful termination begins after all the tests have been executed.
+すべてのテストが実行された後、優雅な終了処理が開始されます。
 
-### During the console environment
+### コンソール環境での動作
 
-In the `console` environment, the termination of the app depends on the executed command.
+`console`環境では、アプリケーションの終了は実行されるコマンドに依存します。
 
-The app will terminate as soon as the command is executed unless the `options.staysAlive` flag is enabled, and in this case, the command should explicitly terminate the app.
+コマンドが`options.staysAlive`フラグを有効にしている場合、コマンドが明示的にアプリケーションを終了するまでアプリケーションは終了しません。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -113,23 +113,23 @@ export default class GreetCommand extends BaseCommand {
   async run() {
     await runSomeProcess()
     
-    // Terminate the process
+    // プロセスを終了する
     await this.terminate()
   }
 }
 ```
 
-## Lifecycle hooks
+## ライフサイクルフック
 
-Lifecycle hooks allow you to hook into the application bootstrap process and perform actions as the app goes through different states.
+ライフサイクルフックを使用すると、アプリケーションのブートストラッププロセスにフックして、アプリケーションが異なる状態を経る間にアクションを実行できます。
 
-You can listen for hooks using the service provider classes or define them inline on the application class.
+サービスプロバイダクラスを使用してフックをリッスンするか、アプリケーションクラスにインラインで定義できます。
 
-### Inline callbacks
+### インラインコールバック
 
-You should register lifecycle hooks as soon as an application instance is created. 
+アプリケーションインスタンスが作成された直後にライフサイクルフックを登録する必要があります。
 
-The entry point files `bin/server.ts`, `bin/console.ts`, and `bin/test.ts` creates a fresh application instance for different environments, and you can register inline callbacks within these files.
+エントリーポイントファイル`bin/server.ts`、`bin/console.ts`、`bin/test.ts`は、異なる環境用に新しいアプリケーションインスタンスを作成し、これらのファイル内でインラインコールバックを登録できます。
 
 ```ts
 const app = new Application(new URL('../', import.meta.url))
@@ -138,37 +138,37 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
   .tap((app) => {
     // highlight-start
     app.booted(() => {
-      console.log('invoked after the app is booted')
+      console.log('アプリケーションが起動した後に呼び出されます')
     })
     
     app.ready(() => {
-      console.log('invoked after the app is ready')
+      console.log('アプリケーションが準備完了した後に呼び出されます')
     })
     
     app.terminating(() => {
-      console.log('invoked before the termination starts')
+      console.log('終了処理が開始される前に呼び出されます')
     })
     // highlight-end
   })
 ```
 
-- `initiating`: The hook actions are called before the application moves to the initiated state. The `adonisrc.ts` file is parsed after executing the `initiating` hooks.
+- `initiating`: `initiating`フックアクションは、アプリケーションが初期化状態に移行する前に呼び出されます。`adonisrc.ts`ファイルは、`initiating`フックを実行した後にパースされます。
 
-- `booting`: The hook actions are called before booting the app. The config files are imported after executing `booting` hooks.
+- `booting`: `booting`フックアクションは、アプリケーションの起動前に呼び出されます。`booting`フックを実行した後に設定ファイルがインポートされます。
 
-- `booted`: The hook actions are invoked after all the service providers have been registered and booted.
+- `booted`: `booted`フックアクションは、すべてのサービスプロバイダが登録および起動された後に呼び出されます。
 
-- `starting`: The hook actions are invoked before importing the preload files.
+- `starting`: `starting`フックアクションは、プリロードファイルをインポートする前に呼び出されます。
 
-- `ready`: The hook actions are invoked after the application is ready.
+- `ready`: `ready`フックアクションは、アプリケーションが準備完了した後に呼び出されます。
 
-- `terminating`: The hook actions are invoked once the graceful exit process begins. For example, this hook can close database connections or end open streams.
+- `terminating`: `terminating`フックアクションは、優雅な終了プロセスが開始されると呼び出されます。たとえば、このフックではデータベース接続を閉じたり、オープンされたストリームを終了したりできます。
 
-### Using service providers
+### サービスプロバイダを使用する
 
-Services providers define the lifecycle hooks as methods in the provider class. We recommend using service providers over inline callbacks, as they keep everything neatly organized.
+サービスプロバイダは、プロバイダクラスのメソッドとしてライフサイクルフックを定義します。インラインコールバックよりもサービスプロバイダを使用することをオススメします。サービスプロバイダを使用すると、すべてがきちんと整理されます。
 
-Following is the list of available lifecycle methods.
+以下は、使用可能なライフサイクルメソッドのリストです。
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
@@ -193,12 +193,12 @@ export default class AppProvider {
 }
 ```
 
-- `register`: The register method registers bindings within the container. This method is synchronous by design.
+- `register`: `register`メソッドは、コンテナ内でバインディングを登録します。このメソッドは同期的に実行されます。
 
-- `boot`: The boot method is used to boot or initialize the bindings you have registered inside the container.
+- `boot`: `boot`メソッドは、コンテナ内で登録したバインディングを初期化または起動するために使用されます。
 
-- `start`: The start method runs just before the `ready` method. It allows you to perform actions that the `ready` hook actions might need.
+- `start`: `start`メソッドは、`ready`メソッドの直前に実行されます。`ready`フックアクションが必要とするアクションを実行できます。
 
-- `ready`: The ready method runs after the application is considered ready.
+- `ready`: `ready`メソッドは、アプリケーションが準備完了とみなされた後に実行されます。
 
-- `shutdown`: The shutdown method is invoked when the application begins the graceful shutdown. You can use this method to close database connections, or end opened streams.
+- `shutdown`: `shutdown`メソッドは、アプリケーションが優雅なシャットダウンを開始したときに呼び出されます。このメソッドを使用してデータベース接続を閉じたり、オープンされたストリームを終了したりできます。

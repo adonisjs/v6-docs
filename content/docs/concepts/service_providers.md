@@ -1,16 +1,16 @@
 ---
-summary: Service providers are plain JavaScript classes with lifecycle methods to perform actions during different phases of the application.
+summary: サービスプロバイダは、アプリケーションのさまざまなフェーズでアクションを実行するためのライフサイクルメソッドを持つプレーンなJavaScriptクラスです。
 ---
 
-# Service providers
+# サービスプロバイダ
 
-Services providers are plain JavaScript classes with lifecycle methods to perform actions during different phases of the application.
+サービスプロバイダは、アプリケーションのさまざまなフェーズでアクションを実行するためのライフサイクルメソッドを持つプレーンなJavaScriptクラスです。
 
-A service provider can register [bindings into the container](../concepts/dependency_injection.md#container-bindings), [extend existing bindings](../concepts/dependency_injection.md#container-events), or run actions after the HTTP server starts.
+サービスプロバイダは、[コンテナにバインディングを登録](../concepts/dependency_injection.md#container-bindings)したり、既存のバインディングを拡張したり、HTTPサーバーの起動後にアクションを実行したりできます。
 
-Service providers are the entry point to an AdonisJS application with the ability to modify the application state before it is considered ready.
+サービスプロバイダは、AdonisJSアプリケーションのエントリーポイントであり、アプリケーションが準備完了と見なされる前にアプリケーションの状態を変更する能力を持っています。
 
-The providers are registered inside the `adonisrc.ts` file under the `providers` array. The value is a function to lazily import the service provider
+プロバイダは、`adonisrc.ts`ファイルの`providers`配列内に登録されます。値はサービスプロバイダを遅延インポートするための関数です。
 
 ```ts
 {
@@ -21,7 +21,7 @@ The providers are registered inside the `adonisrc.ts` file under the `providers`
 }
 ```
 
-By default, a provider is loaded in all the runtime environments. However, you can limit the provider to run in specific environments.
+デフォルトでは、プロバイダはすべてのランタイム環境でロードされます。ただし、特定の環境でのみプロバイダを実行することもできます。
 
 ```ts
 {
@@ -35,13 +35,13 @@ By default, a provider is loaded in all the runtime environments. However, you c
 }
 ```
 
-## Writing service providers
+## サービスプロバイダの作成
 
-Service providers are stored inside the `providers` directory of your app. Alternatively, you can use the `node ace make:provider app` command.
+サービスプロバイダは、アプリの`providers`ディレクトリ内に格納されます。または、`node ace make:provider app`コマンドを使用することもできます。
 
-The provider module must have an `export default` statement returning the provider class. The class constructor receives an instance of the [Application](./application.md) class.
+プロバイダモジュールは、プロバイダクラスを返す`export default`ステートメントを持つ必要があります。クラスのコンストラクタは、[Application](./application.md)クラスのインスタンスを受け取ります。
 
-See also: [Make provider command](../references/commands.md#makeprovider)
+参照: [プロバイダ作成コマンド](../references/commands.md#makeprovider)
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
@@ -52,7 +52,7 @@ export default class AppProvider {
 }
 ```
 
-Following are the lifecycle methods you can implement to perform different actions.
+以下は、さまざまなアクションを実行するために実装できるライフサイクルメソッドです。
 
 ```ts
 export default class AppProvider {
@@ -75,9 +75,9 @@ export default class AppProvider {
 
 ### register
 
-The `register` method is called after an instance of the provider class is created. The `register` method can register bindings within the IoC container. 
+`register`メソッドは、プロバイダクラスのインスタンスが作成された後に呼び出されます。`register`メソッドでは、IoCコンテナ内にバインディングを登録できます。
 
-The `register` method is synchronous, so you cannot use Promises inside this method.
+`register`メソッドは同期的なので、このメソッド内ではPromiseを使用することはできません。
 
 ```ts
 export default class AppProvider {
@@ -91,20 +91,20 @@ export default class AppProvider {
 
 ### boot
 
-The `boot` method is called after all the bindings have been registered with the IoC container. Inside this method, you can resolve bindings from the container to extend/mutate them.
+`boot`メソッドは、すべてのバインディングがIoCコンテナに登録された後に呼び出されます。このメソッド内では、コンテナからバインディングを解決して拡張/変更できます。
 
 ```ts
 export default class AppProvider {
   async boot() {
    const validator = await this.app.container.make('validator')
     
-   // Add custom validation rules
+   // カスタムのバリデーションルールを追加
    validator.rule('foo', () => {})
   }
 }
 ```
 
-It is a good practice to extend bindings when they are resolved from the container. For example, you can use the `resolving` hook to add custom rules to the validator.
+バインディングがコンテナから解決されたときにバインディングを拡張するのは良い習慣です。たとえば、バリデータにカスタムルールを追加するために`resolving`フックを使用できます。
 
 ```ts
 async boot() {
@@ -116,28 +116,28 @@ async boot() {
 
 ### start
 
-The `start` method is called after the `boot` and before the `ready ` method. It allows you to perform actions that the `ready` hook actions might need.
+`start`メソッドは、`boot`メソッドの後および`ready`メソッドの前に呼び出されます。`ready`フックアクションで必要なアクションを実行できます。
 
 ### ready
 
-The `ready` method gets called at different stages based on the application's environment.
+`ready`メソッドは、アプリケーションの環境に基づいて異なるステージで呼び出されます。
 
 <table>
     <tr>
         <td width="100"><code> web </code></td>
-        <td>The <code>ready</code> method is called after the HTTP server has been started and is ready to accept requests.</td>
+        <td><code>ready</code>メソッドは、HTTPサーバーが起動してリクエストを受け付ける準備ができた後に呼び出されます。</td>
     </tr>
     <tr>
         <td width="100"><code>console</code></td>
-        <td>The <code> ready</code> method is called just before the <code>run</code> method of the main command.</td>
+        <td><code>ready</code>メソッドは、メインコマンドの<code>run</code>メソッドの直前に呼び出されます。</td>
     </tr>
     <tr>
         <td width="100"><code>test</code></td>
-        <td>The <code>ready</code> method is called just before running all the tests. However, the test files are imported before the <code>ready</code> method.</td>
+        <td><code>ready</code>メソッドは、すべてのテストを実行する直前に呼び出されます。ただし、テストファイルは<code>ready</code>メソッドよりも前にインポートされます。</td>
     </tr>
     <tr>
         <td width="100"><code>repl</code></td>
-        <td>The <code>ready</code> method is called before the REPL prompt is displayed on the terminal.</td>
+        <td><code>ready</code>メソッドは、REPLプロンプトがターミナル上に表示される前に呼び出されます。</td>
     </tr>
 </table>
 
@@ -161,14 +161,14 @@ export default class AppProvider {
 
 ### shutdown
 
-The `shutdown` method is called when AdonisJS is in the middle of gracefully exiting the application.
+`shutdown`メソッドは、AdonisJSがアプリケーションを正常に終了している最中に呼び出されます。
 
-The event of exiting the application depends upon the environment in which the app is running and how the application process started. Please read the [application lifecycle guide](./application_lifecycle.md) to know more about it.
+アプリケーションの終了イベントは、アプリが実行されている環境とアプリケーションプロセスの開始方法によって異なります。詳細については、[アプリケーションライフサイクルガイド](./application_lifecycle.md)を参照してください。
 
 ```ts
 export default class AppProvider {
   async shutdown() {
-    // perform the cleanup
+    // クリーンアップを実行する
   }
 }
 ```

@@ -1,14 +1,14 @@
 ---
-summary: Learn about config providers and how they help you lazily compute the configuration after the application is booted.
+summary: コンフィグプロバイダについて学び、アプリケーションの起動後に設定を遅延計算する方法を理解しましょう。
 ---
 
-# Config providers
+# コンフィグプロバイダ
 
-Some configuration files like (`config/hash.ts`) do not export config as a plain object. Instead, they export a [config provider](https://github.com/adonisjs/core/blob/main/src/config_provider.ts#L16). The config provider provides a transparent API for packages to lazily compute the configuration after the application is booted.
+一部の設定ファイル（`config/hash.ts`など）は、設定を単なるオブジェクトとしてエクスポートするのではなく、[コンフィグプロバイダ](https://github.com/adonisjs/core/blob/main/src/config_provider.ts#L16)としてエクスポートされます。コンフィグプロバイダは、アプリケーションの起動後に設定を遅延計算するための透過的なAPIを提供します。
 
-## Without config providers
+## コンフィグプロバイダを使用しない場合
 
-To understand config providers, let's see what the `config/hash.ts` file would look like if we were not using config providers.
+コンフィグプロバイダを理解するために、コンフィグプロバイダを使用しない場合の`config/hash.ts`ファイルを見てみましょう。
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -26,9 +26,9 @@ export default {
 }
 ```
 
-So far, so good. Instead of referencing the `scrypt` driver from the `drivers` collection. We are importing it directly and returning an instance using a factory function.
+これまでは問題ありません。`drivers`コレクションから`scrypt`ドライバーを参照する代わりに、直接インポートしてファクトリ関数を使用してインスタンスを返しています。
 
-Let's say the `Scrypt` driver needs an instance of the Emitter class to emit an event every time it hashes a value.
+`Scrypt`ドライバーが値をハッシュするたびにイベントを発行するために、`Scrypt`ドライバーが`Emitter`クラスのインスタンスを必要とするとしましょう。
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -51,10 +51,10 @@ export default {
 }
 ```
 
-**🚨 The above example will fail** because the AdonisJS [container services](./container_services.md) are unavailable until the application has been booted and the config files are imported before the application boot phase.
+**🚨 上記の例は失敗します**。なぜなら、AdonisJSの[コンテナサービス](./container_services.md)は、アプリケーションが起動し、設定ファイルがインポートされる前に利用できないからです。
 
-### Well, that's a problem with AdonisJS architecture 🤷🏻‍♂️
-Not really. Let's not use the container service and create an instance of the Emitter class directly within the config file.
+### それはAdonisJSのアーキテクチャの問題ではありません 🤷🏻‍♂️
+実際にはそうではありません。コンテナサービスを使用せずに、設定ファイル内で`Emitter`クラスのインスタンスを直接作成しましょう。
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -82,9 +82,9 @@ export default {
 }
 ```
 
-Now, we have a new problem. The `emitter` instance we have created for the `Scrypt` driver is not globally available for us to import and listen for events emitted by the driver.
+これで新たな問題が発生しました。`Scrypt`ドライバーのために作成した`emitter`インスタンスは、ドライバーが発行するイベントをインポートしてリッスンするためにグローバルに利用できません。
 
-Therefore, you might want to move the construction of the `Emitter` class to its file and export an instance of it. This way, you can pass the emitter instance to the driver and use it to listen to events.
+そのため、`Emitter`クラスの構築をそのファイルに移動し、そのインスタンスをエクスポートすることが望ましいかもしれません。これにより、エミッターインスタンスをドライバーに渡してイベントをリッスンするために使用できます。
 
 ```ts
 // title: start/emitter.ts
@@ -118,12 +118,12 @@ export default {
 }
 ```
 
-The above code will work fine. However, you are manually constructing the dependencies your application needs this time. As a result, your application will have a lot of boilerplate code to wire everything together.
+上記のコードは正常に動作します。ただし、今回はアプリケーションが必要とする依存関係を手動で構築しています。その結果、アプリケーションにはすべてを結びつけるための大量のボイラープレートコードが必要になります。
 
-With AdonisJS, we strive to write minimal boilerplate code and use the IoC container for lookup dependencies.
+AdonisJSでは、最小限のボイラープレートコードを書き、依存関係の検索にIoCコンテナを使用することを目指しています。
 
-## With config provider
-Now, let's re-write the `config/hash.ts` file and use a config provider this time. Config provider is a fancy name for a function that accepts an [instance of the Application class](./application.md) and resolves its dependencies using the container.
+## コンフィグプロバイダを使用する場合
+さて、`config/hash.ts`ファイルを書き直して、今度はコンフィグプロバイダを使用しましょう。コンフィグプロバイダは、[Applicationクラスのインスタンス](./application.md)を受け取り、コンテナを使用して依存関係を解決する関数のことです。
 
 ```ts
 // highlight-start
@@ -150,9 +150,9 @@ export default {
 }
 ```
 
-Once you use the [hash](../security/hashing.md) service, the config provider for the `scrypt` driver will be executed to resolve its dependencies. As a result, we do not attempt to look up the `emitter` until we use the hash service elsewhere inside our code.
+ハッシュサービスを使用すると、`scrypt`ドライバーのコンフィグプロバイダが依存関係を解決するために実行されます。その結果、コードの他の場所でハッシュサービスを使用するまで、`emitter`を参照しようとはしません。
 
-Since config providers are async, you might want to import the `Scrypt` driver lazily via dynamic import.
+コンフィグプロバイダは非同期なので、動的インポートを使用して`Scrypt`ドライバーを遅延してインポートできます。
 
 ```ts
 import { configProvider } from '@adonisjs/core'
@@ -180,8 +180,8 @@ export default {
 }
 ```
 
-## How do I access the resolved config?
-You may access the resolved config from the service directly. For example, in the case of the hash service, you can get a reference to the resolved config as follows.
+## 解決されたコンフィグにはどのようにアクセスしますか？
+サービスから直接解決されたコンフィグには、次のようにしてアクセスできます。たとえば、ハッシュサービスの場合、次のようにして解決されたコンフィグへの参照を取得できます。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'

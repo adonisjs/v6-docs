@@ -1,29 +1,29 @@
 ---
-summary: Learn how to mock or fake dependencies during testing in AdonisJS.
+summary: AdonisJSでのテスト中に依存関係をモックまたはフェイクする方法を学びます。
 ---
 
-# Mocks and Fakes
+# モックとフェイク
 
-When testing your applications, you might want to mock or fake specific dependencies to prevent actual implementations from running. For example, you wish to refrain from emailing your customers when running tests and neither call third-party services like a payment gateway.
+アプリケーションをテストする際、実際の実装を実行しないように特定の依存関係をモックまたはフェイクしたい場合があります。たとえば、テストを実行する際に顧客にメールを送信したり、決済ゲートウェイのようなサードパーティのサービスを呼び出したりしたくない場合です。
 
-AdonisJS offers a few different APIs and recommendations using which you can fake, mock, or stub a dependency.
+AdonisJSでは、依存関係をフェイク、モック、またはスタブするためのいくつかの異なるAPIと推奨事項を提供しています。
 
-## Using the fakes API
+## フェイクAPIの使用
 
-Fakes are objects with working implementations explicitly created for testing. For example, The mailer module of AdonisJS has a fake implementation that you can use during testing to collect outgoing emails in memory and write assertions for them.
+フェイクは、テスト用に明示的に作成された動作する実装を持つオブジェクトです。たとえば、AdonisJSのメーラーモジュールには、テスト中に出力されるメールをメモリに収集し、それらにアサーションを書くために使用できるフェイク実装があります。
 
-We provide fake implementations for the following container services. The fakes API is documented alongside the module documentation.
+以下のコンテナサービスに対してフェイク実装を提供しています。フェイクAPIの詳細は、モジュールのドキュメントと一緒にドキュメント化されています。
 
-- [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
-- [Hash fake](../security/hashing.md#faking-hash-service-during-tests)
-- [Fake mailer](../digging_deeper/mail.md#fake-mailer)
-- [Drive fake](../digging_deeper/drive.md#faking-disks)
+- [イベントフェイク](../digging_deeper/emitter.md#faking-events-during-tests)
+- [ハッシュフェイク](../security/hashing.md#faking-hash-service-during-tests)
+- [フェイクメーラー](../digging_deeper/mail.md#fake-mailer)
+- [ディスクフェイク](../digging_deeper/drive.md#faking-disks)
 
-## Dependency injection and fakes
+## 依存関係の注入とフェイク
 
-If you use dependency injection in your application or use the [container to create class instances](../concepts/dependency_injection.md), you can provide a fake implementation for a class using the `container.swap` method.
+アプリケーションで依存関係の注入を使用するか、[コンテナを使用してクラスのインスタンスを作成](../concepts/dependency_injection.md)する場合、`container.swap`メソッドを使用してクラスのフェイク実装を提供できます。
 
-In the following example, we inject `UserService` to the `UsersController`.
+次の例では、`UserService`を`UsersController`に注入しています。
 
 ```ts
 import UserService from '#services/user_service'
@@ -35,14 +35,14 @@ export default class UsersController {
 }
 ```
 
-During testing, we can provide an alternate/fake implementation of the `UserService` class as follows.
+テスト中には、`UserService`クラスの代替/フェイク実装を次のように提供できます。
 
 ```ts
 import UserService from '#services/user_service'
 import app from '@adonisjs/core/services/app'
 
-test('get all users', async () => {
-  // highlight-start
+test('全てのユーザーを取得する', async () => {
+  // ハイライト-スタート
   class FakeService extends UserService {
     all() {
       return [{ id: 1, username: 'virk' }]
@@ -50,43 +50,42 @@ test('get all users', async () => {
   }
   
   /**
-   * Swap `UserService` with an instance of
-   * `FakeService`
+   * `UserService`を`FakeService`のインスタンスに置き換える
    */  
   app.container.swap(UserService, () => {
     return new FakeService()
   })
   
   /**
-   * Test logic goes here
+   * テストロジックをここに記述
    */
-  // highlight-end
+  // ハイライト-エンド
 })
 ```
 
-Once the test has been completed, you must restore the fake using the `container.restore` method.
+テストが完了したら、`container.restore`メソッドを使用してフェイクを元に戻す必要があります。
 
 ```ts
 app.container.restore(UserService)
 
-// Restore all
+// 全てを元に戻す
 app.container.restore()
 ```
 
-## Mocks and stubs using Sinon.js
+## Sinon.jsを使用したモックとスタブ
 
-[Sinon](https://sinonjs.org/#get-started) is a mature, time-tested mocking library in the Node.js ecosystem. If you use mocks and stubs regularly, we recommend using Sinon, as it works great with TypeScript.
+[Sinon](https://sinonjs.org/#get-started)は、Node.jsエコシステムで成熟した、時間をかけてテストされたモッキングライブラリです。モックとスタブを頻繁に使用する場合は、TypeScriptとの互換性が高いSinonをオススメします。
 
-## Mocking network requests
+## ネットワークリクエストのモック
 
-If your application makes outgoing HTTP requests to third-party services, you can use [nock](https://github.com/nock/nock) during testing to mock the network requests.
+アプリケーションがサードパーティのサービスに対して出力HTTPリクエストを行う場合、テスト中に[nock](https://github.com/nock/nock)を使用してネットワークリクエストをモックできます。
 
-Since nock intercepts all outgoing requests from the [Node.js HTTP module](https://nodejs.org/dist/latest-v20.x/docs/api/http.html#class-httpclientrequest), it works with almost every third-party library like `got`, `axios` and so on.
+nockは、[Node.jsのHTTPモジュール](https://nodejs.org/dist/latest-v20.x/docs/api/http.html#class-httpclientrequest)からのすべての出力リクエストをインターセプトするため、`got`、`axios`などのほとんどのサードパーティライブラリと動作します。
 
-## Freezing time
-You may use the [timekeeper](https://www.npmjs.com/package/timekeeper) package to freeze or travel time when writing tests. The timekeeper packages works by mocking the `Date` class.
+## 時間の凍結
+テストの作成時に時間を凍結または移動するために、[timekeeper](https://www.npmjs.com/package/timekeeper)パッケージを使用できます。timekeeperパッケージは、`Date`クラスをモックすることで動作します。
 
-In the following example, we encapsulate the API of `timekeeper` inside a [Japa Test resource](https://japa.dev/docs/test-resources).
+次の例では、`timekeeper`のAPIを[Japaテストリソース](https://japa.dev/docs/test-resources)内にカプセル化しています。
 
 ```ts
 import { getActiveTest } from '@japa/runner'
@@ -95,7 +94,7 @@ import timekeeper from 'timekeeper'
 export function timeTravel(secondsToTravel: number) {
   const test = getActiveTest()
   if (!test) {
-    throw new Error('Cannot use "timeTravel" outside of a Japa test')
+    throw new Error('Japaテストの外部で"timeTravel"を使用することはできません')
   }
 
   timekeeper.reset()
@@ -110,14 +109,14 @@ export function timeTravel(secondsToTravel: number) {
 }
 ```
 
-You may use the `timeTravel` method inside your tests as follows.
+テスト内で`timeTravel`メソッドを以下のように使用できます。
 
 ```ts
 import { timeTravel } from '#test_helpers'
 
-test('expire token after 2 hours', async ({ assert }) => {
+test('2時間後にトークンが期限切れになる', async ({ assert }) => {
   /**
-   * Travel 3 hours into the future
+   * 未来に3時間進む
    */
   timeTravel(60 * 60 * 3)
 })

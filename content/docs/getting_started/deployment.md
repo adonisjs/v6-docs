@@ -1,30 +1,30 @@
 ---
-summary: Learn about general guidelines to deploy an AdonisJS application in production.
+summary: 本番環境でのAdonisJSアプリケーションのデプロイについての一般的なガイドラインを学びます。
 ---
 
-# Deployment
+# デプロイ
 
-Deploying an AdonisJS application is no different than deploying a standard Node.js application. You need a server running `Node.js >= 20.6` along with `npm` to install production dependencies.
+AdonisJSアプリケーションのデプロイは、標準的なNode.jsアプリケーションのデプロイと同じです。本番環境で実行するために、`Node.js >= 20.6`が動作するサーバーと、本番環境の依存関係をインストールするための`npm`が必要です。
 
-This guide will cover the generic guidelines to deploy and run an AdonisJS application in production. 
+このガイドでは、AdonisJSアプリケーションを本番環境でデプロイして実行するための一般的なガイドラインについて説明します。
 
-## Creating production build
+## 本番ビルドの作成
 
-As a first step, you must create the production build of your AdonisJS application by running the `build` command.
+まず、`build`コマンドを実行してAdonisJSアプリケーションの本番ビルドを作成する必要があります。
 
-See also: [TypeScript build process](../concepts/typescript_build_process.md)
+詳細はこちらを参照してください：[TypeScriptビルドプロセス](../concepts/typescript_build_process.md)
 
 ```sh
 node ace build
 ```
 
-The compiled output is written inside the `./build` directory. If you use Vite, its output will be written inside the `./build/public` directory.
+コンパイルされた出力は`./build`ディレクトリ内に書き込まれます。Viteを使用している場合、その出力は`./build/public`ディレクトリ内に書き込まれます。
 
-Once you have created the production build, you may copy the `./build` folder to your production server. **From now on, the build folder will be the root of your application**.
+本番ビルドを作成したら、`./build`フォルダを本番サーバーにコピーできます。**これ以降、ビルドフォルダはアプリケーションのルートとなります**。
 
-### Creating a Docker image
+### Dockerイメージの作成
 
-If you are using Docker to deploy your application, you may create a Docker image using the following `Dockerfile`.
+アプリケーションのデプロイにDockerを使用している場合、次の`Dockerfile`を使用してDockerイメージを作成できます。
 
 ```dockerfile
 FROM node:20.12.2-alpine3.18 as base
@@ -58,16 +58,16 @@ EXPOSE 8080
 CMD ["node", "./bin/server.js"]
 ```
 
-Feel free to modify the Dockerfile to suit your needs.
+必要に応じてDockerfileを変更してください。
 
-## Configuring a reverse proxy
+## 逆プロキシの設定
 
-Node.js applications are usually [deployed behind a reverse proxy](https://medium.com/intrinsic-blog/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca) server like Nginx. So the incoming traffic on ports `80` and `443` will be handled by Nginx first and then forwarded to your Node.js application.
+Node.jsアプリケーションは通常、Nginxのような逆プロキシサーバーの背後にデプロイされます。したがって、ポート`80`および`443`の着信トラフィックはまずNginxで処理され、その後Node.jsアプリケーションに転送されます。
 
-Following is an example Nginx config file you may use as the starting point.
+以下は、出発点として使用できるNginxの設定ファイルの例です。
 
 :::warning
-Make sure to replace the values inside the angle brackets `<>`.
+角括弧`<>`内の値を置き換えてください。
 :::
 
 ```nginx
@@ -91,31 +91,31 @@ server {
 }
 ```
 
-## Defining environment variables
+## 環境変数の定義
 
-If you are deploying your application on a bare-bone server, like a DigitalOcean Droplet or an EC2 instance, you may use an `.env` file to define the environment variables. Ensure the file is stored securely and only authorized users can access it.
+DigitalOcean DropletやEC2インスタンスなどのベアボーンサーバーにアプリケーションをデプロイする場合、`.env`ファイルを使用して環境変数を定義できます。ファイルが安全に保存され、認可されたユーザーのみがアクセスできるようにしてください。
 
 :::note
-If you are using a deployment platform like Heroku or Cleavr, you may use their control panel to define the environment variables.
+HerokuやCleavrなどのデプロイメントプラットフォームを使用している場合は、コントロールパネルを使用して環境変数を定義できます。
 :::
 
-Assuming you have created the `.env` file in an `/etc/secrets` directory, you must start your production server as follows.
+`/etc/secrets`ディレクトリに`.env`ファイルを作成したと仮定すると、以下のように本番サーバーを起動する必要があります。
 
 ```sh
 ENV_PATH=/etc/secrets node build/bin/server.js
 ```
 
-The `ENV_PATH` environment variable instructs AdonisJS to look for the `.env` file inside the mentioned directory.
+`ENV_PATH`環境変数は、AdonisJSに`.env`ファイルを指定したディレクトリ内で検索するように指示します。
 
-## Starting the production server
+## 本番サーバーの起動
 
-You may start the production server by running the `node server.js` file. However, it is recommended to use a process manager like [pm2](https://pm2.keymetrics.io/docs/usage/quick-start).
+`node server.js`ファイルを実行することで本番サーバーを起動できます。ただし、[pm2](https://pm2.keymetrics.io/docs/usage/quick-start)のようなプロセスマネージャーを使用することを推奨します。
 
-- PM2 will run your application in background without blocking the current terminal session.
-- It will restart the application, if your app crashes while serving requests.
-- Also, PM2 makes it super simple to run your application in [cluster mode](https://nodejs.org/api/cluster.html#cluster)
+- PM2は、現在のターミナルセッションをブロックせずにアプリケーションをバックグラウンドで実行します。
+- アプリケーションがリクエストを処理している間にアプリケーションがクラッシュした場合、自動的に再起動します。
+- また、PM2を使用すると、[クラスターモード](https://nodejs.org/api/cluster.html#cluster)でアプリケーションを実行することも非常に簡単です。
 
-Following is an example [pm2 ecosystem file](https://pm2.keymetrics.io/docs/usage/application-declaration) you may use as the starting point.
+以下は、出発点として使用できる[pm2エコシステムファイル](https://pm2.keymetrics.io/docs/usage/application-declaration)の例です。
 
 ```js
 // title: ecosystem.config.js
@@ -137,31 +137,31 @@ module.exports = {
 pm2 start ecosystem.config.js
 ```
 
-## Migrating database
+## データベースのマイグレーション
 
-If you are using a SQL database, you must run the database migrations on the production server to create the required tables.
+SQLデータベースを使用している場合、本番サーバーでデータベースマイグレーションを実行して必要なテーブルを作成する必要があります。
 
-If you are using Lucid, you may run the following command.
+Lucidを使用している場合、次のコマンドを実行できます。
 
 ```sh
 node ace migration:run --force
 ```
 
-The `--force` flag is required when running migrations in the production environment.
+マイグレーションを本番環境で実行する場合は、`--force`フラグが必要です。
 
-### When to run migrations
+### マイグレーションを実行するタイミング
 
-Also, it would be best if you always run the migrations before restarting the server. Then, if the migration fails, do not restart the server.
+また、サーバーを再起動する前に常にマイグレーションを実行することをオススメします。マイグレーションが失敗した場合は、サーバーを再起動しないでください。
 
-Using a managed service like Cleavr or Heroku, they can automatically handle this use case. Otherwise, you will have to run the migration script inside a CI/CD pipeline or run it manually through SSH.
+CleavrやHerokuなどの管理されたサービスを使用すると、このようなケースを自動的に処理できます。それ以外の場合は、CI/CDパイプライン内でマイグレーションスクリプトを実行するか、SSHを介して手動で実行する必要があります。
 
-### Do not rollback in production
+### 本番環境でのロールバックは避ける
 
-Rolling back migrations in production is a risky operation. The `down` method in your migration files usually contains destructive actions like **drop the table**, or **remove a column**, and so on.
+本番環境でのマイグレーションのロールバックはリスクが伴います。マイグレーションファイルの`down`メソッドには、テーブルの削除やカラムの削除などの破壊的なアクションが含まれる場合があります。
 
-It is recommended to turn off rollbacks in production inside the config/database.ts file and instead, create a new migration to fix the issue and run it on the production server.
+本番環境では、config/database.tsファイル内でロールバックを無効にし、代わりに問題を修正するための新しいマイグレーションを作成して本番サーバーで実行することをオススメします。
 
-Disabling rollbacks in production will ensure that the `node ace migration:rollback` command results in an error.
+本番環境でのロールバックの無効化により、`node ace migration:rollback`コマンドがエラーを返すようになります。
 
 ```js
 {
@@ -174,45 +174,45 @@ Disabling rollbacks in production will ensure that the `node ace migration:rollb
 }
 ```
 
-### Concurrent migrations
+### 並行マイグレーション
 
-If you are running migrations on a server with multiple instances, you must ensure that only one instance runs the migrations.
+複数のインスタンスを持つサーバーでマイグレーションを実行する場合、同時にマイグレーションを実行することができるインスタンスは1つだけであることを確認する必要があります。
 
-For MySQL and PostgreSQL, Lucid will obtain advisory locks to ensure that concurrent migration is not allowed. However, it is better to avoid running migrations from multiple servers in the first place.
+MySQLとPostgreSQLでは、Lucidは同時マイグレーションを許可しないようにアドバイザリロックを取得します。ただし、最初から複数のサーバーでマイグレーションを実行するのを避ける方が良いです。
 
-## Persistent storage for file uploads
+## ファイルのアップロードのための永続ストレージ
 
-Environments like Amazon EKS, Google Kubernetes, Heroku, DigitalOcean Apps, and so on, run your application code inside [an ephemeral filesystem](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means that each deployment, by default, will nuke the existing filesystem and creates a fresh one.
+Amazon EKS、Google Kubernetes、Heroku、DigitalOcean Appsなどの環境では、AdonisJSアプリケーションのコードを[一時ファイルシステム](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem)内で実行します。これは、デプロイごとに既存のファイルシステムを削除し、新しいものを作成することを意味します。
 
-If your application allows users to upload files, you must use a persistent storage service like Amazon S3, Google Cloud Storage, or DigitalOcean Spaces instead of relying on the local filesystem.
+ユーザーがファイルをアップロードできる場合、ローカルファイルシステムに頼らずに、Amazon S3、Google Cloud Storage、またはDigitalOcean Spacesなどの永続ストレージサービスを使用する必要があります。
 
-## Writing logs
+## ログの記録
 
-AdonisJS uses the [`pino` logger](../digging_deeper/logger.md) by default, which writes logs to the console in JSON format. You can either set up an external logging service to read the logs from stdout/stderr, or forward them to a local file on the same server.
+AdonisJSはデフォルトで[`pino`ロガー](../digging_deeper/logger.md)を使用し、ログをJSON形式でコンソールに書き込みます。ログをstdout/stderrから読み取るための外部のログサービスを設定するか、同じサーバーのローカルファイルに転送できます。
 
-## Serving static assets
+## 静的アセットの提供
 
-Serving static assets effectively is essential for the performance of your application. Regardless of how fast your AdonisJS applications are, the delivery of static assets plays a massive role to a better user experience.
+静的アセットの効率的な提供は、アプリケーションのパフォーマンスにとって重要です。AdonisJSアプリケーションがどれだけ高速であっても、静的アセットの配信はユーザーエクスペリエンスの向上に大きな役割を果たします。
 
-### Using a CDN
+### CDNの使用
 
-The best approach is to use a CDN (Content Delivery Network) for delivering the static assets from your AdonisJS application.
+最良の方法は、AdonisJSアプリケーションから静的アセットをCDN（コンテンツデリバリーネットワーク）を使用して配信することです。
 
-The frontend assets compiled using [Vite](../basics/vite.md) are fingerprinted by default, which means that the file names are hashed based on their content. This allows you to cache the assets forever and serve them from a CDN.
+[Vite](../basics/vite.md)を使用してコンパイルされたフロントエンドアセットは、デフォルトでフィンガープリントが付けられています。これは、ファイル名がその内容に基づいてハッシュ化されることを意味します。これにより、アセットを永久にキャッシュし、CDNから提供できます。
 
-Depending upon the CDN service you are using and your deployment technique, you may have to add a step to your deployment process to move the static files to the CDN server. This is how it should work in a nutshell.
+使用しているCDNサービスとデプロイ方法によっては、静的ファイルをCDNサーバーに移動するためのデプロイプロセスにステップを追加する必要があります。以下は、その概要です。
 
-1. Update the `vite.config.js` and `config/vite.ts` configuration to [use the CDN URL](../basics/vite.md#deploying-assets-to-a-cdn).
+1. `vite.config.js`と`config/vite.ts`の設定を更新して、[CDNのURLを使用](../basics/vite.md#deploying-assets-to-a-cdn)するようにします。
 
-2. Run the `build` command to compile the application and the assets.
+2. `build`コマンドを実行してアプリケーションとアセットをコンパイルします。
 
-3. Copy the output of `public/assets` to your CDN server. For example, [here is a command](https://github.com/adonisjs-community/polls-app/blob/main/commands/PublishAssets.ts) we use to publish the assets to an Amazon S3 bucket.
+3. `public/assets`の出力をCDNサーバーにコピーします。たとえば、[ここ](https://github.com/adonisjs-community/polls-app/blob/main/commands/PublishAssets.ts)には、Amazon S3バケットにアセットを公開するために使用するコマンドがあります。
 
-### Using Nginx to deliver static assets
+### Nginxを使用して静的アセットを提供する
 
-Another option is to offload the task of serving assets to Nginx. If you use Vite to compile the front-end assets, you must aggressively cache all the static files since they are fingerprinted.
+別のオプションは、アセットの提供タスクをNginxにオフロードすることです。フロントエンドアセットをViteでコンパイルする場合、フィンガープリントが付けられているため、すべての静的ファイルを積極的にキャッシュする必要があります。
 
-Add the following block to your Nginx config file. **Make sure to replace the values inside the angle brackets `<>`**.
+以下のブロックをNginxの設定ファイルに追加してください。**角括弧`<>`内の値を置き換えることを忘れないでください**。
 
 ```nginx
 location ~ \.(jpg|png|css|js|gif|ico|woff|woff2) {
@@ -224,12 +224,12 @@ location ~ \.(jpg|png|css|js|gif|ico|woff|woff2) {
 }
 ```
 
-### Using AdonisJS static file server
+### AdonisJSの静的ファイルサーバーの使用
 
-You can also rely on the [AdonisJS inbuilt static file server](../basics/static_file_server.md) to serve the static assets from the `public` directory to keep things simple.
+AdonisJSの組み込み静的ファイルサーバーを利用することもできます。これにより、通常どおりAdonisJSアプリケーションをデプロイし、静的アセットのリクエストが自動的に提供されます。
 
-No additional configuration is required. Just deploy your AdonisJS application as usual, and the request for static assets will be served automatically.
+追加の設定は必要ありません。単純にAdonisJSアプリケーションをデプロイし、静的アセットのリクエストが自動的に提供されます。
 
 :::warn
-The static file server is not recommended for production use. It is best to use a CDN or Nginx to serve static assets.
+静的ファイルサーバーは本番環境での使用はオススメしません。CDNやNginxを使用して静的アセットを提供することをオススメします。
 :::

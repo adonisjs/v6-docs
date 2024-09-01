@@ -1,11 +1,11 @@
 ---
-summary: Implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
+summary: \`@adonisjs/ally`パッケージを使用して、AdonisJSアプリケーションでソーシャル認証を実装します。
 ---
 
-# Social authentication
+# ソーシャル認証
 
-You can implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
-Ally comes with the following inbuilt drivers, alongside an extensible API to [register custom drivers](#creating-a-custom-social-driver).
+`@adonisjs/ally`パッケージを使用して、AdonisJSアプリケーションでソーシャル認証を実装することができます。
+Allyには、以下の組み込みドライバが付属しており、[カスタムドライバの登録](#カスタムソーシャルドライバの作成)も可能です。
 
 - Twitter
 - Facebook
@@ -15,44 +15,44 @@ Ally comes with the following inbuilt drivers, alongside an extensible API to [r
 - Discord
 - LinkedIn
 
-Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. You can store that information inside a database and use the [auth](./introduction.md) package to login the user within your application.
+Allyは、ユーザーまたはアクセストークンを代理で保存しません。OAuth2およびOAuth1プロトコルを実装し、ソーシャルサービスでユーザーを認証し、ユーザーの詳細情報を提供します。その情報をデータベースに保存し、[auth](./introduction.md)パッケージを使用してアプリケーション内でユーザーをログインさせることができます。
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+次のコマンドを使用してパッケージをインストールおよび設定します：
 
 ```sh
 node ace add @adonisjs/ally
 
-# Define providers as CLI flags
+# CLIフラグとしてプロバイダを定義する
 node ace add @adonisjs/ally --providers=github --providers=google
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを確認"}
 
-1. Installs the `@adonisjs/ally` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`@adonisjs/ally`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のサービスプロバイダを登録します。
 
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...他のプロバイダ
         () => import('@adonisjs/ally/ally_provider')
       ]
     }
     ```
 
-3. Create the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
+3. `config/ally.ts`ファイルを作成します。このファイルには選択したOAuthプロバイダの設定が含まれます。
 
-4. Defines the environment variables to store `CLIENT_ID` and `CLIENT_SECRET` for selected OAuth providers. 
+4. 選択したOAuthプロバイダの`CLIENT_ID`と`CLIENT_SECRET`を保存するための環境変数を定義します。
 
 :::
 
-## Configuration
-The `@adonisjs/ally` package configuration is stored inside the `config/ally.ts` file. You can define config for multiple services within a single config file.
+## 設定
+`@adonisjs/ally`パッケージの設定は`config/ally.ts`ファイルに保存されます。1つの設定ファイル内で複数のサービスの設定を定義することができます。
 
-See also: [Config stub](https://github.com/adonisjs/ally/blob/main/stubs/config/ally.stub)
+参照: [Config stub](https://github.com/adonisjs/ally/blob/main/stubs/config/ally.stub)
 
 ```ts
 import { defineConfig, services } from '@adonisjs/ally'
@@ -71,37 +71,37 @@ defineConfig({
 })
 ```
 
-### Configuring the callback URL
-OAuth providers require you to register a callback URL to handle the redirect response after the user authorizes the login request. 
+### コールバックURLの設定
+OAuthプロバイダは、ユーザーがログインリクエストを承認した後のリダイレクトレスポンスを処理するために、コールバックURLの登録を要求します。
 
-The callback URL must be registered with the OAuth service provider. For example: If you are using GitHub, you must log in to your GitHub account, [create a new app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) and define the callback URL using the GitHub interface.
+コールバックURLはOAuthサービスプロバイダに登録する必要があります。例えば、GitHubを使用している場合は、GitHubアカウントにログインし、[新しいアプリを作成](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)し、GitHubのインターフェイスを使用してコールバックURLを定義する必要があります。
 
-Also, you must register the same callback URL within the `config/ally.ts` file using the `callbackUrl` property.
+また、同じコールバックURLを`config/ally.ts`ファイル内にも`callbackUrl`プロパティを使用して登録する必要があります。
 
-## Usage
-Once the package has been configured, you can interact with Ally APIs using the `ctx.ally` property. You can switch between the configured auth providers using the `ally.use()` method. For example:
+## 使用方法
+パッケージが設定されたら、`ctx.ally`プロパティを使用してAlly APIとやり取りすることができます。`ally.use()`メソッドを使用して設定された認証プロバイダを切り替えることができます。例：
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
-  // GitHub driver instance
+  // GitHubドライバのインスタンス
   const gh = ally.use('github')
 })
 
 router.get('/twitter/redirect', ({ ally }) => {
-  // Twitter driver instance
+  // Twitterドライバのインスタンス
   const twitter = ally.use('twitter')
 })
 
-// You could also dynamically retrieve the driver
+// ドライバを動的に取得することもできます
 router.get('/:provider/redirect', ({ ally, params }) => {
   const driverInstance = ally.use(params.provider)
 }).where('provider', /github|twitter/)
 ```
 
-### Redirecting the user for authentication
-The first step in social authentication is to redirect the user to an OAuth service and wait for them to either approve or deny the authentication request.
+### ユーザーを認証するためにユーザーをリダイレクトする
+ソーシャル認証の最初のステップは、ユーザーをOAuthサービスにリダイレクトし、ユーザーが認証リクエストを承認するか拒否するのを待つことです。
 
-You can perform the redirect using the `.redirect()` method.
+`.redirect()`メソッドを使用してリダイレクトを実行できます。
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
@@ -109,7 +109,7 @@ router.get('/github/redirect', ({ ally }) => {
 })
 ```
 
-You can pass a callback function to define custom scopes or query string values during the redirect.
+リダイレクト時にカスタムスコープやクエリ文字列の値を定義するために、コールバック関数を渡すこともできます。
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
@@ -124,48 +124,47 @@ router.get('/github/redirect', ({ ally }) => {
 })
 ```
 
-### Handling callback response
-The user will be redirected back to your application's `callbackUrl` after they approve or deny the authentication request. 
+### コールバックレスポンスの処理
+ユーザーは、認証リクエストを承認または拒否した後、アプリケーションの`callbackUrl`にリダイレクトされます。
 
-Within this route, you can call the `.user()` method to get the logged-in user details and the access token. However, you must also check the response for possible error states.
+このルート内では、`.user()`メソッドを呼び出してログイン済みのユーザーの詳細とアクセストークンを取得することができます。ただし、レスポンスにエラーが含まれていないかも確認する必要があります。
 
 ```ts
 router.get('/github/callback', async ({ ally }) => {
   const gh = ally.use('github')
 
   /**
-   * User has denied access by canceling
-   * the login flow
+   * ユーザーがログインフローをキャンセルしてアクセスを拒否した場合
    */
   if (gh.accessDenied()) {
-    return 'You have cancelled the login process'
+  return 'ログインプロセスをキャンセルしました'
   }
 
   /**
-   * OAuth state verification failed. This happens when the
-   * CSRF cookie gets expired.
+   * OAuthの状態検証に失敗しました。これは、
+   * CSRFクッキーが期限切れになった場合に発生します。
    */
   if (gh.stateMisMatch()) {
-    return 'We are unable to verify the request. Please try again'
+  return 'リクエストを検証できません。もう一度お試しください'
   }
 
   /**
-   * GitHub responded with some error
+   * GitHubからエラーが返されました
    */
   if (gh.hasError()) {
-    return gh.getError()
+  return gh.getError()
   }
 
   /**
-   * Access user info
+   * ユーザー情報にアクセス
    */
   const user = await gh.user()
   return user
 })
 ```
 
-## User properties
-Following is the list of properties you can access from the return value of the `.user()` method call. The properties are consistent among all the underlying drivers.
+## ユーザープロパティ
+`.user()`メソッドの戻り値からアクセスできるプロパティのリストは以下の通りです。これらのプロパティは、すべての基礎となるドライバで一貫しています。
 
 ```ts
 const user = await gh.user()
@@ -181,31 +180,31 @@ user.original
 ```
 
 ### id
-A unique ID returned by the OAuth provider.
+OAuthプロバイダから返される一意のIDです。
 
 ### email
-The email address returned by the OAuth provider. The value will be `null` if the OAuth request does not ask for the user's email address.
+OAuthプロバイダから返されるメールアドレスです。OAuthリクエストでユーザーのメールアドレスを要求しない場合、値は`null`になります。
 
 ### emailVerificationState
-Many OAuth providers allow users with unverified emails to log in and authenticate OAuth requests. You should use this flag to ensure only users with verified emails can log in.
+多くのOAuthプロバイダは、未確認のメールを持つユーザーがログインし、OAuthリクエストを認証することを許可しています。このフラグを使用して、確認済みのメールを持つユーザーのみがログインできるようにする必要があります。
 
-Following is the list of possible values.
+以下は、可能な値のリストです。
 
-- `verified`: The user's email address is verified with the OAuth provider.
-- `unverified`: The user's email address is not verified.
-- `unsupported`: The OAuth provider does not share the email verification state.
+- `verified`：ユーザーのメールアドレスはOAuthプロバイダで確認済みです。
+- `unverified`：ユーザーのメールアドレスは確認されていません。
+- `unsupported`：OAuthプロバイダはメールの確認状態を共有しません。
 
 ### name
-The name of the user returned by the OAuth provider.
+OAuthプロバイダから返されるユーザーの名前です。
 
 ### nickName
-A publicly visible nick name of the user. The value of `nickName` and `name` will be the same if the OAuth provider has no concept of nicknames.
+ユーザーの公開ニックネームです。OAuthプロバイダにニックネームの概念がない場合、`nickName`と`name`の値は同じになります。
 
 ### avatarUrl
-The HTTP(s) URL to the user's public profile picture.
+ユーザーの公開プロフィール画像へのHTTP(s) URLです。
 
 ### token
-The token property is the reference to the underlying access token object. The token object has the following sub-properties.
+`token`プロパティは、基礎となるアクセストークンオブジェクトへの参照です。トークンオブジェクトには以下のサブプロパティがあります。
 
 ```ts
 user.token.token
@@ -215,29 +214,29 @@ user.token.expiresAt
 user.token.expiresIn
 ```
 
-| Property | Protocol | Description |
+| プロパティ | プロトコル | 説明 |
 |---------|------------|------------|
-| `token` | OAuth2 / OAuth1 | The value of the access token. The value is available for the `OAuth2` and the `OAuth1` protocols. |
-| `secret` | OAuth1 | The token secret applicable only for `OAuth1` protocol. Currently, Twitter is the only official driver using OAuth1. |
-| `type` | OAuth2 | The token type. Usually, it will be a [bearer token](https://oauth.net/2/bearer-tokens/).
-| `refreshToken` | OAuth2 | You can use the refresh token to create a new access token. The value will be `undefined` if the OAuth provider does not support refresh tokens |
-| `expiresAt` | OAuth2 | An instance of the luxon DateTime class representing the absolute time when the access token will expire. |
-| `expiresIn` | OAuth2 | Value in seconds, after which the token will expire. It is a static value and does not change as time passes by. |
+| `token` | OAuth2 / OAuth1 | アクセストークンの値。`OAuth2`および`OAuth1`プロトコルで利用できます。 |
+| `secret` | OAuth1 | `OAuth1`プロトコル専用のトークンシークレット。現在、Twitterが唯一の公式ドライバでOAuth1を使用しています。 |
+| `type` | OAuth2 | トークンのタイプ。通常、[ベアラトークン](https://oauth.net/2/bearer-tokens/)です。
+| `refreshToken` | OAuth2 | リフレッシュトークンを使用して新しいアクセストークンを作成できます。OAuthプロバイダがリフレッシュトークンをサポートしていない場合、値は`undefined`になります。 |
+| `expiresAt` | OAuth2 | アクセストークンの有効期限が切れる絶対時間を表すluxon DateTimeクラスのインスタンスです。 |
+| `expiresIn` | OAuth2 | トークンの有効期限を秒単位で表します。これは静的な値であり、時間が経過しても変化しません。 |
 
 ### original
-Reference to the original response from the OAuth provider. You might want to reference the original response if the normalized set of user properties does not have all the information you need.
+OAuthプロバイダからの元のレスポンスへの参照です。正規化されたユーザープロパティのセットに必要な情報がすべて含まれていない場合に、元のレスポンスを参照する必要がある場合があります。
 
 ```ts
 const user = await github.user()
 console.log(user.original)
 ```
 
-## Defining scopes
-Scopes refers to the data you want to access after the user approves the authentication request. The name of scopes and the data you can access varies between the OAuth providers; therefore, you must read their documentation.
+## スコープの定義
+スコープは、ユーザーが認証リクエストを承認した後にアクセスしたいデータを指します。スコープの名前とアクセスできるデータはOAuthプロバイダによって異なるため、ドキュメントを参照する必要があります。
 
-The scopes can be defined within the `config/ally.ts` file, or you can define them when redirecting the user.
+スコープは`config/ally.ts`ファイル内で定義することも、ユーザーをリダイレクトする際に定義することもできます。
 
-Thanks to TypeScript, you will get autocomplete suggestions for all the available scopes.
+TypeScriptのおかげで、利用可能なスコープに対して自動補完の提案が表示されます。
 
 ![](../digging_deeper/ally_autocomplete.png)
 
@@ -255,7 +254,7 @@ github: {
 ```
 
 ```ts
-// title: During redirect
+// title: リダイレクト時
 ally
   .use('github')
   .redirect((request) => {
@@ -265,8 +264,8 @@ ally
   })
 ```
 
-## Defining redirect query params
-You can customize the query parameters for the redirect request alongside the scopes. In the following example, we define the `prompt` and the `access_type` params applicable with the [Google provider](https://developers.google.com/identity/protocols/oauth2/web-server#httprest).
+## リダイレクトクエリパラメータの定義
+スコープと同時に、リダイレクトリクエストのクエリパラメータをカスタマイズできます。次の例では、[Googleプロバイダ](https://developers.google.com/identity/protocols/oauth2/web-server#httprest)で適用される`prompt`と`access_type`パラメータを定義しています。
 
 ```ts
 router.get('/google/redirect', async ({ ally }) => {
@@ -282,10 +281,10 @@ router.get('/google/redirect', async ({ ally }) => {
 })
 ```
 
-## Fetching user details from an access token
-Sometimes, you might want to fetch user details from an access token stored in the database or provided via another OAuth flow. For example, you used the Native OAuth flow via a mobile app and received an access token back.
+## アクセストークンからユーザーの詳細を取得する
+データベースに保存されたアクセストークンからユーザーの詳細を取得したり、別のOAuthフローを介して提供されたアクセストークンからユーザーの詳細を取得したりする場合があります。たとえば、モバイルアプリを介したネイティブOAuthフローを使用し、アクセストークンを受け取った場合です。
 
-You can fetch the user details using the `.userFromToken()` method.
+`.userFromToken()`メソッドを使用してユーザーの詳細を取得できます。
 
 ```ts
 const user = await ally
@@ -293,7 +292,7 @@ const user = await ally
   .userFromToken(accessToken)
 ```
 
-You can fetch the user details for an OAuth1 driver using the `.userFromTokenAndSecret` method.
+OAuth1ドライバの場合は、`.userFromTokenAndSecret`メソッドを使用してユーザーの詳細を取得できます。
 
 ```ts
 const user = await ally
@@ -301,31 +300,32 @@ const user = await ally
   .userFromTokenAndSecret(token, secret)
 ```
 
-## Stateless authentication
-Many OAuth providers [recommend using a CSRF state token](https://developers.google.com/identity/openid-connect/openid-connect?hl=en#createxsrftoken) to prevent your application from request forgery attacks.
+## ステートレス認証
+多くのOAuthプロバイダは、[CSRFステートトークンの使用を推奨しています](https://developers.google.com/identity/openid-connect/openid-connect?hl=en#createxsrftoken)。これにより、アプリケーションがリクエスト偽造攻撃から保護されます。
 
-Ally creates a CSRF token and saves it inside an encrypted cookie, which is later verified after the user approves the authentication request.
+AllyはCSRFトークンを作成し、暗号化されたクッキーに保存し、ユーザーが認証リクエストを承認した後に検証します。
 
-However, if you cannot use cookies for some reason, you can enable the stateless mode in which no state verification will take place, and hence, no CSRF cookie will be generated.
+
+ただし、何らかの理由でクッキーを使用できない場合は、ステートレスモードを有効にできます。ステートレスモードでは、ステートの検証が行われず、したがってCSRFクッキーは生成されません。
 
 ```ts
-// title: Redirecting
+// title: リダイレクト
 ally.use('github').stateless().redirect()
 ```
 
 ```ts
-// title: Handling callback response
+// title: コールバックレスポンスの処理
 const gh = ally.use('github').stateless()
 await gh.user()
 ```
 
 
-## Complete config reference
-The following is the complete configuration reference for all the drivers. You can copy-paste the following objects directly to `config/ally.ts` file.
+## 完全な設定リファレンス
+すべてのドライバの完全な設定リファレンスは以下の通りです。以下のオブジェクトをそのまま`config/ally.ts`ファイルにコピー＆ペーストできます。
 
 <div class="disclosure_wrapper">
 
-:::disclosure{title="GitHub config"}
+:::disclosure{title="GitHubの設定"}
 
 ```ts
 {
@@ -334,7 +334,7 @@ The following is the complete configuration reference for all the drivers. You c
     clientSecret: '',
     callbackUrl: '',
 
-    // GitHub specific
+    // GitHubの設定
     login: 'adonisjs',
     scopes: ['user', 'gist'],
     allowSignup: true,
@@ -344,7 +344,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="Google config"}
+:::disclosure{title="Googleの設定"}
 
 ```ts
 {
@@ -353,7 +353,7 @@ The following is the complete configuration reference for all the drivers. You c
     clientSecret: '',
     callbackUrl: '',
 
-    // Google specific
+    // Googleの設定
     prompt: 'select_account',
     accessType: 'offline',
     hostedDomain: 'adonisjs.com',
@@ -365,7 +365,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="Twitter config"}
+:::disclosure{title="Twitterの設定"}
 
 ```ts
 {
@@ -379,7 +379,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="Discord config"}
+:::disclosure{title="Discordの設定"}
 
 ```ts
 {
@@ -388,7 +388,7 @@ The following is the complete configuration reference for all the drivers. You c
     clientSecret: '',
     callbackUrl: '',
 
-    // Discord specific
+    // Discordの設定
     prompt: 'consent' | 'none',
     guildId: '',
     disableGuildSelect: false,
@@ -400,7 +400,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="LinkedIn config"}
+:::disclosure{title="LinkedInの設定"}
 
 ```ts
 {
@@ -409,7 +409,7 @@ The following is the complete configuration reference for all the drivers. You c
     clientSecret: '',
     callbackUrl: '',
 
-    // LinkedIn specific
+    // LinkedInの設定
     scopes: ['r_emailaddress', 'r_liteprofile'],
   })
 }
@@ -417,7 +417,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="Facebook config"}
+:::disclosure{title="Facebookの設定"}
 
 ```ts
 {
@@ -426,7 +426,7 @@ The following is the complete configuration reference for all the drivers. You c
     clientSecret: '',
     callbackUrl: '',
 
-    // Facebook specific
+    // Facebookの設定
     scopes: ['email', 'user_photos'],
     userFields: ['first_name', 'picture', 'email'],
     display: '',
@@ -437,7 +437,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="Spotify config"}
+:::disclosure{title="Spotifyの設定"}
 
 ```ts
 {
@@ -446,7 +446,7 @@ The following is the complete configuration reference for all the drivers. You c
     clientSecret: '',
     callbackUrl: '',
 
-    // Spotify specific
+    // Spotifyの設定
     scopes: ['user-read-email', 'streaming'],
     showDialog: false
   })
@@ -458,5 +458,5 @@ The following is the complete configuration reference for all the drivers. You c
 
 </div>
 
-## Creating a custom social driver
-We have created a [starter kit](https://github.com/adonisjs-community/ally-driver-boilerplate) to implement and publish a custom social driver on npm. Please go through the README of the starter kit for further instructions.
+## カスタムソーシャルドライバの作成
+カスタムソーシャルドライバを実装してnpmで公開するための[スターターキット](https://github.com/adonisjs-community/ally-driver-boilerplate)を作成しました。詳しい手順については、スターターキットのREADMEを参照してください。

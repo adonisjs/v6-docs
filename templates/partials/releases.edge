@@ -1,15 +1,15 @@
 <h1> Releases </h1>
 <p class="lede">
-  This document outlines notable releases for the framework core and the ecosystem packages maintained by the AdonisJS core team.
+  このドキュメントでは、AdonisJSコアチームがメンテナンスしているフレームワークコアとエコシステムパッケージの注目すべきリリースについて説明します。
 </p>
 
 <div class="table_container table_expanded">
   <table>
     <thead>
       <tr>
-        <th>Package</th>
-        <th>Change</th>
-        <th style="width: 120px; text-align: right;">Released on</th>
+        <th>パッケージ</th>
+        <th>変更内容</th>
+        <th style="width: 120px; text-align: right;">リリース日</th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
             {{{ release.description }}}.
           </td>
           <td style="text-align: right;">
-            {{ dayjs(release.released_on).format('MMM D, YYYY') }}
+            {{ dayjs(release.released_on).format('YYYY年M月D日') }}
           </td>
         </tr>
       @end

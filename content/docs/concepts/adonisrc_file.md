@@ -1,24 +1,24 @@
 ---
-summary: 'The `adonisrc.ts` file is used to configure the workspace settings of your application.'
+summary: '`adonisrc.ts`ファイルは、アプリケーションのワークスペース設定を構成するために使用されます。'
 ---
 
-# AdonisRC file
+# AdonisRCファイル
 
-The `adonisrc.ts` file is used to configure the workspace settings of your application. In this file, you can [register providers](#providers), define [command aliases](#commandsaliases), specify the [files to copy](#metafiles) to the production build, and much more.
+`adonisrc.ts`ファイルは、アプリケーションのワークスペース設定を構成するために使用されます。このファイルでは、[プロバイダの登録](#providers)、[コマンドのエイリアスの定義](#commandsaliases)、[プロダクションビルドにコピーするファイル](#metafiles)の指定などが行えます。
 
 :::warning
 
-The `adonisrc.ts` file is imported by tools other than your AdonisJS application. Therefore, you must not write any application specific code or environment specific conditionals in this file.
+`adonisrc.ts`ファイルは、AdonisJSアプリケーション以外のツールによってインポートされます。そのため、このファイルにはアプリケーション固有のコードや環境固有の条件分岐を記述しないでください。
 
 :::
 
-The file contains the minimum required configuration to run your application. However, you can view the complete file contents by running the `node ace inspect:rcfile` command.
+このファイルには、アプリケーションを実行するために必要な最小限の設定が含まれています。ただし、`node ace inspect:rcfile`コマンドを実行することで、完全なファイルの内容を表示することもできます。
 
 ```sh
 node ace inspect:rcfile
 ```
 
-You can access the parsed RCFile contents using the `app` service.
+`app`サービスを使用して解析されたRCFileの内容にアクセスできます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -28,11 +28,11 @@ console.log(app.rcFile)
 
 ## typescript
 
-The `typescript` property informs the framework and the Ace commands that your application uses TypeScript. Currently, this value is always set to `true`. However, we will later allow applications to be written in JavaScript.
+`typescript`プロパティは、フレームワークとAceコマンドに、アプリケーションがTypeScriptを使用していることを通知します。現在、この値は常に`true`に設定されています。ただし後でJavaScriptでアプリケーションを記述することも可能にする予定です。
 
 ## directories
 
-A set of directories and their paths used by the scaffolding commands. If you decide to rename specific directories, update their new path inside the `directories` object to notify scaffolding commands.
+スキャフォールディングコマンドで使用されるディレクトリとそのパスのセットです。特定のディレクトリの名前を変更する場合は、`directories`オブジェクト内の新しいパスを更新してスキャフォールディングコマンドに通知してください。
 
 ```ts
 {
@@ -66,19 +66,18 @@ A set of directories and their paths used by the scaffolding commands. If you de
 ```
 
 ## preloads
-An array of files to import at the time of booting the application. The files are imported immediately after booting the service providers.
+アプリケーションの起動時にインポートするファイルの配列です。これらのファイルは、サービスプロバイダの起動直後に即座にインポートされます。
 
-You can define the environment in which to import the file. The valid options are:
+ファイルをインポートする環境を定義することもできます。有効なオプションは次のとおりです。
 
-- `web` environment refers to the process started for the HTTP server.
-- `console` environment refers to the Ace commands except for the `repl` command.
-- `repl` environment refers to the process started using the `node ace repl` command.
-- Finally, the `test` environment refers to the process started for running the tests.
-
+- `web`環境は、HTTPサーバーのために開始されたプロセスを指します。
+- `console`環境は、`repl`コマンドを除くAceコマンドを指します。
+- `repl`環境は、`node ace repl`コマンドを使用して開始されたプロセスを指します。
+- 最後に、`test`環境は、テストを実行するために開始されたプロセスを指します。
 
 :::note
 
-You can create and register a preload file using the `node ace make:preload` command.
+`node ace make:preload`コマンドを使用して、プリロードファイルを作成および登録できます。
 
 
 :::
@@ -109,12 +108,12 @@ You can create and register a preload file using the `node ace make:preload` com
 
 ## metaFiles
 
-The `metaFiles` array is a collection of files you want to copy to the `build` folder when creating the production build.
+`metaFiles`配列は、プロダクションビルド時に`build`フォルダにコピーする必要がある、TypeScript/JavaScript以外のファイルのコレクションです。
 
-These are non-TypeScript/JavaScript files that must exist in the production build for your application to work. For example, the Edge templates, i18n language files, etc.
+これらは、アプリケーションが動作するためにプロダクションビルドに存在する必要がある非TypeScript/JavaScriptファイルです。たとえばEdgeテンプレート、i18n言語ファイルなどです。
 
-- `pattern`: The [glob pattern](https://github.com/sindresorhus/globby#globbing-patterns) to find matching files. 
-- `reloadServer`: Reload the development server when matching files change.
+- `pattern`：一致するファイルを検索するための[globパターン](https://github.com/sindresorhus/globby#globbing-patterns)です。
+- `reloadServer`：一致するファイルが変更された場合に開発サーバーを再読み込みします。
 
 ```ts
 {
@@ -132,9 +131,9 @@ These are non-TypeScript/JavaScript files that must exist in the production buil
 ```
 
 ## commands
-An array of functions to lazy import ace commands from installed packages. Your applications commands will be imported automatically and hence you do not have to register them explicitly.
+インストールされたパッケージからaceコマンドを遅延インポートするための関数の配列です。アプリケーションのコマンドは自動的にインポートされるため、明示的に登録する必要はありません。
 
-See also: [Creating ace commands](../ace/creating_commands.md)
+参照：[aceコマンドの作成](../ace/creating_commands.md)
 
 ```ts
 {
@@ -146,9 +145,9 @@ See also: [Creating ace commands](../ace/creating_commands.md)
 ```
 
 ## commandsAliases
-A key-value pair of command aliases. This is usually to help you create memorable aliases for the commands that are harder to type or remember.
+コマンドのエイリアスのキーと値のペアです。これは通常、入力が難しいまたは覚えにくいコマンドに対して覚えやすいエイリアスを作成するのに役立ちます。
 
-See also: [Creating command aliases](../ace/introduction.md#creating-command-aliases)
+参照：[コマンドエイリアスの作成](../ace/introduction.md#creating-command-aliases)
 
 ```ts
 {
@@ -158,7 +157,7 @@ See also: [Creating command aliases](../ace/introduction.md#creating-command-ali
 }
 ```
 
-You can also define multiple aliases for the same command.
+同じコマンドに対して複数のエイリアスを定義することもできます。
 
 ```ts
 {
@@ -171,9 +170,9 @@ You can also define multiple aliases for the same command.
 
 ## tests
 
-The `tests` object registers the test suites and some of the global settings for the test runner.
+`tests`オブジェクトは、テストスイートとテストランナーの一部のグローバル設定を登録します。
 
-See also: [Introduction to testing](../testing/introduction.md)
+参照：[テストの概要](../testing/introduction.md)
 
 ```ts
 {
@@ -193,27 +192,28 @@ See also: [Introduction to testing](../testing/introduction.md)
 }
 ```
 
-- `timeout`: Define the default timeout for all the tests.
-- `forceExit`:  Forcefully exit the application process as soon as the tests are complete. Usually, it is good practice to perform a graceful exit.
-- `suite.name`: A unique name for the test suite.
-- `suite.files`: An array of glob patterns to import the test files.
-- `suite.timeout`: The default timeout for all the tests inside the suite.
+- `timeout`：すべてのテストのデフォルトのタイムアウトを定義します。
+- `forceExit`：テストが完了したらアプリケーションプロセスを強制的に終了します。通常、正常な終了を行うことが良いプラクティスです。
+- `suite.name`：テストスイートの一意の名前。
+- `suite.files`：テストファイルをインポートするためのグロブパターンの配列。
+- `suite.timeout`：スイート内のすべてのテストのデフォルトのタイムアウト。
 
 ## providers
-An array of service providers to load during the application boot phase.
 
-By default, the providers are loaded in all the environments. However, you can also define an explicit array of environments to import the provider.
+アプリケーションの起動フェーズでロードするサービスプロバイダの配列です。
 
-- `web` environment refers to the process started for the HTTP server.
-- `console` environment refers to the Ace commands except for the `repl` command.
-- `repl` environment refers to the process started using the `node ace repl` command.
-- Finally, the `test` environment refers to the process started for running the tests.
+デフォルトでは、プロバイダはすべての環境でロードされます。ただし、プロバイダをインポートするための明示的な環境の配列を定義することもできます。
+
+- `web`環境は、HTTPサーバーのために開始されたプロセスを指します。
+- `console`環境は、`repl`コマンドを除くAceコマンドを指します。
+- `repl`環境は、`node ace repl`コマンドを使用して開始されたプロセスを指します。
+- 最後に、`test`環境は、テストを実行するために開始されたプロセスを指します。
 
 :::note
-Providers are loaded in the same order as registered inside the `providers` array.
+プロバイダは、`providers`配列内で登録された順序でロードされます。
 :::
 
-See also: [Service providers](./service_providers.md)
+参照：[サービスプロバイダ](./service_providers.md)
 
 ```ts
 {
@@ -251,11 +251,11 @@ See also: [Service providers](./service_providers.md)
 
 ## assetsBundler
 
-The `serve` and `build` command attempts to detect the assets used by your application to compile the frontend assets.
+`serve`コマンドと`build`コマンドは、フロントエンドアセットをコンパイルするためにアプリケーションで使用されるアセットを検出しようとします。
 
-The detection is performed for [vite](https://vitejs.dev) by searching for the `vite.config.js` file and [Webpack encore](https://github.com/symfony/webpack-encore) by searching for the `webpack.config.js` file.
+検出は、`vite.config.js`ファイルを検索して[vite](https://vitejs.dev)の場合と、`webpack.config.js`ファイルを検索して[Webpack encore](https://github.com/symfony/webpack-encore)の場合に実行されます。
 
-However, if you use a different assets bundler, you can configure it inside the `adonisrc.ts` file as follows.
+ただし、異なるアセットバンドラを使用する場合は、`adonisrc.ts`ファイル内で次のように設定できます。
 
 ```ts
 {
@@ -273,6 +273,6 @@ However, if you use a different assets bundler, you can configure it inside the 
 }
 ```
 
-- `name` - The name of the asset bundler you use. It is required for display purposes.
-- `devServer.*` - The command and its arguments to start the development server.
-- `build.*` - The command and its arguments to to create the production build.
+- `name` - 使用しているアセットバンドラの名前。表示目的のために必要です。
+- `devServer.*` - 開発サーバーを起動するためのコマンドとその引数。
+- `build.*` - プロダクションビルドを作成するためのコマンドとその引数。

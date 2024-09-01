@@ -1,20 +1,20 @@
 ---
-summary: Learn about HTTP controllers in AdonisJS and how to organize route handlers inside dedicated files.
+summary: AdonisJSでHTTPコントローラについて学び、専用のファイル内でルートハンドラーを整理する方法を学びます。
 ---
 
-# Controllers
+# コントローラ
 
-HTTP controllers offer an abstraction layer to organize the route handlers inside dedicated files. Instead of expressing all the request handling logic within the routes file, you move it to controller classes.
+HTTPコントローラは、ルートハンドラーを専用のファイル内で整理するための抽象化レイヤーを提供します。ルートファイル内ですべてのリクエスト処理ロジックを表現する代わりに、コントローラクラスに移動します。
 
-The controllers are stored within the `./app/controllers` directory, representing each controller as a plain JavaScript class. You may create a new controller by running the following command.
+コントローラは、`./app/controllers`ディレクトリ内に格納され、各コントローラをプレーンなJavaScriptクラスとして表現します。次のコマンドを実行して新しいコントローラを作成できます。
 
-See also: [Make controller command](../references/commands.md#makecontroller)
+参照も: [コントローラ作成コマンド](../references/commands.md#makecontroller)
 
 ```sh
 node ace make:controller users
 ```
 
-A newly created controller is scaffolded with the `class` declaration, and you may manually create methods inside it. For this example, let's create an `index` method and return an array of users.
+新しく作成されたコントローラは、`class`宣言でscaffoldされ、手動でメソッドを作成することもできます。この例では、`index`メソッドを作成し、ユーザーの配列を返します。
 
 ```ts
 import type { HttpContext } from '@adonisjs/core/http'
@@ -35,7 +35,7 @@ export default class UsersController {
 }
 ```
 
-Finally, let's bind this controller to a route. We will import the controller using the `#controllers` alias. The aliases are defined using [subpath imports feature of Node.js](../getting_started/folder_structure.md#the-sub-path-imports).
+最後に、このコントローラをルートにバインドしましょう。`#controllers`エイリアスを使用してコントローラをインポートします。エイリアスは、[Node.jsのサブパスインポート機能](../getting_started/folder_structure.md#the-sub-path-imports)を使用して定義されます。
 
 ```ts
 // title: start/routes.ts
@@ -45,50 +45,50 @@ const UsersController = () => import('#controllers/users_controller')
 router.get('users', [UsersController, 'index'])
 ```
 
-As you might have noticed, we do not create an instance of the controller class and instead pass it directly to the route. Doing so allows AdonisJS to:
+お気づきかもしれませんが、コントローラクラスのインスタンスを作成せずに、直接ルートに渡しています。これにより、AdonisJSが次のことができます。
 
-- Create a fresh instance of the controller for each request.
-- And also construct the class using the [IoC container](../concepts/dependency_injection.md), which allows you to leverage automatic dependency injection.
+- 各リクエストのたびにコントローラの新しいインスタンスを作成します。
+- また、[IoCコンテナ](../concepts/dependency_injection.md)を使用してクラスを構築します。これにより、自動的な依存性の注入を活用できます。
 
 :::caption{for="error"}
 
-#### Not recommended
+#### 非推奨
 
-If you want, you can manually create an instance of the controller and execute the method. However, it is not recommended because you will write more boilerplate code and lose the IoC container benefits.
+必要な場合、コントローラのインスタンスを手動で作成し、メソッドを実行することもできます。ただし、IoCコンテナの利点を失い、冗長なコードが増えるため、おすすめしません。
 
 :::
 
 ```ts
-// 🫤 Naah
+// 🫤 いやいや
 router.get('users', (ctx) => {
   return new UsersController().index(ctx)
 })
 ```
 
-You can also notice that we are lazy-loading the controller using a function.
+また、関数を使用してコントローラを遅延ロードしていることにも注意してください。
 
 :::warning
 
-Lazy-loading controllers are needed when you are using [HMR](../concepts/hmr.md).
+[HMR](../concepts/hmr.md)を使用している場合は、コントローラを遅延ロードする必要があります。
 
 :::
 
-As your codebase grows, you will notice it starts impacting the boot time of your application. A common reason for that is importing all controllers inside the routes file.
+コードベースが成長するにつれて、アプリケーションの起動時間に影響を与えることがわかるでしょう。その一因は、すべてのコントローラをルートファイル内でインポートしているためです。
 
-Since controllers handle HTTP requests, they often import other modules like models, validators, or third-party packages. As a result, your routes file becomes this central point of importing the entire codebase.
+コントローラはHTTPリクエストを処理するため、モデル、バリデータ、またはサードパーティのパッケージなど、他のモジュールをインポートすることがよくあります。その結果、ルートファイルはコードベース全体をインポートする中心地となります。
 
-Lazy-loading is as simple as moving the import statement behind a function and using dynamic imports.
+遅延ロードは、インポートステートメントを関数の後ろに移動し、動的インポートを使用するだけの簡単な方法です。
 
 :::tip
 
-You can use our [ESLint plugin](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin) to enforce and automatically convert standard controller imports to lazy dynamic imports.
+[ESLintプラグイン](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin)を使用して、標準的なコントローラのインポートを強制し、自動的に遅延ダイナミックインポートに変換することができます。
 
 :::
 
 
-## Single action controllers
+## シングルアクションコントローラ
 
-AdonisJS provides a way to define a single action controller. It's an effective way to wrap up functionality into clearly named classes. To accomplish this, you need to define a handle method inside the controller.
+AdonisJSでは、シングルアクションコントローラを定義する方法が用意されています。これは、機能を明確に名前付けられたクラスにまとめる効果的な方法です。これを実現するには、コントローラ内に`handle`メソッドを定義する必要があります。
 
 ```ts
 import type { HttpContext } from '@adonisjs/core/http'
@@ -100,18 +100,18 @@ export default class RegisterNewsletterSubscriptionController {
 }
 ```
 
-Then, you can reference the controller on the route with the following.
+次に、次のようにコントローラをルートに参照できます。
 
 ```ts
 router.post('newsletter/subscriptions', [RegisterNewsletterSubscriptionController])
 ```
 
 
-### Using magic strings
+### マジックストリングの使用
 
-Another way of lazy loading the controllers is to reference the controller and its method as a string. We call it a magic string because the string itself has no meaning, and it's just the router uses it to look up the controller and imports it behind the scenes.
+コントローラを遅延ロードする別の方法は、コントローラとそのメソッドを文字列として参照することです。これはマジックストリングと呼ばれます。文字列自体には意味がなく、ルーターがコントローラを参照し、内部でインポートするために使用します。
 
-In the following example, we do not have any import statements within the routes file, and we bind the controller import path + method as a string to the route.
+次の例では、ルートファイル内にインポートステートメントがなく、コントローラのインポートパス+メソッドを文字列としてルートにバインドしています。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -119,22 +119,23 @@ import router from '@adonisjs/core/services/router'
 router.get('users', '#controllers/users_controller.index')
 ```
 
-The only downside of magic strings is they are not type-safe. If you make a typo in the import path, your editor will not give you any feedback.
+マジックストリングの唯一の欠点は、タイプセーフではないことです。インポートパスにタイプミスをすると、エディターからフィードバックが得られません。
 
-On the upside, magic strings can clean up all the visual clutter inside your routes file because of the import statements.
+一方、マジックストリングは、インポートステートメントのおかげで、ルートファイル内の視覚的な雑音をすべてクリーンアップすることができます。
 
-Using magic strings is subjective, and you can decide if you want to use them personally or as a team.
+マジックストリングの使用は主観的であり、個人的に使用するか、チームで使用するかは自由です。
 
-## Dependency injection
 
-The controller classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
+## 依存性の注入
 
-Given you have a `UserService` class, you can inject an instance of it inside the controller as follows.
+コントローラクラスは、[IoCコンテナ](../concepts/dependency_injection.md)を使用してインスタンス化されるため、コントローラのコンストラクターまたはコントローラメソッド内で依存関係をタイプヒントできます。
+
+`UserService`クラスがある場合、次のようにコントローラ内でそのインスタンスを注入できます。
 
 ```ts
 export default class UserService {
   async all() {
-    // return users from db
+    // データベースからユーザーを返す
   }
 }
 ```
@@ -153,11 +154,11 @@ export default class UsersController {
 }
 ```
 
-### Method injection
+### メソッドインジェクション
 
-You can inject an instance of `UserService` directly inside the controller method using [method injection](../concepts/dependency_injection.md#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
+[メソッドインジェクション](../concepts/dependency_injection.md#using-method-injection)を使用して、コントローラメソッド内で`UserService`のインスタンスを直接注入することもできます。この場合、メソッド名に`@inject`デコレーターを適用する必要があります。
 
-The first parameter passed to the controller method is always the HttpContext. Therefore, you must type-hint the `UserService` as the second parameter.
+コントローラメソッドに渡される最初のパラメータは常にHttpContextです。したがって、2番目のパラメータとして`UserService`をタイプヒントする必要があります。
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -173,11 +174,11 @@ export default class UsersController {
 }
 ```
 
-### Tree of dependencies
+### 依存関係のツリー
 
-Automatic resolution of dependencies is not only limited to the controller. Any class injected inside the controller can also type-hint dependencies, and the IoC container will construct the tree of dependencies for you.
+依存関係の自動解決は、コントローラに限定されるわけではありません。コントローラ内でインジェクトされたクラスは、依存関係をタイプヒントでき、IoCコンテナが依存関係のツリーを自動的に構築します。
 
-For example, let's modify the `UserService` class to accept an instance of the [HttpContext](../concepts/http_context.md) as a constructor dependency.
+たとえば、`UserService`クラスを変更して、[HttpContext](../concepts/http_context.md)のインスタンスをコンストラクターの依存関係として受け入れるようにします。
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -189,20 +190,20 @@ export default class UserService {
 
   async all() {
     console.log(this.ctx.auth.user)
-    // return users from db
+    // データベースからユーザーを返す
   }
 }
 ```
 
-After this change, the `UserService` will automatically receive an instance of the `HttpContext` class. Also, no changes are required in the controller.
+この変更後、`UserService`は自動的に`HttpContext`クラスのインスタンスを受け取ります。また、コントローラには変更は必要ありません。
 
-## Resource-driven controllers
+## リソース駆動型コントローラ
 
-For conventional [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) applications, a controller should only be designed to manage a single resource. A resource is usually an entity in your application like a **User resource** or a **Post resource**.
+従来の[RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer)アプリケーションでは、コントローラは単一のリソースを管理するために設計されるべきです。リソースは通常、**ユーザーリソース**や**投稿リソース**のようなアプリケーション内のエンティティです。
 
-Let's take the example of a Post resource and define the endpoints to handle its CRUD operations. We will start by creating a controller first.
+投稿リソースの例を取り上げ、そのCRUD操作を処理するエンドポイントを定義してみましょう。まず、最初にコントローラを作成します。
 
-You may create a controller for a resource using the `make:controller` ace command. The `--resource` flag scaffolds the controller with the following methods.
+`--resource`フラグを使用して、リソースに対するコントローラを作成できます。次のメソッドが含まれたコントローラが作成されます。
 
 ```sh
 node ace make:controller posts --resource
@@ -213,48 +214,47 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class PostsController {
   /**
-   * Return list of all posts or paginate through
-   * them
+   * すべての投稿のリストまたはページネーションを返す
    */
   async index({}: HttpContext) {}
 
   /**
-   * Render the form to create a new post.
+   * 新しい投稿を作成するためのフォームを表示する
    *
-   * Not needed if you are creating an API server.
+   * APIサーバーを作成している場合は不要です。
    */
   async create({}: HttpContext) {}
 
   /**
-   * Handle form submission to create a new post
+   * 投稿を作成するためのフォームの送信を処理する
    */
   async store({ request }: HttpContext) {}
 
   /**
-   * Display a single post by id.
+   * IDによって単一の投稿を表示する
    */
   async show({ params }: HttpContext) {}
 
   /**
-   * Render the form to edit an existing post by its id.
+   * IDによって既存の投稿を編集するためのフォームを表示する
    *
-   * Not needed if you are creating an API server.
+   * APIサーバーを作成している場合は不要です。
    */
   async edit({ params }: HttpContext) {}
 
   /**
-   * Handle the form submission to update a specific post by id
+   * 特定の投稿をIDで更新するためのフォームの送信を処理する
    */
   async update({ params, request }: HttpContext) {}
 
   /**
-   * Handle the form submission to delete a specific post by id.
+   * 特定の投稿をIDで削除するためのフォームの送信を処理する
    */
   async destroy({ params }: HttpContext) {}
 }
 ```
 
-Next, let's bind the `PostsController` to a resourceful route using the `router.resource` method. The method accepts the resource name as the first argument and the controller reference as the second argument.
+次に、`router.resource`メソッドを使用して`PostsController`をリソースフルなルートにバインドしましょう。メソッドは、リソース名を第1引数として、コントローラの参照を第2引数として受け入れます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -263,15 +263,15 @@ const PostsController = () => import('#controllers/posts_controller')
 router.resource('posts', PostsController)
 ```
 
-Following is the list of routes registered by the `resource` method. You can view this list by running `node ace list:routes` command.
+`resource`メソッドによって登録されるルートのリストは、`node ace list:routes`コマンドを実行することで表示できます。
 
 ![](./post_resource_routes_list.png)
 
-### Nested resources
+### ネストされたリソース
 
-Nested resources can be created by specifying the parent and the child resource name separated using the dot `.` notation.
+ドット`.`表記法を使用して、親リソースと子リソースの名前を指定することで、ネストされたリソースを作成できます。
 
-In the following example, we create routes for the `comments` resource nested under the `posts` resource.
+次の例では、`comments`リソースを`posts`リソースの下にネストしたルートを作成しています。
 
 ```ts
 router.resource('posts.comments', CommentsController)
@@ -279,16 +279,16 @@ router.resource('posts.comments', CommentsController)
 
 ![](./post_comments_resource_routes_list.png)
 
-### Shallow resources
+### シャローリソース
 
-When using nested resources, the routes for the child resource are always prefixed with the parent resource name and its id. For example:
+ネストされたリソースを使用する場合、子リソースのルートは常に親リソース名とそのIDで接頭辞が付けられます。たとえば：
 
-- The `/posts/:post_id/comments` route displays a list of all the comments for a given post.
-- And, the `/posts/:post_id/comments/:id` route displays a single comment by its id.
+- `/posts/:post_id/comments`ルートは、指定された投稿のすべてのコメントのリストを表示します。
+- そして、`/posts/:post_id/comments/:id`ルートは、IDによって単一のコメントを表示します。
 
-The existence of `/posts/:post_id` in the second route is irrelevant, as you can look up the comment by its id.
+2番目のルートの`/posts/:post_id`の存在は無関係であり、IDによってコメントを参照できます。
 
-A shallow resource registers its routes by keeping the URL structure flat (wherever possible). This time, let's register the `posts.comments` as a shallow resource.
+シャローリソースは、URL構造をフラットに保ちながら（可能な限り）、そのルートを登録します。今回は、`posts.comments`をシャローリソースとして登録しましょう。
 
 ```ts
 router.shallowResource('posts.comments', CommentsController)
@@ -296,43 +296,43 @@ router.shallowResource('posts.comments', CommentsController)
 
 ![](./shallow_routes_list.png)
 
-### Naming resource routes
+### リソースルートの名前付け
 
-The routes created using the `router.resource` method are named after the resource name and the controller action. First, we convert the resource name to snake case and concatenate the action name using the dot `.` separator.
+`router.resource`メソッドで作成されるルートは、リソース名とコントローラアクションの後に名前が付けられます。まず、リソース名をスネークケースに変換し、ドット`.`セパレーターを使用してアクション名を連結します。
 
-| Resource         | Action name | Route name               |
+| リソース         | アクション名 | ルート名               |
 |------------------|-------------|--------------------------|
 | posts            | index       | `posts.index`            |
 | userPhotos       | index       | `user_photos.index`      |
 | group-attributes | show        | `group_attributes.index` |
 
-You can rename the prefix for all the routes using the `resource.as` method. In the following example, we rename the `group_attributes.index` route name to `attributes.index`.
+`resource.as`メソッドを使用して、すべてのルートのプレフィックス名を変更できます。次の例では、`group_attributes.index`ルート名を`attributes.index`に変更しています。
 
 ```ts
 router.resource('group-attributes', GroupAttributesController).as('attributes')
 ```
 
-The prefix given to the `resource.as` method is transformed to snake\_ case. If you want, you can turn off the transformation, as shown below.
+`resource.as`メソッドに指定されたプレフィックスは、スネークケースに変換されます。必要な場合は、変換をオフにすることもできます。
 
 ```ts
 router.resource('group-attributes', GroupAttributesController).as('groupAttributes', false)
 ```
 
-### Registering API only routes
+### API専用ルートの登録
 
-When creating an API server, the forms to create and update a resource are rendered by a front-end client or a mobile app. Therefore, creating routes for these endpoints is redundant.
+APIサーバーを作成する場合、リソースの作成と更新のフォームはフロントエンドクライアントやモバイルアプリによってレンダリングされます。そのため、これらのエンドポイントのルートを作成することは冗長です。
 
-You can use the `resource.apiOnly` method to remove the `create` and the `edit` routes. As a result, only five routes will be created.
+`resource.apiOnly`メソッドを使用して、`create`と`edit`のルートを削除することができます。その結果、5つのルートのみが作成されます。
 
 ```ts
 router.resource('posts', PostsController).apiOnly()
 ```
 
-### Registering only specific routes
+### 特定のルートのみの登録
 
-To register only specific routes, you may use the `resource.only` or the `resource.except` methods.
+特定のルートのみを登録する場合は、`resource.only`または`resource.except`メソッドを使用できます。
 
-The `resource.only` method accepts an array of action names and removes all other routes except those mentioned. In the following example, only the routes for the `index`, `store`, and `destroy` actions will be registered.
+`resource.only`メソッドは、アクション名の配列を受け入れ、それ以外のすべてのルートを削除します。次の例では、`index`、`store`、`destroy`アクションのルートのみが登録されます。
 
 ```ts
 router
@@ -340,7 +340,7 @@ router
   .only(['index', 'store', 'destroy'])
 ```
 
-The `resource.except` method is the opposite of the `only` method, removing all the routes except the mentioned one's.
+`resource.except`メソッドは、`only`メソッドの逆で、指定されたルート以外のすべてのルートを削除します。
 
 ```ts
 router
@@ -348,11 +348,11 @@ router
   .except(['destroy'])
 ```
 
-### Renaming resource params
+### リソースパラメータの名前変更
 
-The routes generated by the `router.resource` method use `id` for the param name. For example, `GET /posts/:id` to view a single post, and `DELETE /post/:id` to delete the post.
+`router.resource`メソッドによって生成されるルートは、パラメータ名として`id`を使用します。たとえば、単一の投稿を表示するための`GET /posts/:id`や投稿を削除するための`DELETE /post/:id`などです。
 
-You can rename the param from `id` to something else using the `resource.params` method.
+`resource.params`メソッドを使用して、パラメータ名を`id`から別の名前に変更できます。
 
 ```ts
 router.resource('posts', PostsController).params({
@@ -360,16 +360,16 @@ router.resource('posts', PostsController).params({
 })
 ```
 
-The above change will generate the following routes _(showing partial list)_.
+上記の変更により、次のルートが生成されます（一部のみ表示）。
 
-| HTTP method | Route               | Controller method |
+| HTTPメソッド | ルート               | コントローラメソッド |
 |-------------|---------------------|-------------------|
 | GET         | `/posts/:post`      | show              |
 | GET         | `/posts/:post/edit` | edit              |
 | PUT         | `/posts/:post`      | update            |
 | DELETE      | `/posts/:post`      | destroy           |
 
-You can also rename params when using nested resources.
+ネストされたリソースを使用する場合も、パラメータ名を変更できます。
 
 ```ts
 router.resource('posts.comments', PostsController).params({
@@ -378,8 +378,8 @@ router.resource('posts.comments', PostsController).params({
 })
 ```
 
-### Assigning middleware to resource routes
-You may assign middleware to routes register by a resource using the `resource.use` method. The method accepts an array of action names and the middleware to assign to them. For example:
+### リソースルートにミドルウェアを割り当てる
+リソースによって登録されるルートにミドルウェアを割り当てるには、`resource.use`メソッドを使用します。このメソッドは、アクション名の配列とそれに割り当てるミドルウェアを受け入れます。例えば：
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -393,7 +393,7 @@ router
   )
 ```
 
-You may use the wildcard (*) keyword to assign a middleware to all the routes.
+ワイルドカード(*)キーワードを使用して、すべてのルートにミドルウェアを割り当てることもできます。
 
 ```ts
 router
@@ -401,7 +401,7 @@ router
   .use('*', middleware.auth())
 ```
 
-Finally, you may call the `.use` method multiple times to assign multiple middleware. For example:
+最後に、`.use`メソッドを複数回呼び出して複数のミドルウェアを割り当てることもできます。例えば：
 
 ```ts
 router

@@ -1,26 +1,26 @@
 ---
-summary: Protect your web application or API server from abuse by implementing rate limits using the @adonisjs/limiter package.
+summary: \@adonisjs/limiterパッケージを使用して、ウェブアプリケーションやAPIサーバーでレート制限を実装して、悪用から保護しましょう。
 ---
 
-# Rate limiting
+# レート制限
 
-AdonisJS provides a first-party package for implementing rate limits in your web application or the API server. The rate limiter provides `redis`, `mysql`, `postgresql` and `memory` as the storage options, with the ability to [create custom storage providers](#creating-a-custom-storage-provider).
+AdonisJSは、ウェブアプリケーションやAPIサーバーでレート制限を実装するための第一パーティパッケージを提供しています。レート制限は、`redis`、`mysql`、`postgresql`、`memory`をストレージオプションとして提供し、[カスタムストレージプロバイダの作成](#creating-a-custom-storage-provider)も可能です。
 
-The `@adonisjs/limiter` package is built on top of the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible) package, which provides one of the fastest rate-limiting API and uses atomic increments to avoid race conditions.
+`@adonisjs/limiter`パッケージは、[node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible)パッケージをベースにしており、最速のレート制限APIの1つを提供し、競合状態を避けるためにアトミックインクリメントを使用しています。
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+次のコマンドを使用してパッケージをインストールし、設定します：
 
 ```sh
 node ace add @adonisjs/limiter
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを確認する"}
 
-1. Installs the `@adonisjs/limiter` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`@adonisjs/limiter`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のサービスプロバイダを登録します。
     ```ts
     {
       providers: [
@@ -30,23 +30,23 @@ node ace add @adonisjs/limiter
     }
     ```
 
-3. Create the `config/limiter.ts` file.
+3. `config/limiter.ts`ファイルを作成します。
 
-4. Create the `start/limiter.ts` file. This file is used to define HTTP throttle middleware.
+4. `start/limiter.ts`ファイルを作成します。このファイルはHTTPスロットルミドルウェアを定義するために使用されます。
 
-5. Define the following environment variable alongside its validation inside the `start/env.ts` file.
+5. `start/env.ts`ファイル内で、以下の環境変数とそのバリデーションを定義します。
    ```ts
    LIMITER_STORE=redis
    ```
 
-6. Optionally, create the database migration for the `rate_limits` table if using the `database` store.
+6. `database`ストアを使用する場合は、`rate_limits`テーブルのデータベースマイグレーションを作成することもできます（オプション）。
 
 :::
 
-## Configuration
-The configuration for the rate limiter is stored within the `config/limiter.ts` file. 
+## 設定
+レート制限の設定は、`config/limiter.ts`ファイル内に保存されます。
 
-See also: [Rate limiter config stub](https://github.com/adonisjs/limiter/blob/main/stubs/config/limiter.stub)
+参照：[レート制限の設定スタブ](https://github.com/adonisjs/limiter/blob/main/stubs/config/limiter.stub)
 
 ```ts
 import env from '#start/env'
@@ -83,7 +83,7 @@ default
 
 <dd>
 
-The `default` store to use for applying rate limits. The store is defined within the same config file under the `stores` object.
+レート制限を適用するために使用する`default`ストアです。ストアは同じ設定ファイル内の`stores`オブジェクトで定義されます。
 
 </dd>
 
@@ -95,7 +95,7 @@ stores
 
 <dd>
 
-A collection of stores you plan to use within your application. We recommend always configuring the `memory` store that could be used during testing.
+アプリケーション内で使用するストアのコレクションです。テスト中に使用できる`memory`ストアを常に設定することをオススメします。
 
 </dd>
 
@@ -103,10 +103,10 @@ A collection of stores you plan to use within your application. We recommend alw
 
 ---
 
-### Environment variables
-The default limiter is defined using the `LIMITER_STORE` environment variable, and therefore, you can switch between different stores in different environments. For example, use the `memory` store during testing and the `redis` store for development and production.
+### 環境変数
+デフォルトのレート制限は、`LIMITER_STORE`環境変数を使用して定義されています。したがって、異なるストアを異なる環境で切り替えることができます。たとえば、テスト中に`memory`ストアを使用し、開発および本番環境では`redis`ストアを使用できます。
 
-Also, the environment variable must be validated to allow one of the pre-configured stores. The validation is defined inside the `start/env.ts` file using the `Env.schema.enum` rule.
+また、環境変数は、`start/env.ts`ファイル内で`Env.schema.enum`ルールを使用して事前に設定されたストアのいずれかを許可するように検証する必要があります。
 
 ```ts
 {
@@ -114,8 +114,8 @@ Also, the environment variable must be validated to allow one of the pre-configu
 }
 ```
 
-### Shared options
-Following is the list of options shared by all the bundled stores.
+### 共有オプション
+以下は、すべてのバンドルされたストアで共有されるオプションのリストです。
 
 <dl>
 
@@ -128,7 +128,7 @@ keyPrefix
 
 <dd>
 
-Define the prefix for the keys stored inside the database store. The database store ignores the `keyPrefix` since different database tables can be used to isolate data.
+データベースストア内に格納されるキーのプレフィックスを定義します。データベースストアは異なるデータベーステーブルを使用してデータを分離できるため、`keyPrefix`は無視されます。
 
 </dd>
 
@@ -140,9 +140,9 @@ execEvenly
 
 <dd>
 
-The `execEvenly` option adds a delay when throttling the requests so that all requests are exhausted at the end of the provided duration.
+`execEvenly`オプションは、リクエストのスロットリング時に遅延を追加し、すべてのリクエストが指定された期間の終わりに消費されるようにします。
 
-For example, if you allow a user to make **10 requests/min**, all requests will have an artificial delay, so the tenth request finishes at the end of the 1 minute. Read the [smooth out traffic peaks](https://github.com/animir/node-rate-limiter-flexible/wiki/Smooth-out-traffic-peaks) article on `rate-limiter-flexible` repo to learn more about the `execEvenly` option.
+たとえば、ユーザーに1分間に**10リクエスト**を許可する場合、すべてのリクエストに人工的な遅延が追加され、10番目のリクエストが1分の終わりに終了します。`rate-limiter-flexible`リポジトリの[smooth out traffic peaks](https://github.com/animir/node-rate-limiter-flexible/wiki/Smooth-out-traffic-peaks)記事を読んで、`execEvenly`オプションについて詳しく学びましょう。
 
 </dd>
 
@@ -154,11 +154,11 @@ inMemoryBlockOnConsumed
 
 <dd>
 
-Define the number of requests after which the key should be blocked within memory. For example, you allow a user to make **10 requests/min**, and they have consumed all the requests within the first 10 seconds.
+メモリ内でキーをブロックするリクエスト数を定義します。たとえば、ユーザーには**1分間に10リクエスト**を許可しますが、最初の10秒ですべてのリクエストを消費しました。
 
-However, they continue to make requests to the server, and therefore, the rate limiter has to check with the database before denying the request.
+しかし、ユーザーはサーバーに対してリクエストを続けるため、レート制限はリクエストを拒否する前にデータベースに問い合わせる必要があります。
 
-To reduce the load on the database, you can define the number of requests, after which we should stop querying the database and block the key within the memory.
+データベースへの負荷を軽減するために、指定されたリクエスト数を定義し、その後はデータベースへの問い合わせを停止し、メモリ内でキーをブロックできます。
 
 ```ts
 {
@@ -166,8 +166,8 @@ To reduce the load on the database, you can define the number of requests, after
   requests: 10,
 
   /**
-   * After 12 requests, block the key within the
-   * memory and stop consulting the database.
+   * 12リクエスト後にキーをメモリ内でブロックし、
+   * データベースへの問い合わせを停止します。
    */
   inMemoryBlockOnConsumed: 12,
 }
@@ -183,7 +183,7 @@ inMemoryBlockDuration
 
 <dd>
 
-The duration for which to block the key within memory. This option will reduce the load on the database since the backend stores will first check within memory to see if a key is blocked.
+メモリ内でキーをブロックする期間を定義します。このオプションにより、バックエンドストアはまずメモリ内をチェックしてキーがブロックされているかどうかを確認するため、データベースへの負荷が軽減されます。
 
 ```ts
 {
@@ -198,10 +198,10 @@ The duration for which to block the key within memory. This option will reduce t
 ---
 
 
-### Redis store
-The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the redis store.
+### Redisストア
+`redis`ストアは、`@adonisjs/redis`パッケージに依存しています。そのため、Redisストアを使用する前にこのパッケージを設定する必要があります。
 
-Following is the list of options the redis store accepts (alongside the shared options).
+以下は、redisストアが受け入れるオプションのリストです（共有オプションも含む）。
 
 ```ts
 {
@@ -222,7 +222,7 @@ connectionName
 
 <dd>
 
-The `connectionName` property refers to a connection defined within the `config/redis.ts` file. We recommend using a separate redis database for the limiter.
+`connectionName`プロパティは、`config/redis.ts`ファイルで定義された接続を参照します。レート制限用には別のRedisデータベースを使用することをオススメします。
 
 </dd>
 
@@ -234,7 +234,7 @@ rejectIfRedisNotReady
 
 <dd>
 
-Reject the rate-limiting requests when the status of the Redis connection is not `ready.` 
+Redis接続の状態が`ready`でない場合、レート制限リクエストを拒否します。
 
 </dd>
 
@@ -242,14 +242,14 @@ Reject the rate-limiting requests when the status of the Redis connection is not
 
 ---
 
-### Database store
-The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the Database store.
+### データベースストア
+`database`ストアは、`@adonisjs/lucid`パッケージに依存しています。そのため、データベースストアを使用する前にこのパッケージを設定する必要があります。
 
-Following is the list of options the database store accepts (alongside the shared options).
+以下は、データベースストアが受け入れるオプションのリストです（共有オプションも含む）。
 
 :::note
 
-Only MySQL and PostgreSQL databases can be used with the database store.
+データベースストアでは、MySQLとPostgreSQLのみを使用できます。
 
 :::
 
@@ -275,7 +275,7 @@ connectionName
 
 <dd>
 
-Reference to the database connection defined within the `config/database.ts` file. If not defined, we will use the default database connection.
+`config/database.ts`ファイルで定義されたデータベース接続への参照です。定義されていない場合は、デフォルトのデータベース接続が使用されます。
 
 </dd>
 
@@ -287,7 +287,7 @@ dbName
 
 <dd>
 
-The database to use for making SQL queries. We try to infer the value of `dbName` from the connection config defined within the `config/database.ts` file. However, if using a connection string, you must supply the database name via this property.
+SQLクエリを実行するために使用するデータベースです。`config/database.ts`ファイルで定義された接続設定から`dbName`の値を推測しようとします。ただし、接続文字列を使用する場合は、このプロパティを介してデータベース名を指定する必要があります。
 
 </dd>
 
@@ -299,7 +299,7 @@ tableName
 
 <dd>
 
-The database table to use to store rate limits. 
+レート制限を保存するために使用するデータベーステーブルです。
 
 </dd>
 
@@ -311,7 +311,7 @@ schemaName
 
 <dd>
 
-The schema to use for making SQL queries (PostgreSQL only).
+SQLクエリを実行するために使用するスキーマ（PostgreSQLのみ）です。
 
 </dd>
 
@@ -323,19 +323,19 @@ clearExpiredByTimeout
 
 <dd>
 
-When enabled, the database store will clear expired keys every 5 minutes. Do note that only keys that have been expired for more than 1 hour will be cleared.
+有効期限が切れたキーを5分ごとにクリアするようにデータベースストアが設定されています。ただし、1時間以上有効期限が切れているキーのみがクリアされます。
 
 </dd>
 
 </dl>
 
 
-## Throttling HTTP requests
-Once the limiter has been configured, you may create HTTP throttle middleware using the `limiter.define` method. The `limiter` service is a singleton instance of the [LimiterManager](https://github.com/adonisjs/limiter/blob/main/src/limiter_manager.ts) class created using the config defined within the `config/limiter.ts` file.
+## HTTPリクエストのスロットリング
+レート制限が設定された後、`limiter.define`メソッドを使用してHTTPスロットルミドルウェアを作成できます。`limiter`サービスは、`config/limiter.ts`ファイルで定義された設定を使用して作成された[LimiterManager](https://github.com/adonisjs/limiter/blob/main/src/limiter_manager.ts)クラスのシングルトンインスタンスです。
 
-If you open the `start/limiter.ts` file, you will find a pre-defined global throttle middleware you can apply on a route or a group of routes. Similarly, you can create as many throttle middleware as you need in your application.
+`start/limiter.ts`ファイルを開くと、ルートまたはルートグループに適用できる事前定義されたグローバルスロットルミドルウェアが見つかります。同様に、アプリケーション内で必要な数だけスロットルミドルウェアを作成することもできます。
 
-In the following example, the global throttle middleware allows users to make **10 requests/min** based on their IP address.
+次の例では、グローバルスロットルミドルウェアがIPアドレスに基づいてユーザーが1分間に**10リクエスト**を行うことを許可します。
 
 ```ts
 // title: start/limiter.ts
@@ -346,7 +346,7 @@ export const throttle = limiter.define('global', () => {
 })
 ```
 
-You can apply the `throttle` middleware to a route as follows.
+次のように`throttle`ミドルウェアをルートに適用できます。
 
 ```ts
 // title: start/routes.ts
@@ -362,16 +362,15 @@ router
   // highlight-end
 ```
 
-### Dynamic rate limiting
+### ダイナミックレート制限
 
-Let's create another middleware to protect an API endpoint. This time, we will apply dynamic rate limits based on the authentication status of a request.
+別のミドルウェアを作成してAPIエンドポイントを保護するために、認証状態に基づいて動的なレート制限を適用することもできます。
 
 ```ts
 // title: start/limiter.ts
 export const apiThrottle = limiter.define('api', (ctx) => {
   /**
-   * Allow logged-in users to make 100 requests by
-   * their user ID
+   * ログイン済みのユーザーは、ユーザーIDごとに100リクエストを許可します。
    */
   if (ctx.auth.user) {
     return limiter
@@ -381,7 +380,7 @@ export const apiThrottle = limiter.define('api', (ctx) => {
   }
 
   /**
-   * Allow guest users to make 10 requests by ip address
+   * ゲストユーザーは、IPアドレスごとに10リクエストを許可します。
    */
   return limiter
     .allowRequests(10)
@@ -399,9 +398,10 @@ router
   .use(apiThrottle)
 ```
 
-### Switching the backend store
-You can use a specific backend store with throttle middleware using the `store` method. For example:
+### バックエンドストアの切り替え
+`store`メソッドを使用して、スロットルミドルウェアに特定のバックエンドストアを使用できます。
 
+例：
 ```ts
 limiter
   .allowRequests(10)
@@ -412,8 +412,8 @@ limiter
 ```
 
 
-### Using a custom key
-By default, the requests are rate-limited by the user's IP Address. However, you can specify a custom key using the `usingKey` method.
+### カスタムキーの使用
+デフォルトでは、リクエストはユーザーのIPアドレスによってレート制限されます。ただし、`usingKey`メソッドを使用してカスタムキーを指定することもできます。
 
 ```ts
 limiter
@@ -424,8 +424,8 @@ limiter
   // highlight-end
 ```
 
-### Blocking user
-You may block a user for a specified duration if they continue to make requests even after exhausting their quota using the `blockFor` method. The method accepts the duration in seconds or the time expression.
+### ユーザーのブロック
+クォータを使い果たした後もリクエストを続けるユーザーを指定した期間ブロックする場合は、`blockFor`メソッドを使用します。このメソッドは、秒または時間表現の形式で期間を受け入れます。
 
 ```ts
 limiter
@@ -433,23 +433,25 @@ limiter
   .every('1 minute')
   // highlight-start
   /**
-   * Will be blocked for 30mins, if they send more than
-   * 10 requests under one minute
+   * 1分間に10リクエストを超える場合、30分間ブロックされます。
    */
   .blockFor('30 mins')
   // highlight-end
 ```
 
-## Handling ThrottleException
-The throttle middleware throws the [E_TOO_MANY_REQUESTS](../references/exceptions.md#e_too_many_requests) exception when the user has exhausted all the requests within the specified timeframe. The exception will be automatically converted to an HTTP response using the following content negotiation rules.
+## ThrottleExceptionの処理
+ユーザーが指定された時間枠内ですべてのリクエストを使い果たした場合、スロットルミドルウェアは[E_TOO_MANY_REQUESTS](../references/exceptions.md#e_too_many_requests)例外をスローします。この例外は、以下のコンテンツネゴシエーションルールにしたがってHTTPレスポンスに自動的に変換されます。
 
-- HTTP requests with the `Accept=application/json` header will receive an array of error messages. Each array element will be an object with the message property.
+## ThrottleExceptionの処理
+throttleミドルウェアは、指定された時間枠内ですべてのリクエストを使い果たした場合、[E_TOO_MANY_REQUESTS](../references/exceptions.md#e_too_many_requests)例外をスローします。この例外は、以下のコンテンツネゴシエーションルールにしたがってHTTPレスポンスに自動的に変換されます。
 
-- HTTP requests with the `Accept=application/vnd.api+json` header will receive an array of error messages formatted per the JSON API spec.
+- `Accept=application/json`ヘッダーを持つHTTPリクエストは、エラーメッセージの配列を受け取ります。各配列要素はメッセージプロパティを持つオブジェクトです。
 
-- All other requests will receive a plain text response message. However, you may use [status pages](../basics/exception_handling.md#status-pages) to show a custom error page for limiter errors.
+- `Accept=application/vnd.api+json`ヘッダーを持つHTTPリクエストは、JSON API仕様に従ってフォーマットされたエラーメッセージの配列を受け取ります。
 
-You may also self-handle the error within the [global exception handler](../basics/exception_handling.md#handling-exceptions).
+- その他のリクエストは、プレーンテキストの応答メッセージを受け取ります。ただし、limiterエラーのカスタムエラーページを表示するために[status pages](../basics/exception_handling.md#status-pages)を使用することもできます。
+
+また、[global exception handler](../basics/exception_handling.md#handling-exceptions)内でエラーを自己処理することもできます。
 
 ```ts
 import { errors } from '@adonisjs/limiter'
@@ -478,8 +480,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Customizing the error message
-Instead of handling the exception globally, you may customize the error message, status, and response headers using the `limitExceeded` hook.
+### エラーメッセージのカスタマイズ
+例外をグローバルで処理する代わりに、`limitExceeded`フックを使用してエラーメッセージ、ステータス、およびレスポンスヘッダーをカスタマイズすることもできます。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -492,23 +494,23 @@ export const throttle = limiter.define('global', () => {
     .limitExceeded((error) => {
       error
         .setStatus(400)
-        .setMessage('Cannot process request. Try again later')
+        .setMessage('リクエストを処理できません。後でもう一度お試しください')
     })
     // highlight-end
 })
 ```
 
-### Using translations for the error message
-If you have configured the [@adonisjs/i18n](../digging_deeper/i18n.md) package, you may define the translation for the error message using the `errors.E_TOO_MANY_REQUESTS` key. For example:
+### エラーメッセージの翻訳の使用
+[@adonisjs/i18n](../digging_deeper/i18n.md)パッケージを設定している場合、`errors.E_TOO_MANY_REQUESTS`キーを使用してエラーメッセージの翻訳を定義できます。例えば：
 
 ```json
 // title: resources/lang/fr/errors.json
 {
-  "E_TOO_MANY_REQUESTS": "Trop de demandes"
+  "E_TOO_MANY_REQUESTS": "リクエストが多すぎます"
 }
 ```
 
-Finally, you can define a custom translation key using the `error.t` method.
+最後に、`error.t`メソッドを使用してカスタム翻訳キーを定義することもできます。
 
 ```ts
 limitExceeded((error) => {
@@ -519,18 +521,18 @@ limitExceeded((error) => {
 })
 ```
 
-## Direct usage
-Alongside throttling HTTP requests, you may also use the limiter to apply rate limits in other parts of your application. For example, block a user during login if they provide invalid credentials multiple times. Or limit the number of concurrent jobs a user can run.
+## 直接の使用
+HTTPリクエストのスロットリングと並行して、アプリケーションの他の部分にレート制限を適用するためにlimiterを使用することもできます。例えば、ログイン時に無効な資格情報を複数回提供した場合にユーザーをブロックするか、ユーザーが実行できる同時ジョブの数を制限するなどがあります。
 
-### Creating limiter
+### リミッターの作成
 
-Before you can apply rate limiting on an action, you must get an instance of the [Limiter](https://github.com/adonisjs/limiter/blob/main/src/limiter.ts) class using the `limiter.use` method. The `use` method accepts the name of the backend store and the following rate-limiting options.
+アクションにレート制限を適用する前に、`limiter.use`メソッドを使用して[Limiter](https://github.com/adonisjs/limiter/blob/main/src/limiter.ts)クラスのインスタンスを取得する必要があります。`use`メソッドは、バックエンドストアの名前と以下のレート制限オプションを受け入れます。
 
-- `requests`: The number of requests to allow for a given duration.
-- `duration`: The duration in seconds or a [time expression](../references/helpers.md#seconds) string.
-- `block (optional)`: The duration for which to block the key after all the requests have been exhausted.
-- `inMemoryBlockOnConsumed (optional)`: See [shared options](#shared-options)
-- `inMemoryBlockDuration (optional)`: See [shared options](#shared-options)
+- `requests`: 指定された期間に許可するリクエストの数。
+- `duration`: 秒または[時間表現](../references/helpers.md#seconds)文字列の期間。
+- `block (オプション)`: すべてのリクエストが使い果たされた後にキーをブロックする期間。
+- `inMemoryBlockOnConsumed (オプション)`: [共有オプション](#共有オプション)を参照。
+- `inMemoryBlockDuration (オプション)`: [共有オプション](#共有オプション)を参照。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -541,7 +543,7 @@ const reportsLimiter = limiter.use('redis', {
 })
 ```
 
-Omit the first parameter if you want to use the default store. For example:
+デフォルトのストアを使用する場合は、最初のパラメータを省略できます。例えば：
 
 ```ts
 const reportsLimiter = limiter.use({
@@ -550,23 +552,22 @@ const reportsLimiter = limiter.use({
 })
 ```
 
-### Applying rate limit on an action
+### アクションにレート制限を適用する
 
-Once you have created a limiter instance, you can use the `attempt` method to apply rate limiting on an action. 
-The method accepts the following parameters.
+リミッターのインスタンスを作成したら、`attempt`メソッドを使用してアクションにレート制限を適用できます。
+このメソッドは、以下のパラメータを受け入れます。
 
-- A unique key to use for rate limiting.
-- The callback function to be executed until all the attempts have been exhausted.
+- レート制限に使用する一意のキー。
+- すべての試行が使い果たされるまで実行されるコールバック関数。
 
-The `attempt` method returns the result of the callback function (if it is executed). Otherwise, it returns `undefined`.
+`attempt`メソッドは、コールバック関数の結果を返します（実行された場合）。それ以外の場合は`undefined`を返します。
 
 ```ts
 const key = 'user_1_reports'
 
 /**
- * Attempt to run an action for the given key.
- * The result will be the callback function return
- * value or undefined if no callback was executed.
+ * 指定されたキーでアクションを実行しようとします。
+ * 結果はコールバック関数の戻り値または、コールバックが実行されなかった場合はundefinedになります。
  */ 
 const executed = reportsLimiter.attempt(key, async () => {
   await generateReport()
@@ -574,27 +575,27 @@ const executed = reportsLimiter.attempt(key, async () => {
 })
 
 /**
- * Notify users that they have exceeded the limit
+ * 制限を超えたことをユーザーに通知します。
  */
 if (!executed) {
   const availableIn = await reportsLimiter.availableIn(key)
-  return `Too many requests. Try after ${availableIn} seconds`
+  return `${availableIn}秒後に再試行してください`
 }
 
-return 'Report generated'
+return 'レポートが生成されました'
 ```
 
-### Preventing too many login failures
-Another example of direct usage could be to disallow an IP Address from making multiple invalid attempts on a login form.
+### 多数のログイン失敗を防止する
+直接の使用の別の例として、ログインフォームで複数回の無効な試行を行った場合にIPアドレスからのログインを許可しないことがあります。
 
-In the following example, we use the `limiter.penalize` method to consume one request whenever the user provides invalid credentials and block them for 20 minutes after all the attempts have been exhausted.
+次の例では、`limiter.penalize`メソッドを使用して、ユーザーが無効な資格情報を提供した場合に1つのリクエストを消費し、すべての試行が使い果たされた後に20分間ブロックするようにします。
 
-The `limiter.penalize` method accepts the following arguments.
+`limiter.penalize`メソッドは、次の引数を受け入れます。
 
-- A unique key to use for rate limiting.
-- The callback function to be executed. One request will be consumed if the function throws an error.
+- レート制限に使用する一意のキー。
+- 実行された場合に1つのリクエストが消費されるコールバック関数。
 
-The `penalize` method returns the result of the callback function or an instance of the `ThrottleException`. You can use the exception to find the duration remaining till the next attempt.
+`penalize`メソッドは、コールバック関数の結果または`ThrottleException`のインスタンスを返します。例外を使用して、次の試行までの残り時間を取得できます。
 
 ```ts
 import User from '#models/user'
@@ -606,7 +607,7 @@ export default class SessionController {
     const { email, password } = request.only(['email', 'passwords'])
 
     /**
-     * Create a limiter
+     * リミッターを作成する
      */
     const loginLimiter = limiter.use({
       requests: 5,
@@ -615,45 +616,43 @@ export default class SessionController {
     })
 
     /**
-     * Use IP address + email combination. This ensures if an 
-     * attacker is misusing emails; we do not block actual
-     * users from logging in and only penalize the attacker
-     * IP address.
+     * IPアドレス+メールの組み合わせを使用します。これにより、
+     * 攻撃者がメールを悪用している場合、実際のユーザーが
+     * ログインできなくなることなく、攻撃者のIPアドレスのみをペナルティとします。
      */
     const key = `login_${request.ip()}_${email}`
 
     /**
-     * Wrap User.verifyCredentials inside the "penalize" method, so
-     * that we consume one request for every invalid credentials
-     * error
+     * User.verifyCredentialsを"penalize"メソッドでラップして、
+     * 無効な資格情報のエラーごとに1つのリクエストを消費します。
      */
     const [error, user] = await loginLimiter.penalize(key, () => {
       return User.verifyCredentials(email, password)
     })
 
     /**
-     * On ThrottleException, redirect the user back with a
-     * custom error message
+     * ThrottleExceptionの場合、カスタムエラーメッセージを含む
+     * ユーザーを元のページにリダイレクトします。
      */
     if (error) {
       session.flashAll()
       session.flashErrors({
-        E_TOO_MANY_REQUESTS: `Too many login requests. Try again after ${error.response.availableIn} seconds`
+        E_TOO_MANY_REQUESTS: `${error.response.availableIn}秒後に再試行してください`
       })
       return response.redirect().back()
     }
 
     /**
-     * Otherwise, login the user
+     * それ以外の場合は、ユーザーをログインします。
      */
   }
 }
 ```
 
-## Manually consuming requests
-Alongside the `attempt` and the `penalize` methods, you may interact with the limiter directly to check the remaining requests and manually consume them.
+## リクエストの手動消費
+`attempt`メソッドと`penalize`メソッドの他にも、残りのリクエストを確認し、手動で消費するためにリミッターと対話できます。
 
-In the following example, we use the `remaining` method to check if a given key has consumed all the requests. Otherwise, use the `increment` method to consume one request.
+次の例では、`remaining`メソッドを使用して、指定されたキーがすべてのリクエストを消費したかどうかを確認します。それ以外の場合は、`increment`メソッドを使用して1つのリクエストを消費します。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -668,12 +667,12 @@ if (await requestsLimiter.remaining('unique_key') > 0) {
   await requestsLimiter.increment('unique_key')
   await performAction()
 } else {
-  return 'Too many requests'
+  return 'リクエストが多すぎます'
 }
 // highlight-end
 ```
 
-You might run into a race condition in the above example between calling the `remaining` and the `increment` methods. Therefore, you may want to use the `consume` method instead. The `consume` method will increment the requests count and throw an exception if all the requests have been consumed.
+上記の例では、`remaining`メソッドと`increment`メソッドの間で競合状態が発生する可能性があります。そのため、代わりに`consume`メソッドを使用することをお勧めします。`consume`メソッドはリクエスト数を増やし、すべてのリクエストが消費された場合に例外をスローします。
 
 ```ts
 import { errors } from '@adonisjs/limiter'
@@ -683,15 +682,15 @@ try {
   await performAction()
 } catch (error) {
   if (error instanceof errors.E_TOO_MANY_REQUESTS) {
-    return 'Too many requests'
+    return 'リクエストが多すぎます'
   }
 }
 ```
 
-## Blocking keys
-Alongside consuming requests, you may block a key for longer if a user continues to make requests after exhausting all the attempts.
+## キーのブロック
+リクエストがすべて消費された後にユーザーがリクエストを続ける場合、キーをより長い期間ブロックできます。
 
-The blocking is performed by the `consume`, `attempt`, and the `penalize` methods automatically when you create a limiter instance with `blockDuration` option. For example:
+ブロックは、`consume`メソッド、`attempt`メソッド、および`penalize`メソッドが自動的に実行します。`blockDuration`オプションを使用してリミッターのインスタンスを作成することで、ブロックが実行されます。例えば：
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -705,26 +704,25 @@ const requestsLimiter = limiter.use({
 })
 
 /**
- * A user can make 10 requests in a minute. However, if
- * they send the 11th request, we will block the key
- * for 30 mins.
+ * ユーザーは1分間に10リクエストを行うことができます。ただし、
+ * 11番目のリクエストを送信すると、キーを30分間ブロックします。
  */ 
 await requestLimiter.consume('a_unique_key')
 
 /**
- * Same behavior as consume
+ * consumeと同じ動作
  */
 await requestLimiter.attempt('a_unique_key', () => {
 })
 
 /**
- * Allow 10 failures and then block the key for 30 mins.
+ * 10回の失敗を許可し、その後30分間キーをブロックします。
  */
 await requestLimiter.penalize('a_unique_key', () => {
 })
 ```
 
-Finally, you may use the `block` method to block a key for a given duration.
+最後に、`block`メソッドを使用して指定された期間の間キーをブロックできます。
 
 ```ts
 const requestsLimiter = limiter.use({
@@ -735,13 +733,13 @@ const requestsLimiter = limiter.use({
 await requestsLimiter.block('a_unique_key', '30 mins')
 ```
 
-## Resetting attempts
-You may use one of the following methods to decrease the number of requests or delete the entire key from the storage.
+## 試行のリセット
+リクエスト数を減らすか、キー全体をストレージから削除するために次のいずれかのメソッドを使用できます。
 
-The `decrement` method reduces the request count by 1, and the `delete` method deletes the key. Note that the `decrement` method is not atomic and might set the requests count to `-1` when concurrency is too high.
+`decrement`メソッドはリクエスト数を1減らし、`delete`メソッドはキーを削除します。ただし、`decrement`メソッドはアトミックではなく、並行性が高い場合にリクエスト数を-1に設定する可能性があります。
 
 ```ts
-// title: Decrement requests count
+// title: リクエスト数の減少
 import limiter from '@adonisjs/limiter/services/main'
 
 const jobsLimiter = limiter.use({
@@ -753,9 +751,8 @@ await jobsLimiter.attempt('unique_key', async () => {
   await processJob()
 
   /**
-   * Decrement the consumed requests after we are done
-   * processing the job. This will allow other workers
-   * to use the slot.
+   * ジョブの処理が完了した後に消費されたリクエストを減らします。
+   * これにより、他のワーカーがスロットを使用できるようになります。
    */
   // highlight-start
   await jobsLimiter.decrement('unique_key')
@@ -764,7 +761,7 @@ await jobsLimiter.attempt('unique_key', async () => {
 ```
 
 ```ts
-// title: Delete key
+// title: キーの削除
 import limiter from '@adonisjs/limiter/services/main'
 
 const requestsLimiter = limiter.use({
@@ -775,17 +772,17 @@ const requestsLimiter = limiter.use({
 await requestsLimiter.delete('unique_key')
 ```
 
-## Testing
-If you use a single (i.e., default) store for rate limiting, you may want to switch to the `memory` store during testing by defining the `LIMITER_STORE` environment variable inside the `.env.test` file.
+## テスト
+レート制限に単一の（つまり、デフォルトの）ストアを使用している場合は、テスト中に`memory`ストアに切り替えるために`.env.test`ファイル内で`LIMITER_STORE`環境変数を定義できます。
 
 ```dotenv
 // title: .env.test
 LIMITER_STORE=memory
 ```
 
-You may clear the rate-limiting storage between tests using the `limiter.clear` method. The `clear` method accepts an array of store names and flushes the database. 
+テスト間でレート制限ストレージをクリアするには、`limiter.clear`メソッドを使用します。`clear`メソッドはストア名の配列を受け入れ、データベースをフラッシュします。
 
-When using Redis, it is recommended to use a separate database for the rate limiter. Otherwise, the `clear` method will flush the entire DB, and this might impact other parts of the applications.
+Redisを使用する場合、レートリミッター用に別のデータベースを使用することをオススメします。そうしないと、`clear`メソッドがデータベース全体をフラッシュし、アプリケーションの他の部分に影響を与える可能性があります。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -799,7 +796,7 @@ test.group('Reports', (group) => {
 })
 ```
 
-Alternatively, you can call the `clear` method without any arguments, and all configured stores will be cleared.
+または、引数なしで`clear`メソッドを呼び出すこともできます。すると、すべての設定されたストアがクリアされます。
 
 ```ts
 test.group('Reports', (group) => {
@@ -811,10 +808,10 @@ test.group('Reports', (group) => {
 })
 ```
 
-## Creating a custom storage provider
-A custom storage provider must implement the [LimiterStoreContract](https://github.com/adonisjs/limiter/blob/main/src/types.ts#L163) interface and define the following properties/methods.
+## カスタムストレージプロバイダの作成
+カスタムストレージプロバイダは、[LimiterStoreContract](https://github.com/adonisjs/limiter/blob/main/src/types.ts#L163)インターフェイスを実装し、以下のプロパティ/メソッドを定義する必要があります。
 
-You may write the implementation inside any file/folder. A service provider is not needed to create a custom store.
+実装は任意のファイル/フォルダ内に記述できます。カスタムストアを作成するためには、サービスプロバイダは必要ありません。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -825,7 +822,7 @@ import {
 } from '@adonisjs/limiter/types'
 
 /**
- * A custom set of options you want to accept.
+ * 受け入れるカスタムオプションのセット
  */
 export type MongoDbLimiterConfig = {
   client: MongoDBConnection
@@ -838,33 +835,29 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
   declare readonly blockDuration: number
 
   constructor(public config: MongoDbLimiterConfig & LimiterConsumptionOptions) {
-    this.request = this.config.requests
+    this.requests = this.config.requests
     this.duration = string.seconds.parse(this.config.duration)
     this.blockDuration = string.seconds.parse(this.config.blockDuration)
   }
 
   /**
-   * Consume one request for the given key. This method
-   * should throw an error when all requests have been
-   * already consumed.
+   * 指定されたキーのリクエストを1つ消費します。すべてのリクエストが既に消費されている場合は、エラーをスローする必要があります。
    */
   async consume(key: string | number): Promise<LimiterResponse> {
   }
 
   /**
-   * Consume one request for the given key, but do not throw an
-   * error when all requests have been consumed.
+   * 指定されたキーのリクエストを1つ消費しますが、すべてのリクエストが消費されている場合はエラーをスローしません。
    */
   async increment(key: string | number): Promise<LimiterResponse> {}
 
   /**
-   * Reward one request to the given key. If possible, do not set
-   * the requests count to a negative value.
+   * 指定されたキーのリクエストを1つ減らします。可能な場合は、リクエスト数を負の値に設定しないようにします。
    */
   async decrement(key: string | number): Promise<LimiterResponse> {}
 
   /**
-   * Block a key for the specified duration.
+   * 指定された期間キーをブロックします。
    */ 
   async block(
     key: string | number,
@@ -872,9 +865,7 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
   ): Promise<LimiterResponse> {}
   
   /**
-   * Set the number of consumed requests for a given key. The duration
-   * should be inferred from the config if no explicit duration
-   * is provided.
+   * 指定されたキーの消費されたリクエスト数を設定します。明示的な期間が指定されていない場合は、設定ファイルから期間を推測する必要があります。
    */ 
   async set(
     key: string | number,
@@ -883,35 +874,33 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
   ): Promise<LimiterResponse> {}
 
   /**
-   * Delete the key from the storage
+   * キーをストレージから削除します。
    */
   async delete(key: string | number): Promise<boolean> {}
 
   /**
-   * Flush all keys from the database
+   * データベースからすべてのキーをフラッシュします。
    */
   async clear(): Promise<void> {}
 
   /**
-   * Get a limiter response for a given key. Return `null` if the
-   * key does not exist.
+   * 指定されたキーに対するレートリミットのレスポンスを取得します。キーが存在しない場合は`null`を返します。
    */
   async get(key: string | number): Promise<LimiterResponse | null> {}
 }
 ```
 
-### Defining the config helper
+### 設定ヘルパーの定義
 
-Once you have written the implementation, you must create a config helper to use the provider inside the `config/limiter.ts` file. The config helper should return a `LimiterManagerStoreFactory` function.
+実装が完了したら、設定ファイル内でプロバイダを使用するための設定ヘルパーを作成する必要があります。設定ヘルパーは`LimiterManagerStoreFactory`関数を返す必要があります。
 
-You may write the following function within the same file as the `MongoDbLimiterStore` implementation.
+`MongoDbLimiterStore`の実装と同じファイル内に以下の関数を記述できます。
 
 ```ts
 import { LimiterManagerStoreFactory } from '@adonisjs/limiter/types'
 
 /**
- * Config helper to use the mongoDb store
- * inside the config file
+ * 設定ファイル内でmongoDbストアを使用するための設定ヘルパー
  */
 export function mongoDbStore(config: MongoDbLimiterConfig) {
   const storeFactory: LimiterManagerStoreFactory = (runtimeOptions) => {
@@ -923,9 +912,9 @@ export function mongoDbStore(config: MongoDbLimiterConfig) {
 }
 ```
 
-### Using the config helper
+### 設定ヘルパーの使用
 
-Once done, you may use the `mongoDbStore` helper as follows.
+完了したら、次のように`mongoDbStore`ヘルパーを使用できます。
 
 ```ts
 // title: config/limiter.ts
@@ -948,10 +937,10 @@ const limiterConfig = defineConfig({
 })
 ```
 
-### Wrapping rate-limiter-flexible drivers
-If you are planning to wrap an existing driver from the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible?tab=readme-ov-file#docs-and-examples) package, then you may use the [RateLimiterBridge](https://github.com/adonisjs/limiter/blob/main/src/stores/bridge.ts) for the implementation.
+### rate-limiter-flexibleドライバのラップ
+[node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible?tab=readme-ov-file#docs-and-examples)パッケージから既存のドライバをラップする場合は、[RateLimiterBridge](https://github.com/adonisjs/limiter/blob/main/src/stores/bridge.ts)を使用できます。
 
-Let's re-implement the same `MongoDbLimiterStore` using the bridge this time.
+今度はブリッジを使用して同じ`MongoDbLimiterStore`を再実装してみましょう。
 
 ```ts
 import { RateLimiterBridge } from '@adonisjs/limiter'
@@ -967,14 +956,14 @@ export class MongoDbLimiterStore extends RateLimiterBridge {
         points: config.requests,
         duration: string.seconds.parse(config.duration),
         blockDuration: string.seconds.parse(this.config.blockDuration)
-        // ... provide other options as well
+        // ... 他のオプションも提供します
       })
     )
   }
 
   /**
-   * Self-implement the clear method. Ideally, use the
-   * config.client to issue a delete query
+   * clearメソッドを自己実装します。理想的には、
+   * config.clientを使用して削除クエリを発行します
    */
   async clear() {}
 }

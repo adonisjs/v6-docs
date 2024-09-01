@@ -1,10 +1,10 @@
 ---
-summary: Learn about the commands shipped with the AdonisJS framework core and official packages.
+summary: AdonisJSフレームワークコアと公式パッケージに含まれるコマンドについて学びましょう。
 ---
 
-# Commands reference
+# コマンドリファレンス
 
-In this guide, we cover the usage of all the commands shipped with the framework core and the official packages. You may also view the commands help using the `node ace list` command or the `node ace <command-name> --help` command.
+このガイドでは、フレームワークコアと公式パッケージに含まれるすべてのコマンドの使用方法をカバーしています。コマンドのヘルプを表示するには、`node ace list`コマンドまたは`node ace <コマンド名> --help`コマンドを使用することもできます。
 
 ```sh
 node ace list
@@ -14,24 +14,24 @@ node ace list
 
 :::note
 
-The output of the help screen is formatted as per the [docopt](http://docopt.org/) standard.
+ヘルプ画面の出力は、[docopt](http://docopt.org/)の標準にしたがってフォーマットされています。
 
 :::
 
 ## serve
-The `serve` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#dev-server) package to start the AdonisJS application in development environment. You can optionally watch for file changes and restart the HTTP server on every file change.
+`serve`コマンドは、開発環境でAdonisJSアプリケーションを起動するために[@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#dev-server)パッケージを使用します。ファイルの変更を監視し、ファイルの変更ごとにHTTPサーバーを再起動することもできます。
 
 ```sh
 node ace serve --hmr
 ```
 
-The `serve` command starts the development server (via the `bin/server.ts` file) as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+`serve`コマンドは開発サーバー（`bin/server.ts`ファイル経由）を子プロセスとして起動します。子プロセスに[nodeの引数](https://nodejs.org/api/cli.html#options)を渡す場合は、コマンド名の前にそれらを定義できます。
 
 ```sh
 node ace --no-warnings --inspect serve --hmr
 ```
 
-Following is the list of available options you can pass to the `serve` command. Alternatively, use the `--help` flag to view the command's help.
+以下は、`serve`コマンドに渡すことができるオプションのリストです。または、`--help`フラグを使用してコマンドのヘルプを表示することもできます。
 
 <dl>
 
@@ -43,7 +43,7 @@ Following is the list of available options you can pass to the `serve` command. 
 
 <dd>
 
-Watch the filesystem and reload the server in HMR mode.
+HMRモードでファイルシステムを監視し、サーバーをリロードします。
 
 </dd>
 
@@ -55,7 +55,7 @@ Watch the filesystem and reload the server in HMR mode.
 
 <dd>
 
-Watch the filesystem and always restart the process on file change.
+ファイルシステムを監視し、ファイルの変更ごとにプロセスを常に再起動します。
 
 </dd>
 
@@ -67,7 +67,7 @@ Watch the filesystem and always restart the process on file change.
 
 <dd>
 
-Use polling to detect filesystem changes. You might want to use polling when using a Docker container for development.
+ファイルシステムの変更を検出するためにポーリングを使用します。開発用にDockerコンテナを使用している場合は、ポーリングを使用あります。
 
 </dd>
 
@@ -79,7 +79,7 @@ Use polling to detect filesystem changes. You might want to use polling when usi
 
 <dd>
 
-Clear the terminal after every file change and before displaying the new logs. Use the `--no-clear` flag to retain old logs.
+ファイルの変更ごとにターミナルをクリアし、新しいログを表示する前に古いログを保持するには、`--no-clear`フラグを使用します。
 
 </dd>
 
@@ -91,7 +91,7 @@ Clear the terminal after every file change and before displaying the new logs. U
 
 <dd>
 
-Start the assets bundle development server alongside the AdonisJS HTTP server. Use the `--no-assets` flag to turn off the assets bundler dev server.
+AdonisJS HTTPサーバーと一緒にアセットバンドル開発サーバーを起動します。アセットバンドラーの開発サーバーをオフにするには、`--no-assets`フラグを使用します。
 
 </dd>
 
@@ -103,7 +103,7 @@ Start the assets bundle development server alongside the AdonisJS HTTP server. U
 
 <dd>
 
-Pass commandline arguments to the asset manager child process. For example, if you use vite, you can define its options as follows.
+アセットマネージャーの子プロセスにコマンドライン引数を渡します。たとえば、viteを使用する場合、次のようにオプションを定義できます。
 
 ```sh
 node ace serve --hmr --assets-args="--cors --open"
@@ -114,15 +114,15 @@ node ace serve --hmr --assets-args="--cors --open"
 </dl>
 
 ## build
-The `build` command uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#bundler) package to create the production build of your AdonisJS application. The following steps are performed to generate the build.
+`build`コマンドは、[@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#bundler)パッケージを使用してAdonisJSアプリケーションの本番ビルドを作成します。ビルドの生成には次の手順が実行されます。
 
-See also: [TypeScript build process](../concepts/typescript_build_process.md).
+参照も: [TypeScriptビルドプロセス](../concepts/typescript_build_process.md).
 
 ```sh
 node ace build
 ```
 
-Following is the list of available options you can pass to the `build` command. Alternatively, use the `--help` flag to view the command's help.
+以下は、`build`コマンドに渡すことができるオプションのリストです。または、`--help`フラグを使用してコマンドのヘルプを表示することもできます。
 
 <dl>
 
@@ -134,7 +134,7 @@ Following is the list of available options you can pass to the `build` command. 
 
 <dd>
 
-The build command terminates the build process when your project has TypeScript errors. However, you can ignore those errors and finish the build using the `--ignore-ts-errors` flag.
+プロジェクトにTypeScriptエラーがある場合、ビルドコマンドはビルドプロセスを終了します。ただし、`--ignore-ts-errors`フラグを使用してこれらのエラーを無視し、ビルドを完了できます。
 
 </dd>
 
@@ -146,9 +146,9 @@ The build command terminates the build process when your project has TypeScript 
 
 <dd>
 
-The build command copies the `package.json` file alongside the lock file of the package manager your application is using. 
+ビルドコマンドは、アプリケーションで使用しているパッケージマネージャーの`package.json`ファイルとロックファイルをコピーします。
 
-We detect the package manager using the [@antfu/install-pkg](https://github.com/antfu/install-pkg) package. However, you can turn off detection by explicitly providing the package manager's name.
+パッケージマネージャーは、[@antfu/install-pkg](https://github.com/antfu/install-pkg)パッケージを使用して検出されます。ただし、パッケージマネージャーの検出をオフにすることもできます。
 
 </dd>
 
@@ -160,7 +160,7 @@ We detect the package manager using the [@antfu/install-pkg](https://github.com/
 
 <dd>
 
-Bundle frontend assets alongside your backend application. Use the `--no-assets` flag to turn off the assets bundler dev server.
+バックエンドアプリケーションと一緒にフロントエンドアセットをバンドルします。アセットバンドラーの開発サーバーをオフにするには、`--no-assets`フラグを使用します。
 
 </dd>
 
@@ -172,7 +172,7 @@ Bundle frontend assets alongside your backend application. Use the `--no-assets`
 
 <dd>
 
-Pass commandline arguments to the asset manager child process. For example, if you use vite, you can define its options as follows.
+アセットマネージャーの子プロセスにコマンドライン引数を渡します。たとえば、viteを使用する場合、次のようにオプションを定義できます。
 
 ```sh
 node ace build --assets-args="--sourcemap --debug"
@@ -184,19 +184,19 @@ node ace build --assets-args="--sourcemap --debug"
 
 ## add
 
-The `add` command combines the `npm install <package-name>` and `node ace configure` commands. So, instead of running two separate commands, you can install and configure the package in one go using the `add` command.
+`add`コマンドは、`npm install <パッケージ名>`と`node ace configure`コマンドを組み合わせたものです。つまり、2つの別々のコマンドを実行する代わりに、`add`コマンドを使用してパッケージをインストールして設定できます。
 
-The `add` command will automatically detect the package manager used by your application and use that to install the package. However, you can always opt for a specific package manager using the `--package-manager` CLI flag.
+`add`コマンドは、アプリケーションで使用されているパッケージマネージャーを自動的に検出し、それを使用してパッケージをインストールします。ただし、`--package-manager`CLIフラグを使用して常に特定のパッケージマネージャーを選択することもできます。
 
 ```sh
-# Install and configure the @adonisjs/lucid package
+# @adonisjs/lucidパッケージをインストールして設定する
 node ace add @adonisjs/lucid
 
-# Install the package as a development dependency and configure it
+# パッケージを開発依存関係としてインストールし、設定する
 node ace add my-dev-package --dev
 ```
 
-If the package can be configured using flags, you can pass them directly to the `add` command. Every unknown flag will be passed down to the `configure` command.
+パッケージをフラグで設定できる場合は、直接`add`コマンドに渡すことができます。不明なフラグはすべて`configure`コマンドに渡されます。
 
 ```sh
 node ace add @adonisjs/lucid --db=sqlite
@@ -212,7 +212,7 @@ node ace add @adonisjs/lucid --db=sqlite
 
 <dd>
 
-Enable verbose mode to display the package installation and configuration logs.
+パッケージのインストールと設定のログを表示するために詳細モードを有効にします。
 
 </dd>
 
@@ -224,7 +224,7 @@ Enable verbose mode to display the package installation and configuration logs.
 
 <dd>
 
-Passed down to the `configure` command. Force overwrite files when configuring the package. See the `configure` command for more information.
+`configure`コマンドに渡されます。パッケージの設定時に既存のファイルを強制的に上書きします。詳細については、`configure`コマンドを参照してください。
 
 <dt>
 
@@ -234,7 +234,7 @@ Passed down to the `configure` command. Force overwrite files when configuring t
 
 <dd>
 
-Define the package manager to use for installing the package. The value must be `npm`, `pnpm`, `bun` or `yarn`.
+パッケージのインストールに使用するパッケージマネージャーを定義します。値は`npm`、`pnpm`、`bun`、または`yarn`である必要があります。
 
 </dd>
 
@@ -246,14 +246,14 @@ Define the package manager to use for installing the package. The value must be 
 
 <dd>
 
-Install the package as a development dependency.
+開発依存関係としてパッケージをインストールします。
 
 </dd>
 
 </dl>
 
 ## configure
-Configure a package after it has been installed. The command accepts the package name as the first argument.
+インストール後にパッケージを設定します。コマンドの最初の引数としてパッケージ名を指定します。
 
 ```sh
 node ace configure @adonisjs/lucid
@@ -269,7 +269,7 @@ node ace configure @adonisjs/lucid
 
 <dd>
 
-Enable verbose mode to display the package installation logs.
+パッケージのインストールログを表示するために詳細モードを有効にします。
 
 </dd>
 
@@ -281,9 +281,9 @@ Enable verbose mode to display the package installation logs.
 
 <dd>
 
-The stubs system of AdonisJS does not overwrite existing files. For example, if you configure the `@adonisjs/lucid` package and your application already has a `config/database.ts` file, the configure process will not overwrite the existing config file.
+AdonisJSのスタブシステムは既存のファイルを上書きしません。たとえば、`@adonisjs/lucid`パッケージを設定し、アプリケーションにすでに`config/database.ts`ファイルがある場合、設定プロセスは既存の設定ファイルを上書きしません。
 
-However, you can force overwrite files using the `--force` flag.
+ただし、`--force`フラグを使用してファイルを強制的に上書きできます。
 
 </dd>
 
@@ -291,22 +291,22 @@ However, you can force overwrite files using the `--force` flag.
 
 ## eject
 
-Eject stubs from a given package to your application `stubs` directory. In the following example, we copy the `make/controller` stubs to our application for modification.
+指定されたパッケージのスタブをアプリケーションの`stubs`ディレクトリにコピーします。次の例では、`make/controller`スタブをアプリケーションにコピーして変更します。
 
-See also: [Customizing stubs](../concepts/scaffolding.md#ejecting-stubs)
+参照も: [スタブのカスタマイズ](../concepts/scaffolding.md#ejecting-stubs)
 
 ```sh
-# Copy stub from @adonisjs/core package
+# @adonisjs/coreパッケージからスタブをコピーする
 node ace eject make/controller
 
-# Copy stub from @adonisjs/bouncer package
+# @adonisjs/bouncerパッケージからスタブをコピーする
 node ace eject make/policy --pkg=@adonisjs/bouncer
 ```
 
 ## generate\:key
-Generate a cryptographically secure random key and write to the `.env` file as the `APP_KEY` environment variable.
+暗号的に安全なランダムキーを生成し、`.env`ファイルに`APP_KEY`環境変数として書き込みます。
 
-See also: [App key](../security/encryption.md)
+参照も: [アプリケーションキー](../security/encryption.md)
 
 ```sh
 node ace generate:key
@@ -322,7 +322,7 @@ node ace generate:key
 
 <dd>
 
-Display the key on the terminal instead of writing it to the `.env` file. By default, the key is written to the env file.
+`.env`ファイルに書き込む代わりに、キーをターミナルに表示します。デフォルトでは、キーはenvファイルに書き込まれます。
 
 </dd>
 
@@ -334,7 +334,7 @@ Display the key on the terminal instead of writing it to the `.env` file. By def
 
 <dd>
 
-The `generate:key` command does not write the key to the `.env` file when running your application in production. However, you can use the `--force` flag to override this behavior.
+`generate:key`コマンドは、アプリケーションを本番で実行する場合にキーを`.env`ファイルに書き込みません。ただし、`--force`フラグを使用してこの動作を上書きできます。
 
 </dd>
 
@@ -342,21 +342,21 @@ The `generate:key` command does not write the key to the `.env` file when runnin
 
 ## make\:controller
 
-Create a new HTTP controller class. Controllers are created inside the `app/controllers` directory and use the following naming conventions.
+新しいHTTPコントローラークラスを作成します。コントローラーは`app/controllers`ディレクトリ内に作成され、次の命名規則が使用されます。
 
-- Form: `plural`
-- Suffix: `controller`
-- Class name example: `UsersController`
-- File name example: `users_controller.ts`
+- 形式: `複数形`
+- サフィックス: `controller`
+- クラス名の例: `UsersController`
+- ファイル名の例: `users_controller.ts`
 
 ```sh
 node ace make:controller users
 ```
 
-You also generate a controller with custom action names, as shown in the following example.
+また、次の例のようにカスタムアクション名を持つコントローラーも生成できます。
 
 ```sh
-# Generates controller with "index", "show", and "store" methods
+# "index"、"show"、"store"メソッドを持つコントローラーを生成します
 node ace make:controller users index show store
 ```
 
@@ -370,7 +370,7 @@ node ace make:controller users index show store
 
 <dd>
 
-Force the controller name to be in singular form.
+コントローラー名を単数形に強制します。
 
 </dd>
 
@@ -382,7 +382,7 @@ Force the controller name to be in singular form.
 
 <dd>
 
-Generate a controller with methods to perform CRUD operations on a resource.
+リソース上でCRUD操作を実行するためのメソッドを持つコントローラーを生成します。
 
 </dd>
 
@@ -394,19 +394,19 @@ Generate a controller with methods to perform CRUD operations on a resource.
 
 <dd>
 
-The `--api` flag is similar to the `--resource` flag. However, it does not define the `create` and the `edit` methods since they are used to display forms.
+`--resource`フラグと似ていますが、フォームを表示するために使用される`create`と`edit`メソッドは定義されません。
 
 </dd>
 
 </dl>
 
 ## make\:middleware
-Create a new middleware for HTTP requests. Middleware are stored inside the `app/middleware` directory and uses the following naming conventions.
+HTTPリクエストのための新しいミドルウェアを作成します。ミドルウェアは`app/middleware`ディレクトリ内に保存され、次の命名規則が使用されます。
 
-- Form: `singular`
-- Suffix: `middleware`
-- Class name example: `BodyParserMiddleware`
-- File name example: `body_parser_middleware.ts`
+- 形式: `単数形`
+- サフィックス: `middleware`
+- クラス名の例: `BodyParserMiddleware`
+- ファイル名の例: `body_parser_middleware.ts`
 
 ```sh
 node ace make:middleware bodyparser
@@ -422,7 +422,7 @@ node ace make:middleware bodyparser
 
 <dd>
 
-Skip the [middleware stack](../basics/middleware.md#middleware-stacks) selection prompt by defining the stack explicitly. The value must be `server`, `named`, or `router`.
+スタックの選択プロンプトをスキップし、スタックを明示的に定義します。値は`server`、`named`、または`router`である必要があります。
 
 ```sh
 node ace make:middleware bodyparser --stack=router
@@ -433,31 +433,31 @@ node ace make:middleware bodyparser --stack=router
 </dl>
 
 ## make\:event
-Create a new event class. Events are stored inside the `app/events` directory and use the following naming conventions.
+新しいイベントクラスを作成します。イベントは`app/events`ディレクトリ内に保存され、次の命名規則が使用されます。
 
-- Form: `NA`
-- Suffix: `NA`
-- Class name example: `OrderShipped`
-- File name example: `order_shipped.ts`
-- Recommendation: You must name your events around the lifecycle of an action. For example: `MailSending`, `MailSent`, `RequestCompleted`, and so on.
+- 形式: `NA`
+- サフィックス: `NA`
+- クラス名の例: `OrderShipped`
+- ファイル名の例: `order_shipped.ts`
+- 推奨: アクションのライフサイクルを中心にイベントの名前を付ける必要があります。たとえば: `MailSending`、`MailSent`、`RequestCompleted`など。
 
 ```sh
 node ace make:event orderShipped
 ```
 
 ## make\:validator
-Create a new VineJS validator file. The validators are stored inside the `app/validators` directory, and each file may export multiple validators.
+新しいVineJSバリデータファイルを作成します。バリデータは`app/validators`ディレクトリ内に保存され、各ファイルに複数のバリデータをエクスポートできます。
 
-- Form: `singular`
-- Suffix: `NA`
-- File name example: `user.ts`
-- Recommendation: You must create validator files around the resources of your application.
+- 形式: `単数形`
+- サフィックス: `NA`
+- ファイル名の例: `user.ts`
+- 推奨: アプリケーションのリソースを中心にバリデータファイルを作成する必要があります。
 
 ```sh
-# A validator for managing a user
+# ユーザーを管理するためのバリデータ
 node ace make:validator user
 
-# A validator for managing a post
+# 投稿を管理するためのバリデータ
 node ace make:validator post
 ```
 
@@ -471,7 +471,7 @@ node ace make:validator post
 
 <dd>
 
-Create a validator file with pre-defined validators for `create` and `update` actions.
+`create`と`update`アクションのための事前定義されたバリデータを持つバリデータファイルを作成します。
 
 ```sh
 node ace make:validator post --resource
@@ -483,12 +483,12 @@ node ace make:validator post --resource
 
 ## make\:listener
 
-Create a new event listener class. The listener classes are stored inside the `app/listeners` directory and use the following naming conventions.
+新しいイベントリスナークラスを作成します。リスナークラスは`app/listeners`ディレクトリ内に保存され、次の命名規則が使用されます。
 
-- Form: `NA`
-- Suffix: `NA`
-- Class name example: `SendShipmentNotification`
-- File name example: `send_shipment_notification.ts`
+- 形式: `NA`
+- サフィックス: `NA`
+- クラス名の例: `SendShipmentNotification`
+- ファイル名の例: `send_shipment_notification.ts`
 - Recommendation: The event listeners must be named after the action they perform. For example, a listener that sends the shipment notification email should be called `SendShipmentNotification`.
 
 ```sh
@@ -505,7 +505,7 @@ node ace make:listener sendShipmentNotification
 
 <dd>
 
-Generate an event class alongside the event listener.
+イベントリスナーと一緒にイベントクラスを生成できます。
 
 ```sh
 node ace make:listener sendShipmentNotification --event=shipment_received
@@ -517,18 +517,18 @@ node ace make:listener sendShipmentNotification --event=shipment_received
 
 ## make\:service
 
-Create a new service class. Service classes are stored inside the `app/services` directory and use the following naming conventions.
+新しいサービスクラスを作成します。サービスクラスは`app/services`ディレクトリ内に保存され、以下の命名規則が使用されます。
 
 :::note
 
-A service has no pre-defined meaning, and you can use it to extract the business logic inside your application. For example, if your application generates a lot of PDFs, you may create a service called `PdfGeneratorService` and reuse it in multiple places.
+サービスには事前に定義された意味はなく、アプリケーション内のビジネスロジックを抽出するために使用できます。たとえば、アプリケーションが多くのPDFを生成する場合、`PdfGeneratorService`というサービスを作成し、複数の場所で再利用できます。
 
 :::
 
-- Form: `singular`
-- Suffix: `service`
-- Class name example: `InvoiceService`
-- File name example: `invoice_service.ts`
+- 形式: `単数形`
+- サフィックス: `service`
+- クラス名の例: `InvoiceService`
+- ファイル名の例: `invoice_service.ts`
 
 ```sh
 node ace make:service invoice
@@ -536,12 +536,12 @@ node ace make:service invoice
 
 ## make\:exception
 
-Create a new [custom exception class](../basics/exception_handling.md#custom-exceptions). Exceptions are stored inside the `app/exceptions` directory.
+新しい[カスタム例外クラス](../basics/exception_handling.md#custom-exceptions)を作成します。例外は`app/exceptions`ディレクトリ内に保存されます。
 
-- Form: `NA`
-- Suffix: `exception`
-- Class name example: `CommandValidationException`
-- File name example: `command_validation_exception.ts`
+- 形式: `NA`
+- サフィックス: `exception`
+- クラス名の例: `CommandValidationException`
+- ファイル名の例: `command_validation_exception.ts`
 
 ```sh
 node ace make:exception commandValidation
@@ -549,27 +549,27 @@ node ace make:exception commandValidation
 
 ## make\:command
 
-Create a new Ace command. By default, the commands are stored inside the `commands` directory at the root of your application.
+新しいAceコマンドを作成します。デフォルトでは、コマンドはアプリケーションのルートにある`commands`ディレクトリに保存されます。
 
-Commands from this directory are imported automatically by AdonisJS when you try to execute any Ace command. You may prefix the filename with an `_` to store additional files that are not Ace commands in this directory.
+このディレクトリのコマンドは、AdonisJSがAceコマンドを実行しようとすると自動的にインポートされます。このディレクトリにはAceコマンドではない追加のファイルを保存するために、ファイル名の前に`_`を付けることもできます。
 
-- Form: `NA`
-- Suffix: `NA`
-- Class name example: `ListRoutes`
-- File name example: `list_routes.ts`
-- Recommendation: Commands must be named after the action they perform. For example, `ListRoutes`, `MakeController`, and `Build`.
+- 形式: `NA`
+- サフィックス: `NA`
+- クラス名の例: `ListRoutes`
+- ファイル名の例: `list_routes.ts`
+- オススメ: コマンドは実行するアクションに基づいて名前を付ける必要があります。たとえば、`ListRoutes`、`MakeController`、`Build`などです。
 
 ```sh
 node ace make:command listRoutes
 ```
 
 ## make\:view
-Create a new Edge.js template file. The templates are created inside the `resources/views` directory.
+新しいEdge.jsテンプレートファイルを作成します。テンプレートは`resources/views`ディレクトリ内に作成されます。
 
-- Form: `NA`
-- Suffix: `NA`
-- File name example: `posts/view.edge`
-- Recommendation: You must group templates for a resource inside a subdirectory. For example: `posts/list.edge`, `posts/create.edge`, and so on.
+- 形式: `NA`
+- サフィックス: `NA`
+- ファイル名の例: `posts/view.edge`
+- オススメ: リソースごとにテンプレートをサブディレクトリ内にグループ化する必要があります。たとえば: `posts/list.edge`、`posts/create.edge`などです。
 
 ```sh
 node ace make:view posts/create
@@ -578,12 +578,12 @@ node ace make:view posts/list
 
 ## make\:provider
 
-Create a [service provider file](../concepts/service_providers.md). Providers are stored inside the `providers` directory at the root of your application and use the following naming conventions.
+新しい[サービスプロバイダーファイル](../concepts/service_providers.md)を作成します。プロバイダはアプリケーションのルートにある`providers`ディレクトリに保存され、以下の命名規則が使用されます。
 
-- Form: `singular`
-- Suffix: `provider`
-- Class name example: `AppProvider`
-- File name example: `app_provider.ts`
+- 形式: `単数形`
+- サフィックス: `provider`
+- クラス名の例: `AppProvider`
+- ファイル名の例: `app_provider.ts`
 
 ```sh
 node ace make:provider app
@@ -600,7 +600,7 @@ node ace make:provider app
 
 <dd>
 
-Define environments in which the provider should get imported. [Learn more about app environments](../concepts/application.md#environment)
+プロバイダがインポートされる環境を定義します。[アプリケーションの環境について詳しくはこちらをご覧ください](../concepts/application.md#environment)
 
 ```sh
 node ace make:provider app -e=web -e=console
@@ -612,7 +612,7 @@ node ace make:provider app -e=web -e=console
 
 ## make\:preload
 
-Create a new [preload file](../concepts/adonisrc_file.md#preloads). Preload files are stored inside the `start` directory.
+新しい[プリロードファイル](../concepts/adonisrc_file.md#preloads)を作成します。プリロードファイルは`start`ディレクトリ内に保存されます。
 
 ```sh
 node ace make:preload view
@@ -628,7 +628,7 @@ node ace make:preload view
 
 <dd>
 
-Define environments in which the preload file should get imported. [Learn more about app environments](../concepts/application.md#environment)
+プリロードファイルがインポートされる環境を定義します。[アプリケーションの環境について詳しくはこちらをご覧ください](../concepts/application.md#environment)
 
 ```sh
 node ace make:preload view app -e=web -e=console
@@ -639,11 +639,11 @@ node ace make:preload view app -e=web -e=console
 </dl>
 
 ## make\:test
-Create a new test file inside the `tests/<suite>` directory.
+`tests/<suite>`ディレクトリ内に新しいテストファイルを作成します。
 
-- Form: NA
-- Suffix: `.spec`
-- File name example: `posts/list.spec.ts`, `posts/update.spec.ts`
+- 形式: NA
+- サフィックス: `.spec`
+- ファイル名の例: `posts/list.spec.ts`、`posts/update.spec.ts`
 
 ```sh
 node ace make:test --suite=unit
@@ -659,7 +659,7 @@ node ace make:test --suite=unit
 
 <dd>
 
-Define the suite for which you want to create the test file. Otherwise, the command will display a prompt for suite selection.
+作成するテストファイルのスイートを定義します。指定しない場合、コマンドはスイートの選択についてプロンプトを表示します。
 
 </dd>
 
@@ -667,12 +667,12 @@ Define the suite for which you want to create the test file. Otherwise, the comm
 
 ## make\:mail
 
-Create a new mail class inside the `app/mails` directory. The mail classes are suffixed with the `Notification` keyword. However, you may define a custom suffix using the `--intent` CLI flag.
+`app/mails`ディレクトリ内に新しいメールクラスを作成します。メールクラスは`Notification`キーワードでサフィックスが付けられますが、`--intent` CLIフラグを使用してカスタムサフィックスを定義することもできます。
 
-- Form: NA
-- Suffix: `Intent`
-- Class name example: ShipmentNotification
-- File name example: shipment_notification.ts
+- 形式: NA
+- サフィックス: `Intent`
+- クラス名の例: `ShipmentNotification`
+- ファイル名の例: `shipment_notification.ts`
 
 ```sh
 node ace make:mail shipment
@@ -690,7 +690,7 @@ node ace make:mail shipment
 
 <dd>
 
-Define a custom intent for the mail.
+メールのカスタムインテントを定義します。
 
 ```sh
 node ace make:mail shipment --intent=confirmation
@@ -706,34 +706,34 @@ node ace make:mail storage --intent=warning
 
 ## make\:policy
 
-Create a new Bouncer policy class. The policies are stored inside the `app/policies` folder and use the following naming conventions.
+新しいBouncerポリシークラスを作成します。ポリシーは`app/policies`フォルダ内に保存され、以下の命名規則が使用されます。
 
-- Form: `singular`
-- Suffix: `policy`
-- Class name example: `PostPolicy`
-- File name example: `post_policy.ts`
+- 形式: `単数形`
+- サフィックス: `policy`
+- クラス名の例: `PostPolicy`
+- ファイル名の例: `post_policy.ts`
 
 ```sh
 node ace make:policy post
 ```
 
 ## inspect\:rcfile
-View the contents of the `adonisrc.ts` file after merging the defaults. You may use this command to inspect the available configuration options and override them per your application requirements.
+`adonisrc.ts`ファイルの内容をデフォルトとマージした後の状態で表示します。このコマンドを使用して、利用可能な設定オプションを確認し、アプリケーションの要件に応じてオーバーライドできます。
 
-See also: [AdonisRC file](../concepts/adonisrc_file.md)
+参照も: [AdonisRCファイル](../concepts/adonisrc_file.md)
 
 ```sh
 node ace inspect:rcfile
 ```
 
 ## list\:routes
-View list of routes registered by your application. This command will boot your AdonisJS application in the `console` environment.
+アプリケーションによって登録されたルートのリストを表示します。このコマンドはAdonisJSアプリケーションを`console`環境で起動します。
 
 ```sh
 node ace list:routes
 ```
 
-Also, you can see the routes list from the VSCode activity bar if you are using our [official VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension).
+また、[公式のVSCode拡張機能](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension)を使用している場合、VSCodeのアクティビティバーからルートのリストを表示することもできます。
 
 ![](../basics/vscode_routes_list.png)
 
@@ -747,7 +747,7 @@ Also, you can see the routes list from the VSCode activity bar if you are using 
 
 <dd>
 
-View routes as a JSON string. The output will be an array of object.
+ルートをJSON文字列として表示します。出力はオブジェクトの配列になります。
 
 </dd>
 
@@ -759,7 +759,7 @@ View routes as a JSON string. The output will be an array of object.
 
 <dd>
 
-View routes inside a CLI table. By default, we display routes inside a compact, pretty list.
+CLIテーブル内にルートを表示します。デフォルトでは、ルートはコンパクトで見やすいリスト形式で表示されます。
 
 </dd>
 
@@ -771,7 +771,7 @@ View routes inside a CLI table. By default, we display routes inside a compact, 
 
 <dd>
 
-Filter routes list and include the ones using the mentioned middleware. You may use the `*` keyword to include routes using one or more middleware.
+指定したミドルウェアを使用しているルートのリストをフィルタリングします。ミドルウェアを1つ以上指定するために`*`キーワードを使用できます。
 
 </dd>
 
@@ -783,7 +783,7 @@ Filter routes list and include the ones using the mentioned middleware. You may 
 
 <dd>
 
-Filter routes list and include the ones NOT using the mentioned middleware. You may use the `*` keyword to include routes that do not use any middleware.
+指定したミドルウェアを使用していないルートのリストをフィルタリングします。ミドルウェアを使用していないルートを含めるために`*`キーワードを使用できます。
 
 </dd>
 
@@ -791,15 +791,15 @@ Filter routes list and include the ones NOT using the mentioned middleware. You 
 
 ## env\:add
 
-The `env:add` command allows you to add a new environment variables to the `.env`, `.env.example` files and will also define the validation rules in the `start/env.ts` file. 
+`env:add`コマンドを使用すると、`.env`、`.env.example`ファイルに新しい環境変数を追加し、`start/env.ts`ファイルにバリデーションルールを定義できます。
 
-You can just run the command and it will prompt you for the variable name, value, and validation rules. Or you can pass them as arguments.
+コマンドを実行すると、変数名、値、バリデーションルールを入力するようにプロンプトが表示されます。または、引数として渡すこともできます。
 
 ```sh
-# Will prompt for the variable name, value, and validation rules
+# 変数名、値、バリデーションルールを入力するようにプロンプトが表示されます
 node ace env:add
 
-# Define the variable name, value, and validation rule
+# 変数名、値、バリデーションルールを定義します
 node ace env:add MY_VARIABLE value --type=string
 ```
 
@@ -813,7 +813,7 @@ node ace env:add MY_VARIABLE value --type=string
 
 <dd>
 
-Define the type of the environment variable. The value must be one of the following: `string`, `boolean`, `number`, `enum`.
+環境変数のタイプを定義します。値は次のいずれかである必要があります: `string`、`boolean`、`number`、`enum`。
 
 </dd>
 
@@ -825,7 +825,7 @@ Define the type of the environment variable. The value must be one of the follow
 
 <dd>
 
-Define the allowed values for the environment variable when the type is `enum`. 
+環境変数のタイプが`enum`の場合、許可される値を定義します。
 
 ```sh
 node ace env:add MY_VARIABLE foo --type=enum --enum-values=foo --enum-values=bar

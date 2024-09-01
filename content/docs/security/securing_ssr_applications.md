@@ -1,26 +1,26 @@
 ---
-summary: Learn how to protect your server-rendered applications using the @adonisjs/shield package.
+summary: \@adonisjs/shieldパッケージを使用して、サーバーレンダリングアプリケーションを保護する方法を学びます。
 ---
 
-# Securing server-rendered applications
+# サーバーレンダリングアプリケーションの保護
 
-If you are creating a server-rendered application using AdonisJS, then you must use the `@adonisjs/shield` package to protect your applications from common web attacks like **CSRF**, **XSS**, **Content sniffing**, and so on.
+AdonisJSを使用してサーバーレンダリングアプリケーションを作成している場合は、**CSRF**、**XSS**、**コンテンツスニッフィング**などの一般的なWeb攻撃からアプリケーションを保護するために、`@adonisjs/shield`パッケージを使用する必要があります。
 
-The package comes pre-configured with the **web starter kit**. However, you can manually install and configure the package as follows.
+このパッケージは**ウェブスターターキット**として事前に設定されています。ただし、以下の手順にしたがってパッケージを手動でインストールおよび設定することもできます。
 
 :::note
-The `@adonisjs/shield` package has a peer dependency on the `@adonisjs/session` package, so make sure to [configure the session package](../basics/session.md) first.
+`@adonisjs/shield`パッケージは`@adonisjs/session`パッケージに依存しているため、[セッションパッケージを設定](../basics/session.md)することを忘れないでください。
 :::
 
 ```sh
 node ace add @adonisjs/shield
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行される手順を参照"}
 
-1. Installs the `@adonisjs/shield` package using the detected package manager.
+1. 検出されたパッケージマネージャーを使用して`@adonisjs/shield`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に以下のサービスプロバイダーを登録します。
 
    ```ts
    {
@@ -31,9 +31,9 @@ node ace add @adonisjs/shield
    }
    ```
 
-3. Creates the `config/shield.ts` file.
+3. `config/shield.ts`ファイルを作成します。
 
-4. Registers the following middleware inside the `start/kernel.ts` file.
+4. `start/kernel.ts`ファイル内に以下のミドルウェアを登録します。
 
    ```ts
    router.use([() => import('@adonisjs/shield/shield_middleware')])
@@ -41,18 +41,18 @@ node ace add @adonisjs/shield
 
 :::
 
-## CSRF protection
+## CSRF保護
 
-[CSRF (Cross-Site Request Forgery)](https://owasp.org/www-community/attacks/csrf) is an attack in which a malicious website tricks the users of your web app to perform form submissions without their explicit consent.
+[CSRF（クロスサイトリクエストフォージェリ）](https://owasp.org/www-community/attacks/csrf)は、悪意のあるウェブサイトがユーザーに明示的な同意なしにフォームの送信を行わせる攻撃です。
 
-To protect against CSRF attacks, you should define a hidden input field holding the CSRF token value that only your website can generate and verify. Hence, the form submissions triggered by the malicious website will fail.
+CSRF攻撃に対抗するためには、ウェブサイトだけが生成および検証できるCSRFトークン値を持つ非表示の入力フィールドを定義する必要があります。したがって、悪意のあるウェブサイトによってトリガーされるフォームの送信は失敗します。
 
-### Protecting forms
+### フォームの保護
 
-Once you configure the `@adonisjs/shield` package, all form submissions without a CSRF token will automatically fail. Therefore, you must use the `csrfField` edge helper to define a hidden input field with the CSRF token.
+`@adonisjs/shield`パッケージを設定すると、CSRFトークンのないすべてのフォームの送信は自動的に失敗します。したがって、CSRFトークンを持つ非表示の入力フィールドを定義するために`csrfField`エッジヘルパーを使用する必要があります。
 
 :::caption{for="info"}
-**Edge helper**
+**エッジヘルパー**
 :::
 
 ```edge
@@ -60,13 +60,13 @@ Once you configure the `@adonisjs/shield` package, all form submissions without 
   // highlight-start
   {{ csrfField() }}
   // highlight-end
-  <input type="name" name="name" placeholder="Enter your name">
-  <button type="submit"> Submit </button>
+  <input type="name" name="name" placeholder="名前を入力してください">
+  <button type="submit"> 送信 </button>
 </form>
 ```
 
 :::caption{for="info"}
-**Output HTML**
+**出力されるHTML**
 :::
 
 ```html
@@ -75,18 +75,18 @@ Once you configure the `@adonisjs/shield` package, all form submissions without 
     // highlight-start
     <input type="hidden" name="_csrf" value="Q9ghWSf0-3FD9eCiu5YxvKaxLEZ6F_K4DL8o"/>
     // highlight-end
-    <input type="name" name="name" placeholder="Enter your name"/>
-    <button type="submit">Submit</button>
+    <input type="name" name="name" placeholder="名前を入力してください"/>
+    <button type="submit">送信</button>
 </form>
 ```
 
-During the form submission, the `shield_middleware` will automatically verify the `_csrf` token, only allowing the form submissions with a valid CSRF token.
+フォームの送信時、`shield_middleware`は自動的に`_csrf`トークンを検証し、有効なCSRFトークンを持つフォームの送信のみを許可します。
 
-### Handling exceptions
+### 例外の処理
 
-Shield raises an `E_BAD_CSRF_TOKEN` exception when the CSRF token is missing or invalid. By default, AdonisJS will capture the exception and redirect the user back to the form with an error flash message.
+CSRFトークンが存在しないか無効な場合、Shieldは`E_BAD_CSRF_TOKEN`例外を発生させます。デフォルトでは、AdonisJSは例外をキャプチャし、エラーフラッシュメッセージを含んだフォームにユーザーをリダイレクトします。
 
-You can access the flash message as follows inside an edge template.
+Edgeテンプレート内でフラッシュメッセージにアクセスするには、次のようにします。
 
 ```edge
 // highlight-start
@@ -97,12 +97,12 @@ You can access the flash message as follows inside an edge template.
 
 <form method="POST" action="/">
   {{ csrfField() }}
-  <input type="name" name="name" placeholder="Enter your name">
-  <button type="submit"> Submit </button>
+  <input type="name" name="name" placeholder="名前を入力してください">
+  <button type="submit"> 送信 </button>
 </form>
 ```
 
-You can also self-handle the `E_BAD_CSRF_TOKEN` exception inside the [global exception handler](../basics/exception_handling.md#handling-exceptions) as follows.
+また、[グローバル例外ハンドラ](../basics/exception_handling.md#handling-exceptions)内で`E_BAD_CSRF_TOKEN`例外を自己処理することもできます。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -115,7 +115,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     if (error instanceof errors.E_BAD_CSRF_TOKEN) {
       return ctx.response
         .status(error.status)
-        .send('Page has expired')
+        .send('ページの有効期限が切れました')
     }
     // highlight-end
     return super.handle(error, ctx)
@@ -123,9 +123,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Config reference
+### 設定リファレンス
 
-The configuration for the CSRF guard is stored inside the `config/shield.ts` file.
+CSRFガードの設定は`config/shield.ts`ファイルに保存されます。
 
 ```ts
 import { defineConfig } from '@adonisjs/shield'
@@ -152,7 +152,7 @@ enabled
 
 <dd>
 
-Turn the CSRF guard on or off.
+CSRFガードをオンまたはオフにします。
 
 </dd>
 
@@ -164,14 +164,14 @@ exceptRoutes
 
 <dd>
 
-An array of route patterns to exempt from the CSRF protection. If your application has routes that accept form submissions via an API, you might want to exempt them.
+CSRF保護から除外するルートパターンの配列です。アプリケーションにAPI経由でフォームの送信を受け入れるルートがある場合は、除外する必要があります。
 
-For more advanced use cases, you may register a function to exempt specific routes dynamically.
+より高度な使用例では、特定のルートを動的に除外するために関数を登録することもできます。
 
 ```ts
 {
   exceptRoutes: (ctx) => {
-    // exempt all routes starting with /api/
+    // /api/で始まるすべてのルートを除外
     return ctx.request.url().includes('/api/')
   }
 }
@@ -187,11 +187,9 @@ enableXsrfCookie
 
 <dd>
 
-When enabled, Shield will store the CSRF token inside an encrypted cookie named `XSRF-TOKEN`, which can be read by the frontend JavaScript code.
+有効にすると、Shieldは`XSRF-TOKEN`という名前の暗号化されたクッキーにCSRFトークンを保存します。これにより、Axiosなどのフロントエンドのリクエストライブラリが自動的に`XSRF-TOKEN`を読み取り、サーバーレンダリングされたフォームなしでAjaxリクエストを行う際にヘッダーとして設定できます。
 
-This allows frontend request libraries like Axios to read the `XSRF-TOKEN` automatically and set it as a header when making Ajax requests without server-rendered forms.
-
-You must keep the `enableXsrfCookie` disabled if you are not triggering Ajax requests programmatically.
+Ajaxリクエストをプログラムでトリガーしない場合は、`enableXsrfCookie`を無効にしておく必要があります。
 
 </dd>
 
@@ -203,7 +201,7 @@ methods
 
 <dd>
 
-An array of HTTP methods to protect. All incoming requests for the mentioned methods must present a valid CSRF token.
+保護するHTTPメソッドの配列です。指定されたメソッドのすべての受信リクエストは有効なCSRFトークンを提供する必要があります。
 
 </dd>
 
@@ -215,16 +213,16 @@ cookieOptions
 
 <dd>
 
-Configuration for the `XSRF-TOKEN` cookie. [See cookies configuration](../basics/cookies.md#configuration) for available options.
+`XSRF-TOKEN`クッキーの設定です。使用可能なオプションについては、[クッキーの設定](../basics/cookies.md#configuration)を参照してください。
 
 </dd>
 
 </dl>
 
-## Defining CSP policy
-[CSP (Content security policy)](https://web.dev/csp/) protects your applications from XSS attacks by defining trusted sources for loading JavaScript, CSS, fonts, images, and so on.
+## CSPポリシーの定義
+[CSP（コンテンツセキュリティポリシー）](https://web.dev/csp/)は、JavaScript、CSS、フォント、画像などの信頼できるソースを定義することによって、XSS攻撃からアプリケーションを保護します。
 
-The CSP guard is disabled by default. However, we recommend you enable it and configure the policy directives inside the `config/shield.ts` file.
+CSPガードはデフォルトで無効になっています。ただし、有効にし、ポリシーディレクティブを`config/shield.ts`ファイル内で設定することをオススメします。
 
 ```ts
 import { defineConfig } from '@adonisjs/shield'
@@ -233,7 +231,7 @@ const shieldConfig = defineConfig({
   csp: {
     enabled: true,
     directives: {
-      // policy directives go here
+      // ポリシーディレクティブをここに記述
     },
     reportOnly: false,
   },
@@ -252,7 +250,7 @@ enabled
 
 <dd>
 
-Turn the CSP guard on or off.
+CSPガードをオンまたはオフにします。
 
 </dd>
 
@@ -264,7 +262,7 @@ directives
 
 <dd>
 
-Configure the CSP directives. You can view the list of available directives on [https://content-security-policy.com/](https://content-security-policy.com/#directive)
+CSPディレクティブを設定します。使用可能なディレクティブのリストは[https://content-security-policy.com/](https://content-security-policy.com/#directive)で確認できます。
 
 ```ts
 const shieldConfig = defineConfig({
@@ -294,7 +292,7 @@ reportOnly
 
 <dd>
 
-The CSP policy will not block the resources when the `reportOnly` flag is enabled. Instead, it will report the violations on an endpoint configured using the `reportUri` directive.
+`reportOnly`フラグが有効になっている場合、CSPポリシーはリソースをブロックしません。代わりに、違反を`reportUri`ディレクティブで設定されたエンドポイントに報告します。
 
 ```ts
 const shieldConfig = defineConfig({
@@ -313,7 +311,7 @@ const shieldConfig = defineConfig({
 })
 ```
 
-Also, register the `csp-report` endpoint to collect the violation reports.
+また、違反レポートを収集するために`csp-report`エンドポイントを登録します。
 
 ```ts
 router.post('/csp-report', async ({ request }) => {
@@ -324,19 +322,19 @@ router.post('/csp-report', async ({ request }) => {
 
 </dl>
 
-### Using Nonce
-You may allow inline `script` and `style` tags by defining the [nonce attribute](https://content-security-policy.com/nonce/) on them. The value of the nonce attribute can be accessed inside Edge templates using the `cspNonce` property.
+### Nonceの使用
+インラインの`script`タグと`style`タグを許可するには、それらに[nonce属性](https://content-security-policy.com/nonce/)を定義できます。nonce属性の値は、`cspNonce`プロパティを使用してEdgeテンプレート内でアクセスできます。
 
 ```edge
 <script nonce="{{ cspNonce }}">
-  // Inline JavaScript
+  // インラインJavaScript
 </script>
 <style nonce="{{ cspNonce }}">
-  /* Inline CSS */
+  /* インラインCSS */
 </style>
 ```
 
-Also, use the `@nonce` keyword inside the directives config to allow nonce-based inline scripts and styles.
+また、ディレクティブの設定内で`@nonce`キーワードを使用してnonceベースのインラインスクリプトとスタイルを許可します。
 
 ```ts
 const shieldConfig = defineConfig({
@@ -348,11 +346,11 @@ const shieldConfig = defineConfig({
 })
 ```
 
-### Loading assets from the Vite Dev server
-If you are using the [Vite integration](../basics/vite.md), you can use the following CSP keywords to allow assets served by the Vite Dev server.
+### Vite Devサーバーからアセットを読み込む
+[Viteの統合](../basics/vite.md)を使用している場合、Vite Devサーバーが提供するアセットを許可するために次のCSPキーワードを使用できます。
 
-- The `@viteDevUrl` adds the Vite dev server URL to the allowed list.
-- The `@viteHmrUrl` adds the Vite HMR websocket server URL to the allowed list.
+- `@viteDevUrl`はVite DevサーバーのURLを許可リストに追加します。
+- `@viteHmrUrl`はVite HMRウェブソケットサーバーのURLを許可リストに追加します。
 
 ```ts
 const shieldConfig = defineConfig({
@@ -365,7 +363,7 @@ const shieldConfig = defineConfig({
 })
 ```
 
-If you are deploying the Vite bundled output to a CDN server, you must replace `@viteDevUrl` with the `@viteUrl` keyword to allow assets from both the development server and the CDN server.
+Viteのバンドル出力をCDNサーバーにデプロイしている場合は、`@viteDevUrl`を`@viteUrl`キーワードに置き換えて、開発サーバーとCDNサーバーの両方からのアセットを許可する必要があります。
 
 ```ts
 directives: {
@@ -379,13 +377,13 @@ directives: {
 },
 ```
 
-### Adding Nonce to styles injected by Vite
-Currently, Vite does not allow defining a `nonce` attribute to the `style` tags injected by it inside the DOM. There is an [open PR](https://github.com/vitejs/vite/pull/11864) for the same, and we are hoping it will be resolved soon.
+### Viteによって注入されるスタイルにNonceを追加する
+現在、ViteはDOM内に注入される`style`タグに`nonce`属性を定義することを許可していません。これに関しては[オープンなPR](https://github.com/vitejs/vite/pull/11864)があり、近々解決されることを期待しています。
 
-## Configuring HSTS
-The [**Strict-Transport-Security (HSTS)**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) response header informs the browsers to always load the website using HTTPS. 
+## HSTSの設定
+[**Strict-Transport-Security（HSTS）**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)レスポンスヘッダーは、ブラウザに常にHTTPSを使用してウェブサイトを読み込むように指示します。
 
-You can configure the header directives using the `config/shield.ts` file.
+`config/shield.ts`ファイルを使用してヘッダーディレクティブを設定できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/shield'
@@ -409,7 +407,7 @@ enabled
 
 <dd>
 
-Turn the hsts guard on or off.
+HSTSガードをオンまたはオフにします。
 
 </dd>
 
@@ -421,18 +419,18 @@ maxAge
 
 <dd>
 
-Defines the `max-age` attribute. The value should either be a number in seconds or a string-based time expression.
+`max-age`属性を定義します。値は秒単位の数値または文字列形式の時間表現である必要があります。
 
 ```ts
 {
-  // Remember for 10 seconds
+  // 10秒間記憶する
   maxAge: 10,
 }
 ```
 
 ```ts
 {
-  // Remember for 2 days
+  // 2日間記憶する
   maxAge: '2 days',
 }
 ```
@@ -447,22 +445,22 @@ includeSubDomains
 
 <dd>
 
-Defines the `includeSubDomains` directive to apply the setting on subdomains.
+`includeSubDomains`ディレクティブを定義して、サブドメインに設定を適用します。
 
 </dd>
 
 </dl>
 
-## Configuring X-Frame protection
-The [**X-Frame-Options**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header is used to indicate if a browser is allowed to render a website embedded inside an `iframe`, `frame`, `embed`, or `object` tags.
+## X-Frame保護の設定
+[**X-Frame-Options**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)ヘッダーは、ブラウザが`iframe`、`frame`、`embed`、`object`タグ内に埋め込まれたウェブサイトをレンダリングすることが許可されているかどうかを示すために使用されます。
 
 :::note
 
-If you have configured CSP, you may instead use the [frame-ancestors](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive and disable the `xFrame` guard.
+もしCSPを設定している場合は、代わりに[frame-ancestors](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors)ディレクティブを使用し、`xFrame`ガードを無効にできます。
 
 :::
 
-You can configure the header directives using the `config/shield.ts` file.
+`config/shield.ts`ファイルを使用してヘッダーディレクティブを設定できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/shield'
@@ -485,7 +483,7 @@ enabled
 
 <dd>
 
-Turn the xFrame guard on or off.
+xFrameガードをオンまたはオフにします。
 
 </dd>
 
@@ -497,7 +495,7 @@ action
 
 <dd>
 
-The `action` property defines the header value. It could be `DENY`, `SAMEORIGIN`, or `ALLOW-FROM`.
+`action`プロパティはヘッダーの値を定義します。`DENY`、`SAMEORIGIN`、または`ALLOW-FROM`のいずれかを指定できます。
 
 ```ts
 {
@@ -505,7 +503,7 @@ The `action` property defines the header value. It could be `DENY`, `SAMEORIGIN`
 }
 ```
 
-In the case of `ALLOW-FROM`, you must also define the `domain` property.
+`ALLOW-FROM`の場合、`domain`プロパティも定義する必要があります。
 
 ```ts
 {
@@ -518,10 +516,10 @@ In the case of `ALLOW-FROM`, you must also define the `domain` property.
 
 </dl>
 
-## Disabling MIME sniffing
-The [**X-Content-Type-Options**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options) header instructs browsers to follow the `content-type` header and not perform MIME sniffing by inspecting the content of an HTTP response.
+## MIMEスニッフィングの無効化
+[**X-Content-Type-Options**](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-Content-Type-Options)ヘッダーは、ブラウザに対して`content-type`ヘッダーに従い、HTTPレスポンスの内容を検査してMIMEスニッフィングを行わないよう指示します。
 
-Once you enable this guard, Shield will define the `X-Content-Type-Options: nosniff` header for all HTTP responses.
+このガードを有効にすると、ShieldはすべてのHTTPレスポンスに対して`X-Content-Type-Options: nosniff`ヘッダーを定義します。
 
 ```ts
 import { defineConfig } from '@adonisjs/shield'

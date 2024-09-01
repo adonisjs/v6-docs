@@ -1,44 +1,44 @@
 ---
-summary: Learn how to send real-time updates with SSE from your AdonisJS server using the Transmit package
+summary: AdonisJSサーバーを使用してTransmitパッケージを使ってSSEを介してリアルタイムの更新を送信する方法を学びます
 ---
 
 # Transmit
 
-Transmit is a native opinionated Server-Sent-Event (SSE) module built for AdonisJS. It is a simple and efficient way to send real-time updates to the client, such as notifications, live chat messages, or any other type of real-time data.
+Transmitは、AdonisJS向けに作られたネイティブな意見のあるServer-Sent-Event（SSE）モジュールです。通知、ライブチャットメッセージ、またはその他のリアルタイムデータなど、クライアントへのリアルタイムの更新を送信するためのシンプルで効率的な方法です。
 
 :::note
-The data transmission occurs only from server to client, not the other way around. You have to use a form or a fetch request to achieve client to server communication.
+データの送信はサーバーからクライアントへのみ行われます。クライアントからサーバーへの通信にはフォームまたはフェッチリクエストを使用する必要があります。
 :::
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+次のコマンドを使用してパッケージをインストールおよび設定します：
 
 ```sh
 node ace add @adonisjs/transmit
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行されるステップを参照"}
 
-1. Installs the `@adonisjs/transmit` package using the detected package manager.
- 
-2. Registers the `@adonisjs/transmit/transmit_provider` service provider inside the `adonisrc.ts` file.
- 
-3. Creates a new `transmit.ts` file inside the `config` directory.
- 
+1. 検出されたパッケージマネージャを使用して`@adonisjs/transmit`パッケージをインストールします。
+
+2. `adonisrc.ts`ファイル内で`@adonisjs/transmit/transmit_provider`サービスプロバイダを登録します。
+
+3. `config`ディレクトリ内に新しい`transmit.ts`ファイルを作成します。
+
 :::
 
-You will also have to install the Transmit client package to listen for events on the client-side.
+また、クライアント側でイベントを受信するためにTransmitクライアントパッケージもインストールする必要があります。
 
 ```sh
 npm install @adonisjs/transmit-client
 ```
 
-## Configuration
+## 設定
 
-The configuration for the transmit package is stored within the `config/transmit.ts` file.
+Transmitパッケージの設定は`config/transmit.ts`ファイルに保存されます。
 
-See also: [Config stub](https://github.com/adonisjs/transmit/blob/main/stubs/config/transmit.stub)
+参照：[Config stub](https://github.com/adonisjs/transmit/blob/main/stubs/config/transmit.stub)
 
 ```ts
 import { defineConfig } from '@adonisjs/transmit'
@@ -60,7 +60,7 @@ pingInterval
 
 <dd>
 
-The interval used to send ping messages to the client. The value is in milliseconds or using a string `Duration` format (i.e: `10s`). Set to `false` to disable ping messages.
+クライアントにpingメッセージを送信するために使用される間隔です。値はミリ秒または文字列の`Duration`形式（例：`10s`）で指定します。pingメッセージを無効にするには`false`に設定します。
 
 </dd>
 
@@ -72,7 +72,7 @@ transport
 
 <dd>
 
-Transmit supports syncing events across multiple servers or instances. You can enable the feature by referencing the wanted transport layer (only `redis` is supported for now). Set to `null` to disable syncing.
+Transmitは複数のサーバーやインスタンス間でイベントを同期できます。この機能を有効にするには、必要なトランスポートレイヤー（現在は`redis`のみサポート）を参照するように設定します。同期を無効にするには`null`に設定します。
 
 ```ts
 import env from '#start/env'
@@ -91,7 +91,7 @@ export default defineConfig({
 ```
 
 :::note
-Ensure you have `ioredis` installed when using the `redis` transport.
+`redis`トランスポートを使用する場合は、`ioredis`がインストールされていることを確認してください。
 :::
 
 </dd>
@@ -104,9 +104,9 @@ routeHandlerModifier
 
 <dd>
 
-A function that is called before registering transmit routes. It receives the route instance. Use this function to add custom middleware or modify the route handler.
+トランスミットルートを登録する前に呼び出される関数です。ルートインスタンスが渡されます。この関数を使用してカスタムミドルウェアを追加したり、ルートハンドラを変更したりするために使用します。
 
-For example, you can use the [`Rate Limiter`](../security/rate_limiting.md) and auth middleware to avoid abuse of some transmit route.
+たとえば、[`Rate Limiter`](../security/rate_limiting.md)と認証ミドルウェアを使用して、一部のトランスミットルートの乱用を防ぐために使用できます。
 
 ```ts
 import { defineConfig } from '@adonisjs/transmit'
@@ -116,13 +116,13 @@ export default defineConfig({
   async routeHandlerModifier(route) {
     const { middleware } = await import('#start/kernel')
     
-    // Ensure you are authenticated to register your client
+    // クライアントを登録するために認証されていることを確認してください
     if (route.getPattern() === '__transmit/events') {
       route.middleware(middleware.auth())
       return
     }
     
-    // Add a throttle middleware to other transmit routes
+    // 他のトランスミットルートにスロットルミドルウェアを追加します
     route.use(throttle)
   }
 })
@@ -132,14 +132,13 @@ export default defineConfig({
 
 </dl>
 
-## Channels
+## チャンネル
 
-Channels are used to group events. For example, you can have a channel for notifications, another for chat messages, and so on.
-They are created on the fly when the client subscribes to them.
+チャンネルはイベントをグループ化するために使用されます。たとえば、通知用のチャンネル、チャットメッセージ用の別のチャンネルなどがあります。クライアントがチャンネルに登録すると、チャンネルが動的に作成されます。
 
-### Channel Names
+### チャンネル名
 
-Channel names are used to identify the channel. They are case-sensitive and must be a string. You cannot use any special characters or spaces in the channel name except `/`. The following are some examples of valid channel names:
+チャンネル名はチャンネルを識別するために使用されます。大文字と小文字が区別され、文字列である必要があります。チャンネル名には`/`以外の特殊文字やスペースは使用できません。以下は有効なチャンネル名の例です：
 
 ```ts
 import transmit from '@adonisjs/transmit/services/main'
@@ -150,12 +149,12 @@ transmit.broadcast('users/1', { message: 'Hello' })
 ```
 
 :::tip
-Channel names use the same syntax as route in AdonisJS but are not related to them. You can freely define a http route and a channel with the same key.
+チャンネル名はAdonisJSのルートと同じ構文を使用しますが、それらとは関係ありません。同じキーでHTTPルートとチャンネルを自由に定義できます。
 :::
 
-### Channel Authorization
+### チャンネルの認証
 
-You can authorize or reject a connection to a channel using the `authorizeChannel` method. The method receives the channel name and the `HttpContext`. It must return a boolean value.
+`authorizeChannel`メソッドを使用して、チャンネルへの接続を承認または拒否できます。このメソッドはチャンネル名と`HttpContext`を受け取り、真偽値を返す必要があります。
 
 ```ts
 // title: start/transmit.ts
@@ -175,9 +174,9 @@ transmit.authorizeChannel<{ id: string }>('chats/:id/messages', async (ctx: Http
 })
 ```
 
-## Broadcasting Events
+## イベントのブロードキャスト
 
-You can broadcast events to a channel using the `broadcast` method. The method receives the channel name and the data to send.
+`broadcast`メソッドを使用して、チャンネルにイベントをブロードキャストできます。このメソッドはチャンネル名と送信するデータを受け取ります。
 
 ```ts
 import transmit from '@adonisjs/transmit/services/main'
@@ -185,23 +184,23 @@ import transmit from '@adonisjs/transmit/services/main'
 transmit.broadcast('global', { message: 'Hello' })
 ```
 
-You can also broadcast events to any channel except one using the `broadcastExcept` method. The method receives the channel name, the data to send, and the UID you want to ignore.
+また、`broadcastExcept`メソッドを使用して、特定のUIDを除くすべてのチャンネルにイベントをブロードキャストすることもできます。このメソッドはチャンネル名、送信するデータ、および無視するUIDを受け取ります。
 
 ```ts
 transmit.broadcastExcept('global', { message: 'Hello' }, 'uid-of-sender')
 ```
 
-### Syncing across multiple servers or instances
+### 複数のサーバーやインスタンス間での同期
 
-By default, broadcasting events works only within the context of an HTTP request. However, you can broadcast events from the background using the `transmit` service if you register a `transport` in your configuration.
+デフォルトでは、イベントのブロードキャストはHTTPリクエストのコンテキスト内でのみ動作します。ただし、設定で`transport`を登録することで、バックグラウンドからイベントをブロードキャストすることもできます。
 
-The transport layer is responsible for syncing events across multiple servers or instances. It works by broadcasting any events (like broadcasted events, subscriptions, and un-subscriptions) to all connected servers or instances using a `Message Bus`.
+トランスポートレイヤーは、複数のサーバーやインスタンス間でイベントを同期する責任を持ちます。これは、ブロードキャストされたイベント、サブスクリプション、およびアンサブスクリプションなどのイベントを、接続されているすべてのサーバーやインスタンスに対して`Message Bus`を使用してブロードキャストすることによって機能します。
 
-The server or instance responsible for your client connection will receive the event and broadcast it to the client.
+クライアント接続に対して責任を持つサーバーまたはインスタンスは、イベントを受信し、クライアントにブロードキャストします。
 
-## Transmit Client
+## Transmitクライアント
 
-You can listen for events on the client-side using the `@adonisjs/transmit-client` package. The package provides a `Transmit` class. The client use the [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) API by default to connect to the server.
+`@adonisjs/transmit-client`パッケージを使用して、クライアント側でイベントを受信できます。このパッケージは`Transmit`クラスを提供します。クライアントはデフォルトで[`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) APIを使用してサーバーに接続します。
 
 ```ts
 import { Transmit } from '@adonisjs/transmit-client'
@@ -212,12 +211,12 @@ export const transmit = new Transmit({
 ```
 
 :::tip
-You should create only one instance of the `Transmit` class and reuse it throughout your application.
+`Transmit`クラスのインスタンスは1つだけ作成し、アプリケーション全体で再利用するべきです。
 :::
 
-### Configuring the Transmit Instance
+### Transmitインスタンスの設定
 
-The `Transmit` class accepts an object with the following properties:
+`Transmit`クラスは、次のプロパティを持つオブジェクトを受け入れます：
 
 <dl>
 
@@ -229,7 +228,7 @@ baseUrl
 
 <dd>
 
-The base URL of the server. The URL must include the protocol (http or https) and the domain name.
+サーバーのベースURLです。URLにはプロトコル（httpまたはhttps）とドメイン名を含める必要があります。
 
 </dd>
 
@@ -241,7 +240,7 @@ uidGenerator
 
 <dd>
 
-A function that generates a unique identifier for the client. The function must return a string. It defaults to `crypto.randomUUID`.
+クライアントのための一意の識別子を生成する関数です。関数は文字列を返す必要があります。デフォルトでは`crypto.randomUUID`です。
 
 </dd>
 
@@ -253,7 +252,7 @@ eventSourceFactory
 
 <dd>
 
-A function that creates a new `EventSource` instance. It defaults to the WebAPI [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource). You need to provide a custom implementation if you want to use the client on `Node.js`, `React Native` or any other environment that does not support the `EventSource` API.
+新しい`EventSource`インスタンスを作成する関数です。デフォルトではWebAPIの[`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)を使用します。`EventSource` APIをサポートしていない`Node.js`、`React Native`、または他の環境でクライアントを使用する場合は、カスタムの実装を提供する必要があります。
 
 </dd>
 
@@ -265,7 +264,7 @@ eventTargetFactory
 
 <dd>
 
-A function that creates a new `EventTarget` instance. It defaults to the WebAPI [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget). You need to provide a custom implementation if you want to use the client on `Node.js`, `React Native` or any other environment that does not support the `EventTarget` API. Return `null` to disable the `EventTarget` API.
+新しい`EventTarget`インスタンスを作成する関数です。デフォルトではWebAPIの[`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)を使用します。`EventTarget` APIをサポートしていない`Node.js`、`React Native`、または他の環境でクライアントを使用する場合は、カスタムの実装を提供する必要があります。`EventTarget` APIを無効にするには`null`を返します。
 
 </dd>
 
@@ -277,7 +276,7 @@ httpClientFactory
 
 <dd>
 
-A function that creates a new `HttpClient` instance. It is mainly used for testing purposes.
+新しい`HttpClient`インスタンスを作成する関数です。主にテスト目的で使用されます。
 
 </dd>
 
@@ -289,7 +288,7 @@ beforeSubscribe
 
 <dd>
 
-A function that is called before subscribing to a channel. It receives the channel name and the `Request` object sent to the server. Use this function to add custom headers or modify the request object.
+チャンネルに登録する前に呼び出される関数です。チャンネル名とサーバーに送信される`Request`オブジェクトが渡されます。この関数を使用してカスタムヘッダーを追加したり、リクエストオブジェクトを変更したりするために使用します。
 
 </dd>
 
@@ -301,7 +300,7 @@ beforeUnsubscribe
 
 <dd>
 
-A function that is called before unsubscribing from a channel. It receives the channel name and the `Request` object sent to the server. Use this function to add custom headers or modify the request object.
+チャンネルから登録解除する前に呼び出される関数です。チャンネル名とサーバーに送信される`Request`オブジェクトが渡されます。この関数を使用してカスタムヘッダーを追加したり、リクエストオブジェクトを変更したりするために使用します。
 
 </dd>
 
@@ -313,7 +312,7 @@ maxReconnectAttempts
 
 <dd>
 
-The maximum number of reconnection attempts. It defaults to `5`.
+再接続試行の最大回数です。デフォルトは`5`です。
 
 </dd>
 
@@ -325,7 +324,7 @@ onReconnectAttempt
 
 <dd>
 
-A function that is called before each reconnection attempt and receives the number of attempts made so far. Use this function to add custom logic.
+各再接続試行の前に呼び出される関数で、これまでに行われた試行回数が渡されます。カスタムロジックを追加するためにこの関数を使用します。
 
 </dd>
 
@@ -337,7 +336,7 @@ onReconnectFailed
 
 <dd>
 
-A function that is called when the reconnection attempts fail. Use this function to add custom logic.
+再接続試行が失敗したときに呼び出される関数です。カスタムロジックを追加するためにこの関数を使用します。
 
 </dd>
 
@@ -349,7 +348,7 @@ onSubscribeFailed
 
 <dd>
 
-A function that is called when the subscription fails. It receives the `Response` object. Use this function to add custom logic.
+サブスクリプションが失敗したときに呼び出される関数です。`Response`オブジェクトが渡されます。カスタムロジックを追加するためにこの関数を使用します。
 
 </dd>
 
@@ -361,7 +360,7 @@ onSubscription
 
 <dd>
 
-A function that is called when the subscription is successful. It receives the channel name. Use this function to add custom logic.
+サブスクリプションが成功したときに呼び出される関数です。チャンネル名が渡されます。カスタムロジックを追加するためにこの関数を使用します。
 
 </dd>
 
@@ -373,31 +372,31 @@ onUnsubscription
 
 <dd>
 
-A function that is called when the unsubscription is successful. It receives the channel name. Use this function to add custom logic.
+アンサブスクリプションが成功したときに呼び出される関数です。チャンネル名が渡されます。カスタムロジックを追加するためにこの関数を使用します。
 
 </dd>
 
 </dl>
 
 
-### Creating a Subscription
+### サブスクリプションの作成
 
-You can create a subscription to a channel using the `subscription` method. The method receives the channel name.
+`subscription`メソッドを使用して、チャンネルに対するサブスクリプションを作成できます。このメソッドはチャンネル名を受け取ります。
 
 ```ts
 const subscription = transmit.subscription('chats/1/messages')
 await subscription.create()
 ```
 
-The `create` method registers the subscription on the server. It returns a promise that you can `await` or `void`.
+`create`メソッドはサブスクリプションをサーバーに登録します。`await`または`void`できるプロミスを返します。
 
 :::note
-If you don't call the `create` method, the subscription will not be registered on the server, and you will not receive any events.
+`create`メソッドを呼び出さない場合、サブスクリプションはサーバーに登録されず、イベントを受信しません。
 :::
 
-### Listening for Events
+### イベントのリスニング
 
-You can listen for events on the subscription using the `onMessage` method that receives a callback function. You can call the `onMessage` method multiple times to add different callbacks.
+`onMessage`メソッドを使用して、サブスクリプションでイベントをリスンできます。このメソッドはコールバック関数を受け取ります。異なるコールバックを追加するために、`onMessage`メソッドを複数回呼び出すことができます。
 
 ```ts
 subscription.onMessage((data) => {
@@ -405,30 +404,30 @@ subscription.onMessage((data) => {
 })
 ```
 
-You can also listen to a channel only once using the `onMessageOnce` method which receives a callback function.
+また、`onMessageOnce`メソッドを使用して、コールバック関数を受け取ることで、チャンネルを一度だけリスンすることもできます。
 
 ```ts
 subscription.onMessageOnce(() => {
-  console.log('I will be called only once')
+  console.log('一度だけ呼び出されます')
 })
 ```
 
-### Stop Listening for Events
+### イベントのリスニングを停止する
 
-The `onMessage` and `onMessageOnce` methods return a function that you can call to stop listening for a specific callback.
+`onMessage`および`onMessageOnce`メソッドは、特定のコールバックのリスニングを停止するために呼び出すことができる関数を返します。
 
 ```ts
 const stopListening = subscription.onMessage((data) => {
   console.log(data)
 })
 
-// Stop listening
+// リスニングを停止する
 stopListening()
 ```
 
-### Deleting a Subscription
+### サブスクリプションの削除
 
-You can delete a subscription using the `delete` method. The method returns a promise that you can `await` or `void`. This method will unregister the subscription on the server.
+`delete`メソッドを使用して、サブスクリプションを削除できます。このメソッドは`await`または`void`できるプロミスを返します。このメソッドはサーバー上でサブスクリプションの登録を解除します。
 
 ```ts
 await subscription.delete()

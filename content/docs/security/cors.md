@@ -1,28 +1,28 @@
 ---
-summary: Learn how to implement CORS in AdonisJS to protect your application..
+summary: AdonisJSでCORSを実装してアプリケーションを保護する方法を学びます。
 ---
 
 # CORS
 
-[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) helps you protect your application from malicious requests triggered using scripts in a browser environment. 
+[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)は、ブラウザ環境でスクリプトを使用してトリガーされる悪意のあるリクエストからアプリケーションを保護するのに役立ちます。
 
-For example, if an AJAX or a fetch request is sent to your server from a different domain, the browser will block that request with a CORS error and expect you to implement a CORS policy if you think the request should be allowed.
+たとえば、AJAXやfetchリクエストが異なるドメインからサーバーに送信された場合、ブラウザはCORSエラーでそのリクエストをブロックし、リクエストを許可する必要があると思う場合にCORSポリシーを実装することを期待します。
 
-In AdonisJS, you can implement the CORS policy using the `@adonisjs/cors` package. The package ships with an HTTP middleware that intercepts incoming requests and responds with correct CORS headers.
+AdonisJSでは、`@adonisjs/cors`パッケージを使用してCORSポリシーを実装できます。このパッケージには、受信リクエストをインターセプトし、正しいCORSヘッダーで応答するHTTPミドルウェアが含まれています。
 
-## Installation
+## インストール
 
-Install and configure the package using the following command :
+次のコマンドを使用してパッケージをインストールおよび設定します：
 
 ```sh
 node ace add @adonisjs/cors
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="addコマンドによって実行される手順を参照"}
 
-1. Installs the `@adonisjs/cors` package using the detected package manager.
+1. 検出されたパッケージマネージャを使用して`@adonisjs/cors`パッケージをインストールします。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. `adonisrc.ts`ファイル内に次のサービスプロバイダーを登録します。
 
     ```ts
     {
@@ -33,9 +33,9 @@ node ace add @adonisjs/cors
     }
     ```
 
-3. Creates the `config/cors.ts` file. This file contains the configuration settings for CORS.
+3. `config/cors.ts`ファイルを作成します。このファイルにはCORSの設定が含まれています。
 
-4. Registers the following middleware inside the `start/kernel.ts` file.
+4. `start/kernel.ts`ファイル内に次のミドルウェアを登録します。
 
     ```ts
     server.use([
@@ -45,9 +45,9 @@ node ace add @adonisjs/cors
 
 :::
 
-## Configuration
+## 設定
 
-The configuration for the CORS middleware is stored inside the `config/cors.ts` file. 
+CORSミドルウェアの設定は、`config/cors.ts`ファイルに保存されます。
 
 ```ts
 import { defineConfig } from '@adonisjs/cors'
@@ -75,7 +75,7 @@ enabled
 
 <dd>
 
-Turn the middleware on or off temporarily without removing it from the middleware stack.
+ミドルウェアを一時的にオンまたはオフにすることなく、ミドルウェアスタックから削除せずに、一時的にオンまたはオフにします。
 
 </dd>
 
@@ -87,9 +87,9 @@ origin
 
 <dd>
 
-The `origin` property controls the value for the [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) header.
+`origin`プロパティは、[Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)ヘッダーの値を制御します。
 
-You can allow the request's current origin by setting the value to `true` or disallow the request's current origin by setting it to `false`.
+現在のオリジンのリクエストを許可するには、値を`true`に設定します。現在のオリジンのリクエストを許可しない場合は、`false`に設定します。
 
 ```ts
 {
@@ -97,7 +97,7 @@ You can allow the request's current origin by setting the value to `true` or dis
 }
 ```
 
-You may specify a list of hardcoded origins to allow an array of domain names.
+ハードコードされたオリジンのリストを指定して、ドメイン名の配列を許可することもできます。
 
 ```ts
 {
@@ -105,9 +105,9 @@ You may specify a list of hardcoded origins to allow an array of domain names.
 }
 ```
 
-Use the wildcard expression `*` to allow all the origins. Read the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) to understand how the wildcard expression works.
+すべてのオリジンを許可するにはワイルドカード式`*`を使用します。ワイルドカード式の動作方法については、[MDNのドキュメント](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives)を参照してください。
 
-When the `credentials` property is set to `true`, we will automatically make the wildcard expression behave like a `boolean (true)`. 
+`credentials`プロパティが`true`に設定されている場合、ワイルドカード式は`boolean (true)`のように動作します。
 
 ```ts
 {
@@ -115,7 +115,7 @@ When the `credentials` property is set to `true`, we will automatically make the
 }
 ```
 
-You can compute the `origin` value during the HTTP request using a function. For example:
+HTTPリクエスト中に`origin`の値を計算するために、関数を使用することもできます。例：
 
 ```ts
 {
@@ -135,7 +135,7 @@ methods
 
 <dd>
 
-The `methods` property controls the method to allow during the preflight request. The [Access-Control-Request-Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Method) header value is checked against the allowed methods.
+`methods`プロパティは、プリフライトリクエスト中に許可するメソッドを制御します。[Access-Control-Request-Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Method)ヘッダーの値は、許可されたメソッドと照合されます。
 
 ```sh
 {
@@ -153,9 +153,9 @@ headers
 
 <dd>
 
-The `headers` property controls the request headers to allow during the preflight request. The [Access-Control-Request-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Headers) header value is checked against the headers property.
+`headers`プロパティは、プリフライトリクエスト中に許可するリクエストヘッダーを制御します。[Access-Control-Request-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Headers)ヘッダーの値は、headersプロパティと照合されます。
 
-Setting the value to `true` will allow all the headers. Whereas setting the value to `false` will disallow all the headers.
+値を`true`に設定すると、すべてのヘッダーが許可されます。値を`false`に設定すると、すべてのヘッダーが許可されません。
 
 ```ts
 {
@@ -163,7 +163,7 @@ Setting the value to `true` will allow all the headers. Whereas setting the valu
 }
 ```
 
-You can specify a list of headers to allow by defining them as an array of strings.
+文字列の配列としてヘッダーを許可するには、ヘッダーを指定します。
 
 ```ts
 {
@@ -175,7 +175,7 @@ You can specify a list of headers to allow by defining them as an array of strin
 }
 ```
 
-You can compute the `headers` config value using a function during the HTTP request. For example:
+HTTPリクエスト中に`headers`の設定値を関数を使用して計算することもできます。例：
 
 ```ts
 {
@@ -195,7 +195,7 @@ exposeHeaders
 
 <dd>
 
-The `exposeHeaders` property controls the headers to expose via [Access-Control-Expose-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers) header during the preflight request.
+`exposeHeaders`プロパティは、プリフライトリクエスト中に[Access-Control-Expose-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers)ヘッダーを介して公開するヘッダーを制御します。
 
 ```ts
 {
@@ -220,7 +220,7 @@ credentials
 
 <dd>
 
-The `credentials` property controls whether to set the [Access-Control-Allow-Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials) header during the preflight request.
+`credentials`プロパティは、プリフライトリクエスト中に[Access-Control-Allow-Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials)ヘッダーを設定するかどうかを制御します。
 
 ```ts
 {
@@ -238,10 +238,10 @@ maxAge
 
 <dd>
 
-The `maxAge` property controls the [Access-Control-Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age) response header. The value is in seconds.
+`maxAge`プロパティは、[Access-Control-Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age)レスポンスヘッダーを制御します。値は秒単位です。
 
-- Setting the value to `null` will not set the header.
-- Whereas setting it to `-1 `does set the header but disables the cache.
+- 値を`null`に設定すると、ヘッダーは設定されません。
+- `-1`に設定すると、ヘッダーは設定されますが、キャッシュは無効になります。
 
 ```ts
 {
@@ -253,11 +253,11 @@ The `maxAge` property controls the [Access-Control-Max-Age](https://developer.mo
 
 </dl>
 
-## Debugging CORS errors
-Debugging CORS issues is a challenging experience. However, there are no shortcuts other than understanding the rules of CORS and debugging the response headers to ensure everything is in place.
+## CORSエラーのデバッグ
+CORSの問題をデバッグすることは難しい経験です。ただし、CORSのルールを理解し、レスポンスヘッダーをデバッグしてすべてが正しく設定されていることを確認する以外にショートカットはありません。
 
-Following are some links to the articles you may read to understand better how CORS works.
+以下は、CORSの動作をよりよく理解するために読むことができる記事へのリンクです。
 
-- [How to Debug Any CORS Error](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
-- [Will it CORS?](https://httptoolkit.com/will-it-cors/)
-- [MDN in-depth explanation of CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+- [CORSエラーのデバッグ方法](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
+- [CORSできる？](https://httptoolkit.com/will-it-cors/)
+- [CORSのMDNによる詳細な説明](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)

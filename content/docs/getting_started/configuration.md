@@ -1,25 +1,26 @@
 ---
-summary: Learn how to read and update configuration values in AdonisJS.
+summary: AdonisJSで設定値を読み取り、更新する方法を学びます。
 ---
 
-# Configuration
+# 設定
 
-The configuration files of your AdonisJS application are stored inside the `config` directory. A brand new AdonisJS application comes with a handful of pre-existing files used by the framework core and installed packages.
+AdonisJSアプリケーションの設定ファイルは`config`ディレクトリ内に保存されます。新しいAdonisJSアプリケーションには、フレームワークのコアとインストールされたパッケージによって使用されるいくつかの事前存在するファイルが付属しています。
 
-Feel free to create additional files your application requires inside the `config` directory.
+`config`ディレクトリ内にアプリケーションが必要とする追加のファイルを自由に作成してください。
 
 
 :::note
 
-We recommend using [environment variables](./environment_variables.md) for storing secrets and environment-specific configuration.
+シークレットや環境固有の設定を保存するために、[環境変数](./environment_variables.md)の使用をオススメします。
 
 
 :::
 
-## Importing config files
+## 設定ファイルのインポート
 
-You may import the configuration files within your application codebase using the standard JavaScript `import` statement. For example:
+標準のJavaScriptの`import`ステートメントを使用して、アプリケーションのコードベース内で設定ファイルをインポートできます。
 
+例:
 ```ts
 import { appKey } from '#config/app'
 ```
@@ -28,32 +29,33 @@ import { appKey } from '#config/app'
 import databaseConfig from '#config/database'
 ```
 
-## Using the config service
+## 設定サービスの使用
 
-The config service offers an alternate API for reading the configuration values. In the following example, we use the config service to read the `appKey` value stored within the `config/app.ts` file.
+設定サービスは、設定値を読み取るための代替APIを提供しています。次の例では、設定サービスを使用して、`config/app.ts`ファイル内に保存されている`appKey`の値を読み取っています。
 
 ```ts
 import config from '@adonisjs/core/services/config'
 
 config.get('app.appKey')
-config.get('app.http.cookie') // read nested values
+config.get('app.http.cookie') // ネストされた値を読み取る
 ```
 
-The `config.get` method accepts a dot-separated key and parses it as follows.
+`config.get`メソッドは、ドットで区切られたキーを受け入れ、次のように解析します。
 
-- The first part is the filename from which you want to read the values. I.e., `app.ts` file.
-- The rest of the string fragment is the key you want to access from the exported values. I.e., `appKey` in this case.
+- 最初の部分は、値を読み取りたいファイルのファイル名です。たとえば`app.ts`ファイルです。
+- 文字列の残りの部分は、エクスポートされた値からアクセスしたいキーです。この場合は`appKey`です。
 
-## Config service vs. directly importing config files
+## 設定サービスと設定ファイルの直接インポート
 
-Using the config service over directly importing the config files has no direct benefits. However, the config service is the only choice to read the configuration in external packages and edge templates.
+設定サービスを直接設定ファイルをインポートするよりも利点はありません。ただし、設定サービスは外部パッケージやエッジテンプレートで設定を読み取るための唯一の選択肢です。
 
-### Reading config inside external packages
+### 外部パッケージ内での設定の読み取り
 
-If you are creating a third-party package, you should not directly import the config files from the user application because it will make your package tightly coupled with the folder structure of the host application.
+サードパーティのパッケージを作成している場合、ユーザーアプリケーションから設定ファイルを直接インポートするべきではありません。なぜなら、それによってパッケージがホストアプリケーションのフォルダ構造と密接に結びつくことになるからです。
 
-Instead, you should use the config service to access the config values inside a service provider. For example:
+代わりに、サービスプロバイダ内で設定値にアクセスするために設定サービスを使用するべきです。
 
+例:
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
 
@@ -62,36 +64,36 @@ export default class DriveServiceProvider {
   
   register() {
     this.app.container.singleton('drive', () => {
-      // highlight-start
+      // ハイライト開始
       const driveConfig = this.app.config.get('drive')
       return new DriveManager(driveConfig)
-      // highlight-end
+      // ハイライト終了
     })
   }
 }
 ```
 
-### Reading config inside Edge templates
+### Edgeテンプレート内での設定の読み取り
 
-You may access configuration values inside edge templates using the `config` global method.
+`config`グローバルメソッドを使用して、エッジテンプレート内で設定値にアクセスできます。
 
 ```edge
-<a href="{{ config('app.appUrl') }}"> Home </a>
+<a href="{{ config('app.appUrl') }}"> ホーム </a>
 ```
 
-You can use the `config.has` method to check if a configuration value exists for a given key. The method returns `false` if the value is `undefined`.
+`config.has`メソッドを使用して、指定されたキーに対して設定値が存在するかどうかを確認できます。メソッドは値が`undefined`の場合に`false`を返します。
 
 ```edge
 @if(config.has('app.appUrl'))
-  <a href="{{ config('app.appUrl') }}"> Home </a>
+  <a href="{{ config('app.appUrl') }}"> ホーム </a>
 @else
-  <a href="/"> Home </a>
+  <a href="/"> ホーム </a>
 @end
 ```
 
-## Changing the config location
+## 設定ディレクトリの変更
 
-You can update the location for the config directory by modifying the `adonisrc.ts` file. After the change, the config files will be imported from the new location.
+`adonisrc.ts`ファイルを変更することで、設定ディレクトリの場所を更新できます。変更後、設定ファイルは新しい場所からインポートされます。
 
 ```ts
 directories: {
@@ -99,7 +101,7 @@ directories: {
 }
 ```
 
-Make sure to update the import alias within the `package.json` file.
+`package.json`ファイル内のインポートエイリアスも更新する必要があります。
 
 ```json
 {
@@ -109,21 +111,21 @@ Make sure to update the import alias within the `package.json` file.
 }
 ```
 
-## Config files limitations
+## 設定ファイルの制限
 
-The config files stored within the `config` directory are imported during the boot phase of the application. As a result, the config files cannot rely on the application code.
+`config`ディレクトリ内に保存されている設定ファイルは、アプリケーションの起動フェーズでインポートされます。そのため、設定ファイルはアプリケーションコードに依存することはできません。
 
-For example, if you try to import and use the router service inside the `config/app.ts` file, the application will fail to start. This is because the router service is not configured until the app is in a `booted` state.
+たとえば`config/app.ts`ファイル内でルーターサービスをインポートして使用しようとすると、アプリケーションの起動に失敗します。これは、ルーターサービスが`booted`状態になるまで設定されないためです。
 
-Fundamentally, this limitation positively impacts your codebase because the application code should rely on the config, not vice versa.
+基本的に、この制限はコードベースにプラスの影響を与えます。なぜなら、アプリケーションコードは設定に依存すべきであり、逆ではないからです。
 
-## Updating config at runtime
+## 実行時に設定を更新する
 
-You can mutate the config values at runtime using the config service. The `config.set` updates the value within the memory, and no changes are made to the files on the disk.
+設定サービスを使用して実行時に設定値を変更できます。`config.set`はメモリ内の値を更新し、ディスク上のファイルには変更が加えられません。
 
 :::note
 
-The config value is mutated for the entire application, not just for a single HTTP request. This is because Node.js is not a threaded runtime, and the memory in Node.js is shared between multiple HTTP requests.
+設定値は単一のHTTPリクエストだけでなく、アプリケーション全体に対して変更されます。これは、Node.jsがスレッド化されていないランタイムであり、Node.jsのメモリが複数のHTTPリクエスト間で共有されるためです。
 
 :::
 

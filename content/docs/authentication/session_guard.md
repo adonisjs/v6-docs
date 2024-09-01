@@ -1,14 +1,14 @@
 ---
-summary: Learn how to authenticate users using the session guard in AdonisJS.
+summary: AdonisJSでセッションガードを使用してユーザーの認証を行う方法を学びます。
 ---
 
-# Session guard
-The session guard uses the [@adonisjs/session](../basics/session.md) package to login and authenticate users during an HTTP request.
+# セッションガード
+セッションガードは、HTTPリクエスト中にユーザーのログインと認証を行うために[@adonisjs/session](../basics/session.md)パッケージを使用します。
 
-Sessions and cookies have been on the internet for a long time and work great for most applications. Therefore, we recommend using the session guard for server-rendered applications or an SPA web client on the same top-level domain.
+セッションとクッキーは長い間インターネット上で使用されており、ほとんどのアプリケーションで非常に優れた機能を提供しています。したがって、サーバーレンダリングされるアプリケーションや同じトップレベルドメインのSPAウェブクライアントでは、セッションガードの使用を推奨します。
 
-## Configuring the guard
-The authentication guards are defined inside the `config/auth.ts` file. You can configure multiple guards inside this file under the `guards` object.
+## ガードの設定
+認証ガードは`config/auth.ts`ファイル内で定義されます。このファイル内の`guards`オブジェクトの下に複数のガードを設定できます。
 
 ```ts
 // title: config/auth.ts
@@ -34,22 +34,22 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-The `sessionGuard` method creates an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) class. It accepts a user provider that can be used to find users during authentication and an optional config object to configure the remember tokens behavior.
+`sessionGuard`メソッドは[SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts)クラスのインスタンスを作成します。これは、認証中にユーザーを検索するために使用できるユーザープロバイダと、リメンバートークンの動作を設定するためのオプションの設定オブジェクトを受け入れます。
 
-The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
+`sessionUserProvider`メソッドは[SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/user_providers/lucid.ts)クラスのインスタンスを作成します。これは、認証に使用するモデルへの参照を受け入れます。
 
-## Performing login
-You can login a user using the `guard.login` method. The method accepts an instance of the User model and creates a login session for them.
+## ログインの実行
+`guard.login`メソッドを使用してユーザーをログインできます。このメソッドはUserモデルのインスタンスを受け入れ、ユーザーのログインセッションを作成します。
 
-In the following example:
+次の例：
 
-- We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
+- [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin)から`verifyCredentials`メソッドを使用して、メールアドレスとパスワードでユーザーを検索します。
 
-- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
+- `auth.use('web')`は、`config/auth.ts`ファイルで設定された[SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts)のインスタンスを返します。
 
-- Next, we call the `guard.login(user)` method to create a login session for the user.
+- 次に、`guard.login(user)`メソッドを呼び出して、ユーザーのログインセッションを作成します。
 
-- Finally, we redirect the user to the `/dashboard` endpoint. Feel free to customize the redirect endpoint.
+- 最後に、ユーザーを`/dashboard`エンドポイントにリダイレクトします。リダイレクトエンドポイントをカスタマイズしてください。
 
 ```ts
 import User from '#models/user'
@@ -59,22 +59,22 @@ export default class SessionController {
   async store({ request, auth, response }: HttpContext) {
     // highlight-start
     /**
-     * Step 1: Get credentials from the request body
+     * ステップ1：リクエストボディから資格情報を取得します。
      */
     const { email, password } = request.only(['email', 'password'])
 
     /**
-     * Step 2: Verify credentials
+     * ステップ2：資格情報を検証します。
      */
     const user = await User.verifyCredentials(email, password)
 
     /**
-     * Step 3: Login user
+     * ステップ3：ユーザーをログインさせます。
      */
     await auth.use('web').login(user)
 
     /**
-     * Step 4: Send them to a protected route
+     * ステップ4：保護されたルートにリダイレクトします。
      */
     response.redirect('/dashboard')
     // highlight-end
@@ -82,9 +82,9 @@ export default class SessionController {
 }
 ```
 
-## Protecting routes
+## ルートの保護
 
-You can protect routes from unauthenticated users using the `auth` middleware. The middleware is registered inside the `start/kernel.ts` file under the named middleware collection.
+`auth`ミドルウェアを使用して、未認証のユーザーからルートを保護できます。このミドルウェアは、名前付きミドルウェアコレクションの`start/kernel.ts`ファイル内で登録されます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -94,7 +94,7 @@ export const middleware = router.named({
 })
 ```
 
-Apply the `auth` middleware to the routes you want to protect from unauthenticated users. 
+未認証のユーザーから保護したいルートに`auth`ミドルウェアを適用します。
 
 ```ts
 // highlight-start
@@ -109,9 +109,9 @@ router
  // highlight-end
 ```
 
-By default, the auth middleware will authenticate the user against the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `auth` middleware.
+デフォルトでは、authミドルウェアは`default`ガード（設定ファイルで定義されている）を使用してユーザーを認証します。ただし、`auth`ミドルウェアを割り当てる際にガードの配列を指定することもできます。
 
-In the following example, the auth middleware will attempt to authenticate the request using the `web` and the `api` guards.
+次の例では、authミドルウェアは`web`ガードと`api`ガードを使用してリクエストを認証しようとします。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -128,22 +128,22 @@ router
  // highlight-end
 ```
 
-### Handling authentication exception
+### 認証例外の処理
 
-The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
+認証ミドルウェアは、ユーザーが認証されていない場合に[E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18)をスローします。この例外は、次のコンテンツネゴシエーションルールを使用して自動的に処理されます。
 
-- Request with `Accept=application/json` header will receive an array of errors with the `message` property.
+- `Accept=application/json`ヘッダーを持つリクエストは、`message`プロパティを持つエラーの配列を受け取ります。
 
-- Request with `Accept=application/vnd.api+json` header will receive an array of errors as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+- `Accept=application/vnd.api+json`ヘッダーを持つリクエストは、[JSON API](https://jsonapi.org/format/#errors)仕様に従ったエラーの配列を受け取ります。
 
-- The user will be redirected to the `/login` page for server-rendered applications. You can configure the redirect endpoint within the `auth` middleware class.
+- サーバーレンダリングされるアプリケーションの場合、ユーザーは`/login`ページにリダイレクトされます。リダイレクトエンドポイントは、`auth`ミドルウェアクラス内で設定できます。
 
-## Getting access to the logged-in user
+## ログイン済みのユーザーへのアクセス
 
-You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` middleware or if you call the `auth.authenticate` or `auth.check` methods manually.
+`auth.user`プロパティを使用して、ログイン済みのユーザーインスタンスにアクセスできます。この値は、`auth`ミドルウェアを使用するか、`auth.authenticate`または`auth.check`メソッドを手動で呼び出した場合にのみ利用できます。
 
 ```ts
-// title: Using auth middleware
+// title: authミドルウェアを使用する
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
@@ -157,7 +157,7 @@ router
 ```
 
 ```ts
-// title: Manually calling authenticate method
+// title: 手動でauthenticateメソッドを呼び出す
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
@@ -165,20 +165,20 @@ router
   .get('dashboard', async ({ auth }) => {
     // highlight-start
     /**
-     * First, authenticate the user
+     * まず、ユーザーを認証します。
      */
     await auth.authenticate()
 
     /**
-     * Then access the user object
+     * 次に、ユーザーオブジェクトにアクセスします。
      */ 
     await auth.user!.getAllMetrics()
     // highlight-end
   })
 ```
 
-### Check if the request is authenticated
-You can check if a request has been authenticated using the `auth.isAuthenticated` flag. The value of `auth.user` will always be defined for an authenticated request.
+### リクエストが認証されているかどうかを確認する
+`auth.isAuthenticated`フラグを使用して、リクエストが認証されているかどうかを確認できます。認証されたリクエストでは、`auth.user`の値は常に定義されています。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -195,9 +195,9 @@ router
   .use(middleware.auth())
 ```
 
-### Get authenticated user or fail
+### 認証されたユーザーを取得するか失敗する
 
-If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+`auth.user`プロパティに対して[non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-)を使用することが好きではない場合は、`auth.getUserOrFail`メソッドを使用できます。このメソッドは、ユーザーオブジェクトを返すか、[E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access)例外をスローします。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -213,40 +213,39 @@ router
   .use(middleware.auth())
 ```
 
-### Access user within Edge templates
-The [InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware) also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
+### Edgeテンプレート内でユーザーにアクセスする
+[InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware)は、Edgeテンプレートと`ctx.auth`プロパティを共有します。したがって、現在ログインしているユーザーには`auth.user`プロパティを使用してアクセスできます。
 
 ```edge
 @if(auth.isAuthenticated)
-  <p> Hello {{ auth.user.email }} </p>
+  <p>こんにちは{{ auth.user.email }}さん</p>
 @end
 ```
 
-If you want to fetch logged-in user information on a non-protected route, you can use the `auth.check` method to check if the user is logged-in and then access the `auth.user` property. A great use case for this is displaying the logged-in user information on the website header of a public page.
+保護されていないルートでログイン済みのユーザー情報を取得したい場合は、`auth.check`メソッドを使用してユーザーがログインしているかどうかを確認し、`auth.user`プロパティにアクセスできます。これは、公開ページのウェブサイトヘッダーにログイン済みのユーザー情報を表示する場合に非常に便利です。
 
 ```edge
 {{--
-  This is a public page; therefore, it is not protected by the auth
-  middleware. However, we still want to display the logged-in
-  user info in the header of the website.
+  これは公開ページです。したがって、authミドルウェアによって保護されていません。
+  ただし、ウェブサイトのヘッダーにログイン済みのユーザー情報を表示したい場合があります。
 
-  For that, we use the `auth.check` method to silently check if the
-  user is logged in and then displays their email in the header.
+  そのために、`auth.check`メソッドを使用してユーザーがログインしているかどうかを
+  静かにチェックし、ヘッダーにメールアドレスを表示します。
 
-  You get the idea!
+  アイデアがわかりますね！
 --}}
 
 @eval(await auth.check())
 
 <header>
   @if(auth.isAuthenticated)
-    <p> Hello {{ auth.user.email }} </p>
+    <p>こんにちは{{ auth.user.email }}さん</p>
   @end
 </header>
 ```
 
-## Performing logout
-You can logout a user using the `guard.logout` method. During logout, the user state will be deleted from the session store. The currently active remember me token will also be deleted (if using remember me tokens).
+## ログアウトの実行
+`guard.logout`メソッドを使用してユーザーをログアウトできます。ログアウト時には、ユーザーの状態がセッションストアから削除されます。現在アクティブなリメンバートークンも削除されます（リメンバートークンを使用している場合）。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -260,14 +259,14 @@ router
   .use(middleware.auth())
 ```
 
-## Using the Remember Me feature
-The Remember Me feature automatically login user after their session expires. This is done by generating a cryptographically secure token and saving it as a cookie inside the user's browser.
+## リメンバーミー機能の使用
+リメンバーミー機能は、セッションの有効期限が切れた後に自動的にユーザーをログインさせる機能です。これは、暗号的に安全なトークンを生成し、ユーザーのブラウザにクッキーとして保存することで実現されます。
 
-After the user session has expired, AdonisJS will use the remember me cookie, verify the token's validity, and automatically re-create the logged-in session for the user.
+ユーザーのセッションが期限切れになった後、AdonisJSはリメンバーミークッキーを使用してトークンの有効性を検証し、自動的にユーザーのログインセッションを再作成します。
 
-### Creating the Remember Me Tokens table
+### リメンバーミートークンテーブルの作成
 
-The remember me tokens are saved inside the database, and therefore, you must create a new migration to create the `remember_me_tokens` table.
+リメンバーミートークンはデータベースに保存されるため、`remember_me_tokens`テーブルを作成するために新しいマイグレーションを作成する必要があります。
 
 ```sh
 node ace make:migration remember_me_tokens
@@ -303,8 +302,8 @@ export default class extends BaseSchema {
 }
 ```
 
-### Configuring the tokens provider
-To read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/token_providers/db.ts) to the User model.
+### トークンプロバイダの設定
+トークンの読み書きには、[DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/token_providers/db.ts)をUserモデルに割り当てる必要があります。
 
 ```ts
 import { BaseModel } from '@adonisjs/lucid/orm'
@@ -313,7 +312,7 @@ import { DbRememberMeTokensProvider } from '@adonisjs/auth/session'
 // highlight-end
 
 export default class User extends BaseModel {
-  // ...rest of the model properties
+  // ...モデルの残りのプロパティ
 
   // highlight-start
   static rememberMeTokens = DbRememberMeTokensProvider.forModel(User)
@@ -321,8 +320,8 @@ export default class User extends BaseModel {
 }
 ```
 
-### Enabling Remember Me tokens inside the config
-Finally, let's enable the `useRememberTokens` flag on the session guard config inside the `config/auth.ts` file.
+### 設定ファイルでリメンバーミートークンを有効にする
+最後に、`config/auth.ts`ファイル内のセッションガード設定で`useRememberTokens`フラグを有効にします。
 
 ```ts
 import { defineConfig } from '@adonisjs/auth'
@@ -346,8 +345,9 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-### Remembering users during login
-Once the setup is completed, you can generate the remember me token and cookie using the `guard.login` method as follows.
+### ログイン時にユーザーを記憶する
+
+セットアップが完了したら、次のように`guard.login`メソッドを使用して、リメンバーミートークンとクッキーを生成できます。
 
 ```ts
 import User from '#models/user'
@@ -362,7 +362,7 @@ export default class SessionController {
       user,
       // highlight-start
       /**
-       * Generate token when "remember_me" input exists
+       * "remember_me"の入力が存在する場合にトークンを生成します
        */
       !!request.input('remember_me')
       // highlight-end
@@ -373,8 +373,8 @@ export default class SessionController {
 }
 ```
 
-## Using the guest middleware
-The auth package ships with a guest middleware you can use to redirect the logged-in users from accessing the `/login` page. This should be done to avoid creating multiple sessions for a single user on a single device.
+## guestミドルウェアの使用
+authパッケージには、ログインしているユーザーが`/login`ページにアクセスできないようにリダイレクトするために使用できるguestミドルウェアが付属しています。これは、1つのデバイス上の1人のユーザーに対して複数のセッションを作成するのを避けるために行う必要があります。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -385,7 +385,7 @@ router
   .use(middleware.guest())
 ```
 
-By default, the guest middleware will check the user logged-in status using the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `guest` middleware.
+デフォルトでは、guestミドルウェアは`default`ガード（設定ファイルで定義されている）を使用してユーザーのログイン状態をチェックします。ただし、`guest`ミドルウェアを割り当てる際にガードの配列を指定することもできます。
 
 ```ts
 router
@@ -395,7 +395,7 @@ router
   }))
 ```
 
-Finally, you can configure the redirect route for the logged-in users inside the `./app/middleware/guest_middleware.ts` file.
+最後に、ログインしているユーザーのリダイレクトルートを`./app/middleware/guest_middleware.ts`ファイル内で設定できます。
 
-## Events
-Please check the [events reference guide](../references/events.md#session_authcredentials_verified) to view the list of available events emitted by the Auth package.
+## イベント
+利用可能なイベントのリストを表示するには、[イベントリファレンスガイド](../references/events.md#session_authcredentials_verified)を参照してください。

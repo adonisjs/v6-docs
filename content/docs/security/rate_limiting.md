@@ -4,7 +4,7 @@ summary: \@adonisjs/limiterパッケージを使用して、ウェブアプリ�
 
 # レート制限
 
-AdonisJSは、ウェブアプリケーションやAPIサーバーでレート制限を実装するための第一パーティパッケージを提供しています。レート制限は、`redis`、`mysql`、`postgresql`、`memory`をストレージオプションとして提供し、[カスタムストレージプロバイダの作成](#creating-a-custom-storage-provider)も可能です。
+AdonisJSは、ウェブアプリケーションやAPIサーバーでレート制限を実装するための第一パーティパッケージを提供しています。レート制限は、`redis`、`mysql`、`postgresql`、`memory`をストレージオプションとして提供し、[カスタムストレージプロバイダの作成](#カスタムストレージプロバイダの作成)も可能です。
 
 `@adonisjs/limiter`パッケージは、[node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible)パッケージをベースにしており、最速のレート制限APIの1つを提供し、競合状態を避けるためにアトミックインクリメントを使用しています。
 

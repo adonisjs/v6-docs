@@ -176,7 +176,7 @@ router.get('/', async ({ request }) => {
 
 ## リクエストメソッド
 
-`request.method`メソッドは、現在のリクエストのHTTPメソッドを返します。このメソッドは、[フォームメソッドスプーフィング](#form-method-spoofing)が有効になっている場合にスプーフィングされたメソッドを返し、元のリクエストメソッドを取得するために`request.intended`メソッドを使用できます。
+`request.method`メソッドは、現在のリクエストのHTTPメソッドを返します。このメソッドは、[フォームメソッドスプーフィング](#フォームメソッドスプーフィング)が有効になっている場合にスプーフィングされたメソッドを返し、元のリクエストメソッドを取得するために`request.intended`メソッドを使用できます。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -200,7 +200,7 @@ router.patch('posts', async ({ request }) => {
 
 :::note
 
-アプリケーションが信頼するプロキシを設定するために、[信頼されたプロキシ](#configuring-trusted-proxies)セクションを読んでください。
+アプリケーションが信頼するプロキシを設定するために、[信頼されたプロキシ](#信頼されたプロキシの設定)セクションを読んでください。
 
 :::
 

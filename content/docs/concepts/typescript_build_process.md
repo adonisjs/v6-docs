@@ -41,7 +41,7 @@ node --loader="ts-node/esm" bin/server.js
 
 - `ts-node/esm`：TypeScriptソースをJavaScriptにJust-in-Timeコンパイルするためのライフサイクルフックを登録する`ts-node/esm`スクリプトへのパスです。
 
-- `bin/server.js`：AdonisJSのHTTPサーバーエントリーポイントファイルへのパスです。**詳細はこちらを参照してください：[ファイル拡張子に関する注意事項](#a-note-on-file-extensions)**
+- `bin/server.js`：AdonisJSのHTTPサーバーエントリーポイントファイルへのパスです。**詳細はこちらを参照してください：[ファイル拡張子に関する注意事項](#ファイル拡張子に関する注意事項)**
 
 同様に、他のTypeScriptファイルに対してもこのプロセスを繰り返すことができます。例えば：
 
@@ -98,7 +98,7 @@ node ace --no-warnings --inspect serve --watch
 
 ## 本番ビルドの作成
 
-AdonisJSアプリケーションの本番ビルドは、`node ace build`コマンドを使用して作成されます。`build`コマンドは、以下の操作を実行して、`./build`ディレクトリ内に[**スタンドアロンのJavaScriptアプリケーション**](#what-is-a-standalone-build)を作成します。
+AdonisJSアプリケーションの本番ビルドは、`node ace build`コマンドを使用して作成されます。`build`コマンドは、以下の操作を実行して、`./build`ディレクトリ内に[**スタンドアロンのJavaScriptアプリケーション**](#スタンドアロンビルドとは何ですか)を作成します。
 
 - 既存の`./build`フォルダを削除します（存在する場合）。
 - `ace.js`ファイルを**ゼロから**書き直して、`ts-node/esm`ローダーを削除します。

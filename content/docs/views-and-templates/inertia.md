@@ -713,7 +713,7 @@ class UsersController {
 
 ### 共有プロパティ
 
-コンポーネント内で[共有データ](#sharing-data-with-all-views)の型を使用するには、`config/inertia.ts`ファイルでモジュール拡張を行っていることを確認してください。
+コンポーネント内で[共有データ](#shareddata)の型を使用するには、`config/inertia.ts`ファイルでモジュール拡張を行っていることを確認してください。
 
 ```ts
 // file: config/inertia.ts
@@ -733,7 +733,7 @@ declare module '@adonisjs/inertia/types' {
 }
 ```
 
-また、`inertia/app/app.ts`ファイルにこの[リファレンスディレクティブ](#reference-directives)を追加することも忘れないでください。
+また、`inertia/app/app.ts`ファイルにこの[リファレンスディレクティブ](#リファレンスディレクティブ)を追加することも忘れないでください。
 
 ```ts
 /// <reference path="../../config/inertia.ts" />

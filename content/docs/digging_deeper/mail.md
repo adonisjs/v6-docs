@@ -484,7 +484,7 @@ mail.use('mailgun')
 
 ただし、次の例に示すように、`Message.templateEngine` プロパティをオーバーライドしてカスタムテンプレートエンジンを登録することもできます。
 
-参照: [メールコンテンツの定義](#defining-email-contents)
+参照: [メールコンテンツの定義](#メールコンテンツの定義)
 
 ```ts
 import { Message } from '@adonisjs/mail'
@@ -615,7 +615,7 @@ await mail.send((message) => {
 })
 ```
 
-### メールのコンテンツの定義
+### メールコンテンツの定義
 `message.html` または `message.text` メソッドを使用してメールの **HTML** および **プレーンテキスト** コンテンツを定義できます。
 
 ```ts
@@ -924,7 +924,7 @@ message.addListHeader('post', 'http://example.com/post')
 
 ## クラスベースのメール
 
-`mail.send` メソッドのクロージャ内でメールを記述する代わりに、より良い組織化と[簡単なテスト](#テストメールクラス)のために、専用のメールクラスに移動できます。
+`mail.send` メソッドのクロージャ内でメールを記述する代わりに、より良い組織化と[簡単なテスト](#メールクラスのテスト)のために、専用のメールクラスに移動できます。
 
 メールクラスは `./app/mails` ディレクトリに保存され、各ファイルが1つのメールを表します。`make:mail` aceコマンドを実行してメールクラスを作成できます。
 
@@ -1185,7 +1185,7 @@ mails.assertSent(VerifyEmailNotification)
 
 `assertSent` メソッドにコールバック関数を渡すことで、メールが期待される受信者に送信されたか、正しい件名を持っているかなどをさらにチェックできます。
 
-コールバック関数はメールクラスのインスタンスを受け取り、`.message` プロパティを使用して [message](#configuring-message) オブジェクトにアクセスできます。
+コールバック関数はメールクラスのインスタンスを受け取り、`.message` プロパティを使用して [message](#メッセージの設定) オブジェクトにアクセスできます。
 
 ```ts
 mails.assertSent(VerifyEmailNotification, (email) => {

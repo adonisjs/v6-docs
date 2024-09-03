@@ -27,13 +27,11 @@ You may customize the initial project output using one of the following CLI flag
 
 - `--kit`: Select the [starter kit](#starter-kits) for the project. You can choose between **web**, **api**, **slim** or **inertia**.
 
-- `--db`: Specify the database dialect of your choice. You can choose between **sqlite**, **postgres**, **mysql**, or **mssql**. Defaults to `sqlite`.
+- `--db`: Specify the database dialect of your choice. You can choose between **sqlite**, **postgres**, **mysql**, or **mssql**.
 
 - `--git-init`: Initiate the git repository. Defaults to `false`.
 
-- `--auth-guard`: Specify the authentication guard of your choice. You can choose between **session**, **access_tokens**, or **basic_auth**. Defaults to `session`.
-
-- `--install`: Skip the prompt to install dependencies.
+- `--auth-guard`: Specify the authentication guard of your choice. You can choose between **session**, **access_tokens**, or **basic_auth**.
 
 :::codegroup
 
@@ -47,7 +45,10 @@ npm init adonisjs@latest hello-world
 When passing CLI flags using the `npm init` command, make sure to use [double dashes twice](https://stackoverflow.com/questions/43046885/what-does-do-when-running-an-npm-command). Otherwise, `npm init` will not pass the flags to the `create-adonisjs` initializer package. For example:
 
 ```sh
-# Create a project with MYSQL
+# Create a project and get prompted for all options
+npm init adonisjs@latest hello-world
+
+# Create a project with MySQL
 npm init adonisjs@latest hello-world -- --db=mysql
 
 # Create a project with PostgreSQL and API starter kit

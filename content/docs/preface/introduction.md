@@ -18,7 +18,7 @@ We envision teams using AdonisJS **spending less time** on trivial decisions lik
 
 AdonisJS focuses on the backend and lets you choose the frontend stack of your choice.
 
-If you like to keep things simple, pair AdonisJS with a [traditional template engine](../views-and-templates/introduction.md) to generate static HTML on the server. Or create a JSON API for your frontend Vue/React application.
+If you like to keep things simple, pair AdonisJS with a [traditional template engine](../views-and-templates/introduction.md) to generate static HTML on the server, create a JSON API for your frontend Vue/React application or use [Inertia](../views-and-templates/inertia.md) to make your favorite frontend framework work together in perfect harmony.
 
 AdonisJS aims to provide you with batteries to create a robust backend application from scratch. Be it sending emails, validating user input, performing CRUD operations, or authenticating users. We take care of it all.
 

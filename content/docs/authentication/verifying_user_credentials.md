@@ -14,11 +14,11 @@ In this guide, we will cover the process of finding a user by a UID and verifyin
 You can use the User model directly to find a user and verify their password. In the following example, we find a user by email and use the [hash](../security/hashing.md) service to verify the password hash.
 
 ```ts
-import { HttpContext } from '@adonisjs/core/http'
 // highlight-start
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
 // highlight-end
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default class SessionController {
   async store({ request, response }: HttpContext) {
@@ -28,10 +28,11 @@ export default class SessionController {
     /**
      * Find a user by email. Return error if a user does
      * not exists
-     */ 
+     */
     const user = await User.findBy('email', email)
+
     if (!user) {
-      response.abort('Invalid credentials')
+      return response.abort('Invalid credentials')
     }
     // highlight-end
 
@@ -39,12 +40,17 @@ export default class SessionController {
     /**
      * Verify the password using the hash service
      */
-    await hash.verify(user.password, password)
+    const isPasswordValid = await hash.verify(user.password, password)
+
+    if (!isPasswordValid) {
+      return response.abort('Invalid credentials')
+    }
     // highlight-end
 
     /**
      * Now login the user or create a token for them
      */
+    // ...
   }
 }
 ```
@@ -57,7 +63,7 @@ export default class SessionController {
 
 <div class="card">
 
-The code we have written in the above example is prone to [timing attacks](https://en.wikipedia.org/wiki/Timing_attack). In the case of authentication, an attacker can observe the application response time to find whether the email or the password is incorrect in their provided credentials.
+The code we have written in the above example is prone to [timing attacks](https://en.wikipedia.org/wiki/Timing_attack). In the case of authentication, an attacker can observe the application response time to find whether the email or the password is incorrect in their provided credentials. We recommend you use the [AuthFinder mixin](#using-the-auth-finder-mixin) to prevent timing attacks and have a better developer experience.
 
 As per the above implementation:
 

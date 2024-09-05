@@ -27,13 +27,11 @@ node -v
 
 - `--kit`: プロジェクトの[スターターキット](#スターターキット)を選択します。**web**、**api**、**slim**、または**inertia**のいずれかを選択できます。
 
-- `--db`: 使用するデータベースの方言を指定します。**sqlite**、**postgres**、**mysql**、または**mssql**のいずれかを選択できます。デフォルトは`sqlite`です。
+- `--db`: 使用するデータベースの方言を指定します。**sqlite**、**postgres**、**mysql**、または**mssql**のいずれかを選択できます。
 
 - `--git-init`: Gitリポジトリを初期化します。デフォルトは`false`です。
 
-- `--auth-guard`: 使用する認証ガードを指定します。**session**、**access_tokens**、または**basic_auth**のいずれかを選択できます。デフォルトは`session`です。
-
-- `--install`: 依存関係のインストールのプロンプトをスキップします。
+- `--auth-guard`: 使用する認証ガードを指定します。**session**、**access_tokens**、または**basic_auth**のいずれかを選択できます。
 
 :::codegroup
 
@@ -48,6 +46,9 @@ npm init adonisjs@latest hello-world
 
 例:
 ```sh
+# プロジェクトを作成し、すべてのオプションについてプロンプトを表示する
+npm init adonisjs@latest hello-world
+
 # MYSQLでプロジェクトを作成する
 npm init adonisjs@latest hello-world -- --db=mysql
 

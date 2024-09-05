@@ -18,7 +18,7 @@ AdonisJSは、Node.js向けのTypeScriptファーストのウェブフレーム�
 
 AdonisJSはバックエンドに焦点を当て、フロントエンドスタックを選択できるようにします。
 
-シンプルにする場合は、AdonisJSを[従来のテンプレートエンジン](../views-and-templates/introduction.md)と組み合わせてサーバー上で静的なHTMLを生成します。または、フロントエンドのVue/Reactアプリケーションに対してJSON APIを作成します。
+シンプルにする場合は、AdonisJSを[従来のテンプレートエンジン](../views-and-templates/introduction.md)と組み合わせてサーバー上で静的なHTMLを生成するか、フロントエンドのVue/Reactアプリケーションに対してJSON APIを作成するか、お気に入りのフロントエンドフレームワークとの連携に[Inertia](../views-and-templates/inertia.md)を使用します。
 
 AdonisJSは、電子メールの送信、ユーザー入力の検証、CRUD操作の実行、ユーザーの認証など、ゼロから堅牢なバックエンドアプリケーションを作成するためのバッテリーを提供することを目指しています。すべてを私たちが世話します。
 

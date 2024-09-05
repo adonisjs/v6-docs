@@ -14,11 +14,11 @@ AdonisJSアプリケーションでは、ユーザーの資格情報の検証は
 Userモデルを直接使用してユーザーを検索し、パスワードを検証できます。次の例では、メールアドレスでユーザーを検索し、[hash](../security/hashing.md)サービスを使用してパスワードハッシュを検証しています。
 
 ```ts
-import { HttpContext } from '@adonisjs/core/http'
 // highlight-start
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
 // highlight-end
+import type { HttpContext } from '@adonisjs/core/http'
 
 export default class SessionController {
   async store({ request, response }: HttpContext) {
@@ -29,8 +29,9 @@ export default class SessionController {
      * メールアドレスでユーザーを検索します。ユーザーが存在しない場合はエラーを返します。
      */ 
     const user = await User.findBy('email', email)
+
     if (!user) {
-      response.abort('無効な資格情報')
+      return response.abort('無効な資格情報')
     }
     // highlight-end
 
@@ -38,12 +39,17 @@ export default class SessionController {
     /**
      * ハッシュサービスを使用してパスワードを検証します。
      */
-    await hash.verify(user.password, password)
+    const isPasswordValid = await hash.verify(user.password, password)
+
+    if (!isPasswordValid) {
+      return response.abort('無効な資格情報')
+    }
     // highlight-end
 
     /**
      * ユーザーをログインさせるか、トークンを作成します。
      */
+    // ...
   }
 }
 ```
@@ -57,6 +63,8 @@ export default class SessionController {
 <div class="card">
 
 上記の例で書かれたコードは、[タイミング攻撃](https://en.wikipedia.org/wiki/Timing_attack)のリスクがあります。認証の場合、攻撃者はアプリケーションの応答時間を観察して、提供された資格情報のメールアドレスまたはパスワードが正しくないかどうかを判断できます。
+[AuthFinderミックスイン](#AuthFinderミックスインの使用)を使用して、タイミング攻撃を防止し、より良い開発者体験を得ることをオススメします。
+
 
 上記の実装により、次のような結果が得られます。
 
@@ -68,7 +76,7 @@ export default class SessionController {
 
 </div>
 
-## Auth finderミックスインの使用
+## AuthFinderミックスインの使用
 タイミング攻撃を防ぐために、Userモデルに[AuthFinderミックスイン](https://github.com/adonisjs/auth/blob/main/src/mixins/lucid.ts)を使用することをオススメします。
 
 Auth finderミックスインは、適用されたモデルに`findForAuth`メソッドと`verifyCredentials`メソッドを追加します。`verifyCredentials`メソッドは、ユーザーを見つけてパスワードを検証するためのタイミング攻撃に対して安全なAPIを提供します。

@@ -99,7 +99,7 @@ You can add custom methods to the REPL using `repl.addMethod`. The method accept
 For demonstration, let's create a [preload file](../concepts/adonisrc_file.md#preloads) file and define a method to import all models from the `./app/models` directory.
 
 ```sh
-node ace make:preload repl --env=repl
+node ace make:preload repl -e=repl
 ```
 
 ```ts

@@ -140,7 +140,7 @@ The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonis
 
 ## Getting access to the logged-in user
 
-You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` middleware or if you call the `auth.authenticate` or `auth.check` methods manually.
+You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` or `silent_auth` middleware or if you call the `auth.authenticate` or `auth.check` methods manually.
 
 ```ts
 // title: Using auth middleware
@@ -175,6 +175,24 @@ router
     await auth.user!.getAllMetrics()
     // highlight-end
   })
+```
+
+### Silent auth middleware
+
+The `silent_auth` middleware is similar to the `auth` middleware, but it does not throw an exception when the user is not authenticated. Instead, the request still continues as usual.
+
+This middleware is useful when you want to always authenticate the user to perform some actions but do not want to block the request when the user is not authenticated.
+
+If you plan to use this middleware, then you must register it inside the list of [router middleware](../basics/middleware.md#router-middleware-stack).
+
+```ts
+// title: start/kernel.ts
+import router from '@adonisjs/core/services/router'
+
+router.use([
+  // ...
+  () => import('app/middleware/silent_auth')
+])
 ```
 
 ### Check if the request is authenticated

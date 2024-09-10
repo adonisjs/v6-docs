@@ -45,8 +45,7 @@ import { defineConfig } from '@adonisjs/transmit'
 
 export default defineConfig({
   pingInterval: false,
-  transport: null
-  // routeHandlerModifier(route: Route) {}
+  transport: null,
 })
 ```
 
@@ -85,6 +84,7 @@ export default defineConfig({
       host: env.get('REDIS_HOST'),
       port: env.get('REDIS_PORT'),
       password: env.get('REDIS_PASSWORD'),
+      keyPrefix: 'transmit',
     })
   }
 })
@@ -96,41 +96,49 @@ Ensure you have `ioredis` installed when using the `redis` transport.
 
 </dd>
 
-<dt>
+</dl>
 
-routeHandlerModifier
+## Register Routes
 
-</dt>
-
-<dd>
-
-A function that is called before registering transmit routes. It receives the route instance. Use this function to add custom middleware or modify the route handler.
-
-For example, you can use the [`Rate Limiter`](../security/rate_limiting.md) and auth middleware to avoid abuse of some transmit route.
+You have to register the transmit routes to allow the client to connect to the server. The routes are registered manually.
 
 ```ts
-import { defineConfig } from '@adonisjs/transmit'
-import { throttle } from '#start/limiter'
+// title: start/routes.ts
+import transmit from '@adonisjs/transmit/services/main'
 
-export default defineConfig({
-  async routeHandlerModifier(route) {
-    const { middleware } = await import('#start/kernel')
-    
-    // Ensure you are authenticated to register your client
-    if (route.getPattern() === '__transmit/events') {
-      route.middleware(middleware.auth())
-      return
-    }
-    
-    // Add a throttle middleware to other transmit routes
-    route.use(throttle)
-  }
-})
+transmit.registerRoutes()
+````
+
+You can also register each route manually by binding the controller by hand.
+
+```ts
+// title: start/routes.ts
+const EventStreamController = () => import('@adonisjs/transmit/controllers/event_stream_controller')
+const SubscribeController = () => import('@adonisjs/transmit/controllers/subscribe_controller')
+const UnsubscribeController = () => import('@adonisjs/transmit/controllers/unsubscribe_controller')
+
+router.get('/__transmit/events', [EventStreamController])
+router.post('/__transmit/subscribe', [SubscribeController])
+router.post('/__transmit/unsubscribe', [UnsubscribeController])
 ```
 
-</dd>
+If you want to modify the route definition, for example, to use the [`Rate Limiter`](../security/rate_limiting.md) and auth middleware to avoid abuse of some transmit routes, you can either change the route definition or pass a callback to the `transmit.registerRoutes` method.
 
-</dl>
+```ts
+// title: start/routes.ts
+import transmit from '@adonisjs/transmit/services/main'
+
+transmit.registerRoutes((route) => {
+  // Ensure you are authenticated to register your client
+  if (route.getPattern() === '__transmit/events') {
+    route.middleware(middleware.auth())
+    return
+  }
+
+  // Add a throttle middleware to other transmit routes
+  route.use(throttle)
+})
+```
 
 ## Channels
 
@@ -155,7 +163,7 @@ Channel names use the same syntax as route in AdonisJS but are not related to th
 
 ### Channel Authorization
 
-You can authorize or reject a connection to a channel using the `authorizeChannel` method. The method receives the channel name and the `HttpContext`. It must return a boolean value.
+You can authorize or reject a connection to a channel using the `authorize` method. The method receives the channel name and the `HttpContext`. It must return a boolean value.
 
 ```ts
 // title: start/transmit.ts
@@ -164,11 +172,11 @@ import transmit from '@adonisjs/transmit/services/main'
 import Chat from '#models/chat'
 import type { HttpContext } from '@adonisjs/core/http'
 
-transmit.authorizeChannel<{ id: string }>('users/:id', (ctx: HttpContext, { id }) => {
+transmit.authorize<{ id: string }>('users/:id', (ctx: HttpContext, { id }) => {
   return ctx.auth.user?.id === +id
 })
 
-transmit.authorizeChannel<{ id: string }>('chats/:id/messages', async (ctx: HttpContext, { id }) => {
+transmit.authorize<{ id: string }>('chats/:id/messages', async (ctx: HttpContext, { id }) => {
   const chat = await Chat.findOrFail(+id)
   
   return ctx.bouncer.allows('accessChat', chat)

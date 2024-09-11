@@ -201,6 +201,7 @@ html.dark {
   border-radius: var(--rounded-md);
   padding: 25px 30px 0 30px;
   font-size: 14px;
+  line-height: 1.5;
 }
 
 .markdown .card h3 {
@@ -210,6 +211,10 @@ html.dark {
 
 .markdown .card ul {
   margin-top: 10px;
+}
+
+.markdown .card ul li {
+  margin: 4px 0;
 }
 
 progress[value] {

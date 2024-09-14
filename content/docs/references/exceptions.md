@@ -366,19 +366,6 @@ if (error instanceof sessionErrors.E_SESSION_NOT_MUTABLE) {
 }
 ```
 
-## E_SESSION_NOT_MUTABLE
-The exception is raised by the `@adonisjs/session` package when the session store is initiated in the read-only mode.
-
-- **Status code**: 500
-- **Self handled**: No
-
-```ts
-import { errors as sessionErrors } from '@adonisjs/session'
-if (error instanceof sessionErrors.E_SESSION_NOT_MUTABLE) {
-  console.log(error.message)
-}
-```
-
 ## E_SESSION_NOT_READY
 The exception is raised by the `@adonisjs/session` package when the session store has not been initiated yet. This will be the case when you are not using the session middleware.
 

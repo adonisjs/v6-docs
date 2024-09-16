@@ -67,34 +67,6 @@ The following import aliases are pre-configured within the `package.json` file. 
 }
 ```
 
-In order for code editors to autocomplete imports using import aliases, you will have to re-define the same aliases inside `tsconfig.json` file as well. We hope, the editors will soon catchup and rely on `package.json` as the single source of truth for aliases.
-
-```json
-// title: tsconfig.json
-{
-  "compilerOptions": {
-    "paths": {
-      "#controllers/*": ["./app/controllers/*.js"],
-      "#exceptions/*": ["./app/exceptions/*.js"],
-      "#models/*": ["./app/models/*.js"],
-      "#mails/*": ["./app/mails/*.js"],
-      "#services/*": ["./app/services/*.js"],
-      "#listeners/*": ["./app/listeners/*.js"],
-      "#events/*": ["./app/events/*.js"],
-      "#middleware/*": ["./app/middleware/*.js"],
-      "#validators/*": ["./app/validators/*.js"],
-      "#providers/*": ["./app/providers/*.js"],
-      "#policies/*": ["./app/policies/*.js"],
-      "#abilities/*": ["./app/abilities/*.js"],
-      "#database/*": ["./database/*.js"],
-      "#tests/*": ["./tests/*.js"],
-      "#start/*": ["./start/*.js"],
-      "#config/*": ["./config/*.js"]
-    }
-  }
-}
-```
-
 ## The `bin` directory
 
 The `bin` directory has the entry point files to load your application in a specific environment. For example:

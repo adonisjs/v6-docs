@@ -17,10 +17,8 @@ node ace make:controller users
 A newly created controller is scaffolded with the `class` declaration, and you may manually create methods inside it. For this example, let's create an `index` method and return an array of users.
 
 ```ts
-import type { HttpContext } from '@adonisjs/core/http'
-
 export default class UsersController {
-  async index(ctx: HttpContext) {
+  index() {
     return [
       {
         id: 1,
@@ -50,21 +48,6 @@ As you might have noticed, we do not create an instance of the controller class 
 - Create a fresh instance of the controller for each request.
 - And also construct the class using the [IoC container](../concepts/dependency_injection.md), which allows you to leverage automatic dependency injection.
 
-:::caption{for="error"}
-
-#### Not recommended
-
-If you want, you can manually create an instance of the controller and execute the method. However, it is not recommended because you will write more boilerplate code and lose the IoC container benefits.
-
-:::
-
-```ts
-// 🫤 Naah
-router.get('users', (ctx) => {
-  return new UsersController().index(ctx)
-})
-```
-
 You can also notice that we are lazy-loading the controller using a function.
 
 :::warning
@@ -85,28 +68,6 @@ You can use our [ESLint plugin](https://github.com/adonisjs/tooling-config/tree/
 
 :::
 
-
-## Single action controllers
-
-AdonisJS provides a way to define a single action controller. It's an effective way to wrap up functionality into clearly named classes. To accomplish this, you need to define a handle method inside the controller.
-
-```ts
-import type { HttpContext } from '@adonisjs/core/http'
-
-export default class RegisterNewsletterSubscriptionController {
-  async handle({}: HttpContext) {
-    // ...
-  }
-}
-```
-
-Then, you can reference the controller on the route with the following.
-
-```ts
-router.post('newsletter/subscriptions', [RegisterNewsletterSubscriptionController])
-```
-
-
 ### Using magic strings
 
 Another way of lazy loading the controllers is to reference the controller and its method as a string. We call it a magic string because the string itself has no meaning, and it's just the router uses it to look up the controller and imports it behind the scenes.
@@ -125,6 +86,38 @@ On the upside, magic strings can clean up all the visual clutter inside your rou
 
 Using magic strings is subjective, and you can decide if you want to use them personally or as a team.
 
+## Single action controllers
+
+AdonisJS provides a way to define a single action controller. It's an effective way to wrap up functionality into clearly named classes. To accomplish this, you need to define a handle method inside the controller.
+
+```ts
+export default class RegisterNewsletterSubscriptionController {
+  handle() {
+    // ...
+  }
+}
+```
+
+Then, you can reference the controller on the route with the following.
+
+```ts
+router.post('newsletter/subscriptions', [RegisterNewsletterSubscriptionController])
+```
+
+## HTTP context
+
+The controller methods receive an instance of the [HttpContext](../concepts/http_context.md) class as the first argument. 
+
+```ts
+import type { HttpContext } from '@adonisjs/core/http'
+
+export default class UsersController {
+  index(context: HttpContext) {
+    // ...
+  }
+}
+```
+
 ## Dependency injection
 
 The controller classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
@@ -133,7 +126,7 @@ Given you have a `UserService` class, you can inject an instance of it inside th
 
 ```ts
 export default class UserService {
-  async all() {
+  all() {
     // return users from db
   }
 }
@@ -145,7 +138,9 @@ import UserService from '#services/user_service'
 
 @inject()
 export default class UsersController {
-  constructor(protected userService: UserService) {}
+  constructor(
+    private userService: UserService
+  ) {}
 
   index() {
     return this.userService.all()
@@ -157,7 +152,7 @@ export default class UsersController {
 
 You can inject an instance of `UserService` directly inside the controller method using [method injection](../concepts/dependency_injection.md#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
 
-The first parameter passed to the controller method is always the HttpContext. Therefore, you must type-hint the `UserService` as the second parameter.
+The first parameter passed to the controller method is always the [`HttpContext`](../concepts/http_context.md). Therefore, you must type-hint the `UserService` as the second parameter.
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -185,9 +180,11 @@ import { HttpContext } from '@adonisjs/core/http'
 
 @inject()
 export default class UserService {
-  constructor(protected ctx: HttpContext) {}
+  constructor(
+    private ctx: HttpContext
+  ) {}
 
-  async all() {
+  all() {
     console.log(this.ctx.auth.user)
     // return users from db
   }
@@ -355,9 +352,9 @@ The routes generated by the `router.resource` method use `id` for the param name
 You can rename the param from `id` to something else using the `resource.params` method.
 
 ```ts
-router.resource('posts', PostsController).params({
-  posts: 'post',
-})
+router
+  .resource('posts', PostsController)
+  .params({ posts: 'post' })
 ```
 
 The above change will generate the following routes _(showing partial list)_.
@@ -372,10 +369,12 @@ The above change will generate the following routes _(showing partial list)_.
 You can also rename params when using nested resources.
 
 ```ts
-router.resource('posts.comments', PostsController).params({
-  posts: 'post',
-  comments: 'comment',
-})
+router
+  .resource('posts.comments', PostsController)
+  .params({
+    posts: 'post',
+    comments: 'comment',
+  })
 ```
 
 ### Assigning middleware to resource routes

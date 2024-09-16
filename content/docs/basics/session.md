@@ -14,6 +14,8 @@ You can manage user sessions inside your AdonisJS application using the `@adonis
 
 - `redis`: The session data is stored inside a Redis database. The redis store is recommended for apps with large volumes of session data and can scale to multi-server deployments.
 
+- `dynamodb`: The session data is stored inside an Amazon DynamoDB table. The DynamoDB store is suitable for applications that require a highly scalable and distributed session store, especially when the infrastructure is built on AWS.
+
 - `memory`: The session data is stored within a global memory store. The memory store is used during testing.
 
 Alongside the inbuilt backend stores, you can also create and [register custom session stores](#creating-a-custom-session-store).
@@ -203,6 +205,19 @@ export default defineConfig({
     redis: stores.redis({
       connection: 'main'
     })
+
+    dynamodb: stores.dynamodb({
+      clientConfig: {
+        // DynamoDB client config
+        // See: https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-dynamodb/Interface/DynamoDBClientConfig/
+        // You can also set credentials using the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+        // Also, you can set the region using the environment variable `AWS_REGION`.
+      },
+      tableName: 'Session', // The table name to store the sessions. The default is `Session`.
+      keyAttribute: 'key', // The attribute name for the session id, default is `key`.
+      valueAttribute: 'value', // The attribute name for the session value, default is `value`.
+      expiresAtAttribute: 'expires_at', // The attribute name for the session expiration, default is `expires_at`.
+    }),
   }
   // highlight-end
 })
@@ -250,6 +265,18 @@ Make sure to first install and configure the [@adonisjs/redis](../database/redis
 
 </dd>
 
+<dt>
+
+  stores.dynamodb
+
+</dt>
+
+<dd>
+
+Define the configuration for the `dynamodb` store. The method accepts the `clientConfig`, `tableName`, `keyAttribute`, `valueAttribute`, and `expiresAtAttribute` properties.
+
+</dd>
+
 </dl>
 
 ---
@@ -257,7 +284,7 @@ Make sure to first install and configure the [@adonisjs/redis](../database/redis
 ### Updating environment variables validation
 If you decide to use session stores other than the default one, make sure to also update the environment variables validation for the `SESSION_DRIVER` environment variable.
 
-We configure the `cookie` and the `redis` stores in the following example. Therefore, we should also allow the `SESSION_DRIVER` environment variable to be one of them.
+We configure the `cookie`, the `redis`, and the `dynamodb` stores in the following example. Therefore, we should also allow the `SESSION_DRIVER` environment variable to be one of them.
 
 ```ts
 import { defineConfig, stores } from '@adonisjs/session'

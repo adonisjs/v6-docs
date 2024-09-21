@@ -1,5 +1,5 @@
 ---
-summary: Debugging
+summary: Explore multiple ways of debugging your AdonisJS applications, from using the VSCode debugger to using Dump and Die and viewing the debug logs of the framework.
 ---
 
 # Debugging

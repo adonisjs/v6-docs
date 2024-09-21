@@ -222,6 +222,12 @@
     "category": "Basics"
   },
   {
+    "permalink": "basics/debugging",
+    "title": "Debugging",
+    "contentPath": "./basics/debugging.md",
+    "category": "Basics"
+  },
+  {
     "permalink": "basics/vite",
     "title": "Vite",
     "contentPath": "./basics/vite.md",

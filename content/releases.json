@@ -1,5 +1,82 @@
 [
   {
+    "package": "@adonisjs/core",
+    "version": "v6.14.0",
+    "description": "Add support for dd and dump helpers",
+    "released_on": "2024-09-21",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.14.0"
+  },
+  {
+    "package": "@adonisjs/hash",
+    "version": "v9.0.5",
+    "description": "Fix parameters order of Argon2 hash",
+    "released_on": "2024-09-20",
+    "release_notes_link": "https://github.com/adonisjs/hash/releases/tag/v9.0.5"
+  },
+  {
+    "package": "@adonisjs/core",
+    "version": "v6.13.1",
+    "description": "Keep APP_KEY as an empty value within the .env.example file",
+    "released_on": "2024-09-11",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.13.1"
+  },
+  {
+    "package": "@adonisjs/presets",
+    "version": "v2.6.3",
+    "description": "Generate SilentAuth middleware",
+    "released_on": "2024-09-11",
+    "release_notes_link": "https://github.com/adonisjs/presets/releases/tag/v2.6.3"
+  },
+  {
+    "package": "@adonisjs/core",
+    "version": "v6.13.0",
+    "description": "Use Ace Kernel errorHandler when running commands",
+    "released_on": "2024-09-05",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.13.0"
+  },
+  {
+    "package": "@adonisjs/assembler",
+    "version": "v7.8.0",
+    "description": "Add yarn berry and ts-node-maintained support",
+    "released_on": "2024-09-01",
+    "release_notes_link": "https://github.com/adonisjs/assembler/releases/tag/v7.8.0"
+  },
+  {
+    "package": "@adonisjs/eslint-config",
+    "version": "v2.0.0-beta.0",
+    "description": "Beta release of config preset for ESLint 9 and above",
+    "released_on": "2024-08-21",
+    "release_notes_link": "https://github.com/adonisjs/eslint-config/releases/tag/v2.0.0-beta.0"
+  },
+  {
+    "package": "@adonisjs/drive",
+    "version": "v3.0.0",
+    "description": "Breaking - Rewrite to work with v6",
+    "released_on": "2024-08-10",
+    "release_notes_link": "https://github.com/adonisjs/drive/releases/tag/v3.0.0"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v21.2.0",
+    "description": "Pin strtok3 and fix relationship query builder to apply constraints on subqueries",
+    "released_on": "2024-08-08",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v21.2.0"
+  },
+  {
+    "package": "@adonisjs/limiter",
+    "version": "v2.3.2",
+    "description": "Fix X-RateLimit-Reset header to use ISO date time strings",
+    "released_on": "2024-08-02",
+    "release_notes_link": "https://github.com/adonisjs/limiter/releases/tag/v2.3.2"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v21.1.1",
+    "description": "Fix - Cleanup connection resources when using read replicas",
+    "released_on": "2024-07-25",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v21.1.1"
+  },
+  {
     "package": "create-adonisjs",
     "version": "v2.4.0",
     "description": "Remove installation prompt and always install packages by default",

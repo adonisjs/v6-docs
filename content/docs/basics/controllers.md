@@ -352,7 +352,7 @@ router
   .only(['index', 'store', 'destroy'])
 ```
 
-The `resource.except` method is the opposite of the `only` method, removing all the routes except the mentioned one's.
+The `resource.except` method is the opposite of the `only` method, registering all the routes except the mentioned one's.
 
 ```ts
 // title: start/routes.ts

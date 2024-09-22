@@ -215,8 +215,6 @@ export default defineConfig({
       },
       tableName: 'Session', // The table name to store the sessions. The default is `Session`.
       keyAttribute: 'key', // The attribute name for the session id, default is `key`.
-      valueAttribute: 'value', // The attribute name for the session value, default is `value`.
-      expiresAtAttribute: 'expires_at', // The attribute name for the session expiration, default is `expires_at`.
     }),
   }
   // highlight-end
@@ -273,7 +271,7 @@ Make sure to first install and configure the [@adonisjs/redis](../database/redis
 
 <dd>
 
-Define the configuration for the `dynamodb` store. The method accepts the `clientConfig`, `tableName`, `keyAttribute`, `valueAttribute`, and `expiresAtAttribute` properties.
+Define the configuration for the `dynamodb` store. The method accepts the `clientConfig`, `tableName` and `keyAttribute` properties.
 
 </dd>
 

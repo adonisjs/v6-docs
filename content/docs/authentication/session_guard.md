@@ -191,7 +191,7 @@ import router from '@adonisjs/core/services/router'
 
 router.use([
   // ...
-  () => import('app/middleware/silent_auth')
+  () => import('#middleware/silent_auth_middleware')
 ])
 ```
 

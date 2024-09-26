@@ -69,8 +69,11 @@ Once the test has been completed, you must restore the fake using the `container
 ```ts
 app.container.restore(UserService)
 
+// Restore UserService and PostService
+app.container.restoreAll([UserService, PostService])
+
 // Restore all
-app.container.restore()
+app.container.restoreAll()
 ```
 
 ## Mocks and stubs using Sinon.js

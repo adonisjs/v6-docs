@@ -473,8 +473,11 @@ Once a swap has been defined, the container will use it instead of the actual cl
 ```ts
 app.container.restore(UserService)
 
+// Restore UserService and PostService
+app.container.restoreAll([UserService, PostService])
+
 // Restore all
-app.container.restore()
+app.container.restoreAll()
 ```
 
 ## Contextual dependencies

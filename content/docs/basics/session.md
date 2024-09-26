@@ -114,7 +114,7 @@ Enable or disable the middleware temporarily without removing it from the middle
 
 <dd>
 
-The cookie name for storing the session ID. Feel free to rename it.
+The cookie name is used to store the session ID. Feel free to rename it.
 
 </dd>
 
@@ -138,7 +138,7 @@ When set to true, the session ID cookie will be removed after the user closes th
 
 <dd>
 
-The `age` property controls the validity of session data without any user activity. After the given duration, the session data will be considered expired.
+The `age` property controls the validity of session data without user activity. After the given duration, the session data is considered expired.
 
 </dd>
 
@@ -162,7 +162,7 @@ store
 
 <dd>
 
-Define the store you want to use for storing the session data. It can be a fixed value or read from the environment variables.
+Define the store you want to use to store the session data. It can be a fixed value or read from the environment variables.
 
 </dd>
 
@@ -207,14 +207,7 @@ export default defineConfig({
     })
 
     dynamodb: stores.dynamodb({
-      clientConfig: {
-        // DynamoDB client config
-        // See: https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-dynamodb/Interface/DynamoDBClientConfig/
-        // You can also set credentials using the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-        // Also, you can set the region using the environment variable `AWS_REGION`.
-      },
-      tableName: 'Session', // The table name to store the sessions. The default is `Session`.
-      keyAttribute: 'key', // The attribute name for the session id, default is `key`.
+      clientConfig: {}
     }),
   }
   // highlight-end
@@ -271,7 +264,40 @@ Make sure to first install and configure the [@adonisjs/redis](../database/redis
 
 <dd>
 
-Define the configuration for the `dynamodb` store. The method accepts the `clientConfig`, `tableName` and `keyAttribute` properties.
+Define the configuration for the `dynamodb` store. You may either pass the [DynamoDB config](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-dynamodb/Interface/DynamoDBClientConfig/) via the `clientConfig` property or pass an instance of the DynamoDB as the `client` property.
+
+```ts
+// title: With client config
+stores.dynamodb({
+  clientConfig: {
+    region: 'us-east-1',
+    endpoint: '<database-endpoint>',
+    credentials: {
+      accessKeyId: '',
+      secretAccessKey: '',
+    }
+  },
+})
+```
+
+```ts
+// title: With client instance
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
+const client = new DynamoDBClient({})
+
+stores.dynamodb({
+  client,
+})
+```
+
+Additionally, you may define a custom table name and key attribute name.
+
+```ts
+stores.dynamodb({
+  tableName: 'Session'
+  keyAttributName: 'key'
+})
+```
 
 </dd>
 
@@ -366,7 +392,7 @@ session.put('visited_at', new Date())
 ```
 
 ## Reading and writing data
-Following is the list of methods you can access from the `session` object to interact with the data.
+The following is the list of methods you can use to interact with the data from the `session` object.
 
 ### get
 Returns the value of a key from the store. You can use dot notation to read nested values.
@@ -455,9 +481,9 @@ session.clear()
 ## Session lifecycle
 AdonisJS creates an empty session store and assigns it to a unique session ID on the first HTTP request, even if the request/response lifecycle doesn't interact with sessions.
 
-On every subsequent request, we update the `maxAge` property of the session ID cookie to ensure it doesn't expire. Also, the session store is notified about the changes (if any) to update and persist the changes.
+On every subsequent request, we update the `maxAge` property of the session ID cookie to ensure it doesn't expire. The session store is also notified about the changes (if any) to update and persist them.
 
-You can access the unique session ID using the `sessionId` property. The session ID for a visitor remains the same until it expires.
+You can access the unique session ID using the `sessionId` property. A visitor's session ID remains the same until it expires.
 
 ```ts
 console.log(session.sessionId)
@@ -466,7 +492,7 @@ console.log(session.sessionId)
 ### Re-generating session id
 Re-generating session ID helps prevent a [session fixation](https://owasp.org/www-community/attacks/Session_fixation) attack in your application. You must re-generate the session ID when associating an anonymous session with a logged-in user.
 
-The `@adonisjs/auth` package re-generates the session ID automatically; therefore, you do not have to do it manually.
+The `@adonisjs/auth` package automatically re-generates the session ID, so you do not have to do it manually.
 
 ```ts
 /**
@@ -610,7 +636,7 @@ session.flashExcept(['password'])
 session.flash(request.except(['password']))
 ```
 
-Finally, if you want to reflash the current flash messages, you can do that using the `session.reflash` method.
+Finally, you can reflash the current flash messages using the `session.reflash` method.
 
 ```ts
 session.reflash()

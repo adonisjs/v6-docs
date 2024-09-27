@@ -40,7 +40,7 @@ AdonisJS embraces the classic MVC design pattern. You start by defining the rout
 ```ts
 // title: start/routes.ts
 import router from '@adonisjs/core/services/router'
-const PostsController = () => import(`'#controllers`/posts_controller')
+const PostsController = () => import('#controllers/posts_controller')
 
 router.get('posts', [PostsController, 'index'])
 ```

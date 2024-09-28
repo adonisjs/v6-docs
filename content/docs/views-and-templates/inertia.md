@@ -1046,7 +1046,7 @@ In addition to this, you can access the following properties on `ApiResponse` :
 
 ```ts
 test('returns correct data', async ({ client }) => {
-  const { body } = await client.get('/home').withInertia()
+  const response = await client.get('/home').withInertia()
 
   // 👇 The component returned by the server
   console.log(response.inertiaComponent) 

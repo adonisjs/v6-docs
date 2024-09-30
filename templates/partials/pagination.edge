@@ -1,0 +1,25 @@
+<hr />
+<div class="pagination">
+  @if (previous.url)
+    <a href="{{ previous.url }}" class="button">
+      @!component('partials/arrow', { direction: 'left' })
+      <div>
+        <p class="category">{{ previous.category }}</p>
+        <p class="title">{{ previous.title }}</p>
+      </div>
+    </a>
+  @else
+    <div></div>
+  @endif
+  @if (next.url)
+    <a href="{{ next.url }}" class="button">
+      <div>
+        <p class="category">{{ next.category }}</p>
+        <p class="title">{{ next.title }}</p>
+      </div>
+      @!component('partials/arrow')
+    </a>
+  @else
+    <div></div>
+  @endif
+</div>

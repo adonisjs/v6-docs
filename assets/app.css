@@ -250,3 +250,49 @@ progress[value]::-webkit-progress-value {
   text-align: right;
   display: block;
 }
+
+.pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 64px;
+}
+
+.pagination .button {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--neutral-gray-5);
+  color: var(--neutral-gray-11);
+  text-align: center;
+  text-decoration: none;
+}
+
+.pagination .button:nth-child(1) {
+  grid-template-columns: fit-content(100%) 1fr;
+}
+
+.pagination .button:nth-child(2) {
+  grid-template-columns: 1fr fit-content(100%);
+}
+
+.pagination .button:hover {
+  background-color: var(--neutral-gray-6);
+}
+
+.pagination .category, .pagination .title {
+  margin: 0;
+}
+
+.pagination .category {
+  color: var(--neutral-gray-9);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.pagination .title {
+  color: var(--neutral-gray-11);
+  font-size: 14px;
+  font-weight: 600;
+}

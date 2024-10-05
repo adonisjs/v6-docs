@@ -414,6 +414,12 @@
     "category": "Digging deeper"
   },
   {
+    "permalink": "digging-deeper/cache",
+    "title": "Cache",
+    "contentPath": "./digging_deeper/cache.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "digging-deeper/locks",
     "title": "Locks",
     "contentPath": "./digging_deeper/locks.md",

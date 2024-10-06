@@ -189,7 +189,7 @@ enableXsrfCookie
 
 When enabled, Shield will store the CSRF token inside an encrypted cookie named `XSRF-TOKEN`, which can be read by the frontend JavaScript code.
 
-This allows frontend request libraries like Axios to read the `XSRF-TOKEN` automatically and set it as a header when making Ajax requests without server-rendered forms.
+This allows frontend request libraries like Axios to read the `XSRF-TOKEN` automatically and set it as a `X-XSRF-TOKEN` header when making Ajax requests without server-rendered forms.
 
 You must keep the `enableXsrfCookie` disabled if you are not triggering Ajax requests programmatically.
 

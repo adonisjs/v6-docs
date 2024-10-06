@@ -315,7 +315,7 @@ export default class PostsController {
 import User from '#models/user'
 import Post from '#models/post'
 import { BasePolicy, allowGuest } from '@adonisjs/bouncer'
-import { AuthorizerResponse } from '@adonisjs/bouncer/types'
+import type { AuthorizerResponse } from '@adonisjs/bouncer/types'
 
 export default class PostPolicy extends BasePolicy {
   @allowGuest()

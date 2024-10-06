@@ -80,6 +80,24 @@ edge.global('getSections', function (collection: Collection, entry: CollectionEn
     .all()
 })
 
+edge.global('getPagination', function (collection: Collection, entry: CollectionEntry) {
+  const entries = collection.all()
+  const currentIndex = entries.findIndex((item) => item.permalink === entry.permalink)
+
+  return {
+    previous: {
+      category: entries[currentIndex - 1]?.meta.category,
+      title: entries[currentIndex - 1]?.title,
+      url: entries[currentIndex - 1]?.permalink,
+    },
+    next: {
+      category: entries[currentIndex + 1]?.meta.category,
+      title: entries[currentIndex + 1]?.title,
+      url: entries[currentIndex + 1]?.permalink,
+    },
+  }
+})
+
 /**
  * Configuring rendering pipeline
  */

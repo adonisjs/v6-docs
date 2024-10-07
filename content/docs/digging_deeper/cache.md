@@ -77,7 +77,7 @@ const cacheConfig = defineConfig({
 export default cacheConfig
 ```
 
-As you can see, you can configure multiple layers for each cache system. I highly recommend reading BentoCache's documentation to better understand how [multi-tiering](https://bentocache.dev/docs/multi-tier) works.
+In the code example above, we are setting up multiple layers for each cache store. This is called a [multi-tier caching system](https://bentocache.dev/docs/multi-tier). It lets us first check a fast in-memory cache (the first layer). If we do not find the data there, we will then use the distributed cache (the second layer).
 
 ### Redis
 

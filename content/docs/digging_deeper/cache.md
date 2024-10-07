@@ -95,7 +95,7 @@ In `config/cache.ts`, you must specify a `connectionName`. This property should 
 
 You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`. 
 
-They accept exactly the same options as within Bentocache. See [Cache Drivers](https://bentocache.dev/docs/cache-drivers) for more information.
+See [Cache Drivers](https://bentocache.dev/docs/cache-drivers) for more information.
 
 ## Usage
 

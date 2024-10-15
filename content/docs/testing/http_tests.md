@@ -336,12 +336,7 @@ export const plugins: Config['plugins'] = [
 ]
 ```
 
-If you are using session-based authentication, then make sure to switch the session driver to an in-memory store.
-
-```dotenv
-// title: .env.test
-SESSION_DRIVER=memory
-```
+If you are using session-based authentication, make sure to also set up the session plugin. See [Populating session store - Setup](#setup-1).
 
 That's all. Now, you may login users using the `loginAs` method. The method accepts the user object as the only argument and marks the user as logged in for the current HTTP request.
 

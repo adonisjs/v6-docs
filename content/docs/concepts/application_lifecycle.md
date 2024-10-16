@@ -68,7 +68,7 @@ export default class GreetCommand extends BaseCommand {
   }
   
   async run() {
-    console.log(this.app.isStarted) // true
+    console.log(this.app.isReady) // true
   }
 }
 ```

@@ -27,6 +27,7 @@
       })
         @!component('docs::doc_errors', { messages: file.messages })
         @!component('dimer_contents', { nodes: file.ast.children, pipeline })~
+        @!component('partials/pagination', getPagination(collection, entry))
       @end
 
       @if(file.toc)

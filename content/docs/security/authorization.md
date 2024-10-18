@@ -605,8 +605,8 @@ export default InitializeBouncerMiddleware {
   ```ts
   // title: app/policies/main.ts
   export const policies = {
-    PostPolicy: () => import('#polices/post_policy'),
-    CommentPolicy: () => import('#polices/comment_policy')
+    PostPolicy: () => import('#policies/post_policy'),
+    CommentPolicy: () => import('#policies/comment_policy')
   }
   ```
 

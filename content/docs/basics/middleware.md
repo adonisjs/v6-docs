@@ -20,7 +20,7 @@ Server middleware runs on every HTTP request, even if you have not defined any r
 
 They are great for adding additional functionality to your app that does not rely on the routing system of the framework. For example, the Static assets middleware is registered as server middleware.
 
-You can register server middleware using the `serve.use` method inside the `start/kernel.ts` file.
+You can register server middleware using the `server.use` method inside the `start/kernel.ts` file.
 
 ```ts
 import server from '@adonisjs/core/services/server'

@@ -282,6 +282,22 @@ router.get('/google/redirect', async ({ ally }) => {
 })
 ```
 
+You can clear any existing parameters using the `.clearParam()` method on the request. This can be helpful if parameter defaults are defined in the config and you need to redefine them for a separate custom auth flow.
+
+```ts
+router.get('/google/redirect', async ({ ally }) => {
+  return ally
+    .use('google')
+    .redirect((request) => {
+      // highlight-start
+      request
+        .clearParam('redirect_uri')
+        .param('redirect_uri', '')
+      // highlight-end
+    })
+})
+```
+
 ## Fetching user details from an access token
 Sometimes, you might want to fetch user details from an access token stored in the database or provided via another OAuth flow. For example, you used the Native OAuth flow via a mobile app and received an access token back.
 

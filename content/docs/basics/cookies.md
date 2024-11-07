@@ -186,7 +186,7 @@ To turn off encoding, set `encoding: false` in the options object.
 ```ts
 response.plainCookie('token', tokenValue, {
   httpOnly: true,
-  encoding: false,
+  encode: false,
 })
 
 // Read plain cookie with encoding off

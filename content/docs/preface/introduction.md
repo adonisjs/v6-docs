@@ -88,7 +88,7 @@ export default class PostsController {
 
 The AdonisJS documentation is written as a reference guide, covering the usage and the API of several packages and modules maintained by the core team.
 
-**The guide does not teach you how to build an application from scratch**. If you are looking for a tutorial, we recommend starting your journey with [Adocasts](https://adocasts.com/). Tom (the creator of Adocasts) has created some highly quality screencasts, helping you to take the first steps with AdonisJS.
+**The guide does not teach you how to build an application from scratch**. If you are looking for a tutorial, we recommend starting your journey with [Adocasts](https://adocasts.com/). Tom (the creator of Adocasts) has created some high quality screencasts, helping you to take the first steps with AdonisJS.
 
 With that said, the documentation extensively covers the usage of available modules and the inner workings of the framework.
 

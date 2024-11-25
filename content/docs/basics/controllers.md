@@ -131,7 +131,7 @@ Given you have a `UserService` class, you can inject an instance of it inside th
 
 ```ts
 // title: app/services/user_service.ts
-export default class UserService {
+export class UserService {
   all() {
     // return users from db
   }
@@ -188,7 +188,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 @inject()
-export default class UserService {
+export class UserService {
   constructor(
     private ctx: HttpContext
   ) {}

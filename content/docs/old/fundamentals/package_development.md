@@ -65,7 +65,7 @@ In the following example, we have a `LogRequests` middleware that needs the conf
 ```ts
 import type { ApplicationService } from '@adonisjs/core/types'
 
-export default class LogRequests {
+export class LogRequests {
   // highlight-start
   constructor(
     config: { ignoreRoutes: string[], logResponseBody: boolean },
@@ -79,8 +79,8 @@ export default class LogRequests {
 Inside the `register` method of a service provider, we will use the `container.bind` method to self construct the `LogRequests` middleware class and manually inject the constructor dependencies. **Think of it as a way to tell AdonisJS how to create an instance of a specific class**.
 
 ```ts
+import { LogRequests } from '../middleware/log_requests.js'
 import type { ApplicationService } from '@adonisjs/core/types'
-import LogRequests from '../middleware/log_requests.js'
 
 export default class MyPackageProvider {
   constructor(protected app: ApplicationService) {}
@@ -114,8 +114,8 @@ export class DummyCache {
 
 ```ts
 // title: providers/cache_provider.ts
-import type { ApplicationService } from '@adonisjs/core/types'
 import { DummyCache } from '../src/cache.js'
+import type { ApplicationService } from '@adonisjs/core/types'
 
 export default class CacheProvider {
   constructor(protected app: ApplicationService) {}

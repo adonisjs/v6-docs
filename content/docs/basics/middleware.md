@@ -210,7 +210,7 @@ Given you have a `GeoIpService` class to look up user location from the request 
 
 ```ts
 // title: app/services/geoip_service.ts
-export default class GeoIpService {
+export class GeoIpService {
   async lookup(ipAddress: string) {
     // lookup location and return
   }
@@ -219,9 +219,9 @@ export default class GeoIpService {
 
 ```ts
 import { inject } from '@adonisjs/core'
-import { HttpContext } from '@adonisjs/core/http'
-import { NextFn } from '@adonisjs/core/types/http'
-import GeoIpService from '#services/geoip_service'
+import { GeoIpService } from '#services/geoip_service'
+import type { HttpContext } from '@adonisjs/core/http'
+import type { NextFn } from '@adonisjs/core/types/http'
 
 @inject()
 export default class UserLocationMiddleware {

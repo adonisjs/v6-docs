@@ -69,7 +69,7 @@ import { inject } from '@adonisjs/core'
 
   // highlight-start
 @inject()
-export default class PostService {
+export class PostService {
   constructor(protected disk: Disk) {
   }
   // highlight-end  
@@ -92,7 +92,7 @@ When using the `drive` service, we call the `drive.use` method to get an instanc
 ```ts
 import drive from '@adonisjs/drive/services/main'
 
-export default class PostService {
+export class PostService {
   async save(post: Post, coverImage: File) {
     const coverImageName = 'random_name.jpg'
 
@@ -121,7 +121,7 @@ In the following example, we call the `drive.fake` method to swap drive disks wi
 
 ```ts
 import drive from '@adonisjs/drive/services/main'
-import PostService from '#services/post_service'
+import { PostService } from '#services/post_service'
 
 test('save post', async ({ assert }) => {
   /**

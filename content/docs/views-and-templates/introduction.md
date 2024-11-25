@@ -28,4 +28,4 @@ Following is the list of popular template engines you can use inside an AdonisJS
 
 AdonisJS is also a great fit for creating hybrid applications that render HTML on the server and then hydrate your JavaScript on the client. This approach is popular among developers who want to use `Vue`, `React`, `Svelte`, `Solid`, or others for building interactive user interfaces but still want a full backend stack to handle server-side concerns.
 
-In this case, AdonisJS provide a first-class support for using [InertiaJS](./introduction.md) to bridge the gap between your frontend and backend.
+In this case, AdonisJS provide a first-class support for using [InertiaJS](./inertia.md) to bridge the gap between your frontend and backend.

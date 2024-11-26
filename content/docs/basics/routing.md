@@ -116,7 +116,7 @@ router.get('/docs/:category/*', ({ params }) => {
 
 The router does not know the format of the param data you want to accept. For example, a request with URI `/posts/foo-bar` and `/posts/1` will match the same route. However, you can explicitly validate the params values using param matchers.
 
-A matcher is registered using the `route.where` method. The first argument is the param name, and the second argument is the matcher object.
+A matcher is registered by chaining the `where()` method. The first argument is the param name, and the second argument is the matcher object.
 
 In the following example, we define a regex to validate the id to be a valid number. The route will be skipped in case the validation fails.
 
@@ -184,7 +184,7 @@ router
 
 ## HTTP methods
 
-The `router.get` method creates a route that responds to [GET HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET). Similarly, you can use the following methods to register routes for different HTTP methods.
+The `router.get()` method creates a route that responds to [GET HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET). Similarly, you can use the following methods to register routes for different HTTP methods.
 
 ```ts
 // title: start/routes.ts
@@ -206,14 +206,14 @@ router.patch('users/:id', () => {})
 router.delete('users/:id', () => {})
 ```
 
-You can use the `route.any` method to create a route that responds to all standard HTTP methods.
+You can use the `router.any()` method to create a route that responds to all standard HTTP methods.
 
 ```ts
 // title: start/routes.ts
 router.any('reports', () => {})
 ```
 
-Finally, you can create a route for custom HTTP methods using the `route.route` method.
+Finally, you can create a route for custom HTTP methods using the `router.route()` method.
 
 ```ts
 // title: start/routes.ts
@@ -253,7 +253,7 @@ router.post('users', [UsersController, 'store'])
 
 ## Route middleware
 
-You can define a middleware on a route by calling the `route.use` method. The method accepts an inline callback or a reference to a named middleware.
+You can define a middleware on a route by chaining the `use()` method. The method accepts an inline callback or a reference to a named middleware.
 
 Following is a minimal example of defining a route middleware. We recommend reading the [dedicated guide on middleware](./middleware.md) to explore all the available options and the execution flow of middleware.
 
@@ -273,7 +273,7 @@ router
 
 ## Route identifier
 
-Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [response.redirect](./response.md#redirects) method.
+Every route has a unique identifier you can use to reference the route elsewhere in your application. For example, you can generate a URL to a route using the [URL builder](#url-builder) or redirect to a route using the [`response.redirect()`](./response.md#redirects) method.
 
 By default, the route pattern is the route identifier. However, you can assign a unique, memorable name to the route using the `route.as` method.
 
@@ -470,15 +470,15 @@ router
  .domain(':tenant.adonisjs.com')
 ```
 
-## Render view from a route
+## Render Edge view from a route
 
-You may use the `router.on.render` method if you have a route handler that only renders a view. It is a convenient shortcut to render a view without defining an explicit handler.
+You may use the `router.on().render()` method if you have a route handler that only renders a view. It is a convenient shortcut to render a view without defining an explicit handler.
 
 The render method accepts the name of the edge template to render. Optionally, you can pass the template data as the second argument.
 
 :::warning
 
-The `route.on.render` method only exists when you have configured the [Edge service provider](../views-and-templates/introduction.md#using-edge)
+The `route.on().render()` method only exists when you have configured the [Edge service provider](../views-and-templates/edgejs.md)
 
 :::
 
@@ -491,9 +491,30 @@ router.on('about').render('about', { title: 'About us' })
 router.on('contact').render('contact', { title: 'Contact us' })
 ```
 
+## Render Inertia view from a route
+
+If you are using the Inertia.js adapter, you can use the `router.on().renderInertia()` method to render an Inertia view. It is a convenient shortcut to render a view without defining an explicit handler.
+
+The renderInertia method accepts the name of the Inertia component to render. Optionally, you can pass the component data as the second argument.
+
+:::warning
+
+The `route.on().renderInertia()` method only exists when you have configured the [Inertia service provider](../views-and-templates/inertia.md)
+
+:::
+
+```ts
+// title: start/routes.ts
+import router from '@adonisjs/core/services/router'
+
+router.on('/').renderInertia('home')
+router.on('about').renderInertia('about', { title: 'About us' })
+router.on('contact').renderInertia('contact', { title: 'Contact us' })
+```
+
 ## Redirect from a route
 
-If you are defining a route handler to redirect the request to another path or route, you may use the `router.on.redirect` or `router.on.redirectToPath` methods.
+If you are defining a route handler to redirect the request to another path or route, you may use the `router.on().redirect()` or `router.on().redirectToPath()` methods.
 
 The `redirect` method accepts the route identifier. Whereas the `redirectToPath` method accepts a static path/URL.
 
@@ -639,7 +660,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
 You may use the URL builder to create URLs for pre-defined routes in your application. For example, create a form action URL inside Edge templates, or make the URL to redirect the request to another route.
 
-The `router.builder` method creates an instance of the [URL builder](https://github.com/adonisjs/http-server/blob/main/src/router/lookup_store/url_builder.ts) class, and you can use the builder's fluent API to lookup a route and create a URL for it.
+The `router.builder` method creates an instance of the [URL builder](https://github.com/adonisjs/http-server/blob/main/src/router/lookup_store/url_builder.ts) class, and you can use the builder's fluent API to look up a route and create a URL for it.
 
 ```ts
 // title: start/routes.ts
@@ -773,7 +794,7 @@ router
 
 The URL builder performs a route lookup with the route identifier given to the `make` and the `makeSigned` methods.
 
-If you want to create a URL for routes defined outside of your AdonisJS application, you may disable the route lookup and give the route pattern to the `make` and the `makeSigned` methods.
+If you want to create a URL for routes defined outside your AdonisJS application, you may disable the route lookup and give the route pattern to the `make` and the `makeSigned` methods.
 
 ```ts
 // title: start/routes.ts

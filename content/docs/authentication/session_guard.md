@@ -39,15 +39,15 @@ The `sessionGuard` method creates an instance of the [SessionGuard](https://gith
 The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
 
 ## Performing login
-You can login a user using the `guard.login` method. The method accepts an instance of the User model and creates a login session for them.
+You can login a user using the `login` method from your guard. The method accepts an instance of the User model and creates a login session for them.
 
 In the following example:
 
 - We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
 
-- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file.
+- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file (`web` is the name of the guard defined in your configuration).
 
-- Next, we call the `guard.login(user)` method to create a login session for the user.
+- Next, we call the `auth.use('web').login(user)` method to create a login session for the user.
 
 - Finally, we redirect the user to the `/dashboard` endpoint. Feel free to customize the redirect endpoint.
 

@@ -229,7 +229,7 @@ If the trusted proxy settings are insufficient to determine the correct IP addre
 The method is defined inside the `config/app.ts` file under the `http` settings object.
 
 ```ts
-http: {
+export const http = defineConfig({
   getIp(request) {
     const ip = request.header('X-Real-Ip')
     if (ip) {
@@ -238,7 +238,7 @@ http: {
 
     return request.ips()[0]
   }
-}
+})
 ```
 
 ## Content negotiation
@@ -316,11 +316,9 @@ Request ids are generated using the [cuid2](https://github.com/paralleldrive/cui
 
 ```ts
 // title: config/app.ts
-{
-  http: {
-    generateRequestId: true
-  }
-}
+export const http = defineConfig({
+  generateRequestId: true
+})
 ```
 
 Once enabled, you can access the id using the `request.id` method.

@@ -352,23 +352,19 @@ You can configure which IP addresses to trust within the `config/app.ts` file us
 ```ts
 import proxyAddr from 'proxy-addr'
 
-{
-  http: {
-    trustProxy: proxyAddr.compile(['127.0.0.1/8', '::1/128'])
-  }
-}
+export const http = defineConfig({
+  trustProxy: proxyAddr.compile(['127.0.0.1/8', '::1/128'])
+})
 ```
 
 The value for `trustProxy` can also be a function. The method should return `true` if the IP address is trusted; otherwise, return `false`.
 
 ```ts
-{
-  http: {
-    trustProxy: (address) => {
-      return address === '127.0.0.1' || address === '123.123.123.123'
-    }
+export const http = defineConfig({
+  trustProxy: (address) => {
+    return address === '127.0.0.1' || address === '123.123.123.123'
   }
-}
+})
 ```
 
 If you are running Nginx on the same server as your application code, you need to trust the loopback IP addresses, i.e. (127.0.0.1).
@@ -376,21 +372,17 @@ If you are running Nginx on the same server as your application code, you need t
 ```ts
 import proxyAddr from 'proxy-addr'
 
-{
-  http: {
-    trustProxy: proxyAddr.compile('loopback')
-  }
-}
+export const http = defineConfig({
+  trustProxy: proxyAddr.compile('loopback')
+})
 ```
 
 Suppose your application is only accessible through a load balancer, and you do not have a list of IP addresses for that load balancer. Then, you can trust the proxy server by defining a callback that always returns `true`.
 
 ```ts
-{
-  http: {
-    trustProxy: () => true
-  }
-}
+export const http = defineConfig({
+  trustProxy: () => true
+})
 ```
 
 ## Configuring query string parser
@@ -400,12 +392,12 @@ Query strings from the request URL are parsed using the [qs](http://npmjs.com/qs
 [View the list](https://github.com/adonisjs/http-server/blob/main/src/types/qs.ts#L11) of all the available options.
 
 ```ts
-http: {
+export const http = defineConfig({
   qs: {
     parse: {
     },
   }
-}
+})
 ```
 
 ## Form method spoofing

@@ -46,7 +46,10 @@ import testUtils from '@adonisjs/core/services/test_utils'
 
 export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
   setup: [
-    () => testUtils.db().truncate(),
+    async () => {
+      const truncate = await testUtils.db().truncate()
+      await truncate()
+    },
   ],
 }
 ```

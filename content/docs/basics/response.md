@@ -195,6 +195,10 @@ The `response.removeHeader` method removes the existing header.
 response.removeHeader('Set-cookie')
 ```
 
+### X-Request-Id header
+
+If the header exists in the current request or if [Generating request ids](./request#generating-request-ids) is enabled, the header will be present in the response.
+
 ## Redirects
 
 The `response.redirect` method returns an instance of the [Redirect](https://github.com/adonisjs/http-server/blob/main/src/redirect.ts) class. The redirect class uses fluent API to construct the redirect URL.

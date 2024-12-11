@@ -147,8 +147,8 @@ createInertiaApp({
   title: (title) => {{ `${title} - ${appName}` }},
   resolve: (name) => {
     return resolvePageComponent(
-      `./pages/${name}.vue`,
-      import.meta.glob<DefineComponent>('./pages/**/*.vue'),
+      `../pages/${name}.vue`,
+      import.meta.glob<DefineComponent>('../pages/**/*.vue'),
     )
   },
   setup({ el, App, props, plugin }) {
@@ -822,8 +822,8 @@ export default function render(page) {
     page,
     render: renderToString,
     resolve: (name) => {
-      const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue')
-      return pages[`./pages/${name}.vue`]()
+      const pages = import.meta.glob<DefineComponent>('../pages/**/*.vue')
+      return pages[`../pages/${name}.vue`]()
     },
 
     setup({ App, props, plugin }) {
@@ -898,7 +898,7 @@ export default defineConfig({
   // ...
   ssr: {
     enabled: true,
-    entrypoint: 'inertia/app/ssr.tsx'
+    entrypoint: 'inertia/app/ssr.ts'
   }
 })
 ```
@@ -916,7 +916,7 @@ export default defineConfig({
     inertia({
       ssr: {
         enabled: true,
-        entrypoint: 'inertia/app/ssr.tsx'
+        entrypoint: 'inertia/app/ssr.ts'
       }
     })
   ]

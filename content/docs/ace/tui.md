@@ -269,8 +269,8 @@ The `update` method displays the latest log message using the `minimal` renderer
 
 ```ts
 const sleep = () => new Promise<void>((resolve) => setTimeout(resolve, 50))
-
-tasks
+const tasks = this.ui.tasks()
+await tasks
   .add('clone repo', async (task) => {
     for (let i = 0; i <= 100; i = i + 2) {
       await sleep()
@@ -279,6 +279,7 @@ tasks
 
     return 'Completed'
   })
+  .run()
 ```
 
 ### Switching to the verbose renderer

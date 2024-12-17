@@ -45,8 +45,8 @@ export default defineConfig({
   loggers: {
     app: {
       enabled: true,
-      name: Env.get('APP_NAME'),
-      level: Env.get('LOG_LEVEL', 'info')
+      name: env.get('APP_NAME'),
+      level: env.get('LOG_LEVEL', 'info')
     },
   }
 })
@@ -98,8 +98,8 @@ This behavior is different from pino. In Pino, targets do not inherit levels fro
   loggers: {
     app: {
       enabled: true,
-      name: Env.get('APP_NAME'),
-      level: Env.get('LOG_LEVEL', 'info'),
+      name: env.get('APP_NAME'),
+      level: env.get('LOG_LEVEL', 'info'),
       
       // highlight-start
       transport: {
@@ -229,13 +229,13 @@ export default defineConfig({
     // highlight-start
     app: {
       enabled: true,
-      name: Env.get('APP_NAME'),
-      level: Env.get('LOG_LEVEL', 'info')
+      name: env.get('APP_NAME'),
+      level: env.get('LOG_LEVEL', 'info')
     },
     payments: {
       enabled: true,
       name: 'payments',
-      level: Env.get('LOG_LEVEL', 'info')
+      level: env.get('LOG_LEVEL', 'info')
     },
     // highlight-start
   }
@@ -371,8 +371,8 @@ Pino ships with a `pino/file` target, which you can use to write logs to a file.
 ```ts
 app: {
   enabled: true,
-  name: Env.get('APP_NAME'),
-  level: Env.get('LOG_LEVEL', 'info')
+  name: env.get('APP_NAME'),
+  level: env.get('LOG_LEVEL', 'info')
 
   transport: {
     targets: targets()
@@ -398,8 +398,8 @@ npm i pino-roll
 ```ts
 app: {
   enabled: true,
-  name: Env.get('APP_NAME'),
-  level: Env.get('LOG_LEVEL', 'info')
+  name: env.get('APP_NAME'),
+  level: env.get('LOG_LEVEL', 'info')
 
   transport: {
     targets: targets()
@@ -430,8 +430,8 @@ In Pino, you can use the `redact` option to hide/remove sensitive key-value pair
 // title: config/logger.ts
 app: {
   enabled: true,
-  name: Env.get('APP_NAME'),
-  level: Env.get('LOG_LEVEL', 'info')
+  name: env.get('APP_NAME'),
+  level: env.get('LOG_LEVEL', 'info')
 
   // highlight-start
   redact: {

@@ -230,6 +230,6 @@ You can also rely on the [AdonisJS inbuilt static file server](../basics/static_
 
 No additional configuration is required. Just deploy your AdonisJS application as usual, and the request for static assets will be served automatically.
 
-:::warn
+:::warning
 The static file server is not recommended for production use. It is best to use a CDN or Nginx to serve static assets.
 :::

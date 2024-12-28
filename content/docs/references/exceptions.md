@@ -28,10 +28,10 @@ The exception is raised when the database query for finding one item fails [e.g 
 - **Self handled**: No
 
 ```ts
-import { errors } from '@adonisjs/lucid'
-if (error instanceof errors.E_ROW_NOT_FOUND) {
+import { errors as lucidErrors } from '@adonisjs/lucid'
+if (error instanceof lucidErrors.E_ROW_NOT_FOUND) {
   // handle error
-  const message = `${error?.model || 'Row'} not found`
+  console.log(`${error.model?.name || 'Row'} not found`)
 }
 ```
 

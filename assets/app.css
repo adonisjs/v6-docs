@@ -164,6 +164,10 @@ html.dark {
   border-radius: 0 0 7px 7px;
 }
 
+.disclosure_wrapper .disclosure_panel p {
+  margin-top: 12px;
+}
+
 @media (min-width: 1440px) {
   .markdown .table_expanded {
     max-width: 120%;

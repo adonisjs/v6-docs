@@ -416,7 +416,9 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::
 
-:::disclosure{title="LinkedIn config"}
+:::disclosure{title="LinkedIn config (deprecated)"}
+
+This configuration is deprecated in compliance with the updated [LinkedIn OAuth requirements](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin).
 
 ```ts
 {
@@ -427,6 +429,22 @@ The following is the complete configuration reference for all the drivers. You c
 
     // LinkedIn specific
     scopes: ['r_emailaddress', 'r_liteprofile'],
+  })
+}
+```
+:::
+
+:::disclosure{title="LinkedIn Openid Connect config"}
+
+```ts
+{
+  linkedin: services.linkedinOpenidConnect({
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: '',
+
+    // LinkedIn specific
+    scopes: ['openid', 'profile', 'email'],
   })
 }
 ```

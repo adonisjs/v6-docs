@@ -1,5 +1,5 @@
 ---
-summary: Use Redis inside your AdonisJS applications using the `@adonisjs/redis` package. 
+summary: Use Redis inside your AdonisJS applications using the `@adonisjs/redis` package.
 ---
 
 # Redis
@@ -95,6 +95,28 @@ Every named connection config is identical to the [config accepted by ioredis](h
 
 </dd>
 </dl>
+
+### Connect via Socket
+You can configure Redis to use a Unix socket for connections. Use the `path` property in your Redis configuration object and provide the file system path to the socket.
+
+
+```ts
+import env from '#start/env'
+import { defineConfig } from '@adonisjs/redis'
+
+const redisConfig = defineConfig({
+  connection: 'main',
+  connections: {
+    main: {
+      path: env.get('REDIS_SOCKET_PATH'),
+      db: 0,
+      keyPrefix: '',
+    },
+  },
+})
+
+export default redisConfig
+```
 
 ---
 

@@ -783,13 +783,13 @@ When re-deploying your application, your users should always get the latest vers
 
 By default, the `@adonisjs/inertia` package will compute a hash for the `public/assets/manifest.json` file and use it as the version of your assets.
 
-If you want to tweak this behavior, you can edit the `config/inertia.ts` file. The `version` prop defines the version of your assets and can be a string or a function.
+If you want to tweak this behavior, you can edit the `config/inertia.ts` file. The `assetsVersion` prop defines the version of your assets and can be a string or a function.
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
 
 export default defineConfig({
-  version: 'v1'
+  assetsVersion: 'v1'
 })
 ```
 

@@ -75,7 +75,7 @@ The Web starter kit is tailored for creating traditional server renderer web app
 
 The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.dev) will boost your productivity as you do not have to deal with complex build systems to render some HTML.
 
-Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like a SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
+Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like an SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
 ```sh
 npm init adonisjs@latest -- -K=web
@@ -115,7 +115,7 @@ The web starter kit comes with the following packages.
 </tr>
 <tr>
 <td><code>@adonisjs/shield</code></td>
-<td>A set of security primitives to keep your web apps safe from attacks like <strong>CSRF</strong> and <strong>‌ XSS</strong>.</td>
+<td>A set of security primitives to keep your web apps safe from attacks like <strong>CSRF</strong> and <strong>XSS</strong>.</td>
 </tr>
 <tr>
 <td><code>@adonisjs/static</code></td>
@@ -158,6 +158,7 @@ npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
 ---
 
 ### Slim starter kit
+
 For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
 
 ```sh
@@ -169,7 +170,7 @@ npm init adonisjs@latest -- -K=slim --db=mysql
 
 ---
 
-### Inertia Starter kit
+### Inertia starter kit
 
 [Inertia](https://inertiajs.com/) is a way to build server-driven single-page applications. You can use your favorite frontend framework ( React, Vue, Solid, Svelte ) to build the frontend of your application.
 
@@ -178,6 +179,8 @@ You can use the `--adapter` flag to choose the frontend framework you want to us
 You can also use the `--ssr` and `--no-ssr` flags to turn server-side rendering on or off.
 
 ```sh
+npm init adonisjs@latest -- -K=inertia
+
 # React with server-side rendering
 npm init adonisjs@latest -- -K=inertia --adapter=react --ssr
 
@@ -188,7 +191,8 @@ npm init adonisjs@latest -- -K=inertia --adapter=vue --no-ssr
 ---
 
 ### Bring your starter kit
-Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or Gitlab. You can also create your starter kits and download them as follows.
+
+Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or GitLab. You can also create your starter kits and download them as follows.
 
 ```sh
 npm init adonisjs@latest -- -K="github_user/repo"
@@ -196,7 +200,7 @@ npm init adonisjs@latest -- -K="github_user/repo"
 # Download from GitLab
 npm init adonisjs@latest -- -K="gitlab:user/repo"
 
-# Download from BitBucket
+# Download from Bitbucket
 npm init adonisjs@latest -- -K="bitbucket:user/repo"
 ```
 
@@ -217,6 +221,7 @@ npm init adonisjs@latest -- -K="user/repo#v2.1.0"
 ```
 
 ## Starting the development server
+
 Once you have created an AdonisJS application, you may start the development server by running the `node ace serve` command.
 
 Ace is a command line framework bundled inside the framework's core. The `--hmr` flag monitors the file system and performs [hot module replacement (HMR)](../concepts/hmr.md) for certain sections of your codebase.
@@ -252,17 +257,18 @@ The official starter kits come pre-configured with both ESLint and Prettier and 
 Finally, we recommend you install ESLint and Prettier plugins for your code editor so that you have a tighter feedback loop during the application development. Also, you can use the following commands to `lint` and `format` your code from the command line.
 
 ```sh
-# Runs ESLint
+# Run ESLint
 npm run lint
 
 # Run ESLint and auto-fix issues
 npm run lint -- --fix
 
-# Runs prettier
+# Run prettier
 npm run format
 ```
 
 ## VSCode extensions
+
 You can develop an AdonisJS application on any code editor supporting TypeScript. However, we have developed several extensions for VSCode to enhance the development experience further.
 
 - [**AdonisJS**](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension) - View application routes, run ace commands, migrate the database, and read documentation directly from your code editor.

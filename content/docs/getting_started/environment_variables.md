@@ -61,7 +61,7 @@ edge.global('env', env)
 
 Doing this will not expose the `env` module to the browser. The `env` module is only available during server-side rendering.
 
-::
+:::
 
 ## Validating environment variables
 

@@ -300,6 +300,26 @@ import env from '#start/env'
 env.get('SESSION_DRIVER') // memory
 ```
 
+## Using identifiers for interpolation
+
+You can define and use "identifiers" to change the interpolation behavior. The identifier is a string that prefix the environment variable value and let you customize the value resolution.
+
+```ts
+import { EnvParser } from '@adonisjs/env'
+
+EnvParser.identifier('base64', (value) => {
+  return Buffer.from(value, 'base64').toString()
+})
+
+const envParser = new EnvParser(`
+  APP_KEY=base64:U7dbSKkdb8wjVFOTq2osaDVz4djuA7BRLdoCUJEWxak=
+`)
+
+console.log(await envParser.parse())
+```
+
+In the above example, the `base64:` prefix tells the env parser to decode the value from base64 before returning it.
+
 ## All other dot-env files
 
 Alongside the `.env` file, AdonisJS processes the environment variables from the following dot-env files. Therefore, you can optionally create these files (if needed).
@@ -370,23 +390,3 @@ To use the `$` sign as a value, you must escape it to prevent variable substitut
 ```dotenv
 PASSWORD=pa\$\$word
 ```
-
-### Using identifiers for interpolation
-
-You can define and use "identifiers" to change the interpolation behavior. The identifier is a string that prefix the environment variable value and let you customize the value resolution.
-
-```ts
-import { EnvParser } from '@adonisjs/env'
-
-EnvParser.identifier('base64', (value) => {
-  return Buffer.from(value, 'base64').toString()
-})
-
-const envParser = new EnvParser(`
-  APP_KEY=base64:U7dbSKkdb8wjVFOTq2osaDVz4djuA7BRLdoCUJEWxak=
-`)
-
-console.log(await envParser.parse())
-```
-
-In the above example, the `base64:` prefix tells the env parser to decode the value from base64 before returning it.

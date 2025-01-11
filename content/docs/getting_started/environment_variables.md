@@ -115,9 +115,14 @@ The `schema.string` method ensures the value is a valid string. Empty strings fa
   APP_KEY: Env.schema.string()
 }
 
-// Mark APP_KEY to be optional
+// Mark it as optional
 {
   APP_KEY: Env.schema.string.optional()
+}
+
+// Mark it as optional with a condition
+{
+  APP_KEY: Env.schema.string.optionalWhen(process.env.NODE_ENV === 'production')
 }
 ```
 
@@ -174,6 +179,11 @@ The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to 
 {
   CACHE_VIEWS: Env.schema.boolean.optional()
 }
+
+// Mark it as optional with a condition
+{
+  CACHE_VIEWS: Env.schema.boolean.optionalWhen(process.env.NODE_ENV === 'production')
+}
 ```
 
 ### schema.number
@@ -188,6 +198,11 @@ The `schema.number` method ensures the value is a valid number. The string repre
 // Mark it as optional
 {
   PORT: Env.schema.number.optional()
+}
+
+// Mark it as optional with a condition
+{
+  PORT: Env.schema.number.optionalWhen(process.env.NODE_ENV === 'production')
 }
 ```
 
@@ -208,6 +223,17 @@ The `schema.enum` method validates the environment variable against one of the p
     .schema
     .enum
     .optional(['development', 'production'] as const)
+}
+
+// Mark it as optional with a condition
+{
+  NODE_ENV: Env
+    .schema
+    .enum
+    .optionalWhen(
+      process.env.NODE_ENV === 'production',
+      ['development', 'production'] as const
+    )
 }
 
 // Using native enums

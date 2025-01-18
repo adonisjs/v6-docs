@@ -4,7 +4,7 @@ summary: How to create and configure a new AdonisJS application.
 
 # Installation
 
-Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. AdonisJS needs `Node.js >= 20.6`.
+Before creating a new application, you should ensure that you have Node.js and npm installed on your computer. **AdonisJS needs Node.js version 20 or higher**.
 
 You may install Node.js using either the [official installers](https://nodejs.org/en/download/) or [Volta](https://docs.volta.sh/guide/getting-started). Volta is a cross-platform package manager that installs and runs multiple Node.js versions on your computer.
 

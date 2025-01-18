@@ -49,6 +49,12 @@ If you want to access environment variables within edge templates, then you must
 
 You can [create `view.ts` as a preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory and write the following lines of code inside it.
 
+:::note
+
+Doing this will not expose the `env` module to the browser. The `env` module is only available during server-side rendering.
+
+:::
+
 ```ts
 // title: start/view.ts
 import env from '#start/env'
@@ -56,12 +62,6 @@ import edge from 'edge.js'
 
 edge.global('env', env)
 ```
-
-:::note
-
-Doing this will not expose the `env` module to the browser. The `env` module is only available during server-side rendering.
-
-:::
 
 ## Validating environment variables
 

@@ -108,7 +108,7 @@ import router from '@adonisjs/core/services/router'
 router.get('/user/:id', async ({ params }) => {
   return cache.getOrSet({
     key: `user:${params.id}`,
-    duration: '5m',
+    ttl: '5m',
     factory: async () => {
       const user = await User.find(params.id)
       return user.toJSON()

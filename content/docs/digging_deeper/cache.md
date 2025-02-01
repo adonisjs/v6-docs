@@ -6,7 +6,7 @@ summary: Cache data to improve the performance of your application
 
 AdonisJS Cache (`@adonisjs/cache`) is a simple, lightweight wrapper built on top of [bentocache.dev](https://bentocache.dev) to cache data and enhance the performance of your application. It provides a straightforward and unified API to interact with various cache drivers, such as Redis, DynamoDB, PostgreSQL, in-memory caching, and more.
 
-We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [timeouts](https://bentocache.dev/docs/timeouts), and more.
+We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
 
 ## Installation
 
@@ -156,7 +156,7 @@ cache.getOrSet({
   },
   ttl: '1h',
   grace: '6h',
-  timeouts: { soft: '200ms' },
+  timeout: '200ms',
 })
 ```
 
@@ -174,11 +174,17 @@ cache.getOrSet({
     return 'slow-api-response'
   },
   ttl: '1h',
-  timeouts: { hard: '200ms' },
+  hardTimeout: '200ms',
 })
 ```
 
 In this example, the factory method will be stopped after 200ms and an error will be thrown.
+
+:::note
+
+You can define the `timeout` and `hardTimeout` together. The `timeout` is the maximum time the factory method is allowed to run before returning stale data, while the `hardTimeout` is the maximum time the factory method is allowed to run before being stopped.
+
+:::
 
 ## Cache Service
 

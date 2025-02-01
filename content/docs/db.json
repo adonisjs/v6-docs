@@ -390,15 +390,15 @@
     "category": "Testing"
   },
   {
-    "permalink": "digging-deeper/drive",
-    "title": "Drive",
-    "contentPath": "./digging_deeper/drive.md",
-    "category": "Digging deeper"
-  },
-  {
     "permalink": "digging-deeper/cache",
     "title": "Cache",
     "contentPath": "./digging_deeper/cache.md",
+    "category": "Digging deeper"
+  },
+  {
+    "permalink": "digging-deeper/drive",
+    "title": "Drive",
+    "contentPath": "./digging_deeper/drive.md",
     "category": "Digging deeper"
   },
   {

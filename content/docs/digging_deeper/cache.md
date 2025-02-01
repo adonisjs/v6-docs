@@ -46,11 +46,7 @@ import { defineConfig, store, drivers } from '@adonisjs/cache'
 
 const cacheConfig = defineConfig({
   default: 'redis',
-  suppressL2Errors: false,
-  gracePeriod: {
-    enabled: true,
-    duration: '60s',
-  },
+  
   stores: {
     /**
      * Cache data only on DynamoDB
@@ -68,7 +64,7 @@ const cacheConfig = defineConfig({
      * need to be synchronized using a bus.
      */
     redis: store()
-      .useL1Layer(drivers.memory({ maxSize: 10 * 1024 * 1024 }))
+      .useL1Layer(drivers.memory({ maxSize: '100mb' }))
       .useL2Layer(drivers.redis({ connectionName: 'main' }))
       .useBus(drivers.redisBus({ connectionName: 'main' })),
   },
@@ -108,20 +104,81 @@ import router from '@adonisjs/core/services/router'
 router.get('/user/:id', async ({ params }) => {
   return cache.getOrSet({
     key: `user:${params.id}`,
-    ttl: '5m',
     factory: async () => {
       const user = await User.find(params.id)
       return user.toJSON()
     },
+    ttl: '5m',
   })
 })
 ```
 
-Key points to note here:
+:::warning
 
-- We are using the [`getOrSet`](https://bentocache.dev/docs/methods#getorset) method. The first time the route is accessed, it will fetch the user details from the database and cache them for 5 minutes. Subsequent requests will return the cached value.
-- The `factory` method is a callback that executes when the cache key is missing. The return value of the factory method is then cached.
-- As you can see, we serialize the user's data using `user.toJSON()`. This is necessary because your data must be serialized to be stored in the cache. Classes such as Lucid models or instances of `Date` cannot be stored directly in caches like Redis or a database.
+As you can see, we serialize the user's data using `user.toJSON()`. This is necessary because your data must be serialized to be stored in the cache. Classes such as Lucid models or instances of `Date` cannot be stored directly in caches like Redis or a database.
+
+:::
+
+The `ttl` defines the time-to-live for the cache key. After the TTL expires, the cache key is considered stale, and the next request will re-fetch the data from the factory method.
+
+### Grace period
+
+You can allow Bentocache to return stale data if the cache key is expired but still within a grace period using the `grace` option. This change makes Bentocache works in a same way `SWR` or `TanStack Query` do
+
+```ts
+import cache from '@adonisjs/cache/services/main'
+
+cache.getOrSet({
+  key: 'slow-api',
+  factory: async () => {
+    await sleep(5000)
+    return 'slow-api-response'
+  },
+  ttl: '1h',
+  grace: '6h',
+})
+```
+
+In the example above, the data will be considered stale after 1 hour. However, the next request within the grace period of 6 hours will return the stale data while re-fetching the data from the factory method and updating the cache.
+
+### Timeouts
+
+You can configure how long you allow your factory method to run before returning stale data using the `timeout` option. By default, Bentocache set a soft timeout of 0ms, which means we always return stale data while re-fetching the data in the background.
+
+```ts
+import cache from '@adonisjs/cache/services/main'
+
+cache.getOrSet({
+  key: 'slow-api',
+  factory: async () => {
+    await sleep(5000)
+    return 'slow-api-response'
+  },
+  ttl: '1h',
+  grace: '6h',
+  timeouts: { soft: '200ms' },
+})
+```
+
+In the example above, the factory method will be allowed to run for a maximum of 200ms. If the factory method takes longer than 200ms, the stale data will be returned to the user but the factory method will continue to run in the background.
+
+If you have not defined a `grace` period, you can still use a hard timeout to stop the factory method from running after a certain time.
+
+```ts
+import cache from '@adonisjs/cache/services/main'
+
+cache.getOrSet({
+  key: 'slow-api',
+  factory: async () => {
+    await sleep(5000)
+    return 'slow-api-response'
+  },
+  ttl: '1h',
+  timeouts: { hard: '200ms' },
+})
+```
+
+In this example, the factory method will be stopped after 200ms and an error will be thrown.
 
 ## Cache Service
 
@@ -158,8 +215,8 @@ await cache.setForever('username', 'jul')
 
 await cache.getOrSet({
   key: 'username',
-  ttl: '1h',
   factory: async () => fetchUserName(),
+  ttl: '1h',
 })
 
 await cache.has('username')

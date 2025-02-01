@@ -396,6 +396,12 @@
     "category": "Digging deeper"
   },
   {
+    "permalink": "digging-deeper/cache",
+    "title": "Cache",
+    "contentPath": "./digging_deeper/cache.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "digging-deeper/emitter",
     "title": "Emitter",
     "contentPath": "./digging_deeper/emitter.md",
@@ -411,12 +417,6 @@
     "permalink": "digging-deeper/i18n",
     "title": "I18n",
     "contentPath": "./digging_deeper/i18n.md",
-    "category": "Digging deeper"
-  },
-  {
-    "permalink": "digging-deeper/cache",
-    "title": "Cache",
-    "contentPath": "./digging_deeper/cache.md",
     "category": "Digging deeper"
   },
   {
@@ -438,15 +438,15 @@
     "category": "Digging deeper"
   },
   {
-    "permalink": "digging-deeper/transmit",
-    "title": "Transmit",
-    "contentPath": "./digging_deeper/transmit.md",
-    "category": "Digging deeper"
-  },
-  {
     "permalink": "digging-deeper/repl",
     "title": "Repl",
     "contentPath": "./digging_deeper/repl.md",
+    "category": "Digging deeper"
+  },
+  {
+    "permalink": "digging-deeper/transmit",
+    "title": "Transmit",
+    "contentPath": "./digging_deeper/transmit.md",
     "category": "Digging deeper"
   },
   {

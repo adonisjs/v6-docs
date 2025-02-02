@@ -212,12 +212,12 @@ You can find all available methods here: [BentoCache API](https://bentocache.dev
 
 ```ts
 await cache.namespace('users').set({ key: 'username', value: 'jul' })
-await cache.namespace('users').get('username')
+await cache.namespace('users').get({ key: 'username' })
 
-await cache.get('username')
+await cache.get({ key: 'username' })
 
-await cache.set('username', 'jul')
-await cache.setForever('username', 'jul')
+await cache.set({ key: 'username', value: 'jul' })
+await cache.setForever({ key: 'username', value: 'jul' })
 
 await cache.getOrSet({
   key: 'username',
@@ -225,13 +225,13 @@ await cache.getOrSet({
   ttl: '1h',
 })
 
-await cache.has('username')
-await cache.missing('username')
+await cache.has({ key: 'username' })
+await cache.missing({ key: 'username' } )
 
-await cache.pull('username')
+await cache.pull({ key: 'username' })
 
-await cache.delete('username')
-await cache.deleteMany(['products', 'users'])
+await cache.delete({ key: 'username' })
+await cache.deleteMany({ keys: ['products', 'users'] })
 
 await cache.clear()
 ```
@@ -242,7 +242,7 @@ The `cache` service is available as an edge helper within your views. You can us
 
 ```edge
 <p>
-  Hello {{ await cache.get('username') }}
+  Hello {{ await cache.get({ key: 'username' }) }}
 </p>
 ```
 

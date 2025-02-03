@@ -159,12 +159,12 @@ Aliases the shorthand names for a flag mentioned using a single hyphen (`-`). An
 
 ```ts
 @flags.boolean({
-  aliases: ['r']
+  alias: ['r']
 })
 declare resource: boolean
 
 @flags.boolean({
-  aliases: ['s']
+  alias: ['s']
 })
 declare singular: boolean
 ```

@@ -103,7 +103,7 @@
   },
   {
     "permalink": "concepts/dependency-injection",
-    "title": "Dependency injection (DI)",
+    "title": "Dependency injection",
     "contentPath": "./concepts/dependency_injection.md",
     "category": "Concepts"
   },
@@ -115,7 +115,7 @@
   },
   {
     "permalink": "concepts/hot-module-replacement",
-    "title": "Hot module replacement (HMR)",
+    "title": "Hot module replacement",
     "contentPath": "./concepts/hmr.md",
     "category": "Concepts"
   },

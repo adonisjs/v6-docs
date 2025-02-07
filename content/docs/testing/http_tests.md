@@ -91,19 +91,25 @@ It is a great way to keep your Open API spec and server responses in sync. Becau
 ### Registering schema
 AdonisJS does not offer tooling for generating Open API schema files from code. You may write it by hand or use graphical tools to create it.
 
-Once you have a spec file, save it inside the `resources` directory (create the directory if missing) and register it with the `assert` plugin within the `tests/bootstrap.ts` file.
+Once you have a spec file, save it inside the `resources` directory (create the directory if missing) and register it with the `openapi-assertions` plugin within the `tests/bootstrap.ts` file.
+
+```sh
+npm i -D @japa/openapi-assertions
+```
 
 ```ts
 // title: tests/bootstrap.ts
 import app from '@adonisjs/core/services/app'
+// highlight-start
+import { openapi } from '@japa/openapi-assertions'
+// highlight-end
 
 export const plugins: Config['plugins'] = [
+  assert(),
   // highlight-start
-  assert({
-    openApi: {
-      schemas: [app.makePath('resources/open_api_schema.yaml')]
-    }
-  }),
+  openapi({
+    schemas: [app.makePath('resources/open_api_schema.yaml')]
+  })
   // highlight-end
   apiClient(),
   pluginAdonisJS(app)

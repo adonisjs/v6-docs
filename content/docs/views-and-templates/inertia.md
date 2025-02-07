@@ -499,12 +499,8 @@ import { defineConfig } from '@adonisjs/inertia'
 
 export default defineConfig({
   sharedData: {
-    // 👇 This will be available in all views
-    appName: 'My App' ,
-    // 👇 Scoped to the current request
-    user: (ctx) => ctx.auth?.user, 
-    // 👇 Scoped to the current request
-    errors: (ctx) => ctx.session.flashMessages.get('errors'),
+    appName: 'My App', // 👈 This will be available in all views
+    user: (ctx) => ctx.auth?.user, // 👈 Scoped to the current request
   },
 })
 ```

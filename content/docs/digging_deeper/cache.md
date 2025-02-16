@@ -6,7 +6,7 @@ summary: Cache data to improve the performance of your application
 
 AdonisJS Cache (`@adonisjs/cache`) is a simple, lightweight wrapper built on top of [bentocache.dev](https://bentocache.dev) to cache data and enhance the performance of your application. It provides a straightforward and unified API to interact with various cache drivers, such as Redis, DynamoDB, PostgreSQL, in-memory caching, and more.
 
-We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
+We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [tagging](https://bentocache.dev/docs/tagging) [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
 
 ## Installation
 
@@ -121,6 +121,33 @@ As you can see, we serialize the user's data using `user.toJSON()`. This is nece
 
 The `ttl` defines the time-to-live for the cache key. After the TTL expires, the cache key is considered stale, and the next request will re-fetch the data from the factory method.
 
+### Tagging
+
+You can associate a cache entry with one or more tags to simplify invalidation. Instead of managing individual keys, entries can be grouped under multiple tags and invalidated in a single operation.
+
+```ts
+await bento.getOrSet({
+  key: 'foo',
+  factory: getFromDb(),
+  tags: ['tag-1', 'tag-2']
+});
+
+await bento.deleteByTags({ tags: ['tag-1'] });
+```
+
+### Namespaces
+
+Another way to group your keys is to use namespaces. This allows you to invalidate everything at once later :
+
+```ts
+const users = bento.namespace('users')
+
+users.set({ key: '32', value: { name: 'foo' } })
+users.set({ key: '33', value: { name: 'bar' } })
+
+users.clear() 
+```
+
 ### Grace period
 
 You can allow Bentocache to return stale data if the cache key is expired but still within a grace period using the `grace` option. This change makes Bentocache works in a same way `SWR` or `TanStack Query` do
@@ -212,12 +239,12 @@ You can find all available methods here: [BentoCache API](https://bentocache.dev
 
 ```ts
 await cache.namespace('users').set({ key: 'username', value: 'jul' })
-await cache.namespace('users').get('username')
+await cache.namespace('users').get({ key: 'username' })
 
-await cache.get('username')
+await cache.get({ key: 'username' })
 
-await cache.set('username', 'jul')
-await cache.setForever('username', 'jul')
+await cache.set({key: 'username', value: 'jul' })
+await cache.setForever({ key: 'username', value:'jul' })
 
 await cache.getOrSet({
   key: 'username',
@@ -225,13 +252,14 @@ await cache.getOrSet({
   ttl: '1h',
 })
 
-await cache.has('username')
-await cache.missing('username')
+await cache.has({ key: 'username' })
+await cache.missing({ key: 'username' })
 
-await cache.pull('username')
+await cache.pull({ key: 'username' })
 
-await cache.delete('username')
-await cache.deleteMany(['products', 'users'])
+await cache.delete({ key: 'username' })
+await cache.deleteMany({ keys: ['products', 'users'] })
+await cache.deleteByTags({ tags: ['products', 'users'] })
 
 await cache.clear()
 ```

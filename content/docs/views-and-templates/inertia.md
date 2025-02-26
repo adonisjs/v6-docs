@@ -596,7 +596,7 @@ If you're using Vue, you'll have to manually define each property in your `defin
 
 ```vue
 <script setup lang="ts">
-import { InferPageProps } from '@adonisjs/inertia'
+import { InferPageProps } from '@adonisjs/inertia/types'
 
 defineProps<{
   // 👇 You will have to manually define each prop

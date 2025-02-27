@@ -118,3 +118,16 @@
 /guides/experimental-assembler-hooks /guides/concepts/assembler-hooks
 /guides/inertia /guides/views-and-templates/inertia
 /guides/experimental-vite /guides/basics/vite
+
+# 404 on Google Search Console
+/reference/validator/rules/ip https://vinejs.dev/docs/types/string#ipaddress
+/reference/i18n/view-helpers /guides/references/edge#i18n
+/guides/deployment /guides/getting-started/deployment
+/reference/validator/schema/enum https://vinejs.dev/docs/types/enum
+/guides/assets-bundlers/vite /guides/basics/vite
+/reference/validator/rules/before-field https://v5-docs.adonisjs.com/reference/validator/rules/before-field
+/guides/views/templating-syntax /guides/views-and-templates/edgejs
+/guides/auth/basic-auth-guard /guides/authentication/basic-auth-guard
+/guides/models/serializing-models https://lucid.adonisjs.com/docs/serializing-models
+/reference/orm/relations/belongs-to https://lucid.adonisjs.com/docs/relationships#belongsto
+/guides/hashing /guides/security/hashing

@@ -546,7 +546,7 @@ export default class UsersController {
       // NEVER included on first visit.
       // OPTIONALLY included on partial reloads.
       // ONLY evaluated when needed
-      users: inertia.lazy(() => User.all())
+      users: inertia.optional(() => User.all())
     }),
   }
 }

@@ -188,7 +188,7 @@ The `token.value` property contains the value (wrapped as a [Secret](../referenc
 import router from '@adonisjs/core/services/router'
 import User from '#models/user'
 
-router.post('users/:id/tokens', ({ params }) => {
+router.post('users/:id/tokens', async ({ params }) => {
   const user = await User.findOrFail(params.id)
   const token = await User.accessTokens.create(user)
 
@@ -202,7 +202,7 @@ router.post('users/:id/tokens', ({ params }) => {
 You can also return the `token` directly in response, which will be serialized to the following JSON object.
 
 ```ts
-router.post('users/:id/tokens', ({ params }) => {
+router.post('users/:id/tokens', async ({ params }) => {
   const user = await User.findOrFail(params.id)
   const token = await User.accessTokens.create(user)
 

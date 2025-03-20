@@ -178,6 +178,8 @@ export default class extends BaseSchema {
 ## Issuing tokens
 Depending upon your application, you might issue a token during login or after login from the application dashboard. In either case, issuing a token requires a user object (for whom the token will be generated), and you can generate them directly using the `User` model.
 
+If you are using access tokens as the primary way to log users in/out, you might prefer to create/invalidate tokens directly through the auth guard, see [Logging in and out](#logging-in-and-out).
+
 In the following example, we **find a user by id** and **issue them an access token** using the `User.accessTokens.create` method. Of course, in a real-world application, you will have this endpoint guarded by authentication, but let's keep it simple for now.
 
 The `.create` method accepts an instance of the User model and returns an instance of the [AccessToken](https://github.com/adonisjs/auth/blob/main/modules/access_tokens_guard/access_token.ts) class. 
@@ -488,3 +490,55 @@ await User.accessTokens.delete(user, token.identifier)
 
 ## Events
 Please check the [events reference guide](../references/events.md#access_tokens_authauthentication_attempted) to view the list of available events emitted by the access tokens guard.
+
+## Logging in and out
+
+Access tokens are sometimes the prefered method for signing users in and out - for instance when authenticating a native app.
+
+To accomodate those situations the access tokens guard provides an API similar to the [login](./session_guard.md#performing-login) and [logout](./session_guard.md#performing-logout) methods of the [session guard](./session_guard.md).
+
+Logging in:
+
+```ts
+const token = await auth.use('api').createToken(user)
+```
+
+Logging out (the currently authenticated token):
+
+```ts
+await auth.use('api').invalidateToken()
+```
+
+### Session controller example
+
+Assuming that an access tokens guards, `api`, is already in place (e.g. you've set up: [user model](#configuring-the-user-model), [access tokens](#creating-the-access-tokens-database-table), and [auth guard](#configuring-the-guard)), a session controller can be implemented in the following way:
+
+```ts
+// title: app/controllers/session_controller.ts
+import User from '#models/user'
+import { HttpContext } from '@adonisjs/core/http'
+
+export default class SessionController {
+  async store({ request, auth, response }: HttpContext) {
+    const { email, password } = request.only(['email', 'password'])
+    const user = await User.verifyCredentials(email, password)
+
+    return await auth.use('api').createToken(user)
+  }
+
+  async delete({ request, auth, response }: HttpContext) {
+    await auth.use('api').invalidateToken()
+  }
+}
+```
+
+```ts
+// title: start/routes.ts
+import router from '@adonisjs/core/services/router'
+
+const SessionController = () => import('#controllers/session_controller')
+
+router.post('session', [SessionController, 'store'])
+router.destroy('session', [SessionController, 'destroy'])
+  .use(middleware.auth({ guards: ['api'] }))
+```

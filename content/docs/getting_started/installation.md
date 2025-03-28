@@ -49,13 +49,13 @@ When passing CLI flags using the `npm init` command, make sure to use [double da
 npm init adonisjs@latest hello-world
 
 # Create a project with MySQL
-npm init adonisjs@latest hello-world -- --db=mysql
+npm init adonisjs@latest hello-world --db=mysql
 
 # Create a project with PostgreSQL and API starter kit
-npm init adonisjs@latest hello-world -- --db=postgres --kit=api
+npm init adonisjs@latest hello-world --db=postgres --kit=api
 
 # Create a project with API starter kit and access tokens guard
-npm init adonisjs@latest hello-world -- --kit=api --auth-guard=access_tokens
+npm init adonisjs@latest hello-world --kit=api --auth-guard=access_tokens
 ```
 
 ## Starter kits
@@ -78,10 +78,10 @@ The simplicity of rendering HTML on the server using [Edge.js](https://edgejs.de
 Later, you can use [Hotwire](https://hotwired.dev), [HTMX](http://htmx.org), or [Unpoly](http://unpoly.com) to make your applications navigate like an SPA and use [Alpine.js](http://alpinejs.dev) to create interactive widgets like a dropdown or a modal.
 
 ```sh
-npm init adonisjs@latest -- -K=web
+npm init adonisjs@latest -K=web
 
 # Switch database dialect
-npm init adonisjs@latest -- -K=web --db=mysql
+npm init adonisjs@latest -K=web --db=mysql
 ```
 
 The web starter kit comes with the following packages.
@@ -134,10 +134,10 @@ The web starter kit comes with the following packages.
 The API starter kit is tailored for creating JSON API servers. It is a trimmed-down version of the `web` starter kit. If you plan to build your frontend app using React or Vue, you may create your AdonisJS backend using the API starter kit.
 
 ```sh
-npm init adonisjs@latest -- -K=api
+npm init adonisjs@latest -K=api
 
 # Switch database dialect
-npm init adonisjs@latest -- -K=api --db=mysql
+npm init adonisjs@latest -K=api --db=mysql
 ```
 
 In this starter kit:
@@ -152,7 +152,7 @@ The API starter kit is configured with session-based authentication. However, if
 See also: [Which authentication guard should I use?](../authentication/introduction.md#choosing-an-auth-guard)
 
 ```sh
-npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
+npm init adonisjs@latest -K=api --auth-guard=access_tokens
 ```
 
 ---
@@ -162,10 +162,10 @@ npm init adonisjs@latest -- -K=api --auth-guard=access_tokens
 For minimalists, we have created a `slim` starter kit. It comes with just the core of the framework and the default folder structure. You may use it when you do not want any bells and whistles of AdonisJS.
 
 ```sh
-npm init adonisjs@latest -- -K=slim
+npm init adonisjs@latest -K=slim
 
 # Switch database dialect
-npm init adonisjs@latest -- -K=slim --db=mysql
+npm init adonisjs@latest -K=slim --db=mysql
 ```
 
 ---
@@ -182,10 +182,10 @@ You can also use the `--ssr` and `--no-ssr` flags to turn server-side rendering 
 npm init adonisjs@latest -- -K=inertia
 
 # React with server-side rendering
-npm init adonisjs@latest -- -K=inertia --adapter=react --ssr
+npm init adonisjs@latest -K=inertia --adapter=react --ssr
 
 # Vue without server-side rendering
-npm init adonisjs@latest -- -K=inertia --adapter=vue --no-ssr
+npm init adonisjs@latest -K=inertia --adapter=vue --no-ssr
 ```
 
 ---
@@ -195,29 +195,29 @@ npm init adonisjs@latest -- -K=inertia --adapter=vue --no-ssr
 Starter kits are pre-built projects hosted with a Git repository provider like GitHub, Bitbucket, or GitLab. You can also create your starter kits and download them as follows.
 
 ```sh
-npm init adonisjs@latest -- -K="github_user/repo"
+npm init adonisjs@latest -K="github_user/repo"
 
 # Download from GitLab
-npm init adonisjs@latest -- -K="gitlab:user/repo"
+npm init adonisjs@latest --K="gitlab:user/repo"
 
 # Download from Bitbucket
-npm init adonisjs@latest -- -K="bitbucket:user/repo"
+npm init adonisjs@latest -K="bitbucket:user/repo"
 ```
 
 You can download private repos using Git+SSH authentication using the `git` mode.
 
 ```sh
-npm init adonisjs@latest -- -K="user/repo" --mode=git
+npm init adonisjs@latest -K="user/repo" --mode=git
 ```
 
 Finally, you can specify a tag, branch, or commit.
 
 ```sh
 # Branch
-npm init adonisjs@latest -- -K="user/repo#develop"
+npm init adonisjs@latest -K="user/repo#develop"
 
 # Tag
-npm init adonisjs@latest -- -K="user/repo#v2.1.0"
+npm init adonisjs@latest -K="user/repo#v2.1.0"
 ```
 
 ## Starting the development server

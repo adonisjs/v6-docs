@@ -4,7 +4,7 @@ summary: Protect your web application or API server from abuse by implementing r
 
 # Rate limiting
 
-AdonisJS provides a first-party package for implementing rate limits in your web application or the API server. The rate limiter provides `redis`, `mysql`, `postgresql` and `memory` as the storage options, with the ability to [create custom storage providers](#creating-a-custom-storage-provider).
+AdonisJS provides a first-party package for implementing rate limits in your web application or the API server. The rate limiter provides `redis`, `mysql`, `postgresql`, `sqlite` and `memory` as the storage options, with the ability to [create custom storage providers](#creating-a-custom-storage-provider).
 
 The `@adonisjs/limiter` package is built on top of the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible) package, which provides one of the fastest rate-limiting API and uses atomic increments to avoid race conditions.
 
@@ -44,7 +44,7 @@ node ace add @adonisjs/limiter
 :::
 
 ## Configuration
-The configuration for the rate limiter is stored within the `config/limiter.ts` file. 
+The configuration for the rate limiter is stored within the `config/limiter.ts` file.
 
 See also: [Rate limiter config stub](https://github.com/adonisjs/limiter/blob/main/stubs/config/limiter.stub)
 
@@ -234,7 +234,7 @@ rejectIfRedisNotReady
 
 <dd>
 
-Reject the rate-limiting requests when the status of the Redis connection is not `ready.` 
+Reject the rate-limiting requests when the status of the Redis connection is not `ready.`
 
 </dd>
 
@@ -249,7 +249,7 @@ Following is the list of options the database store accepts (alongside the share
 
 :::note
 
-Only MySQL and PostgreSQL databases can be used with the database store.
+Only MySQL, PostgreSQL, and SQLite databases can be used with the database store.
 
 :::
 
@@ -299,7 +299,7 @@ tableName
 
 <dd>
 
-The database table to use to store rate limits. 
+The database table to use to store rate limits.
 
 </dd>
 
@@ -552,7 +552,7 @@ const reportsLimiter = limiter.use({
 
 ### Applying rate limit on an action
 
-Once you have created a limiter instance, you can use the `attempt` method to apply rate limiting on an action. 
+Once you have created a limiter instance, you can use the `attempt` method to apply rate limiting on an action.
 The method accepts the following parameters.
 
 - A unique key to use for rate limiting.
@@ -567,7 +567,7 @@ const key = 'user_1_reports'
  * Attempt to run an action for the given key.
  * The result will be the callback function return
  * value or undefined if no callback was executed.
- */ 
+ */
 const executed = reportsLimiter.attempt(key, async () => {
   await generateReport()
   return true
@@ -615,7 +615,7 @@ export default class SessionController {
     })
 
     /**
-     * Use IP address + email combination. This ensures if an 
+     * Use IP address + email combination. This ensures if an
      * attacker is misusing emails; we do not block actual
      * users from logging in and only penalize the attacker
      * IP address.
@@ -708,7 +708,7 @@ const requestsLimiter = limiter.use({
  * A user can make 10 requests in a minute. However, if
  * they send the 11th request, we will block the key
  * for 30 mins.
- */ 
+ */
 await requestLimiter.consume('a_unique_key')
 
 /**
@@ -783,7 +783,7 @@ If you use a single (i.e., default) store for rate limiting, you may want to swi
 LIMITER_STORE=memory
 ```
 
-You may clear the rate-limiting storage between tests using the `limiter.clear` method. The `clear` method accepts an array of store names and flushes the database. 
+You may clear the rate-limiting storage between tests using the `limiter.clear` method. The `clear` method accepts an array of store names and flushes the database.
 
 When using Redis, it is recommended to use a separate database for the rate limiter. Otherwise, the `clear` method will flush the entire DB, and this might impact other parts of the applications.
 
@@ -865,17 +865,17 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
 
   /**
    * Block a key for the specified duration.
-   */ 
+   */
   async block(
     key: string | number,
     duration: string | number
   ): Promise<LimiterResponse> {}
-  
+
   /**
    * Set the number of consumed requests for a given key. The duration
    * should be inferred from the config if no explicit duration
    * is provided.
-   */ 
+   */
   async set(
     key: string | number,
     requests: number,

@@ -542,3 +542,9 @@ router.post('session', [SessionController, 'store'])
 router.delete('session', [SessionController, 'delete'])
   .use(middleware.auth({ guards: ['api'] }))
 ```
+
+:::note
+
+If [CSRF](../security/securing_ssr_applications.md#csrf-protection) protection is enabled, remember to add an exception for the `/session` route. See [shield config reference](https://docs.adonisjs.com/guides/security/securing-ssr-applications#config-reference)
+
+:::

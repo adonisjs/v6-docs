@@ -539,6 +539,6 @@ import router from '@adonisjs/core/services/router'
 const SessionController = () => import('#controllers/session_controller')
 
 router.post('session', [SessionController, 'store'])
-router.destroy('session', [SessionController, 'destroy'])
+router.delete('session', [SessionController, 'delete'])
   .use(middleware.auth({ guards: ['api'] }))
 ```

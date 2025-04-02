@@ -318,7 +318,7 @@ const user = await ally
 ```
 
 ## Stateless authentication
-Many OAuth providers [recommend using a CSRF state token](https://developers.google.com/identity/openid-connect/openid-connect?hl=en#createxsrftoken) to prevent your application from request forgery attacks.
+Many OAuth providers [recommend using a CSRF state token](https://developers.google.com/identity/openid-connect/openid-connect?hl=en#createxsrftoken) to prevent your application from cross-site request forgery attacks.
 
 Ally creates a CSRF token and saves it inside an encrypted cookie, which is later verified after the user approves the authentication request.
 

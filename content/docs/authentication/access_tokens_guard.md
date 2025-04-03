@@ -543,6 +543,14 @@ router.delete('session', [SessionController, 'destroy'])
   .use(middleware.auth({ guards: ['api'] }))
 ```
 
+:::warning
+
+Use [content negotiation](../authentication/verifying_user_credentials.md#handling-exceptions) to get appropriate responses when `User.verifyCredentials` fails (and throws [E_INVALID_CREDENTIALS](../references/exceptions#e_invalid_credentials)).
+
+In the above example's case, the client should include an `Accept=application/json` header in post requests to `/session`. This ensures that failures will result in json formatted responses rather than redirects.
+
+:::
+
 :::tip
 
 If you are using access tokens to sign from an external source, like a mobile app, you might want to disable CSRF protection [CSRF](../security/securing_ssr_applications.md#csrf-protection).

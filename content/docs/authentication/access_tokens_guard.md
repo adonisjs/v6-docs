@@ -543,7 +543,15 @@ router.delete('session', [SessionController, 'delete'])
   .use(middleware.auth({ guards: ['api'] }))
 ```
 
-:::note
+:::warning
+
+Use [content negotiation](../authentication/verifying_user_credentials.md#handling-exceptions) to get appropriate responses when `User.verifyCredentials` fails (and throws [E_INVALID_CREDENTIALS](../references/exceptions#e_invalid_credentials)).
+
+In the above example's case, the client should include an `Accept=application/json` header in post requests to `/session`. This ensures that failures will result in json formatted responses rather than redirects.
+
+:::
+
+:::warning
 
 If [CSRF](../security/securing_ssr_applications.md#csrf-protection) protection is enabled, remember to add an exception for the `/session` route. See [shield config reference](https://docs.adonisjs.com/guides/security/securing-ssr-applications#config-reference)
 

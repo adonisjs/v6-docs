@@ -553,7 +553,7 @@ In the above example's case, the client should include an `Accept=application/js
 
 :::tip
 
-If you are using access tokens to sign from an external source, like a mobile app, you might want to disable CSRF protection [CSRF](../security/securing_ssr_applications.md#csrf-protection).
+If you are using access tokens to sign in from an external source, like a mobile app, you might want to disable [CSRF protection](../security/securing_ssr_applications.md#csrf-protection).
 You can either disable CSRF protection globally (if your app is solely used as an API), or add exceptions for API routes (including the `/session` route). See [shield config reference](https://docs.adonisjs.com/guides/security/securing-ssr-applications#config-reference)
 
 :::

@@ -526,7 +526,7 @@ export default class SessionController {
     return await auth.use('api').createToken(user)
   }
 
-  async delete({ request, auth, response }: HttpContext) {
+  async destroy({ request, auth, response }: HttpContext) {
     await auth.use('api').invalidateToken()
   }
 }
@@ -539,6 +539,21 @@ import router from '@adonisjs/core/services/router'
 const SessionController = () => import('#controllers/session_controller')
 
 router.post('session', [SessionController, 'store'])
-router.destroy('session', [SessionController, 'destroy'])
+router.delete('session', [SessionController, 'destroy'])
   .use(middleware.auth({ guards: ['api'] }))
 ```
+
+:::warning
+
+Use [content negotiation](../authentication/verifying_user_credentials.md#handling-exceptions) to get appropriate responses when `User.verifyCredentials` fails (and throws [E_INVALID_CREDENTIALS](../references/exceptions#e_invalid_credentials)).
+
+In the above example's case, the client should include an `Accept=application/json` header in post requests to `/session`. This ensures that failures will result in json formatted responses rather than redirects.
+
+:::
+
+:::tip
+
+If you are using access tokens to sign from an external source, like a mobile app, you might want to disable CSRF protection [CSRF](../security/securing_ssr_applications.md#csrf-protection).
+You can either disable CSRF protection globally (if your app is solely used as an API), or add exceptions for API routes (including the `/session` route). See [shield config reference](https://docs.adonisjs.com/guides/security/securing-ssr-applications#config-reference)
+
+:::

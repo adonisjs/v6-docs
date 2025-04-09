@@ -309,7 +309,7 @@ emitter.on('authorization:finished', (event) => {
 })
 ```
 
-## cache:cleared
+## cache\:cleared
 
 The event is dispatched by the `@adonisjs/cache` package after the cache has been cleared using the `cache.clear` method.
 
@@ -321,7 +321,7 @@ emitter.on('cache:cleared', (event) => {
 })
 ```
 
-## cache:deleted
+## cache\:deleted
 
 The event is dispatched by the `@adonisjs/cache` package after a cache key has been deleted using the `cache.delete` method.
 
@@ -333,7 +333,7 @@ emitter.on('cache:deleted', (event) => {
 })
 ```
 
-## cache:hit
+## cache\:hit
 
 The event is dispatched by the `@adonisjs/cache` package when a cache key is found in the cache store.
 
@@ -346,7 +346,7 @@ emitter.on('cache:hit', (event) => {
 })
 ```
 
-## cache:miss
+## cache\:miss
 
 The event is dispatched by the `@adonisjs/cache` package when a cache key is not found in the cache store.
 
@@ -358,7 +358,7 @@ emitter.on('cache:miss', (event) => {
 })
 ```
 
-## cache:written
+## cache\:written
 
 The event is dispatched by the `@adonisjs/cache` package after a cache key has been written to the cache store.
 

@@ -46,7 +46,7 @@ node ace add @adonisjs/limiter
 ## Configuration
 The configuration for the rate limiter is stored within the `config/limiter.ts` file. 
 
-See also: [Rate limiter config stub](https://github.com/adonisjs/limiter/blob/main/stubs/config/limiter.stub)
+See also: [Rate limiter config stub](https://github.com/adonisjs/limiter/blob/2.x/stubs/config/limiter.stub)
 
 ```ts
 import env from '#start/env'
@@ -331,7 +331,7 @@ When enabled, the database store will clear expired keys every 5 minutes. Do not
 
 
 ## Throttling HTTP requests
-Once the limiter has been configured, you may create HTTP throttle middleware using the `limiter.define` method. The `limiter` service is a singleton instance of the [LimiterManager](https://github.com/adonisjs/limiter/blob/main/src/limiter_manager.ts) class created using the config defined within the `config/limiter.ts` file.
+Once the limiter has been configured, you may create HTTP throttle middleware using the `limiter.define` method. The `limiter` service is a singleton instance of the [LimiterManager](https://github.com/adonisjs/limiter/blob/2.x/src/limiter_manager.ts) class created using the config defined within the `config/limiter.ts` file.
 
 If you open the `start/limiter.ts` file, you will find a pre-defined global throttle middleware you can apply on a route or a group of routes. Similarly, you can create as many throttle middleware as you need in your application.
 
@@ -524,7 +524,7 @@ Alongside throttling HTTP requests, you may also use the limiter to apply rate l
 
 ### Creating limiter
 
-Before you can apply rate limiting on an action, you must get an instance of the [Limiter](https://github.com/adonisjs/limiter/blob/main/src/limiter.ts) class using the `limiter.use` method. The `use` method accepts the name of the backend store and the following rate-limiting options.
+Before you can apply rate limiting on an action, you must get an instance of the [Limiter](https://github.com/adonisjs/limiter/blob/2.x/src/limiter.ts) class using the `limiter.use` method. The `use` method accepts the name of the backend store and the following rate-limiting options.
 
 - `requests`: The number of requests to allow for a given duration.
 - `duration`: The duration in seconds or a [time expression](../references/helpers.md#seconds) string.
@@ -812,7 +812,7 @@ test.group('Reports', (group) => {
 ```
 
 ## Creating a custom storage provider
-A custom storage provider must implement the [LimiterStoreContract](https://github.com/adonisjs/limiter/blob/main/src/types.ts#L163) interface and define the following properties/methods.
+A custom storage provider must implement the [LimiterStoreContract](https://github.com/adonisjs/limiter/blob/2.x/src/types.ts#L163) interface and define the following properties/methods.
 
 You may write the implementation inside any file/folder. A service provider is not needed to create a custom store.
 
@@ -949,7 +949,7 @@ const limiterConfig = defineConfig({
 ```
 
 ### Wrapping rate-limiter-flexible drivers
-If you are planning to wrap an existing driver from the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible?tab=readme-ov-file#docs-and-examples) package, then you may use the [RateLimiterBridge](https://github.com/adonisjs/limiter/blob/main/src/stores/bridge.ts) for the implementation.
+If you are planning to wrap an existing driver from the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible?tab=readme-ov-file#docs-and-examples) package, then you may use the [RateLimiterBridge](https://github.com/adonisjs/limiter/blob/2.x/src/stores/bridge.ts) for the implementation.
 
 Let's re-implement the same `MongoDbLimiterStore` using the bridge this time.
 

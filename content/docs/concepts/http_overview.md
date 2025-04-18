@@ -158,7 +158,7 @@ Once there is a matching route, we execute the [router global middleware](../bas
 
 As the final step, the request reaches the route handler and returns to the client with a response.
 
-Suppose an exception is raised during any step in the process. In that case, the request will be handed over to the global exception handler, who is responsible for converting the exception to a response.
+Suppose an exception is raised during any step in the process. In that case, the request will be handed over to the global exception handler, which is responsible for converting the exception to a response.
 
 </dd>
 

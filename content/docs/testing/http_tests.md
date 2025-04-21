@@ -156,7 +156,7 @@ The `withCookie` method defines a [singed cookie](../basics/cookies.md#signed-co
 ```ts
 await client
   .get('/users')
-  .witEncryptedCookie('user_preferences', { limit: 10 })
+  .withEncryptedCookie('user_preferences', { limit: 10 })
 ```
 
 ```ts

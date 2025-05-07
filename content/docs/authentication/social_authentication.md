@@ -7,7 +7,6 @@ summary: Implement social authentication in your AdonisJS applications using the
 You can implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
 Ally comes with the following inbuilt drivers, alongside an extensible API to [register custom drivers](#creating-a-custom-social-driver).
 
-- Twitter
 - Facebook
 - Spotify
 - Google
@@ -63,9 +62,9 @@ defineConfig({
     clientSecret: env.get('GITHUB_CLIENT_SECRET')!,
     callbackUrl: '',
   }),
-  twitter: services.twitter({
-    clientId: env.get('TWITTER_CLIENT_ID')!,
-    clientSecret: env.get('TWITTER_CLIENT_SECRET')!,
+  google: services.google({
+    clientId: env.get('GOOGLE_CLIENT_ID')!,
+    clientSecret: env.get('GOOGLE_CLIENT_SECRET')!,
     callbackUrl: '',
   }),
 })
@@ -76,7 +75,7 @@ OAuth providers require you to register a callback URL to handle the redirect re
 
 The callback URL must be registered with the OAuth service provider. For example: If you are using GitHub, you must log in to your GitHub account, [create a new app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) and define the callback URL using the GitHub interface.
 
-Also, you must register the same callback URL within the `config/ally.ts` file using the `callbackUrl` property.
+Also, you must register the same callback URL within the `config/ally.ts` file using the `callbackUrl` property. In many cases, you will want the callback URL to come from an Enviroment variable, or constructed based on a "public url" for your service.
 
 ## Usage
 Once the package has been configured, you can interact with Ally APIs using the `ctx.ally` property. You can switch between the configured auth providers using the `ally.use()` method. For example:
@@ -87,15 +86,15 @@ router.get('/github/redirect', ({ ally }) => {
   const gh = ally.use('github')
 })
 
-router.get('/twitter/redirect', ({ ally }) => {
-  // Twitter driver instance
-  const twitter = ally.use('twitter')
+router.get('/google/redirect', ({ ally }) => {
+  // Google driver instance
+  const google = ally.use('google')
 })
 
 // You could also dynamically retrieve the driver
 router.get('/:provider/redirect', ({ ally, params }) => {
   const driverInstance = ally.use(params.provider)
-}).where('provider', /github|twitter/)
+}).where('provider', /github|google/)
 ```
 
 ### Redirecting the user for authentication
@@ -218,7 +217,7 @@ user.token.expiresIn
 | Property | Protocol | Description |
 |---------|------------|------------|
 | `token` | OAuth2 / OAuth1 | The value of the access token. The value is available for the `OAuth2` and the `OAuth1` protocols. |
-| `secret` | OAuth1 | The token secret applicable only for `OAuth1` protocol. Currently, Twitter is the only official driver using OAuth1. |
+| `secret` | OAuth1 | The token secret applicable only for `OAuth1` protocol. |
 | `type` | OAuth2 | The token type. Usually, it will be a [bearer token](https://oauth.net/2/bearer-tokens/).
 | `refreshToken` | OAuth2 | You can use the refresh token to create a new access token. The value will be `undefined` if the OAuth provider does not support refresh tokens |
 | `expiresAt` | OAuth2 | An instance of the luxon DateTime class representing the absolute time when the access token will expire. |
@@ -375,20 +374,6 @@ The following is the complete configuration reference for all the drivers. You c
     hostedDomain: 'adonisjs.com',
     display: 'page',
     scopes: ['userinfo.email', 'calendar.events'],
-  })
-}
-```
-
-:::
-
-:::disclosure{title="Twitter config"}
-
-```ts
-{
-  twitter: services.twitter({
-    clientId: '',
-    clientSecret: '',
-    callbackUrl: '',
   })
 }
 ```

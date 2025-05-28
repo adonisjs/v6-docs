@@ -46,7 +46,7 @@ import { defineConfig, store, drivers } from '@adonisjs/cache'
 
 const cacheConfig = defineConfig({
   default: 'redis',
-  
+
   stores: {
     /**
      * Cache data only on DynamoDB
@@ -89,7 +89,7 @@ In `config/cache.ts`, you must specify a `connectionName`. This property should 
 
 ### Other drivers
 
-You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`. 
+You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`.
 
 See [Cache Drivers](https://bentocache.dev/docs/cache-drivers) for more information.
 
@@ -132,7 +132,7 @@ await bento.getOrSet({
   tags: ['tag-1', 'tag-2']
 });
 
-await bento.deleteByTags({ tags: ['tag-1'] });
+await bento.deleteByTag({ tags: ['tag-1'] });
 ```
 
 ### Namespaces
@@ -145,7 +145,7 @@ const users = bento.namespace('users')
 users.set({ key: '32', value: { name: 'foo' } })
 users.set({ key: '33', value: { name: 'bar' } })
 
-users.clear() 
+users.clear()
 ```
 
 ### Grace period
@@ -259,7 +259,7 @@ await cache.pull({ key: 'username' })
 
 await cache.delete({ key: 'username' })
 await cache.deleteMany({ keys: ['products', 'users'] })
-await cache.deleteByTags({ tags: ['products', 'users'] })
+await cache.deleteByTag({ tags: ['products', 'users'] })
 
 await cache.clear()
 ```

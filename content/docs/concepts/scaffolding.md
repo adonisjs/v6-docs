@@ -86,7 +86,7 @@ We recommend computing these properties within the stub using inline variables. 
 // insert-start
 {{#var entity = generators.createEntity('user')}}
 {{#var modelName = generators.modelName(entity.name)}}
-{{#var modelReference = string.toCamelCase(modelName)}}
+{{#var modelReference = string.camelCase(modelName)}}
 // insert-end
 
 export default class {{ modelName }}Resource {
@@ -104,7 +104,7 @@ The destination path is defined using the `exports` function. The function accep
 ```js
 {{#var entity = generators.createEntity('user')}}
 {{#var modelName = generators.modelName(entity.name)}}
-{{#var modelReference = string.toCamelCase(modelName)}}
+{{#var modelReference = string.camelCase(modelName)}}
 // insert-start
 {{#var resourceFileName = string(modelName).snakeCase().suffix('_resource').ext('.ts').toString()}}
 {{{
@@ -153,7 +153,7 @@ export default class MakeApiResource extends BaseCommand {
 {{#var entity = generators.createEntity(name)}}
 // insert-end
 {{#var modelName = generators.modelName(entity.name)}}
-{{#var modelReference = string.toCamelCase(modelName)}}
+{{#var modelReference = string.camelCase(modelName)}}
 {{#var resourceFileName = string(modelName).snakeCase().suffix('_resource').ext('.ts').toString()}}
 {{{
   exports({

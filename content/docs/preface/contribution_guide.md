@@ -12,7 +12,7 @@ Code is not the only way to contribute. Following are also some ways to contribu
 - Writing cookbooks or blog posts to educate others in the community
 - Triaging issues
 - Sharing your opinion on existing issues
-- Help the community in discord and the discussions forum
+- Help the community on [discord](https://discord.gg/vDcEjq6) and in the discussion forums.
 
 ## Reporting bugs
 Many issues reported on open source projects are usually questions or misconfiguration at the reporter's end. Therefore, we highly recommend you properly troubleshoot your issues before reporting them.

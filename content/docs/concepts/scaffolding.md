@@ -235,7 +235,7 @@ node ace make:controller invoice --feature=billing
 // title: Controller stub
 {{#var controllerName = generators.controllerName(entity.name)}}
 // insert-start
-{{#var featureDirectoryName = generators.makePath('features', flags.feature)}}
+{{#var featureDirectoryName = flags.feature}}
 // insert-end
 {{#var controllerFileName = generators.controllerFileName(entity.name)}}
 {{{
@@ -244,7 +244,7 @@ node ace make:controller invoice --feature=billing
     to: app.httpControllersPath(entity.path, controllerFileName)
     // delete-end
     // insert-start
-    to: app.makePath(featureDirectoryName, entity.path, controllerFileName)
+    to: app.makePath('features', featureDirectoryName, controllerFileName)
     // insert-end
   })
 }}}

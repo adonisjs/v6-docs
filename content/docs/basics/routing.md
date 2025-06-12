@@ -429,6 +429,21 @@ router
   })
 ```
 
+### Registering API only routes of a group
+
+You can use the `group.apiOnly` to apply `apiOnly` on all its resources.
+
+See also: [Registering API only routes](controllers.md#registering-api-only-routes)
+
+
+```ts
+// title: start/routes.ts
+router.group(() => {
+  router.resource('posts', PostsController)
+  router.resource('user', UsersController)
+}).apiOnly()
+```
+
 ## Registering routes for a specific domain
 
 AdonisJS allows you to register routes under a specific domain name. This is helpful when you have an application mapped to multiple domains and want different routes for each domain.

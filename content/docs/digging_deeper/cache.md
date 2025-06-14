@@ -283,7 +283,27 @@ The `@adonisjs/cache` package also provides a set of Ace commands to interact wi
 Clears the cache for the specified store. If not specified, it will clear the default one.
 
 ```sh
+# Clear the default cache store
 node ace cache:clear
+
+# Clear a specific cache store
 node ace cache:clear redis
-node ace cache:clear dynamodb
+
+# Clear a specific namespace
+node ace cache:clear store --namespace users
+
+# Clear multiple specific tags
+node ace cache:clear store --tags products --tags users
+```
+
+### cache:delete
+
+Deletes a specific cache key from the specified store. If not specified, it will delete from the default one.
+
+```sh
+# Delete a specific cache key
+node ace cache:delete cache-key
+
+# Delete a specific cache key from a specific store
+node ace cache:delete cache-key store
 ```

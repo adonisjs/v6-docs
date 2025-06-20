@@ -43,7 +43,7 @@ node ace add @adonisjs/drive
 
 The `@adonisjs/drive` package configuration is stored inside the `config/drive.ts` file. You can define config for multiple services within a single config file.
 
-See also: [Config stub](https://github.com/adonisjs/drive/blob/main/stubs/config/drive.stub)
+See also: [Config stub](https://github.com/adonisjs/drive/blob/3.x/stubs/config/drive.stub)
 
 ```ts
 import env from '#start/env'

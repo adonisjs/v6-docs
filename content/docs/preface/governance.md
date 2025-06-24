@@ -36,7 +36,7 @@ Core team members have no authority over the overall direction of the project. H
 
 #### Active Core Team Members
 
-Active Core Team Members contribute to the project on a regular basis. An active core team member usually has or more focus areas - in the most common cases, they will be responsible for the regular issue triaging, bug fixing, documentation improvements or feature development in a subproject repository.
+Active Core Team Members contribute to the project on a regular basis. An active core team member usually has one or more focus areas - in the most common cases, they will be responsible for the regular issue triaging, bug fixing, documentation improvements or feature development in a subproject repository.
 
 #### Core Team Emeriti
 

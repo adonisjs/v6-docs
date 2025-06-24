@@ -6,7 +6,7 @@ summary: Cache data to improve the performance of your application
 
 AdonisJS Cache (`@adonisjs/cache`) is a simple, lightweight wrapper built on top of [bentocache.dev](https://bentocache.dev) to cache data and enhance the performance of your application. It provides a straightforward and unified API to interact with various cache drivers, such as Redis, DynamoDB, PostgreSQL, in-memory caching, and more.
 
-We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
+We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [tagging](https://bentocache.dev/docs/tagging) [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
 
 ## Installation
 
@@ -46,7 +46,7 @@ import { defineConfig, store, drivers } from '@adonisjs/cache'
 
 const cacheConfig = defineConfig({
   default: 'redis',
-  
+
   stores: {
     /**
      * Cache data only on DynamoDB
@@ -89,7 +89,7 @@ In `config/cache.ts`, you must specify a `connectionName`. This property should 
 
 ### Other drivers
 
-You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`. 
+You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`.
 
 See [Cache Drivers](https://bentocache.dev/docs/cache-drivers) for more information.
 
@@ -120,6 +120,33 @@ As you can see, we serialize the user's data using `user.toJSON()`. This is nece
 :::
 
 The `ttl` defines the time-to-live for the cache key. After the TTL expires, the cache key is considered stale, and the next request will re-fetch the data from the factory method.
+
+### Tagging
+
+You can associate a cache entry with one or more tags to simplify invalidation. Instead of managing individual keys, entries can be grouped under multiple tags and invalidated in a single operation.
+
+```ts
+await bento.getOrSet({
+  key: 'foo',
+  factory: getFromDb(),
+  tags: ['tag-1', 'tag-2']
+});
+
+await bento.deleteByTag({ tags: ['tag-1'] });
+```
+
+### Namespaces
+
+Another way to group your keys is to use namespaces. This allows you to invalidate everything at once later :
+
+```ts
+const users = bento.namespace('users')
+
+users.set({ key: '32', value: { name: 'foo' } })
+users.set({ key: '33', value: { name: 'bar' } })
+
+users.clear()
+```
 
 ### Grace period
 
@@ -212,12 +239,12 @@ You can find all available methods here: [BentoCache API](https://bentocache.dev
 
 ```ts
 await cache.namespace('users').set({ key: 'username', value: 'jul' })
-await cache.namespace('users').get('username')
+await cache.namespace('users').get({ key: 'username' })
 
-await cache.get('username')
+await cache.get({ key: 'username' })
 
-await cache.set('username', 'jul')
-await cache.setForever('username', 'jul')
+await cache.set({key: 'username', value: 'jul' })
+await cache.setForever({ key: 'username', value:'jul' })
 
 await cache.getOrSet({
   key: 'username',
@@ -225,13 +252,14 @@ await cache.getOrSet({
   ttl: '1h',
 })
 
-await cache.has('username')
-await cache.missing('username')
+await cache.has({ key: 'username' })
+await cache.missing({ key: 'username' })
 
-await cache.pull('username')
+await cache.pull({ key: 'username' })
 
-await cache.delete('username')
-await cache.deleteMany(['products', 'users'])
+await cache.delete({ key: 'username' })
+await cache.deleteMany({ keys: ['products', 'users'] })
+await cache.deleteByTag({ tags: ['products', 'users'] })
 
 await cache.clear()
 ```
@@ -255,7 +283,27 @@ The `@adonisjs/cache` package also provides a set of Ace commands to interact wi
 Clears the cache for the specified store. If not specified, it will clear the default one.
 
 ```sh
+# Clear the default cache store
 node ace cache:clear
+
+# Clear a specific cache store
 node ace cache:clear redis
-node ace cache:clear dynamodb
+
+# Clear a specific namespace
+node ace cache:clear store --namespace users
+
+# Clear multiple specific tags
+node ace cache:clear store --tags products --tags users
+```
+
+### cache:delete
+
+Deletes a specific cache key from the specified store. If not specified, it will delete from the default one.
+
+```sh
+# Delete a specific cache key
+node ace cache:delete cache-key
+
+# Delete a specific cache key from a specific store
+node ace cache:delete cache-key store
 ```

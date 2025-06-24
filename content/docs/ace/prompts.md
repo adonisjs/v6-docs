@@ -168,7 +168,7 @@ Validate the user input. Returning `true` from the method will pass the validati
 
 ```ts
 {
-  format(value) {
+  validate(value) {
     return value.length > 6
     ? true
     : 'Model name must be 6 characters long'

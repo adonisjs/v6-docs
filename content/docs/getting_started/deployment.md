@@ -27,7 +27,7 @@ Once you have created the production build, you may copy the `./build` folder to
 If you are using Docker to deploy your application, you may create a Docker image using the following `Dockerfile`.
 
 ```dockerfile
-FROM node:20.12.2-alpine3.18 AS base
+FROM node:22.16.0-alpine3.22 AS base
 
 # All deps stage
 FROM base AS deps

@@ -375,7 +375,7 @@ You can define and use "identifiers" to change the interpolation behavior. The i
 ```ts
 import { EnvParser } from '@adonisjs/env'
 
-EnvParser.identifier('base64', (value) => {
+EnvParser.defineIdentifier('base64', (value) => {
   return Buffer.from(value, 'base64').toString()
 })
 
@@ -387,6 +387,33 @@ console.log(await envParser.parse())
 ```
 
 In the above example, the `base64:` prefix tells the env parser to decode the value from base64 before returning it.
+
+Alternatively, you can define an identifier using the `defineIdentifierIfMissing` method. This method will not override the existing identifier.
+
+```ts
+EnvParser.defineIdentifierIfMissing('base64', (value) => {
+  return Buffer.from(value, 'base64').toString()
+})
+```
+
+:::note
+
+You can directly use those methods inside the `start/env.ts` file.
+
+```ts
+// title: start/env.ts
+import { Env } from '@adonisjs/core/env'
+
+Env.defineIdentifier('base64', (value) => {
+  return Buffer.from(value, 'base64').toString()
+})
+
+export default await Env.create(APP_ROOT, {
+  APP_KEY: Env.schema.string()
+})
+```
+
+:::
 
 ## Using variables inside the dot-env files
 

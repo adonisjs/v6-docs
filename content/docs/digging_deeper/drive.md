@@ -43,7 +43,7 @@ node ace add @adonisjs/drive
 
 The `@adonisjs/drive` package configuration is stored inside the `config/drive.ts` file. You can define config for multiple services within a single config file.
 
-See also: [Config stub](https://github.com/adonisjs/drive/blob/main/stubs/config/drive.stub)
+See also: [Config stub](https://github.com/adonisjs/drive/blob/3.x/stubs/config/drive.stub)
 
 ```ts
 import env from '#start/env'
@@ -131,15 +131,15 @@ router.put('/me', async ({ request, response }) => {
   return {
     message: 'Image uploaded',
     // highlight-start
-    url: await drive.use().getUrl(key),
+    url: image.meta.url,
     // highlight-end
   }
 })
 ```
 
-- The Drive package adds the `moveToDisk` method to the [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110). This method copies the file from its `tmpPath` to the configured storage provider.
+- The Drive package adds the `moveToDisk` method to the [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110). This method moves the file from its `tmpPath` to the configured storage provider.
 
-- The `drive.use().getUrl()` method returns the public URL for the file. For private files, you must use the `getSignedUrl` method.
+- After moving the file, the `meta.url` property will be set on the file object. This property contains the public URL of the file. If your files are private, then you must use the `drive.use().getSignedUrl()` method.
 
 ## Drive service
 
@@ -329,6 +329,15 @@ await image.moveToDisk(key, 's3')
  */
 await image.moveToDisk(key, 's3', {
   contentType: 'image/png',
+})
+
+/**
+ * Write file by first reading it as a buffer. You may use this
+ * option when your cloud storage provider results in broken
+ * files with the "stream" option
+ */
+await image.moveToDisk(key, 's3', {
+  moveAs: 'buffer'
 })
 ```
 

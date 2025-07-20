@@ -87,6 +87,8 @@ The `database` driver has a peer dependency on `@adonisjs/lucid`. Therefore, you
 
 In `config/cache.ts`, you must specify a `connectionName`. This property should correspond to the database configuration key in the `config/database.ts` file.
 
+Additionally, when configuring the `database` driver, a [migration](https://github.com/adonisjs/cache/blob/1.x/stubs/migration.stub) will be published to your `database/migrations` directory, which you must run to create the necessary table for storing cache entries.
+
 ### Other drivers
 
 You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`.
@@ -278,7 +280,7 @@ The `cache` service is available as an edge helper within your views. You can us
 
 The `@adonisjs/cache` package also provides a set of Ace commands to interact with the cache from the terminal.
 
-### cache:clear
+### `cache:clear`
 
 Clears the cache for the specified store. If not specified, it will clear the default one.
 
@@ -296,7 +298,7 @@ node ace cache:clear store --namespace users
 node ace cache:clear store --tags products --tags users
 ```
 
-### cache:delete
+### `cache:delete`
 
 Deletes a specific cache key from the specified store. If not specified, it will delete from the default one.
 
@@ -306,4 +308,16 @@ node ace cache:delete cache-key
 
 # Delete a specific cache key from a specific store
 node ace cache:delete cache-key store
+```
+
+### `cache:prune`
+
+Some cache drivers, like the database driver, do not automatically remove expired keys because they lack native TTL support. You can use the `cache:prune` command to manually remove expired keys. On stores that support TTL, this command will result in a no-op.
+
+```sh
+# Prune expired keys from the default cache store
+node ace cache:prune
+
+# Prune expired keys from a specific cache store
+node ace cache:prune store
 ```

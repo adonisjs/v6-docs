@@ -1,5 +1,180 @@
 [
   {
+    "package": "@adonisjs/repl",
+    "version": "v4.1.1",
+    "description": "Update dependencies",
+    "released_on": "2025-08-15",
+    "release_notes_link": "https://github.com/adonisjs/repl/releases/tag/v4.1.1"
+  },
+  {
+    "package": "@adonisjs/eslint-config",
+    "version": "v2.1.2",
+    "description": "Remove @stylistic/eslint-plugin-ts in favor of @stylistic/eslint-plugin",
+    "released_on": "2025-08-08",
+    "release_notes_link": "https://github.com/adonisjs/eslint-config/releases/tag/v2.1.2"
+  },
+  {
+    "package": "@adonisjs/lucid",
+    "version": "v21.8.0",
+    "description": "Use natural sort when executing seeders and display migration filename during error in compact mode",
+    "released_on": "2025-07-22",
+    "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v21.8.0"
+  },
+  {
+    "package": "@adonisjs/cache",
+    "version": "1.3.0",
+    "description": "`cache:prune` and database migration",
+    "released_on": "2025-07-20",
+    "release_notes_link": "https://github.com/adonisjs/cache/releases/tag/v1.3.0"
+  },
+  {
+    "package": "@adonisjs/i18n",
+    "version": "2.2.2",
+    "description": "Resolve otherField from translations",
+    "released_on": "2025-07-16",
+    "release_notes_link": "https://github.com/adonisjs/i18n/releases/tag/v2.2.2"
+  },
+  {
+    "package": "@adonisjs/auth",
+    "version": "v9.4.2",
+    "description": "Update dependencies",
+    "released_on": "2025-07-15",
+    "release_notes_link": "https://github.com/adonisjs/auth/releases/tag/v9.4.2"
+  },
+  {
+    "package": "@adonisjs/core",
+    "version": "v6.19.0",
+    "description": "Export VineMultipartClass for extending and fix multipart file serialization issue",
+    "released_on": "2025-06-17",
+    "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.19.0"
+  },
+  {
+    "package": "@adonisjs/http-server",
+    "version": "v7.7.0",
+    "description": "Do not clone rich data types when creating original body copy",
+    "released_on": "2025-06-17",
+    "release_notes_link": "https://github.com/adonisjs/http-server/releases/tag/v7.7.0"
+  },
+  {
+    "package": "@adonisjs/bouncer",
+    "version": "3.1.6",
+    "description": "Fix types inference for policies wrapper `AuthorizerResponse` inside a `Promise`",
+    "released_on": "2025-06-09",
+    "release_notes_link": "https://github.com/adonisjs/bouncer/releases/tag/v3.1.6"
+  },
+  {
+    "package": "@adonisjs/tsconfig",
+    "version": "v1.4.1",
+    "description": "Re-publish to overwrite release made from the tooling-config monorepo",
+    "released_on": "2025-05-29",
+    "release_notes_link": "https://github.com/adonisjs/tsconfig/releases/tag/v1.4.1"
+  },
+  {
+    "package": "@adonisjs/application",
+    "version": "v8.4.1",
+    "description": "Move Feature flags implementation to its own class",
+    "released_on": "2025-05-15",
+    "release_notes_link": "https://github.com/adonisjs/application/releases/tag/v8.4.1"
+  },
+  {
+    "package": "@adonisjs/bodyparser",
+    "version": "v10.1.0",
+    "description": "Allow merging multipart fields and files",
+    "released_on": "2025-05-15",
+    "release_notes_link": "https://github.com/adonisjs/bodyparser/releases/tag/v10.1.0"
+  },
+  {
+    "package": "@adonisjs/hash",
+    "version": "v9.1.1",
+    "description": "Explicitly support argon version 0.43.0",
+    "released_on": "2025-05-14",
+    "release_notes_link": "https://github.com/adonisjs/hash/releases/tag/v9.1.1"
+  },
+  {
+    "package": "@adonisjs/limiter",
+    "version": "v2.4.0",
+    "description": "Add support for SQLite",
+    "released_on": "2025-04-15",
+    "release_notes_link": "https://github.com/adonisjs/limiter/releases/tag/v2.4.0"
+  },
+  {
+    "package": "@adonisjs/shield",
+    "version": "8.2.0",
+    "description": "Generate CSRF token even when the validation has failed",
+    "released_on": "2025-03-25",
+    "release_notes_link": "https://github.com/adonisjs/shield/releases/tag/v8.2.0"
+  },
+  {
+    "package": "@adonisjs/drive",
+    "version": "v3.4.1",
+    "description": "Improvements to file.moveToDisk method",
+    "released_on": "2025-03-19",
+    "release_notes_link": "https://github.com/adonisjs/drive/releases/tag/v3.4.1"
+  },
+  {
+    "package": "@adonisjs/env",
+    "version": "v6.2.0",
+    "description": "Introduce defineIdentifier and defineIdentifierIfMissing methods",
+    "released_on": "2025-03-19",
+    "release_notes_link": "https://github.com/adonisjs/env/releases/tag/v6.2.0"
+  },
+  {
+    "package": "@adonisjs/inertia",
+    "version": "3.1.1",
+    "description": "Update svelte starter kit + Fix callback props typing",
+    "released_on": "2025-03-07",
+    "release_notes_link": "https://github.com/adonisjs/inertia/releases/tag/v3.1.1"
+  },
+  {
+    "package": "@adonisjs/ally",
+    "version": "5.1.0",
+    "description": "Add LinkedIn openID connect driver",
+    "released_on": "2025-03-02",
+    "release_notes_link": "https://github.com/adonisjs/ally/releases/tag/v5.1.0"
+  },
+  {
+    "package": "@adonisjs/redis",
+    "version": "v9.2.0",
+    "description": "Add support for defining multiple listeners on a pub-sub channel",
+    "released_on": "2025-02-07",
+    "release_notes_link": "https://github.com/adonisjs/redis/releases/tag/v9.2.0"
+  },
+  {
+    "package": "@adonisjs/session",
+    "version": "v7.5.1",
+    "description": "Update dependencies",
+    "released_on": "2025-01-16",
+    "release_notes_link": "https://github.com/adonisjs/session/releases/tag/v7.5.1"
+  },
+  {
+    "package": "@adonisjs/presets",
+    "version": "v2.6.4",
+    "description": "Fix auth stub to import InferAuthenticators",
+    "released_on": "2024-12-18",
+    "release_notes_link": "https://github.com/adonisjs/presets/releases/tag/v2.6.4"
+  },
+  {
+    "package": "@adonisjs/vite",
+    "version": "v4.0.0",
+    "description": "Vite 6 Support",
+    "released_on": "2024-12-14",
+    "release_notes_link": "https://github.com/adonisjs/vite/releases/tag/v4.0.0"
+  },
+  {
+    "package": "@adonisjs/ace",
+    "version": "v13.3.0",
+    "description": "Allow exceptions to self handle themselves",
+    "released_on": "2024-10-09",
+    "release_notes_link": "https://github.com/adonisjs/ace/releases/tag/v13.3.0"
+  },
+  {
+    "package": "@adonisjs/transmit",
+    "version": "v2.0.2",
+    "description": "Fix returning function on unsubscribe",
+    "released_on": "2024-09-25",
+    "release_notes_link": "https://github.com/adonisjs/transmit/releases/tag/v2.0.2"
+  },
+  {
     "package": "@adonisjs/core",
     "version": "v6.14.0",
     "description": "Add support for dd and dump helpers",
@@ -33,6 +208,13 @@
     "description": "Use Ace Kernel errorHandler when running commands",
     "released_on": "2024-09-05",
     "release_notes_link": "https://github.com/adonisjs/core/releases/tag/v6.13.0"
+  },
+  {
+    "package": "@adonisjs/assembler",
+    "version": "v7.8.2",
+    "description": "Bug fix after migrating execa",
+    "released_on": "2024-09-03",
+    "release_notes_link": "https://github.com/adonisjs/assembler/releases/tag/v7.8.2"
   },
   {
     "package": "@adonisjs/assembler",
@@ -77,11 +259,25 @@
     "release_notes_link": "https://github.com/adonisjs/lucid/releases/tag/v21.1.1"
   },
   {
+    "package": "@adonisjs/lock",
+    "version": "v1.1.1",
+    "description": "Allow to use latest version of Redis",
+    "released_on": "2025-06-22",
+    "release_notes_link": "https://github.com/adonisjs/lock/releases/tag/v1.1.1"
+  },
+  {
     "package": "create-adonisjs",
     "version": "v2.4.0",
     "description": "Remove installation prompt and always install packages by default",
     "released_on": "2024-06-22",
     "release_notes_link": "https://github.com/adonisjs/create-adonisjs/releases/tag/v2.4.0"
+  },
+  {
+    "package": "@adonisjs/mail",
+    "version": "v9.2.2",
+    "description": "Correct env variable access for SES in stubs",
+    "released_on": "2024-06-21",
+    "release_notes_link": "https://github.com/adonisjs/mail/releases/tag/v9.2.2"
   },
   {
     "package": "@adonisjs/redis",
@@ -376,5 +572,12 @@
     "released_on": "2024-01-09",
     "version": "9.1.0",
     "release_notes_link": "https://github.com/adonisjs/mail/releases/tag/v9.1.0"
+  },
+  {
+    "package": "@adonisjs/logger",
+    "description": "Allow disabling timestamps or custom timestamp via a function",
+    "released_on": "2024-01-05",
+    "version": "6.0.0",
+    "release_notes_link": "https://github.com/adonisjs/logger/releases/tag/v6.0.0"
   }
 ]

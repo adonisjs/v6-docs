@@ -151,7 +151,7 @@ await client
   .withCookie('user_preferences', { limit: 10 })
 ```
 
-The `withCookie` method defines a [singed cookie](../basics/cookies.md#signed-cookies). In addition, you may use the `withEncryptedCookie` or `withPlainCookie` methods to send other types of cookies to the server.
+The `withCookie` method defines a [signed cookie](../basics/cookies.md#signed-cookies). In addition, you may use the `withEncryptedCookie` or `withPlainCookie` methods to send other types of cookies to the server.
 
 ```ts
 await client

@@ -10,7 +10,7 @@ The typical workflow of a server-rendered application in AdonisJS looks as follo
 
 - Choose a template engine to render HTML dynamically.
 - Use [Vite](../basics/vite.md) for bundling CSS and frontend JavaScript.
-- Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like an SPA.
+- Optionally, you can opt for libraries like [HTMX](https://htmx.org/) or [Unpoly](https://unpoly.com/) to progressively enhance your application and navigate like a SPA.
 
 :::note
 The AdonisJS core team has created a framework-agnostic template engine called [Edge.js](https://edgejs.dev) but does not force you to use it. You can use any other template engine you would like inside an AdonisJS application.

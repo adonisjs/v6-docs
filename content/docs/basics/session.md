@@ -295,7 +295,7 @@ Additionally, you may define a custom table name and key attribute name.
 ```ts
 stores.dynamodb({
   tableName: 'Session'
-  keyAttributName: 'key'
+  keyAttribute: 'key'
 })
 ```
 

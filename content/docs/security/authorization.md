@@ -522,7 +522,7 @@ export const editPost = Bouncer.ability((user: User, post: Post) => {
 
 ### Using a custom response builder
 
-The flexibility to define custom error messages for individual authorization checks is great. However, if you always want to return the same response, it might be cumbersome to repeat the same code everytime.
+The flexibility to define custom error messages for individual authorization checks is great. However, if you always want to return the same response, it might be cumbersome to repeat the same code every time.
 
 Therefore, you can override the default response builder for Bouncer as follows.
 

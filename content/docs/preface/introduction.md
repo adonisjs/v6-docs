@@ -14,7 +14,7 @@ At the fundamental level, AdonisJS [provides structure to your applications](../
 
 We envision teams using AdonisJS **spending less time** on trivial decisions like cherry-picking npm packages for every minor feature, writing glue code, debating for the perfect folder structure, and **spending more time** delivering real-world features critical for the business needs.
 
-### Frontend agnostic 
+### Frontend agnostic
 
 AdonisJS focuses on the backend and lets you choose the frontend stack of your choice.
 

@@ -493,9 +493,9 @@ Please check the [events reference guide](../references/events.md#access_tokens_
 
 ## Logging in and out
 
-Access tokens are sometimes the prefered method for signing users in and out - for instance when authenticating a native app.
+Access tokens are sometimes the preferred method for signing users in and out - for instance when authenticating a native app.
 
-To accomodate those situations the access tokens guard provides an API similar to the [login](./session_guard.md#performing-login) and [logout](./session_guard.md#performing-logout) methods of the [session guard](./session_guard.md).
+To accommodate those situations the access tokens guard provides an API similar to the [login](./session_guard.md#performing-login) and [logout](./session_guard.md#performing-logout) methods of the [session guard](./session_guard.md).
 
 Logging in:
 

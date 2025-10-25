@@ -492,7 +492,7 @@ mail.use('mailgun')
 ```
 
 ## Configuring the template engine
-By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.§
+By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.
 
 However, as shown in the following example, you may also register a custom template engine by overriding the `Message.templateEngine` property.
 

@@ -146,7 +146,7 @@ See also: [Creating ace commands](../ace/creating_commands.md)
 ```
 
 ## commandsAliases
-A key-value pair of command aliases. This is usually to help you create memorable aliases for the commands that are harder to type or remember.
+A key-value pairs of command aliases. This is usually to help you create memorable aliases for the commands that are harder to type or remember.
 
 See also: [Creating command aliases](../ace/introduction.md#creating-command-aliases)
 
@@ -251,7 +251,7 @@ See also: [Service providers](./service_providers.md)
 
 ## assetsBundler
 
-The `serve` and `build` command attempts to detect the assets used by your application to compile the frontend assets.
+The `serve` and `build` command attempt to detect the assets used by your application to compile the frontend assets.
 
 The detection is performed for [vite](https://vitejs.dev) by searching for the `vite.config.js` file and [Webpack encore](https://github.com/symfony/webpack-encore) by searching for the `webpack.config.js` file.
 
@@ -275,4 +275,4 @@ However, if you use a different assets bundler, you can configure it inside the 
 
 - `name` - The name of the asset bundler you use. It is required for display purposes.
 - `devServer.*` - The command and its arguments to start the development server.
-- `build.*` - The command and its arguments to to create the production build.
+- `build.*` - The command and its arguments to create the production build.

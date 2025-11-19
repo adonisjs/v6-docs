@@ -6,7 +6,7 @@ summary: Cache data to improve the performance of your application
 
 AdonisJS Cache (`@adonisjs/cache`) is a simple, lightweight wrapper built on top of [bentocache.dev](https://bentocache.dev) to cache data and enhance the performance of your application. It provides a straightforward and unified API to interact with various cache drivers, such as Redis, DynamoDB, PostgreSQL, in-memory caching, and more.
 
-We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [tagging](https://bentocache.dev/docs/tagging) [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
+We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [tagging](https://bentocache.dev/docs/tagging), [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
 
 ## Installation
 
@@ -102,6 +102,7 @@ Once your cache is configured, you can import the `cache` service to interact wi
 ```ts
 import cache from '@adonisjs/cache/services/main'
 import router from '@adonisjs/core/services/router'
+import User from '#models/user'
 
 router.get('/user/:id', async ({ params }) => {
   return cache.getOrSet({
@@ -128,21 +129,21 @@ The `ttl` defines the time-to-live for the cache key. After the TTL expires, the
 You can associate a cache entry with one or more tags to simplify invalidation. Instead of managing individual keys, entries can be grouped under multiple tags and invalidated in a single operation.
 
 ```ts
-await bento.getOrSet({
+await cache.getOrSet({
   key: 'foo',
   factory: getFromDb(),
   tags: ['tag-1', 'tag-2']
 });
 
-await bento.deleteByTag({ tags: ['tag-1'] });
+await cache.deleteByTag({ tags: ['tag-1'] });
 ```
 
 ### Namespaces
 
-Another way to group your keys is to use namespaces. This allows you to invalidate everything at once later :
+Another way to group your keys is to use namespaces. This allows you to invalidate everything at once later:
 
 ```ts
-const users = bento.namespace('users')
+const users = cache.namespace('users')
 
 users.set({ key: '32', value: { name: 'foo' } })
 users.set({ key: '33', value: { name: 'bar' } })
@@ -152,7 +153,7 @@ users.clear()
 
 ### Grace period
 
-You can allow Bentocache to return stale data if the cache key is expired but still within a grace period using the `grace` option. This change makes Bentocache works in a same way `SWR` or `TanStack Query` do
+You can allow Bentocache to return stale data if the cache key is expired but still within a grace period using the `grace` option. This makes Bentocache work in the same way libraries like SWR or TanStack Query do.
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
@@ -172,7 +173,7 @@ In the example above, the data will be considered stale after 1 hour. However, t
 
 ### Timeouts
 
-You can configure how long you allow your factory method to run before returning stale data using the `timeout` option. By default, Bentocache set a soft timeout of 0ms, which means we always return stale data while re-fetching the data in the background.
+You can configure how long you allow your factory method to run before returning stale data using the `timeout` option. By default, Bentocache sets a soft timeout of 0ms, which means we always return stale data while re-fetching the data in the background.
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
@@ -245,7 +246,7 @@ await cache.namespace('users').get({ key: 'username' })
 
 await cache.get({ key: 'username' })
 
-await cache.set({key: 'username', value: 'jul' })
+await cache.set({ key: 'username', value: 'jul' })
 await cache.setForever({ key: 'username', value:'jul' })
 
 await cache.getOrSet({
@@ -268,7 +269,7 @@ await cache.clear()
 
 ## Edge Helper
 
-The `cache` service is available as an edge helper within your views. You can use it to retrieve cached values directly in your templates.
+The `cache` service is available as an Edge helper within your views. You can use it to retrieve cached values directly in your templates.
 
 ```edge
 <p>

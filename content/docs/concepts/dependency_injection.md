@@ -242,7 +242,7 @@ class MyFakeCache {
 }
 
 app.container.bind('cache', function () {
-  return new MyCache()
+  return new MyFakeCache()
 })
 
 const cache = await app.container.make('cache')

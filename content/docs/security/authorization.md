@@ -434,7 +434,7 @@ export class PostPolicy extends BasePolicy {
 ```
 
 ## Throwing AuthorizationException
-Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](https://github.com/adonisjs/bouncer/blob/main/src/errors.ts#L19) when the check fails.
+Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](../references/exceptions.md#e_authorization_failure) when the check fails.
 
 ```ts
 router.put('posts/:id', async ({ bouncer, params }) => {

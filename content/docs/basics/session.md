@@ -16,6 +16,8 @@ You can manage user sessions inside your AdonisJS application using the `@adonis
 
 - `dynamodb`: The session data is stored inside an Amazon DynamoDB table. The DynamoDB store is suitable for applications that require a highly scalable and distributed session store, especially when the infrastructure is built on AWS.
 
+- `database`: The session data is stored inside a SQL database using Lucid. The database store is a good option if you are already using a SQL database in your application and want to avoid adding an extra dependency like Redis.
+
 - `memory`: The session data is stored within a global memory store. The memory store is used during testing.
 
 Alongside the inbuilt backend stores, you can also create and [register custom session stores](#creating-a-custom-session-store).
@@ -209,6 +211,11 @@ export default defineConfig({
     dynamodb: stores.dynamodb({
       clientConfig: {}
     }),
+
+    database: stores.database({
+      connection: 'postgres',
+      tableName: 'sessions',
+    }),
   }
   // highlight-end
 })
@@ -298,6 +305,38 @@ stores.dynamodb({
   keyAttribute: 'key'
 })
 ```
+
+</dd>
+
+<dt>
+
+  stores.database
+
+</dt>
+
+<dd>
+
+Define the configuration for the `database` store. The method optionally accepts the `connection` name to use and the `tableName` for storing session data.
+
+Make sure to first install and configure the [@adonisjs/lucid](../database/lucid.md) package before using the `database` store.
+
+You must also create the sessions table inside your database. You can use the following command to create the migration file.
+
+```sh
+node ace make:session-table
+```
+
+```ts
+stores.database({
+  connection: 'postgres',
+  tableName: 'sessions',
+  gcProbability: 2,
+})
+```
+
+Unlike Redis which handles expiration automatically, SQL databases require manual cleanup of expired sessions. The database store implements a probabilistic garbage collection: on each request, there is a `gcProbability` percent chance (default: **2%**) that expired sessions will be deleted from the database.
+
+Set `gcProbability` to `0` to disable automatic garbage collection entirely. In this case, you should set up a scheduled task to periodically clean up expired sessions.
 
 </dd>
 

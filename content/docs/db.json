@@ -450,6 +450,12 @@
     "category": "Digging deeper"
   },
   {
+    "permalink": "digging-deeper/tuyau-client",
+    "title": "Tuyau client",
+    "contentPath": "./digging_deeper/tuyau_client.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "ace/introduction",
     "title": "Introduction",
     "contentPath": "./ace/introduction.md",

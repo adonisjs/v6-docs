@@ -131,14 +131,12 @@ By default, the package exports traces using OTLP over gRPC to `localhost:4317`.
 You can configure the exporter endpoint using environment variables without changing any code:
 
 ```dotenv
-# title: .env
 OTEL_EXPORTER_OTLP_ENDPOINT=https://otel-collector.example.com:4317
 ```
 
 For authentication or custom headers:
 
 ```dotenv
-# title: .env
 OTEL_EXPORTER_OTLP_HEADERS=x-api-key=your-api-key
 ```
 
@@ -218,7 +216,9 @@ If you provide a custom `sampler` option, `samplingRatio` is ignored.
 
 ## Automatic instrumentation
 
-The package automatically instruments common libraries without any code changes. Out of the box, you get tracing for HTTP requests (incoming and outgoing), Lucid database queries (via Knex), Redis operations, and more.
+Under the hood, `@adonisjs/otel` uses the official [`@opentelemetry/auto-instrumentations-node`](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/packages/auto-instrumentations-node#readme) package. This means you get automatic tracing for a wide range of libraries without any code changes: HTTP requests (incoming and outgoing), database queries (PostgreSQL, MySQL, MongoDB), Redis operations, and [many more](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/packages/auto-instrumentations-node#supported-instrumentations).
+
+We pre-configure sensible defaults so everything works out of the box. However, you can override any instrumentation setting through the `instrumentations` option in your configuration.
 
 ### Default ignored URLs
 
@@ -411,34 +411,6 @@ export default class CheckoutService {
 ## Context propagation
 
 When your application calls other services or processes background jobs, you need to propagate the trace context so all operations appear in the same trace.
-
-### Propagating to HTTP calls
-
-Inject trace context into outgoing HTTP request headers:
-
-```ts 
-// title: app/services/external_api_service.ts
-import { injectTraceContext } from '@adonisjs/otel/helpers'
-
-export default class ExternalApiService {
-  async fetchUserData(userId: string) {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    }
-    
-    /**
-     * Adds traceparent and tracestate headers
-     */
-    injectTraceContext(headers)
-    
-    const response = await fetch(`https://api.example.com/users/${userId}`, {
-      headers,
-    })
-    
-    return response.json()
-  }
-}
-```
 
 ### Propagating to queue jobs
 

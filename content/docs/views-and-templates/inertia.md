@@ -189,6 +189,7 @@ createInertiaApp({
 ```ts
 // title: Svelte
 import { createInertiaApp } from '@inertiajs/svelte'
+import { mount } from 'svelte'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 
 const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
@@ -206,7 +207,7 @@ createInertiaApp({
   },
 
   setup({ el, App, props }) {
-    new App({ target: el, props })
+    mount(App, { target: el, props })
   },
 })
 ```

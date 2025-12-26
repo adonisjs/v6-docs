@@ -34,10 +34,14 @@ node ace add @adonisjs/session
 
 1. Installs the `@adonisjs/session` package using the detected package manager.
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider and command inside the `adonisrc.ts` file.
 
     ```ts
     {
+      commands: [
+        // ...other commands
+        () => import('@adonisjs/session/commands')
+      ],
       providers: [
         // ...other providers
         () => import('@adonisjs/session/session_provider')
@@ -213,7 +217,7 @@ export default defineConfig({
     }),
 
     database: stores.database({
-      connection: 'postgres',
+      connectionName: 'postgres',
       tableName: 'sessions',
     }),
   }
@@ -316,7 +320,7 @@ stores.dynamodb({
 
 <dd>
 
-Define the configuration for the `database` store. The method optionally accepts the `connection` name to use and the `tableName` for storing session data.
+Define the configuration for the `database` store. The method optionally accepts the `connectionName` to use and the `tableName` for storing session data.
 
 Make sure to first install and configure the [@adonisjs/lucid](../database/lucid.md) package before using the `database` store.
 
@@ -328,7 +332,7 @@ node ace make:session-table
 
 ```ts
 stores.database({
-  connection: 'postgres',
+  connectionName: 'postgres',
   tableName: 'sessions',
   gcProbability: 2,
 })

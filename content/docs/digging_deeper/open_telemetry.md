@@ -227,6 +227,7 @@ To reduce noise, the following endpoints are excluded from tracing by default:
 - `/health`, `/healthz`, `/ready`, `/readiness`
 - `/metrics`, `/internal/metrics`, `/internal/healthz`
 - `/favicon.ico`
+- All `OPTIONS` requests (CORS preflight)
 
 ### Customizing instrumentations
 
@@ -235,6 +236,7 @@ You can configure individual instrumentations or add custom ignored URLs:
 ```ts 
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
+import { MyCustomInstrumentation } from 'my-custom-instrumentation'
 
 export default defineConfig({
   serviceName: 'my-app',
@@ -252,6 +254,11 @@ export default defineConfig({
      * Disable a specific instrumentation
      */
     '@opentelemetry/instrumentation-pg': { enabled: false },
+
+    /**
+     * Add a custom instrumentation
+     */
+    'my-custom-instrumentation': new MyCustomInstrumentation(),
   },
 })
 ```
@@ -474,6 +481,10 @@ export default class ProcessOrderJob {
 
 When `@adonisjs/auth` is installed, the middleware automatically sets user attributes on spans if a user is authenticated. This includes `user.id`, `user.email` (if available), and `user.roles` (if available).
 
+:::note
+For automatic user detection to work, the user must be authenticated before the OTEL middleware runs. This means you need to register a `silent_auth` middleware **before** the OTEL middleware in your router middleware stack. If this setup doesn't fit your needs, you can use `setUser()` manually in your own auth middleware instead.
+:::
+
 You can customize this behavior or add additional user attributes:
 
 ```ts 
@@ -505,7 +516,7 @@ export default defineConfig({
 })
 ```
 
-You can also manually set user context anywhere in your code:
+You can also manually set user context anywhere in your code. Custom attributes are automatically prefixed with `user.`:
 
 ```ts 
 // title: app/middleware/auth_middleware.ts
@@ -516,15 +527,22 @@ export default class AuthMiddleware {
     await auth.authenticate()
     
     setUser({
-      id: auth.user!.id,
-      email: auth.user!.email,
-      role: auth.user!.role,
+      id: auth.user?.id,
+      email: auth.user?.email,
+      role: auth.user?.role,
+      // Custom attributes
+      tenantId: auth.user?.tenantId,
+      plan: auth.user?.plan,
     })
     
     return next()
   }
 }
 ```
+
+:::warning
+Be careful not to include sensitive data (passwords, tokens, API keys) in user attributes. These values are sent to your observability backend and may be visible in trace viewers.
+:::
 
 ## Logging integration
 

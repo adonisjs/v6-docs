@@ -216,6 +216,7 @@ See also: [File uploads](./file_uploads.md)
 
 ```ts
 multipart: {
+  enabled: true,
   autoProcess: true,
   processManually: [],
   encoding: 'utf-8',
@@ -227,6 +228,20 @@ multipart: {
 ```
 
 <dl>
+
+<dt>
+
+enabled
+
+</dt>
+
+<dd>
+
+Setting `enabled` to `false` will result in all multipart requests being rejected with a [415 Unsupported Media Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/415) error.
+
+By default `enabled` is set to `true`.
+
+</dd>
 
 <dt>
 

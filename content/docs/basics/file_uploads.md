@@ -256,6 +256,19 @@ We recommend using Drive over manually uploading and serving files. Drive handle
 
 [Learn more about Drive](../digging_deeper/drive.md)
 
+## Advanced - Disabling file uploads
+You can turn of file upload handling and processing of multipart requests entirely, in which case a request for a multipart file upload will return a [415 Unsupported Media Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/415) error to the client. 
+
+Open the `config/bodyparser.ts` file and change the following to disable multipart file uploads entirely.
+
+```ts
+{
+  multipart: {
+    enabled: false
+  }
+}
+```
+
 ## Advanced - Self-processing multipart stream
 You can turn off the automatic processing of multipart requests and self-process the stream for advanced use cases. Open the `config/bodyparser.ts` file and change one of the following options to disable auto-processing.
 

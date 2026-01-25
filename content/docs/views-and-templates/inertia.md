@@ -499,12 +499,8 @@ import { defineConfig } from '@adonisjs/inertia'
 
 export default defineConfig({
   sharedData: {
-    // 👇 This will be available in all views
-    appName: 'My App' ,
-    // 👇 Scoped to the current request
-    user: (ctx) => ctx.auth?.user, 
-    // 👇 Scoped to the current request
-    errors: (ctx) => ctx.session.flashMessages.get('errors'),
+    appName: 'My App', // 👈 This will be available in all views
+    user: (ctx) => ctx.auth?.user, // 👈 Scoped to the current request
   },
 })
 ```
@@ -550,7 +546,7 @@ export default class UsersController {
       // NEVER included on first visit.
       // OPTIONALLY included on partial reloads.
       // ONLY evaluated when needed
-      users: inertia.lazy(() => User.all())
+      users: inertia.optional(() => User.all())
     }),
   }
 }
@@ -600,7 +596,7 @@ If you're using Vue, you'll have to manually define each property in your `defin
 
 ```vue
 <script setup lang="ts">
-import { InferPageProps } from '@adonisjs/inertia'
+import { InferPageProps } from '@adonisjs/inertia/types'
 
 defineProps<{
   // 👇 You will have to manually define each prop
@@ -783,13 +779,13 @@ When re-deploying your application, your users should always get the latest vers
 
 By default, the `@adonisjs/inertia` package will compute a hash for the `public/assets/manifest.json` file and use it as the version of your assets.
 
-If you want to tweak this behavior, you can edit the `config/inertia.ts` file. The `version` prop defines the version of your assets and can be a string or a function.
+If you want to tweak this behavior, you can edit the `config/inertia.ts` file. The `assetsVersion` prop defines the version of your assets and can be a string or a function.
 
 ```ts
 import { defineConfig } from '@adonisjs/inertia'
 
 export default defineConfig({
-  version: 'v1'
+  assetsVersion: 'v1'
 })
 ```
 

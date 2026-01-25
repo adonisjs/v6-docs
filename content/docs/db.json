@@ -103,7 +103,7 @@
   },
   {
     "permalink": "concepts/dependency-injection",
-    "title": "Dependency injection (DI)",
+    "title": "Dependency injection",
     "contentPath": "./concepts/dependency_injection.md",
     "category": "Concepts"
   },
@@ -115,7 +115,7 @@
   },
   {
     "permalink": "concepts/hot-module-replacement",
-    "title": "Hot module replacement (HMR)",
+    "title": "Hot module replacement",
     "contentPath": "./concepts/hmr.md",
     "category": "Concepts"
   },
@@ -390,6 +390,12 @@
     "category": "Testing"
   },
   {
+    "permalink": "digging-deeper/cache",
+    "title": "Cache",
+    "contentPath": "./digging_deeper/cache.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "digging-deeper/drive",
     "title": "Drive",
     "contentPath": "./digging_deeper/drive.md",
@@ -432,15 +438,21 @@
     "category": "Digging deeper"
   },
   {
+    "permalink": "digging-deeper/repl",
+    "title": "Repl",
+    "contentPath": "./digging_deeper/repl.md",
+    "category": "Digging deeper"
+  },
+  {
     "permalink": "digging-deeper/transmit",
     "title": "Transmit",
     "contentPath": "./digging_deeper/transmit.md",
     "category": "Digging deeper"
   },
   {
-    "permalink": "digging-deeper/repl",
-    "title": "Repl",
-    "contentPath": "./digging_deeper/repl.md",
+    "permalink": "digging-deeper/open-telemetry",
+    "title": "OpenTelemetry",
+    "contentPath": "./digging_deeper/open_telemetry.md",
     "category": "Digging deeper"
   },
   {

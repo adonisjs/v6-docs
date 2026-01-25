@@ -26,7 +26,7 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-To accept multiple values under the same argument name, you may use the `@agrs.spread` decorator. Do note, the spread argument must be the last.
+To accept multiple values under the same argument name, you may use the `@args.spread` decorator. Do note, the spread argument must be the last.
 
 ```ts
 import { BaseCommand, args, flags } from '@adonisjs/core/ace'

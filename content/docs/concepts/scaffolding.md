@@ -86,7 +86,7 @@ We recommend computing these properties within the stub using inline variables. 
 // insert-start
 {{#var entity = generators.createEntity('user')}}
 {{#var modelName = generators.modelName(entity.name)}}
-{{#var modelReference = string.toCamelCase(modelName)}}
+{{#var modelReference = string.camelCase(modelName)}}
 // insert-end
 
 export default class {{ modelName }}Resource {
@@ -104,7 +104,7 @@ The destination path is defined using the `exports` function. The function accep
 ```js
 {{#var entity = generators.createEntity('user')}}
 {{#var modelName = generators.modelName(entity.name)}}
-{{#var modelReference = string.toCamelCase(modelName)}}
+{{#var modelReference = string.camelCase(modelName)}}
 // insert-start
 {{#var resourceFileName = string(modelName).snakeCase().suffix('_resource').ext('.ts').toString()}}
 {{{
@@ -153,7 +153,7 @@ export default class MakeApiResource extends BaseCommand {
 {{#var entity = generators.createEntity(name)}}
 // insert-end
 {{#var modelName = generators.modelName(entity.name)}}
-{{#var modelReference = string.toCamelCase(modelName)}}
+{{#var modelReference = string.camelCase(modelName)}}
 {{#var resourceFileName = string(modelName).snakeCase().suffix('_resource').ext('.ts').toString()}}
 {{{
   exports({
@@ -235,7 +235,7 @@ node ace make:controller invoice --feature=billing
 // title: Controller stub
 {{#var controllerName = generators.controllerName(entity.name)}}
 // insert-start
-{{#var featureDirectoryName = generators.makePath('features', flags.feature)}}
+{{#var featureDirectoryName = flags.feature}}
 // insert-end
 {{#var controllerFileName = generators.controllerFileName(entity.name)}}
 {{{
@@ -244,7 +244,7 @@ node ace make:controller invoice --feature=billing
     to: app.httpControllersPath(entity.path, controllerFileName)
     // delete-end
     // insert-start
-    to: app.makePath(featureDirectoryName, entity.path, controllerFileName)
+    to: app.makePath('features', featureDirectoryName, controllerFileName)
     // insert-end
   })
 }}}

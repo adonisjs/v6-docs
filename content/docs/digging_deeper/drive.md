@@ -1,5 +1,5 @@
 ---
-summary: Manage user-uploaded files on local filesystem and cloud storage services like S3, GCS, R2 and Digital Ocean spaces. Without any Vendor lock-in.
+summary: Manage user-uploaded files on local filesystem and cloud storage services like S3, GCS, R2 and DigitalOcean spaces. Without any vendor lock-in.
 ---
 
 # Drive
@@ -35,7 +35,7 @@ node ace add @adonisjs/drive
 
 4. Defines the environment variables for the selected storage services.
 
-5. Install the required peer dependencies for the selected storage services.
+5. Installs the required peer dependencies for the selected storage services.
 
 :::
 
@@ -43,7 +43,7 @@ node ace add @adonisjs/drive
 
 The `@adonisjs/drive` package configuration is stored inside the `config/drive.ts` file. You can define config for multiple services within a single config file.
 
-See also: [Config stub](https://github.com/adonisjs/drive/blob/main/stubs/config/drive.stub)
+See also: [Config stub](https://github.com/adonisjs/drive/blob/3.x/stubs/config/drive.stub)
 
 ```ts
 import env from '#start/env'
@@ -95,7 +95,7 @@ Once you have configured Drive, you can import the `drive` service to interact w
 
 :::note
 
-Since AdonisJS integration is a thin wrapper on top of FlyDrive. To better understand its APIs, you should read [FlyDrive docs](https://flydrive.dev).
+Since the AdonisJS integration is a thin wrapper on top of FlyDrive, you should read the [FlyDrive docs](https://flydrive.dev) to better understand its APIs.
 
 :::
 
@@ -131,15 +131,15 @@ router.put('/me', async ({ request, response }) => {
   return {
     message: 'Image uploaded',
     // highlight-start
-    url: await drive.use().getUrl(key),
+    url: image.meta.url,
     // highlight-end
   }
 })
 ```
 
-- The Drive package adds the `moveToDisk` method to the [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110). This method copies the file from its `tmpPath` to the configured storage provider.
+- The Drive package adds the `moveToDisk` method to the [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110). This method moves the file from its `tmpPath` to the configured storage provider.
 
-- The `drive.use().getUrl()` method returns the public URL for the file. For private files, you must use the `getSignedUrl` method.
+- After moving the file, the `meta.url` property will be set on the file object. This property contains the public URL of the file. If your files are private, then you must use the `drive.use().getSignedUrl()` method.
 
 ## Drive service
 
@@ -192,9 +192,9 @@ await disk.moveFromFs(source, destination)
 
 ## Local filesystem driver
 
-AdonisJS integration enhances the FlyDrive's local filesystem driver and adds support for URL generation and ability to serve files using the AdonisJS HTTP server.
+AdonisJS integration enhances the FlyDrive's local filesystem driver and adds support for URL generation and the ability to serve files using the AdonisJS HTTP server.
 
-Following is the list of options you may use configure the filesystem driver.
+Following is the list of options you may use to configure the filesystem driver.
 
 ```ts
 {
@@ -217,11 +217,11 @@ Following is the list of options you may use configure the filesystem driver.
 
 location
 
-<dt>
+</dt>
 
 <dd>
 
-The `location` property defines the stores inside which the files should be stored. This directory should be added to `.gitignore` so that you do not push files uploaded during development to the production server.
+The `location` property defines the store inside which the files should be stored. This directory should be added to `.gitignore` so that you do not push files uploaded during development to the production server.
 
 </dd>
 
@@ -229,7 +229,7 @@ The `location` property defines the stores inside which the files should be stor
 
 visibility
 
-<dt>
+</dt>
 
 <dd>
 
@@ -241,7 +241,7 @@ The `visibility` property is used to mark files public or private. Private files
 
 serveFiles
 
-<dt>
+</dt>
 
 <dd>
 
@@ -253,7 +253,7 @@ The `serveFiles` option auto registers a route to serve the files from the local
 
 routeBasePath
 
-<dt>
+</dt>
 
 <dd>
 
@@ -265,7 +265,7 @@ The `routeBasePath` option defines the base prefix for the route to serve files.
 
 appUrl
 
-<dt>
+</dt>
 
 <dd>
 
@@ -277,7 +277,7 @@ You may optionally define the `appUrl` property to create URLs with the complete
 </dl>
 
 ## Edge helpers
-Within the Edge templates, you may use one the following helper methods to generate URLs. Both the methods are async, so make sure to `await` them.
+Within the Edge templates, you may use one of the following helper methods to generate URLs. Both the methods are async, so make sure to `await` them.
 
 ```edge
 <img src="{{ await driveUrl(user.avatar) }}" />
@@ -330,9 +330,18 @@ await image.moveToDisk(key, 's3')
 await image.moveToDisk(key, 's3', {
   contentType: 'image/png',
 })
+
+/**
+ * Write file by first reading it as a buffer. You may use this
+ * option when your cloud storage provider results in broken
+ * files with the "stream" option
+ */
+await image.moveToDisk(key, 's3', {
+  moveAs: 'buffer'
+})
 ```
 
-## Faking Disks during tests
+## Faking disks during tests
 The fakes API of Drive can be used during testing to prevent interacting with a remote storage. In the fakes mode, the `drive.use()` method will return a fake disk (backed by local filesystem) and all files will be written inside the `./tmp/drive-fakes` directory of your application root.
 
 These files are deleted automatically after you restore a fake using the `drive.restore` method.

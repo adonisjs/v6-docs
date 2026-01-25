@@ -29,21 +29,6 @@
   ],
   "featured_sponsors": [
     {
-      "name": "Relancer",
-      "website": "https://relancer.com/",
-      "logo": "logos/sponsors/relancer"
-    },
-    {
-      "name": "Cleavr",
-      "website": "https://cleavr.io/",
-      "logo": "logos/sponsors/cleavr"
-    },
-    {
-      "name": "ToolZZ",
-      "website": "https://www.toolzz.com.br/",
-      "logo": "logos/sponsors/toolzz"
-    },
-    {
       "name": "Vehicle Routing and Route Optimization Software",
       "website": "https://route4me.com/",
       "logo": "logos/sponsors/route4me"
@@ -52,6 +37,21 @@
       "name": "Ezycourse",
       "website": "https://ezycourse.com/",
       "logo": "logos/sponsors/ezycourse"
+    },
+    {
+      "name": "Galaxy Cloud",
+      "website": "https://meteor.software/g6h",
+      "logo": "logos/sponsors/galaxy"
+    },
+    {
+      "name": "LambdaTest",
+      "website": "https://www.lambdatest.com",
+      "logo": "logos/sponsors/lambdatest"
+    },
+    {
+      "name": "Relancer",
+      "website": "https://relancer.com/",
+      "logo": "logos/sponsors/relancer"
     }
   ],
   "carbon_ads": {

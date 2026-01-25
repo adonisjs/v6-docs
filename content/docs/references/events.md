@@ -308,3 +308,65 @@ emitter.on('authorization:finished', (event) => {
   console.log(event.action) 
 })
 ```
+
+## cache\:cleared
+
+The event is dispatched by the `@adonisjs/cache` package after the cache has been cleared using the `cache.clear` method.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('cache:cleared', (event) => {
+  console.log(event.store)
+})
+```
+
+## cache\:deleted
+
+The event is dispatched by the `@adonisjs/cache` package after a cache key has been deleted using the `cache.delete` method.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('cache:deleted', (event) => {
+  console.log(event.key)
+})
+```
+
+## cache\:hit
+
+The event is dispatched by the `@adonisjs/cache` package when a cache key is found in the cache store.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('cache:hit', (event) => {
+  console.log(event.key)
+  console.log(event.value)
+})
+```
+
+## cache\:miss
+
+The event is dispatched by the `@adonisjs/cache` package when a cache key is not found in the cache store.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('cache:miss', (event) => {
+  console.log(event.key)
+})
+```
+
+## cache\:written
+
+The event is dispatched by the `@adonisjs/cache` package after a cache key has been written to the cache store.
+
+```ts
+import emitter from '@adonisjs/core/services/emitter'
+
+emitter.on('cache:written', (event) => {
+  console.log(event.key)
+  console.log(event.value)
+})
+```

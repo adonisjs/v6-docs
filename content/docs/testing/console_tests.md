@@ -48,7 +48,7 @@ import Greet from '#commands/greet'
 import ace from '@adonisjs/core/services/ace'
 
 test.group('Commands greet', () => {
-  test('should greet the user and finish with exit code 1', async () => {
+  test('should greet the user and finish with exit code 0', async () => {
     /**
      * Create an instance of the Greet command class
      */
@@ -156,9 +156,9 @@ command.assertTableRows([
 
 ## Trapping prompts
 
-Since [prompts](../ace/prompts.md) blocks the terminal waiting for manual input, you must trap and respond to them programmatically when writing tests.
+Since [prompts](../ace/prompts.md) block the terminal waiting for manual input, you must trap and respond to them programmatically when writing tests.
 
-Prompts are trapped using the `prompt.trap` method. The method accepts the prompt title (case sensitive) and offers a chainable API for configuring additional behavior.
+Prompts are trapped using the `prompt.trap` method. The method accepts the prompt title (case-sensitive) and offers a chainable API for configuring additional behavior.
 
 The traps are removed automatically after the prompt gets triggered. An error will be thrown if the test finishes without triggering the prompt with a trap.
 
@@ -254,7 +254,7 @@ Assert the command exited with non-zero `exitCode`.
 
 ```ts
 await command.exec()
-command.assertSucceeded()
+command.assertFailed()
 ```
 
 ### assertExitCode

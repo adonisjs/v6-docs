@@ -22,7 +22,7 @@ You can install the package and use it as follows.
 npm i -D @adonisjs/tsconfig
 
 # Make sure also to install the following packages
-npm i -D typescript ts-node @swc/core
+npm i -D typescript ts-node-maintained @swc/core
 ```
 
 Extend from the `tsconfig.app.json` file when creating an AdonisJS application. (Comes pre-configured with starter kits).

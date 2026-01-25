@@ -15,7 +15,7 @@ You can send emails from your AdonisJS application using the `@adonisjs/mail` pa
 
 ## Installation
 
-Install and configure the package using the following command :
+Install and configure the package using the following command:
 
 ```sh
 node ace add @adonisjs/mail
@@ -84,7 +84,7 @@ const mailConfig = defineConfig({
 
   /**
    * The mailers object can be used to configure multiple mailers
-   * each using a different transport or the same transport with a different
+   * each using a different transport or the same transport with different
    * options.
    */
   mailers: {
@@ -446,7 +446,7 @@ new Worker('emails', async (job) => {
 })
 ```
 
-That's all! You may continue using the `mail.sendLater` method. However, the emails will be queued inside a redis database this time.
+That's all! You may continue using the `mail.sendLater` method. However, the emails will be queued inside a Redis database this time.
 
 ## Switching between mailers
 You may switch between the configured mailers using the `mail.use` method. The `mail.use` method accepts the name of the mailer (as defined inside the config file) and returns an instance of the [Mailer](https://github.com/adonisjs/mail/blob/main/src/mailer.ts) class.
@@ -492,7 +492,7 @@ mail.use('mailgun')
 ```
 
 ## Configuring the template engine
-By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.§
+By default, the mail package is configured to use the [Edge template engine](../views-and-templates/introduction.md#configuring-edge) for defining the email **HTML** and **Plain text** contents.
 
 However, as shown in the following example, you may also register a custom template engine by overriding the `Message.templateEngine` property.
 
@@ -596,7 +596,7 @@ await mail.send((message) => {
 })
 ```
 
-You can define multiple `cc` and `bcc` recipients as an array of email addresses or an object with email addresses and the recipient name.
+You can define multiple `cc` and `bcc` recipients as an array of email addresses or an array of objects with the recipient name and email address.
 
 ```ts
 await mail.send((message) => {
@@ -868,7 +868,7 @@ message.icalEventFromFile(
 ```
 
 ```ts
-message.icalEventFromFile(
+message.icalEventFromUrl(
   'https://myapp.com/users/1/invite.ics',
   {
     filename: 'invite.ics',
@@ -946,7 +946,7 @@ See also: [Make mail command](../references/commands.md#makemail)
 node ace make:mail verify_email
 ```
 
-The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts) class and is scaffolded with following properties and methods. You may configure the mail message inside the `prepare` method using the `this.message` property.
+The mail class extends the [BaseMail](https://github.com/adonisjs/mail/blob/main/src/base_mail.ts) class and is scaffolded with the following properties and methods. You may configure the mail message inside the `prepare` method using the `this.message` property.
 
 ```ts
 import User from '#models/user'
@@ -1194,7 +1194,7 @@ The `mails.assertSent` method accepts the mail class constructor as the first ar
 const { mails } = mail.fake()
 
 /**
- * Asser the email was sent
+ * Assert the email was sent
  */
 mails.assertSent(VerifyEmailNotification)
 ```
@@ -1325,7 +1325,7 @@ In this guide, we will wrap the [nodemailer-postmark-transport](https://www.npmj
 npm i nodemailer nodemailer-postmark-transport
 ```
 
-As you can see in the following example, the heavy lifting of sending an email is done by the `nodemailer`. The AdonisJS transport acts as an adapter forwarding the message to nodemailer and normalizing its response to an instance of [MailResponse](https://github.com/adonisjs/mail/blob/main/src/mail_response.ts).
+As you can see in the following example, the heavy lifting of sending an email is done by the Nodemailer. The AdonisJS transport acts as an adapter forwarding the message to nodemailer and normalizing its response to an instance of [MailResponse](https://github.com/adonisjs/mail/blob/main/src/mail_response.ts).
 
 ```ts
 import nodemailer from 'nodemailer'
@@ -1340,7 +1340,7 @@ import type {
 /**
  * Configuration accepted by the transport
  */
-export type PostMarkConfig = {
+export type PostmarkConfig = {
   auth: {
     apiKey: string
   }
@@ -1349,19 +1349,19 @@ export type PostMarkConfig = {
 /**
  * Transport implementation
  */
-export class PostMarkTransport implements MailTransportContract {
-  #config: PostMarkConfig
-  constructor(config: PostMarkConfig) {
+export class PostmarkTransport implements MailTransportContract {
+  #config: PostmarkConfig
+  constructor(config: PostmarkConfig) {
     this.#config = config
   }
 
-  #createNodemailerTransport(config: PostMarkConfig) {
+  #createNodemailerTransport(config: PostmarkConfig) {
     return nodemailer.createTransport(nodemailerTransport(config))
   }
 
   async send(
     message: NodeMailerMessage,
-    config?: PostMarkConfig
+    config?: PostmarkConfig
   ): Promise<MailResponse> {
     /**
      * Create nodemailer transport
@@ -1398,26 +1398,26 @@ import type {
   // insert-end
 } from '@adonisjs/mail/types'
 
-export function postMarkTransport(
-  config: PostMarkConfig
+export function PostmarkTransport(
+  config: PostmarkConfig
 ): MailManagerTransportFactory {
   return () => {
-    return new PostMarkTransport(config)
+    return new PostmarkTransport(config)
   }
 }
 ```
 
 ### Using the transport
-Finally, you can reference the transport inside your config file using the `postMarkTransport` helper.
+Finally, you can reference the transport inside your config file using the `postmarkTransport` helper.
 
 ```ts
 import env from '#start/env'
 import { defineConfig } from '@adonisjs/mail'
-import { postMarkTransport } from 'my-custom-package'
+import { postmarkTransport } from 'my-custom-package'
 
 const mailConfig = defineConfig({
   mailers: {
-    postmark: postMarkTransport({
+    postmark: postmarkTransport({
       auth: {
         apiKey: env.get('POSTMARK_API_KEY'),
       },

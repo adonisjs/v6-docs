@@ -16,6 +16,8 @@ You can manage user sessions inside your AdonisJS application using the `@adonis
 
 - `dynamodb`: The session data is stored inside an Amazon DynamoDB table. The DynamoDB store is suitable for applications that require a highly scalable and distributed session store, especially when the infrastructure is built on AWS.
 
+- `database`: The session data is stored inside a SQL database using Lucid. The database store is a good option if you are already using a SQL database in your application and want to avoid adding an extra dependency like Redis.
+
 - `memory`: The session data is stored within a global memory store. The memory store is used during testing.
 
 Alongside the inbuilt backend stores, you can also create and [register custom session stores](#creating-a-custom-session-store).
@@ -32,10 +34,14 @@ node ace add @adonisjs/session
 
 1. Installs the `@adonisjs/session` package using the detected package manager.
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. Registers the following service provider and command inside the `adonisrc.ts` file.
 
     ```ts
     {
+      commands: [
+        // ...other commands
+        () => import('@adonisjs/session/commands')
+      ],
       providers: [
         // ...other providers
         () => import('@adonisjs/session/session_provider')
@@ -209,6 +215,11 @@ export default defineConfig({
     dynamodb: stores.dynamodb({
       clientConfig: {}
     }),
+
+    database: stores.database({
+      connectionName: 'postgres',
+      tableName: 'sessions',
+    }),
   }
   // highlight-end
 })
@@ -295,8 +306,68 @@ Additionally, you may define a custom table name and key attribute name.
 ```ts
 stores.dynamodb({
   tableName: 'Session'
-  keyAttributName: 'key'
+  keyAttribute: 'key'
 })
+```
+
+</dd>
+
+<dt>
+
+  stores.database
+
+</dt>
+
+<dd>
+
+Define the configuration for the `database` store. The method optionally accepts the `connectionName` to use and the `tableName` for storing session data.
+
+Make sure to first install and configure the [@adonisjs/lucid](../database/lucid.md) package before using the `database` store.
+
+You must also create the sessions table inside your database. You can use the following command to create the migration file.
+
+```sh
+node ace make:session-table
+```
+
+```ts
+stores.database({
+  connectionName: 'postgres',
+  tableName: 'sessions',
+  gcProbability: 2,
+})
+```
+
+Unlike Redis which handles expiration automatically, SQL databases require manual cleanup of expired sessions. The database store implements a probabilistic garbage collection: on each request, there is a `gcProbability` percent chance (default: **2%**) that expired sessions will be deleted from the database.
+
+Set `gcProbability` to `0` to disable automatic garbage collection entirely. In this case, you should set up a scheduled task to periodically clean up expired sessions.
+
+#### Adding tagging support to an existing database
+
+If you have an existing sessions table and want to use [session tagging](#session-tagging), you need to add the `user_id` column. Create a new migration:
+
+```sh
+node ace make:migration add_user_id_to_sessions
+```
+
+```ts
+import { BaseSchema } from '@adonisjs/lucid/schema'
+
+export default class extends BaseSchema {
+  protected tableName = 'sessions'
+
+  async up() {
+    this.schema.alterTable(this.tableName, (table) => {
+      table.string('user_id').nullable().index()
+    })
+  }
+
+  async down() {
+    this.schema.alterTable(this.tableName, (table) => {
+      table.dropColumn('user_id')
+    })
+  }
+}
 ```
 
 </dd>
@@ -500,6 +571,117 @@ The `@adonisjs/auth` package automatically re-generates the session ID, so you d
  * the end of the request
  */
 session.regenerate()
+```
+
+## Session tagging
+Session tagging allows you to link a session to a user ID. This is useful for implementing features like:
+
+- **Logout from all devices**: Destroy all sessions associated with a user.
+- **Active sessions list**: Display all active sessions to the user in their account settings.
+
+:::note
+Session tagging is only supported by the `redis`, `database`, and `memory` stores. Attempting to use tagging with `cookie`, `file`, or `dynamodb` stores will throw an error.
+:::
+
+### Tagging the current session
+You can tag the current session with a user ID using the `session.tag` method. This is typically done after a user logs in.
+
+```ts
+import router from '@adonisjs/core/services/router'
+
+router.post('/login', async ({ auth, session }) => {
+  const user = await auth.use('web').login(email, password)
+
+  // highlight-start
+  // Tag the session with the user ID
+  await session.tag(String(user.id))
+  // highlight-end
+})
+```
+
+## SessionCollection
+The `SessionCollection` class provides APIs for programmatic session management outside of an HTTP request context. It allows you to read, destroy, and tag sessions by their ID.
+
+### Creating an instance
+You must obtain the `SessionCollection` instance through the container to ensure proper configuration injection.
+
+```ts
+import app from '@adonisjs/core/services/app'
+import { SessionCollection } from '@adonisjs/session'
+
+const sessionCollection = await app.container.make(SessionCollection)
+```
+
+### Available methods
+
+```ts
+// Get session data by ID
+const data = await sessionCollection.get(sessionId)
+
+// Destroy a session by ID
+await sessionCollection.destroy(sessionId)
+
+// Tag a session with a user ID
+await sessionCollection.tag(sessionId, userId)
+
+// Get all sessions for a user
+const sessions = await sessionCollection.tagged(userId)
+// Returns: Array<{ id: string, data: SessionData }>
+
+// Check if the current store supports tagging
+const supportsTagging = sessionCollection.supportsTagging()
+```
+
+### List active sessions
+Here is an example of listing all active sessions for a user in their account settings page.
+
+```ts
+import app from '@adonisjs/core/services/app'
+import router from '@adonisjs/core/services/router'
+import { SessionCollection } from '@adonisjs/session'
+
+router.get('/account/sessions', async ({ auth, session, view }) => {
+  const user = auth.user!
+  const sessionCollection = await app.container.make(SessionCollection)
+
+  // highlight-start
+  const sessions = await sessionCollection.tagged(String(user.id))
+
+  // Mark the current session
+  const sessionsWithCurrent = sessions.map((tagged) => ({
+    ...tagged,
+    isCurrent: tagged.id === session.sessionId,
+  }))
+  // highlight-end
+
+  return view.render('account/sessions', { sessions: sessionsWithCurrent })
+})
+```
+
+### Logout from all other devices
+Here is a complete example of implementing a "Logout from all other devices" feature.
+
+```ts
+import app from '@adonisjs/core/services/app'
+import router from '@adonisjs/core/services/router'
+import { SessionCollection } from '@adonisjs/session'
+
+router.post('/logout-other-devices', async ({ auth, session, response }) => {
+  const user = auth.user!
+  const sessionCollection = await app.container.make(SessionCollection)
+
+  // highlight-start
+  const sessions = await sessionCollection.tagged(String(user.id))
+
+  for (const s of sessions) {
+    if (s.id !== session.sessionId) {
+      await sessionCollection.destroy(s.id)
+    }
+  }
+  // highlight-end
+
+  return response.redirect().back()
+})
 ```
 
 ## Flash messages

@@ -8,11 +8,9 @@ The configuration files of your AdonisJS application are stored inside the `conf
 
 Feel free to create additional files your application requires inside the `config` directory.
 
-
 :::note
 
 We recommend using [environment variables](./environment_variables.md) for storing secrets and environment-specific configuration.
-
 
 :::
 
@@ -27,6 +25,8 @@ import { appKey } from '#config/app'
 ```ts
 import databaseConfig from '#config/database'
 ```
+
+When you import a config files, you get access to the exported values. In most cases, these exports are [`ConfigProvider`](../concepts/config_providers.md) instances, so directly using their values is not recommended. Instead, read the values from [the resolved config](../concepts/config_providers.md#how-do-i-access-the-resolved-config).
 
 ## Using the config service
 
@@ -44,7 +44,7 @@ The `config.get` method accepts a dot-separated key and parses it as follows.
 - The first part is the filename from which you want to read the values. I.e., `app.ts` file.
 - The rest of the string fragment is the key you want to access from the exported values. I.e., `appKey` in this case.
 
-## Config service vs. directly importing config files
+### Config service vs. directly importing config files
 
 Using the config service over directly importing the config files has no direct benefits. However, the config service is the only choice to read the configuration in external packages and edge templates.
 
@@ -91,7 +91,7 @@ You can use the `config.has` method to check if a configuration value exists for
 
 ## Changing the config location
 
-You can update the location for the config directory by modifying the `adonisrc.ts` file. After the change, the config files will be imported from the new location.
+You can update the location for the config directory by modifying the [`adonisrc.ts`](../concepts/adonisrc_file.md) file. After the change, the config files will be imported from the new location.
 
 ```ts
 directories: {

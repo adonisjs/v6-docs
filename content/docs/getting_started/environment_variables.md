@@ -4,7 +4,7 @@ summary: Learn how to use environment variables inside an AdonisJS application.
 
 # Environment variables
 
-Environment variables serve the purpose of storing secrets like the database password, the app secret, or an API key outside of your application codebase.
+Environment variables serve the purpose of storing secrets like the database password, the app secret, or an API key outside your application codebase.
 
 Also, environment variables can be used to have different configurations for different environments. For example, you may use a memory mailer during tests, an SMTP mailer during development, and a third-party service in production.
 
@@ -44,9 +44,16 @@ env.get('PORT', 3333)
 ```
 
 ### Sharing env module with Edge templates
+
 If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
 
 You can [create `view.ts` as a preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory and write the following lines of code inside it.
+
+:::note
+
+Doing this will not expose the `env` module to the browser. The `env` module is only available during server-side rendering.
+
+:::
 
 ```ts
 // title: start/view.ts
@@ -92,6 +99,7 @@ export default await Env.create(APP_ROOT, {
 ```
 
 ### Static-type information
+
 The same validation rules are used to infer the static-type information. The type information is available when using the env module.
 
 ![](./env_intellisense.jpeg)
@@ -107,15 +115,21 @@ The `schema.string` method ensures the value is a valid string. Empty strings fa
   APP_KEY: Env.schema.string()
 }
 
-// Mark APP_KEY to be optional
+// Mark it as optional
 {
   APP_KEY: Env.schema.string.optional()
+}
+
+// Mark it as optional with a condition
+{
+  APP_KEY: Env.schema.string.optionalWhen(() => process.env.NODE_ENV === 'production')
 }
 ```
 
 The string value can be validated for its formatting. Following is the list of available formats.
 
 #### host
+
 Validate the value to be a valid URL or an IP address.
 
 ```ts
@@ -125,6 +139,7 @@ Validate the value to be a valid URL or an IP address.
 ```
 
 #### url
+
 Validate the value to be a valid URL. Optionally, you can make the validation less strict by allowing URLs not to have `protocol` or `tld`.
 
 ```ts
@@ -140,6 +155,7 @@ Validate the value to be a valid URL. Optionally, you can make the validation le
 ```
   
 #### email
+
 Validate the value to be a valid email address.
 
 ```ts
@@ -163,6 +179,11 @@ The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to 
 {
   CACHE_VIEWS: Env.schema.boolean.optional()
 }
+
+// Mark it as optional with a condition
+{
+  CACHE_VIEWS: Env.schema.boolean.optionalWhen(() => process.env.NODE_ENV === 'production')
+}
 ```
 
 ### schema.number
@@ -177,6 +198,11 @@ The `schema.number` method ensures the value is a valid number. The string repre
 // Mark it as optional
 {
   PORT: Env.schema.number.optional()
+}
+
+// Mark it as optional with a condition
+{
+  PORT: Env.schema.number.optionalWhen(() => process.env.NODE_ENV === 'production')
 }
 ```
 
@@ -199,6 +225,17 @@ The `schema.enum` method validates the environment variable against one of the p
     .optional(['development', 'production'] as const)
 }
 
+// Mark it as optional with a condition
+{
+  NODE_ENV: Env
+    .schema
+    .enum
+    .optionalWhen(
+      () => process.env.NODE_ENV === 'production',
+      ['development', 'production'] as const
+    )
+}
+
 // Using native enums
 enum NODE_ENV {
   development = 'development',
@@ -211,6 +248,7 @@ enum NODE_ENV {
 ```
 
 ### Custom functions
+
 Custom functions can perform validations not covered by the schema API. 
 
 The function receives the name of the environment variable as the first argument and the value as the second argument. It must return the final value post-validation.
@@ -234,6 +272,7 @@ The function receives the name of the environment variable as the first argument
 ## Defining environment variables
 
 ### In development
+
 The environment variables are defined inside the `.env` file during development. The env module looks for this file within the project's root and automatically parses it (if it exists).
 
 ```dotenv
@@ -247,6 +286,7 @@ CACHE_VIEWS=false
 ```
 
 ### In production
+
 Using your deployment platform to define the environment variables is recommended in production. Most modern-day deployment platforms have first-class support for defining environment variables from their web UI.
 
 Suppose your deployment platform provides no means for defining environment variables. You can create a `.env` file in the project root or at some different location on your production server.
@@ -262,6 +302,7 @@ ENV_PATH=/etc/secrets node server.js
 ```
 
 ### During tests
+
 The environment variables specific to the test environment must be defined within the `.env.test` file. The values from this file override the values from the `.env` file.
 
 ```dotenv
@@ -285,7 +326,7 @@ import env from '#start/env'
 env.get('SESSION_DRIVER') // memory
 ```
 
-## All other dot-env files
+### All other dot-env files
 
 Alongside the `.env` file, AdonisJS processes the environment variables from the following dot-env files. Therefore, you can optionally create these files (if needed).
 
@@ -326,6 +367,53 @@ The file with the top-most rank overrides the values from the bottom rank files.
         </tr>
     </tbody>
 </table>
+
+## Using identifiers for interpolation
+
+You can define and use "identifiers" to change the interpolation behavior. The identifier is a string that prefix the environment variable value and let you customize the value resolution.
+
+```ts
+import { EnvParser } from '@adonisjs/env'
+
+EnvParser.defineIdentifier('base64', (value) => {
+  return Buffer.from(value, 'base64').toString()
+})
+
+const envParser = new EnvParser(`
+  APP_KEY=base64:U7dbSKkdb8wjVFOTq2osaDVz4djuA7BRLdoCUJEWxak=
+`)
+
+console.log(await envParser.parse())
+```
+
+In the above example, the `base64:` prefix tells the env parser to decode the value from base64 before returning it.
+
+Alternatively, you can define an identifier using the `defineIdentifierIfMissing` method. This method will not override the existing identifier.
+
+```ts
+EnvParser.defineIdentifierIfMissing('base64', (value) => {
+  return Buffer.from(value, 'base64').toString()
+})
+```
+
+:::note
+
+You can directly use those methods inside the `start/env.ts` file.
+
+```ts
+// title: start/env.ts
+import { Env } from '@adonisjs/core/env'
+
+Env.defineIdentifier('base64', (value) => {
+  return Buffer.from(value, 'base64').toString()
+})
+
+export default await Env.create(APP_ROOT, {
+  APP_KEY: Env.schema.string()
+})
+```
+
+:::
 
 ## Using variables inside the dot-env files
 

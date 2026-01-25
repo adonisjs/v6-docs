@@ -213,7 +213,7 @@ export default defineConfig({
     bcrypt: drivers.bcrypt({
       rounds: 10,
       saltSize: 16,
-      version: '2b'
+      version: 98
     })
   }
 })
@@ -257,7 +257,7 @@ version
 
 <dd>
 
-The version for the hashing algorithm. The supported values are `2a` and `2b`. Using the latest version, i.e., `2b` is recommended.
+The version for the hashing algorithm. The supported values are `97` and `98`. Using the latest version, i.e., `98` is recommended.
 
 </dd>
 

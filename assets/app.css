@@ -164,6 +164,10 @@ html.dark {
   border-radius: 0 0 7px 7px;
 }
 
+.disclosure_wrapper .disclosure_panel p {
+  margin-top: 12px;
+}
+
 @media (min-width: 1440px) {
   .markdown .table_expanded {
     max-width: 120%;
@@ -331,4 +335,54 @@ progress[value]::-webkit-progress-value {
   color: var(--neutral-gray-11);
   font-size: 14px;
   font-weight: 600;
+}
+
+.notification_banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background-color: #f6ff92;
+  color: #171717;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 11;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.notification_banner a {
+  text-decoration: underline;
+}
+
+.header {
+  top: 40px;
+}
+
+.docs_sidebar {
+  margin-top: 101px;
+}
+
+.content_container {
+  padding-top: 80px;
+}
+
+.aside_container {
+  padding-top: 70px;
+}
+
+.docs_local_nav_wrapper {
+  top: 40px;
+}
+
+@media (max-width: 600px) {
+  .notification_banner {
+    font-size: 13px;
+  }
 }

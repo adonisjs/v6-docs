@@ -20,7 +20,7 @@ Bouncer is not an implementation of RBAC or ACL. Instead, it provides a low-leve
 
 ## Installation
 
-Install and configure the package using the following command :
+Install and configure the package using the following command:
 
 ```sh
 node ace add @adonisjs/bouncer
@@ -157,7 +157,7 @@ The opposite of `bouncer.allows` method is the `bouncer.denies` method. You may 
 
 ```ts
 if (await bouncer.denies(editPost, post)) {
-  response.abort('Your cannot edit the post', 403)
+  response.abort('You cannot edit the post', 403)
 }
 ```
 
@@ -434,11 +434,11 @@ export class PostPolicy extends BasePolicy {
 ```
 
 ## Throwing AuthorizationException
-Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](https://github.com/adonisjs/bouncer/blob/main/src/errors.ts#L19) when the check fails.
+Alongside the `allows` and the `denies` methods, you may use the `bouncer.authorize` method to perform the authorization check. This method will throw the [AuthorizationException](../references/exceptions.md#e_authorization_failure) when the check fails.
 
 ```ts
 router.put('posts/:id', async ({ bouncer, params }) => {
-  const post = await Post.findOrFail(post)
+  const post = await Post.findOrFail(params.id)
   // highlight-start
   await bouncer.authorize(editPost, post)
   // highlight-end
@@ -461,6 +461,7 @@ AdonisJS will convert the `AuthorizationException` to a `403 - Forbidden` HTTP r
 You may also self-handle `AuthorizationException` errors within the [global exception handler](../basics/exception_handling.md).
 
 ```ts
+import app from '@adonisjs/core/services/app'
 import { errors } from '@adonisjs/bouncer'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 
@@ -522,7 +523,7 @@ export const editPost = Bouncer.ability((user: User, post: Post) => {
 
 ### Using a custom response builder
 
-The flexibility to define custom error messages for individual authorization checks is great. However, if you always want to return the same response, it might be cumbersome to repeat the same code everytime.
+The flexibility to define custom error messages for individual authorization checks is great. However, if you always want to return the same response, it might be cumbersome to repeat the same code every time.
 
 Therefore, you can override the default response builder for Bouncer as follows.
 
@@ -583,7 +584,7 @@ import * as abilities from '#abilities/main'
 import { policies } from '#policies/main'
 // highlight-end
 
-export default InitializeBouncerMiddleware {
+export default class InitializeBouncerMiddleware {
   async handle(ctx, next) {
     ctx.bouncer = new Bouncer(
       () => ctx.auth.user,
@@ -592,6 +593,8 @@ export default InitializeBouncerMiddleware {
       policies
       // highlight-end
     )
+
+    return next()
   }
 }
 ```

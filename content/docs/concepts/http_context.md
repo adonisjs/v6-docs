@@ -101,7 +101,7 @@ If you use Dependency injection throughout your application, you can inject the 
 
 :::warning
 
-Ensure the `#middleware/container_bindings_middleware` middleware is registered inside the `kernel/start.ts` file. This middleware is required to resolve request-specific values (i.e., the HttpContext class) from the container.
+Ensure the `#middleware/container_bindings_middleware` middleware is registered inside the `start/kernel.ts` file. This middleware is required to resolve request-specific values (i.e., the HttpContext class) from the container.
 
 :::
 

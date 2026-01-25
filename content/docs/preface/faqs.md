@@ -36,7 +36,7 @@ However, we look closer at the performance metrics and fine-tune the framework p
 - The validation layer of the framework [outperforms other popular validation libraries](https://github.com/vinejs/vine/blob/main/benchmarks.md) in the Node.js ecosystem.
 
 ## Do you offer paid support?
-Yes! On our website, you can learn more about the [priority support program](https://adonisjs.com/support_program).
+Yes! On our website, you can learn more about the [priority support program](https://adonisjs.com/contact).
 
 ## How do I stay up to date with AdonisJS?
 Check out the following links to stay connected and up-to-date.

@@ -130,7 +130,7 @@ router
 
 ### Handling authentication exception
 
-The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/auth/errors.ts#L18) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
+The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/errors.ts#L21) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
 
 - Request with `Accept=application/json` header will receive an array of errors with the `message` property.
 

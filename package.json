@@ -5,11 +5,11 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "export": "vite build && npm run download:sponsors && node --loader=ts-node/esm bin/build.ts",
+    "export": "vite build && npm run download:sponsors && node --import=ts-node-maintained/register/esm bin/build.ts",
     "build": "npm run export",
     "postexport": "copyfiles -u 1 public/* public/**/* dist",
-    "download:sponsors": "node --loader=ts-node/esm bin/download_sponsors.ts",
-    "serve": "node --loader=ts-node/esm bin/serve.ts",
+    "download:sponsors": "node --import=ts-node-maintained/register/esm bin/download_sponsors.ts",
+    "serve": "node --import=ts-node-maintained/register/esm bin/serve.ts",
     "dev": "vite build && npm run serve",
     "test": "node ace test"
   },
@@ -42,7 +42,7 @@
     "prettier": "^3.3.3",
     "reflect-metadata": "^0.2.2",
     "sharp": "^0.33.4",
-    "ts-node": "^10.9.2",
+    "ts-node-maintained": "^10.9.4",
     "typescript": "^5.5.4",
     "unpoly": "^3.8.0",
     "vite": "^5.4.0"

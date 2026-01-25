@@ -183,6 +183,22 @@ You can use the `dd` helper within Edge templates via the `@dd` tag. Additionall
 @dump(state)
 ```
 
+When using the `@dump` helper make sure there is an [EdgeJS Stack](https://edgejs.dev/docs/stacks) named "dumper" on the page. The script and styles used by the `@dump` helper will be written to this stack for inclusion in the final HTML output.
+
+```edge
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @stack('dumper')
+  </head>
+  <body>
+    @dump(state)
+  </body>
+</html>
+```
+
 ### Dumper settings
 You can configure the dumper settings inside the `config/app.ts` file. This file should export a `dumper` configuration object, as shown below.
 

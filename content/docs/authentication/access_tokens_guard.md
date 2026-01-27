@@ -488,6 +488,12 @@ You may delete a token using the `accessTokens.delete` method. The method accept
 await User.accessTokens.delete(user, token.identifier)
 ```
 
+You could also delete all tokens for the user using `accessTokens.deleteAll` method. This method accepts just the user as the parameter. Useful after a password reset for example
+
+```ts
+await User.accessTokens.deleteAll(user)
+```
+
 ## Events
 Please check the [events reference guide](../references/events.md#access_tokens_authauthentication_attempted) to view the list of available events emitted by the access tokens guard.
 

@@ -1,48 +1,48 @@
 ---
-summary: Use the `@adonisjs/lock` package to manage atomic locks in your AdonisJS application. 
+summary: 使用 `@adonisjs/lock` 包在 AdonisJS 应用程序中管理原子锁。
 ---
 
-# Atomic Locks
+# 原子锁
 
-An atomic lock, otherwise known as a `mutex`, is used for synchronizing access to a shared resource. In other words, it prevents several processes, or concurrent code, from executing a section of code at the same time.
+原子锁，也称为 `互斥锁（mutex）`，用于同步对共享资源的访问。换句话说，它可以防止多个进程或并发代码同时执行某段代码。
 
-The AdonisJS team has created a framework-agnostic package called [Verrou](https://github.com/Julien-R44/verrou). The `@adonisjs/lock` package is based on this package, **so make sure to also read [the Verrou documentation](https://verrou.dev/docs/introduction) which is more detailed.**
+AdonisJS 团队创建了一个名为 [Verrou](https://github.com/Julien-R44/verrou) 的框架无关包。`@adonisjs/lock` 包基于此包，**因此请务必阅读 [Verrou 文档](https://verrou.dev/docs/introduction)，其中包含更详细的信息。**
 
-## Installation
+## 安装
 
-Install and configure the package using the following command:
+使用以下命令安装并配置该包：
 
 ```sh
 node ace add @adonisjs/lock
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Install the `@adonisjs/lock` package using the detected package manager.
+1. 使用检测到的包管理器安装 `@adonisjs/lock` 包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...其他提供者
         () => import('@adonisjs/lock/lock_provider')
       ]
     }
     ```
 
-3. Create the `config/lock.ts` file.
+3. 创建 `config/lock.ts` 文件。
 
-4. Define the following environment variable alongside its validation inside the `start/env.ts` file.
+4. 在 `start/env.ts` 文件中定义以下环境变量及其验证。
    ```ts
    LOCK_STORE=redis
    ```
 
-5. Optionally, create the database migration for the `locks` table if using the `database` store.
+5. 如果使用 `database` 存储，可选择为 `locks` 表创建数据库迁移。
 
 :::
 
-## Configuration
-The configuration for the locks is stored inside the `config/lock.ts` file.
+## 配置
+锁的配置存储在 `config/lock.ts` 文件中。
 
 ```ts
 import env from '#start/env'
@@ -79,7 +79,7 @@ default
 
 <dd>
 
-The `default` store to use for managing locks. The store is defined within the same config file under the `stores` object.
+用于管理锁的 `default` 存储。该存储在同一配置文件的 `stores` 对象下定义。
 
 </dd>
 
@@ -91,7 +91,7 @@ stores
 
 <dd>
 
-A collection of stores you plan to use within your application. We recommend always configuring the `memory` store that could be used during testing.
+你计划在应用程序中使用的存储集合。我们建议始终配置 `memory` 存储，以便在测试期间使用。
 
 </dd>
 
@@ -100,10 +100,10 @@ A collection of stores you plan to use within your application. We recommend alw
 ---
 
 
-### Environment variables
-The default lock store is defined using the `LOCK_STORE` environment variable, and therefore, you can switch between different stores in different environments. For example, use the `memory` store during testing and the `redis` store for development and production.
+### 环境变量
+默认的锁存储使用 `LOCK_STORE` 环境变量定义，因此，你可以在不同的环境中切换不同的存储。例如，在测试期间使用 `memory` 存储，在开发和生产环境中使用 `redis` 存储。
 
-Also, the environment variable must be validated to allow one of the pre-configured stores. The validation is defined inside the `start/env.ts` file using the `Env.schema.enum` rule.
+此外，必须验证环境变量以允许预配置的存储之一。验证是在 `start/env.ts` 文件中使用 `Env.schema.enum` 规则定义的。
 
 ```ts
 {
@@ -111,10 +111,10 @@ Also, the environment variable must be validated to allow one of the pre-configu
 }
 ```
 
-### Redis store
-The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the Redis store.
+### Redis 存储
+`redis` 存储对 `@adonisjs/redis` 包有对等依赖；因此，在使用 Redis 存储之前，你必须配置此包。
 
-Following is the list of options the Redis store accepts:
+以下是 Redis 存储接受的选项列表：
 
 ```ts
 {
@@ -130,16 +130,16 @@ connectionName
 </dt>
 <dd>
 
-The `connectionName` property refers to a connection defined within the `config/redis.ts` file.
+`connectionName` 属性引用在 `config/redis.ts` 文件中定义的连接。
 
 </dd>
 </dl>
 
-### Database store
+### 数据库存储
 
-The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the database store.
+`database` 存储对 `@adonisjs/lucid` 包有对等依赖，因此，在使用数据库存储之前，你必须配置此包。
 
-Following is the list of options the database store accepts:
+以下是数据库存储接受的选项列表：
 
 ```ts
 {
@@ -160,7 +160,7 @@ connectionName
 
 <dd>
 
-Reference to the database connection defined within the `config/database.ts` file. If not defined, we will use the default database connection.
+引用在 `config/database.ts` 文件中定义的数据库连接。如果未定义，我们将使用默认数据库连接。
 
 </dd>
 
@@ -172,17 +172,17 @@ tableName
 
 <dd>
 
-The database table to use to store rate limits. 
+用于存储速率限制的数据库表。
 
 </dd>
 
 </dl>
 
-### Memory store
+### 内存存储
 
-The `memory` store is a simple in-memory store that can be useful for testing purposes but not only. Sometimes, for some use cases, you might want to have a lock that is only valid for the current process and not shared across multiple ones.
+`memory` 存储是一个简单的内存存储，对测试目的很有用，但不限于此。有时，对于某些用例，你可能希望拥有一个仅对当前进程有效且不在多个进程之间共享的锁。
 
-The memory store is built on top of the [`async-mutex`](https://www.npmjs.com/package/async-mutex) package.
+内存存储构建在 [`async-mutex`](https://www.npmjs.com/package/async-mutex) 包之上。
 
 ```ts
 {
@@ -190,17 +190,17 @@ The memory store is built on top of the [`async-mutex`](https://www.npmjs.com/pa
 }
 ```
 
-## Locking a resource
+## 锁定资源
 
-Once you have configured your lock store, you can start using locks to protect your resources anywhere within your application.
+配置好锁存储后，你可以开始在应用程序的任何位置使用锁来保护资源。
 
-Here is a simple example of how to use locks to protect a resource.
+以下是如何使用锁来保护资源的简单示例。
 
 
 :::codegroup
 
 ```ts
-// title: Manual locking
+// title: 手动锁定
 import { errors } from '@adonisjs/lock'
 import locks from '@adonisjs/lock/services/main'
 import { HttpContext } from '@adonisjs/core/http'
@@ -210,7 +210,7 @@ export default class OrderController {
     const orderId = request.input('order_id')
 
     /**
-     * Try to acquire the lock immediately ( without retrying )
+     * 尝试立即获取锁（不重试）
      */
     const lock = locks.createLock(`order.processing.${orderId}`)
     const acquired = await lock.acquireImmediately()
@@ -219,16 +219,16 @@ export default class OrderController {
     }
 
     /**
-     * Lock has been acquired. We can process the order
+     * 已获取锁。我们可以处理订单
      */
     try {
       await processOrder()
       return 'Order processed successfully'
     } finally {
       /**
-       * Always release the lock using the `finally` block, so that
-       * we are sure that the lock is released even when an exception
-       * is thrown during the processing.
+       * 始终使用 `finally` 块释放锁，
+       * 以便即使在处理过程中抛出异常，
+       * 我们也能确保锁被释放。
        */
       await lock.release()
     }
@@ -237,7 +237,7 @@ export default class OrderController {
 ```
 
 ```ts
-// title: Automatic locking
+// title: 自动锁定
 import { errors } from '@adonisjs/lock'
 import locks from '@adonisjs/lock/services/main'
 import { HttpContext } from '@adonisjs/core/http'
@@ -247,22 +247,21 @@ export default class OrderController {
     const orderId = request.input('order_id')
 
     /**
-     * Will run the function only if lock is available
-     * Lock will also be automatically released once the function
-     * has been executed
+     * 仅当锁可用时才运行该函数
+     * 一旦函数执行完毕，锁也将自动释放
      */
     const [executed, result] = await locks
       .createLock(`order.processing.${orderId}`)
       .runImmediately(async (lock) => {
         /**
-         * Lock has been acquired. We can process the order
+         * 已获取锁。我们可以处理订单
          */
         await processOrder()
         return 'Order processed successfully'
       })
 
     /**
-     * Lock could not be acquired and function was not executed
+     * 无法获取锁，函数未执行
      */
     if (!executed) return 'Order is already being processed'
 
@@ -273,15 +272,15 @@ export default class OrderController {
 
 :::
 
-This is a quick example of how to use locks within your application. 
+这是如何在应用程序中使用锁的快速示例。
 
-They are many other methods available to manage locks, such as `extend` for extending the lock duration, `getRemainingTime` to get the remaining time before the lock expires, options to configure the lock, and more.
+还有许多其他可用于管理锁的方法，例如用于延长锁持续时间的 `extend`、获取锁到期前剩余时间的 `getRemainingTime`、配置锁的选项等。
 
-**For that, make sure to read the [Verrou documentation](https://verrou.dev/docs/introduction) for more details**. As a reminder, the `@adonisjs/lock` package is based on the `Verrou` package, so everything you read in the Verrou documentation is also applicable to the `@adonisjs/lock` package.
+**为此，请务必阅读 [Verrou 文档](https://verrou.dev/docs/introduction) 以了解更多详细信息**。提醒一下，`@adonisjs/lock` 包基于 `Verrou` 包，因此你在 Verrou 文档中读到的所有内容也适用于 `@adonisjs/lock` 包。
 
-## Using another store
+## 使用其他存储
 
-If you defined multiple stores inside the `config/lock.ts` file, you can use a different store for a specific lock by using the `use` method.
+如果你在 `config/lock.ts` 文件中定义了多个存储，你可以通过使用 `use` 方法为特定锁使用不同的存储。
 
 ```ts
 import locks from '@adonisjs/lock/services/main'
@@ -289,7 +288,7 @@ import locks from '@adonisjs/lock/services/main'
 const lock = locks.use('redis').createLock('order.processing.1')
 ```
 
-Otherwise, if using only the `default` store, you can omit the `use` method.
+否则，如果仅使用 `default` 存储，则可以省略 `use` 方法。
 
 ```ts
 import locks from '@adonisjs/lock/services/main'
@@ -297,12 +296,12 @@ import locks from '@adonisjs/lock/services/main'
 const lock = locks.createLock('order.processing.1')
 ```
 
-## Managing locks across multiple processes
+## 跨多个进程管理锁
 
-Sometimes, you might want to have one process creating and acquiring a lock, and another process releasing it. For example, you might want to acquire a lock inside a web request and release it inside a background job. This is possible using the `restoreLock` method.
+有时，你可能希望让一个进程创建并获取锁，而另一个进程释放它。例如，你可能希望在 Web 请求内获取锁，并在后台任务内释放它。这可以使用 `restoreLock` 方法实现。
 
 ```ts
-// title: Your main server
+// title: 你的主服务器
 import locks from '@adonisjs/lock/services/main'
 
 export class OrderController {
@@ -313,10 +312,10 @@ export class OrderController {
     await lock.acquire()
 
     /**
-     * Dispatch a background job to process the order.
+     * 调度后台任务以处理订单。
      * 
-     * We also pass the serialized lock to the job, so that the job
-     * can release the lock once the order has been processed.
+     * 我们还将序列化的锁传递给任务，以便任务
+     * 可以在订单处理完毕后释放锁。
      */
     queue.dispatch('app/jobs/process_order', {
       lock: lock.serialize()
@@ -326,91 +325,91 @@ export class OrderController {
 ```
 
 ```ts
-// title: Your background job
+// title: 你的后台任务
 import locks from '@adonisjs/lock/services/main'
 
 export class ProcessOrder {
   async handle({ lock }) {
     /**
-     * We are restoring the lock from the serialized version
+     * 我们正在从序列化版本恢复锁
      */
     const handle = locks.restoreLock(lock)
 
     /**
-     * Process the order
+     * 处理订单
      */
     await processOrder()
 
     /**
-     * Release the lock
+     * 释放锁
      */
     await handle.release()
   }
 }
 ```
 
-## Testing 
+## 测试
 
-During testing, you can use the `memory` store to avoid making real network requests to acquire locks. You can do this by setting the `LOCK_STORE` environment variable to `memory` inside the `.env.testing` file.
+在测试期间，你可以使用 `memory` 存储来避免在获取锁时发出真实的网络请求。你可以通过在 `.env.testing` 文件中将 `LOCK_STORE` 环境变量设置为 `memory` 来实现这一点。
 
 ```env
 // title: .env.test
 LOCK_STORE=memory
 ```
 
-## Create a custom lock store
+## 创建自定义锁存储
 
-First, make sure to consult the [Verrou documentation](https://verrou.dev/docs/custom-lock-store) that goes deeper into the creation of a custom lock store. In AdonisJS, it will be pretty much the same. 
+首先，请务必查阅 [Verrou 文档](https://verrou.dev/docs/custom-lock-store)，其中深入介绍了如何创建自定义锁存储。在 AdonisJS 中，这几乎是一样的。
 
-Let's create a simple Noop store that does not do anything. First, we must create a class that will implement the `LockStore` interface.
+让我们创建一个不做任何事情的简单 Noop 存储。首先，我们需要创建一个实现 `LockStore` 接口的类。
 
 ```ts
 import type { LockStore } from '@adonisjs/lock/types'
 
 class NoopStore implements LockStore {
   /**
-   * Save the lock in the store.
-   * This method should return false if the given key is already locked
+   * 将锁保存在存储中。
+   * 如果给定的键已被锁定，此方法应返回 false
    *
-   * @param key The key to lock
-   * @param owner The owner of the lock
-   * @param ttl The time to live of the lock in milliseconds. Null means no expiration
+   * @param key 要锁定的键
+   * @param owner 锁的所有者
+   * @param ttl 锁的生存时间（以毫秒为单位）。Null 表示不过期
    *
-   * @returns True if the lock was acquired, false otherwise
+   * @returns 如果成功获取锁，则返回 True，否则返回 false
    */
   async save(key: string, owner: string, ttl: number | null): Promise<boolean> {
     return false
   }
 
   /**
-   * Delete the lock from the store if it is owned by the given owner
-   * Otherwise should throws a E_LOCK_NOT_OWNED error
+   * 如果锁归给定的所有者所有，则从存储中删除该锁
+   * 否则应抛出 E_LOCK_NOT_OWNED 错误
    *
-   * @param key The key to delete
-   * @param owner The owner
+   * @param key 要删除的键
+   * @param owner 所有者
    */
   async delete(key: string, owner: string): Promise<void> {
     return false
   }
 
   /**
-   * Force delete the lock from the store without checking the owner
+   * 强制从存储中删除锁，而不检查所有者
    */
   async forceDelete(key: string): Promise<Void> {
     return false
   }
 
   /**
-   * Check if the lock exists. Returns true if so, false otherwise
+   * 检查锁是否存在。如果存在返回 true，否则返回 false
    */
   async exists(key: string): Promise<boolean> {
     return false
   }
 
   /**
-   * Extend the lock expiration. Throws an error if the lock is not owned by 
-   * the given owner
-   * Duration is in milliseconds
+   * 延长锁的过期时间。如果锁不归给定的所有者所有，
+   * 则抛出错误
+   * 持续时间以毫秒为单位
    */
   async extend(key: string, owner: string, duration: number): Promise<void> {
     return false
@@ -418,9 +417,9 @@ class NoopStore implements LockStore {
 }
 ```
 
-### Defining the store factory
+### 定义存储工厂
 
-Once you have created your store, you must define a simple factory function that will be used by `@adonisjs/lock` to create an instance of you store.
+创建存储后，你必须定义一个简单的工厂函数，`@adonisjs/lock` 将使用该函数来创建存储的实例。
 
 ```ts
 function noopStore(options: MyNoopStoreConfig) {
@@ -428,9 +427,9 @@ function noopStore(options: MyNoopStoreConfig) {
 }
 ```
 
-### Using the custom store
+### 使用自定义存储
 
-Once done, you may use the `noopStore` function as follows:
+完成后，你可以按如下方式使用 `noopStore` 函数：
 
 ```ts
 import { defineConfig } from '@adonisjs/lock'

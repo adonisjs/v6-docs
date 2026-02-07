@@ -1,18 +1,18 @@
 ---
-summary: Ace Terminal UI utilizes the @poppinss/cliui package, offering tools to display logs, tables, and animations. Designed for testing, it includes a 'raw' mode to simplify log collection and assertions.
+summary: Ace 终端 UI 利用 @poppinss/cliui 包，提供显示日志、表格和动画的工具。专为测试而设计，它包括“raw”模式以简化日志收集和断言。
 ---
 
-# Terminal UI
+# 终端 UI
 
-Ace terminal UI is powered by the [@poppinss/cliui](https://github.com/poppinss/cliui) package. The package exports helpers to display logs, render tables, render animated tasks UI, and much more.
+Ace 终端 UI 由 [@poppinss/cliui](https://github.com/poppinss/cliui) 包提供支持。该包导出帮助程序以显示日志、渲染表格、渲染动画任务 UI 等等。
 
-The terminal UI primitives are built with testing in mind. When writing tests, you may turn on the `raw` mode to disable colors and formatting and collect all logs in memory to write assertions against them.
+终端 UI 原语的构建考虑了测试。在编写测试时，你可以打开 `raw` 模式以禁用颜色和格式化，并将所有日志收集在内存中以对其进行断言。
 
-See also: [Testing Ace commands](../testing/console_tests.md)
+另请参阅：[测试 Ace 命令](../testing/console_tests.md)
 
-## Displaying log messages
+## 显示日志消息
 
-You may display log messages using the CLI logger. Following is the list of available log methods.
+你可以使用 CLI 记录器显示日志消息。以下是可用日志方法的列表。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -24,16 +24,16 @@ export default class GreetCommand extends BaseCommand {
     this.logger.success('Account created')
     this.logger.warning('Running out of disk space')
 
-    // Writes to stderr
+    // 写入 stderr
     this.logger.error(new Error('Unable to write. Disk full'))
     this.logger.fatal(new Error('Unable to write. Disk full'))
   }
 }
 ```
 
-### Adding prefix and suffix
+### 添加前缀和后缀
 
-Using the options object, you may define the `prefix` and `suffix` for the log message. The prefix and suffix are displayed with lower opacity.
+使用选项对象，你可以定义日志消息的 `prefix` 和 `suffix`。前缀和后缀以较低的不透明度显示。
 
 ```ts
 this.logger.info('installing packages', {
@@ -45,9 +45,9 @@ this.logger.info('installing packages', {
 })
 ```
 
-### Loading animation
+### 加载动画
 
-A log message with loading animation appends animated three dots (...) to the message. You may update the log message using the `animation.update` method and stop the animation using the `animation.stop` method.
+带有加载动画的日志消息会在消息后附加动画的三个点 (...)。你可以使用 `animation.update` 方法更新日志消息，并使用 `animation.stop` 方法停止动画。
 
 ```ts
 const animation = this.logger.await('installing packages', {
@@ -56,20 +56,20 @@ const animation = this.logger.await('installing packages', {
 
 animation.start()
 
-// Update the message
+// 更新消息
 animation.update('unpacking packages', {
   suffix: undefined
 })
 
-// Stop animation
+// 停止动画
 animation.stop()
 ```
 
-### Logger actions
+### 记录器操作
 
-Logger actions can display the state of action with consistent styling and colors. 
+记录器操作可以以一致的样式和颜色显示操作的状态。
 
-You may create an action using the `logger.action` method. The method accepts the action title as the first parameter.
+你可以使用 `logger.action` 方法创建一个操作。该方法接受操作标题作为第一个参数。
 
 ```ts
 const createFile = this.logger.action('creating config/auth.ts')
@@ -82,7 +82,7 @@ try {
 }
 ```
 
-You can mark an action as either `succeeded`, `failed`, or `skipped`.
+你可以将操作标记为 `succeeded`、`failed` 或 `skipped`。
 
 ```ts
 action.succeeded()
@@ -90,18 +90,18 @@ action.skipped('Skip reason')
 action.failed(new Error())
 ```
 
-## Formatting text with ANSI colors
+## 使用 ANSI 颜色格式化文本
 
-Ace uses [kleur](https://www.npmjs.com/package/kleur) for formatting text with ANSI colors. Using the `this.colors` property, you can access kleur's chained API.
+Ace 使用 [kleur](https://www.npmjs.com/package/kleur) 使用 ANSI 颜色格式化文本。使用 `this.colors` 属性，你可以访问 kleur 的链式 API。
 
 ```ts
 this.colors.red('[ERROR]')
 this.colors.bgGreen().white(' CREATED ')
 ```
 
-## Rendering tables
+## 渲染表格
 
-A table can be created using the `this.ui.table` method. The method returns an instance of the `Table` class that you can use to define the table head and rows.
+可以使用 `this.ui.table` 方法创建一个表格。该方法返回 `Table` 类的一个实例，你可以使用它来定义表头和行。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -131,7 +131,7 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-You may apply color transforms to any value when rendering the table. For example:
+在渲染表格时，你可以对任何值应用颜色转换。例如：
 
 ```ts
 table.row([
@@ -141,9 +141,9 @@ table.row([
 ])
 ```
 
-### Right-align columns
+### 右对齐列
 
-You may right-align the columns by defining them as objects and using the hAlign property. Make sure to also right-align the header column.
+你可以通过将列定义为对象并使用 hAlign 属性来右对齐列。确保也右对齐标题列。
 
 ```ts
 table
@@ -166,20 +166,20 @@ table.row([
 ])
 ```
 
-### Full-width rendering
+### 全宽渲染
 
-By default, tables are rendered with width `auto`, taking only the space required by the contents of each column.
+默认情况下，表格以宽度 `auto` 渲染，仅占用每列内容所需的空间。
 
-However, you may render tables at full-width (taking all the terminal space) using the `fullWidth` method. In full-width mode:
+但是，你可以使用 `fullWidth` 方法以全宽（占用所有终端空间）渲染表格。在全宽模式下：
 
-- We will render all columns as per the size of the content.
-- Except for the first column, which takes all the available space.
+- 我们将根据内容的大小渲染所有列。
+- 除了第一列，它占用所有可用空间。
 
 ```ts
 table.fullWidth().render()
 ```
 
-You may change the column index for the fluid column (the one that takes all the space) by calling the `table.fluidColumnIndex` method.
+你可以通过调用 `table.fluidColumnIndex` 方法更改流式列（占用所有空间的列）的列索引。
 
 ```ts
 table
@@ -187,11 +187,11 @@ table
   .fluidColumnIndex(1)
 ```
 
-## Printing stickers
+## 打印贴纸
 
-Stickers allow you to render content inside a box with a border. They are helpful when you want to draw the user's attention to an essential piece of information.
+贴纸允许你在带边框的框内渲染内容。当你想要吸引用户注意重要信息时，它们很有用。
 
-You can create an instance of a sticker using the `this.ui.sticker` method.
+你可以使用 `this.ui.sticker` 方法创建贴纸的实例。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -199,7 +199,6 @@ import { BaseCommand } from '@adonisjs/core/ace'
 export default class GreetCommand extends BaseCommand {
   async run() {
     const sticker = this.ui.sticker()
-
     sticker
       .add('Started HTTP server')
       .add('')
@@ -210,93 +209,18 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-If you want to display a set of instructions inside a box, you can use the `this.ui.instructions` method. Each line in the instructions output will be prefixed with an arrow sign `>`.
-
-## Rendering tasks
-
-The tasks widget provides an excellent UI for sharing the progress of multiple time-taking tasks. The widget has the following two rendering modes:
-
-- In `minimal` mode, the UI for the currently running task is expanded to show one log line at a time.
-- In `verbose` mode, each log statement is rendered in its line. The verbose renderer must be used for debugging tasks.
-
-You can create an instance of the tasks widget using the `this.ui.tasks` method. 
+如果你想在一个框内显示一组说明，你可以使用 `this.ui.instructions` 方法。说明块中的每一行都必须使用 `add` 方法添加。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
 
 export default class GreetCommand extends BaseCommand {
   async run() {
-    const tasks = this.ui.tasks()
-    
-    // ... rest of the code to follow
-  }
-}
-```
-
-Individual tasks are added using the `tasks.add` method. The method accepts the task title as the first parameter and the implementation callback as the second parameter.
-
-You must return the status of the task from the callback. All return values are considered success messages until you wrap them inside the `task.error` method or throw an exception inside the callback.
-
-```ts
-import { BaseCommand } from '@adonisjs/core/ace'
-
-export default class GreetCommand extends BaseCommand {
-  async run() {
-    const tasks = this.ui.tasks()
-
-    // highlight-start
-    await tasks
-      .add('clone repo', async (task) => {
-        return 'Completed'
-      })
-      .add('update package file', async (task) => {
-        return task.error('Unable to update package file')
-      })
-      .add('install dependencies', async (task) => {
-        return 'Installed'
-      })
-      .run()
-    // highlight-end
-  }
-}
-```
-
-### Reporting task progress
-
-Instead of writing the task progress messages to the console, it is recommended to call the `task.update` method.
-
-The `update` method displays the latest log message using the `minimal` renderer and logs all messages using the `verbose` renderer.
-
-```ts
-const sleep = () => new Promise<void>((resolve) => setTimeout(resolve, 50))
-const tasks = this.ui.tasks()
-await tasks
-  .add('clone repo', async (task) => {
-    for (let i = 0; i <= 100; i = i + 2) {
-      await sleep()
-      task.update(`Downloaded ${i}%`)
-    }
-
-    return 'Completed'
-  })
-  .run()
-```
-
-### Switching to the verbose renderer
-
-You may switch to a verbose renderer when creating the tasks widget. You might consider allowing the command's user to pass a flag to turn on the `verbose` mode.
-
-```ts
-import { BaseCommand, flags } from '@adonisjs/core/ace'
-
-export default class GreetCommand extends BaseCommand {
-  @flags.boolean()
-  declare verbose: boolean
-
-  async run() {
-    const tasks = this.ui.tasks({
-      verbose: this.verbose
-    })
+    this.ui
+      .instructions()
+      .add('Run "node ace migration:run" to execute migrations')
+      .add('Run "node ace db:seed" to seed the database')
+      .render()
   }
 }
 ```

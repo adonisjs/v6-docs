@@ -1,13 +1,13 @@
 ---
-summary: Learn about the helpers and tags contributed by the AdonisJS official packages to the Edge templating engine.
+summary: 了解 AdonisJS 官方包为 Edge 模板引擎提供的辅助函数和标签。
 ---
 
-# Edge helpers and tags
+# Edge 辅助函数和标签
 
-In this guide, we will learn about the **helpers and the tags** contributed to Edge by the AdonisJS official packages. The helpers shipped with Edge are not covered in this guide and must reference [Edge](https://edgejs.dev/docs/helpers) documentation for the same.
+在本指南中，我们将了解 AdonisJS 官方包为 Edge 提供的 **辅助函数（helpers）和标签（tags）**。Edge 自带的辅助函数不包含在本指南中，必须参考 [Edge](https://edgejs.dev/docs/helpers) 文档。
 
 ## request
-Reference to the instance of ongoing [HTTP request](../basics/request.md). The property is only available when a template is rendered using the `ctx.view.render` method.
+引用正在进行的 [HTTP 请求](../basics/request.md) 的实例。该属性仅在使用 `ctx.view.render` 方法渲染模板时可用。
 
 ```edge
 {{ request.url() }}
@@ -15,30 +15,30 @@ Reference to the instance of ongoing [HTTP request](../basics/request.md). The p
 ```
 
 ## route/signedRoute
-Helper functions to create URL for a route using the [URL builder](../basics/routing.md#url-builder). Unlike the URL builder, the view helpers do not have a fluent API and accept the following parameters.
+使用 [URL 构建器](../basics/routing.md#url-builder) 为路由创建 URL 的辅助函数。与 URL 构建器不同，视图辅助函数没有流畅的 API，而是接受以下参数。
 
 <table>
     <tr>
-        <td>Position</td>
-        <td>Description</td>
+        <td>位置</td>
+        <td>描述</td>
     </tr>
     <tr>
-        <td>1st</td>
-        <td>The route identifier or the route pattern</td>
+        <td>第 1 个</td>
+        <td>路由标识符或路由模式</td>
     </tr>
     <tr>
-        <td>2nd</td>
-        <td>Route params are defined as an array or an object.</td>
+        <td>第 2 个</td>
+        <td>定义为数组或对象的路由参数。</td>
     </tr>
     <tr>
-        <td>3rd</td>
+        <td>第 3 个</td>
         <td>
-          <p>The options object with the following properties.</p>
+          <p>具有以下属性的选项对象。</p>
           <ul>
-            <li><code>qs</code>: Define query string parameters as an object.</li>
-            <li><code>domain</code>: Search for routes under a specific domain.</li>
-            <li><code>prefixUrl</code>: Prefix a URL to the output.</li>
-            <li><code>disableRouteLookup</code>: Enable/disable routes lookup.</li>
+            <li><code>qs</code>: 将查询字符串参数定义为对象。</li>
+            <li><code>domain</code>: 在特定域下搜索路由。</li>
+            <li><code>prefixUrl</code>: 为输出的 URL 添加前缀。</li>
+            <li><code>disableRouteLookup</code>: 启用/禁用路由查找。</li>
           </ul>
         </td>
     </tr>
@@ -62,14 +62,14 @@ Helper functions to create URL for a route using the [URL builder](../basics/rou
 ```
 
 ## app
-Reference to the [Application instance](../concepts/application.md).
+引用 [Application 实例](../concepts/application.md)。
 
 ```edge
 {{ app.getEnvironment() }}
 ```
 
 ## config
-A [helper function](../getting_started/configuration.md#reading-config-inside-edge-templates) to reference configuration values inside Edge templates. You may use the `config.has` method to check if the value for a key exists.
+在 Edge 模板中引用配置值的 [辅助函数](../getting_started/configuration.md#reading-config-inside-edge-templates)。你可以使用 `config.has` 方法检查键的值是否存在。
 
 ```edge
 @if(config.has('app.appUrl'))
@@ -80,14 +80,14 @@ A [helper function](../getting_started/configuration.md#reading-config-inside-ed
 ```
 
 ## session
-A read-only copy of the [session object](../basics/session.md#reading-and-writing-data). You cannot mutate session data within Edge templates. The `session` property is only available when the template is rendered using the `ctx.view.render` method.
+[session 对象](../basics/session.md#reading-and-writing-data) 的只读副本。你不能在 Edge 模板中修改会话数据。`session` 属性仅在通过 `ctx.view.render` 方法渲染模板时可用。
 
 ```edge
 Post views: {{ session.get(`post.${post.id}.visits`) }}
 ```
 
 ## flashMessages
-A read-only copy of [session flash messages](../basics/session.md#flash-messages). The `flashMessages` property is only available when the template is rendered using the `ctx.view.render` method.
+[session flash messages](../basics/session.md#flash-messages) 的只读副本。`flashMessages` 属性仅在通过 `ctx.view.render` 方法渲染模板时可用。
 
 ```edge
 @if(flashMessages.has('inputErrorsBag.title'))
@@ -102,7 +102,7 @@ A read-only copy of [session flash messages](../basics/session.md#flash-messages
 ```
 
 ## old
-The `old` method is a shorthand for the `flashMessages.get` method.
+`old` 方法是 `flashMessages.get` 方法的简写。
 
 ```edge
 <input
@@ -113,21 +113,21 @@ The `old` method is a shorthand for the `flashMessages.get` method.
 ```
 
 ## t
-The `t` method is contributed by the `@adonisjs/i18n` package to display translations using the [i18n class](../digging_deeper/i18n.md#resolving-translations). The method accepts the translation key identifier, message data and a fallback message as the parameters.
+`t` 方法由 `@adonisjs/i18n` 包提供，用于使用 [i18n 类](../digging_deeper/i18n.md#resolving-translations) 显示翻译。该方法接受翻译键标识符、消息数据和回退消息作为参数。
 
 ```edge
 <h1> {{ t('messages.greeting') }} </h1>
 ```
 
 ## i18n
-Reference to an instance of the I18n class configured using the application's default locale. However, the [`DetectUserLocaleMiddleware`](../digging_deeper/i18n.md#detecting-user-locale-during-an-http-request) overrides this property with an instance created for the current HTTP request locale.
+引用使用应用程序默认区域设置配置的 I18n 类实例。但是，[`DetectUserLocaleMiddleware`](../digging_deeper/i18n.md#detecting-user-locale-during-an-http-request) 会用为当前 HTTP 请求区域设置创建的实例覆盖此属性。
 
 ```edge
 {{ i18n.formatCurrency(200, { currency: 'USD' }) }}
 ```
 
 ## auth
-Reference to the [ctx.auth](../concepts/http_context.md#http-context-properties) property shared by the [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/main/src/auth/middleware/initialize_auth_middleware.ts#L14). You may use this property to access information about the logged-in user.
+引用由 [InitializeAuthMiddleware](https://github.com/adonisjs/auth/blob/main/src/auth/middleware/initialize_auth_middleware.ts#L14) 共享的 [ctx.auth](../concepts/http_context.md#http-context-properties) 属性。你可以使用此属性访问有关已登录用户的信息。
 
 ```edge
 @if(auth.isAuthenticated)
@@ -135,7 +135,7 @@ Reference to the [ctx.auth](../concepts/http_context.md#http-context-properties)
 @end
 ```
 
-If you are displaying the logged-in user info on a public page (not protected by the auth middleware), then you may want to first silently check if the user is logged-in or not.
+如果你在公共页面（不受 auth 中间件保护）上显示已登录用户的信息，那么你可能希望先静默检查用户是否已登录。
 
 ```edge
 {{-- Check if user is logged-in --}}
@@ -147,14 +147,14 @@ If you are displaying the logged-in user info on a public page (not protected by
 ```
 
 ## asset
-Resolve the URL of an asset processed by Vite. Learn more about [referencing assets inside Edge templates](../basics/vite.md#referencing-assets-inside-edge-templates).
+解析 Vite 处理的资产的 URL。了解更多关于 [在 Edge 模板中引用资产](../basics/vite.md#referencing-assets-inside-edge-templates) 的信息。
 
 ```edge
 <img src="{{ asset('resources/images/hero.jpg') }}" />
 ```
 
 ## embedImage / embedImageData
-The `embedImage` and the `embedImageData` helpers are added by the [mail](../digging_deeper/mail.md#embedding-images) package and are only available when rendering a template to send an email.
+`embedImage` 和 `embedImageData` 辅助函数由 [mail](../digging_deeper/mail.md#embedding-images) 包添加，仅在渲染发送电子邮件的模板时可用。
 
 ```edge
 <img src="{{
@@ -163,10 +163,10 @@ The `embedImage` and the `embedImageData` helpers are added by the [mail](../dig
 ```
 
 ## @flashMessage
-The `@flashMessage` tag provides a better DX for reading flash messages for a given key conditionally.
+`@flashMessage` 标签提供了更好的开发体验 (DX)，用于有条件地读取给定键的 flash 消息。
 
 :::caption{for="error"}
-**Instead of writing conditionals**
+**而不是编写条件语句**
 :::
 
 ```edge
@@ -178,7 +178,7 @@ The `@flashMessage` tag provides a better DX for reading flash messages for a gi
 ```
 
 :::caption{for="success"}
-**You may prefer using the tag**
+**你可能更喜欢使用标签**
 :::
 
 ```edge
@@ -190,10 +190,10 @@ The `@flashMessage` tag provides a better DX for reading flash messages for a gi
 ```
 
 ## @error
-The `@error` tag provides a better DX for reading error messages stored inside the `errorsBag` key in `flashMessages`.
+`@error` 标签提供了更好的开发体验 (DX)，用于读取存储在 `flashMessages` 中 `errorsBag` 键内的错误消息。
 
 :::caption{for="error"}
-**Instead of writing conditionals**
+**而不是编写条件语句**
 :::
 
 ```edge
@@ -203,7 +203,7 @@ The `@error` tag provides a better DX for reading error messages stored inside t
 ```
 
 :::caption{for="success"}
-**You may prefer using the tag**
+**你可能更喜欢使用标签**
 :::
 
 ```edge
@@ -213,10 +213,10 @@ The `@error` tag provides a better DX for reading error messages stored inside t
 ```
 
 ## @inputError
-The `@inputError` tag provides a better DX for reading validation error messages stored inside the `inputErrorsBag` key in `flashMessages`.
+`@inputError` 标签提供了更好的开发体验 (DX)，用于读取存储在 `flashMessages` 中 `inputErrorsBag` 键内的验证错误消息。
 
 :::caption{for="error"}
-**Instead of writing conditionals**
+**而不是编写条件语句**
 :::
 
 ```edge
@@ -228,7 +228,7 @@ The `@inputError` tag provides a better DX for reading validation error messages
 ```
 
 :::caption{for="success"}
-**You may prefer using the tag**
+**你可能更喜欢使用标签**
 :::
 
 ```edge
@@ -240,7 +240,7 @@ The `@inputError` tag provides a better DX for reading validation error messages
 ```
 
 ## @vite
-The `@vite` tag accepts an array of entry point paths and returns the `script` and the `link` tags for the same. The path you provide to the `@vite` tag should match exactly the path registered inside the `vite.config.js` file.
+`@vite` 标签接受入口点路径数组，并返回相应的 `script` 和 `link` 标签。你提供给 `@vite` 标签的路径应与 `vite.config.js` 文件中注册的路径完全匹配。
 
 ```ts
 export default defineConfig({
@@ -258,7 +258,7 @@ export default defineConfig({
 @vite(['resources/js/app.js'])
 ```
 
-You can define the script tag attributes as the 2nd argument. For example:
+你可以将 script 标签属性定义为第 2 个参数。例如：
 
 ```edge
 @vite(['resources/js/app.js'], {
@@ -267,13 +267,13 @@ You can define the script tag attributes as the 2nd argument. For example:
 ```
 
 ## @viteReactRefresh
-The `@viteReactRefresh` tag returns a [script tag to enable React HMR](https://vitejs.dev/guide/backend-integration.html#:~:text=you%27ll%20also%20need%20to%20add%20this%20before%20the%20above%20scripts) for project using the [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react) package.
+`@viteReactRefresh` 标签返回一个 [启用 React HMR 的 script 标签](https://vitejs.dev/guide/backend-integration.html#:~:text=you%27ll%20also%20need%20to%20add%20this%20before%20the%20above%20scripts)，用于使用 [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react) 包的项目。
 
 ```edge
 @viteReactRefresh()
 ```
 
-Output HTML
+输出 HTML
 
 ```html
 <script type="module">
@@ -286,11 +286,11 @@ Output HTML
 ```
 
 ## @can/@cannot
-The `@can` and `@cannot` tags allows you write authorization checks in Edge templates by referencing the ability name or the policy name as a string.
+`@can` 和 `@cannot` 标签允许你在 Edge 模板中通过引用能力名称或策略名称作为字符串来编写授权检查。
 
-The first argument is the ability or the policy reference followed by the arguments accepted by the check.
+第一个参数是能力或策略引用，后跟检查所接受的参数。
 
-See also: [Pre-registering abilities and policies](../security/authorization.md#pre-registering-abilities-and-policies)
+另请参阅：[预注册能力和策略](../security/authorization.md#pre-registering-abilities-and-policies)
 
 ```edge
 @can('editPost', post)

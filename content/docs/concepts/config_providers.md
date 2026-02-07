@@ -1,14 +1,14 @@
 ---
-summary: Learn about config providers and how they help you lazily compute the configuration after the application is booted.
+summary: 了解配置提供者 (Config providers) 以及它们如何帮助您在应用程序启动后延迟计算配置。
 ---
 
-# Config providers
+# 配置提供者 (Config providers)
 
-Some configuration files like (`config/hash.ts`) do not export config as a plain object. Instead, they export a [config provider](https://github.com/adonisjs/core/blob/main/src/config_provider.ts#L16). The config provider provides a transparent API for packages to lazily compute the configuration after the application is booted.
+一些配置文件（如 `config/hash.ts`）不导出纯对象配置。相反，它们导出 [配置提供者](https://github.com/adonisjs/core/blob/main/src/config_provider.ts#L16)。配置提供者为包提供了一个透明的 API，以便在应用程序启动后延迟计算配置。
 
-## Without config providers
+## 没有配置提供者
 
-To understand config providers, let's see what the `config/hash.ts` file would look like if we were not using config providers.
+为了理解配置提供者，让我们看看如果我们不使用配置提供者，`config/hash.ts` 文件会是什么样子。
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -26,9 +26,9 @@ export default {
 }
 ```
 
-So far, so good. Instead of referencing the `scrypt` driver from the `drivers` collection. We are importing it directly and returning an instance using a factory function.
+到目前为止，一切顺利。我们直接导入它并使用工厂函数返回一个实例，而不是从 `drivers` 集合中引用 `scrypt` 驱动程序。
 
-Let's say the `Scrypt` driver needs an instance of the Emitter class to emit an event every time it hashes a value.
+假设 `Scrypt` 驱动程序需要一个 Emitter 类的实例，以便在每次哈希值时发出事件。
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -51,10 +51,11 @@ export default {
 }
 ```
 
-**🚨 The above example will fail** because the AdonisJS [container services](./container_services.md) are unavailable until the application has been booted and the config files are imported before the application boot phase.
+**🚨 上面的例子将会失败**，因为 AdonisJS [容器服务](./container_services.md) 在应用程序启动之前不可用，而配置文件是在应用程序启动阶段之前导入的。
 
-### Well, that's a problem with AdonisJS architecture 🤷🏻‍♂️
-Not really. Let's not use the container service and create an instance of the Emitter class directly within the config file.
+### 呃，这是 AdonisJS 架构的问题吗 🤷🏻‍♂️
+
+并非如此。让我们不使用容器服务，而是直接在配置文件中创建 Emitter 类的实例。
 
 ```ts
 import { Scrypt } from '@adonisjs/core/hash/drivers/scrypt'
@@ -82,9 +83,9 @@ export default {
 }
 ```
 
-Now, we have a new problem. The `emitter` instance we have created for the `Scrypt` driver is not globally available for us to import and listen for events emitted by the driver.
+现在，我们遇到了一个新问题。我们为 `Scrypt` 驱动程序创建的 `emitter` 实例不是全局可用的，我们无法导入它并监听驱动程序发出的事件。
 
-Therefore, you might want to move the construction of the `Emitter` class to its file and export an instance of it. This way, you can pass the emitter instance to the driver and use it to listen to events.
+因此，您可能希望将 `Emitter` 类的构造移动到其文件中并导出其实例。这样，您可以将 emitter 实例传递给驱动程序并使用它来监听事件。
 
 ```ts
 // title: start/emitter.ts
@@ -118,12 +119,13 @@ export default {
 }
 ```
 
-The above code will work fine. However, you are manually constructing the dependencies your application needs this time. As a result, your application will have a lot of boilerplate code to wire everything together.
+上面的代码将正常工作。但是，这次您是在手动构造应用程序所需的依赖项。结果，您的应用程序将有大量的样板代码来将所有内容连接在一起。
 
-With AdonisJS, we strive to write minimal boilerplate code and use the IoC container for lookup dependencies.
+使用 AdonisJS，我们努力编写最少的样板代码，并使用 IoC 容器来查找依赖项。
 
-## With config provider
-Now, let's re-write the `config/hash.ts` file and use a config provider this time. Config provider is a fancy name for a function that accepts an [instance of the Application class](./application.md) and resolves its dependencies using the container.
+## 使用配置提供者
+
+现在，让我们重写 `config/hash.ts` 文件，这次使用配置提供者。配置提供者是一个函数的别名，该函数接受 [Application 类的实例](./application.md) 并使用容器解析其依赖项。
 
 ```ts
 // highlight-start
@@ -150,9 +152,9 @@ export default {
 }
 ```
 
-Once you use the [hash](../security/hashing.md) service, the config provider for the `scrypt` driver will be executed to resolve its dependencies. As a result, we do not attempt to look up the `emitter` until we use the hash service elsewhere inside our code.
+一旦您使用 [hash](../security/hashing.md) 服务，`scrypt` 驱动程序的配置提供者将被执行以解析其依赖项。因此，直到我们在代码的其他地方使用哈希服务之前，我们不会尝试查找 `emitter`。
 
-Since config providers are async, you might want to import the `Scrypt` driver lazily via dynamic import.
+由于配置提供者是异步的，您可能希望通过动态导入延迟导入 `Scrypt` 驱动程序。
 
 ```ts
 import { configProvider } from '@adonisjs/core'
@@ -180,8 +182,9 @@ export default {
 }
 ```
 
-## How do I access the resolved config?
-You may access the resolved config from the service directly. For example, in the case of the hash service, you can get a reference to the resolved config as follows.
+## 如何访问解析后的配置？
+
+您可以直接从服务访问解析后的配置。例如，在哈希服务的情况下，您可以按如下方式获取对解析后配置的引用。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'

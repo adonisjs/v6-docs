@@ -1,26 +1,26 @@
 ---
-summary: Learn about middleware in AdonisJS, how to create them, and how to assign them to routes and route groups.
+summary: 了解 AdonisJS 中的中间件，如何创建中间件，以及如何将它们分配给路由和路由组。
 ---
 
-# Middleware
+# 中间件 (Middleware)
 
-Middleware are a series of functions executed during an HTTP request before the request reaches the route handler. Every function in the chain can end the request or forward it to the next middleware.
+中间件是在 HTTP 请求到达路由处理程序之前执行的一系列函数。链中的每个函数都可以结束请求或将其转发给下一个中间件。
 
-A typical AdonisJS application uses middleware for **parsing request body**, **managing users sessions**, **authenticating requests**, **serving static assets**, etc.
+典型的 AdonisJS 应用程序使用中间件来 **解析请求体**、**管理用户会话**、**验证请求**、**提供静态资源** 等。
 
-You can also create custom middleware to perform additional tasks during an HTTP request.
+你还可以创建自定义中间件，以便在 HTTP 请求期间执行其他任务。
 
-## Middleware stacks
+## 中间件堆栈
 
-To give you better control over the execution of the middleware pipeline, AdonisJS split the middleware stack into following three groups.
+为了让你更好地控制中间件管道的执行，AdonisJS 将中间件堆栈分为以下三组。
 
-### Server middleware stack
+### 服务器中间件堆栈
 
-Server middleware runs on every HTTP request, even if you have not defined any route for the current request's URL.
+服务器中间件在每个 HTTP 请求上运行，即使当前请求的 URL 没有定义任何路由。
 
-They are great for adding additional functionality to your app that does not rely on the routing system of the framework. For example, the Static assets middleware is registered as server middleware.
+它们非常适合为你的应用程序添加不依赖于框架路由系统的附加功能。例如，静态资源中间件被注册为服务器中间件。
 
-You can register server middleware using the `server.use` method inside the `start/kernel.ts` file.
+你可以使用 `start/kernel.ts` 文件中的 `server.use` 方法注册服务器中间件。
 
 ```ts
 import server from '@adonisjs/core/services/server'
@@ -32,13 +32,13 @@ server.use([
 
 ---
 
-### Router middleware stack
+### 路由器中间件堆栈
 
-Router middleware are also known as global middleware. They are executed on every HTTP request that has a matching route.
+路由器中间件也称为全局中间件。它们在每个有匹配路由的 HTTP 请求上执行。
 
-The Bodyparser, auth, and session middleware are registered under the router middleware stack.
+Bodyparser、auth 和 session 中间件注册在路由器中间件堆栈下。
 
-You can register router middleware using the `router.use` method inside the `start/kernel.ts` file.
+你可以使用 `start/kernel.ts` 文件中的 `router.use` 方法注册路由器中间件。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -50,13 +50,13 @@ router.use([
 
 ---
 
-### Named middleware collection
+### 命名中间件集合
 
-Named middleware is a collection of middleware that are not executed unless explicitly assigned to a route or a group.
+命名中间件是一个中间件集合，除非明确分配给路由或组，否则不会执行。
 
-Instead of defining middleware as an inline callback within the routes file, we recommend you create dedicated middleware classes, store them inside the named middleware collection and then assign them to the routes.
+建议你创建专门的中间件类，将它们存储在命名中间件集合中，然后将它们分配给路由，而不是在路由文件中将中间件定义为内联回调。
 
-You can define named middleware using the `router.named` method inside the `start/kernel.ts` file. Make sure to export the named collection to be able to use it [inside the routes file](#assigning-middleware-to-routes-and-route-groups).
+你可以使用 `start/kernel.ts` 文件中的 `router.named` 方法定义命名中间件。确保存储导出的命名集合，以便能够在 [路由文件中使用它](#assigning-middleware-to-routes-and-route-groups)。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -66,19 +66,19 @@ router.named({
 })
 ```
 
-## Creating middleware
+## 创建中间件
 
-Middleware are stored inside the `./app/middleware` directory, and you can create a new middleware file by running the `make:middleware` ace command.
+中间件存储在 `./app/middleware` 目录中，你可以通过运行 `make:middleware` ace 命令来创建一个新的中间件文件。
 
-See also: [Make middleware command](../references/commands.md#makemiddleware)
+另请参阅：[Make middleware 命令](../references/commands.md#makemiddleware)
 
 ```sh
 node ace make:middleware user_location
 ```
 
-The above command will create the `user_location_middleware.ts` file under the middleware directory. 
+上面的命令将在 middleware 目录下创建 `user_location_middleware.ts` 文件。
 
-A middleware is represented as a class with the `handle` method. During execution, AdonisJS will automatically call this method and give it the [HttpContext](../concepts/http_context.md) as the first argument.
+中间件表示为具有 `handle` 方法的类。在执行期间，AdonisJS 将自动调用此方法，并将 [HttpContext](../concepts/http_context.md) 作为第一个参数传递给它。
 
 ```ts
 // title: app/middleware/user_location_middleware.ts
@@ -91,12 +91,11 @@ export default class UserLocationMiddleware {
 }
 ```
 
-Within the `handle` method, a middleware has to decide whether to continue with the request, finish the request by sending a response or raise an exception to abort the request.
+在 `handle` 方法中，中间件必须决定是继续请求、通过发送响应结束请求，还是引发异常以中止请求。
 
+### 中止请求
 
-### Abort request
-
-If a middleware raises an exception, all the upcoming middleware and the route handler will not be executed, and the exception will be given to the global exception handler.
+如果中间件引发异常，所有后续的中间件和路由处理程序将不会被执行，异常将交给全局异常处理程序。
 
 ```ts
 import { Exception } from '@adonisjs/core/exceptions'
@@ -109,39 +108,37 @@ export default class UserLocationMiddleware {
 }
 ```
 
+### 继续请求
 
-### Continue with the request
-
-You must call the `next` method to continue with the request. Otherwise, the rest of the actions inside the middleware stack will not be executed.
+你必须调用 `next` 方法来继续请求。否则，中间件堆栈中的其余操作将不会执行。
 
 ```ts
 export default class UserLocationMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
-    // Call the `next` function to continue
+    // 调用 `next` 函数以继续
     await next()      
   }
 }
 ```
 
-### Send a response, and do not call the `next` method
+### 发送响应，且不调用 `next` 方法
 
-Finally, you can end the request by sending the response. In this case, do not call the `next` method.
-
+最后，你可以通过发送响应来结束请求。在这种情况下，不要调用 `next` 方法。
 
 ```ts
 export default class UserLocationMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
-    // send response + do not call next
+    // 发送响应 + 不调用 next
     ctx.response.send('Ending request')
   }
 }
 ```
 
-## Assigning middleware to routes and route groups
+## 将中间件分配给路由和路由组
 
-The named middleware collection is unused by default, and you must explicitly assign them to routes or the route groups.
+命名中间件集合默认是不使用的，你必须显式地将它们分配给路由或路由组。
 
-In the following example, we first import the `middleware` collection and assign the `userLocation` middleware to a route.
+在下面的示例中，我们首先导入 `middleware` 集合，并将 `userLocation` 中间件分配给一个路由。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -152,7 +149,7 @@ router
   .use(middleware.userLocation())
 ```
 
-Multiple middleware can be applied either as an array or by calling the `use` method multiple times.
+多个中间件可以作为数组应用，或者通过多次调用 `use` 方法应用。
 
 ```ts
 router
@@ -163,7 +160,7 @@ router
   ])
 ```
 
-Similarly, you can assign middleware to a route group as well. The group middleware will be applied to all group routes automatically.
+同样，你也可以将中间件分配给路由组。组中间件将自动应用于所有组内路由。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -178,9 +175,9 @@ router.group(() => {
 }).use(middleware.userLocation())
 ```
 
-## Middleware parameters
+## 中间件参数
 
-Middleware registered under the named middleware collection can accept an additional parameter as part of the `handle` method arguments. For example, the `auth` middleware accepts the authentication guard as a configuration option.
+注册在命名中间件集合下的中间件可以接受一个额外的参数作为 `handle` 方法参数的一部分。例如，`auth` 中间件接受认证守卫 (guard) 作为配置选项。
 
 ```ts
 type AuthGuards = 'web' | 'api'
@@ -191,7 +188,7 @@ export default class AuthMiddleware {
 }
 ```
 
-When assigning the middleware to the route, you can specify the guard to use.
+将中间件分配给路由时，你可以指定要使用的守卫。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -202,17 +199,17 @@ router.get('payments', () => {}).use(
 )
 ```
 
-## Dependency injection 
+## 依赖注入
 
-Middleware classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the middleware constructor, and the container will inject them for you.
+中间件类是使用 [IoC 容器](../concepts/dependency_injection.md) 实例化的；因此，你可以在中间件构造函数中对依赖项进行类型提示，容器将为你注入它们。
 
-Given you have a `GeoIpService` class to look up user location from the request IP, you can inject it into the middleware using the `@inject` decorator.
+假设你有一个 `GeoIpService` 类用于从请求 IP 查找用户位置，你可以使用 `@inject` 装饰器将其注入到中间件中。
 
 ```ts
 // title: app/services/geoip_service.ts
 export class GeoIpService {
   async lookup(ipAddress: string) {
-    // lookup location and return
+    // 查找位置并返回
   }
 }
 ```
@@ -235,37 +232,36 @@ export default class UserLocationMiddleware {
 }
 ```
 
+## 中间件执行流程
 
-## Middleware execution flow
+AdonisJS 的中间件层是建立在 [责任链 (Chain of Responsibility)](https://refactoring.guru/design-patterns/chain-of-responsibility) 设计模式之上的。中间件有两个执行阶段：**下游阶段 (downstream phase)** 和 **上游阶段 (upstream phase)**。
 
-The middleware layer of AdonisJS is built on top of [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) design pattern. A middleware has two execution phases: the **downstream phase** and the **upstream phase**.
-
-- The downstream phase is the block of code you write before calling the `next` method. In this phase, you handle the request.
-- The upstream phase is the block of code you might write after calling the `next` method. In this phase, you can inspect the response or change it completely. 
+- 下游阶段是你调用 `next` 方法之前编写的代码块。在这个阶段，你处理请求。
+- 上游阶段是你调用 `next` 方法之后可能编写的代码块。在这个阶段，你可以检查响应或完全更改它。
 
 ![](./middleware_flow.jpeg)
 
-## Middleware and exception handling
+## 中间件和异常处理
 
-AdonisJS automatically captures the exception raised by the middleware pipeline or the route handler and converts it into an HTTP response using the [global exception handler](./exception_handling.md).
+AdonisJS 会自动捕获中间件管道或路由处理程序引发的异常，并使用 [全局异常处理程序](./exception_handling.md) 将其转换为 HTTP 响应。
 
-As a result, you do not have to wrap the `next` function calls inside a `try/catch` statement. Also, the automatic exception handling ensures that the upstream logic of middleware is always executed after the `next` function call.
+因此，你不必将 `next` 函数调用包装在 `try/catch` 语句中。此外，自动异常处理确保中间件的上游逻辑总是在 `next` 函数调用之后执行。
 
-## Mutating response from a middleware
+## 从中间件修改响应
 
-The upstream phase of middleware can mutate the response body, headers, and status code. Doing so will discard the old response set by the route handler or any other middleware.
+中间件的上游阶段可以修改响应体、标头和状态码。这样做将丢弃路由处理程序或任何其他中间件设置的旧响应。
 
-Before mutating the response, you must ensure you are dealing with the correct response type. Following is the list of response types in the `Response` class.
+在修改响应之前，必须确保正在处理正确的响应类型。以下是 `Response` 类中的响应类型列表。
 
-- **Standard response** refers to sending data values using the `response.send` method. Its value might be an `Array`, `Object`, `String`, `Boolean`, or `Buffer`.
-- **Streaming response** refers to piping a stream to the response socket using the `response.stream` method. 
-- **File download response** refers to downloading a file using the `response.download` method.
+- **标准响应** 指的是使用 `response.send` 方法发送数据值。其值可能是 `Array`、`Object`、`String`、`Boolean` 或 `Buffer`。
+- **流式响应** 指的是使用 `response.stream` 方法将流传输到响应套接字。
+- **文件下载响应** 指的是使用 `response.download` 方法下载文件。
 
-You will/will not have access to specific response properties based on the kind of response.
+根据响应的类型，你将拥有/不拥有访问特定响应属性的权限。
 
-### Dealing with a standard response
+### 处理标准响应
 
-When mutating a standard response, you can access it using the `response.content` property. Make sure first to check if the `content` exists or not.
+修改标准响应时，可以使用 `response.content` 属性访问它。确先检查 `content` 是否存在。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -285,11 +281,11 @@ export default class {
 }
 ```
 
-### Dealing with a streaming response
+### 处理流式响应
 
-Response streams set using the `response.stream` method are not immediately piped to the outgoing [HTTP response](https://nodejs.org/api/http.html#class-httpserverresponse). Instead, AdonisJS waits for the route handler and the middleware pipeline to finish.
+使用 `response.stream` 方法设置的响应流不会立即传输到传出的 [HTTP 响应](https://nodejs.org/api/http.html#class-httpserverresponse)。相反，AdonisJS 等待路由处理程序和中间件管道完成。
 
-As a result, inside a middleware, you can replace the existing stream with a new stream or define event handlers to monitor the stream.
+因此，在中间件内部，你可以用新流替换现有流，或定义事件处理程序来监视流。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -308,11 +304,11 @@ export default class {
 }
 ```
 
-### Dealing with file downloads
+### 处理文件下载
 
-The file downloads performed using the `response.download`, and `response.attachment` methods defer the download process until the route handler and the middleware pipeline finish.
+使用 `response.download` 和 `response.attachment` 方法执行的文件下载会推迟下载过程，直到路由处理程序和中间件管道完成。
 
-As a result, inside a middleware, you can replace the path for the file to download.
+因此，在中间件内部，你可以替换要下载的文件的路径。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -330,11 +326,11 @@ export default class {
 }
 ```
 
-## Testing middleware classes
+## 测试中间件类
 
-Creating middleware as classes allows you to easily test a middleware in isolation (aka unit test a middleware). There are a few different ways to test middleware. Let's explore all the available options.
+将中间件创建为类允许你轻松地隔离测试中间件（即单元测试中间件）。有几种不同的方法可以测试中间件。让我们探索所有可用的选项。
 
-The simplest option is to create a new instance of the middleware class and invoke the `handle` method with the HTTP context and `next` callback function.
+最简单的选项是创建一个中间件类的新实例，并使用 HTTP 上下文和 `next` 回调函数调用 `handle` 方法。
 
 ```ts
 import testUtils from '@adonisjs/core/services/test_utils'
@@ -351,9 +347,9 @@ await middleware.handle(ctx, () => {
 })
 ```
 
-The `testUtils` service is available only after the AdonisJS application is booted. However, if you are testing a middleware inside a package, you can use the `HttpContextFactory` class to create a dummy HTTP context instance without booting an application.
+`testUtils` 服务仅在 AdonisJS 应用程序启动后可用。但是，如果你正在测试包内的中间件，则可以使用 `HttpContextFactory` 类创建一个虚拟 HTTP 上下文实例，而无需启动应用程序。
 
-See also: [CORS middleware test](https://github.com/adonisjs/cors/blob/main/tests/cors_middleware.spec.ts#L24-L41) for a real-world example.
+另请参阅：[CORS 中间件测试](https://github.com/adonisjs/cors/blob/main/tests/cors_middleware.spec.ts#L24-L41) 以获取实际示例。
 
 ```ts
 import {
@@ -373,14 +369,13 @@ await middleware.handle(ctx, () => {
 })
 ```
 
+### 使用服务器管道
 
-### Using server pipeline
+如果你的中间件依赖于其他中间件先执行，你可以使用 `server.pipeline` 方法组成一个中间件管道。
 
-If your middleware relies on other middleware to be executed first, you may compose a pipeline of middleware using the `server.pipeline` method.
-
-- The `server.pipeline` method accepts an array of middleware classes.
-- The class instance is created using the IoC container.
-- The execution flow is the same as the original execution flow of middleware during an HTTP request.
+- `server.pipeline` 方法接受一个中间件类数组。
+- 类实例是使用 IoC 容器创建的。
+- 执行流程与 HTTP 请求期间中间件的原始执行流程相同。
 
 ```ts
 import testUtils from '@adonisjs/core/services/test_utils'
@@ -395,10 +390,10 @@ const ctx = testUtils.createHttpContext()
 await pipeline.run(ctx)
 ```
 
-You can define the `finalHandler` and `errorHandler` functions before calling the `pipeline.run` method. 
+你可以在调用 `pipeline.run` 方法之前定义 `finalHandler` 和 `errorHandler` 函数。
 
-- The final handler is executed after all the middleware has been executed. The final handler is not executed when any middleware ends the chain without calling the `next` method.
-- The error handler is executed if a middleware raises an exception. The upstream flow will start after the error handler is invoked.
+- 最终处理程序 (final handler) 在所有中间件执行完毕后执行。当任何中间件在不调用 `next` 方法的情况下结束链时，不会执行最终处理程序。
+- 错误处理程序 (error handler) 在中间件引发异常时执行。错误处理程序被调用后，上游流程将开始。
 
 ```ts
 const ctx = testUtils.createHttpContext()
@@ -417,7 +412,7 @@ await pipeline
 console.log('pipeline executed')
 ```
 
-The `server` service is available after the application is booted. However, if you are creating a package, you can use the `ServerFactory` to create an instance of the Server class without booting the application.
+`server` 服务在应用程序启动后可用。但是，如果你正在创建一个包，可以使用 `ServerFactory` 来创建 Server 类的实例，而无需启动应用程序。
 
 ```ts
 import { ServerFactory } from '@adonisjs/core/factories/http'

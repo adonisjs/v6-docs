@@ -1,45 +1,45 @@
 ---
-summary: Cache data to improve the performance of your application
+summary: 缓存数据以提高应用程序的性能
 ---
 
-# Cache
+# 缓存 (Cache)
 
-AdonisJS Cache (`@adonisjs/cache`) is a simple, lightweight wrapper built on top of [bentocache.dev](https://bentocache.dev) to cache data and enhance the performance of your application. It provides a straightforward and unified API to interact with various cache drivers, such as Redis, DynamoDB, PostgreSQL, in-memory caching, and more.
+AdonisJS 缓存 (`@adonisjs/cache`) 是一个简单、轻量级的封装，基于 [bentocache.dev](https://bentocache.dev) 构建，用于缓存数据并增强应用程序的性能。它提供了一个直观且统一的 API 来与各种缓存驱动程序进行交互，例如 Redis、DynamoDB、PostgreSQL、内存缓存等。
 
-We highly encourage you to read the Bentocache documentation. Bentocache offers some advanced, optional concepts that can be very useful in certain situations, such as [multi-tiering](https://bentocache.dev/docs/multi-tier), [grace periods](https://bentocache.dev/docs/grace-periods), [tagging](https://bentocache.dev/docs/tagging), [timeouts](https://bentocache.dev/docs/timeouts), [Stampede Protection](https://bentocache.dev/docs/stampede-protection) and more.
+我们强烈建议你阅读 Bentocache 的文档。Bentocache 提供了一些高级的可选概念，在某些情况下非常有用，例如 [多级缓存 (multi-tiering)](https://bentocache.dev/docs/multi-tier)、[宽限期 (grace periods)](https://bentocache.dev/docs/grace-periods)、[标签 (tagging)](https://bentocache.dev/docs/tagging)、[超时 (timeouts)](https://bentocache.dev/docs/timeouts)、[惊群保护 (Stampede Protection)](https://bentocache.dev/docs/stampede-protection) 等。
 
-## Installation
+## 安装
 
-Install and configure the `@adonisjs/cache` package by running the following command:
+运行以下命令安装并配置 `@adonisjs/cache` 包：
 
 ```sh
 node ace add @adonisjs/cache
 ```
 
-:::disclosure{title="See the steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `@adonisjs/cache` package using the detected package manager.
-2. Registers the following service provider inside the `adonisrc.ts` file:
+1. 使用检测到的包管理器安装 `@adonisjs/cache` 包。
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者：
 
    ```ts
    {
      providers: [
-       // ...other providers
+       // ...其他提供者
        () => import('@adonisjs/cache/cache_provider'),
      ]
    }
    ```
 
-3. Creates the `config/cache.ts` file.
-4. Defines the environment variables for the selected cache drivers inside the `.env` file.
+3. 创建 `config/cache.ts` 文件。
+4. 在 `.env` 文件中定义所选缓存驱动程序的环境变量。
 
 :::
 
-## Configuration
+## 配置
 
-The configuration file for the cache package is located at `config/cache.ts`. You can configure the default cache driver, the list of drivers, and their specific configurations.
+缓存包的配置文件位于 `config/cache.ts`。你可以配置默认的缓存驱动程序、驱动程序列表及其具体配置。
 
-See also: [Config stub](https://github.com/adonisjs/cache/blob/1.x/stubs/config.stub)
+另请参阅：[配置存根 (Config stub)](https://github.com/adonisjs/cache/blob/1.x/stubs/config.stub)
 
 ```ts
 import { defineConfig, store, drivers } from '@adonisjs/cache'
@@ -49,19 +49,19 @@ const cacheConfig = defineConfig({
 
   stores: {
     /**
-     * Cache data only on DynamoDB
+     * 仅在 DynamoDB 上缓存数据
      */
     dynamodb: store().useL2Layer(drivers.dynamodb({})),
 
     /**
-     * Cache data using your Lucid-configured database
+     * 使用你配置的 Lucid 数据库缓存数据
      */
     database: store().useL2Layer(drivers.database({ connectionName: 'default' })),
 
     /**
-     * Cache data in-memory as the primary store and Redis as the secondary store.
-     * If your application is running on multiple servers, then in-memory caches
-     * need to be synchronized using a bus.
+     * 将数据缓存在内存中作为主存储，Redis 作为辅助存储。
+     * 如果你的应用程序运行在多个服务器上，那么内存缓存
+     * 需要使用总线进行同步。
      */
     redis: store()
       .useL1Layer(drivers.memory({ maxSize: '100mb' }))
@@ -73,31 +73,31 @@ const cacheConfig = defineConfig({
 export default cacheConfig
 ```
 
-In the code example above, we are setting up multiple layers for each cache store. This is called a [multi-tier caching system](https://bentocache.dev/docs/multi-tier). It lets us first check a fast in-memory cache (the first layer). If we do not find the data there, we will then use the distributed cache (the second layer).
+在上面的代码示例中，我们为每个缓存存储设置了多层。这被称为 [多级缓存系统](https://bentocache.dev/docs/multi-tier)。它允许我们首先检查快速的内存缓存（第一层）。如果在那里找不到数据，我们将使用分布式缓存（第二层）。
 
 ### Redis
 
-To use Redis as your cache system, you must install the `@adonisjs/redis` package and configure it. Refer to the documentation here: [Redis](../database/redis.md).
+要使用 Redis 作为缓存系统，你必须安装 `@adonisjs/redis` 包并进行配置。请参阅此处的文档：[Redis](../database/redis.md)。
 
-In `config/cache.ts`, you must specify a `connectionName`. This property should match the Redis configuration key in the `config/redis.ts` file.
+在 `config/cache.ts` 中，你必须指定一个 `connectionName`。此属性应与 `config/redis.ts` 文件中的 Redis 配置键匹配。
 
-### Database
+### 数据库 (Database)
 
-The `database` driver has a peer dependency on `@adonisjs/lucid`. Therefore, you must install and configure this package to use the `database` driver.
+`database` 驱动程序具有对 `@adonisjs/lucid` 的对等依赖。因此，你必须安装并配置此包才能使用 `database` 驱动程序。
 
-In `config/cache.ts`, you must specify a `connectionName`. This property should correspond to the database configuration key in the `config/database.ts` file.
+在 `config/cache.ts` 中，你必须指定一个 `connectionName`。此属性应对应于 `config/database.ts` 文件中的数据库配置键。
 
-Additionally, when configuring the `database` driver, a [migration](https://github.com/adonisjs/cache/blob/1.x/stubs/migration.stub) will be published to your `database/migrations` directory, which you must run to create the necessary table for storing cache entries.
+此外，配置 `database` 驱动程序时，会将一个 [迁移文件](https://github.com/adonisjs/cache/blob/1.x/stubs/migration.stub) 发布到你的 `database/migrations` 目录，你必须运行该迁移以创建用于存储缓存条目的必要表。
 
-### Other drivers
+### 其他驱动程序
 
-You can use other drivers such as `memory`, `dynamodb`, `kysely` and `orchid`.
+你可以使用其他驱动程序，如 `memory`、`dynamodb`、`kysely` 和 `orchid`。
 
-See [Cache Drivers](https://bentocache.dev/docs/cache-drivers) for more information.
+更多信息请参阅 [缓存驱动程序](https://bentocache.dev/docs/cache-drivers)。
 
-## Usage
+## 使用
 
-Once your cache is configured, you can import the `cache` service to interact with it. In the following example, we cache the user details for 5 minutes:
+一旦你的缓存配置完成，你可以导入 `cache` 服务与其进行交互。在下面的示例中，我们将用户详情缓存 5 分钟：
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
@@ -118,15 +118,15 @@ router.get('/user/:id', async ({ params }) => {
 
 :::warning
 
-As you can see, we serialize the user's data using `user.toJSON()`. This is necessary because your data must be serialized to be stored in the cache. Classes such as Lucid models or instances of `Date` cannot be stored directly in caches like Redis or a database.
+如你所见，我们使用 `user.toJSON()` 序列化用户数据。这是必要的，因为你的数据必须被序列化才能存储在缓存中。像 Lucid 模型这样的类或 `Date` 实例不能直接存储在 Redis 或数据库等缓存中。
 
 :::
 
-The `ttl` defines the time-to-live for the cache key. After the TTL expires, the cache key is considered stale, and the next request will re-fetch the data from the factory method.
+`ttl` 定义了缓存键的生存时间 (Time-To-Live)。TTL 过期后，缓存键被视为陈旧，下一个请求将从工厂方法重新获取数据。
 
-### Tagging
+### 标签 (Tagging)
 
-You can associate a cache entry with one or more tags to simplify invalidation. Instead of managing individual keys, entries can be grouped under multiple tags and invalidated in a single operation.
+你可以将缓存条目与一个或多个标签关联，以简化失效操作。条目可以分组在多个标签下，并在一次操作中失效，而不是管理单个键。
 
 ```ts
 await cache.getOrSet({
@@ -138,9 +138,9 @@ await cache.getOrSet({
 await cache.deleteByTag({ tags: ['tag-1'] });
 ```
 
-### Namespaces
+### 命名空间 (Namespaces)
 
-Another way to group your keys is to use namespaces. This allows you to invalidate everything at once later:
+另一种分组键的方法是使用命名空间。这允许你稍后一次性使所有内容失效：
 
 ```ts
 const users = cache.namespace('users')
@@ -151,9 +151,9 @@ users.set({ key: '33', value: { name: 'bar' } })
 users.clear()
 ```
 
-### Grace period
+### 宽限期 (Grace period)
 
-You can allow Bentocache to return stale data if the cache key is expired but still within a grace period using the `grace` option. This makes Bentocache work in the same way libraries like SWR or TanStack Query do.
+你可以使用 `grace` 选项允许 Bentocache 在缓存键过期但在宽限期内时返回陈旧数据。这使得 Bentocache 的工作方式与 SWR 或 TanStack Query 等库相同。
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
@@ -166,14 +166,15 @@ cache.getOrSet({
   },
   ttl: '1h',
   grace: '6h',
+  // 6 小时
 })
 ```
 
-In the example above, the data will be considered stale after 1 hour. However, the next request within the grace period of 6 hours will return the stale data while re-fetching the data from the factory method and updating the cache.
+在上面的示例中，数据将在 1 小时后被视为陈旧。但是，在 6 小时的宽限期内，下一个请求将返回陈旧数据，同时从工厂方法重新获取数据并更新缓存。
 
-### Timeouts
+### 超时 (Timeouts)
 
-You can configure how long you allow your factory method to run before returning stale data using the `timeout` option. By default, Bentocache sets a soft timeout of 0ms, which means we always return stale data while re-fetching the data in the background.
+你可以使用 `timeout` 选项配置允许工厂方法运行多长时间后返回陈旧数据。默认情况下，Bentocache 设置了 0ms 的软超时，这意味着我们总是返回陈旧数据，同时在后台重新获取数据。
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
@@ -190,9 +191,9 @@ cache.getOrSet({
 })
 ```
 
-In the example above, the factory method will be allowed to run for a maximum of 200ms. If the factory method takes longer than 200ms, the stale data will be returned to the user but the factory method will continue to run in the background.
+在上面的示例中，工厂方法将被允许运行最多 200ms。如果工厂方法耗时超过 200ms，陈旧数据将返回给用户，但工厂方法将继续在后台运行。
 
-If you have not defined a `grace` period, you can still use a hard timeout to stop the factory method from running after a certain time.
+如果你没有定义 `grace` 周期，你仍然可以使用硬超时在特定时间后停止工厂方法的运行。
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
@@ -208,37 +209,37 @@ cache.getOrSet({
 })
 ```
 
-In this example, the factory method will be stopped after 200ms and an error will be thrown.
+在这个例子中，工厂方法将在 200ms 后停止，并抛出一个错误。
 
 :::note
 
-You can define the `timeout` and `hardTimeout` together. The `timeout` is the maximum time the factory method is allowed to run before returning stale data, while the `hardTimeout` is the maximum time the factory method is allowed to run before being stopped.
+你可以同时定义 `timeout` 和 `hardTimeout`。`timeout` 是工厂方法在返回陈旧数据之前允许运行的最长时间，而 `hardTimeout` 是工厂方法被停止之前允许运行的最长时间。
 
 :::
 
-## Cache Service
+## 缓存服务 (Cache Service)
 
-The cache service exported from `@adonisjs/cache/services/main` is a singleton instance of the [BentoCache](https://bentocache.dev/docs/named-caches) class created using the configuration defined in `config/cache.ts`.
+从 `@adonisjs/cache/services/main` 导出的缓存服务是使用 `config/cache.ts` 中定义的配置创建的 [BentoCache](https://bentocache.dev/docs/named-caches) 类的单例实例。
 
-You can import the cache service into your application and use it to interact with the cache:
+你可以将缓存服务导入到你的应用程序中，并使用它与缓存进行交互：
 
 ```ts
 import cache from '@adonisjs/cache/services/main'
 
 /**
- * Without calling the `use` method, the methods you call on the cache service
- * will use the default store defined in `config/cache.ts`.
+ * 如果不调用 `use` 方法，你在缓存服务上调用的方法
+ * 将使用 `config/cache.ts` 中定义的默认存储。
  */
 cache.put({ key: 'username', value: 'jul', ttl: '1h' })
 
 /**
- * Using the `use` method, you can switch to a different store defined in
- * `config/cache.ts`.
+ * 使用 `use` 方法，你可以切换到 `config/cache.ts` 中
+ * 定义的不同存储。
  */
 cache.use('dynamodb').put({ key: 'username', value: 'jul', ttl: '1h' })
 ```
 
-You can find all available methods here: [BentoCache API](https://bentocache.dev/docs/methods).
+你可以在这里找到所有可用的方法：[BentoCache API](https://bentocache.dev/docs/methods)。
 
 ```ts
 await cache.namespace('users').set({ key: 'username', value: 'jul' })
@@ -267,9 +268,9 @@ await cache.deleteByTag({ tags: ['products', 'users'] })
 await cache.clear()
 ```
 
-## Edge Helper
+## Edge 辅助函数 (Edge Helper)
 
-The `cache` service is available as an Edge helper within your views. You can use it to retrieve cached values directly in your templates.
+`cache` 服务作为 Edge 辅助函数在你的视图中可用。你可以使用它直接在模板中检索缓存值。
 
 ```edge
 <p>
@@ -277,48 +278,48 @@ The `cache` service is available as an Edge helper within your views. You can us
 </p>
 ```
 
-## Ace Commands
+## Ace 命令 (Ace Commands)
 
-The `@adonisjs/cache` package also provides a set of Ace commands to interact with the cache from the terminal.
+`@adonisjs/cache` 包还提供了一组 Ace 命令，用于从终端与缓存进行交互。
 
 ### `cache:clear`
 
-Clears the cache for the specified store. If not specified, it will clear the default one.
+清除指定存储的缓存。如果未指定，它将清除默认存储。
 
 ```sh
-# Clear the default cache store
+# 清除默认缓存存储
 node ace cache:clear
 
-# Clear a specific cache store
+# 清除特定缓存存储
 node ace cache:clear redis
 
-# Clear a specific namespace
+# 清除特定命名空间
 node ace cache:clear store --namespace users
 
-# Clear multiple specific tags
+# 清除多个特定标签
 node ace cache:clear store --tags products --tags users
 ```
 
 ### `cache:delete`
 
-Deletes a specific cache key from the specified store. If not specified, it will delete from the default one.
+从指定存储中删除特定的缓存键。如果未指定，它将从默认存储中删除。
 
 ```sh
-# Delete a specific cache key
+# 删除特定缓存键
 node ace cache:delete cache-key
 
-# Delete a specific cache key from a specific store
+# 从特定存储中删除特定缓存键
 node ace cache:delete cache-key store
 ```
 
 ### `cache:prune`
 
-Some cache drivers, like the database driver, do not automatically remove expired keys because they lack native TTL support. You can use the `cache:prune` command to manually remove expired keys. On stores that support TTL, this command will result in a no-op.
+一些缓存驱动程序（如数据库驱动程序）不会自动删除过期的键，因为它们缺乏原生的 TTL 支持。你可以使用 `cache:prune` 命令手动删除过期的键。在支持 TTL 的存储上，此命令将不执行任何操作。
 
 ```sh
-# Prune expired keys from the default cache store
+# 从默认缓存存储中修剪过期键
 node ace cache:prune
 
-# Prune expired keys from a specific cache store
+# 从特定缓存存储中修剪过期键
 node ace cache:prune store
 ```

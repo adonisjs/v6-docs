@@ -1,11 +1,11 @@
 ---
-summary: Implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
+summary: 使用 `@adonisjs/ally` 包在 AdonisJS 应用程序中实现社交身份验证。
 ---
 
-# Social authentication
+# 社交身份验证
 
-You can implement social authentication in your AdonisJS applications using the `@adonisjs/ally` package.
-Ally comes with the following inbuilt drivers, alongside an extensible API to [register custom drivers](#creating-a-custom-social-driver).
+你可以使用 `@adonisjs/ally` 包在 AdonisJS 应用程序中实现社交身份验证。
+Ally 附带以下内置驱动程序，以及用于 [注册自定义驱动程序](#creating-a-custom-social-driver) 的可扩展 API。
 
 - Twitter
 - Facebook
@@ -15,24 +15,24 @@ Ally comes with the following inbuilt drivers, alongside an extensible API to [r
 - Discord
 - LinkedIn
 
-Ally does not store any users or access tokens on your behalf. It implements the OAuth2 and OAuth1 protocols, authenticates a user with social service, and provides user details. You can store that information inside a database and use the [auth](./introduction.md) package to login the user within your application.
+Ally 不会代表你存储任何用户或访问令牌。它实现了 OAuth2 和 OAuth1 协议，通过社交服务对用户进行身份验证，并提供用户详细信息。你可以将该信息存储在数据库中，并使用 [auth](./introduction.md) 包在你的应用程序中登录用户。
 
-## Installation
+## 安装
 
-Install and configure the package using the following command :
+使用以下命令安装并配置该包：
 
 ```sh
 node ace add @adonisjs/ally
 
-# Define providers as CLI flags
+# 将提供程序定义为 CLI 标志
 node ace add @adonisjs/ally --providers=github --providers=google
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `@adonisjs/ally` package using the detected package manager.
+1. 使用检测到的包管理器安装 `@adonisjs/ally` 包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
 
     ```ts
     {
@@ -43,16 +43,17 @@ node ace add @adonisjs/ally --providers=github --providers=google
     }
     ```
 
-3. Create the `config/ally.ts` file. This file contains the configuration settings for selected OAuth providers.
+3. 创建 `config/ally.ts` 文件。此文件包含所选 OAuth 提供程序的配置设置。
 
-4. Defines the environment variables to store `CLIENT_ID` and `CLIENT_SECRET` for selected OAuth providers. 
+4. 定义环境变量以存储所选 OAuth 提供程序的 `CLIENT_ID` 和 `CLIENT_SECRET`。
 
 :::
 
-## Configuration
-The `@adonisjs/ally` package configuration is stored inside the `config/ally.ts` file. You can define config for multiple services within a single config file.
+## 配置
 
-See also: [Config stub](https://github.com/adonisjs/ally/blob/main/stubs/config/ally.stub)
+`@adonisjs/ally` 包配置存储在 `config/ally.ts` 文件中。你可以在单个配置文件中为多个服务定义配置。
+
+另请参阅：[配置存根](https://github.com/adonisjs/ally/blob/main/stubs/config/ally.stub)
 
 ```ts
 import { defineConfig, services } from '@adonisjs/ally'
@@ -71,37 +72,40 @@ defineConfig({
 })
 ```
 
-### Configuring the callback URL
-OAuth providers require you to register a callback URL to handle the redirect response after the user authorizes the login request. 
+### 配置回调 URL
 
-The callback URL must be registered with the OAuth service provider. For example: If you are using GitHub, you must log in to your GitHub account, [create a new app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) and define the callback URL using the GitHub interface.
+OAuth 提供程序要求你注册一个回调 URL，以便在用户授权登录请求后处理重定向响应。
 
-Also, you must register the same callback URL within the `config/ally.ts` file using the `callbackUrl` property.
+回调 URL 必须向 OAuth 服务提供商注册。例如：如果你使用的是 GitHub，则必须登录 GitHub 帐户，[创建一个新应用](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) and define the callback URL using the GitHub interface.
 
-## Usage
-Once the package has been configured, you can interact with Ally APIs using the `ctx.ally` property. You can switch between the configured auth providers using the `ally.use()` method. For example:
+此外，你必须使用 `callbackUrl` 属性在 `config/ally.ts` 文件中注册相同的回调 URL。
+
+## 用法
+
+配置包后，你可以使用 `ctx.ally` 属性与 Ally API 进行交互。你可以使用 `ally.use()` 方法在配置的 auth 提供程序之间切换。例如：
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
-  // GitHub driver instance
+  // GitHub 驱动程序实例
   const gh = ally.use('github')
 })
 
 router.get('/twitter/redirect', ({ ally }) => {
-  // Twitter driver instance
+  // Twitter 驱动程序实例
   const twitter = ally.use('twitter')
 })
 
-// You could also dynamically retrieve the driver
+// 你也可以动态检索驱动程序
 router.get('/:provider/redirect', ({ ally, params }) => {
   const driverInstance = ally.use(params.provider)
 }).where('provider', /github|twitter/)
 ```
 
-### Redirecting the user for authentication
-The first step in social authentication is to redirect the user to an OAuth service and wait for them to either approve or deny the authentication request.
+### 重定向用户进行身份验证
 
-You can perform the redirect using the `.redirect()` method.
+社交身份验证的第一步是将用户重定向到 OAuth 服务，并等待他们批准或拒绝身份验证请求。
+
+你可以使用 `.redirect()` 方法执行重定向。
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
@@ -109,7 +113,7 @@ router.get('/github/redirect', ({ ally }) => {
 })
 ```
 
-You can pass a callback function to define custom scopes or query string values during the redirect.
+你可以传递回调函数以在重定向期间定义自定义范围或查询字符串值。
 
 ```ts
 router.get('/github/redirect', ({ ally }) => {
@@ -124,48 +128,48 @@ router.get('/github/redirect', ({ ally }) => {
 })
 ```
 
-### Handling callback response
-The user will be redirected back to your application's `callbackUrl` after they approve or deny the authentication request. 
+### 处理回调响应
 
-Within this route, you can call the `.user()` method to get the logged-in user details and the access token. However, you must also check the response for possible error states.
+用户批准或拒绝身份验证请求后，将被重定向回应用程序的 `callbackUrl`。
+
+在此路由中，你可以调用 `.user()` 方法来获取登录用户的详细信息和访问令牌。但是，你还必须检查响应是否存在可能的错误状态。
 
 ```ts
 router.get('/github/callback', async ({ ally }) => {
   const gh = ally.use('github')
 
   /**
-   * User has denied access by canceling
-   * the login flow
+   * 用户通过取消登录流程拒绝了访问
    */
   if (gh.accessDenied()) {
     return 'You have cancelled the login process'
   }
 
   /**
-   * OAuth state verification failed. This happens when the
-   * CSRF cookie gets expired.
+   * OAuth 状态验证失败。这发生在 CSRF Cookie 过期时。
    */
   if (gh.stateMisMatch()) {
     return 'We are unable to verify the request. Please try again'
   }
 
   /**
-   * GitHub responded with some error
+   * GitHub 响应了一些错误
    */
   if (gh.hasError()) {
     return gh.getError()
   }
 
   /**
-   * Access user info
+   * 访问用户信息
    */
   const user = await gh.user()
   return user
 })
 ```
 
-## User properties
-Following is the list of properties you can access from the return value of the `.user()` method call. The properties are consistent among all the underlying drivers.
+## 用户属性
+
+以下是可以从 `.user()` 方法调用的返回值访问的属性列表。这些属性在所有底层驱动程序中是一致的。
 
 ```ts
 const user = await gh.user()
@@ -181,31 +185,31 @@ user.original
 ```
 
 ### id
-A unique ID returned by the OAuth provider.
+OAuth 提供程序返回的唯一 ID。
 
 ### email
-The email address returned by the OAuth provider. The value will be `null` if the OAuth request does not ask for the user's email address.
+OAuth 提供程序返回的电子邮件地址。如果 OAuth 请求不要求用户的电子邮件地址，则该值将为 `null`。
 
 ### emailVerificationState
-Many OAuth providers allow users with unverified emails to log in and authenticate OAuth requests. You should use this flag to ensure only users with verified emails can log in.
+许多 OAuth 提供程序允许电子邮件未经过验证的用户登录并验证 OAuth 请求。你应该使用此标志确保只有拥有经过验证的电子邮件的用户才能登录。
 
-Following is the list of possible values.
+以下是可能值的列表。
 
-- `verified`: The user's email address is verified with the OAuth provider.
-- `unverified`: The user's email address is not verified.
-- `unsupported`: The OAuth provider does not share the email verification state.
+- `verified`: 用户的电子邮件地址已通过 OAuth 提供程序的验证。
+- `unverified`: 用户的电子邮件地址未经过验证。
+- `unsupported`: OAuth 提供程序不共享电子邮件验证状态。
 
 ### name
-The name of the user returned by the OAuth provider.
+OAuth 提供程序返回的用户姓名。
 
 ### nickName
-A publicly visible nick name of the user. The value of `nickName` and `name` will be the same if the OAuth provider has no concept of nicknames.
+用户公开可见的昵称。如果 OAuth 提供程序没有昵称的概念，则 `nickName` 和 `name` 的值将相同。
 
 ### avatarUrl
-The HTTP(s) URL to the user's public profile picture.
+用户公开个人资料图片的 HTTP(s) URL。
 
 ### token
-The token property is the reference to the underlying access token object. The token object has the following sub-properties.
+token 属性是对底层访问令牌对象的引用。令牌对象具有以下子属性。
 
 ```ts
 user.token.token
@@ -215,29 +219,30 @@ user.token.expiresAt
 user.token.expiresIn
 ```
 
-| Property | Protocol | Description |
+| 属性 | 协议 | 描述 |
 |---------|------------|------------|
-| `token` | OAuth2 / OAuth1 | The value of the access token. The value is available for the `OAuth2` and the `OAuth1` protocols. |
-| `secret` | OAuth1 | The token secret applicable only for `OAuth1` protocol. Currently, Twitter is the only official driver using OAuth1. |
-| `type` | OAuth2 | The token type. Usually, it will be a [bearer token](https://oauth.net/2/bearer-tokens/).
-| `refreshToken` | OAuth2 | You can use the refresh token to create a new access token. The value will be `undefined` if the OAuth provider does not support refresh tokens |
-| `expiresAt` | OAuth2 | An instance of the luxon DateTime class representing the absolute time when the access token will expire. |
-| `expiresIn` | OAuth2 | Value in seconds, after which the token will expire. It is a static value and does not change as time passes by. |
+| `token` | OAuth2 / OAuth1 | 访问令牌的值。该值适用于 `OAuth2` 和 `OAuth1` 协议。 |
+| `secret` | OAuth1 | 令牌秘密仅适用于 `OAuth1` 协议。目前，Twitter 是唯一使用 OAuth1 的官方驱动程序。 |
+| `type` | OAuth2 | 令牌类型。通常，它将是 [bearer token](https://oauth.net/2/bearer-tokens/)。
+| `refreshToken` | OAuth2 | 你可以使用刷新令牌创建新的访问令牌。如果 OAuth 提供程序不支持刷新令牌，则该值将为 `undefined` |
+| `expiresAt` | OAuth2 | 代表访问令牌过期的绝对时间的 luxon DateTime 类实例。 |
+| `expiresIn` | OAuth2 | 值以秒为单位，之后令牌将过期。它是一个静态值，不会随着时间的推移而改变。 |
 
 ### original
-Reference to the original response from the OAuth provider. You might want to reference the original response if the normalized set of user properties does not have all the information you need.
+对 OAuth 提供程序原始响应的引用。如果标准化的用户属性集没有你需要的所有信息，你可能希望引用原始响应。
 
 ```ts
 const user = await github.user()
 console.log(user.original)
 ```
 
-## Defining scopes
-Scopes refers to the data you want to access after the user approves the authentication request. The name of scopes and the data you can access varies between the OAuth providers; therefore, you must read their documentation.
+## 定义范围 (Scopes)
 
-The scopes can be defined within the `config/ally.ts` file, or you can define them when redirecting the user.
+范围是指用户批准身份验证请求后你要访问的数据。范围的名称和你可以访问的数据因 OAuth 提供程序而异；因此，你必须阅读他们的文档。
 
-Thanks to TypeScript, you will get autocomplete suggestions for all the available scopes.
+范围可以在 `config/ally.ts` 文件中定义，也可以在重定向用户时定义。
+
+多亏了 TypeScript，你将获得所有可用范围的自动完成建议。
 
 ![](../digging_deeper/ally_autocomplete.png)
 
@@ -265,8 +270,9 @@ ally
   })
 ```
 
-## Defining redirect query params
-You can customize the query parameters for the redirect request alongside the scopes. In the following example, we define the `prompt` and the `access_type` params applicable with the [Google provider](https://developers.google.com/identity/protocols/oauth2/web-server#httprest).
+## 定义重定向查询参数
+
+你可以自定义重定向请求的查询参数以及范围。在以下示例中，我们定义了适用于 [Google 提供程序](https://developers.google.com/identity/protocols/oauth2/web-server#httprest) 的 `prompt` 和 `access_type` 参数。
 
 ```ts
 router.get('/google/redirect', async ({ ally }) => {
@@ -282,7 +288,7 @@ router.get('/google/redirect', async ({ ally }) => {
 })
 ```
 
-You can clear any existing parameters using the `.clearParam()` method on the request. This can be helpful if parameter defaults are defined in the config and you need to redefine them for a separate custom auth flow.
+你可以使用请求上的 `.clearParam()` 方法清除任何现有参数。如果参数默认值在配置中定义，并且你需要为单独的自定义 auth 流程重新定义它们，这会很有帮助。
 
 ```ts
 router.get('/google/redirect', async ({ ally }) => {
@@ -298,10 +304,11 @@ router.get('/google/redirect', async ({ ally }) => {
 })
 ```
 
-## Fetching user details from an access token
-Sometimes, you might want to fetch user details from an access token stored in the database or provided via another OAuth flow. For example, you used the Native OAuth flow via a mobile app and received an access token back.
+## 从访问令牌获取用户详细信息
 
-You can fetch the user details using the `.userFromToken()` method.
+有时，你可能希望从存储在数据库中或通过另一个 OAuth 流程提供的访问令牌中获取用户详细信息。例如，你通过移动应用程序使用了本机 OAuth 流程并收到了访问令牌。
+
+你可以使用 `.userFromToken()` 方法获取用户详细信息。
 
 ```ts
 const user = await ally
@@ -309,7 +316,7 @@ const user = await ally
   .userFromToken(accessToken)
 ```
 
-You can fetch the user details for an OAuth1 driver using the `.userFromTokenAndSecret` method.
+你可以使用 `.userFromTokenAndSecret` 方法获取 OAuth1 驱动程序的用户详细信息。
 
 ```ts
 const user = await ally
@@ -317,12 +324,13 @@ const user = await ally
   .userFromTokenAndSecret(token, secret)
 ```
 
-## Stateless authentication
-Many OAuth providers [recommend using a CSRF state token](https://developers.google.com/identity/openid-connect/openid-connect?hl=en#createxsrftoken) to prevent your application from cross-site request forgery attacks.
+## 无状态身份验证
 
-Ally creates a CSRF token and saves it inside an encrypted cookie, which is later verified after the user approves the authentication request.
+许多 OAuth 提供程序 [建议使用 CSRF 状态令牌](https://developers.google.com/identity/openid-connect/openid-connect?hl=en#createxsrftoken) 来防止你的应用程序遭受跨站点请求伪造攻击。
 
-However, if you cannot use cookies for some reason, you can enable the stateless mode in which no state verification will take place, and hence, no CSRF cookie will be generated.
+Ally 创建一个 CSRF 令牌并将其保存在加密的 Cookie 中，该 Cookie 稍后在用户批准身份验证请求后进行验证。
+
+但是，如果你因某种原因无法使用 Cookie，则可以启用无状态模式，在该模式下不会进行状态验证，因此不会生成 CSRF Cookie。
 
 ```ts
 // title: Redirecting
@@ -336,8 +344,9 @@ await gh.user()
 ```
 
 
-## Complete config reference
-The following is the complete configuration reference for all the drivers. You can copy-paste the following objects directly to `config/ally.ts` file.
+## 完整配置参考
+
+以下是所有驱动程序的完整配置参考。你可以将以下对象直接复制粘贴到 `config/ally.ts` 文件中。
 
 <div class="disclosure_wrapper">
 
@@ -418,7 +427,7 @@ The following is the complete configuration reference for all the drivers. You c
 
 :::disclosure{title="LinkedIn config (deprecated)"}
 
-This configuration is deprecated in compliance with the updated [LinkedIn OAuth requirements](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin).
+此配置已弃用，以符合更新后的 [LinkedIn OAuth 要求](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin)。
 
 ```ts
 {
@@ -492,5 +501,6 @@ This configuration is deprecated in compliance with the updated [LinkedIn OAuth 
 
 </div>
 
-## Creating a custom social driver
-We have created a [starter kit](https://github.com/adonisjs-community/ally-driver-boilerplate) to implement and publish a custom social driver on npm. Please go through the README of the starter kit for further instructions.
+## 创建自定义社交驱动程序
+
+我们创建了一个 [入门套件](https://github.com/adonisjs-community/ally-driver-boilerplate) 来在 npm 上实现和发布自定义社交驱动程序。请仔细阅读入门套件的 README 以获取更多说明。

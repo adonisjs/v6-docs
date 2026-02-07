@@ -1,52 +1,52 @@
 ---
-summary: Protect your web application or API server from abuse by implementing rate limits using the @adonisjs/limiter package.
+summary: 使用 @adonisjs/limiter 软件包实施速率限制，保护您的 Web 应用程序或 API 服务器免受滥用。
 ---
 
-# Rate limiting
+# 速率限制 (Rate limiting)
 
-AdonisJS provides a first-party package for implementing rate limits in your web application or the API server. The rate limiter provides `redis`, `mysql`, `postgresql`, `sqlite` and `memory` as the storage options, with the ability to [create custom storage providers](#creating-a-custom-storage-provider).
+AdonisJS 提供了一个官方软件包，用于在您的 Web 应用程序或 API 服务器中实施速率限制。速率限制器提供 `redis`、`mysql`、`postgresql`、`sqlite` 和 `memory` 作为存储选项，并能够[创建自定义存储提供程序](#creating-a-custom-storage-provider)。
 
-The `@adonisjs/limiter` package is built on top of the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible) package, which provides one of the fastest rate-limiting API and uses atomic increments to avoid race conditions.
+`@adonisjs/limiter` 软件包构建在 [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible) 软件包之上，该软件包提供了最快的速率限制 API 之一，并使用原子增量来避免竞争条件。
 
-## Installation
+## 安装
 
-Install and configure the package using the following command :
+使用以下命令安装并配置该软件包：
 
 ```sh
 node ace add @adonisjs/limiter
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `@adonisjs/limiter` package using the detected package manager.
+1. 使用检测到的包管理器安装 `@adonisjs/limiter` 软件包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...其他提供者
         () => import('@adonisjs/limiter/limiter_provider')
       ]
     }
     ```
 
-3. Create the `config/limiter.ts` file.
+3. 创建 `config/limiter.ts` 文件。
 
-4. Create the `start/limiter.ts` file. This file is used to define HTTP throttle middleware.
+4. 创建 `start/limiter.ts` 文件。此文件用于定义 HTTP 节流中间件。
 
-5. Define the following environment variable alongside its validation inside the `start/env.ts` file.
+5. 在 `start/env.ts` 文件中定义以下环境变量及其验证。
    ```ts
    LIMITER_STORE=redis
    ```
 
-6. Optionally, create the database migration for the `rate_limits` table if using the `database` store.
+6. 如果使用 `database` 存储，可选择为 `rate_limits` 表创建数据库迁移。
 
 :::
 
-## Configuration
-The configuration for the rate limiter is stored within the `config/limiter.ts` file.
+## 配置
+速率限制器的配置存储在 `config/limiter.ts` 文件中。
 
-See also: [Rate limiter config stub](https://github.com/adonisjs/limiter/blob/2.x/stubs/config/limiter.stub)
+另请参阅：[速率限制器配置存根](https://github.com/adonisjs/limiter/blob/2.x/stubs/config/limiter.stub)
 
 ```ts
 import env from '#start/env'
@@ -83,7 +83,7 @@ default
 
 <dd>
 
-The `default` store to use for applying rate limits. The store is defined within the same config file under the `stores` object.
+用于应用速率限制的 `default` 存储。该存储在同一配置文件下的 `stores` 对象中定义。
 
 </dd>
 
@@ -95,7 +95,7 @@ stores
 
 <dd>
 
-A collection of stores you plan to use within your application. We recommend always configuring the `memory` store that could be used during testing.
+您计划在应用程序中使用的存储集合。我们建议始终配置 `memory` 存储，以便在测试期间使用。
 
 </dd>
 
@@ -103,10 +103,10 @@ A collection of stores you plan to use within your application. We recommend alw
 
 ---
 
-### Environment variables
-The default limiter is defined using the `LIMITER_STORE` environment variable, and therefore, you can switch between different stores in different environments. For example, use the `memory` store during testing and the `redis` store for development and production.
+### 环境变量
+默认限制器使用 `LIMITER_STORE` 环境变量定义，因此，您可以在不同的环境中切换不同的存储。例如，在测试期间使用 `memory` 存储，在开发和生产环境中使用 `redis` 存储。
 
-Also, the environment variable must be validated to allow one of the pre-configured stores. The validation is defined inside the `start/env.ts` file using the `Env.schema.enum` rule.
+此外，必须验证环境变量以允许预配置的存储之一。验证在 `start/env.ts` 文件中使用 `Env.schema.enum` 规则定义。
 
 ```ts
 {
@@ -114,8 +114,8 @@ Also, the environment variable must be validated to allow one of the pre-configu
 }
 ```
 
-### Shared options
-Following is the list of options shared by all the bundled stores.
+### 共享选项
+以下是所有捆绑存储共享的选项列表。
 
 <dl>
 
@@ -128,7 +128,7 @@ keyPrefix
 
 <dd>
 
-Define the prefix for the keys stored inside the database store. The database store ignores the `keyPrefix` since different database tables can be used to isolate data.
+定义存储在数据库存储中的键的前缀。数据库存储会忽略 `keyPrefix`，因为可以使用不同的数据库表来隔离数据。
 
 </dd>
 
@@ -140,9 +140,9 @@ execEvenly
 
 <dd>
 
-The `execEvenly` option adds a delay when throttling the requests so that all requests are exhausted at the end of the provided duration.
+`execEvenly` 选项在限制请求时添加延迟，以便所有请求在提供的持续时间结束时耗尽。
 
-For example, if you allow a user to make **10 requests/min**, all requests will have an artificial delay, so the tenth request finishes at the end of the 1 minute. Read the [smooth out traffic peaks](https://github.com/animir/node-rate-limiter-flexible/wiki/Smooth-out-traffic-peaks) article on `rate-limiter-flexible` repo to learn more about the `execEvenly` option.
+例如，如果您允许用户进行 **10 次请求/分钟**，所有请求将具有人为延迟，以便第 10 个请求在 1 分钟结束时完成。阅读 `rate-limiter-flexible` 仓库上的 [平滑流量峰值](https://github.com/animir/node-rate-limiter-flexible/wiki/Smooth-out-traffic-peaks) 文章以了解有关 `execEvenly` 选项的更多信息。
 
 </dd>
 
@@ -154,11 +154,11 @@ inMemoryBlockOnConsumed
 
 <dd>
 
-Define the number of requests after which the key should be blocked within memory. For example, you allow a user to make **10 requests/min**, and they have consumed all the requests within the first 10 seconds.
+定义在消耗完请求后应在内存中阻止键的请求数。例如，您允许用户进行 **10 次请求/分钟**，并且他们在前 10 秒内消耗了所有请求。
 
-However, they continue to make requests to the server, and therefore, the rate limiter has to check with the database before denying the request.
+但是，他们继续向服务器发出请求，因此，速率限制器必须在拒绝请求之前检查数据库。
 
-To reduce the load on the database, you can define the number of requests, after which we should stop querying the database and block the key within the memory.
+为了减少数据库的负载，您可以定义请求数，之后我们将停止查询数据库并在内存中阻止该键。
 
 ```ts
 {
@@ -166,8 +166,8 @@ To reduce the load on the database, you can define the number of requests, after
   requests: 10,
 
   /**
-   * After 12 requests, block the key within the
-   * memory and stop consulting the database.
+   * 在 12 次请求后，在内存中阻止该键
+   * 并停止咨询数据库。
    */
   inMemoryBlockOnConsumed: 12,
 }
@@ -183,7 +183,7 @@ inMemoryBlockDuration
 
 <dd>
 
-The duration for which to block the key within memory. This option will reduce the load on the database since the backend stores will first check within memory to see if a key is blocked.
+在内存中阻止键的持续时间。此选项将减少数据库的负载，因为后端存储将首先检查内存以查看键是否被阻止。
 
 ```ts
 {
@@ -198,10 +198,10 @@ The duration for which to block the key within memory. This option will reduce t
 ---
 
 
-### Redis store
-The `redis` store has a peer dependency on the `@adonisjs/redis` package; therefore, you must configure this package before using the redis store.
+### Redis 存储
+`redis` 存储与 `@adonisjs/redis` 软件包具有对等依赖关系；因此，在使用 redis 存储之前，必须配置此软件包。
 
-Following is the list of options the redis store accepts (alongside the shared options).
+以下是 redis 存储接受的选项列表（以及共享选项）。
 
 ```ts
 {
@@ -222,7 +222,7 @@ connectionName
 
 <dd>
 
-The `connectionName` property refers to a connection defined within the `config/redis.ts` file. We recommend using a separate redis database for the limiter.
+`connectionName` 属性引用 `config/redis.ts` 文件中定义的连接。我们建议为限制器使用单独的 redis 数据库。
 
 </dd>
 
@@ -234,7 +234,7 @@ rejectIfRedisNotReady
 
 <dd>
 
-Reject the rate-limiting requests when the status of the Redis connection is not `ready.`
+当 Redis 连接的状态不是 `ready` 时，拒绝速率限制请求。
 
 </dd>
 
@@ -242,14 +242,14 @@ Reject the rate-limiting requests when the status of the Redis connection is not
 
 ---
 
-### Database store
-The `database` store has a peer dependency on the `@adonisjs/lucid` package, and therefore, you must configure this package before using the Database store.
+### 数据库存储
+`database` 存储与 `@adonisjs/lucid` 软件包具有对等依赖关系，因此，在使用数据库存储之前，必须配置此软件包。
 
-Following is the list of options the database store accepts (alongside the shared options).
+以下是数据库存储接受的选项列表（以及共享选项）。
 
 :::note
 
-Only MySQL, PostgreSQL, and SQLite databases can be used with the database store.
+只有 MySQL、PostgreSQL 和 SQLite 数据库可以与数据库存储一起使用。
 
 :::
 
@@ -275,7 +275,7 @@ connectionName
 
 <dd>
 
-Reference to the database connection defined within the `config/database.ts` file. If not defined, we will use the default database connection.
+引用 `config/database.ts` 文件中定义的数据库连接。如果未定义，我们将使用默认数据库连接。
 
 </dd>
 
@@ -287,7 +287,7 @@ dbName
 
 <dd>
 
-The database to use for making SQL queries. We try to infer the value of `dbName` from the connection config defined within the `config/database.ts` file. However, if using a connection string, you must supply the database name via this property.
+用于进行 SQL 查询的数据库。我们尝试从 `config/database.ts` 文件中定义的连接配置推断 `dbName` 的值。但是，如果使用连接字符串，则必须通过此属性提供数据库名称。
 
 </dd>
 
@@ -299,7 +299,7 @@ tableName
 
 <dd>
 
-The database table to use to store rate limits.
+用于存储速率限制的数据库表。
 
 </dd>
 
@@ -311,7 +311,7 @@ schemaName
 
 <dd>
 
-The schema to use for making SQL queries (PostgreSQL only).
+用于进行 SQL 查询的模式（仅限 PostgreSQL）。
 
 </dd>
 
@@ -323,19 +323,19 @@ clearExpiredByTimeout
 
 <dd>
 
-When enabled, the database store will clear expired keys every 5 minutes. Do note that only keys that have been expired for more than 1 hour will be cleared.
+启用后，数据库存储将每 5 分钟清除一次过期键。请注意，只有过期超过 1 小时的键才会被清除。
 
 </dd>
 
 </dl>
 
 
-## Throttling HTTP requests
-Once the limiter has been configured, you may create HTTP throttle middleware using the `limiter.define` method. The `limiter` service is a singleton instance of the [LimiterManager](https://github.com/adonisjs/limiter/blob/2.x/src/limiter_manager.ts) class created using the config defined within the `config/limiter.ts` file.
+## HTTP 请求节流
+配置限制器后，您可以使用 `limiter.define` 方法创建 HTTP 节流中间件。`limiter` 服务是使用 `config/limiter.ts` 文件中定义的配置创建的 [LimiterManager](https://github.com/adonisjs/limiter/blob/2.x/src/limiter_manager.ts) 类的单例实例。
 
-If you open the `start/limiter.ts` file, you will find a pre-defined global throttle middleware you can apply on a route or a group of routes. Similarly, you can create as many throttle middleware as you need in your application.
+如果您打开 `start/limiter.ts` 文件，您将找到一个预定义的全局节流中间件，您可以将其应用于路由或路由组。同样，您可以在应用程序中根据需要创建任意数量的节流中间件。
 
-In the following example, the global throttle middleware allows users to make **10 requests/min** based on their IP address.
+在以下示例中，全局节流中间件允许用户根据其 IP 地址进行 **10 次请求/分钟**。
 
 ```ts
 // title: start/limiter.ts
@@ -346,7 +346,7 @@ export const throttle = limiter.define('global', () => {
 })
 ```
 
-You can apply the `throttle` middleware to a route as follows.
+您可以按如下方式将 `throttle` 中间件应用于路由。
 
 ```ts
 // title: start/routes.ts
@@ -362,16 +362,15 @@ router
   // highlight-end
 ```
 
-### Dynamic rate limiting
+### 动态速率限制
 
-Let's create another middleware to protect an API endpoint. This time, we will apply dynamic rate limits based on the authentication status of a request.
+让我们创建另一个中间件来保护 API 端点。这次，我们将根据请求的身份验证状态应用动态速率限制。
 
 ```ts
 // title: start/limiter.ts
 export const apiThrottle = limiter.define('api', (ctx) => {
   /**
-   * Allow logged-in users to make 100 requests by
-   * their user ID
+   * 允许已登录用户通过其用户 ID 进行 100 次请求
    */
   if (ctx.auth.user) {
     return limiter
@@ -381,7 +380,7 @@ export const apiThrottle = limiter.define('api', (ctx) => {
   }
 
   /**
-   * Allow guest users to make 10 requests by ip address
+   * 允许访客用户通过 ip 地址进行 10 次请求
    */
   return limiter
     .allowRequests(10)
@@ -399,8 +398,8 @@ router
   .use(apiThrottle)
 ```
 
-### Switching the backend store
-You can use a specific backend store with throttle middleware using the `store` method. For example:
+### 切换后端存储
+您可以使用 `store` 方法在节流中间件中使用特定的后端存储。例如：
 
 ```ts
 limiter
@@ -412,8 +411,8 @@ limiter
 ```
 
 
-### Using a custom key
-By default, the requests are rate-limited by the user's IP Address. However, you can specify a custom key using the `usingKey` method.
+### 使用自定义键
+默认情况下，请求受用户 IP 地址的速率限制。但是，您可以使用 `usingKey` 方法指定自定义键。
 
 ```ts
 limiter
@@ -424,8 +423,8 @@ limiter
   // highlight-end
 ```
 
-### Blocking user
-You may block a user for a specified duration if they continue to make requests even after exhausting their quota using the `blockFor` method. The method accepts the duration in seconds or the time expression.
+### 阻止用户
+如果用户在耗尽配额后继续发出请求，您可以使用 `blockFor` 方法在指定的持续时间内阻止该用户。该方法接受秒数或时间表达式。
 
 ```ts
 limiter
@@ -433,23 +432,23 @@ limiter
   .every('1 minute')
   // highlight-start
   /**
-   * Will be blocked for 30mins, if they send more than
-   * 10 requests under one minute
+   * 如果他们在一分钟内发送超过 10 个请求，
+   * 将被阻止 30 分钟
    */
   .blockFor('30 mins')
   // highlight-end
 ```
 
-## Handling ThrottleException
-The throttle middleware throws the [E_TOO_MANY_REQUESTS](../references/exceptions.md#e_too_many_requests) exception when the user has exhausted all the requests within the specified timeframe. The exception will be automatically converted to an HTTP response using the following content negotiation rules.
+## 处理 ThrottleException
+当用户在指定的时间范围内耗尽所有请求时，节流中间件会抛出 [E_TOO_MANY_REQUESTS](../references/exceptions.md#e_too_many_requests) 异常。该异常将使用以下内容协商规则自动转换为 HTTP 响应。
 
-- HTTP requests with the `Accept=application/json` header will receive an array of error messages. Each array element will be an object with the message property.
+- 带有 `Accept=application/json` 头的 HTTP 请求将收到一个错误消息数组。每个数组元素将是一个具有 message 属性的对象。
 
-- HTTP requests with the `Accept=application/vnd.api+json` header will receive an array of error messages formatted per the JSON API spec.
+- 带有 `Accept=application/vnd.api+json` 头的 HTTP 请求将收到按照 JSON API 规范格式化的错误消息数组。
 
-- All other requests will receive a plain text response message. However, you may use [status pages](../basics/exception_handling.md#status-pages) to show a custom error page for limiter errors.
+- 所有其他请求将收到纯文本响应消息。但是，您可以使用[状态页](../basics/exception_handling.md#status-pages)为限制器错误显示自定义错误页面。
 
-You may also self-handle the error within the [global exception handler](../basics/exception_handling.md#handling-exceptions).
+您也可以在[全局异常处理器](../basics/exception_handling.md#handling-exceptions)中自行处理错误。
 
 ```ts
 import { errors } from '@adonisjs/limiter'
@@ -478,8 +477,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 }
 ```
 
-### Customizing the error message
-Instead of handling the exception globally, you may customize the error message, status, and response headers using the `limitExceeded` hook.
+### 自定义错误消息
+您可以不全局处理异常，而是使用 `limitExceeded` 钩子自定义错误消息、状态和响应头。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -498,8 +497,8 @@ export const throttle = limiter.define('global', () => {
 })
 ```
 
-### Using translations for the error message
-If you have configured the [@adonisjs/i18n](../digging_deeper/i18n.md) package, you may define the translation for the error message using the `errors.E_TOO_MANY_REQUESTS` key. For example:
+### 对错误消息使用翻译
+如果您已配置 [@adonisjs/i18n](../digging_deeper/i18n.md) 软件包，则可以使用 `errors.E_TOO_MANY_REQUESTS` 键定义错误消息的翻译。例如：
 
 ```json
 // title: resources/lang/fr/errors.json
@@ -508,7 +507,7 @@ If you have configured the [@adonisjs/i18n](../digging_deeper/i18n.md) package, 
 }
 ```
 
-Finally, you can define a custom translation key using the `error.t` method.
+最后，您可以使用 `error.t` 方法定义自定义翻译键。
 
 ```ts
 limitExceeded((error) => {
@@ -519,18 +518,18 @@ limitExceeded((error) => {
 })
 ```
 
-## Direct usage
-Alongside throttling HTTP requests, you may also use the limiter to apply rate limits in other parts of your application. For example, block a user during login if they provide invalid credentials multiple times. Or limit the number of concurrent jobs a user can run.
+## 直接使用
+除了限制 HTTP 请求外，您还可以使用限制器在应用程序的其他部分应用速率限制。例如，如果用户多次提供无效凭据，则在登录期间阻止用户。或者限制用户可以运行的并发作业数量。
 
-### Creating limiter
+### 创建限制器
 
-Before you can apply rate limiting on an action, you must get an instance of the [Limiter](https://github.com/adonisjs/limiter/blob/2.x/src/limiter.ts) class using the `limiter.use` method. The `use` method accepts the name of the backend store and the following rate-limiting options.
+在对操作应用速率限制之前，必须使用 `limiter.use` 方法获取 [Limiter](https://github.com/adonisjs/limiter/blob/2.x/src/limiter.ts) 类的实例。`use` 方法接受后端存储的名称和以下速率限制选项。
 
-- `requests`: The number of requests to allow for a given duration.
-- `duration`: The duration in seconds or a [time expression](../references/helpers.md#seconds) string.
-- `block (optional)`: The duration for which to block the key after all the requests have been exhausted.
-- `inMemoryBlockOnConsumed (optional)`: See [shared options](#shared-options)
-- `inMemoryBlockDuration (optional)`: See [shared options](#shared-options)
+- `requests`: 在给定持续时间内允许的请求数。
+- `duration`: 秒数或[时间表达式](../references/helpers.md#seconds)字符串。
+- `block (optional)`: 耗尽所有请求后阻止键的持续时间。
+- `inMemoryBlockOnConsumed (optional)`: 参见[共享选项](#shared-options)
+- `inMemoryBlockDuration (optional)`: 参见[共享选项](#shared-options)
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -541,7 +540,7 @@ const reportsLimiter = limiter.use('redis', {
 })
 ```
 
-Omit the first parameter if you want to use the default store. For example:
+如果要使用默认存储，请省略第一个参数。例如：
 
 ```ts
 const reportsLimiter = limiter.use({
@@ -550,23 +549,23 @@ const reportsLimiter = limiter.use({
 })
 ```
 
-### Applying rate limit on an action
+### 对操作应用速率限制
 
-Once you have created a limiter instance, you can use the `attempt` method to apply rate limiting on an action.
-The method accepts the following parameters.
+创建限制器实例后，可以使用 `attempt` 方法对操作应用速率限制。
+该方法接受以下参数。
 
-- A unique key to use for rate limiting.
-- The callback function to be executed until all the attempts have been exhausted.
+- 用于速率限制的唯一键。
+- 在所有尝试耗尽之前要执行的回调函数。
 
-The `attempt` method returns the result of the callback function (if it is executed). Otherwise, it returns `undefined`.
+`attempt` 方法返回回调函数的结果（如果已执行）。否则，它返回 `undefined`。
 
 ```ts
 const key = 'user_1_reports'
 
 /**
- * Attempt to run an action for the given key.
- * The result will be the callback function return
- * value or undefined if no callback was executed.
+ * 尝试为给定键运行操作。
+ * 结果将是回调函数的返回值，
+ * 或者如果未执行回调，则为 undefined。
  */
 const executed = reportsLimiter.attempt(key, async () => {
   await generateReport()
@@ -574,7 +573,7 @@ const executed = reportsLimiter.attempt(key, async () => {
 })
 
 /**
- * Notify users that they have exceeded the limit
+ * 通知用户他们已超出限制
  */
 if (!executed) {
   const availableIn = await reportsLimiter.availableIn(key)
@@ -584,17 +583,17 @@ if (!executed) {
 return 'Report generated'
 ```
 
-### Preventing too many login failures
-Another example of direct usage could be to disallow an IP Address from making multiple invalid attempts on a login form.
+### 防止过多的登录失败
+直接使用的另一个示例是禁止 IP 地址在登录表单上进行多次无效尝试。
 
-In the following example, we use the `limiter.penalize` method to consume one request whenever the user provides invalid credentials and block them for 20 minutes after all the attempts have been exhausted.
+在以下示例中，我们使用 `limiter.penalize` 方法，只要用户提供无效凭据就消耗一个请求，并在所有尝试耗尽后将其阻止 20 分钟。
 
-The `limiter.penalize` method accepts the following arguments.
+`limiter.penalize` 方法接受以下参数。
 
-- A unique key to use for rate limiting.
-- The callback function to be executed. One request will be consumed if the function throws an error.
+- 用于速率限制的唯一键。
+- 要执行的回调函数。如果函数抛出错误，将消耗一个请求。
 
-The `penalize` method returns the result of the callback function or an instance of the `ThrottleException`. You can use the exception to find the duration remaining till the next attempt.
+`penalize` 方法返回回调函数的结果或 `ThrottleException` 的实例。您可以使用该异常来查找直到下一次尝试的剩余持续时间。
 
 ```ts
 import User from '#models/user'
@@ -606,7 +605,7 @@ export default class SessionController {
     const { email, password } = request.only(['email', 'passwords'])
 
     /**
-     * Create a limiter
+     * 创建限制器
      */
     const loginLimiter = limiter.use({
       requests: 5,
@@ -615,25 +614,23 @@ export default class SessionController {
     })
 
     /**
-     * Use IP address + email combination. This ensures if an
-     * attacker is misusing emails; we do not block actual
-     * users from logging in and only penalize the attacker
-     * IP address.
+     * 使用 IP 地址 + 电子邮件组合。这确保如果
+     * 攻击者滥用电子邮件，我们不会阻止实际
+     * 用户登录，而只惩罚攻击者
+     * IP 地址。
      */
     const key = `login_${request.ip()}_${email}`
 
     /**
-     * Wrap User.verifyCredentials inside the "penalize" method, so
-     * that we consume one request for every invalid credentials
-     * error
+     * 将 User.verifyCredentials 包装在 "penalize" 方法中，
+     * 以便我们为每个无效凭据错误消耗一个请求
      */
     const [error, user] = await loginLimiter.penalize(key, () => {
       return User.verifyCredentials(email, password)
     })
 
     /**
-     * On ThrottleException, redirect the user back with a
-     * custom error message
+     * 在 ThrottleException 上，使用自定义错误消息重定向用户
      */
     if (error) {
       session.flashAll()
@@ -644,16 +641,16 @@ export default class SessionController {
     }
 
     /**
-     * Otherwise, login the user
+     * 否则，登录用户
      */
   }
 }
 ```
 
-## Manually consuming requests
-Alongside the `attempt` and the `penalize` methods, you may interact with the limiter directly to check the remaining requests and manually consume them.
+## 手动消耗请求
+除了 `attempt` 和 `penalize` 方法外，您还可以直接与限制器交互以检查剩余请求并手动消耗它们。
 
-In the following example, we use the `remaining` method to check if a given key has consumed all the requests. Otherwise, use the `increment` method to consume one request.
+在以下示例中，我们使用 `remaining` 方法检查给定键是否消耗了所有请求。否则，使用 `increment` 方法消耗一个请求。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -673,7 +670,7 @@ if (await requestsLimiter.remaining('unique_key') > 0) {
 // highlight-end
 ```
 
-You might run into a race condition in the above example between calling the `remaining` and the `increment` methods. Therefore, you may want to use the `consume` method instead. The `consume` method will increment the requests count and throw an exception if all the requests have been consumed.
+在上面的示例中，您可能会在调用 `remaining` 和 `increment` 方法之间遇到竞争条件。因此，您可能希望改用 `consume` 方法。`consume` 方法将增加请求计数，并在所有请求都已消耗时抛出异常。
 
 ```ts
 import { errors } from '@adonisjs/limiter'
@@ -688,10 +685,10 @@ try {
 }
 ```
 
-## Blocking keys
-Alongside consuming requests, you may block a key for longer if a user continues to make requests after exhausting all the attempts.
+## 阻止键
+除了消耗请求外，如果用户在耗尽所有尝试后继续发出请求，您还可以将键阻止更长时间。
 
-The blocking is performed by the `consume`, `attempt`, and the `penalize` methods automatically when you create a limiter instance with `blockDuration` option. For example:
+当您使用 `blockDuration` 选项创建限制器实例时，`consume`、`attempt` 和 `penalize` 方法会自动执行阻止。例如：
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -705,26 +702,25 @@ const requestsLimiter = limiter.use({
 })
 
 /**
- * A user can make 10 requests in a minute. However, if
- * they send the 11th request, we will block the key
- * for 30 mins.
+ * 用户在一分钟内可以进行 10 次请求。但是，如果
+ * 他们发送第 11 个请求，我们将把该键阻止 30 分钟。
  */
 await requestLimiter.consume('a_unique_key')
 
 /**
- * Same behavior as consume
+ * 与 consume 行为相同
  */
 await requestLimiter.attempt('a_unique_key', () => {
 })
 
 /**
- * Allow 10 failures and then block the key for 30 mins.
+ * 允许 10 次失败，然后将该键阻止 30 分钟。
  */
 await requestLimiter.penalize('a_unique_key', () => {
 })
 ```
 
-Finally, you may use the `block` method to block a key for a given duration.
+最后，您可以使用 `block` 方法将键阻止给定的持续时间。
 
 ```ts
 const requestsLimiter = limiter.use({
@@ -735,10 +731,10 @@ const requestsLimiter = limiter.use({
 await requestsLimiter.block('a_unique_key', '30 mins')
 ```
 
-## Resetting attempts
-You may use one of the following methods to decrease the number of requests or delete the entire key from the storage.
+## 重置尝试
+您可以使用以下方法之一来减少请求数或从存储中删除整个键。
 
-The `decrement` method reduces the request count by 1, and the `delete` method deletes the key. Note that the `decrement` method is not atomic and might set the requests count to `-1` when concurrency is too high.
+`decrement` 方法将请求计数减少 1，`delete` 方法删除键。请注意，`decrement` 方法不是原子的，当并发性过高时可能会将请求计数设置为 `-1`。
 
 ```ts
 // title: Decrement requests count
@@ -753,9 +749,8 @@ await jobsLimiter.attempt('unique_key', async () => {
   await processJob()
 
   /**
-   * Decrement the consumed requests after we are done
-   * processing the job. This will allow other workers
-   * to use the slot.
+   * 完成作业处理后减少已消耗的请求。
+   * 这将允许其他工作进程使用该插槽。
    */
   // highlight-start
   await jobsLimiter.decrement('unique_key')
@@ -775,17 +770,17 @@ const requestsLimiter = limiter.use({
 await requestsLimiter.delete('unique_key')
 ```
 
-## Testing
-If you use a single (i.e., default) store for rate limiting, you may want to switch to the `memory` store during testing by defining the `LIMITER_STORE` environment variable inside the `.env.test` file.
+## 测试
+如果您使用单个（即默认）存储进行速率限制，您可能希望在测试期间通过在 `.env.test` 文件中定义 `LIMITER_STORE` 环境变量来切换到 `memory` 存储。
 
 ```dotenv
 // title: .env.test
 LIMITER_STORE=memory
 ```
 
-You may clear the rate-limiting storage between tests using the `limiter.clear` method. The `clear` method accepts an array of store names and flushes the database.
+您可以使用 `limiter.clear` 方法在测试之间清除速率限制存储。`clear` 方法接受存储名称数组并刷新数据库。
 
-When using Redis, it is recommended to use a separate database for the rate limiter. Otherwise, the `clear` method will flush the entire DB, and this might impact other parts of the applications.
+使用 Redis 时，建议为速率限制器使用单独的数据库。否则，`clear` 方法将刷新整个 DB，这可能会影响应用程序的其他部分。
 
 ```ts
 import limiter from '@adonisjs/limiter/services/main'
@@ -799,7 +794,7 @@ test.group('Reports', (group) => {
 })
 ```
 
-Alternatively, you can call the `clear` method without any arguments, and all configured stores will be cleared.
+或者，您可以不带任何参数调用 `clear` 方法，所有配置的存储都将被清除。
 
 ```ts
 test.group('Reports', (group) => {
@@ -811,10 +806,10 @@ test.group('Reports', (group) => {
 })
 ```
 
-## Creating a custom storage provider
-A custom storage provider must implement the [LimiterStoreContract](https://github.com/adonisjs/limiter/blob/2.x/src/types.ts#L163) interface and define the following properties/methods.
+## 创建自定义存储提供程序
+自定义存储提供程序必须实现 [LimiterStoreContract](https://github.com/adonisjs/limiter/blob/2.x/src/types.ts#L163) 接口并定义以下属性/方法。
 
-You may write the implementation inside any file/folder. A service provider is not needed to create a custom store.
+您可以在任何文件/文件夹中编写实现。不需要服务提供者来创建自定义存储。
 
 ```ts
 import string from '@adonisjs/core/helpers/string'
@@ -825,7 +820,7 @@ import {
 } from '@adonisjs/limiter/types'
 
 /**
- * A custom set of options you want to accept.
+ * 您希望接受的一组自定义选项。
  */
 export type MongoDbLimiterConfig = {
   client: MongoDBConnection
@@ -844,27 +839,26 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
   }
 
   /**
-   * Consume one request for the given key. This method
-   * should throw an error when all requests have been
-   * already consumed.
+   * 为给定键消耗一个请求。当所有请求都已
+   * 消耗时，此方法应抛出错误。
    */
   async consume(key: string | number): Promise<LimiterResponse> {
   }
 
   /**
-   * Consume one request for the given key, but do not throw an
-   * error when all requests have been consumed.
+   * 为给定键消耗一个请求，但在所有请求都已消耗时
+   * 不抛出错误。
    */
   async increment(key: string | number): Promise<LimiterResponse> {}
 
   /**
-   * Reward one request to the given key. If possible, do not set
-   * the requests count to a negative value.
+   * 奖励给定键一个请求。如果可能，不要将
+   * 请求计数设置为负值。
    */
   async decrement(key: string | number): Promise<LimiterResponse> {}
 
   /**
-   * Block a key for the specified duration.
+   * 将键阻止指定的持续时间。
    */
   async block(
     key: string | number,
@@ -872,9 +866,8 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
   ): Promise<LimiterResponse> {}
 
   /**
-   * Set the number of consumed requests for a given key. The duration
-   * should be inferred from the config if no explicit duration
-   * is provided.
+   * 设置给定键的已消耗请求数。如果没有提供
+   * 显式持续时间，则应从配置推断持续时间。
    */
   async set(
     key: string | number,
@@ -883,35 +876,34 @@ export class MongoDbLimiterStore implements LimiterStoreContract {
   ): Promise<LimiterResponse> {}
 
   /**
-   * Delete the key from the storage
+   * 从存储中删除键
    */
   async delete(key: string | number): Promise<boolean> {}
 
   /**
-   * Flush all keys from the database
+   * 从数据库中刷新所有键
    */
   async clear(): Promise<void> {}
 
   /**
-   * Get a limiter response for a given key. Return `null` if the
-   * key does not exist.
+   * 获取给定键的限制器响应。如果键不存在，
+   * 则返回 `null`。
    */
   async get(key: string | number): Promise<LimiterResponse | null> {}
 }
 ```
 
-### Defining the config helper
+### 定义配置助手
 
-Once you have written the implementation, you must create a config helper to use the provider inside the `config/limiter.ts` file. The config helper should return a `LimiterManagerStoreFactory` function.
+编写实现后，必须创建一个配置助手以在 `config/limiter.ts` 文件中使用提供程序。配置助手应返回一个 `LimiterManagerStoreFactory` 函数。
 
-You may write the following function within the same file as the `MongoDbLimiterStore` implementation.
+您可以在 `MongoDbLimiterStore` 实现的同一文件中编写以下函数。
 
 ```ts
 import { LimiterManagerStoreFactory } from '@adonisjs/limiter/types'
 
 /**
- * Config helper to use the mongoDb store
- * inside the config file
+ * 用于在配置文件中使用 mongoDb 存储的配置助手
  */
 export function mongoDbStore(config: MongoDbLimiterConfig) {
   const storeFactory: LimiterManagerStoreFactory = (runtimeOptions) => {
@@ -923,9 +915,9 @@ export function mongoDbStore(config: MongoDbLimiterConfig) {
 }
 ```
 
-### Using the config helper
+### 使用配置助手
 
-Once done, you may use the `mongoDbStore` helper as follows.
+完成后，您可以按如下方式使用 `mongoDbStore` 助手。
 
 ```ts
 // title: config/limiter.ts
@@ -948,10 +940,10 @@ const limiterConfig = defineConfig({
 })
 ```
 
-### Wrapping rate-limiter-flexible drivers
-If you are planning to wrap an existing driver from the [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible?tab=readme-ov-file#docs-and-examples) package, then you may use the [RateLimiterBridge](https://github.com/adonisjs/limiter/blob/2.x/src/stores/bridge.ts) for the implementation.
+### 包装 rate-limiter-flexible 驱动程序
+如果您计划包装 [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible?tab=readme-ov-file#docs-and-examples) 软件包中的现有驱动程序，则可以使用 [RateLimiterBridge](https://github.com/adonisjs/limiter/blob/2.x/src/stores/bridge.ts) 进行实现。
 
-Let's re-implement the same `MongoDbLimiterStore` using the bridge this time.
+这次让我们使用桥重新实现相同的 `MongoDbLimiterStore`。
 
 ```ts
 import { RateLimiterBridge } from '@adonisjs/limiter'
@@ -973,8 +965,8 @@ export class MongoDbLimiterStore extends RateLimiterBridge {
   }
 
   /**
-   * Self-implement the clear method. Ideally, use the
-   * config.client to issue a delete query
+   * 自行实现 clear 方法。理想情况下，使用
+   * config.client 发出删除查询
    */
   async clear() {}
 }

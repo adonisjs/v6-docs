@@ -1,18 +1,18 @@
 ---
-summary: Assembler hooks are a way of executing code at specific points in the assembler lifecycle. 
+summary: Assembler 钩子是一种在 Assembler 生命周期中的特定点执行代码的方式。
 ---
 
-# Assembler hooks
+# Assembler 钩子
 
-Assembler hooks are a way of executing code at specific points in the assembler lifecycle. As a reminder, the Assembler is a part of AdonisJS that enables you to launch your dev server, build your application, and run your tests. 
+Assembler 钩子是一种在 Assembler 生命周期中的特定点执行代码的方式。提醒一下，Assembler 是 AdonisJS 的一部分，它使您能够启动开发服务器、构建应用程序和运行测试。
 
-These hooks can be helpful for tasks such as file generation, code compilation, or injecting custom build steps.
+这些钩子对于文件生成、代码编译或注入自定义构建步骤等任务非常有用。
 
-For example, the `@adonisjs/vite` package uses the `onBuildStarting` hook to inject a step where front-end assets are built. So, when you run `node ace build`, the `@adonisjs/vite` package will build your front-end assets before the rest of the build process. This is a good example of how hooks can be used to customize the build process.
+例如，`@adonisjs/vite` 包使用 `onBuildStarting` 钩子注入构建前端资产的步骤。因此，当您运行 `node ace build` 时，`@adonisjs/vite` 包将在构建过程的其余部分之前构建您的前端资产。这是如何使用钩子自定义构建过程的一个很好的例子。
 
-## Adding a hook
+## 添加钩子
 
-Assembler hooks are defined in the `adonisrc.ts` file, in the `hooks` key :
+Assembler 钩子定义在 `adonisrc.ts` 文件的 `hooks` 键中：
 
 ```ts
 import { defineConfig } from '@adonisjs/core/app'
@@ -35,13 +35,13 @@ export default defineConfig({
 })
 ```
 
-Several hooks can be defined for each stage of the assembly lifecycle. Each hook is an array of functions to be executed.
+可以为 Assembler 生命周期的每个阶段定义多个钩子。每个钩子都是要执行的函数数组。
 
-We recommend using dynamic imports to load hooks. It ensures that hooks are not loaded unnecessarily but only when needed. If you write your hook code directly in the `adonisrc.ts` file, this may slow down the start-up of your application.
+我们建议使用动态导入来加载钩子。这确保了钩子不会被不必要地加载，而只在需要时加载。如果您直接在 `adonisrc.ts` 文件中编写钩子代码，这可能会减慢应用程序的启动速度。
 
-## Create a hook
+## 创建钩子
 
-A hook is just a simple function. Let's take an example of a hook that is supposed to execute a custom build task.
+钩子只是一个简单的函数。让我们以一个应该执行自定义构建任务的钩子为例。
 
 ```ts
 // title: hooks/on_build_starting.ts
@@ -56,9 +56,9 @@ const buildHook: AssemblerHookHandler = async ({ logger }) => {
 export default buildHook
 ```
 
-Note that the hook must be exported by default.
+请注意，钩子必须默认导出。
 
-Once this hook has been defined, all you have to do is add it to the `adonisrc.ts` file like this:
+定义此钩子后，您只需将其添加到 `adonisrc.ts` 文件中，如下所示：
 
 ```ts
 // title: adonisrc.ts
@@ -73,24 +73,24 @@ export default defineConfig({
 })
 ```
 
-And now, every time you run `node ace build`, the `onBuildStarting` hook will be executed with the custom logic you defined.
+现在，每次运行 `node ace build` 时，都会执行您定义的自定义逻辑的 `onBuildStarting` 钩子。
 
-## Hooks list
+## 钩子列表
 
-Here's the list of available hooks:
+以下是可用钩子的列表：
 
 ### onBuildStarting
 
-This hook is executed before the build starts. It is helpful for tasks such as file generation or for injecting custom build steps.
+此钩子在构建开始之前执行。它对于文件生成或注入自定义构建步骤等任务非常有用。
 
 ### onBuildCompleted
 
-This hook is executed once the build is complete. It can also be used to customize the build process.
+此钩子在构建完成后执行。它也可以用来自定义构建过程。
 
 ### onDevServerStarted
 
-This hook is executed once the Adonis dev server is started. 
+此钩子在 Adonis 开发服务器启动后执行。
 
 ### onSourceFileChanged
 
-This hook is executed each time a source file (included by your `tsconfig.json` ) is modified. Your hook will receive the path of the modified file as an argument.
+每次修改源文件（包含在 `tsconfig.json` 中）时，都会执行此钩子。您的钩子将接收修改后的文件路径作为参数。

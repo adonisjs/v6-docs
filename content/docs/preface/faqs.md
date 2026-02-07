@@ -1,48 +1,48 @@
 ---
-summary: Frequently asked questions about AdonisJS, the framework, and its ecosystem.
+summary: 关于 AdonisJS、框架及其生态系统的常见问题。
 ---
 
-# FAQs
+# 常见问题 (FAQs)
 
-## Who maintains AdonisJS?
+## 谁在维护 AdonisJS？
 
-AdonisJS is an independent project created by [Harminder Virk](https://twitter.com/AmanVirk1) in 2015. The framework is actively maintained by the [core team](https://github.com/orgs/adonisjs/people) and community contributors.
+AdonisJS 是一个独立项目，由 [Harminder Virk](https://twitter.com/AmanVirk1) 于 2015 年创建。该框架由[核心团队](https://github.com/orgs/adonisjs/people)和社区贡献者积极维护。
 
-The framework creator (Harminder Virk) is the project lead and works full-time on the framework.
+框架创建者 (Harminder Virk) 是项目负责人，全职致力于框架的开发工作。
 
-The project is funded through GitHub Sponsors. If you or your business benefit from AdonisJS, consider [sponsoring us to support the framework development](https://github.com/sponsors/thetutlage).
+该项目通过 GitHub Sponsors 获得资金支持。如果你或你的企业从 AdonisJS 中受益，请考虑[赞助我们以支持框架开发](https://github.com/sponsors/thetutlage)。
 
-## How is AdonisJS licensed?
+## AdonisJS 是如何授权的？
 
-AdonisJS (the framework) and the official packages are distributed under the [MIT License](https://opensource.org/license/mit/). In addition, the source code is publicly available on [GitHub](https://github.com/adonisjs).
+AdonisJS（框架）和官方包均在 [MIT 许可证](https://opensource.org/license/mit/)下分发。此外，源代码可在 [GitHub](https://github.com/adonisjs) 上公开获取。
 
-## Is AdonisJS reliable and well-maintained?
+## AdonisJS 可靠且维护良好吗？
 
-AdonisJS is used in production by [Marie Claire](https://www.marieclaire.com/), [Cleavr](https://cleavr.io), [Ledger](https://www.ledger.com/), [Cavai](https://cavai.com), [Kayako](https://kayako.com), [Renault Group](https://www.renaultgroup.com/en/), [Zakodium](https://www.zakodium.com/), [FIVB](https://www.fivb.com), and many more companies in varying capacities.
+AdonisJS 已在 [Marie Claire](https://www.marieclaire.com/)、[Cleavr](https://cleavr.io)、[Ledger](https://www.ledger.com/)、[Cavai](https://cavai.com)、[Kayako](https://kayako.com)、[Renault Group](https://www.renaultgroup.com/en/)、[Zakodium](https://www.zakodium.com/)、[FIVB](https://www.fivb.com) 等众多公司以不同规模投入生产使用。
 
-The framework creator works full-time on AdonisJS and ensures the framework is actively improved and maintained.
+框架创建者全职致力于 AdonisJS，并确保框架得到积极改进和维护。
 
-- During the v6 release, we migrated to the ES module system.
-- Officially maintained packages have zero security vulnerabilities reported by Snyk’s security scan.
-- We continuously work towards writing better documentation, releasing new features, and improving the existing codebase. 
+- 在 v6 发布期间，我们要迁移到了 ES 模块系统。
+- 官方维护的包在 Snyk 的安全扫描中报告零安全漏洞。
+- 我们不断致力于编写更好的文档、发布新功能并改进现有代码库。
 
-## Is AdonisJS fast?
+## AdonisJS 快吗？
 
-When creating the framework or adding new features, we primarily focus on solving real-world problems rather than cutting down the functionality to make AdonisJS win the benchmark Olympics.
+在创建框架或添加新功能时，我们主要关注解决实际问题，而不是为了让 AdonisJS 赢得基准测试竞赛而削减功能。
 
-However, we look closer at the performance metrics and fine-tune the framework performance wherever it matters. For example:
+但是，我们会密切关注性能指标，并在重要的地方微调框架性能。例如：
 
-- The AdonisJS HTTP server in standalone mode is [on par with Fastify in performance](https://github.com/adonisjs/http-server/blob/main/benchmarks.md). 
-- The validation layer of the framework [outperforms other popular validation libraries](https://github.com/vinejs/vine/blob/main/benchmarks.md) in the Node.js ecosystem.
+- 独立模式下的 AdonisJS HTTP 服务器[在性能上与 Fastify 相当](https://github.com/adonisjs/http-server/blob/main/benchmarks.md)。
+- 框架的验证层在 Node.js 生态系统中[优于其他流行的验证库](https://github.com/vinejs/vine/blob/main/benchmarks.md)。
 
-## Do you offer paid support?
-Yes! On our website, you can learn more about the [priority support program](https://adonisjs.com/contact).
+## 你们提供付费支持吗？
+是的！你可以在我们的网站上了解有关[优先支持计划](https://adonisjs.com/contact)的更多信息。
 
-## How do I stay up to date with AdonisJS?
-Check out the following links to stay connected and up-to-date.
+## 我如何随时了解 AdonisJS 的最新动态？
+查看以下链接以保持联系并了解最新信息。
 
-- [Discord server](https://discord.gg/vDcEjq6)
-- [X (Formerly Twitter)](https://twitter.com/adonisframework)
-- [GitHub discussions](https://github.com/orgs/adonisjs/discussions)
-- [Blog and Newsletter](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
+- [Discord 服务器](https://discord.gg/vDcEjq6)
+- [X (原 Twitter)](https://twitter.com/adonisframework)
+- [GitHub 讨论区](https://github.com/orgs/adonisjs/discussions)
+- [博客和新闻通讯](https://adonisjs.com/blog?referrer=adonisjs_docs_faq)
 - [Adocasts](https://adocasts.com/?referrer=adonisjs_docs_faq)

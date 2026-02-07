@@ -1,20 +1,20 @@
 ---
-summary: Learn how to monitor your application in production and ensure it is running smoothly
+summary: 了解如何在生产环境中监控你的应用程序并确保其平稳运行
 ---
 
-# Health checks
+# 健康检查 (Health checks)
 
-Health checks are performed to ensure that your application is in a healthy state while running in production. This may include monitoring the **available disk space** on the server, the **memory consumed by your application**, or **testing the database connection**.
+执行健康检查是为了确保你的应用程序在生产环境中运行时处于健康状态。这可能包括监控服务器上的 **可用磁盘空间**、**应用程序消耗的内存** 或 **测试数据库连接**。
 
-AdonisJS provides a handful of built-in [health checks](#available-health-checks) and the ability to create and register [custom health checks](#creating-a-custom-health-check).
+AdonisJS 提供了一些内置的 [健康检查](#available-health-checks)，并能够创建和注册 [自定义健康检查](#creating-a-custom-health-check)。
 
-## Configuring health checks
+## 配置健康检查
 
-You may configure health checks in your application by executing the following command. The command will create a `start/health.ts` file and configures health checks for **memory usage** and **used disk space**. Feel free to modify this file and remove/add additional health checks.
+你可以通过执行以下命令在应用程序中配置健康检查。该命令将创建一个 `start/health.ts` 文件，并配置 **内存使用情况** 和 **已用磁盘空间** 的健康检查。你可以随意修改此文件并删除/添加其他健康检查。
 
 :::note
 
-Make sure you have installed `@adonisjs/core@6.12.1` before using the following command.
+在使用以下命令之前，请确保已安装 `@adonisjs/core@6.12.1`。
 
 :::
 
@@ -32,11 +32,11 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-## Exposing an endpoint
+## 暴露端点
 
-A common approach for performing health checks is to expose an HTTP endpoint that an external monitoring service can ping to collect the health check results.
+执行健康检查的一种常用方法是暴露一个 HTTP 端点，外部监控服务可以通过 ping 该端点来收集健康检查结果。
 
-So, let's define a route within the `start/routes.ts` file and bind the `HealthChecksController` to it. The `health_checks_controller.ts` file is created during the initial setup and lives inside the `app/controllers` directory.
+因此，让我们在 `start/routes.ts` 文件中定义一个路由，并将 `HealthChecksController` 绑定到它。`health_checks_controller.ts` 文件是在初始设置期间创建的，位于 `app/controllers` 目录中。
 
 ```ts
 // title: start/routes.ts
@@ -46,9 +46,9 @@ const HealthChecksController = () => import('#controllers/health_checks_controll
 router.get('/health', [HealthChecksController])
 ```
 
-### Sample report
+### 报告示例
 
-The `healthChecks.run` method will execute all the checks and return a detailed [report as a JSON object](https://github.com/adonisjs/health/blob/develop/src/types.ts#L36). The report has the following properties:
+`healthChecks.run` 方法将执行所有检查并返回详细的 [JSON 对象报告](https://github.com/adonisjs/health/blob/develop/src/types.ts#L36)。报告具有以下属性：
 
 ```json
 {
@@ -105,7 +105,7 @@ isHealthy
 
 <dd>
 
-A boolean to know if all the checks have passed. The value will be set to `false` if one or more checks fail.
+一个布尔值，用于了解是否所有检查都已通过。如果一个或多个检查失败，该值将设置为 `false`。
 
 </dd>
 
@@ -117,11 +117,11 @@ status
 
 <dd>
 
-Report status after performing all the checks. It will be one of the following.
+执行所有检查后的报告状态。它将是以下之一。
 
-- `ok`: All checks have passed successfully.
-- `warning`: One or more checks have reported a warning.
-- `error`: One or more checks have failed.
+- `ok`: 所有检查均已成功通过。
+- `warning`: 一个或多个检查报告了警告。
+- `error`: 一个或多个检查失败。
 
 </dd>
 
@@ -133,7 +133,7 @@ finishedAt
 
 <dd>
 
-The DateTime at which the tests were completed.
+测试完成的时间 (DateTime)。
 
 </dd>
 
@@ -145,7 +145,7 @@ checks
 
 <dd>
 
-An array of objects containing the detailed report of all the performed checks.
+包含所有已执行检查的详细报告的对象数组。
 
 </dd>
 
@@ -157,20 +157,21 @@ debugInfo
 
 <dd>
 
-Debug info can be used to identify the process and the duration for which it has been running. It includes the following properties.
+调试信息可用于识别进程及其运行持续时间。它包括以下属性。
 
-- `pid`: The process ID.
-- `ppid`: The process ID of the parent process managing your AdonisJS app process.
-- `platform`: The platform on which the application is running.
-- `uptime`: The duration (in seconds) for which the application is running.
-- `version`: Node.js version.
+- `pid`: 进程 ID。
+- `ppid`: 管理 AdonisJS 应用程序进程的父进程的进程 ID。
+- `platform`: 应用程序运行的平台。
+- `uptime`: 应用程序运行的持续时间（以秒为单位）。
+- `version`: Node.js 版本。
 
 </dd>
 
 </dl>
 
-### Protecting the endpoint
-You may protect the `/health` endpoint from public access using either the auth middleware or creating a custom middleware that checks for a particular API secret inside the request header. For example:
+### 保护端点
+
+你可以使用 auth 中间件或创建检查请求头中特定 API 密钥的自定义中间件，来保护 `/health` 端点免受公共访问。例如：
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -188,13 +189,13 @@ router
   // insert-end
 ```
 
-## Available health checks
+## 可用的健康检查
 
-Following is the list of available health checks you can configure within the `start/health.ts` file.
+以下是你可以在 `start/health.ts` 文件中配置的可用健康检查列表。
 
 ### DiskSpaceCheck
 
-The `DiskSpaceCheck` calculates the used disk space on your server and reports a warning/error when a certain threshold has been exceeded.
+`DiskSpaceCheck` 计算服务器上的已用磁盘空间，并在超过特定阈值时报告警告/错误。
 
 ```ts
 import { HealthChecks, DiskSpaceCheck } from '@adonisjs/core/health'
@@ -204,21 +205,21 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-By default, the warning threshold is set to 75%, and the failure threshold is set to 80%. However, you may also define custom thresholds.
+默认情况下，警告阈值设置为 75%，故障阈值设置为 80%。但是，你也可以定义自定义阈值。
 
 ```ts
 export const healthChecks = new HealthChecks().register([
   new DiskSpaceCheck()
     // highlight-start
-    .warnWhenExceeds(80) // warn when used over 80%
-    .failWhenExceeds(90), // fail when used over 90%
+    .warnWhenExceeds(80) // 使用超过 80% 时警告
+    .failWhenExceeds(90), // 使用超过 90% 时失败
   // highlight-end
 ])
 ```
 
 ### MemoryHeapCheck
 
-The `MemoryHeapCheck` monitors the heap size reported by the [process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage) method and reports a warning/error when a certain threshold has been exceeded.
+`MemoryHeapCheck` 监控 [process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage) 方法报告的堆大小，并在超过特定阈值时报告警告/错误。
 
 ```ts
 import { HealthChecks, MemoryHeapCheck } from '@adonisjs/core/health'
@@ -228,7 +229,7 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-By default, the warning threshold is set to **250MB** and the failure threshold is set to **300MB**. However, you may define custom thresholds as well.
+默认情况下，警告阈值设置为 **250MB**，故障阈值设置为 **300MB**。但是，你也可以定义自定义阈值。
 
 ```ts
 export const healthChecks = new HealthChecks().register([
@@ -242,7 +243,7 @@ export const healthChecks = new HealthChecks().register([
 
 ### MemoryRSSCheck
 
-The `MemoryRSSCheck` monitors the Resident Set Size reported by the [process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage) method and reports a warning/error when a certain threshold has been exceeded.
+`MemoryRSSCheck` 监控 [process.memoryUsage()](https://nodejs.org/api/process.html#processmemoryusage) 方法报告的常驻集大小 (Resident Set Size)，并在超过特定阈值时报告警告/错误。
 
 ```ts
 import { HealthChecks, MemoryRSSCheck } from '@adonisjs/core/health'
@@ -252,7 +253,7 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-By default, the warning threshold is set to **320MB**, and the failure threshold is set to **350MB**. However, you may also define custom thresholds.
+默认情况下，警告阈值设置为 **320MB**，故障阈值设置为 **350MB**。但是，你也可以定义自定义阈值。
 
 ```ts
 export const healthChecks = new HealthChecks().register([
@@ -265,7 +266,8 @@ export const healthChecks = new HealthChecks().register([
 ```
 
 ### DbCheck
-The `DbCheck` is provided by the `@adonisjs/lucid` package to monitor the connection with a SQL database. You can import and use it as follows.
+
+`DbCheck` 由 `@adonisjs/lucid` 包提供，用于监控与 SQL 数据库的连接。你可以按如下方式导入和使用它。
 
 ```ts
 // insert-start
@@ -283,10 +285,10 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the database health check.
+以下是数据库健康检查的报告示例。
 
 ```json
-// title: Report sample
+// title: 报告示例
 {
   "name": "Database health check (postgres)",
   "isCached": false,
@@ -302,10 +304,10 @@ Following is an example report from the database health check.
 }
 ```
 
-The `DbCheck` class accepts a database connection for monitoring. Register this check multiple times for each connection if you want to monitor multiple connections. For example:
+`DbCheck` 类接受一个数据库连接进行监控。如果你想监控多个连接，请为每个连接多次注册此检查。例如：
 
 ```ts
-// title: Monitoring multiple connections
+// title: 监控多个连接
 export const healthChecks = new HealthChecks().register([
   new DiskSpaceCheck(),
   new MemoryHeapCheck(),
@@ -318,7 +320,8 @@ export const healthChecks = new HealthChecks().register([
 ```
 
 ### DbConnectionCountCheck
-The `DbConnectionCountCheck` monitors the active connections on the database server and reports a warning/error when a certain threshold has been exceeded. This check is only supported for **PostgreSQL** and **MySQL** databases.
+
+`DbConnectionCountCheck` 监控数据库服务器上的活动连接，并在超过特定阈值时报告警告/错误。此检查仅支持 **PostgreSQL** 和 **MySQL** 数据库。
 
 ```ts
 import db from '@adonisjs/lucid/services/db'
@@ -337,10 +340,10 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the database connection count health check.
+以下是数据库连接计数健康检查的报告示例。
 
 ```json
-// title: Report sample
+// title: 报告示例
 {
   "name": "Connection count health check (postgres)",
   "isCached": false,
@@ -361,7 +364,7 @@ Following is an example report from the database connection count health check.
 }
 ```
 
-By default, the warning threshold is set to **10 connections**, and the failure threshold is set to **15 connections**. However, you may also define custom thresholds.
+默认情况下，警告阈值设置为 **10 个连接**，故障阈值设置为 **15 个连接**。但是，你也可以定义自定义阈值。
 
 ```ts
 new DbConnectionCountCheck(db.connection())
@@ -370,7 +373,8 @@ new DbConnectionCountCheck(db.connection())
 ```
 
 ### RedisCheck
-The `RedisCheck` is provided by the `@adonisjs/redis` package to monitor the connection with a Redis database (including Cluster). You can import and use it as follows.
+
+`RedisCheck` 由 `@adonisjs/redis` 包提供，用于监控与 Redis 数据库（包括集群）的连接。你可以按如下方式导入和使用它。
 
 ```ts
 // insert-start
@@ -388,10 +392,10 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the database health check.
+以下是数据库健康检查的报告示例。
 
 ```json
-// title: Report sample
+// title: 报告示例
 {
   "name": "Redis health check (main)",
   "isCached": false,
@@ -407,10 +411,10 @@ Following is an example report from the database health check.
 }
 ```
 
-The `RedisCheck` class accepts a redis connection to monitor. Register this check multiple times for each connection if you want to monitor multiple connections. For example:
+`RedisCheck` 类接受一个 redis 连接进行监控。如果你想监控多个连接，请为每个连接多次注册此检查。例如：
 
 ```ts
-// title: Monitoring multiple connections
+// title: 监控多个连接
 export const healthChecks = new HealthChecks().register([
   new DiskSpaceCheck(),
   new MemoryHeapCheck(),
@@ -423,7 +427,8 @@ export const healthChecks = new HealthChecks().register([
 ```
 
 ### RedisMemoryUsageCheck
-The `RedisMemoryUsageCheck` monitors the memory consumption of the redis server and reports a warning/error when a certain threshold has been exceeded.
+
+`RedisMemoryUsageCheck` 监控 redis 服务器的内存消耗，并在超过特定阈值时报告警告/错误。
 
 ```ts
 import redis from '@adonisjs/redis/services/main'
@@ -442,10 +447,10 @@ export const healthChecks = new HealthChecks().register([
 ])
 ```
 
-Following is an example report from the redis memory usage health check.
+以下是 redis 内存使用情况健康检查的报告示例。
 
 ```json
-// title: Report sample
+// title: 报告示例
 {
   "name": "Redis memory consumption health check (main)",
   "isCached": false,
@@ -466,7 +471,7 @@ Following is an example report from the redis memory usage health check.
 }
 ```
 
-By default, the warning threshold is set to **100MB**, and the failure threshold is set to **120MB**. However, you may also define custom thresholds.
+默认情况下，警告阈值设置为 **100MB**，故障阈值设置为 **120MB**。但是，你也可以定义自定义阈值。
 
 ```ts
 new RedisMemoryUsageCheck(db.connection())
@@ -474,13 +479,13 @@ new RedisMemoryUsageCheck(db.connection())
   .failWhenExceeds('240MB')
 ```
 
-## Caching results
+## 缓存结果
 
-Health checks are performed every time you call the `healthChecks.run` method (aka visit the `/health` endpoint). You might want to ping the `/health` endpoint frequently, but avoid performing certain checks on every visit.
+每次调用 `healthChecks.run` 方法（即访问 `/health` 端点）时，都会执行健康检查。你可能希望频繁 ping `/health` 端点，但避免在每次访问时执行某些检查。
 
-For example, monitoring disk space every minute is not very useful, but tracking memory every minute can be helpful.
+例如，每分钟监控磁盘空间不是很有用，但每分钟跟踪内存可能会有所帮助。
 
-Therefore, we allow you to cache the results of individual health checks when you register them. For example:
+因此，我们允许你在注册单个健康检查时缓存其结果。例如：
 
 ```ts
 import {
@@ -494,14 +499,14 @@ export const healthChecks = new HealthChecks().register([
   // highlight-start
   new DiskSpaceCheck().cacheFor('1 hour'),
   // highlight-end
-  new MemoryHeapCheck(), // do not cache
-  new MemoryRSSCheck(), // do not cache
+  new MemoryHeapCheck(), // 不缓存
+  new MemoryRSSCheck(), // 不缓存
 ])
 ```
 
-## Creating a custom health check
+## 创建自定义健康检查
 
-You may create a custom health check as a JavaScript class that adheres to the [HealthCheckContract](https://github.com/adonisjs/health/blob/develop/src/types.ts#L98) interface. You can define a health check anywhere inside your project or package and import it within the `start/health.ts` file to register it.
+你可以创建一个自定义健康检查作为 JavaScript 类，该类遵守 [HealthCheckContract](https://github.com/adonisjs/health/blob/develop/src/types.ts#L98) 接口。你可以在项目或包中的任何位置定义健康检查，并在 `start/health.ts` 文件中导入它以进行注册。
 
 ```ts
 import { Result, BaseCheck } from '@adonisjs/core/health'
@@ -510,7 +515,7 @@ import type { HealthCheckResult } from '@adonisjs/core/types/health'
 export class ExampleCheck extends BaseCheck {
   async run(): Promise<HealthCheckResult> {
     /**
-     * The following checks are for reference purposes only
+     * 以下检查仅供参考
      */
     if (checkPassed) {
       return Result.ok('Success message to display')
@@ -525,7 +530,7 @@ export class ExampleCheck extends BaseCheck {
 }
 ```
 
-As shown in the above example, you may use the [Result](https://github.com/adonisjs/health/blob/develop/src/result.ts) class to create Health check results. Optionally, you may merge meta-data for the result as follows.
+如上例所示，你可以使用 [Result](https://github.com/adonisjs/health/blob/develop/src/result.ts) 类来创建健康检查结果。或者，你可以按如下方式合并结果的元数据。
 
 ```ts
 Result.ok('Database connection is healthy').mergeMetaData({
@@ -536,8 +541,9 @@ Result.ok('Database connection is healthy').mergeMetaData({
 })
 ```
 
-### Registering custom health check
-You may import your custom health check class within the `start/health.ts` file and register it by creating a new class instance.
+### 注册自定义健康检查
+
+你可以在 `start/health.ts` 文件中导入你的自定义健康检查类，并通过创建一个新的类实例来注册它。
 
 ```ts
 // highlight-start

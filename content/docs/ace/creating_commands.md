@@ -1,22 +1,22 @@
 ---
-summary: Learn how to create custom Ace commands in AdonisJS
+summary: 了解如何在 AdonisJS 中创建自定义 Ace 命令
 ---
 
-# Creating commands
+# 创建命令
 
-Alongside using Ace commands, you may also create custom commands as part of your application codebase. The commands are stored inside the `commands` directory (at the root level). You may create a command by running the following command.
+除了使用 Ace 命令外，你还可以创建自定义命令作为应用程序代码库的一部分。这些命令存储在 `commands` 目录（位于根级别）中。你可以通过运行以下命令来创建一个命令。
 
-See also: [Make command](../references/commands.md#makecommand)
+另请参阅：[Make command](../references/commands.md#makecommand)
 
 ```sh
 node ace make:command greet
 ```
 
-The above command will create a `greet.ts` file inside the `commands` directory. Ace commands are represented by a class and must implement the `run` method to execute the command instructions.
+上述命令将在 `commands` 目录中创建一个 `greet.ts` 文件。Ace 命令由一个类表示，必须实现 `run` 方法来执行命令指令。
 
-## Command metadata
+## 命令元数据
 
-The command metadata consists of the **command name**, **description**, **help text**, and the **options** to configure the command behavior.
+命令元数据包括 **命令名称**、**描述**、**帮助文本** 以及配置命令行为的 **选项**。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -41,9 +41,9 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-The `commandName` property is used to define the command name. A command name should not contain spaces. Also, it is recommended to avoid using unfamiliar special characters like `*`, `&`, or slashes in the command name.
+`commandName` 属性用于定义命令名称。命令名称不应包含空格。此外，建议避免在命令名称中使用不熟悉的特殊字符，如 `*`、`&` 或斜杠。
 
-The command names can be under a namespace. For example, to define a command under the `make` namespace, you may prefix it with `make:`.
+命令名称可以位于命名空间下。例如，要定义 `make` 命名空间下的命令，可以在其前缀加上 `make:`。
 
 </dd>
 
@@ -53,7 +53,7 @@ The command names can be under a namespace. For example, to define a command und
 
 <dd>
 
-The command description is shown inside the commands list and on the command help screen. You must keep the description short and use the **help text** for longer descriptions.
+命令描述显示在命令列表和命令帮助屏幕上。你必须保持描述简短，并使用 **帮助文本** 进行更长的描述。
 
 </dd>
 
@@ -63,7 +63,7 @@ The command description is shown inside the commands list and on the command hel
 
 <dd>
 
-The help text is used to write a longer description or show usage examples.
+帮助文本用于编写更长的描述或显示用法示例。
 
 ```ts
 export default class GreetCommand extends BaseCommand {
@@ -76,7 +76,7 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-> The `{{ binaryName }}` variable substitution is a reference to the binary used to execute ace commands.
+> `{{ binaryName }}` 变量替换是对用于执行 ace 命令的二进制文件的引用。
 
 </dd>
 
@@ -86,7 +86,7 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-You may define one or more aliases for the command name using the `aliases` property.
+你可以使用 `aliases` 属性为命令名称定义一个或多个别名。
 
 ```ts
 export default class GreetCommand extends BaseCommand {
@@ -103,9 +103,9 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-By default, AdonisJS does not boot the application when running an Ace command. This ensures that the commands are quick to run and do not go through the application boot phase to perform simple tasks.
+默认情况下，AdonisJS 在运行 Ace 命令时不会启动应用程序。这确保了命令运行迅速，并且不会为了执行简单任务而经过应用程序启动阶段。
 
-However, if your command relies on the application state, you can tell Ace to start the app before executing the command.
+但是，如果你的命令依赖于应用程序状态，你可以告诉 Ace 在执行命令之前启动应用程序。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -128,7 +128,7 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-By default, Ace prints an error if you pass an unknown flag to the command. However, you can disable strict flags parsing at the command level using the `options.allowUnknownFlags` property.
+默认情况下，如果你向命令传递未知的标志，Ace 会打印错误。但是，你可以使用 `options.allowUnknownFlags` 属性在命令级别禁用严格的标志解析。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -151,9 +151,9 @@ export default class GreetCommand extends BaseCommand {
 
 <dd>
 
-AdonisJS implicitly terminates the app after executing the command's `run` command. However, if you want to start a long-running process in a command, you must tell Ace not to kill the process.
+AdonisJS 在执行命令的 `run` 命令后会隐式终止应用程序。但是，如果你想在命令中启动一个长时间运行的进程，你必须告诉 Ace 不要杀死该进程。
 
-See also: [Terminating app](#terminating-application) and [cleaning up before the app terminates](#cleaning-up-before-the-app-terminates) sections.
+另请参阅：[终止应用程序](#terminating-application) 和 [在应用程序终止前清理](#cleaning-up-before-the-app-terminates) 部分。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -170,9 +170,9 @@ export default class GreetCommand extends BaseCommand {
 </dd>
 </dl>
 
-## Command lifecycle methods
+## 命令生命周期方法
 
-You may define the following lifecycle methods on a command class, and Ace will execute them in a pre-defined order.
+你可以在命令类上定义以下生命周期方法，Ace 将按预定义顺序执行它们。
 
 ```ts
 import { BaseCommand, args, flags } from '@adonisjs/core/ace'
@@ -198,166 +198,3 @@ export default class GreetCommand extends BaseCommand {
 
 <table>
   <thead>
-    <tr>
-      <th width="120px">Method</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>prepare</code>
-      </td>
-      <td>This is the first method Ace executes on a command. This method can set up the state or data needed to run the command.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>interact</code>
-      </td>
-      <td>The interact method is executed after the <code>prepare</code> method. It can be used to display prompts to the user. </td>
-    </tr>
-    <tr>
-      <td>
-        <code>run</code>
-      </td>
-      <td>The command main logic goes inside the <code>run</code> method. This method is called after the <code>interact</code> method. </td>
-    </tr>
-    <tr>
-      <td>
-        <code>completed</code>
-      </td>
-      <td>The completed method is called after running all other lifecycle methods. This method can be used to perform cleanup or handle/display thrown raised by other methods.</td>
-    </tr>
-  </tbody>
-</table>
-
-## Dependency injection
-
-Ace commands are constructed and executed using the [IoC container](../concepts/dependency_injection.md). Therefore, you can type-hint dependencies on command lifecycle methods and use the `@inject` decorator to resolve them.
-
-For demonstration, let's inject the `UserService` class in all the lifecycle methods.
-
-```ts
-import { inject } from '@adonisjs/core'
-import { BaseCommand } from '@adonisjs/core/ace'
-import UserService from '#services/user_service'
-
-export default class GreetCommand extends BaseCommand {
-  @inject()
-  async prepare(userService: UserService) {
-  }
-
-  @inject()
-  async interact(userService: UserService) {
-  }
-  
-  @inject()
-  async run(userService: UserService) {
-  }
-
-  @inject()
-  async completed(userService: UserService) {
-  }
-}
-```
-
-## Handling errors and exit code
-
-Exceptions raised by commands are displayed using the CLI logger, and the command `exitCode` is set to `1` (a non-zero error code means the command failed).
-
-However, you may also capture errors by wrapping your code inside a `try/catch` block or using the `completed` lifecycle method to handle errors. In either situation, remember to update the command `exitCode` and `error` properties.
-
-### Handling errors with try/catch
-
-```ts
-import { BaseCommand } from '@adonisjs/core/ace'
-
-export default class GreetCommand extends BaseCommand {
-  async run() {
-    try {
-      await runSomeOperation()
-    } catch (error) {
-      this.logger.error(error.message)
-      this.error = error
-      this.exitCode = 1
-    }
-  }
-}
-```
-
-### Handling errors inside the completed method
-
-```ts
-import { BaseCommand } from '@adonisjs/core/ace'
-
-export default class GreetCommand extends BaseCommand {
-  async run() {
-    await runSomeOperation()
-  }
-  
-  async completed() {
-    if (this.error) {
-      this.logger.error(this.error.message)
-      
-      /**
-       * Notify Ace that error has been handled
-       */
-      return true
-    }
-  }
-}
-```
-
-## Terminating application
-
-By default, Ace will terminate the application after executing the command. However, if you have enabled the `staysAlive` option, you will have to explicitly terminate the application using the `this.terminate` method.
-
-Let's assume we make a redis connection to monitor the server memory. We listen for the `error` event on the redis connection and terminate the app when the connection fails.
-
-```ts
-import { BaseCommand } from '@adonisjs/core/ace'
-import { CommandOptions } from '@adonisjs/core/types/ace'
-
-export default class GreetCommand extends BaseCommand {
-  static options: CommandOptions = {
-    staysAlive: true
-  }
-  
-  async run() {
-    const redis = createRedisConnection()
-    
-    // highlight-start
-    redis.on('error', (error) => {
-      this.logger.error(error)
-      this.terminate()
-    })
-    // highlight-end
-  }
-}
-```
-
-## Cleaning up before the app terminates
-
-Multiple events can trigger an application to terminate, including the [`SIGTERM` signal](https://www.howtogeek.com/devops/linux-signals-hacks-definition-and-more/). Therefore, you must listen for the `terminating` hook in your commands to perform the cleanup.
-
-You can listen for the terminating hook inside the `prepare` lifecycle method.
-
-```ts
-import { BaseCommand } from '@adonisjs/core/ace'
-import { CommandOptions } from '@adonisjs/core/types/ace'
-
-export default class GreetCommand extends BaseCommand {
-  static options: CommandOptions = {
-    staysAlive: true
-  }
-  
-  prepare() {
-    this.app.terminating(() => {
-      // perform the cleanup
-    })
-  }
-  
-  async run() {
-  }
-}
-```

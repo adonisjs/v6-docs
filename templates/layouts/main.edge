@@ -1,6 +1,6 @@
 <!DOCTYPE html>
   <html
-    lang="en"
+    lang="zh-CN"
     x-data
     :class="{ dark: $store.darkMode.enabled, light: !$store.darkMode.enabled }"
   >
@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ file.frontmatter.title }} ({{ file.frontmatter.category }}) | AdonisJS Documentation</title>
+    <title>{{ file.frontmatter.title }} ({{ file.frontmatter.category }}) | AdonisJS 中文文档</title>
     @if(file.frontmatter.summary)
       <meta name="description" content="{{ file.frontmatter.summary }}">
     @end
@@ -26,13 +26,13 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.adonisjs.com{{ file.frontmatter.permalink }}">
-    <meta property="og:title" content="{{ file.frontmatter.title }} ({{ file.frontmatter.category }}) | AdonisJS Documentation">
+    <meta property="og:title" content="{{ file.frontmatter.title }} ({{ file.frontmatter.category }}) | AdonisJS 中文文档">
     @if(file.frontmatter.summary)
       <meta name="og:description" content="{{ file.frontmatter.summary }}">
     @end
 
     <meta property="twitter:url" content="https://docs.adonisjs.com{{ file.frontmatter.permalink }}">
-    <meta property="twitter:title" content="{{ file.frontmatter.title }} ({{ file.frontmatter.category }}) | AdonisJS Documentation">
+    <meta property="twitter:title" content="{{ file.frontmatter.title }} ({{ file.frontmatter.category }}) | AdonisJS 中文文档">
     @if(file.frontmatter.summary)
       <meta name="twitter:description" content="{{ file.frontmatter.summary }}">
     @end
@@ -52,8 +52,8 @@
   <body>
     <div class="notification_banner">
       <p>
-        AdonisJS v7 is feature-complete and entering final validation.
-        <a href="https://adonisjs.com/blog/v7-feature-complete-update" target="_blank">Learn more</a>
+        AdonisJS v7 已完成功能开发，正在进行最终验证。
+        <a href="https://adonisjs.com/blog/v7-feature-complete-update" target="_blank">了解更多</a>
       </p>
     </div>
     {{{ await $slots.main() }}}

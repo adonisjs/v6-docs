@@ -1,11 +1,11 @@
 ---
-summary: Prompts are terminal widgets for user input, using the @poppinss/prompts package. They support various types like input, password, and select, and are designed for easy testing integration.
+summary: Prompts 是终端小部件，用于用户输入，使用 @poppinss/prompts 包。它们支持各种类型，如输入、密码和选择，并且旨在易于测试集成。
 ---
 
 
 # Prompts
 
-Prompts are interactive terminal widgets you can use to accept user input. Ace prompts are powered by the [@poppinss/prompts](https://github.com/poppinss/prompts) package, which supports the following prompt types.
+Prompts 是你可以用来接受用户输入的交互式终端小部件。Ace prompts 由 [@poppinss/prompts](https://github.com/poppinss/prompts) 包提供支持，该包支持以下 prompt 类型。
 
 - input
 - list
@@ -16,13 +16,13 @@ Prompts are interactive terminal widgets you can use to accept user input. Ace p
 - multi-select
 - autocomplete
 
-Ace prompts are built with testing in mind. When writing tests, you may trap prompts and respond to them programmatically.
+Ace prompts 的构建考虑了测试。在编写测试时，你可以捕获 prompts 并以编程方式响应它们。
 
-See also: [Testing ace commands](../testing/console_tests.md)
+另请参阅：[测试 ace 命令](../testing/console_tests.md)
 
-## Displaying a prompt
+## 显示 prompt
 
-You may display prompts using the `this.prompt` property available on all Ace commands.
+你可以使用所有 Ace 命令上可用的 `this.prompt` 属性来显示 prompts。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -36,16 +36,16 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## Prompt options
+## Prompt 选项
 
-Following is the list of options accepted by prompts. You may reference this table as the single source of truth.
+以下是 prompts 接受的选项列表。你可以将此表作为唯一的参考来源。
 
 
 <table>
 <tr>
-<td width="110px">Option</td>
-<td width="120px">Accepted by</td>
-<td>Description</td>
+<td width="110px">选项</td>
+<td width="120px">接受者</td>
+<td>描述</td>
 </tr>
 <tr>
 <td>
@@ -56,13 +56,13 @@ Following is the list of options accepted by prompts. You may reference this tab
 
 <td>
 
-All prompts
+所有 prompts
 
 </td>
 
 <td>
 
-The default value to use when no value is entered. In the case of `select`, `multiselect`, and `autocomplete` prompts, the value must be the choices array index.
+当未输入任何值时使用的默认值。在 `select`、`multiselect` 和 `autocomplete` prompts 的情况下，该值必须是 choices 数组索引。
 
 </td>
 </tr>
@@ -76,13 +76,13 @@ The default value to use when no value is entered. In the case of `select`, `mul
 
 <td>
 
-All prompts
+所有 prompts
 
 </td>
 
 <td>
 
-The unique name for the prompt
+prompt 的唯一名称
 
 </td>
 </tr>
@@ -96,13 +96,13 @@ The unique name for the prompt
 
 <td>
 
-All prompts
+所有 prompts
 
 </td>
 
 <td>
 
-The hint text to display next to the prompt
+显示在 prompt 旁边的提示文本
 
 </td>
 </tr>
@@ -113,10 +113,10 @@ The hint text to display next to the prompt
 
 </td>
 
-<td>All prompts</td>
+<td>所有 prompts</td>
 <td>
 
-Transform the prompt return value. The input value of the `result` method depends on the prompt. For example, the `multiselect` prompt value will be an array of selected choices.
+转换 prompt 返回值。`result` 方法的输入值取决于 prompt。例如，`multiselect` prompt 值将是选定选项的数组。
 
 ```ts
 {
@@ -136,11 +136,11 @@ Transform the prompt return value. The input value of the `result` method depend
 
 </td>
 
-<td>All prompts</td>
+<td>所有 prompts</td>
 
 <td>
 
-Live format the input value as the user types. The formatting is only applied to the CLI output, not the return value.
+在用户输入时实时格式化输入值。格式化仅应用于 CLI 输出，而不应用于返回值。
 
 ```ts
 {
@@ -160,11 +160,11 @@ Live format the input value as the user types. The formatting is only applied to
 
 </td>
 
-<td>All prompts</td>
+<td>所有 prompts</td>
 
 <td>
 
-Validate the user input. Returning `true` from the method will pass the validation. Returning `false` or an error message string will be considered a failure.
+验证用户输入。从该方法返回 `true` 将通过验证。返回 `false` 或错误消息字符串将被视为失败。
 
 ```ts
 {
@@ -193,147 +193,8 @@ Validate the user input. Returning `true` from the method will pass the validati
 
 <td>
 
-Limit the number of options to display. You will have to scroll to see the rest of the options.
+限制显示的选项数量。你必须滚动才能看到其余的选项。
 
 </td>
 </tr>
 </table>
-
-
-## Text input
-
-You may render the prompt to accept text input using the `prompt.ask` method. The method accepts the prompt message as the first parameter and the [options object](#prompt-options) as the second parameter.
-
-```ts
-await this.prompt.ask('Enter the model name')
-```
-
-```ts
-// Validate input
-await this.prompt.ask('Enter the model name', {
-  validate(value) {
-    return value.length > 0
-  }
-})
-```
-
-```ts
-// Default value
-await this.prompt.ask('Enter the model name', {
-  default: 'User'
-})
-```
-
-## Masked input
-
-As the name suggests, the masked input prompt masks the user input in the terminal. You may display the masked prompt using the `prompt.secure` method.
-
-The method accepts the prompt message as the first parameter and the [options object](#prompt-options) as the second parameter.
-
-```ts
-await this.prompt.secure('Enter account password')
-```
-
-```ts
-await this.prompt.secure('Enter account password', {
-  validate(value) {
-    return value.length < 6
-      ? 'Password must be 6 characters long'
-      : true
-  }
-})
-```
-
-## List of choices
-
-You may display a list of choices for a single selection using the `prompt.choice` method. The method accepts the following parameters.
-
-1. Prompt message.
-2. An array of choices.
-3. Optional [options object](#prompt-options).
-
-```ts
-await this.prompt.choice('Select package manager', [
-  'npm',
-  'yarn',
-  'pnpm'
-])
-```
-
-To mention a different display value, you can define options as objects. The `name` property is returned as the prompt result, and the `message` property is displayed in the terminal.
-
-```ts
-await this.prompt.choice('Select database driver', [
-  {
-    name: 'sqlite',
-    message: 'SQLite'
-  },
-  {
-    name: 'mysql',
-    message: 'MySQL'
-  },
-  {
-    name: 'pg',
-    message: 'PostgreSQL'
-  }
-])
-```
-
-## Multi-select choices
-
-You may use the `prompt.multiple` method to allow multiple selections in the choices list. The accepted parameters are the same as the `choice` prompt.
-
-```ts
-await this.prompt.multiple('Select database drivers', [
-  {
-    name: 'sqlite',
-    message: 'SQLite'
-  },
-  {
-    name: 'mysql',
-    message: 'MySQL'
-  },
-  {
-    name: 'pg',
-    message: 'PostgreSQL'
-  }
-])
-```
-
-## Confirm action
-
-You can display a confirmation prompt with `Yes/No` options using the `prompt.confirm` method. The method accepts the prompt message as the first parameter and the [options object](#prompt-options) as the second parameter.
-
-The `confirm` prompt returns a boolean value.
-
-```ts
-const deleteFiles = await this.prompt.confirm(
-  'Want to delete all files?'
-)
-
-if (deleteFiles) {
-}
-```
-
-To customize the `Yes/No` options display value, you may use the `prompt.toggle` method. 
-
-```ts
-const deleteFiles = await this.prompt.toggle(
-  'Want to delete all files?',
-  ['Yup', 'Nope']
-)
-
-if (deleteFiles) {
-}
-```
-
-## Autocomplete
-
-The `autocomplete` prompt is a combination of the select and the multi-select prompt, but with the ability to fuzzy search the choices.
-
-```ts
-const selectedCity = await this.prompt.autocomplete(
-  'Select your city',
-  await getCitiesList()
-)
-```

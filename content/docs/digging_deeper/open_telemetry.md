@@ -1,71 +1,71 @@
 ---
-summary: Add distributed tracing and observability to your AdonisJS application with OpenTelemetry.
+summary: 使用 OpenTelemetry 为你的 AdonisJS 应用程序添加分布式链路追踪和可观测性。
 ---
 
 # OpenTelemetry
 
-This guide covers OpenTelemetry integration in AdonisJS applications. You will learn how to install and configure the `@adonisjs/otel` package, understand OpenTelemetry concepts like traces and spans, use automatic instrumentation for HTTP requests and database queries, create custom spans with helpers and decorators, propagate trace context across services, and configure sampling and exporters for production environments.
+本指南涵盖了 AdonisJS 应用程序中的 OpenTelemetry 集成。你将学习如何安装和配置 `@adonisjs/otel` 包，理解 OpenTelemetry 的概念（如 traces 和 spans），对 HTTP 请求和数据库查询使用自动仪表化 (automatic instrumentation)，使用辅助函数和装饰器创建自定义 spans，跨服务传播追踪上下文，以及为生产环境配置采样和导出器。
 
-## Overview
+## 概述
 
-OpenTelemetry is an open standard for collecting telemetry data from your applications: traces, metrics, and logs. The `@adonisjs/otel` package provides a seamless integration between AdonisJS and OpenTelemetry, giving you distributed tracing and automatic instrumentation with sensible defaults and zero-config setup.
+OpenTelemetry 是一个用于从应用程序收集遥测数据（traces、metrics 和 logs）的开放标准。`@adonisjs/otel` 包提供了 AdonisJS 和 OpenTelemetry 之间的无缝集成，为你提供分布式链路追踪和具有合理默认值及零配置设置的自动仪表化。
 
-Observability is essential for understanding what happens inside your application, especially in production. When a user reports that "the checkout page is slow," tracing lets you see exactly where time is spent: was it the database query? An external API call? A slow service? Without tracing, you're left guessing.
+可观测性对于理解应用程序内部发生的事情至关重要，尤其是在生产环境中。当用户报告“结账页面很慢”时，追踪可以让你准确看到时间花在哪里：是数据库查询？外部 API 调用？还是缓慢的服务？没有追踪，你只能靠猜测。
 
 :::media
 ![alt text](./tracing.png)
 :::
 
-This package handles the complexity of OpenTelemetry setup for you. Run a single command, and your application automatically traces HTTP requests, database queries, Redis operations, and more.
+该包为你处理了 OpenTelemetry 设置的复杂性。只需运行一个命令，你的应用程序就会自动追踪 HTTP 请求、数据库查询、Redis 操作等。
 
-## OpenTelemetry concepts
+## OpenTelemetry 概念
 
-Before diving into the implementation, you should understand a few core OpenTelemetry concepts. For a comprehensive introduction, see the [official OpenTelemetry documentation](https://opentelemetry.io/docs/concepts/observability-primer/).
+在深入实施之前，你应该了解一些核心的 OpenTelemetry 概念。有关全面的介绍，请参阅 [OpenTelemetry 官方文档](https://opentelemetry.io/docs/concepts/observability-primer/)。
 
-A **trace** represents the complete journey of a request through your system. When a user hits your API, the trace captures everything that happens: the HTTP request, database queries, cache lookups, calls to external services, and the response.
+**Trace (链路)** 代表请求在系统中经过的完整旅程。当用户访问你的 API 时，trace 会捕获发生的所有事情：HTTP 请求、数据库查询、缓存查找、对外部服务的调用以及响应。
 
-A **span** is a single unit of work within a trace. Each database query, HTTP request, or function call can be a span. Spans have a start time, duration, name, and attributes (key-value metadata). Spans are nested hierarchically: a parent span for the HTTP request contains child spans for each database query made during that request.
+**Span (跨度)** 是 trace 中的单个工作单元。每个数据库查询、HTTP 请求或函数调用都可以是一个 span。Span 具有开始时间、持续时间、名称和属性（键值元数据）。Span 是分层嵌套的：HTTP 请求的父 span 包含该请求期间进行的每个数据库查询的子 span。
 
-**Attributes** are key-value pairs attached to spans that provide context. For example, an HTTP span might have attributes like `http.method: GET`, `http.route: /users/:id`, and `http.status_code: 200`.
+**Attributes (属性)** 是附加到 span 的键值对，提供上下文信息。例如，HTTP span 可能具有 `http.method: GET`、`http.route: /users/:id` 和 `http.status_code: 200` 等属性。
 
-## Installation
+## 安装
 
-Install and configure the package using the following command:
+使用以下命令安装并配置该包：
 
 ```sh
 node ace add @adonisjs/otel
 ```
 
-This command creates `otel.ts` at the root of your project with the OpenTelemetry initialization, adds the import at the top of `bin/server.ts`, registers the provider and middleware, and sets up environment variables.
+此命令会在项目根目录下创建 `otel.ts` 文件以进行 OpenTelemetry 初始化，在 `bin/server.ts` 顶部添加导入，注册提供者和中间件，并设置环境变量。
 
-That's it. Your application now has automatic tracing for HTTP requests, database queries, and more.
+就是这样。你的应用程序现在具有针对 HTTP 请求、数据库查询等的自动追踪功能。
 
 :::warning
 
-**The import order is critical**
+**导入顺序至关重要**
 
-OpenTelemetry must initialize before any other code loads. The SDK needs to patch libraries like `http`, `pg`, and `redis` before they're imported. That's why `otel.ts` is imported as the very first line in `bin/server.ts`.
+OpenTelemetry 必须在加载任何其他代码之前初始化。SDK 需要在导入 `http`、`pg` 和 `redis` 等库之前对其进行修补 (patch)。这就是为什么 `otel.ts` 被作为 `bin/server.ts` 中的第一行导入。
 
-If you move or remove the `import './otel.js'` line, auto-instrumentation will not work. You'll still be able to create manual spans, but automatic tracing of HTTP requests and database queries won't be captured.
+如果你移动或删除 `import './otel.js'` 行，自动仪表化将无法工作。你仍然可以创建手动 span，但 HTTP 请求和数据库查询的自动追踪将不会被捕获。
 
 :::
 
-## Manual setup
+## 手动设置
 
-If you prefer not to use `node ace add`, here's what it configures.
+如果你不想使用 `node ace add`，以下是它的配置内容。
 
-First, create a file at `otel.ts` with the OpenTelemetry initialization:
+首先，在 `otel.ts` 中创建一个文件，用于 OpenTelemetry 初始化：
 
-```ts 
+```ts
 // title: otel.ts
 import { init } from '@adonisjs/otel/init'
 
 await init(import.meta.dirname)
 ```
 
-Then update `bin/server.ts` to import it as the very first line:
+然后更新 `bin/server.ts`，将其作为第一行导入：
 
-```ts 
+```ts
 // title: bin/server.ts
 /**
  * OpenTelemetry initialization - MUST be the first import
@@ -76,9 +76,9 @@ import { Ignitor } from '@adonisjs/core'
 // ... rest of your server setup
 ```
 
-Add the provider in `adonisrc.ts` to hook into AdonisJS's exception handler and record errors in spans:
+在 `adonisrc.ts` 中添加提供者，以挂钩到 AdonisJS 的异常处理程序并在 span 中记录错误：
 
-```ts 
+```ts
 // title: adonisrc.ts
 {
   providers: [
@@ -88,9 +88,9 @@ Add the provider in `adonisrc.ts` to hook into AdonisJS's exception handler and 
 }
 ```
 
-Finally, add the middleware as the first router middleware in `start/kernel.ts` to enrich HTTP spans with route information:
+最后，将中间件作为第一个路由器中间件添加到 `start/kernel.ts` 中，以使用路由信息丰富 HTTP span：
 
-```ts 
+```ts
 // title: start/kernel.ts
 router.use([
   () => import('@adonisjs/otel/otel_middleware'),
@@ -98,11 +98,11 @@ router.use([
 ])
 ```
 
-## Configuration
+## 配置
 
-The configuration file is located at `config/otel.ts`:
+配置文件位于 `config/otel.ts`：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 import env from '#start/env'
@@ -114,39 +114,39 @@ export default defineConfig({
 })
 ```
 
-### Service identification
+### 服务标识
 
-The package resolves service metadata from multiple sources:
+该包从多个来源解析服务元数据：
 
-| Option           | Environment Variable              | Default           |
+| 选项 | 环境变量 | 默认值 |
 | ---------------- | --------------------------------- | ----------------- |
-| `serviceName`    | `OTEL_SERVICE_NAME` or `APP_NAME` | `unknown_service` |
-| `serviceVersion` | `APP_VERSION`                     | `0.0.0`           |
-| `environment`    | `APP_ENV`                         | `development`     |
+| `serviceName` | `OTEL_SERVICE_NAME` 或 `APP_NAME` | `unknown_service` |
+| `serviceVersion` | `APP_VERSION` | `0.0.0` |
+| `environment` | `APP_ENV` | `development` |
 
-### Exporters
+### 导出器 (Exporters)
 
-By default, the package exports traces using OTLP over gRPC to `localhost:4317`. This is the standard OpenTelemetry Collector endpoint. If you're running an OpenTelemetry Collector locally or in your infrastructure, traces will be sent there automatically.
+默认情况下，该包使用 OTLP over gRPC 将 traces 导出到 `localhost:4317`。这是标准的 OpenTelemetry Collector 端点。如果你在本地或基础设施中运行 OpenTelemetry Collector，traces 将自动发送到那里。
 
-You can configure the exporter endpoint using environment variables without changing any code:
+你可以使用环境变量配置导出器端点，而无需更改任何代码：
 
 ```dotenv
 OTEL_EXPORTER_OTLP_ENDPOINT=https://otel-collector.example.com:4317
 ```
 
-For authentication or custom headers:
+对于身份验证或自定义头：
 
 ```dotenv
 OTEL_EXPORTER_OTLP_HEADERS=x-api-key=your-api-key
 ```
 
-See the [OpenTelemetry environment variable specification](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/) for all available options, and check [Advanced configuration](#advanced-configuration) for even more customization.
+请参阅 [OpenTelemetry 环境变量规范](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/) 以了解所有可用选项，并查看 [高级配置](#高级配置) 以获取更多自定义选项。
 
-### Debug mode
+### 调试模式
 
-Enable debug mode to print spans to the console during development:
+启用调试模式以在开发期间将 span 打印到控制台：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 
@@ -156,13 +156,13 @@ export default defineConfig({
 })
 ```
 
-This adds a `ConsoleSpanExporter` that outputs spans to your terminal, helping you visualize traces without setting up a collector.
+这将添加一个 `ConsoleSpanExporter`，将 span 输出到你的终端，帮助你在不设置收集器的情况下可视化 traces。
 
-### Enabling and disabling
+### 启用和禁用
 
-OpenTelemetry is automatically disabled when `NODE_ENV === 'test'` to avoid noise during tests. You can override this behavior:
+为了避免测试期间的噪音，OpenTelemetry 在 `NODE_ENV === 'test'` 时自动禁用。你可以覆盖此行为：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 
@@ -181,11 +181,11 @@ export default defineConfig({
 })
 ```
 
-### Sampling
+### 采样 (Sampling)
 
-In high-traffic production environments, tracing every single request generates enormous amounts of data. Sampling controls what percentage of traces are collected:
+在高流量的生产环境中，追踪每一个请求会产生大量数据。采样控制收集 trace 的百分比：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 
@@ -204,36 +204,36 @@ export default defineConfig({
 })
 ```
 
-The sampler uses parent-based sampling, meaning child spans inherit the sampling decision from their parent. This ensures you always get complete traces rather than fragments.
+采样器使用基于父级的采样，这意味着子 span 继承其父级的采样决策。这确保了你总是获得完整的 trace，而不是片段。
 
-See also: [OpenTelemetry Sampling documentation](https://opentelemetry.io/docs/concepts/sampling/)
+另请参阅：[OpenTelemetry 采样文档](https://opentelemetry.io/docs/concepts/sampling/)
 
 :::note
 
-If you provide a custom `sampler` option, `samplingRatio` is ignored.
+如果你提供自定义 `sampler` 选项，`samplingRatio` 将被忽略。
 
 :::
 
-## Automatic instrumentation
+## 自动仪表化 (Automatic instrumentation)
 
-Under the hood, `@adonisjs/otel` uses the official [`@opentelemetry/auto-instrumentations-node`](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/packages/auto-instrumentations-node#readme) package. This means you get automatic tracing for a wide range of libraries without any code changes: HTTP requests (incoming and outgoing), database queries (PostgreSQL, MySQL, MongoDB), Redis operations, and [many more](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/packages/auto-instrumentations-node#supported-instrumentations).
+在底层，`@adonisjs/otel` 使用官方的 [`@opentelemetry/auto-instrumentations-node`](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/packages/auto-instrumentations-node#readme) 包。这意味着你无需更改任何代码即可获得对各种库的自动追踪：HTTP 请求（传入和传出）、数据库查询（PostgreSQL、MySQL、MongoDB）、Redis 操作以及 [更多](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/packages/auto-instrumentations-node#supported-instrumentations)。
 
-We pre-configure sensible defaults so everything works out of the box. However, you can override any instrumentation setting through the `instrumentations` option in your configuration.
+我们预先配置了合理的默认值，以便一切开箱即用。但是，你可以通过配置中的 `instrumentations` 选项覆盖任何仪表化设置。
 
-### Default ignored URLs
+### 默认忽略的 URL
 
-To reduce noise, the following endpoints are excluded from tracing by default:
+为了减少噪音，默认情况下以下端点不被追踪：
 
 - `/health`, `/healthz`, `/ready`, `/readiness`
 - `/metrics`, `/internal/metrics`, `/internal/healthz`
 - `/favicon.ico`
-- All `OPTIONS` requests (CORS preflight)
+- 所有 `OPTIONS` 请求 (CORS 预检)
 
-### Customizing instrumentations
+### 自定义仪表化
 
-You can configure individual instrumentations or add custom ignored URLs:
+你可以配置单个仪表化或添加自定义忽略的 URL：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 import { MyCustomInstrumentation } from 'my-custom-instrumentation'
@@ -263,15 +263,15 @@ export default defineConfig({
 })
 ```
 
-## Creating custom spans
+## 创建自定义 Spans
 
-While automatic instrumentation covers most common operations, you'll often want to trace custom business logic. The package provides helpers and decorators for this purpose.
+虽然自动仪表化涵盖了大多数常见操作，但你通常希望追踪自定义业务逻辑。该包为此提供了辅助函数和装饰器。
 
-### Using the record helper
+### 使用 record 辅助函数
 
-The `record` helper creates a span around a code section:
+`record` 辅助函数围绕代码段创建一个 span：
 
-```ts 
+```ts
 // title: app/services/order_service.ts
 import { record } from '@adonisjs/otel/helpers'
 
@@ -306,11 +306,11 @@ export default class OrderService {
 }
 ```
 
-### Using decorators
+### 使用装饰器
 
-For class methods, decorators provide a cleaner syntax:
+对于类方法，装饰器提供了更简洁的语法：
 
-```ts 
+```ts
 // title: app/services/user_service.ts
 import { span, spanAll } from '@adonisjs/otel/decorators'
 
@@ -333,9 +333,9 @@ export default class UserService {
 }
 ```
 
-To automatically trace all methods of a class, use the `@spanAll` decorator:
+要自动追踪类的所有方法，请使用 `@spanAll` 装饰器：
 
-```ts 
+```ts
 // title: app/services/payment_service.ts
 import { spanAll } from '@adonisjs/otel/decorators'
 
@@ -362,11 +362,11 @@ export default class PaymentService {
 }
 ```
 
-### Setting attributes on the current span
+### 在当前 span 上设置属性
 
-Use `setAttributes` to add metadata to the currently active span without creating a new one:
+使用 `setAttributes` 将元数据添加到当前活动的 span，而无需创建新的 span：
 
-```ts 
+```ts
 // title: app/controllers/orders_controller.ts
 import { setAttributes } from '@adonisjs/otel/helpers'
 
@@ -388,11 +388,11 @@ export default class OrdersController {
 }
 ```
 
-### Recording events
+### 记录事件
 
-Events are time-stamped annotations within a span. Use them to mark significant moments:
+事件是 span 内的时间戳注释。使用它们来标记重要时刻：
 
-```ts 
+```ts
 // title: app/services/checkout_service.ts
 import { recordEvent } from '@adonisjs/otel/helpers'
 
@@ -415,15 +415,15 @@ export default class CheckoutService {
 }
 ```
 
-## Context propagation
+## 上下文传播 (Context propagation)
 
-When your application calls other services or processes background jobs, you need to propagate the trace context so all operations appear in the same trace.
+当你的应用程序调用其他服务或处理后台作业时，你需要传播追踪上下文，以便所有操作都出现在同一个 trace 中。
 
-### Propagating to queue jobs
+### 传播到队列作业
 
-When dispatching background jobs, include the trace context:
+分发后台作业时，包含追踪上下文：
 
-```ts 
+```ts
 // title: app/controllers/orders_controller.ts
 import { injectTraceContext } from '@adonisjs/otel/helpers'
 
@@ -447,9 +447,9 @@ export default class OrdersController {
 }
 ```
 
-In your queue worker, extract the context and continue the trace:
+在你的队列工作者 (worker) 中，提取上下文并继续 trace：
 
-```ts 
+```ts
 // title: app/jobs/process_order_job.ts
 import { extractTraceContext, record } from '@adonisjs/otel/helpers'
 import { context } from '@adonisjs/otel'
@@ -477,17 +477,17 @@ export default class ProcessOrderJob {
 }
 ```
 
-## User context
+## 用户上下文 (User context)
 
-When `@adonisjs/auth` is installed, the middleware automatically sets user attributes on spans if a user is authenticated. This includes `user.id`, `user.email` (if available), and `user.roles` (if available).
+当安装了 `@adonisjs/auth` 时，如果用户已通过身份验证，中间件会自动在 span 上设置用户属性。这包括 `user.id`、`user.email`（如果可用）和 `user.roles`（如果可用）。
 
 :::note
-For automatic user detection to work, the user must be authenticated before the OTEL middleware runs. This means you need to register a `silent_auth` middleware **before** the OTEL middleware in your router middleware stack. If this setup doesn't fit your needs, you can use `setUser()` manually in your own auth middleware instead.
+为了使自动用户检测工作，用户必须在 OTEL 中间件运行**之前**通过身份验证。这意味着你需要在路由器中间件堆栈中的 OTEL 中间件**之前**注册 `silent_auth` 中间件。如果此设置不符合你的需求，你可以在自己的 auth 中间件中手动使用 `setUser()`。
 :::
 
-You can customize this behavior or add additional user attributes:
+你可以自定义此行为或添加其他用户属性：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 
@@ -516,9 +516,9 @@ export default defineConfig({
 })
 ```
 
-You can also manually set user context anywhere in your code. Custom attributes are automatically prefixed with `user.`:
+你也可以在代码中的任何位置手动设置用户上下文。自定义属性会自动加上 `user.` 前缀：
 
-```ts 
+```ts
 // title: app/middleware/auth_middleware.ts
 import { setUser } from '@adonisjs/otel/helpers'
 
@@ -541,16 +541,16 @@ export default class AuthMiddleware {
 ```
 
 :::warning
-Be careful not to include sensitive data (passwords, tokens, API keys) in user attributes. These values are sent to your observability backend and may be visible in trace viewers.
+请注意不要在用户属性中包含敏感数据（密码、令牌、API 密钥）。这些值会被发送到你的可观测性后端，并且可能在 trace 查看器中可见。
 :::
 
-## Logging integration
+## 日志集成
 
-The package automatically injects trace context into Pino logs, adding `trace_id` and `span_id` to each log entry. This lets you correlate logs with traces in your observability platform.
+该包会自动将追踪上下文注入 Pino 日志，向每个日志条目添加 `trace_id` 和 `span_id`。这让你可以在可观测性平台中将日志与 traces 关联起来。
 
-When using `pino-pretty` for development, you can hide these fields for cleaner output:
+当在开发中使用 `pino-pretty` 时，你可以隐藏这些字段以获得更清晰的输出：
 
-```ts 
+```ts
 // title: config/logger.ts
 import { defineConfig, targets } from '@adonisjs/core/logger'
 import app from '@adonisjs/core/services/app'
@@ -570,17 +570,17 @@ export default defineConfig({
 })
 ```
 
-To keep specific fields visible:
+要保持特定字段可见：
 
 ```ts
 otelLoggingPreset({ keep: ['trace_id', 'span_id'] })
 ```
 
-## Advanced configuration
+## 高级配置
 
-The `defineConfig` function accepts all options from the [OpenTelemetry Node SDK](https://opentelemetry.io/docs/languages/js/getting-started/nodejs/), giving power users full control:
+`defineConfig` 函数接受来自 [OpenTelemetry Node SDK](https://opentelemetry.io/docs/languages/js/getting-started/nodejs/) 的所有选项，给予高级用户完全控制权：
 
-```ts 
+```ts
 // title: config/otel.ts
 import { defineConfig } from '@adonisjs/otel'
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base'
@@ -617,33 +617,28 @@ export default defineConfig({
 })
 ```
 
-See the [OpenTelemetry JS documentation](https://opentelemetry.io/docs/languages/js/) for all available options.
+有关所有可用选项，请参阅 [OpenTelemetry JS 文档](https://opentelemetry.io/docs/languages/js/)。
 
-## Performance considerations
+## 性能考量
 
-OpenTelemetry adds some overhead to your application. The SDK needs to create span objects, record timing information, and export data to your collector. In most applications, this overhead is negligible, but you should be aware of it.
+OpenTelemetry 会给你的应用程序增加一些开销。SDK 需要创建 span 对象，记录时间信息，并将数据导出到你的收集器。在大多数应用程序中，这种开销可以忽略不计，但你应该意识到这一点。
 
-For high-traffic production environments, consider these recommendations:
+对于高流量的生产环境，请考虑以下建议：
 
-- **Use sampling** to reduce the volume of traces. A `samplingRatio` of `0.1` (10%) is often sufficient to identify issues while dramatically reducing overhead and storage costs.
+- **使用采样** 来减少 trace 的数量。`0.1` (10%) 的 `samplingRatio` 通常足以识别问题，同时显著减少开销和存储成本。
 
-- **Use batch processing** (the default) rather than sending spans immediately. The `BatchSpanProcessor` queues spans and sends them in batches, reducing network overhead.
+- **使用批处理**（默认），而不是立即发送 span。`BatchSpanProcessor` 将 span 排队并分批发送，从而减少网络开销。
 
-- **Be selective with custom spans**. Automatic instrumentation covers most needs. Only add custom spans for business-critical operations where you need additional visibility. Don't over-instrument by using a `@spanAll` decorator on every single class.
+- **有选择地使用自定义 spans**。自动仪表化涵盖了大多数需求。仅为需要额外可见性的业务关键操作添加自定义 span。不要通过在每个类上使用 `@spanAll` 装饰器来进行过度仪表化。
 
-See also: [OpenTelemetry Sampling documentation](https://opentelemetry.io/docs/concepts/sampling/)
+另请参阅：[OpenTelemetry 采样文档](https://opentelemetry.io/docs/concepts/sampling/)
 
-## Helpers reference
+## 辅助函数参考
 
-All helpers are available from `@adonisjs/otel/helpers`:
+所有辅助函数都可以从 `@adonisjs/otel/helpers` 获取：
 
-| Helper                           | Description                                               |
+| 辅助函数 | 描述 |
 | -------------------------------- | --------------------------------------------------------- |
-| `getCurrentSpan()`               | Returns the currently active span, or `undefined` if none |
-| `setAttributes(attributes)`      | Sets attributes on the current span                       |
-| `record(name, fn)`               | Creates a span around a function                          |
-| `recordEvent(name, attributes?)` | Records an event on the current span                      |
-| `setUser(user)`                  | Sets user attributes on the current span                  |
-| `injectTraceContext(carrier)`    | Injects trace context into a carrier object (headers)     |
-| `extractTraceContext(carrier)`   | Extracts trace context from a carrier object              |
-| `otelLoggingPreset(options?)`    | Returns pino-pretty options that hide OTEL fields         |
+| `getCurrentSpan()` | 返回当前活动的 span，如果没有则返回 `undefined` |
+| `setAttributes(attributes)` | 在当前 span 上设置属性 |
+| `record(name, fn)` | 围绕函数创建一个 span |

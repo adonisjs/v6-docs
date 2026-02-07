@@ -1,38 +1,38 @@
 ---
-summary: Learn how AdonisJS boots the HTTP server, handles incoming requests, and the modules available at the HTTP layer.
+summary: 了解 AdonisJS 如何启动 HTTP 服务器，处理传入请求，以及 HTTP 层可用的模块。
 ---
 
-# HTTP overview
+# HTTP 概览
 
-AdonisJS is primarily a web framework to create applications that respond to HTTP requests. In this guide, we will learn how AdonisJS boots the HTTP server, handles the incoming requests, and the modules available at the HTTP layer.
+AdonisJS 主要是一个用于创建响应 HTTP 请求的应用程序的 Web 框架。在本指南中，我们将了解 AdonisJS 如何启动 HTTP 服务器，处理传入请求，以及 HTTP 层可用的模块。
 
-## The HTTP layer
-The HTTP layer inside an AdonisJS application consists of the following modules. It is worth mentioning that the AdonisJS HTTP layer is built from scratch and does not use any microframework under the hood.
+## HTTP 层
 
+AdonisJS 应用程序中的 HTTP 层由以下模块组成。值得一提的是，AdonisJS 的 HTTP 层是从头开始构建的，底层没有使用任何微框架。
 
 <dl>
 
 <dt>
 
-[Router](../basics/routing.md)
+[路由器 (Router)](../basics/routing.md)
 
 </dt>
 
 <dd>
 
-The [router module](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts) is responsible for defining the endpoints of your application, which are known as routes. A route should define a handler responsible for handling the request. The handler can be a closure or reference to a controller.
+[路由器模块](https://github.com/adonisjs/http-server/blob/main/src/router/main.ts) 负责定义应用程序的端点，这些端点被称为路由。一个路由应该定义一个负责处理请求的处理程序。处理程序可以是一个闭包或对控制器的引用。
 
 </dd>
 
 <dt>
 
-[Controllers](../basics/controllers.md)
+[控制器 (Controllers)](../basics/controllers.md)
 
 </dt>
 
 <dd>
 
-Controllers are JavaScript classes that you bind to a route to handle the HTTP requests. Controllers act as an organization layer and help you divide the business logic of your application inside different files/classes.
+控制器是 JavaScript 类，您可以将其绑定到路由以处理 HTTP 请求。控制器充当组织层，帮助您将应用程序的业务逻辑划分到不同的文件/类中。
 
 </dd>
 
@@ -45,130 +45,131 @@ Controllers are JavaScript classes that you bind to a route to handle the HTTP r
 
 <dd>
 
-AdonisJS creates an instance of the [HttpContext](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) class for every incoming HTTP request. The HttpContext (aka `ctx`) carries the information like the request body, headers, authenticated user, etc, for a given request.
+AdonisJS 为每个传入的 HTTP 请求创建一个 [HttpContext](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) 类的实例。HttpContext（又名 `ctx`）携带给定请求的信息，如请求体、标头、认证用户等。
 
 </dd>
 
 <dt>
 
-[Middleware](../basics/middleware.md)
+[中间件 (Middleware)](../basics/middleware.md)
 
 </dt>
 
 <dd>
 
-The middleware pipeline in AdonisJS is an implementation of [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) design pattern. You can use middleware to intercept HTTP requests and respond to them before they reach the route handler.
+AdonisJS 中的中间件管道是 [责任链](https://refactoring.guru/design-patterns/chain-of-responsibility) 设计模式的实现。您可以使用中间件拦截 HTTP 请求，并在它们到达路由处理程序之前对其进行响应。
 
 </dd>
 
 <dt>
 
-[Global Exception handler](../basics/exception_handling.md)
+[全局异常处理器 (Global Exception handler)](../basics/exception_handling.md)
 
 </dt>
 
 <dd>
 
-The global exception handler handles exceptions raised during an HTTP request at a central location. You can use the global exception handler to convert exceptions to an HTTP response or report them to an external logging service.
+全局异常处理器在一个中心位置处理 HTTP 请求期间引发的异常。您可以使用全局异常处理器将异常转换为 HTTP 响应或将其报告给外部日志记录服务。
 
 </dd>
 
 <dt>
 
-Server
+服务器 (Server)
 
 </dt>
 
 <dd>
 
-The [server module](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts) wires up the router, middleware, the global exception handler and exports [a `handle` function](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts#L330) you can bind to the Node.js HTTP server to handle requests.
+[服务器模块](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts) 连接路由器、中间件、全局异常处理器，并导出 [一个 `handle` 函数](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts#L330)，您可以将其绑定到 Node.js HTTP 服务器以处理请求。
 
 </dd>
 
 </dl>
 
-## How AdonisJS boots the HTTP server
-The HTTP server is booted once you call [the `boot` method](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts#L252) on the Server class. Under the hood, this method performs the following actions.
+## AdonisJS 如何启动 HTTP 服务器
 
-- Create the middleware pipeline
-- Compile routes
-- Import and instantiate the global exception handler
+一旦您调用 Server 类上的 [`boot` 方法](https://github.com/adonisjs/http-server/blob/main/src/server/main.ts#L252)，HTTP 服务器就会启动。在底层，此方法执行以下操作。
 
-In a typical AdonisJS application, the `boot` method is called by the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/http.ts) module within the `bin/server.ts` file.
+- 创建中间件管道
+- 编译路由
+- 导入并实例化全局异常处理器
 
-Also, it is essential to define the routes, middleware, and the global exception handler before the `boot` method is called, and AdonisJS achieves that using the `start/routes.ts` and `start/kernel.ts` [preload files](./adonisrc_file.md#preloads).
+在典型的 AdonisJS 应用程序中，`boot` 方法由 `bin/server.ts` 文件中的 [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/http.ts) 模块调用。
+
+此外，必须在调用 `boot` 方法之前定义路由、中间件和全局异常处理器，AdonisJS 使用 `start/routes.ts` 和 `start/kernel.ts` [预加载文件](./adonisrc_file.md#preloads) 来实现这一点。
 
 ![](./server_boot_lifecycle.png)
 
-## HTTP request lifecycle
-Now that we have an HTTP server listening for incoming requests. Let's see how AdonisJS handles a given HTTP request.
+## HTTP 请求生命周期
+
+现在我们有了一个监听传入请求的 HTTP 服务器。让我们看看 AdonisJS 如何处理给定的 HTTP 请求。
 
 :::note
 
-**See also:**\
-[Middleware execution flow](../basics/middleware.md#middleware-execution-flow)\
-[Middleware and exception handling](../basics/middleware.md#middleware-and-exception-handling)
+**另请参阅：**\
+[中间件执行流程](../basics/middleware.md#middleware-execution-flow)\
+[中间件和异常处理](../basics/middleware.md#middleware-and-exception-handling)
 
 :::
 
 
 <dl>
 
-<dt> Creating the HttpContext </dt>
+<dt> 创建 HttpContext </dt>
 
 
 <dd>
 
-As the first step, the server module creates an instance of the [HttpContext](./http_context.md) class and passes it as a reference to the middleware, route handlers, and the global exception handler.
+作为第一步，服务器模块创建 [HttpContext](./http_context.md) 类的一个实例，并将其作为引用传递给中间件、路由处理程序和全局异常处理器。
 
-If you have enabled the [AsyncLocalStorage](./async_local_storage.md#usage), then the same instance is 
-shared as the local storage state.
+如果您启用了 [AsyncLocalStorage](./async_local_storage.md#usage)，那么同一个实例将作为本地存储状态共享。
 
 </dd>
 
-<dt> Executing server middleware stack </dt>
+<dt> 执行服务器中间件堆栈 </dt>
 
 <dd>
 
-Next, the middleware from the [server middleware stack](../basics/middleware.md#server-middleware-stack) are executed. These middleware can intercept and respond to the request before it reaches the route handler.
+接下来，执行 [服务器中间件堆栈](../basics/middleware.md#server-middleware-stack) 中的中间件。这些中间件可以在请求到达路由处理程序之前拦截并响应该请求。
 
-Also, every HTTP request goes through the server middleware stack, even if you have not defined any router for the given endpoint. This allows server middleware to add functionality to an app without relying on the routing system.
+此外，每个 HTTP 请求都会经过服务器中间件堆栈，即使您没有为给定的端点定义任何路由器。这允许服务器中间件在不依赖路由系统的情况下向应用程序添加功能。
 
 </dd>
 
-<dt> Finding the matching route </dt>
+<dt> 查找匹配的路由 </dt>
 
 <dd>
 
-If a server middleware does not end the request, we look for a matching route for the `req.url` property. The request is aborted with a `404 - Not found` exception when no matching route exists. Otherwise, we continue with the request.
+如果服务器中间件没有结束请求，我们会查找与 `req.url` 属性匹配的路由。当不存在匹配的路由时，请求将以 `404 - Not found` 异常中止。否则，我们将继续处理请求。
 
 </dd>
 
-<dt> Executing the route middleware </dt>
+<dt> 执行路由中间件 </dt>
 
 <dd>
 
-Once there is a matching route, we execute the [router global middleware](../basics/middleware.md#router-middleware-stack) and the [named middleware stack](../basics/middleware.md#named-middleware-collection). Again, middleware can intercept the request before it reaches the route handler.
+一旦找到匹配的路由，我们将执行 [路由器全局中间件](../basics/middleware.md#router-middleware-stack) 和 [命名中间件堆栈](../basics/middleware.md#named-middleware-collection). 同样，中间件可以在请求到达路由处理程序之前拦截该请求。
 
 </dd>
 
-<dt> Executing the route handler </dt>
+<dt> 执行路由处理程序 </dt>
 
 <dd>
 
-As the final step, the request reaches the route handler and returns to the client with a response.
+作为最后一步，请求到达路由处理程序并向客户端返回响应。
 
-Suppose an exception is raised during any step in the process. In that case, the request will be handed over to the global exception handler, which is responsible for converting the exception to a response.
+假设在过程中的任何步骤引发了异常。在这种情况下，请求将移交给全局异常处理器，该处理器负责将异常转换为响应。
 
 </dd>
 
-<dt> Serializing response </dt>
+<dt> 序列化响应 </dt>
 
 <dd>
 
-Once you define the response body using the `response.send` method or by returning a value from the route handler, we begin the response serialization process and set the appropriate headers.
+一旦您使用 `response.send` 方法定义了响应体或从路由处理程序返回了一个值，我们将开始响应序列化过程并设置适当的标头。
 
-Learn more about [response body serialization](../basics/response.md#response-body-serialization)
+了解更多关于 [响应体序列化](../basics/response.md#response-body-serialization) 的信息
 
 </dd>
 

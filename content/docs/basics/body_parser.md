@@ -1,15 +1,15 @@
 ---
-summary: Learn how to parse request bodies using the BodyParser middleware.
+summary: 了解如何使用 BodyParser 中间件解析请求体。
 ---
 
-# Body parser middleware
+# Body parser 中间件
 
-The request data is parsed using the `BodyParser` middleware registered inside the `start/kernel.ts` file.
+请求数据是使用注册在 `start/kernel.ts` 文件中的 `BodyParser` 中间件进行解析的。
 
-The configuration for the middleware is stored inside the `config/bodyparser.ts` file. In this file, you may configure parsers for parsing **JSON payloads**, **multipart forms with file uploads**, and **URL-encoded forms**.
+该中间件的配置存储在 `config/bodyparser.ts` 文件中。在这个文件中，你可以配置用于解析 **JSON 载荷**、**包含文件上传的多部分表单**以及 **URL 编码表单**的解析器。
 
-See also: [Reading request body](./request.md#request-body)\
-See also: [File uploads](./file_uploads.md)
+另请参阅：[读取请求体](./request.md#request-body)\
+另请参阅：[文件上传](./file_uploads.md)
 
 ```ts
 import { defineConfig } from '@adonisjs/core/bodyparser'
@@ -18,26 +18,26 @@ export const defineConfig({
   allowedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
 
   form: {
-    // settings for parsing HTML forms
+    // 解析 HTML 表单的设置
   },
 
   json: {
-    // Settings for parsing JSON body
+    // 解析 JSON 请求体的设置
   },
 
   multipart: {
-    // Settings for multipart parser
+    // Multipart 解析器的设置
   },
 
   raw: {
-    // Settings for a raw text parser
+    // 原始文本解析器的设置
   },
 })
 ```
 
-## Allowed methods
+## 允许的方法
 
-You may define an array of `allowedMethods` for which the bodyparser middleware should attempt to parse the request body. By default, the following methods are configured. However, feel free to remove or add new methods.
+你可以定义一个 `allowedMethods` 数组，指定 bodyparser 中间件应该尝试解析请求体的方法。默认情况下，配置了以下方法。当然，你可以随意移除或添加新方法。
 
 ```ts
 {
@@ -45,38 +45,38 @@ You may define an array of `allowedMethods` for which the bodyparser middleware 
 }
 ```
 
-## Converting empty strings to null
+## 将空字符串转换为 null
 
-HTML forms send an empty string in the request body when an input field has no value. This behavior of HTML forms makes data normalization at the database layer harder.
+当输入字段没有值时，HTML 表单会在请求体中发送一个空字符串。HTML 表单的这种行为使得数据库层的数据规范化变得更加困难。
 
-For example, if you have a database column `country` set to nullable, you would want to store `null` as a value inside this column when the user does not select a country.
+例如，如果你的数据库列 `country` 设置为可空（nullable），你希望在用户没有选择国家时在该列中存储 `null` 值。
 
-However, with HTML forms, the backend receives an empty string, and you might insert an empty string into the database instead of leaving the column as `null`.
+然而，对于 HTML 表单，后端接收到的是一个空字符串，你可能会将空字符串插入数据库，而不是将该列保留为 `null`。
 
-The `BodyParser` middleware can handle this inconsistency by converting all empty string values to `null` when the `convertEmptyStringsToNull` flag is enabled inside the config.
+`BodyParser` 中间件可以通过在配置中启用 `convertEmptyStringsToNull` 标志，将所有空字符串值转换为 `null` 来处理这种不一致性。
 
 ```ts
 {
   form: {
-    // ... rest of the config
+    // ... 其余配置
     convertEmptyStringsToNull: true
   },
 
   json: {
-    // ... rest of the config
+    // ... 其余配置
     convertEmptyStringsToNull: true
   },
 
   multipart: {
-    // ... rest of the config
+    // ... 其余配置
     convertEmptyStringsToNull: true
   }
 }
 ```
 
-## JSON parser
+## JSON 解析器
 
-The JSON parser is used for parsing request body defined as a JSON encoded string with the `Content-type` header matching one of the pre-defined `types` values.
+JSON 解析器用于解析定义为 JSON 编码字符串的请求体，且 `Content-type` 头匹配预定义的 `types` 值之一。
 
 ```ts
 json: {
@@ -103,7 +103,7 @@ encoding
 
 <dd>
 
-The encoding to use when converting the request body Buffer to a string. Most likely, you want to use `utf-8`. However, you can use any encoding supported by the [iconv-lite package](https://www.npmjs.com/package/iconv-lite#readme).
+用于将请求体 Buffer 转换为字符串的编码。大多数情况下，你会希望使用 `utf-8`。不过，你可以使用 [iconv-lite 包](https://www.npmjs.com/package/iconv-lite#readme)支持的任何编码。
 
 </dd>
 
@@ -115,7 +115,7 @@ limit
 
 <dd>
 
-The maximum limit of request body data the parser should allow. A `413` error will be returned if the request body exceeds the configured limit.
+解析器允许的最大请求体数据限制。如果请求体超过配置的限制，将返回 `413` 错误。
 
 </dd>
 
@@ -127,7 +127,7 @@ strict
 
 <dd>
 
-The strict parsing allows only `objects` and `arrays` at the top level of a JSON-encoded string.
+严格解析仅允许 `objects` 和 `arrays` 出现在 JSON 编码字符串的顶层。
 
 </dd>
 
@@ -139,15 +139,15 @@ types
 
 <dd>
 
-An array of values for the `Content-type` header should be parsed using the JSON parser.
+应该使用 JSON 解析器解析的 `Content-type` 头的值数组。
 
 </dd>
 
 </dl>
 
-## URL encoded form parser
+## URL 编码表单解析器
 
-The `form` parser is used for parsing URL encoded strings with the `Content-type` header set to `application/x-www-form-urlencoded`. In other words, the HTML forms data is parsed using the `form` parser.
+`form` 解析器用于解析 `Content-type` 头设置为 `application/x-www-form-urlencoded` 的 URL 编码字符串。换句话说，HTML 表单数据是使用 `form` 解析器解析的。
 
 ```ts
 form: {
@@ -169,7 +169,7 @@ encoding
 
 <dd>
 
-The encoding to use when converting the request body Buffer to a string. Most likely, you want to use `utf-8`. However, you can use any encoding supported by the [iconv-lite package](https://www.npmjs.com/package/iconv-lite#readme).
+用于将请求体 Buffer 转换为字符串的编码。大多数情况下，你会希望使用 `utf-8`。不过，你可以使用 [iconv-lite 包](https://www.npmjs.com/package/iconv-lite#readme)支持的任何编码。
 
 </dd>
 
@@ -181,7 +181,7 @@ limit
 
 <dd>
 
-The maximum limit of request body data the parser should allow. A `413` error will be returned if the request body exceeds the configured limit.
+解析器允许的最大请求体数据限制。如果请求体超过配置的限制，将返回 `413` 错误。
 
 </dd>
 
@@ -193,7 +193,7 @@ queryString
 
 <dd>
 
-The URL-encoded request body is parsed using the [qs package](https://www.npmjs.com/package/qs). You can define the options for the package using the `queryString` property.
+URL 编码的请求体是使用 [qs 包](https://www.npmjs.com/package/qs)解析的。你可以使用 `queryString` 属性定义该包的选项。
 
 ```ts
   form: {
@@ -208,11 +208,11 @@ The URL-encoded request body is parsed using the [qs package](https://www.npmjs.
 
 </dl>
 
-## Multipart parser
+## Multipart 解析器
 
-The `multipart` parser is used for parsing HTML form requests with file uploads.
+`multipart` 解析器用于解析带有文件上传的 HTML 表单请求。
 
-See also: [File uploads](./file_uploads.md)
+另请参阅：[文件上传](./file_uploads.md)
 
 ```ts
 multipart: {
@@ -236,13 +236,13 @@ autoProcess
 
 <dd>
 
-Enabling `autoProcess` will move all the user-uploaded files to the `tmp` directory of your operating system.
+启用 `autoProcess` 将把所有用户上传的文件移动到操作系统的 `tmp` 目录中。
 
-Later, inside the controllers, you can validate the files and move them to a persistent location or a cloud service.
+稍后，在控制器中，你可以验证文件并将它们移动到持久化位置或云服务。
 
-If you disable the `autoProcess` flag, then you will have to manually process the stream and read files/fields from the request body. See also: [Self-processing multipart stream](./file_uploads.md#self-processing-multipart-stream).
+如果你禁用 `autoProcess` 标志，那么你将必须手动处理流并从请求体中读取文件/字段。另请参阅：[自我处理 multipart 流](./file_uploads.md#self-processing-multipart-stream)。
 
-You may define an array of routes for which to auto process the files. The values **must be a route pattern** and not the URL.
+你可以定义一个路由数组，对这些路由自动处理文件。这些值**必须是路由模式**，而不是 URL。
 
 ```ts
 {
@@ -263,7 +263,7 @@ processManually
 
 <dd>
 
-The `processManually` array allows you to turn off auto processing of files for selected routes. The values **must be a route pattern** and not the URL.
+`processManually` 数组允许你针对选定的路由关闭文件的自动处理。这些值**必须是路由模式**，而不是 URL。
 
 ```ts
 multipart: {
@@ -285,7 +285,7 @@ encoding
 
 <dd>
 
-The encoding to use when converting the request body Buffer to a string. Most likely, you want to use `utf-8`. However, you can use any encoding supported by the [iconv-lite package](https://www.npmjs.com/package/iconv-lite#readme).
+用于将请求体 Buffer 转换为字符串的编码。大多数情况下，你会希望使用 `utf-8`。不过，你可以使用 [iconv-lite 包](https://www.npmjs.com/package/iconv-lite#readme)支持的任何编码。
 
 </dd>
 
@@ -297,7 +297,7 @@ limit
 
 <dd>
 
-The maximum limit of bytes to allow when processing all files. You can define the individual file size limit using the [request.file](./file_uploads.md) method.
+处理所有文件时允许的最大字节限制。你可以使用 [request.file](./file_uploads.md) 方法定义单个文件的大小限制。
 
 </dd>
 
@@ -309,7 +309,7 @@ fieldsLimit
 
 <dd>
 
-The maximum limit of bytes to allow for the fields (not files) when processing the multipart request. A `413` error will be returned if the field size exceeds the configured limit.
+处理 multipart 请求时，允许字段（非文件）的最大字节限制。如果字段大小超过配置的限制，将返回 `413` 错误。
 
 </dd>
 

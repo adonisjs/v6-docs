@@ -1,14 +1,14 @@
 ---
-summary: Response class is used to send HTTP responses. It supports sending HTML fragments, JSON objects, streams, and much more.
+summary: Response 类用于发送 HTTP 响应。它支持发送 HTML 片段、JSON 对象、流等。
 ---
 
-# Response
+# 响应 (Response)
 
-An instance of the [response class](https://github.com/adonisjs/http-server/blob/main/src/response.ts) is used to respond to HTTP requests. AdonisJS supports sending **HTML fragments**, **JSON objects**, **streams**, and much more. The response instance can be accessed using the `ctx.response` property.
+[Response 类](https://github.com/adonisjs/http-server/blob/main/src/response.ts) 的实例用于响应 HTTP 请求。AdonisJS 支持发送 **HTML 片段**、**JSON 对象**、**流** 等。可以通过 `ctx.response` 属性访问响应实例。
 
-## Sending response
+## 发送响应
 
-The simplest way to send a response is to return a value from the route handler.
+发送响应的最简单方法是从路由处理程序返回值。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -28,7 +28,7 @@ router.get('/', async () => {
 })
 ```
 
-Along with returning a value from the route handler, you can use the `response.send` method to explicitly set the response body. However, calling the `response.send` method multiple times will overwrite the old body and only keep the latest one.
+除了从路由处理程序返回值外，还可以使用 `response.send` 方法显式设置响应体。但是，多次调用 `response.send` 方法将覆盖旧的响应体，只保留最新的响应体。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -48,7 +48,7 @@ router.get('/', async ({ response }) => {
 })
 ```
 
-A custom status code for the response can be set using the `response.status` method.
+可以使用 `response.status` 方法设置响应的自定义状态码。
 
 ```ts
 response.status(200).send({ page: 'home' })
@@ -57,11 +57,11 @@ response.status(200).send({ page: 'home' })
 response.status(201).send('')
 ```
 
-## Streaming content
+## 流式传输内容
 
-The `response.stream` method allows piping a stream to the response. The method internally destroys the stream after it finishes.
+`response.stream` 方法允许将流管道传输到响应。该方法在流完成后会在内部销毁流。
 
-The `response.stream` method does not set the `content-type` and the `content-length` headers; you must set them explicitly before streaming the content.
+`response.stream` 方法不会设置 `content-type` 和 `content-length` 标头；在流式传输内容之前，必须显式设置它们。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -72,7 +72,7 @@ router.get('/', async ({ response }) => {
 })
 ```
 
-A 500 status code is sent to the client in case of an error. However, you can customize the error code and message by defining a callback as the second parameter.
+发生错误时，将向客户端发送 500 状态码。但是，你可以通过将回调定义为第二个参数来自定义错误代码和消息。
 
 ```ts
 const image = fs.createReadStream('./some-file.jpg')
@@ -85,9 +85,9 @@ response.stream(image, () => {
 })
 ```
 
-## Downloading files
+## 下载文件
 
-We recommend using the `response.download` method over the `response.stream` method when you want to stream files from the disk. This is because the `download` method automatically sets the `content-type` and the `content-length` headers.
+当你想从磁盘流式传输文件时，我们建议使用 `response.download` 方法而不是 `response.stream` 方法。这是因为 `download` 方法会自动设置 `content-type` 和 `content-length` 标头。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -100,7 +100,7 @@ router.get('/uploads/:file', async ({ response, params }) => {
 })
 ```
 
-Optionally, you can generate an [Etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) for the file contents. Using Etags will help the browser re-use the cached response from the previous request (if any).
+或者，你可以为文件内容生成 [Etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)。使用 Etags 将有助于浏览器重用先前请求（如果有）的缓存响应。
 
 ```ts
 const filePath = app.makePath(`uploads/${params.file}`)
@@ -109,7 +109,7 @@ const generateEtag = true
 response.download(filePath, generateEtag)
 ```
 
-Similar to the `response.stream` method, you can send a custom error message and status code by defining a callback as the last parameter.
+与 `response.stream` 方法类似，你可以通过将回调定义为最后一个参数来发送自定义错误消息和状态码。
 
 ```ts
 const filePath = app.makePath(`uploads/${params.file}`)
@@ -124,9 +124,9 @@ response.download(filePath, generateEtag, (error) => {
 })
 ```
 
-### Force downloading files
+### 强制下载文件
 
-The `response.attachment` method is similar to the `response.download` method, but it forces the browsers to save the file on the user's computer by setting the [Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) header.
+`response.attachment` 方法与 `response.download` 方法类似，但它通过设置 [Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) 标头强制浏览器将文件保存在用户的计算机上。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -139,11 +139,11 @@ router.get('/uploads/:file', async ({ response, params }) => {
 })
 ```
 
-## Setting response status and headers
+## 设置响应状态和标头
 
-### Setting status
+### 设置状态
 
-You may set the response status using the `response.status` method. Calling this method will override the existing response status (if any). However, you may use the `response.safeStatus` method to set the status only when it is `undefined`.
+你可以使用 `response.status` 方法设置响应状态。调用此方法将覆盖现有的响应状态（如果有）。但是，你可以使用 `response.safeStatus` 方法仅在状态为 `undefined` 时设置状态。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -162,9 +162,9 @@ router.get('/', async ({ response }) => {
 })
 ```
 
-### Setting headers
+### 设置标头
 
-You may set the response headers using the `response.header` method. This method overrides the existing header value (if it already exists). However, you may use the `response.safeHeader` method to set the header only when it is `undefined`.
+你可以使用 `response.header` 方法设置响应标头。此方法将覆盖现有的标头值（如果已存在）。但是，你可以使用 `response.safeHeader` 方法仅在标头为 `undefined` 时设置标头。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -183,27 +183,27 @@ router.get('/', async ({ response }) => {
 })
 ```
 
-You can use the `response.append` method to append values to existing header values.
+你可以使用 `response.append` 方法将值附加到现有的标头值。
 
 ```ts
 response.append('Set-cookie', 'cookie-value')
 ```
 
-The `response.removeHeader` method removes the existing header.
+`response.removeHeader` 方法删除现有的标头。
 
 ```ts
 response.removeHeader('Set-cookie')
 ```
 
-### X-Request-Id header
+### X-Request-Id 标头
 
-If the header exists in the current request or if [Generating request ids](./request#generating-request-ids) is enabled, the header will be present in the response.
+如果当前请求中存在该标头，或者启用了 [生成请求 ID](./request#generating-request-ids)，则该标头将出现在响应中。
 
-## Redirects
+## 重定向
 
-The `response.redirect` method returns an instance of the [Redirect](https://github.com/adonisjs/http-server/blob/main/src/redirect.ts) class. The redirect class uses fluent API to construct the redirect URL.
+`response.redirect` 方法返回 [Redirect](https://github.com/adonisjs/http-server/blob/main/src/redirect.ts) 类的实例。重定向类使用流畅的 API 来构建重定向 URL。
 
-The simplest way to perform a redirect is to call the `redirect.toPath` method with the redirection path.
+执行重定向的最简单方法是使用重定向路径调用 `redirect.toPath` 方法。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -213,7 +213,7 @@ router.get('/posts', async ({ response }) => {
 })
 ```
 
-The redirect class also allows constructing a URL from a pre-registered route. The `redirect.toRoute` method accepts the [route identifier](./routing.md#route-identifier) as the first parameter and the route params as the second parameter.
+重定向类还允许从预先注册的路由构建 URL。`redirect.toRoute` 方法接受 [路由标识符](./routing.md#route-identifier) 作为第一个参数，将路由参数作为第二个参数。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -225,47 +225,47 @@ router.get('/posts/:id', async ({ response, params }) => {
 })
 ```
 
-### Redirect back to the previous page
+### 重定向回上一页
 
-You might want to redirect the user to the previous page during form submissions in case of validation errors. You can do that using the `redirect.back` method.
+在表单提交期间出现验证错误时，你可能希望将用户重定向回上一页。你可以使用 `redirect.back` 方法来做到这一点。
 
 ```ts
 response.redirect().back()
 ```
 
-### Redirection status code
+### 重定向状态码
 
-The default status for redirect responses is `302`; you can change it by calling the `redirect.status` method.
+重定向响应的默认状态为 `302`；你可以通过调用 `redirect.status` 方法来更改它。
 
 ```ts
 response.redirect().status(301).toRoute('articles.show', { id: params.id })
 ```
 
-### Redirect with query string
+### 带有查询字符串的重定向
 
-You can use the `withQs` method to append a query string to the redirect URL. The method accepts an object of a key-value pair and converts it to a string.
+你可以使用 `withQs` 方法将查询字符串附加到重定向 URL。该方法接受键值对对象并将其转换为字符串。
 
 ```ts
 response.redirect().withQs({ page: 1, limit: 20 }).toRoute('articles.index')
 ```
 
-To forward the query string from the current request URL, call the `withQs` method without any parameters.
+要从当前请求 URL 转发查询字符串，请在没有任何参数的情况下调用 `withQs` 方法。
 
 ```ts
 // Forward current URL query string
 response.redirect().withQs().toRoute('articles.index')
 ```
 
-When redirecting back to the previous page, the `withQs` method will forward the query string of the previous page.
+当重定向回上一页时，`withQs` 方法将转发上一页的查询字符串。
 
 ```ts
 // Forward current URL query string
 response.redirect().withQs().back()
 ```
 
-## Aborting request with an error
+## 中止请求并报错
 
-You may use the `response.abort` method to end the request by raising an exception. The method will throw an `E_HTTP_REQUEST_ABORTED` exception and trigger the [exception handling](./exception_handling.md) flow.
+你可以使用 `response.abort` 方法通过引发异常来结束请求。该方法将抛出 `E_HTTP_REQUEST_ABORTED` 异常并触发 [异常处理](./exception_handling.md) 流程。
 
 ```ts
 router.get('posts/:id/edit', async ({ response, auth, params }) => {
@@ -279,15 +279,15 @@ router.get('posts/:id/edit', async ({ response, auth, params }) => {
 })
 ```
 
-By default, the exception will create an HTTP response with a `400` status code. However, you can specify a custom status code as the second parameter.
+默认情况下，该异常将创建一个状态码为 `400` 的 HTTP 响应。但是，你可以指定自定义状态码作为第二个参数。
 
 ```ts
 response.abort({ message: 'Cannot edit post' }, 403)
 ```
 
-## Running actions after response finishes
+## 响应完成后运行操作
 
-You may listen for the event when Node.js finishes writing the response to the TCP socket using the `response.onFinish` method. Under the hood, we use the [on-finished](https://github.com/jshttp/on-finished) package, so feel free to consult the package README file for an in-depth technical explanation.
+你可以使用 `response.onFinish` 方法监听 Node.js 完成将响应写入 TCP 套接字的事件。在底层，我们使用 [on-finished](https://github.com/jshttp/on-finished) 包，因此请随时查阅该包的 README 文件以获取深入的技术说明。
 
 ```ts
 router.get('posts', ({ response }) => {
@@ -297,9 +297,9 @@ router.get('posts', ({ response }) => {
 })
 ```
 
-## Accessing Node.js `res` object
+## 访问 Node.js `res` 对象
 
-You can access the [Node.js res object](https://nodejs.org/dist/latest-v19.x/docs/api/http.html#class-httpserverresponse) using the `response.response` property.
+你可以使用 `response.response` 属性访问 [Node.js res 对象](https://nodejs.org/dist/latest-v19.x/docs/api/http.html#class-httpserverresponse)。
 
 ```ts
 router.get('posts', ({ response }) => {
@@ -307,32 +307,32 @@ router.get('posts', ({ response }) => {
 })
 ```
 
-## Response body serialization
+## 响应体序列化
 
-The response body set using the `response.send` method gets serialized to a string before it is [written as response](https://nodejs.org/dist/latest-v18.x/docs/api/http.html#responsewritechunk-encoding-callback) to the outgoing message stream.
+使用 `response.send` 方法设置的响应体在 [作为响应写入](https://nodejs.org/dist/latest-v18.x/docs/api/http.html#responsewritechunk-encoding-callback) 到传出消息流之前会被序列化为字符串。
 
-Following is the list of supported data types and their serialization rules.
+以下是支持的数据类型及其序列化规则的列表。
 
-- Arrays and Objects are stringified using the [safe stringify function](https://github.com/poppinss/utils/blob/main/src/json/safe_stringify.ts). The method is similar to `JSON.stringify` but removes the circular references and serializes `BigInt(s)`.
-- The number and boolean values are converted to a string.
-- The instance of the Date class is converted to a string by calling the `toISOString` method.
-- Regular expressions and error objects are converted to a string by calling the `toString` method.
-- Any other data type results in an exception.
+- 数组和对象使用 [安全字符串化函数](https://github.com/poppinss/utils/blob/main/src/json/safe_stringify.ts) 进行字符串化。该方法类似于 `JSON.stringify`，但会删除循环引用并序列化 `BigInt(s)`。
+- 数字和布尔值转换为字符串。
+- Date 类的实例通过调用 `toISOString` 方法转换为字符串。
+- 正则表达式和错误对象通过调用 `toString` 方法转换为字符串。
+- 任何其他数据类型都会导致异常。
 
-### Content type inference
+### 内容类型推断
 
-After serializing the response, the response class automatically infers and sets the `content-type` and the `content-length` headers.
+序列化响应后，响应类会自动推断并设置 `content-type` 和 `content-length` 标头。
 
-Following is the list of rules we follow to set the `content-type` header.
+以下是我们设置 `content-type` 标头所遵循的规则列表。
 
-- Content type is set to `application/json` for arrays and objects.
-- It is set to `text/html` for HTML fragments.
-- JSONP responses are sent with the `text/javascript` content type.
-- The content type is set to `text/plain` for everything else.
+- 对于数组和对象，内容类型设置为 `application/json`。
+- 对于 HTML 片段，它设置为 `text/html`。
+- JSONP 响应使用 `text/javascript` 内容类型发送。
+- 对于其他所有内容，内容类型设置为 `text/plain`。
 
-## Extending Response class
+## 扩展 Response 类
 
-You can add custom properties to the Response class using macros or getters. Make sure to read the [extending AdonisJS guide](../concepts/extending_the_framework.md) first if you are new to the concept of macros.
+你可以使用宏 (macros) 或 getter 向 Response 类添加自定义属性。如果你是第一次接触宏的概念，请务必先阅读 [扩展 AdonisJS 指南](../concepts/extending_the_framework.md)。
 
 ```ts
 import { Response } from '@adonisjs/core/http'
@@ -345,7 +345,7 @@ Response.getter('property', function (this: Response) {
 })
 ```
 
-Since the macros and getters are added at runtime, you must inform TypeScript about their types.
+由于宏和 getter 是在运行时添加的，你必须告知 TypeScript 它们的类型。
 
 ```ts
 declare module '@adonisjs/core/http' {

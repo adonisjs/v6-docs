@@ -1,20 +1,20 @@
 ---
-summary: Learn how to use environment variables inside an AdonisJS application.
+summary: 了解如何在 AdonisJS 应用程序中使用环境变量。
 ---
 
-# Environment variables
+# 环境变量
 
-Environment variables serve the purpose of storing secrets like the database password, the app secret, or an API key outside your application codebase.
+环境变量用于在应用程序代码库之外存储数据库密码、应用密钥或 API 密钥等机密信息。
 
-Also, environment variables can be used to have different configurations for different environments. For example, you may use a memory mailer during tests, an SMTP mailer during development, and a third-party service in production.
+此外，环境变量还可用于针对不同环境进行不同的配置。例如，你可以在测试期间使用内存邮件程序，在开发期间使用 SMTP 邮件程序，在生产环境中使用第三方服务。
 
-Since environment variables are supported by all operating systems, deployment platforms, and CI/CD pipelines, they have become a de-facto standard for storing secrets and environment-specific config.
+由于所有操作系统、部署平台和 CI/CD 流水线都支持环境变量，因此它们已成为存储机密和特定于环境配置的事实标准。
 
-In this guide, we will learn how to leverage environment variables inside an AdonisJS application.
+在本指南中，我们将学习如何在 AdonisJS 应用程序中利用环境变量。
 
-## Reading environment variables
+## 读取环境变量
 
-Node.js natively exposes all the environment variables as an object through the [`process.env` global property](https://nodejs.org/dist/latest-v8.x/docs/api/process.html#process_process_env), and you may access them as follows. 
+Node.js 原生通过 [`process.env` 全局属性](https://nodejs.org/dist/latest-v8.x/docs/api/process.html#process_process_env) 将所有环境变量作为对象公开，你可以按如下方式访问它们。
 
 ```dotenv
 process.env.NODE_ENV
@@ -22,15 +22,15 @@ process.env.HOST
 process.env.PORT
 ```
 
-## Using the AdonisJS env module
+## 使用 AdonisJS env 模块
 
-Reading environment variables via the `process.env` object requires no setup on the AdonisJS side, as the Node.js runtime supports it. However, in the rest of this document, we will use the AdonisJS env module for the following reasons.
+通过 `process.env` 对象读取环境变量不需要在 AdonisJS 端进行任何设置，因为 Node.js 运行时支持它。但是，在本文档的其余部分，我们将使用 AdonisJS env 模块，原因如下。
 
-- Ability to store and parse environment variables from multiple `.env` files.
-- Validate environment variables as soon as the application starts.
-- Have static-type safety for validated environment variables.
+- 能够从多个 `.env` 文件存储和解析环境变量。
+- 应用程序启动后立即验证环境变量。
+- 为经过验证的环境变量提供静态类型安全。
 
-The env module is instantiated inside the `start/env.ts` file, and you may access it elsewhere inside your application as follows.
+env 模块在 `start/env.ts` 文件中实例化，你可以按如下方式在应用程序的其他位置访问它。
 
 ```ts
 import env from '#start/env'
@@ -39,19 +39,19 @@ env.get('NODE_ENV')
 env.get('HOST')
 env.get('PORT')
 
-// Returns 3333 when PORT is undefined
+// 当 PORT 未定义时返回 3333
 env.get('PORT', 3333)
 ```
 
-### Sharing env module with Edge templates
+### 与 Edge 模板共享 env 模块
 
-If you want to access environment variables within edge templates, then you must share the `env` module as a global variable with edge templates. 
+如果你想在 edge 模板中访问环境变量，则必须将 `env` 模块作为全局变量与 edge 模板共享。
 
-You can [create `view.ts` as a preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory and write the following lines of code inside it.
+你可以 [创建一个 `view.ts` 作为预加载文件](../concepts/adonisrc_file.md#preloads) 在 `start` 目录中，并在其中编写以下代码行。
 
 :::note
 
-Doing this will not expose the `env` module to the browser. The `env` module is only available during server-side rendering.
+这样做不会将 `env` 模块公开给浏览器。`env` 模块仅在服务器端渲染期间可用。
 
 :::
 
@@ -63,16 +63,16 @@ import edge from 'edge.js'
 edge.global('env', env)
 ```
 
-## Validating environment variables
+## 验证环境变量
 
-The validation rules for environment variables are defined inside the `start/env.ts` file using the `Env.create` method. 
+环境变量的验证规则在 `start/env.ts` 文件中使用 `Env.create` 方法定义。
 
-The validation is performed automatically when you first import this file. Typically, the `start/env.ts` file is imported by one of the config files in your project. If not, then AdonisJS will import this file implicitly [before booting the application](https://github.com/adonisjs/slim-starter-kit/blob/main/bin/server.ts#L34-L36).
+当你首次导入此文件时，验证会自动执行。通常，`start/env.ts` 文件由项目中的某个配置文件导入。如果没有，那么 AdonisJS 将隐式导入此文件 [在启动应用程序之前](https://github.com/adonisjs/slim-starter-kit/blob/main/bin/server.ts#L34-L36)。
 
-The `Env.create` method accepts the validation schema as a key-value pair.
+`Env.create` 方法接受验证模式作为键值对。
 
-- The key is the name of the environment variable.
-- The value is the function that performs the validation. It can be a custom inline function or a reference to pre-defined schema methods like `schema.string` or `schema.number`.
+- 键是环境变量的名称。
+- 值是执行验证的函数。它可以是自定义内联函数，也可以是对预定义模式方法（如 `schema.string` 或 `schema.number`）的引用。
 
 ```ts
 import Env from '@adonisjs/core/env'
@@ -98,39 +98,39 @@ export default await Env.create(APP_ROOT, {
 })
 ```
 
-### Static-type information
+### 静态类型信息
 
-The same validation rules are used to infer the static-type information. The type information is available when using the env module.
+相同的验证规则用于推断静态类型信息。使用 env 模块时可以使用类型信息。
 
 ![](./env_intellisense.jpeg)
 
-## Validator schema API
+## 验证器模式 API
 
 ### schema.string
 
-The `schema.string` method ensures the value is a valid string. Empty strings fail the validation, and you must use the optional variant to allow empty strings.
+`schema.string` 方法确保值是有效的字符串。空字符串无法通过验证，你必须使用可选变体来允许空字符串。
 
 ```ts
 {
   APP_KEY: Env.schema.string()
 }
 
-// Mark it as optional
+// 标记为可选
 {
   APP_KEY: Env.schema.string.optional()
 }
 
-// Mark it as optional with a condition
+// 带有条件地标记为可选
 {
   APP_KEY: Env.schema.string.optionalWhen(() => process.env.NODE_ENV === 'production')
 }
 ```
 
-The string value can be validated for its formatting. Following is the list of available formats.
+可以验证字符串值的格式。以下是可用格式的列表。
 
 #### host
 
-Validate the value to be a valid URL or an IP address.
+验证该值是有效的 URL 或 IP 地址。
 
 ```ts
 {
@@ -140,23 +140,23 @@ Validate the value to be a valid URL or an IP address.
 
 #### url
 
-Validate the value to be a valid URL. Optionally, you can make the validation less strict by allowing URLs not to have `protocol` or `tld`.
+验证该值是有效的 URL。或者，你可以通过允许 URL 没有 `protocol` 或 `tld` 来降低验证严格程度。
 
 ```ts
 {
   S3_ENDPOINT: Env.schema.string({ format: 'url' })
 
-  // Allow URLs without protocol
+  // 允许没有协议的 URL
   S3_ENDPOINT: Env.schema.string({ format: 'url', protocol: false })
 
-  // Allow URLs without tld
+  // 允许没有 tld 的 URL
   S3_ENDPOINT: Env.schema.string({ format: 'url', tld: false })
 }
 ```
   
 #### email
 
-Validate the value to be a valid email address.
+验证该值是有效的电子邮件地址。
 
 ```ts
 {
@@ -166,21 +166,21 @@ Validate the value to be a valid email address.
 
 ### schema.boolean
 
-The `schema.boolean` method ensures the value is a valid boolean. Empty values fail the validation, and you must use the optional variant to allow empty values.
+`schema.boolean` 方法确保值是有效的布尔值。空值无法通过验证，你必须使用可选变体来允许空值。
 
-The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to the boolean data type.
+`'true'`、`'1'`、`'false'` 和 `'0'` 的字符串表示形式将转换为布尔数据类型。
 
 ```ts
 {
   CACHE_VIEWS: Env.schema.boolean()
 }
 
-// Mark it as optional
+// 标记为可选
 {
   CACHE_VIEWS: Env.schema.boolean.optional()
 }
 
-// Mark it as optional with a condition
+// 带有条件地标记为可选
 {
   CACHE_VIEWS: Env.schema.boolean.optionalWhen(() => process.env.NODE_ENV === 'production')
 }
@@ -188,19 +188,19 @@ The string representations of `'true'`, `'1'`, `'false'`, and `'0'` are cast to 
 
 ### schema.number
 
-The `schema.number` method ensures the value is a valid number. The string representation of a number value is cast to the number data type.
+`schema.number` 方法确保值是有效的数字。数字值的字符串表示形式将转换为数字数据类型。
 
 ```ts
 {
   PORT: Env.schema.number()
 }
 
-// Mark it as optional
+// 标记为可选
 {
   PORT: Env.schema.number.optional()
 }
 
-// Mark it as optional with a condition
+// 带有条件地标记为可选
 {
   PORT: Env.schema.number.optionalWhen(() => process.env.NODE_ENV === 'production')
 }
@@ -208,7 +208,7 @@ The `schema.number` method ensures the value is a valid number. The string repre
 
 ### schema.enum
 
-The `schema.enum` method validates the environment variable against one of the pre-defined values. The enum options can be specified as an array of values or a TypeScript native enum type.
+`schema.enum` 方法根据预定义的值之一验证环境变量。枚举选项可以指定为值数组或 TypeScript 原生枚举类型。
 
 ```ts
 {
@@ -217,7 +217,7 @@ The `schema.enum` method validates the environment variable against one of the p
     .enum(['development', 'production'] as const)
 }
 
-// Mark it as optional
+// 标记为可选
 {
   NODE_ENV: Env
     .schema
@@ -225,7 +225,7 @@ The `schema.enum` method validates the environment variable against one of the p
     .optional(['development', 'production'] as const)
 }
 
-// Mark it as optional with a condition
+// 带有条件地标记为可选
 {
   NODE_ENV: Env
     .schema
@@ -236,7 +236,7 @@ The `schema.enum` method validates the environment variable against one of the p
     )
 }
 
-// Using native enums
+// 使用原生枚举
 enum NODE_ENV {
   development = 'development',
   production = 'production'
@@ -247,11 +247,11 @@ enum NODE_ENV {
 }
 ```
 
-### Custom functions
+### 自定义函数
 
-Custom functions can perform validations not covered by the schema API. 
+自定义函数可以执行模式 API 未涵盖的验证。
 
-The function receives the name of the environment variable as the first argument and the value as the second argument. It must return the final value post-validation.
+该函数接收环境变量的名称作为第一个参数，接收值作为第二个参数。它必须返回验证后的最终值。
 
 ```ts
 {
@@ -269,11 +269,11 @@ The function receives the name of the environment variable as the first argument
 }
 ```
 
-## Defining environment variables
+## 定义环境变量
 
-### In development
+### 在开发中
 
-The environment variables are defined inside the `.env` file during development. The env module looks for this file within the project's root and automatically parses it (if it exists).
+在开发过程中，环境变量定义在 `.env` 文件中。env 模块在项目的根目录中查找此文件并自动解析它（如果存在）。
 
 ```dotenv
 // title: .env
@@ -285,25 +285,25 @@ SESSION_DRIVER=cookie
 CACHE_VIEWS=false
 ```
 
-### In production
+### 在生产中
 
-Using your deployment platform to define the environment variables is recommended in production. Most modern-day deployment platforms have first-class support for defining environment variables from their web UI.
+在生产环境中，建议使用你的部署平台来定义环境变量。大多数现代部署平台都对从其 Web UI 定义环境变量提供了一流的支持。
 
-Suppose your deployment platform provides no means for defining environment variables. You can create a `.env` file in the project root or at some different location on your production server.
+假设你的部署平台没有提供定义环境变量的方法。你可以在项目根目录或生产服务器上的其他位置创建一个 `.env` 文件。
 
-AdonisJS will automatically read the `.env` file from the project root. However, you must set the `ENV_PATH` variable when the `.env` file is stored at some different location.
+AdonisJS 将自动从项目根目录读取 `.env` 文件。但是，当 `.env` 文件存储在其他位置时，你必须设置 `ENV_PATH` 变量。
 
 ```sh
-# Attempts to read .env file from project root
+# 尝试从项目根目录读取 .env 文件
 node server.js
 
-# Reads the .env file from the "/etc/secrets" directory
+# 从 "/etc/secrets" 目录读取 .env 文件
 ENV_PATH=/etc/secrets node server.js
 ```
 
-### During tests
+### 在测试期间
 
-The environment variables specific to the test environment must be defined within the `.env.test` file. The values from this file override the values from the `.env` file.
+特定于测试环境的环境变量必须定义在 `.env.test` 文件中。此文件中的值会覆盖 `.env` 文件中的值。
 
 ```dotenv
 // title: .env
@@ -320,57 +320,57 @@ ASSETS_DRIVER=fake
 ```
 
 ```ts
-// During tests
+// 在测试期间
 import env from '#start/env'
 
 env.get('SESSION_DRIVER') // memory
 ```
 
-### All other dot-env files
+### 所有其他 dot-env 文件
 
-Alongside the `.env` file, AdonisJS processes the environment variables from the following dot-env files. Therefore, you can optionally create these files (if needed).
+除了 `.env` 文件之外，AdonisJS 还会处理来自以下 dot-env 文件的环境变量。因此，你可以选择性地创建这些文件（如果需要）。
 
-The file with the top-most rank overrides the values from the bottom rank files.
+排名最高的那个文件会覆盖排名较低文件中的值。
 
 <table>
     <thead>
         <tr>
-            <th width="40px">Rank</th>
-            <th width="220px">Filename</th>
-            <th>Notes</th>
+            <th width="40px">排名</th>
+            <th width="220px">文件名</th>
+            <th>备注</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>1st</td>
+            <td>第一</td>
             <td><code>.env.[NODE_ENV].local</code></td>
             <td>
-            Loaded for the current <code>NODE_ENV</code>. For example, if the <code>NODE_ENV</code> is set to <code>development</code>, then the <code>.env.development.local</code> file will be loaded.
+            为当前 <code>NODE_ENV</code> 加载。例如，如果 <code>NODE_ENV</code> 设置为 <code>development</code>，则会加载 <code>.env.development.local</code> 文件。
             </td>
         </tr>
         <tr>
-            <td>2nd</td>
+            <td>第二</td>
             <td><code>.env.local</code></td>
-            <td>Loaded in all the environments except the <code>test</code> and <code>testing</code> environments</td>
+            <td>在所有环境中加载，除了 <code>test</code> 和 <code>testing</code> 环境</td>
         </tr>
         <tr>
-            <td>3rd</td>
+            <td>第三</td>
             <td><code>.env.[NODE_ENV]</code></td>
             <td>
-            Loaded for the current <code>NODE_ENV</code>. For example, if the <code>NODE_ENV</code> is set to <code>development</code>, then the <code>.env.development</code> file will be loaded.
+            为当前 <code>NODE_ENV</code> 加载。例如，如果 <code>NODE_ENV</code> 设置为 <code>development</code>，则会加载 <code>.env.development</code> 文件。
             </td>
         </tr>
         <tr>
-            <td>4th</td>
+            <td>第四</td>
             <td><code>.env</code></td>
-            <td>Loaded in all the environments. You should add this file to <code>.gitignore</code> when storing secrets inside it.</td>
+            <td>在所有环境中加载。当在其中存储机密时，你应该将此文件添加到 <code>.gitignore</code> 中。</td>
         </tr>
     </tbody>
 </table>
 
-## Using identifiers for interpolation
+## 使用标识符进行插值
 
-You can define and use "identifiers" to change the interpolation behavior. The identifier is a string that prefix the environment variable value and let you customize the value resolution.
+你可以定义并使用“标识符”来更改插值行为。标识符是一个字符串，它作为环境变量值的前缀，让你自定义值解析。
 
 ```ts
 import { EnvParser } from '@adonisjs/env'
@@ -386,9 +386,9 @@ const envParser = new EnvParser(`
 console.log(await envParser.parse())
 ```
 
-In the above example, the `base64:` prefix tells the env parser to decode the value from base64 before returning it.
+在上面的示例中，`base64:` 前缀告诉 env 解析器在返回之前从 base64 解码该值。
 
-Alternatively, you can define an identifier using the `defineIdentifierIfMissing` method. This method will not override the existing identifier.
+或者，你可以使用 `defineIdentifierIfMissing` 方法定义标识符。此方法不会覆盖现有标识符。
 
 ```ts
 EnvParser.defineIdentifierIfMissing('base64', (value) => {
@@ -398,7 +398,7 @@ EnvParser.defineIdentifierIfMissing('base64', (value) => {
 
 :::note
 
-You can directly use those methods inside the `start/env.ts` file.
+你可以直接在 `start/env.ts` 文件中使用这些方法。
 
 ```ts
 // title: start/env.ts
@@ -415,11 +415,11 @@ export default await Env.create(APP_ROOT, {
 
 :::
 
-## Using variables inside the dot-env files
+## 在 dot-env 文件中使用变量
 
-Within dot-env files, you can reference other environment variables using the variable substitution syntax. 
+在 dot-env 文件中，你可以使用变量替换语法引用其他环境变量。
 
-We compute the `APP_URL` from the `HOST` and the `PORT` properties in the following example.
+在下面的示例中，我们根据 `HOST` 和 `PORT` 属性计算 `APP_URL`。
 
 ```dotenv
 HOST=localhost
@@ -429,16 +429,16 @@ URL=$HOST:$PORT
 // highlight-end
 ```
 
-All **letter**, **numbers**, and the **underscore (_)** after the `$` sign are used to form a variable name. You must wrap the variable name inside curly braces `{}` if the name has special characters other than an underscore.
+`$` 符号后的所有 **字母**、**数字** 和 **下划线 (_)** 用于形成变量名。如果名称包含下划线以外的特殊字符，则必须将变量名包裹在花括号 `{}` 中。
 
 ```dotenv
 REDIS-USER=admin
 REDIS-URL=localhost@${REDIS-USER}
 ```
 
-### Escaping the `$` sign
+### 转义 `$` 符号
 
-To use the `$` sign as a value, you must escape it to prevent variable substitution.
+要将 `$` 符号用作值，必须对其进行转义以防止变量替换。
 
 ```dotenv
 PASSWORD=pa\$\$word

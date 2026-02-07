@@ -1,28 +1,28 @@
 ---
-summary: Learn about the HTTP context in AdonisJS and how to access it from route handlers, middleware, and exception handlers.
+summary: 了解 AdonisJS 中的 HTTP 上下文，以及如何从路由处理程序、中间件和异常处理程序访问它。
 ---
 
-# HTTP context
+# HTTP 上下文
 
-A new instance of [HTTP Context class](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts) is generated for every HTTP request and passed along to the route handler, middleware, and exception handler.
+每个 HTTP 请求都会生成一个新的 [HTTP Context 类](https://github.com/adonisjs/http-server/blob/main/src/http_context/main.ts)实例，并将其传递给路由处理程序、中间件和异常处理程序。
 
-HTTP Context holds all the information you may need related to an HTTP request. For example:
+HTTP 上下文保存了你可能需要的与 HTTP 请求相关的所有信息。例如：
 
-- You can access the request body, headers, and query params using the [ctx.request](../basics/request.md) property.
-- You can respond to the HTTP request using the [ctx.response](../basics/response.md) property.
-- Access the logged-in user using the [ctx.auth](../authentication/introduction.md) property.
-- Authorize user actions using the [ctx.bouncer](../security/authorization.md) property.
-- And so on.
+- 你可以使用 [ctx.request](../basics/request.md) 属性访问请求体、标头和查询参数。
+- 你可以使用 [ctx.response](../basics/response.md) 属性响应 HTTP 请求。
+- 使用 [ctx.auth](../authentication/introduction.md) 属性访问已登录的用户。
+- 使用 [ctx.bouncer](../security/authorization.md) 属性授权用户操作。
+- 等等。
 
-In a nutshell, the context is a request-specific store holding all the information for the ongoing request.
+简而言之，上下文是一个特定于请求的存储，保存了当前请求的所有信息。
 
-## Getting access to the HTTP context
+## 获取 HTTP 上下文的访问权限
 
-The HTTP context is passed by reference to the route handler, middleware, and exception handler, and you can access it as follows.
+HTTP 上下文通过引用传递给路由处理程序、中间件和异常处理程序，你可以按如下方式访问它。
 
-### Route handler
+### 路由处理程序
 
-The [router handler](../basics/routing.md) receives the HTTP context as the first parameter.
+[路由处理程序](../basics/routing.md)接收 HTTP 上下文作为第一个参数。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -33,7 +33,7 @@ router.get('/', (ctx) => {
 ```
 
 ```ts
-// title: Destructure properties
+// title: 解构属性
 import router from '@adonisjs/core/services/router'
 
 router.get('/', ({ request, response }) => {
@@ -47,9 +47,9 @@ router.get('/', ({ request, response }) => {
 })
 ```
 
-### Controller method
+### 控制器方法
 
-The [controller method](../basics/controllers.md) (similar to the router handler) receives the HTTP context as the first parameter.
+[控制器方法](../basics/controllers.md)（类似于路由处理程序）接收 HTTP 上下文作为第一个参数。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -60,9 +60,9 @@ export default class HomeController {
 }
 ```
 
-### Middleware class
+### 中间件类
 
-The `handle` method of the [middleware class](../basics/middleware.md) receives HTTP context as the first parameter. 
+[中间件类](../basics/middleware.md)的 `handle` 方法接收 HTTP 上下文作为第一个参数。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -73,9 +73,9 @@ export default class AuthMiddleware {
 }
 ```
 
-### Exception handler class
+### 异常处理程序类
 
-The `handle` and the `report` methods of the [global exception handler](../basics/exception_handling.md) class receive HTTP context as the second parameter. The first parameter is the `error` property.
+[全局异常处理程序](../basics/exception_handling.md)类的 `handle` 和 `report` 方法接收 HTTP 上下文作为第二个参数。第一个参数是 `error` 属性。
 
 ```ts
 import {
@@ -94,18 +94,18 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 }
 ```
 
-## Injecting HTTP Context using Dependency Injection
+## 使用依赖注入注入 HTTP 上下文
 
-If you use Dependency injection throughout your application, you can inject the HTTP context to a class or a method by type hinting the `HttpContext` class.
+如果你在整个应用程序中使用依赖注入，你可以通过类型提示 `HttpContext` 类将 HTTP 上下文注入到类或方法中。
 
 
 :::warning
 
-Ensure the `#middleware/container_bindings_middleware` middleware is registered inside the `start/kernel.ts` file. This middleware is required to resolve request-specific values (i.e., the HttpContext class) from the container.
+确保在 `start/kernel.ts` 文件中注册了 `#middleware/container_bindings_middleware` 中间件。此中间件是从容器中解析请求特定值（即 HttpContext 类）所必需的。
 
 :::
 
-See also: [IoC container guide](../concepts/dependency_injection.md)
+另请参阅：[IoC 容器指南](../concepts/dependency_injection.md)
 
 ```ts
 // title: app/services/user_service.ts
@@ -117,12 +117,12 @@ export default class UserService {
   constructor(protected ctx: HttpContext) {}
   
   all() {
-    // method implementation
+    // 方法实现
   }
 }
 ```
 
-For automatic dependency resolution to work, you must inject the `UserService` inside your controller. Remember, the first argument to a controller method will always be the context, and the rest will be injected using the IoC container.
+为了使自动依赖解析工作，你必须在控制器中注入 `UserService`。请记住，控制器方法的第一个参数始终是上下文，其余参数将使用 IoC 容器注入。
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -137,17 +137,17 @@ export default class UsersController {
 }
 ```
 
-That's all! The `UserService` will now automatically receive an instance of the ongoing HTTP request. You can repeat the same process for nested dependencies as well.
+就是这样！`UserService` 现在将自动接收当前 HTTP 请求的实例。你也可以对嵌套依赖项重复相同的过程。
 
-## Accessing HTTP context from anywhere inside your application
+## 在应用程序的任何位置访问 HTTP 上下文
 
-Dependency injection is one way to accept the HTTP context as a class constructor or a method dependency and then rely on the container to resolve it for you.
+依赖注入是接受 HTTP 上下文作为类构造函数或方法依赖项，然后依靠容器为你解析它的一种方式。
 
-However, it is not a hard requirement to restructure your application and use Dependency injection everywhere. You can also access the HTTP context from anywhere inside your application using the [Async local storage](https://nodejs.org/dist/latest-v21.x/docs/api/async_context.html#class-asynclocalstorage) provided by Node.js. 
+但是，这并不是重构应用程序并随处使用依赖注入的硬性要求。你还可以使用 Node.js 提供的 [Async local storage](https://nodejs.org/dist/latest-v21.x/docs/api/async_context.html#class-asynclocalstorage) 在应用程序的任何位置访问 HTTP 上下文。
 
-We have a [dedicated guide](./async_local_storage.md) on how Async local storage works and how AdonisJS uses it to provide global access to the HTTP context.
+我们有一个[专门的指南](./async_local_storage.md)介绍 Async local storage 的工作原理以及 AdonisJS 如何使用它来提供对 HTTP 上下文的全局访问。
 
-In the following example, the `UserService` class uses the `HttpContext.getOrFail` method to get the HTTP context instance for the ongoing request.
+在以下示例中，`UserService` 类使用 `HttpContext.getOrFail` 方法获取当前请求的 HTTP 上下文实例。
 
 ```ts
 // title: app/services/user_service.ts
@@ -161,7 +161,7 @@ export default class UserService {
 }
 ```
 
-The following code block shows the `UserService` class usage inside the `UsersController`.
+以下代码块显示了 `UsersController` 中 `UserService` 类的用法。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -175,9 +175,9 @@ export default class UsersController {
 }
 ```
 
-## HTTP Context properties
+## HTTP 上下文属性
 
-Following is the list of properties you can access through the HTTP context. As you install new packages, they may add additional properties to the context.
+以下是你可以通过 HTTP 上下文访问的属性列表。随着你安装新包，它们可能会向上下文添加其他属性。
 
 <dl>
 <dt>
@@ -188,7 +188,7 @@ ctx.request
 
 <dd>
 
-Reference to an instance of the [HTTP Request class](../basics/request.md).
+[HTTP Request 类](../basics/request.md)实例的引用。
 
 </dd>
 
@@ -200,7 +200,7 @@ ctx.response
 
 <dd>
 
-Reference to an instance of the [HTTP Response class](../basics/response.md).
+[HTTP Response 类](../basics/response.md)实例的引用。
 
 </dd>
 
@@ -212,7 +212,7 @@ ctx.logger
 
 <dd>
 
-Reference to an instance of [logger](../digging_deeper/logger.md) created for a given HTTP request.
+为给定 HTTP 请求创建的 [logger](../digging_deeper/logger.md) 实例的引用。
 
 </dd>
 
@@ -224,7 +224,7 @@ ctx.route
 
 <dd>
 
-The matched route for the current HTTP request. The `route` property is an object of type [StoreRouteNode](https://github.com/adonisjs/http-server/blob/main/src/types/route.ts#L69)
+当前 HTTP 请求的匹配路由。`route` 属性是 [StoreRouteNode](https://github.com/adonisjs/http-server/blob/main/src/types/route.ts#L69) 类型的对象。
 
 </dd>
 
@@ -236,7 +236,7 @@ ctx.params
 
 <dd>
 
-An object of route params
+路由参数对象。
 
 </dd>
 
@@ -248,7 +248,7 @@ ctx.subdomains
 
 <dd>
 
-An object of route subdomains. Only exists when the route is part of a dynamic subdomain
+路由子域名对象。仅当路由是动态子域名的一部分时存在。
 
 </dd>
 
@@ -260,7 +260,7 @@ ctx.session
 
 <dd>
 
-Reference to an instance of [Session](../basics/session.md) created for the current HTTP request.
+为当前 HTTP 请求创建的 [Session](../basics/session.md) 实例的引用。
 
 </dd>
 
@@ -272,7 +272,7 @@ ctx.auth
 
 <dd>
 
-Reference to an instance of the [Authenticator class](https://github.com/adonisjs/auth/blob/main/src/authenticator.ts). Learn more about [authentication](../authentication/introduction.md).
+[Authenticator 类](https://github.com/adonisjs/auth/blob/main/src/authenticator.ts)实例的引用。了解更多关于 [身份验证](../authentication/introduction.md) 的信息。
 
 </dd>
 
@@ -284,7 +284,7 @@ ctx.view
 
 <dd>
 
-Reference to an instance of Edge renderer. Learn more about Edge in [View and templates guide](../views-and-templates/introduction.md#using-edge)
+Edge 渲染器实例的引用。在 [视图和模板指南](../views-and-templates/introduction.md#using-edge) 中了解更多关于 Edge 的信息。
 
 </dd>
 
@@ -296,7 +296,7 @@ ctx\.ally
 
 <dd>
 
-Reference to an instance of the [Ally Manager class](https://github.com/adonisjs/ally/blob/main/src/ally_manager.ts) to implement social login in your apps. Learn more about [Ally](../authentication/social_authentication.md)
+[Ally Manager 类](https://github.com/adonisjs/ally/blob/main/src/ally_manager.ts)实例的引用，用于在应用程序中实现社交登录。了解更多关于 [Ally](../authentication/social_authentication.md) 的信息。
 
 </dd>
 
@@ -308,7 +308,7 @@ ctx.bouncer
 
 <dd>
 
-Reference to an instance of the [Bouncer class](https://github.com/adonisjs/bouncer/blob/main/src/bouncer.ts). Learn more about [Authorization](../security/authorization.md).
+[Bouncer 类](https://github.com/adonisjs/bouncer/blob/main/src/bouncer.ts)实例的引用。了解更多关于 [授权](../security/authorization.md) 的信息。
 
 </dd>
 
@@ -320,16 +320,16 @@ ctx.i18n
 
 <dd>
 
-Reference to an instance of the [I18n class](https://github.com/adonisjs/i18n/blob/main/src/i18n.ts). Learn more about `i18n` in [Internationalization](../digging_deeper/i18n.md) guide.
+[I18n 类](https://github.com/adonisjs/i18n/blob/main/src/i18n.ts)实例的引用。在 [国际化](../digging_deeper/i18n.md) 指南中了解更多关于 `i18n` 的信息。
 
 </dd>
 
 </dl>
 
 
-## Extending HTTP context
+## 扩展 HTTP 上下文
 
-You may add custom properties to the HTTP context class using macros or getters. Make sure to read the [extending AdonisJS guide](./extending_the_framework.md) first if you are new to the concept of macros.
+你可以使用宏 (macros) 或 getter 向 HTTP 上下文类添加自定义属性。如果你是宏概念的新手，请务必先阅读 [扩展 AdonisJS 指南](./extending_the_framework.md)。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -343,7 +343,7 @@ HttpContext.getter('aProperty', function (this: HttpContext) {
 })
 ```
 
-Since the macros and getters are added at runtime, you must inform TypeScript about their types using module augmentation.
+由于宏和 getter 是在运行时添加的，因此你必须使用模块增强将它们的类型通知 TypeScript。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -366,11 +366,11 @@ HttpContext.getter('aProperty', function (this: HttpContext) {
 })
 ```
 
-## Creating dummy context during tests
+## 在测试期间创建虚拟上下文
 
-You may use the `testUtils` service to create a dummy HTTP context during tests. 
+你可以使用 `testUtils` 服务在测试期间创建虚拟 HTTP 上下文。
 
-The context instance is not attached to any route; therefore, the `ctx.route` and `ctx.params` values will be undefined. However, you can manually assign these properties if required by the code under test.
+上下文实例未附加到任何路由；因此，`ctx.route` 和 `ctx.params` 值将为 undefined。但是，如果被测试代码需要，你可以手动分配这些属性。
 
 ```ts
 import testUtils from '@adonisjs/core/services/test_utils'
@@ -378,7 +378,7 @@ import testUtils from '@adonisjs/core/services/test_utils'
 const ctx = testUtils.createHttpContext()
 ```
 
-By default, the `createHttpContext` method uses fake values for the `req` and the `res` objects. However, you can define custom values for these properties as shown in the following example.
+默认情况下，`createHttpContext` 方法对 `req` 和 `res` 对象使用伪造值。但是，你可以为这些属性定义自定义值，如下例所示。
 
 ```ts
 import { createServer } from 'node:http'
@@ -394,8 +394,8 @@ createServer((req, res) => {
 })
 ```
 
-### Using the HttpContext factory
-The `testUtils` service is only available inside an AdonisJS application; therefore, if you are building a package and need access to a fake HTTP context, you may use the [HttpContextFactory](https://github.com/adonisjs/http-server/blob/main/factories/http_context.ts#L30) class.
+### 使用 HttpContext 工厂
+`testUtils` 服务仅在 AdonisJS 应用程序内部可用；因此，如果你正在构建一个包并需要访问伪造的 HTTP 上下文，可以使用 [HttpContextFactory](https://github.com/adonisjs/http-server/blob/main/factories/http_context.ts#L30) 类。
 
 ```ts
 import { HttpContextFactory } from '@adonisjs/core/factories/http'

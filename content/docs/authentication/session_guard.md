@@ -1,14 +1,16 @@
 ---
-summary: Learn how to authenticate users using the session guard in AdonisJS.
+summary: 了解如何在 AdonisJS 中使用 session guard 验证用户。
 ---
 
-# Session guard
-The session guard uses the [@adonisjs/session](../basics/session.md) package to login and authenticate users during an HTTP request.
+# 会话守卫
 
-Sessions and cookies have been on the internet for a long time and work great for most applications. Therefore, we recommend using the session guard for server-rendered applications or an SPA web client on the same top-level domain.
+Session guard 使用 [@adonisjs/session](../basics/session.md) 包在 HTTP 请求期间登录和验证用户。
 
-## Configuring the guard
-The authentication guards are defined inside the `config/auth.ts` file. You can configure multiple guards inside this file under the `guards` object.
+会话和 Cookie 已经在互联网上存在很长时间了，对于大多数应用程序来说效果很好。因此，我们建议对服务器端渲染的应用程序或同一顶级域名上的 SPA Web 客户端使用 session guard。
+
+## 配置 guard
+
+身份验证 guards 在 `config/auth.ts` 文件中定义。你可以在此文件中的 `guards` 对象下配置多个 guards。
 
 ```ts
 // title: config/auth.ts
@@ -34,22 +36,23 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-The `sessionGuard` method creates an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) class. It accepts a user provider that can be used to find users during authentication and an optional config object to configure the remember tokens behavior.
+`sessionGuard` 方法创建 [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) 类的实例。它接受一个用户 provider（可用于在身份验证期间查找用户）和一个可选的配置对象（用于配置 remember tokens 行为）。
 
-The `sessionUserProvider` method creates an instance of the [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/user_providers/lucid.ts) class. It accepts a reference to the model to use for authentication.
+`sessionUserProvider` 方法创建 [SessionLucidUserProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/user_providers/lucid.ts) 类的实例。它接受一个对用于身份验证的模型的引用。
 
-## Performing login
-You can login a user using the `login` method from your guard. The method accepts an instance of the User model and creates a login session for them.
+## 执行登录
 
-In the following example:
+你可以使用 guard 中的 `login` 方法登录用户。该方法接受 User 模型的实例并为他们创建登录会话。
 
-- We use the `verifyCredentials` from the [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) to find a user by email and password.
+在以下示例中：
 
-- The `auth.use('web')` returns an instance of the [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) configured inside the `config/auth.ts` file (`web` is the name of the guard defined in your configuration).
+- 我们使用 [AuthFinder mixin](./verifying_user_credentials.md#using-the-auth-finder-mixin) 中的 `verifyCredentials` 通过电子邮件和密码查找用户。
 
-- Next, we call the `auth.use('web').login(user)` method to create a login session for the user.
+- `auth.use('web')` 返回在 `config/auth.ts` 文件中配置的 [SessionGuard](https://github.com/adonisjs/auth/blob/main/modules/session_guard/guard.ts) 实例（`web` 是你在配置中定义的 guard 的名称）。
 
-- Finally, we redirect the user to the `/dashboard` endpoint. Feel free to customize the redirect endpoint.
+- 接下来，我们调用 `auth.use('web').login(user)` 方法为用户创建登录会话。
+
+- 最后，我们将用户重定向到 `/dashboard` 端点。请随意自定义重定向端点。
 
 ```ts
 import User from '#models/user'
@@ -59,22 +62,22 @@ export default class SessionController {
   async store({ request, auth, response }: HttpContext) {
     // highlight-start
     /**
-     * Step 1: Get credentials from the request body
+     * 步骤 1: 从请求体中获取凭据
      */
     const { email, password } = request.only(['email', 'password'])
 
     /**
-     * Step 2: Verify credentials
+     * 步骤 2: 验证凭据
      */
     const user = await User.verifyCredentials(email, password)
 
     /**
-     * Step 3: Login user
+     * 步骤 3: 登录用户
      */
     await auth.use('web').login(user)
 
     /**
-     * Step 4: Send them to a protected route
+     * 步骤 4: 将他们发送到受保护的路由
      */
     response.redirect('/dashboard')
     // highlight-end
@@ -82,9 +85,9 @@ export default class SessionController {
 }
 ```
 
-## Protecting routes
+## 保护路由
 
-You can protect routes from unauthenticated users using the `auth` middleware. The middleware is registered inside the `start/kernel.ts` file under the named middleware collection.
+你可以使用 `auth` 中间件保护路由免受未经身份验证的用户的访问。该中间件在 `start/kernel.ts` 文件中的命名中间件集合下注册。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -94,7 +97,7 @@ export const middleware = router.named({
 })
 ```
 
-Apply the `auth` middleware to the routes you want to protect from unauthenticated users. 
+将 `auth` 中间件应用于你要保护免受未经身份验证的用户访问的路由。
 
 ```ts
 // highlight-start
@@ -109,9 +112,9 @@ router
  // highlight-end
 ```
 
-By default, the auth middleware will authenticate the user against the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `auth` middleware.
+默认情况下，auth 中间件将根据 `default` guard（如配置文件中所定义）对用户进行身份验证。但是，在分配 `auth` 中间件时，你可以指定一个 guards 数组。
 
-In the following example, the auth middleware will attempt to authenticate the request using the `web` and the `api` guards.
+在以下示例中，auth 中间件将尝试使用 `web` 和 `api` guards 对请求进行身份验证。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -128,22 +131,22 @@ router
  // highlight-end
 ```
 
-### Handling authentication exception
+### 处理身份验证异常
 
-The auth middleware throws the [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/errors.ts#L21) if the user is not authenticated. The exception is handled automatically using the following content-negotiation rules.
+如果用户未通过身份验证，auth 中间件会抛出 [E_UNAUTHORIZED_ACCESS](https://github.com/adonisjs/auth/blob/main/src/errors.ts#L21)。该异常将使用以下内容协商规则自动处理。
 
-- Request with `Accept=application/json` header will receive an array of errors with the `message` property.
+- 带有 `Accept=application/json` 标头的请求将收到一个带有 `message` 属性的错误数组。
 
-- Request with `Accept=application/vnd.api+json` header will receive an array of errors as per the [JSON API](https://jsonapi.org/format/#errors) spec.
+- 带有 `Accept=application/vnd.api+json` 标头的请求将收到一个根据 [JSON API](https://jsonapi.org/format/#errors) 规范的错误数组。
 
-- The user will be redirected to the `/login` page for server-rendered applications. You can configure the redirect endpoint within the `auth` middleware class.
+- 对于服务器端渲染的应用程序，用户将被重定向到 `/login` 页面。你可以在 `auth` 中间件类中配置重定向端点。
 
-## Getting access to the logged-in user
+## 获取已登录用户的访问权限
 
-You may access the logged-in user instance using the `auth.user` property. The value is only available when using the `auth` or `silent_auth` middleware or if you call the `auth.authenticate` or `auth.check` methods manually.
+你可以使用 `auth.user` 属性访问已登录的用户实例。该值仅在使用 `auth` 或 `silent_auth` 中间件或者你手动调用 `auth.authenticate` 或 `auth.check` 方法时才可用。
 
 ```ts
-// title: Using auth middleware
+// title: 使用 auth 中间件
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
@@ -157,7 +160,7 @@ router
 ```
 
 ```ts
-// title: Manually calling authenticate method
+// title: 手动调用 authenticate 方法
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
@@ -165,25 +168,25 @@ router
   .get('dashboard', async ({ auth }) => {
     // highlight-start
     /**
-     * First, authenticate the user
+     * 首先，验证用户
      */
     await auth.authenticate()
 
     /**
-     * Then access the user object
+     * 然后访问用户对象
      */ 
     await auth.user!.getAllMetrics()
     // highlight-end
   })
 ```
 
-### Silent auth middleware
+### Silent auth 中间件
 
-The `silent_auth` middleware is similar to the `auth` middleware, but it does not throw an exception when the user is not authenticated. Instead, the request still continues as usual.
+`silent_auth` 中间件类似于 `auth` 中间件，但在用户未通过身份验证时不会抛出异常。相反，请求仍会照常继续。
 
-This middleware is useful when you want to always authenticate the user to perform some actions but do not want to block the request when the user is not authenticated.
+当你希望始终对用户进行身份验证以执行某些操作，但不希望在用户未通过身份验证时阻止请求时，此中间件非常有用。
 
-If you plan to use this middleware, then you must register it inside the list of [router middleware](../basics/middleware.md#router-middleware-stack).
+如果你打算使用此中间件，则必须在 [路由中间件](../basics/middleware.md#router-middleware-stack) 列表中注册它。
 
 ```ts
 // title: start/kernel.ts
@@ -195,8 +198,9 @@ router.use([
 ])
 ```
 
-### Check if the request is authenticated
-You can check if a request has been authenticated using the `auth.isAuthenticated` flag. The value of `auth.user` will always be defined for an authenticated request.
+### 检查请求是否已通过身份验证
+
+你可以使用 `auth.isAuthenticated` 标志检查请求是否已通过身份验证。对于经过身份验证的请求，`auth.user` 的值将始终已定义。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -213,9 +217,9 @@ router
   .use(middleware.auth())
 ```
 
-### Get authenticated user or fail
+### 获取已认证用户或失败
 
-If you do not like using the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-) on the `auth.user` property, you may use the `auth.getUserOrFail` method. This method will return the user object or throw [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) exception.
+如果你不喜欢在 `auth.user` 属性上使用 [非空断言运算符](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-)，可以使用 `auth.getUserOrFail` 方法。此方法将返回用户对象或抛出 [E_UNAUTHORIZED_ACCESS](../references/exceptions.md#e_unauthorized_access) 异常。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -231,8 +235,9 @@ router
   .use(middleware.auth())
 ```
 
-### Access user within Edge templates
-The [InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware) also shares the `ctx.auth` property with Edge templates. Therefore, you can access the currently logged-in user via the `auth.user` property.
+### 在 Edge 模板中访问用户
+
+[InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware) 还与 Edge 模板共享 `ctx.auth` 属性。因此，你可以通过 `auth.user` 属性访问当前登录的用户。
 
 ```edge
 @if(auth.isAuthenticated)
@@ -240,18 +245,17 @@ The [InitializeAuthMiddleware](./introduction.md#the-initialize-auth-middleware)
 @end
 ```
 
-If you want to fetch logged-in user information on a non-protected route, you can use the `auth.check` method to check if the user is logged-in and then access the `auth.user` property. A great use case for this is displaying the logged-in user information on the website header of a public page.
+如果你想在非受保护的路由上获取已登录的用户信息，可以使用 `auth.check` 方法检查用户是否已登录，然后访问 `auth.user` 属性。这方面的一个很好的用例是在公共页面的网站标题上显示已登录的用户信息。
 
 ```edge
 {{--
-  This is a public page; therefore, it is not protected by the auth
-  middleware. However, we still want to display the logged-in
-  user info in the header of the website.
+  这是一个公共页面；因此，它不受 auth 中间件保护。
+  但是，我们仍然希望在网站标题中显示已登录的用户信息。
 
-  For that, we use the `auth.check` method to silently check if the
-  user is logged in and then displays their email in the header.
+  为此，我们使用 `auth.check` 方法静默检查用户是否已登录，
+  然后在标题中显示他们的电子邮件。
 
-  You get the idea!
+  你应该明白了吧！
 --}}
 
 @eval(await auth.check())
@@ -263,8 +267,9 @@ If you want to fetch logged-in user information on a non-protected route, you ca
 </header>
 ```
 
-## Performing logout
-You can logout a user using the `guard.logout` method. During logout, the user state will be deleted from the session store. The currently active remember me token will also be deleted (if using remember me tokens).
+## 执行注销
+
+你可以使用 `guard.logout` 方法注销用户。在注销期间，用户状态将从会话存储中删除。当前活动的“记住我”令牌也将被删除（如果使用“记住我”令牌）。
 
 ```ts
 import { middleware } from '#start/kernel'
@@ -278,14 +283,15 @@ router
   .use(middleware.auth())
 ```
 
-## Using the Remember Me feature
-The Remember Me feature automatically login user after their session expires. This is done by generating a cryptographically secure token and saving it as a cookie inside the user's browser.
+## 使用“记住我”功能
 
-After the user session has expired, AdonisJS will use the remember me cookie, verify the token's validity, and automatically re-create the logged-in session for the user.
+“记住我”功能会在用户会话过期后自动登录用户。这是通过生成加密安全令牌并将其作为 Cookie 保存在用户浏览器中来实现的。
 
-### Creating the Remember Me Tokens table
+用户会话过期后，AdonisJS 将使用“记住我” Cookie，验证令牌的有效性，并自动为用户重新创建登录会话。
 
-The remember me tokens are saved inside the database, and therefore, you must create a new migration to create the `remember_me_tokens` table.
+### 创建 Remember Me Tokens 表
+
+“记住我”令牌保存在数据库中，因此，你必须创建一个新的迁移来创建 `remember_me_tokens` 表。
 
 ```sh
 node ace make:migration remember_me_tokens
@@ -321,8 +327,9 @@ export default class extends BaseSchema {
 }
 ```
 
-### Configuring the tokens provider
-To read-write tokens, you will have to assign the [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/token_providers/db.ts) to the User model.
+### 配置令牌 provider
+
+要读取/写入令牌，你必须将 [DbRememberMeTokensProvider](https://github.com/adonisjs/auth/blob/main/modules/session_guard/token_providers/db.ts) 分配给 User 模型。
 
 ```ts
 import { BaseModel } from '@adonisjs/lucid/orm'
@@ -339,8 +346,9 @@ export default class User extends BaseModel {
 }
 ```
 
-### Enabling Remember Me tokens inside the config
-Finally, let's enable the `useRememberTokens` flag on the session guard config inside the `config/auth.ts` file.
+### 在配置中启用 Remember Me 令牌
+
+最后，让我们在 `config/auth.ts` 文件中的 session guard 配置上启用 `useRememberTokens` 标志。
 
 ```ts
 import { defineConfig } from '@adonisjs/auth'
@@ -364,8 +372,9 @@ const authConfig = defineConfig({
 export default authConfig
 ```
 
-### Remembering users during login
-Once the setup is completed, you can generate the remember me token and cookie using the `guard.login` method as follows.
+### 在登录期间记住用户
+
+设置完成后，你可以使用 `guard.login` 方法生成“记住我”令牌和 Cookie，如下所示。
 
 ```ts
 import User from '#models/user'
@@ -380,7 +389,7 @@ export default class SessionController {
       user,
       // highlight-start
       /**
-       * Generate token when "remember_me" input exists
+       * 当 "remember_me" 输入存在时生成令牌
        */
       !!request.input('remember_me')
       // highlight-end
@@ -391,8 +400,9 @@ export default class SessionController {
 }
 ```
 
-## Using the guest middleware
-The auth package ships with a guest middleware you can use to redirect the logged-in users from accessing the `/login` page. This should be done to avoid creating multiple sessions for a single user on a single device.
+## 使用 guest 中间件
+
+Auth 包附带了一个 guest 中间件，你可以使用它来重定向已登录的用户，阻止其访问 `/login` 页面。这样做是为了避免在单个设备上为单个用户创建多个会话。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -403,7 +413,7 @@ router
   .use(middleware.guest())
 ```
 
-By default, the guest middleware will check the user logged-in status using the `default` guard (as defined in the config file). However, you can specify an array of guards when assigning the `guest` middleware.
+默认情况下，guest 中间件将使用 `default` guard（如配置文件中所定义）检查用户登录状态。但是，在分配 `guest` 中间件时，你可以指定一个 guards 数组。
 
 ```ts
 router
@@ -413,7 +423,8 @@ router
   }))
 ```
 
-Finally, you can configure the redirect route for the logged-in users inside the `./app/middleware/guest_middleware.ts` file.
+最后，你可以在 `./app/middleware/guest_middleware.ts` 文件中为已登录的用户配置重定向路由。
 
-## Events
-Please check the [events reference guide](../references/events.md#session_authcredentials_verified) to view the list of available events emitted by the Auth package.
+## 事件
+
+请查看 [事件参考指南](../references/events.md#session_authcredentials_verified) 以查看 Auth 包发出的可用事件列表。

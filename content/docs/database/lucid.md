@@ -1,49 +1,49 @@
 ---
-summary: Quick overview of Lucid ORM, a SQL query builder and Active Record ORM built on top of Knex.
+summary: Lucid ORM 快速概览，这是一个构建在 Knex 之上的 SQL 查询构建器和 Active Record ORM。
 ---
 
 # Lucid ORM
 
-Lucid is a SQL query builder, and an Active Record ORM built on top of [Knex](https://knexjs.org) created and maintained by the AdonisJS core team. Lucid strives to leverage SQL to its full potential and offers clean API for many advanced SQL operations.
+Lucid 是一个 SQL 查询构建器，也是一个构建在 [Knex](https://knexjs.org) 之上的 Active Record ORM，由 AdonisJS 核心团队创建和维护。Lucid 致力于充分利用 SQL 的潜力，并为许多高级 SQL 操作提供简洁的 API。
 
 :::note
-The documentation for Lucid is available on [https://lucid.adonisjs.com](https://lucid.adonisjs.com)
+Lucid 的文档位于 [https://lucid.adonisjs.com](https://lucid.adonisjs.com)
 :::
 
-## Why Lucid
+## 为什么选择 Lucid
 
-Following are some of the hand-picked Lucid features.
+以下是 Lucid 的一些精选特性。
 
-- A fluent query builder built on top of Knex.
-- Support for read-write replicas and multiple connection management.
-- Class-based models that adhere to the active record pattern (handling relations, serialization and hooks).
-- Migration system to modify database schema using incremental changesets.
-- Model factories to generate fake data for testing.
-- Database seeders to insert initial/dummy data into the database.
+- 基于 Knex 构建的流畅查询构建器。
+- 支持读写副本和多连接管理。
+- 符合 Active Record 模式的基于类的模型（处理关系、序列化和钩子）。
+- 使用增量变更集修改数据库模式的迁移系统。
+- 用于生成测试伪造数据的模型工厂。
+- 用于将初始/虚拟数据插入数据库的数据库填充器。
 
-Apart from those, the following are additional reasons for using Lucid inside an AdonisJS application.
+除此之外，以下是在 AdonisJS 应用程序中使用 Lucid 的其他原因。
 
-- We ship first-class integrations for Lucid with the Auth package and validator. Therefore, you do not have to write these integrations yourself.
+- 我们为 Lucid 提供了与 Auth 包和验证器的集成。因此，你不必自己编写这些集成。
 
-- Lucid comes pre-configured with the `api` and the `web` starter kits, providing a head start to your applications.
+- Lucid 预配置在 `api` 和 `web` 启动套件中，为你的应用程序提供了先发优势。
 
-- One of the primary goals of Lucid is to leverage SQL to its full potential and support many advanced SQL operations like **window functions**, **recursive CTEs**, **JSON operations**, **row-based locks**, and much more.
+- Lucid 的主要目标之一是充分利用 SQL 的潜力，并支持许多高级 SQL 操作，如 **窗口函数**、**递归 CTE**、**JSON 操作**、**行级锁** 等等。
 
-- Both Lucid and Knex have been around for many years. Hence, they are mature and battle-tested compared to many other new ORMs.
+- Lucid 和 Knex 都已经存在多年。因此，与许多其他新 ORM 相比，它们更加成熟且经过实战检验。
 
-With that said, AdonisJS does not force you to use Lucid. Just uninstall the package and install the ORM of your choice.
+话虽如此，AdonisJS 并不强制你使用 Lucid。只需卸载该包并安装你选择的 ORM 即可。
 
-## Installation
+## 安装
 
-Install and configure Lucid using the following command.
+使用以下命令安装并配置 Lucid。
 
 ```sh
 node ace add @adonisjs/lucid
 ```
 
-:::disclosure{title="See steps performed by the configure command"}
+:::disclosure{title="查看配置命令执行的步骤"}
 
-1. Registers the following service provider inside the `adonisrc.ts` file.
+1. 在 `adonisrc.ts` 文件中注册以下服务提供者。
 
    ```ts
    {
@@ -54,7 +54,7 @@ node ace add @adonisjs/lucid
    }
    ```
 
-2. Register the following command inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下命令。
 
    ```ts
    {
@@ -65,24 +65,24 @@ node ace add @adonisjs/lucid
    }
    ```
 
-3. Create the `config/database.ts` file.
+3. 创建 `config/database.ts` 文件。
 
-4. Define the environment variables and their validations for the selected dialect.
+4. 定义所选方言的环境变量及其验证。
 
-5. Install required peer dependencies.
+5. 安装所需的对等依赖项。
 
 :::
 
 
-## Creating your first model
+## 创建你的第一个模型
 
-Once the configuration is completed, you can create your first model using the following command.
+配置完成后，你可以使用以下命令创建你的第一个模型。
 
 ```sh
 node ace make:model User
 ```
 
-This command creates a new file inside the `app/models` directory with the following content.
+此命令会在 `app/models` 目录下创建一个包含以下内容的新文件。
 
 ```ts
 import { DateTime } from 'luxon'
@@ -100,17 +100,17 @@ export default class User extends BaseModel {
 }
 ```
 
-Learn more about models by visiting the [official documentation](https://lucid.adonisjs.com/docs/models).
+访问 [官方文档](https://lucid.adonisjs.com/docs/models) 了解更多关于模型的信息。
 
-## Migrations
+## 迁移
 
-Migrations are a way to modify the database schema and data using incremental changesets. You can create a new migration using the following command.
+迁移是一种使用增量变更集来修改数据库模式和数据的方法。你可以使用以下命令创建一个新的迁移。
 
 ```sh
 node ace make:migration users
 ```
 
-This command creates a new file inside the `database/migrations` directory with the following content.
+此命令会在 `database/migrations` 目录下创建一个包含以下内容的新文件。
 
 ```ts
 import { BaseSchema } from '@adonisjs/lucid/schema'
@@ -132,34 +132,33 @@ export default class extends BaseSchema {
 }
 ```
 
-You can run all the pending migrations using the following command.
+你可以使用以下命令运行所有挂起的迁移。
 
 ```sh
 node ace migration:run
 ```
 
-Learn more about migrations by visiting the [official documentation](https://lucid.adonisjs.com/docs/migrations).
+访问 [官方文档](https://lucid.adonisjs.com/docs/migrations) 了解更多关于迁移的信息。
 
-## Query Builder
+## 查询构建器
 
-Lucid ships with a fluent query builder built on top of Knex. You can use the query builder to perform CRUD operations on your database.
+Lucid 附带了一个基于 Knex 构建的流畅查询构建器。你可以使用查询构建器对数据库执行 CRUD 操作。
 
 ```ts
 import db from '@adonisjs/lucid/services/db'
 
 /**
- * Creates query builder instance
+ * 创建查询构建器实例
  */
 const query = db.query()
 
 /**
- * Creates query builder instance and also selects
- * the table
+ * 创建查询构建器实例并选择表
  */
 const queryWithTableSelection = db.from('users')
 ```
 
-The query builder can also be scoped to a model instance.
+查询构建器也可以限定于模型实例。
 
 ```ts
 import User from '#models/user'
@@ -167,17 +166,17 @@ import User from '#models/user'
 const user = await User.query().where('username', 'rlanz').first()
 ```
 
-Learn more about the query builder by visiting the [official documentation](https://lucid.adonisjs.com/docs/select-query-builder).
+访问 [官方文档](https://lucid.adonisjs.com/docs/select-query-builder) 了解更多关于查询构建器的信息。
 
-## CRUD operations
+## CRUD 操作
 
-Lucid models have built-in methods to perform CRUD operations on the database.
+Lucid 模型具有内置方法来对数据库执行 CRUD 操作。
 
 ```ts
 import User from '#models/user'
 
 /**
- * Create a new user
+ * 创建一个新用户
  */
 const user = await User.create({
   username: 'rlanz',
@@ -185,12 +184,12 @@ const user = await User.create({
 })
 
 /**
- * Find a user by primary key
+ * 通过主键查找用户
  */
 const user = await User.find(1)
 
 /**
- * Update a user
+ * 更新用户
  */
 
 const user = await User.find(1)
@@ -198,19 +197,19 @@ user.username = 'romain'
 await user.save()
 
 /**
- * Delete a user
+ * 删除用户
  */
 const user = await User.find(1)
 await user.delete()
 ```
 
-Learn more about CRUD operations by visiting the [official documentation](https://lucid.adonisjs.com/docs/crud-operations).
+访问 [官方文档](https://lucid.adonisjs.com/docs/crud-operations) 了解更多关于 CRUD 操作的信息。
 
-## Learn more
+## 了解更多
 
-- [Lucid documentation](https://lucid.adonisjs.com)
-- [Installation & Usage](https://lucid.adonisjs.com/docs/installation)
-- [CRUD Operations](https://lucid.adonisjs.com/docs/crud-operations)
-- [Model Hooks](https://lucid.adonisjs.com/docs/model-hooks)
-- [Relations](https://lucid.adonisjs.com/docs/relationships)
-- [Adocasts Lucid Series](https://adocasts.com/topics/lucid)
+- [Lucid 文档](https://lucid.adonisjs.com)
+- [安装与使用](https://lucid.adonisjs.com/docs/installation)
+- [CRUD 操作](https://lucid.adonisjs.com/docs/crud-operations)
+- [模型钩子](https://lucid.adonisjs.com/docs/model-hooks)
+- [关系](https://lucid.adonisjs.com/docs/relationships)
+- [Adocasts Lucid 系列](https://adocasts.com/topics/lucid)

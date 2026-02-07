@@ -1,13 +1,13 @@
 ---
-summary: Learn how to read, write, and clear cookies in AdonisJS.
+summary: 了解如何在 AdonisJS 中读取、写入和清除 cookie。
 ---
 
 # Cookies
 
-The request cookies are parsed automatically during an HTTP request. You can read cookies using the [request](./request.md) object and set/clear cookies using the [response](./response.md) object.
+在 HTTP 请求期间，请求 cookie 会自动被解析。你可以使用 [request](./request.md) 对象读取 cookie，使用 [response](./response.md) 对象设置/清除 cookie。
 
 ```ts
-// title: Read cookies
+// title: 读取 cookie
 import router from '@adonisjs/core/services/router'
 
 router.get('cart', async ({ request }) => {
@@ -19,7 +19,7 @@ router.get('cart', async ({ request }) => {
 ```
 
 ```ts
-// title: Set cookies
+// title: 设置 cookie
 import router from '@adonisjs/core/services/router'
 
 router.post('cart', async ({ request, response }) => {
@@ -31,7 +31,7 @@ router.post('cart', async ({ request, response }) => {
 ```
 
 ```ts
-// title: Clear cookies
+// title: 清除 cookie
 import router from '@adonisjs/core/services/router'
 
 router.delete('cart', async ({ request, response }) => {
@@ -41,9 +41,9 @@ router.delete('cart', async ({ request, response }) => {
 })
 ```
 
-## Configuration
+## 配置
 
-The default configuration for setting cookies is defined inside the `config/app.ts` file. Feel free to tweak the options as per your application requirements.
+设置 cookie 的默认配置定义在 `config/app.ts` 文件中。你可以根据应用程序的要求随意调整这些选项。
 
 ```ts
 http: {
@@ -55,18 +55,19 @@ http: {
     secure: true,
     sameSite: 'lax',
     /**
-     * Experimental properties
+     * 实验性属性
      * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#partitioned
      */
     partitioned: false,
     priority: 'medium',
+    // 优先级
   }
 }
 ```
 
-The options are converted to [set-cookie attributes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes). The `maxAge` property accepts a string-based time expression, and its value will be converted to seconds.
+这些选项将被转换为 [set-cookie 属性](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes)。`maxAge` 属性接受基于字符串的时间表达式，其值将被转换为秒。
 
-The same set of options can be overridden when setting the cookies. 
+设置 cookie 时，可以覆盖相同的选项集。
 
 ```ts
 response.cookie('key', value, {
@@ -79,9 +80,9 @@ response.cookie('key', value, {
 })
 ```
 
-## Supported data types
+## 支持的数据类型
 
-The cookie values are serialized to a string using `JSON.stringify`; therefore, you can use the following JavaScript data types as cookie values.
+Cookie 值使用 `JSON.stringify` 序列化为字符串；因此，你可以使用以下 JavaScript 数据类型作为 cookie 值。
 
 - string
 - number
@@ -114,74 +115,71 @@ response.cookie('visits', BigInt(10))
 response.cookie('visits', new Date())
 ```
 
-## Signed cookies
+## 签名 Cookie
 
-The cookies set using the `response.cookie` method are signed. A signed cookie is tamper-proof, meaning changing its contents will invalidate its signature, and the cookie will be ignored.
+使用 `response.cookie` 方法设置的 cookie 是签名的。签名 cookie 是防篡改的，这意味着更改其内容将使签名失效，并且该 cookie 将被忽略。
 
-The cookies are signed using the `appKey` defined inside the `config/app.ts` file.
-
+Cookie 使用 `config/app.ts` 文件中定义的 `appKey` 进行签名。
 
 :::note
 
-The signed cookies are still readable by Base64 decoding them. You can use encrypted cookies if you want the cookie value to be unreadable.
-
+签名 cookie 仍然可以通过 Base64 解码来读取。如果你希望 cookie 值不可读，可以使用加密 cookie。
 
 :::
-
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ request, response }) => {
-  // set signed cookie
+  // 设置签名 cookie
   response.cookie('user_id', 1)
 
-  // read signed cookie
+  // 读取签名 cookie
   request.cookie('user_id')
 })
 ```
 
-## Encrypted cookies
+## 加密 Cookie
 
-Unlike signed cookies, the encrypted cookie value cannot be decoded to plain text. Therefore, you can use encrypted cookies for values containing sensitive information that should not be readable by anyone.
+与签名 cookie 不同，加密 cookie 的值不能解码为纯文本。因此，你可以将加密 cookie 用于包含不应被任何人读取的敏感信息的值。
 
-Encrypted cookies are set using the `response.encryptedCookie` method and read using the `request.encryptedCookie` method. Under the hood, these methods use the [Encryption module](../security/encryption.md).
+加密 cookie 使用 `response.encryptedCookie` 方法设置，并使用 `request.encryptedCookie` 方法读取。在底层，这些方法使用 [Encryption 模块](../security/encryption.md)。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ request, response }) => {
-  // set encrypted cookie
+  // 设置加密 cookie
   response.encryptedCookie('user_id', 1)
 
-  // read encrypted cookie
+  // 读取加密 cookie
   request.encryptedCookie('user_id')
 })
 ```
 
-## Plain cookies
+## 普通 Cookie
 
-Plain cookies are meant to be used when you want the cookie to be accessed by your frontend code using the `document.cookie` value. 
+普通 cookie (Plain cookies) 用于当你希望前端代码使用 `document.cookie` 值访问 cookie 时。
 
-By default, we call `JSON.stringify` on raw values and convert them to a base64 encoded string. It is done so that you can use `objects` and `arrays` for the cookie value. However, the encoding can be turned off.
+默认情况下，我们对原始值调用 `JSON.stringify` 并将其转换为 base64 编码的字符串。这样做是为了让你可以在 cookie 值中使用 `object` 和 `array`。但是，可以关闭编码。
 
-Plain cookies are defined using the `response.plainCookie` method and can be read using the `request.plainCookie` method.
+普通 cookie 使用 `response.plainCookie` 方法定义，可以使用 `request.plainCookie` 方法读取。
 
 ```ts
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async ({ request, response }) => {
-  // set plain cookie
+  // 设置普通 cookie
   response.plainCookie('user', { id: 1 }, {
     httpOnly: true
   })
 
-  // read plain cookie
+  // 读取普通 cookie
   request.plainCookie('user')
 })
 ``` 
 
-To turn off encoding, set `encoding: false` in the options object.
+要关闭编码，请在选项对象中设置 `encoding: false`。
 
 ```ts
 response.plainCookie('token', tokenValue, {
@@ -189,14 +187,15 @@ response.plainCookie('token', tokenValue, {
   encode: false,
 })
 
-// Read plain cookie with encoding off
+// 读取关闭编码的普通 cookie
 request.plainCookie('token', {
   encoded: false
 })
 ```
 
-## Setting cookies during tests
-The following guides cover the usage of cookies when writing tests.
+## 测试期间设置 Cookie
 
-- Defining cookies with [Japa API client](../testing/http_tests.md#readingwriting-cookies).
-- Defining cookie with [Japa browser client](../testing/browser_tests.md#readingwriting-cookies).
+以下指南涵盖了编写测试时 cookie 的使用。
+
+- 使用 [Japa API client](../testing/http_tests.md#readingwriting-cookies) 定义 cookie。
+- 使用 [Japa browser client](../testing/browser_tests.md#readingwriting-cookies) 定义 cookie。

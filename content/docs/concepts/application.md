@@ -1,26 +1,26 @@
 ---
-summary: Learn about the Application class and how to access the environment, state, and make URLs and paths to project files.
+summary: 了解 Application 类，以及如何访问环境、状态，并生成项目文件的 URL 和路径。
 ---
 
-# Application
+# 应用 (Application)
 
-The [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class does all the heavy lifting of wiring together an AdonisJS application. You can use this class to know about the environment in which your app is running, get the current state of the application, or make paths to specific directories.
+[Application](https://github.com/adonisjs/application/blob/main/src/application.ts) 类负责将 AdonisJS 应用程序的各个部分连接在一起。你可以使用此类来了解应用程序运行的环境、获取应用程序的当前状态，或生成指向特定目录的路径。
 
-See also: [Application lifecycle](./application_lifecycle.md)
+另请参阅：[应用程序生命周期](./application_lifecycle.md)
 
-## Environment 
+## 环境
 
-The environment refers to the application runtime environment. The application is always booted in one of the following known environments. 
+环境是指应用程序的运行环境。应用程序总是在以下已知环境之一中启动。
 
-- `web` environment refers to the process started for the HTTP server.
+- `web` 环境是指为 HTTP 服务器启动的进程。
 
-- `console` environment refers to the Ace commands except for the REPL command.
+- `console` 环境是指除 REPL 命令之外的 Ace 命令。
 
-- `repl` environment refers to the process started using the `node ace repl` command.
+- `repl` 环境是指使用 `node ace repl` 命令启动的进程。
 
-- Finally, the `test` environment refers to the process started using the `node ace test` command.
+- 最后，`test` 环境是指使用 `node ace test` 命令启动的进程。
 
-You can access the application environment using the `getEnvironment` method.
+你可以使用 `getEnvironment` 方法访问应用程序环境。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -28,9 +28,9 @@ import app from '@adonisjs/core/services/app'
 console.log(app.getEnvironment())
 ```
 
-You can also switch the application environment before it has been booted. A great example of this is the REPL command. 
+你也可以在应用程序启动之前切换应用程序环境。REPL 命令就是一个很好的例子。
 
-The `node ace repl` command starts the application in the `console` environment, but the command internally switches the environment to `repl` before presenting the REPL prompt.
+`node ace repl` 命令在 `console` 环境中启动应用程序，但该命令在内部会在显示 REPL 提示符之前将环境切换到 `repl`。
 
 ```ts
 if (!app.isBooted) {
@@ -38,9 +38,9 @@ if (!app.isBooted) {
 }
 ```
 
-## Node environment
+## Node 环境
 
-You can access the Node.js environment using the `nodeEnvironment` property. The value is a reference to the `NODE_ENV` environment variable. However, the value is further normalized to be consistent.
+你可以使用 `nodeEnvironment` 属性访问 Node.js 环境。该值是对 `NODE_ENV` 环境变量的引用。但是，该值经过进一步规范化以保持一致。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -48,7 +48,7 @@ import app from '@adonisjs/core/services/app'
 console.log(app.nodeEnvironment)
 ```
 
-| NODE_ENV | Normalized to |
+| NODE_ENV | 规范化为 |
 |----------|---------------|
 | dev      | development   |
 | develop  | development   |
@@ -56,43 +56,43 @@ console.log(app.nodeEnvironment)
 | prod     | production    |
 | testing  | test          |
 
-Also, you can use the following properties as a shorthand to know the current environment.
+此外，你可以使用以下属性作为简写来了解当前环境。
 
-- `inProduction`: Check if the application is running in the production environment.
-- `inDev`: Check if the application is running in the development environment.
-- `inTest`: Check if the application is running in the test environment.
+- `inProduction`: 检查应用程序是否在生产环境中运行。
+- `inDev`: 检查应用程序是否在开发环境中运行。
+- `inTest`: 检查应用程序是否在测试环境中运行。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
-// Is in production
+// 是否在生产环境
 app.inProduction
 app.nodeEnvironment === 'production'
 
-// Is in development
+// 是否在开发环境
 app.inDev
 app.nodeEnvironment === 'development'
 
-// Is in the test
+// 是否在测试环境
 app.inTest
 app.nodeEnvironment === 'test'
 ```
 
-## State
+## 状态
 
-The state refers to the current state of the application. The framework features you can access significantly depend upon the current state of the application. For example, you cannot access the [container bindings](./dependency_injection.md#container-bindings) or [container services](./container_services.md) until the app is in a `booted` state.
+状态是指应用程序的当前状态。你可以访问的框架功能很大程度上取决于应用程序的当前状态。例如，在应用程序处于 `booted` 状态之前，你无法访问 [容器绑定](./dependency_injection.md#container-bindings) 或 [容器服务](./container_services.md)。
 
-The application is always in one of the following known states.
+应用程序总是处于以下已知状态之一。
 
-- `created`: It is the default state of the application.
+- `created`: 这是应用程序的默认状态。
 
-- `initiated`: In this state, we parse/validate the environment variables and process the `adonisrc.ts` file.
+- `initiated`: 在此状态下，我们解析/验证环境变量并处理 `adonisrc.ts` 文件。
 
-- `booted`: The application service providers are registered and booted at this state.
+- `booted`: 应用程序服务提供者在此状态下被注册并启动。
 
-- `ready`: The ready state varies between different environments. For example, in the `web` environment, the ready state means the application is ready to accept new HTTP requests.
+- `ready`: ready 状态在不同环境之间有所不同。例如，在 `web` 环境中，ready 状态意味着应用程序已准备好接受新的 HTTP 请求。
 
-- `terminated`: The application has been terminated, and the process will exit shortly. The application will not accept new HTTP requests in the `web` environment.
+- `terminated`: 应用程序已终止，进程将很快退出。在 `web` 环境中，应用程序将不再接受新的 HTTP 请求。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -100,46 +100,46 @@ import app from '@adonisjs/core/services/app'
 console.log(app.getState())
 ```
 
-You can also use the following shorthand properties to know whether the application is in a given state.
+你也可以使用以下简写属性来了解应用程序是否处于给定状态。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
-// App is booted
+// 应用已启动
 app.isBooted
 app.getState() !== 'created' && app.getState() !== 'initiated'
 
-// App is ready
+// 应用已就绪
 app.isReady
 app.getState() === 'ready'
 
-// gracefully attempting to terminate the app
+// 正在尝试优雅地终止应用
 app.isTerminating
 
-// App has been terminated
+// 应用已终止
 app.isTerminated
 app.getState() === 'terminated'
 ```
 
-## Listening for process signals
+## 监听进程信号
 
-You can listen for [POSIX signals](https://man7.org/linux/man-pages/man7/signal.7.html) using the `app.listen`, or `app.listenOnce` methods. Under the hood, we register the listener with the Node.js `process` object.
+你可以使用 `app.listen` 或 `app.listenOnce` 方法监听 [POSIX 信号](https://man7.org/linux/man-pages/man7/signal.7.html)。在底层，我们向 Node.js `process` 对象注册监听器。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
-// Listen for a SIGTERM signal
+// 监听 SIGTERM 信号
 app.listen('SIGTERM', () => {
 })
 
-// Listen once for a SIGTERM signal
+// 监听一次 SIGTERM 信号
 app.listenOnce('SIGTERM', () => {
 })
 ```
 
-At times, you might want to register the listeners conditionally. For example, listen to the `SIGINT` signal when running inside the pm2 environment.
+有时，你可能希望有条件地注册监听器。例如，在 pm2 环境中运行时监听 `SIGINT` 信号。
 
-You can use the `listenIf` or `listenOnceIf` methods to register a listener conditionally. The listener is only registered when the first argument's value is truthy.
+你可以使用 `listenIf` 或 `listenOnceIf` 方法有条件地注册监听器。只有当第一个参数的值为真时，才会注册监听器。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -151,9 +151,9 @@ app.listenOnceIf(app.managedByPm2, 'SIGTERM', () => {
 })
 ```
 
-## Notifying parent process
+## 通知父进程
 
-If your application starts as a child process, you can send messages to the parent process using the `app.notify` method. Under the hood, we use the `process.send` method.
+如果你的应用程序作为子进程启动，你可以使用 `app.notify` 方法向父进程发送消息。在底层，我们使用 `process.send` 方法。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -167,13 +167,13 @@ app.notify({
 })
 ```
 
-## Making URLs and paths to project files
+## 生成 URL 和项目文件路径
 
-Instead of self-constructing absolute URLs or paths to project files, we highly recommend using the following helpers.
+我们要强烈建议使用以下辅助函数，而不是自行构建绝对 URL 或项目文件路径。
 
 ### makeURL
 
-The make URL method returns a file URL to a given file or directory within the project root. For example, you may generate a URL when importing a file.
+make URL 方法返回项目根目录内给定文件或目录的文件 URL。例如，你可以在导入文件时生成 URL。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -190,7 +190,7 @@ await Promise.all(files.map((file) => {
 
 ### makePath
 
-The `makePath` method returns an absolute path to a given file or directory within the project root.
+`makePath` 方法返回项目根目录内给定文件或目录的绝对路径。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -200,7 +200,7 @@ app.makePath('app/middleware/auth.ts')
 
 ### configPath
 
-Returns path to a file inside the project's config directory.
+返回项目 config 目录内文件的路径。
 
 ```ts
 app.configPath('shield.ts')
@@ -212,7 +212,7 @@ app.configPath()
 
 ### publicPath
 
-Returns path to a file inside the project's public directory.
+返回项目 public 目录内文件的路径。
 
 ```ts
 app.publicPath('style.css')
@@ -224,7 +224,7 @@ app.publicPath()
 
 ### providersPath
 
-Returns path to a file inside the provider's directory.
+返回 provider 目录内文件的路径。
 
 ```ts
 app.providersPath('app_provider')
@@ -236,7 +236,7 @@ app.providersPath()
 
 ### factoriesPath
 
-Returns path to a file inside the database factories directory.
+返回数据库 factories 目录内文件的路径。
 
 ```ts
 app.factoriesPath('user.ts')
@@ -247,7 +247,8 @@ app.factoriesPath()
 ```
 
 ### migrationsPath
-Returns path to a file inside the database migrations directory.
+
+返回数据库 migrations 目录内文件的路径。
 
 ```ts
 app.migrationsPath('user.ts')
@@ -258,7 +259,8 @@ app.migrationsPath()
 ```
 
 ### seedersPath
-Returns path to a file inside the database seeders directory.
+
+返回数据库 seeders 目录内文件的路径。
 
 ```ts
 app.seedersPath('user.ts')
@@ -269,7 +271,8 @@ app.seedersPath()
 ```
 
 ### languageFilesPath
-Returns path to a file inside languages directory.
+
+返回 languages 目录内文件的路径。
 
 ```ts
 app.languageFilesPath('en/messages.json')
@@ -280,7 +283,8 @@ app.languageFilesPath()
 ```
 
 ### viewsPath
-Returns path to a file inside the views directory.
+
+返回 views 目录内文件的路径。
 
 ```ts
 app.viewsPath('welcome.edge')
@@ -291,7 +295,8 @@ app.viewsPath()
 ```
 
 ### startPath
-Returns path to a file inside the start directory.
+
+返回 start 目录内文件的路径。
 
 ```ts
 app.startPath('routes.ts')
@@ -303,7 +308,7 @@ app.startPath()
 
 ### tmpPath
 
-Returns path to a file inside the `tmp` directory within the project root.
+返回项目根目录内 `tmp` 目录中文件的路径。
 
 ```ts
 app.tmpPath('logs/mail.txt')
@@ -315,7 +320,7 @@ app.tmpPath()
 
 ### httpControllersPath
 
-Returns path to a file inside the HTTP controllers directory.
+返回 HTTP controllers 目录内文件的路径。
 
 ```ts
 app.httpControllersPath('users_controller.ts')
@@ -327,7 +332,7 @@ app.httpControllersPath()
 
 ### modelsPath
 
-Returns path to a file inside the model's directory.
+返回 model 目录内文件的路径。
 
 ```ts
 app.modelsPath('user.ts')
@@ -339,7 +344,7 @@ app.modelsPath()
 
 ### servicesPath
 
-Returns path to a file inside the services directory.
+返回 services 目录内文件的路径。
 
 ```ts
 app.servicesPath('user.ts')
@@ -351,7 +356,7 @@ app.servicesPath()
 
 ### exceptionsPath
 
-Returns path to a file inside the exceptions directory.
+返回 exceptions 目录内文件的路径。
 
 ```ts
 app.exceptionsPath('handler.ts')
@@ -363,7 +368,7 @@ app.exceptionsPath()
 
 ### mailsPath
 
-Returns path to a file inside the mails directory.
+返回 mails 目录内文件的路径。
 
 ```ts
 app.mailsPath('verify_email.ts')
@@ -375,7 +380,7 @@ app.mailsPath()
 
 ### middlewarePath
 
-Returns path to a file inside the middleware directory.
+返回 middleware 目录内文件的路径。
 
 ```ts
 app.middlewarePath('auth.ts')
@@ -387,7 +392,7 @@ app.middlewarePath()
 
 ### policiesPath
 
-Returns path to a file inside the policies directory.
+返回 policies 目录内文件的路径。
 
 ```ts
 app.policiesPath('posts.ts')
@@ -399,7 +404,7 @@ app.policiesPath()
 
 ### validatorsPath
 
-Returns path to a file inside the validators directory.
+返回 validators 目录内文件的路径。
 
 ```ts
 app.validatorsPath('create_user.ts')
@@ -411,7 +416,7 @@ app.validatorsPath()
 
 ### commandsPath
 
-Returns path to a file inside the commands directory.
+返回 commands 目录内文件的路径。
 
 ```ts
 app.commandsPath('greet.ts')
@@ -423,7 +428,7 @@ app.commandsPath()
 
 ### eventsPath
 
-Return path to a file inside the events directory.
+返回 events 目录内文件的路径。
 
 ```ts
 app.eventsPath('user_created.ts')
@@ -435,7 +440,7 @@ app.eventsPath()
 
 ### listenersPath
 
-Return path to a file inside the listeners directory.
+返回 listeners 目录内文件的路径。
 
 ```ts
 app.listenersPath('send_invoice.ts')
@@ -445,18 +450,18 @@ app.listenersPath()
 // /project_root/app/listeners
 ```
 
-## Generators
+## 生成器
 
-Generators are used to create class names and file names for different entities. For example, you may use the `generators.controllerFileName` method to generate the filename for a controller.
+生成器用于为不同的实体创建类名和文件名。例如，你可以使用 `generators.controllerFileName` 方法生成控制器的文件名。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 
 app.generators.controllerFileName('user')
-// output - users_controller.ts
+// 输出 - users_controller.ts
 
 app.generators.controllerName('user')
-// output - UsersController
+// 输出 - UsersController
 ```
 
-Please [reference the `generators.ts` source code](https://github.com/adonisjs/application/blob/main/src/generators.ts) to view the list of available generators.
+请 [参考 `generators.ts` 源代码](https://github.com/adonisjs/application/blob/main/src/generators.ts) 查看可用生成器的列表。

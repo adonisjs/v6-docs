@@ -1,14 +1,14 @@
 ---
-summary: The Request class holds data for the ongoing HTTP request, including the request body, reference to uploaded files, cookies, request headers, and much more.
+summary: Request 类保存正在进行的 HTTP 请求的数据，包括请求体、上传文件的引用、cookie、请求头等。
 ---
 
-# Request
+# 请求 (Request)
 
-An instance of the [request class](https://github.com/adonisjs/http-server/blob/main/src/request.ts) holds data for the ongoing HTTP request, including the **request body**, **reference to uploaded files**, **cookies**, **request headers**, and much more. The request instance can be accessed using the `ctx.request` property.
+[Request 类](https://github.com/adonisjs/http-server/blob/main/src/request.ts) 的实例保存正在进行的 HTTP 请求的数据，包括 **请求体**、**上传文件的引用**、**cookie**、**请求头** 等。可以通过 `ctx.request` 属性访问请求实例。
 
-## Query string and route params
+## 查询字符串和路由参数
 
-The `request.qs` method returns the parsed query string as an object.
+`request.qs` 方法以对象形式返回解析后的查询字符串。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -22,7 +22,7 @@ router.get('posts', async ({ request }) => {
 })
 ```
 
-The `request.params` method returns an object of [Route params](./routing.md#route-params).
+`request.params` 方法返回 [路由参数](./routing.md#route-params) 对象。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -36,7 +36,7 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 })
 ```
 
-You can access a single parameter using the `request.param` method.
+你可以使用 `request.param` 方法访问单个参数。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -47,11 +47,11 @@ router.get('posts/:slug/comments/:id', async ({ request }) => {
 })
 ```
 
-## Request body
+## 请求体
 
-AdonisJS parses the request body using the [body-parser middleware](../basics/body_parser.md) registered inside the `start/kernel.ts` file.
+AdonisJS 使用在 `start/kernel.ts` 文件中注册的 [body-parser 中间件](../basics/body_parser.md) 解析请求体。
 
-You can access the request body using the `request.body()` method. It returns the parsed request body as an object.
+你可以使用 `request.body()` 方法访问请求体。它以对象形式返回解析后的请求体。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -61,7 +61,7 @@ router.post('/', async ({ request }) => {
 })
 ```
 
-The `request.all` method returns a merged copy of both the request body and the query string.
+`request.all` 方法返回请求体和查询字符串的合并副本。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -71,11 +71,11 @@ router.post('/', async ({ request }) => {
 })
 ```
 
-### Cherry-picking values
+### 挑选值
 
-The `request.input`, `request.only`, and the `request.except` methods can cherry-pick specific properties from the request data. All the cherry-picking methods lookup for values inside both the request body and the query string.
+`request.input`、`request.only` 和 `request.except` 方法可以从请求数据中挑选特定属性。所有挑选方法都会在请求体和查询字符串中查找值。
 
-The `request.only` method returns an object with only the mentioned properties.
+`request.only` 方法返回仅包含提到的属性的对象。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -87,7 +87,7 @@ router.post('login', async ({ request }) => {
 })
 ```
 
-The `request.except` method returns an object excluding the mentioned properties.
+`request.except` 方法返回排除提到的属性的对象。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -99,7 +99,7 @@ router.post('register', async ({ request }) => {
 })
 ```
 
-The `request.input` method returns the value for a specific property. Optionally, you can pass a default value as the second argument. The default value is returned when the actual value is missing.
+`request.input` 方法返回特定属性的值。你可以选择传递默认值作为第二个参数。当缺少实际值时，将返回默认值。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -110,15 +110,15 @@ router.post('comments', async ({ request }) => {
 })
 ```
 
-### Type-safe request body
+### 类型安全的请求体
 
-By default, AdonisJS does not enforce data types for the `request.all`, `request.body`, or cherry-picking methods, as it cannot know the expected content of the request body in advance. 
+默认情况下，AdonisJS 不会对 `request.all`、`request.body` 或挑选方法强制执行数据类型，因为它无法提前知道请求体的预期内容。
 
-To ensure type-safety, you can use the [validator](./validation.md) to validate and parse the request body, ensuring that all values are correct and match the expected types.
+为了确保类型安全，你可以使用 [验证器](./validation.md) 来验证和解析请求体，确保所有值都是正确的并且符合预期类型。
 
-## Request URL
+## 请求 URL
 
-The `request.url` method returns the request URL relative to the hostname. By default, the return value does not include the query string. However, you can get the URL with query string by calling `request.url(true)`.
+`request.url` 方法返回相对于主机名的请求 URL。默认情况下，返回值不包含查询字符串。但是，你可以通过调用 `request.url(true)` 来获取包含查询字符串的 URL。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -138,7 +138,7 @@ router.get('/users', async ({ request }) => {
 })
 ```
 
-The `request.completeUrl` method returns the complete URL, including the hostname. Again, unless explicitly told, the return value does not include the query string.
+`request.completeUrl` 方法返回完整的 URL，包括主机名。同样，除非明确告知，否则返回值不包含查询字符串。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -149,9 +149,9 @@ router.get('/users', async ({ request }) => {
 })
 ```
 
-## Request headers
+## 请求头
 
-The `request.headers` method returns the request headers as an object.
+`request.headers` 方法以对象形式返回请求头。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -161,7 +161,7 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-You can access the value for an individual header using the `request.header` method.
+你可以使用 `request.header` 方法访问单个请求头的值。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -174,9 +174,9 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-## Request method
+## 请求方法
 
-The `request.method` method returns the HTTP method for the current request. This method returns the spoofed method when [form method spoofing](#form-method-spoofing) is enabled, and you can use the `request.intended` method to get the original request method.
+`request.method` 方法返回当前请求的 HTTP 方法。当启用 [表单方法伪造](#form-method-spoofing) 时，此方法返回伪造的方法，你可以使用 `request.intended` 方法获取原始请求方法。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -194,13 +194,13 @@ router.patch('posts', async ({ request }) => {
 })
 ```
 
-## User IP Address
+## 用户 IP 地址
 
-The `request.ip` method returns the user IP address for the current HTTP request. This method relies on the [`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) header set by proxy servers like Nginx or Caddy.
+`request.ip` 方法返回当前 HTTP 请求的用户 IP 地址。此方法依赖于 Nginx 或 Caddy 等代理服务器设置的 [`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) 标头。
 
 :::note
 
-Read the [trusted proxies](#configuring-trusted-proxies) section to configure the proxies your application should trust.
+阅读 [受信任的代理](#configuring-trusted-proxies) 部分以配置应用程序应信任的代理。
 
 :::
 
@@ -212,7 +212,7 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-The `request.ips` method returns an array of all the IP addresses set by intermediate proxies. The array is sorted by most trusted to least trusted IP address.
+`request.ips` 方法返回中间代理设置的所有 IP 地址的数组。该数组按最受信任到最不受信任的 IP 地址排序。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -222,11 +222,11 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-### Defining a custom `getIp` method
+### 定义自定义 `getIp` 方法
 
-If the trusted proxy settings are insufficient to determine the correct IP address, you can implement your custom `getIp` method.
+如果受信任的代理设置不足以确定正确的 IP 地址，你可以实现自定义的 `getIp` 方法。
 
-The method is defined inside the `config/app.ts` file under the `http` settings object.
+该方法在 `config/app.ts` 文件中的 `http` 设置对象下定义。
 
 ```ts
 export const http = defineConfig({
@@ -241,11 +241,11 @@ export const http = defineConfig({
 })
 ```
 
-## Content negotiation
+## 内容协商
 
-AdonisJS provides several methods for [content-negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation#server-driven_content_negotiation) by parsing all the commonly supported `Accept` headers. For example, you can use the `request.types` method to get a list of all the content types accepted by a given request.
+AdonisJS 通过解析所有通常支持的 `Accept` 标头，为 [内容协商](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation#server-driven_content_negotiation) 提供了多种方法。例如，你可以使用 `request.types` 方法获取给定请求接受的所有内容类型的列表。
 
-The return value of the `request.types` method is ordered by the client's preference (most preferred first).
+`request.types` 方法的返回值按客户端的偏好排序（最喜欢的排在第一位）。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -255,7 +255,7 @@ router.get('/', async ({ request }) => {
 })
 ```
 
-Following is the complete list of content negotiation methods.
+以下是内容协商方法的完整列表。
 
 | Method    | HTTP header in use                                                                           |
 |-----------|----------------------------------------------------------------------------------------------|
@@ -264,9 +264,9 @@ Following is the complete list of content negotiation methods.
 | encodings | [Accept-encoding](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) |
 | charsets  | [Accept-charset](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Charset)   |
 
-Sometimes you want to find the preferred content type based on what the server can support.
+有时你想根据服务器支持的内容查找首选内容类型。
 
-For the same, you can use the `request.accepts` method. The method takes an array of supported content types and returns the most preferred one after inspecting the `Accept` header. A `null` value is returned when unable to find a match.
+为此，你可以使用 `request.accepts` 方法。该方法接受支持的内容类型数组，并在检查 `Accept` 标头后返回最首选的内容类型。当找不到匹配项时返回 `null` 值。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -291,7 +291,7 @@ router.get('posts', async ({ request, view }) => {
 })
 ```
 
-Similar to `request.accept`, the following methods can be used to find the preferred value for other `Accept` headers.
+与 `request.accept` 类似，以下方法可用于查找其他 `Accept` 标头的首选值。
 
 ```ts
 // Preferred language
@@ -304,13 +304,13 @@ const encoding = request.encoding(['gzip', 'br'])
 const charset = request.charset(['utf-8', 'hex', 'ascii'])
 ```
 
-## Generating request ids
+## 生成请求 ID
 
-Request ids help you [debug and trace application issues](https://blog.heroku.com/http_request_id_s_improve_visibility_across_the_application_stack) from logs by assigning a unique id to every HTTP request. By default, request id creation is disabled. However, you can enable it inside the `config/app.ts` file.
+请求 ID 通过为每个 HTTP 请求分配唯一的 ID，帮助你从日志中 [调试和跟踪应用程序问题](https://blog.heroku.com/http_request_id_s_improve_visibility_across_the_application_stack)。默认情况下，请求 ID 创建是禁用的。但是，你可以在 `config/app.ts` 文件中启用它。
 
 :::note
 
-Request ids are generated using the [cuid2](https://github.com/paralleldrive/cuid2) package. Before generating an id, we check for the `X-Request-Id` request header and use its value (if it exists).
+请求 ID 使用 [cuid2](https://github.com/paralleldrive/cuid2) 包生成。在生成 ID 之前，我们会检查 `X-Request-Id` 请求头并使用其值（如果存在）。
 
 :::
 
@@ -321,7 +321,7 @@ export const http = defineConfig({
 })
 ```
 
-Once enabled, you can access the id using the `request.id` method.
+启用后，你可以使用 `request.id` 方法访问 ID。
 
 ```ts
 router.get('/', ({ request }) => {
@@ -330,7 +330,7 @@ router.get('/', ({ request }) => {
 })
 ```
 
-The same request-id is also added to all the logs generated using the `ctx.logger` instance.
+相同的请求 ID 也会添加到使用 `ctx.logger` 实例生成的所有日志中。
 
 ```ts
 router.get('/', ({ logger }) => {
@@ -339,13 +339,13 @@ router.get('/', ({ logger }) => {
 })
 ```
 
-## Configuring trusted proxies
+## 配置受信任的代理
 
-Most Node.js applications are deployed behind a proxy server like Nginx or Caddy. Therefore we have to rely on HTTP headers such as `X-Forwarded-Host`, `X-Forwarded-For`, and `X-Forwarded-Proto` to know about the real end-client making an HTTP request.
+大多数 Node.js 应用程序部署在 Nginx 或 Caddy 等代理服务器后面。因此，我们必须依靠 HTTP 标头（如 `X-Forwarded-Host`、`X-Forwarded-For` 和 `X-Forwarded-Proto`）来了解发出 HTTP 请求的真实终端客户端。
 
-These headers are only used when your AdonisJS application can trust the source IP address.
+这些标头仅在你的 AdonisJS 应用程序可以信任源 IP 地址时使用。
 
-You can configure which IP addresses to trust within the `config/app.ts` file using the `http.trustProxy` configuration option.
+你可以在 `config/app.ts` 文件中使用 `http.trustProxy` 配置选项配置要信任的 IP 地址。
 
 ```ts
 import proxyAddr from 'proxy-addr'
@@ -355,7 +355,7 @@ export const http = defineConfig({
 })
 ```
 
-The value for `trustProxy` can also be a function. The method should return `true` if the IP address is trusted; otherwise, return `false`.
+`trustProxy` 的值也可以是一个函数。如果 IP 地址受信任，该方法应返回 `true`；否则，返回 `false`。
 
 ```ts
 export const http = defineConfig({
@@ -365,7 +365,7 @@ export const http = defineConfig({
 })
 ```
 
-If you are running Nginx on the same server as your application code, you need to trust the loopback IP addresses, i.e. (127.0.0.1).
+如果你在与应用程序代码相同的服务器上运行 Nginx，你需要信任回环 IP 地址，即 (127.0.0.1)。
 
 ```ts
 import proxyAddr from 'proxy-addr'
@@ -375,7 +375,7 @@ export const http = defineConfig({
 })
 ```
 
-Suppose your application is only accessible through a load balancer, and you do not have a list of IP addresses for that load balancer. Then, you can trust the proxy server by defining a callback that always returns `true`.
+假设你的应用程序只能通过负载均衡器访问，并且你没有该负载均衡器的 IP 地址列表。那么，你可以通过定义一个始终返回 `true` 的回调来信任代理服务器。
 
 ```ts
 export const http = defineConfig({
@@ -383,11 +383,11 @@ export const http = defineConfig({
 })
 ```
 
-## Configuring query string parser
+## 配置查询字符串解析器
 
-Query strings from the request URL are parsed using the [qs](http://npmjs.com/qs) module. You can configure the parser settings inside the `config/app.ts` file.
+来自请求 URL 的查询字符串使用 [qs](http://npmjs.com/qs) 模块解析。你可以在 `config/app.ts` 文件中配置解析器设置。
 
-[View the list](https://github.com/adonisjs/http-server/blob/main/src/types/qs.ts#L11) of all the available options.
+[查看所有可用选项的列表](https://github.com/adonisjs/http-server/blob/main/src/types/qs.ts#L11)。
 
 ```ts
 export const http = defineConfig({
@@ -398,13 +398,13 @@ export const http = defineConfig({
 })
 ```
 
-## Form method spoofing
+## 表单方法伪造
 
-The form method on an HTML form can only be set to `GET`, or `POST`, making it impossible to leverage [restful HTTP methods](https://restfulapi.net/http-methods/).
+HTML 表单上的表单方法只能设置为 `GET` 或 `POST`，这使得无法利用 [RESTful HTTP 方法](https://restfulapi.net/http-methods/)。
 
-However, AdonisJS allows you to workaround this limitation using **form method spoofing**. Form method spoofing is a fancy term for specifying the form method via the `_method` query string.
+但是，AdonisJS 允许你使用 **表单方法伪造** 来解决此限制。表单方法伪造是一个花哨的术语，用于通过 `_method` 查询字符串指定表单方法。
 
-For method spoofing to work, you must set the form action to `POST` and enable the feature inside the `config/app.ts` file.
+要使方法伪造工作，你必须将表单操作设置为 `POST` 并在 `config/app.ts` 文件中启用该功能。
 
 ```ts
 // title: config/app.ts
@@ -413,7 +413,7 @@ export const http = defineConfig({
 })
 ```
 
-Once enabled, you can spoof the form method as follows.
+启用后，你可以如下所示伪造表单方法。
 
 ```html
 <form method="POST" action="/articles/1?_method=PUT">
@@ -427,9 +427,9 @@ Once enabled, you can spoof the form method as follows.
 </form>
 ```
 
-## Extending Request class
+## 扩展 Request 类
 
-You can add custom properties to the Request class using macros or getters. Make sure to read the [extending AdonisJS guide](../concepts/extending_the_framework.md) first if you are new to the concept of macros.
+你可以使用宏 (macros) 或 getter 向 Request 类添加自定义属性。如果你是第一次接触宏的概念，请务必先阅读 [扩展 AdonisJS 指南](../concepts/extending_the_framework.md)。
 
 ```ts
 import { Request } from '@adonisjs/core/http'
@@ -442,7 +442,7 @@ Request.getter('property', function (this: Request) {
 })
 ```
 
-Since the macros and getters are added at runtime, you must inform TypeScript about their types.
+由于宏和 getter 是在运行时添加的，你必须告知 TypeScript 它们的类型。
 
 ```ts
 declare module '@adonisjs/core/http' {

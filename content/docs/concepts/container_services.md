@@ -1,47 +1,47 @@
 ---
-summary: Learn about container services and how they help in keeping your codebase clean and testable.
+summary: 了解容器服务以及它们如何帮助保持代码库的整洁和可测试性。
 ---
 
-# Container services
+# 容器服务
 
-As we discussed in the [IoC container guide](./dependency_injection.md#container-bindings), the container bindings are one of the primary reasons for the IoC container to exists in AdonisJS.
+正如我们在 [IoC 容器指南](./dependency_injection.md#container-bindings) 中所讨论的，容器绑定是 AdonisJS 中 IoC 容器存在的主要原因之一。
 
-Container bindings keep your codebase clean from boilerplate code required to construct objects before they can be used.
+容器绑定使您的代码库免受构造对象所需的样板代码的影响。
 
-In the following example before you can use the `Database` class, you will have to create an instance of it. Depending the class you are constructing, you might have write a lot of boilerplate code to get all of its dependencies.
+在下面的示例中，在使用 `Database` 类之前，您必须创建一个实例。根据您正在构造的类，您可能需要编写大量样板代码来获取其所有依赖项。
 
 ```ts
 import { Database } from '@adonisjs/lucid'
 export const db = new Database(
-  // inject config and other dependencies
+  // 注入配置和其他依赖项
 )
 ```
 
-However, when using an IoC container, you can offload the task of constructing a class to the container and fetch a pre-built instance.
+但是，当使用 IoC 容器时，您可以将构造类的任务卸载到容器并获取预构建的实例。
 
 ```ts
 import app from '@adonisjs/core/services/app'
 const db = await app.container.make('lucid.db')
 ```
 
-## The need for container services
+## 容器服务的需求
 
-Using the container to resolve pre-configured objects is great. However, using the `container.make` method has its own downsides.
+使用容器来解析预配置的对象非常好。但是，使用 `container.make` 方法也有其缺点。
 
-- Editors are good with auto imports. If you attempt to use a variable and the editor can guess the import path of the variable, then it will write the import statement for you. **However, this cannot work with `container.make` calls.**
+- 编辑器擅长自动导入。如果您尝试使用一个变量，并且编辑器可以猜测该变量的导入路径，那么它将为您编写导入语句。**但是，这对 `container.make` 调用不起作用。**
 
-- Using a mix of import statements and `container.make` calls feels unintuitive compared to having a unified syntax for importing/using modules.
+- 与拥有统一的模块导入/使用语法相比，混合使用导入语句和 `container.make` 调用感觉不直观。
 
-To overcome these downsides, we wrap `container.make` calls inside a regular JavaScript module, so you can fetch them using the `import` statement.
+为了克服这些缺点，我们将 `container.make` 调用包装在一个常规的 JavaScript 模块中，这样您就可以使用 `import` 语句获取它们。
 
-For example, the `@adonisjs/lucid` package has a file called `services/db.ts` and this file has roughly the following contents.
+例如，`@adonisjs/lucid` 包有一个名为 `services/db.ts` 的文件，该文件大致包含以下内容。
 
 ```ts
 const db = await app.container.make('lucid.db')
 export { db as default }
 ```
 
-Within your application, you can replace the `container.make` call with an import pointing to the `services/db.ts` file.
+在您的应用程序中，您可以将 `container.make` 调用替换为指向 `services/db.ts` 文件的导入。
 
 ```ts
 // delete-start
@@ -53,15 +53,15 @@ import db from '@adonisjs/lucid/services/db'
 // insert-end
 ```
 
-As you can see, we are still relying on the container to resolve an instance of the Database class for us. However, with a layer of indirection, we can replace the `container.make` call with a regular `import` statement.
+如您所见，我们仍然依靠容器为我们解析 Database 类的实例。但是，通过一层间接，我们可以将 `container.make` 调用替换为常规的 `import` 语句。
 
-**The JavaScript module wrapping the `container.make` calls is known as a Container service.** Almost every package that interacts with the container ships with one or more container services.
+**包装 `container.make` 调用的 JavaScript 模块被称为容器服务。** 几乎每个与容器交互的包都附带一个或多个容器服务。
 
-## Container services vs. Dependency injection
+## 容器服务与依赖注入
 
-Container services are an alternative to dependency injection. For example, instead of accepting the `Disk` class as a dependency, you ask the `drive` service to give you a disk instance. Let's look at some code examples.
+容器服务是依赖注入的一种替代方案。例如，您可以要求 `drive` 服务为您提供一个磁盘实例，而不是接受 `Disk` 类作为依赖项。让我们看一些代码示例。
 
-In the following example, we use the `@inject` decorator to inject an instance of the `Disk` class.
+在下面的示例中，我们使用 `@inject` 装饰器注入 `Disk` 类的一个实例。
 
 ```ts
 import { Disk } from '@adonisjs/drive'
@@ -87,7 +87,7 @@ export class PostService {
 }
 ```
 
-When using the `drive` service, we call the `drive.use` method to get an instance of `Disk` with `s3` driver.
+当使用 `drive` 服务时，我们调用 `drive.use` 方法来获取带有 `s3` 驱动程序的 `Disk` 实例。
 
 ```ts
 import drive from '@adonisjs/drive/services/main'
@@ -107,17 +107,17 @@ export class PostService {
 }
 ```
 
-Container services are great for keeping your code terse. Whereas, dependency injection creates a loose coupling between different application parts.
+容器服务非常适合保持代码简洁。而依赖注入则在不同的应用程序部分之间创建了松散耦合。
 
-Choosing one over the other comes down to your personal choice and the approach you want to take to structure your code.
+选择哪一个取决于您的个人偏好以及您希望采用的代码结构方法。
 
-## Testing with container services
+## 使用容器服务进行测试
 
-The outright benefit of dependency injection is the ability to swap dependencies at the time of writing tests.
+依赖注入的直接好处是能够在编写测试时交换依赖项。
 
-To provide a similar testing experience with container services, AdonisJS provides first-class APIs for faking implementations when writing tests.
+为了在使用容器服务时提供类似的测试体验，AdonisJS 提供了一流的 API，用于在编写测试时伪造实现。
 
-In the following example, we call the `drive.fake` method to swap drive disks with an in-memory driver. After a fake is created, any call to the `drive.use` method will receive the fake implementation.
+在下面的示例中，我们调用 `drive.fake` 方法将驱动程序磁盘与内存驱动程序交换。创建伪造对象后，对 `drive.use` 方法的任何调用都将接收伪造实现。
 
 ```ts
 import drive from '@adonisjs/drive/services/main'
@@ -125,7 +125,7 @@ import { PostService } from '#services/post_service'
 
 test('save post', async ({ assert }) => {
   /**
-   * Fake s3 disk
+   * 伪造 s3 磁盘
    */
   drive.fake('s3')
  
@@ -133,27 +133,27 @@ test('save post', async ({ assert }) => {
   await postService.save(post, coverImage)
   
   /**
-   * Write assertions
+   * 编写断言
    */
   assert.isTrue(await drive.use('s3').exists(coverImage.name))
   
   /**
-   * Restore fake
+   * 恢复伪造
    */
   drive.restore('s3')
 })
 ```
 
-## Container bindings and services
+## 容器绑定和服务
 
-The following table outlines a list of container bindings and their related services exported by the framework core and first-party packages.
+下表列出了框架核心和第一方包导出的容器绑定及其相关服务。
 
 <table>
   <thead>
     <tr>
-      <th width="100px">Binding</th>
-      <th width="140px">Class</th>
-      <th>Service</th>
+      <th width="100px">绑定</th>
+      <th width="140px">类</th>
+      <th>服务</th>
     </tr>
   </thead>
   <tbody>

@@ -1,28 +1,28 @@
 ---
-summary: Learn how to use Edge.js for templating in AdonisJS
+summary: 学习如何在 AdonisJS 中使用 Edge.js 进行模板渲染
 ---
 
 # EdgeJS
 
-Edge is a **simple**, **Modern**, and **batteries included** template engine created and maintained by the AdonisJS core team for Node.js. Edge is similar to writing JavaScript. If you know JavaScript, you know Edge.
+Edge 是一个 **简单**、**现代** 且 **功能齐全** 的模板引擎，由 AdonisJS 核心团队为 Node.js 创建和维护。Edge 的语法类似于编写 JavaScript。如果你懂 JavaScript，你就懂 Edge。
 
 :::note
-The documentation for Edge is available on [https://edgejs.dev](https://edgejs.dev)
+Edge 的文档可在 [https://edgejs.dev](https://edgejs.dev) 上查看
 :::
 
-## Installation
+## 安装
 
-Install and configure Edge using the following command.
+使用以下命令安装并配置 Edge。
 
 ```sh
 node ace add edge
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `edge.js` package using the detected package manager.
+1. 使用检测到的包管理器安装 `edge.js` 包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
 
     ```ts
     {
@@ -35,15 +35,15 @@ node ace add edge
 
 :::
 
-## Rendering your first template
+## 渲染你的第一个模板
 
-Once the configuration is completed, you can use Edge to render templates. Let's create a `welcome.edge` file inside the `resources/views` directory.
+配置完成后，你可以使用 Edge 来渲染模板。让我们在 `resources/views` 目录下创建一个 `welcome.edge` 文件。
 
 ```sh
 node ace make:view welcome
 ```
 
-Open the newly created file and write the following markup inside it.
+打开新创建的文件并写入以下标记。
 
 ```edge
 <!DOCTYPE html>
@@ -59,7 +59,7 @@ Open the newly created file and write the following markup inside it.
 </html>
 ```
 
-Finally, let's register a route to render the template.
+最后，让我们注册一个路由来渲染该模板。
 
 ```ts
 import router from '@adonisjs/core/services/router'
@@ -69,15 +69,15 @@ router.get('/', async ({ view }) => {
 })
 ```
 
-You can also use the `router.on().render` method to render a template without assigning a callback to the route.
+你也可以使用 `router.on().render` 方法来渲染模板，而无需为路由分配回调函数。
 
 ```ts
 router.on('/').render('welcome')
 ```
 
-### Passing data to the template
+### 向模板传递数据
 
-You can pass data to the template by passing an object as the second argument to the `view.render` method.
+你可以通过将对象作为第二个参数传递给 `view.render` 方法来向模板传递数据。
 
 ```ts
 router.get('/', async ({ view }) => {
@@ -85,8 +85,8 @@ router.get('/', async ({ view }) => {
 })
 ```
 
-## Configuring Edge
-You can use Edge plugins or add global helpers to Edge by creating a [preload file](../concepts/adonisrc_file.md#preloads) inside the `start` directory.
+## 配置 Edge
+你可以通过在 `start` 目录下创建一个 [预加载文件](../concepts/adonisrc_file.md#preloads) 来使用 Edge 插件或向 Edge 添加全局辅助函数。
 
 ```sh
 node ace make:preload view
@@ -99,23 +99,23 @@ import env from '#start/env'
 import { edgeIconify } from 'edge-iconify'
 
 /**
- * Register a plugin
+ * 注册插件
  */
 edge.use(edgeIconify)
 
 /**
- * Define a global property
+ * 定义全局属性
  */
 edge.global('appUrl', env.get('APP_URL'))
 ```
 
-## Global helpers
+## 全局辅助函数
 
-Please check the [Edge helpers reference guide](../references/edge.md) to view the list of helpers contributed by AdonisJS.
+请查看 [Edge 辅助函数参考指南](../references/edge.md) 以了解 AdonisJS 提供的辅助函数列表。
 
-## Learn more
+## 了解更多
 
-- [Edge.js documentation](https://edgejs.dev)
-- [Components](https://edgejs.dev/docs/components/introduction)
-- [SVG icons](https://edgejs.dev/docs/edge-iconify)
-- [Adocasts Edge Series](https://adocasts.com/topics/edge)
+- [Edge.js 文档](https://edgejs.dev)
+- [组件](https://edgejs.dev/docs/components/introduction)
+- [SVG 图标](https://edgejs.dev/docs/edge-iconify)
+- [Adocasts Edge 系列教程](https://adocasts.com/topics/edge)

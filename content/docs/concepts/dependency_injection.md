@@ -1,26 +1,26 @@
 ---
-summary: Learn about dependency injection in AdonisJS and how to use the IoC container to resolve dependencies.
+summary: 了解 AdonisJS 中的依赖注入以及如何使用 IoC 容器来解析依赖项。
 ---
 
-# Dependency injection
+# 依赖注入
 
-At the heart of every AdonisJS application is an IoC container that can construct classes and resolve dependencies with almost zero config.
+每个 AdonisJS 应用程序的核心都是一个 IoC 容器，它可以几乎零配置地构造类和解析依赖项。
 
-The IoC container serves the following two primary use cases.
+IoC 容器主要服务于以下两个用例。
 
-- Exposing API for first and third-party packages to register and resolve bindings from the container (More on [bindings later](#container-bindings)).
-- Automatically resolve and inject dependencies to a class constructor or class methods.
+- 为第一方和第三方包公开 API，以便从容器注册和解析绑定（稍后将详细介绍 [绑定](#container-bindings)）。
+- 自动解析并将依赖项注入到类构造函数或类方法中。
 
-Let's start with injecting dependencies into a class.
+让我们从向类中注入依赖项开始。
 
-## Basic example
+## 基本示例
 
-The automatic dependency injection relies on the [TypeScript legacy decorators implementation](https://www.typescriptlang.org/docs/handbook/decorators.html) and the [Reflection metadata](https://www.npmjs.com/package/reflect-metadata) API.
+自动依赖注入依赖于 [TypeScript 旧版装饰器实现](https://www.typescriptlang.org/docs/handbook/decorators.html) 和 [Reflection metadata](https://www.npmjs.com/package/reflect-metadata) API。
 
-In the following example, we create an `EchoService` class and inject an instance of it into the `HomeController` class. You can follow along by copy-pasting the code examples.
+在下面的示例中，我们创建一个 `EchoService` 类，并将其的一个实例注入到 `HomeController` 类中。您可以复制粘贴代码示例来跟随操作。
 
-### Step 1. Create the Service class
-Start by creating the `EchoService` class inside the `app/services` folder.
+### 步骤 1. 创建 Service 类
+首先在 `app/services` 文件夹中创建 `EchoService` 类。
 
 ```ts
 // title: app/services/echo_service.ts
@@ -31,11 +31,11 @@ export default class EchoService {
 }
 ```
 
-### Step 2. Inject the service inside the controller
+### 步骤 2. 在控制器中注入服务
 
-Create a new HTTP controller inside the `app/controllers` folder. Alternatively, you can use the `node ace make:controller home` command.
+在 `app/controllers` 文件夹中创建一个新的 HTTP 控制器。或者，您可以使用 `node ace make:controller home` 命令。
 
-Import the `EchoService` in the controller file and accept it as a constructor dependency.
+在控制器文件中导入 `EchoService` 并将其作为构造函数依赖项接受。
 
 ```ts
 // title: app/controllers/home_controller.ts
@@ -51,9 +51,9 @@ export default class HomeController {
 }
 ```
 
-### Step 3. Using the inject decorator
+### 步骤 3. 使用 inject 装饰器
 
-To make automatic dependency resolution work, we will have to use the `@inject` decorator on the `HomeController` class. 
+为了使自动依赖解析工作，我们必须在 `HomeController` 类上使用 `@inject` 装饰器。
 
 ```ts
 import EchoService from '#services/echo_service'
@@ -74,19 +74,19 @@ export default class HomeController {
 }
 ```
 
-That's all! You can now bind the `HomeController` class to a route and it will automatically receive an instance of the `EchoService` class.
+就是这样！现在，您可以将 `HomeController` 类绑定到路由，它将自动接收 `EchoService` 类的实例。
 
-### Conclusion
+### 结论
 
-You can think of the `@inject` decorator as a spy looking at the class constructor or method dependencies and informing the container about it. 
+您可以将 `@inject` 装饰器视为查看类构造函数或方法依赖项并将有关信息通知容器的间谍。
 
-When the AdonisJS router asks the container to construct the `HomeController`, the container already knows about the controller dependencies.
+当 AdonisJS 路由器要求容器构造 `HomeController` 时，容器已经知道了控制器的依赖项。
 
-## Constructing a tree of dependencies
+## 构造依赖树
 
-Right now, the `EchoService` class has no dependencies, and using the container to create an instance of it might seem overkill.
+目前，`EchoService` 类没有依赖项，使用容器创建其实例似乎有些大材小用。
 
-Let's update the class constructor and make it accept an instance of the `HttpContext` class.
+让我们更新类构造函数，使其接受 `HttpContext` 类的一个实例。
 
 ```ts
 // title: app/services/echo_service.ts
@@ -110,27 +110,27 @@ export default class EchoService {
 }
 ```
 
-Again, we must place our spy (the `@inject` decorator) on the `EchoService` class to inspect its dependencies.
+同样，我们必须将我们的间谍（`@inject` 装饰器）放在 `EchoService` 类上以检查其依赖项。
 
-Voila, that's all we have to do. Without changing a single line of code inside the controller, you can re-run the code, and the `EchoService` class will receive an instance of the `HttpContext` class.
+瞧，这就是我们要做的一切。无需更改控制器内的一行代码，您可以重新运行代码，`EchoService` 类将接收 `HttpContext` 类的实例。
 
 
 :::note
 
-The great thing about using the container is that you can have deeply nested dependencies, and the container can resolve the entire tree for you. The only deal is to use the `@inject` decorator.
+使用容器的好处在于，您可以拥有深层嵌套的依赖项，并且容器可以为您解析整个树。唯一的条件是使用 `@inject` 装饰器。
 
 
 :::
 
-## Using method injection
+## 使用方法注入
 
-Method injection is used to inject dependencies inside a class method. For method injection to work, you must place the `@inject` decorator before the method signature.
+方法注入用于在类方法内部注入依赖项。要使方法注入工作，必须在方法签名前放置 `@inject` 装饰器。
 
-Let's continue with our previous example and move the `EchoService` dependency from the `HomeController` constructor to the `handle` method.
+让我们继续前面的示例，并将 `EchoService` 依赖项从 `HomeController` 构造函数移动到 `handle` 方法。
 
 :::note
 
-When using method injection inside a controller, remember the first parameter receives a fixed value (i.e., the HTTP context), and the rest of the parameters are resolved using the container.
+在控制器内部使用方法注入时，请记住第一个参数接收固定值（即 HTTP 上下文），其余参数使用容器解析。
 
 :::
 
@@ -157,24 +157,24 @@ export default class HomeController {
 }
 ```
 
-That's all! This time, the `EchoService` class instance will be injected inside the `handle` method.
+就是这样！这次，`EchoService` 类实例将被注入到 `handle` 方法中。
 
-## When to use Dependency Injection
+## 何时使用依赖注入
 
-Leveraging dependency injection in your projects is recommended because DI creates a loose coupling between different parts of your application. As a result, the codebase becomes easier to test and refactor.
+建议在项目中利用依赖注入，因为 DI 会在应用程序的不同部分之间创建松散耦合。因此，代码库变得更容易测试和重构。
 
-However, you have to be careful and not take the idea of dependency injection to its extreme that you start to lose its benefits. For example:
+但是，您必须小心，不要将依赖注入的想法推向极端，以至于开始失去其好处。例如：
 
-- You should not inject helper libraries like `lodash` as a dependency of your class. Import and use it directly.
-- Your codebase might not need loose coupling for components that are ever likely to get swapped or replaced. For example, you may prefer importing the `logger` service vs. injecting the `Logger` class as a dependency.
+- 您不应该将像 `lodash` 这样的辅助库作为类的依赖项注入。直接导入并使用它。
+- 对于不太可能被交换或替换的组件，您的代码库可能不需要松散耦合。例如，您可能更喜欢导入 `logger` 服务而不是将 `Logger` 类作为依赖项注入。
 
-## Using the container directly 
+## 直接使用容器
 
-Most classes within your AdonisJS application, like the **Controllers**, **Middleware**, **Event listeners**, **Validators**, and **Mailers**, are constructed using the container. Therefore you can leverage the `@inject` decorator for automatic dependency injection.
+AdonisJS 应用程序中的大多数类，如 **控制器**、**中间件**、**事件监听器**、**验证器** 和 **邮件发送器**，都是使用容器构造的。因此，您可以利用 `@inject` 装饰器进行自动依赖注入。
 
-For situations where you want to self-construct a class instance using the container, you can use the `container.make` method. 
+对于想要使用容器自行构造类实例的情况，可以使用 `container.make` 方法。
 
-The `container.make` method accepts a class constructor and returns an instance of it after resolving all its dependencies.
+`container.make` 方法接受一个类构造函数，并在解析其所有依赖项后返回其实例。
 
 ```ts
 import { inject } from '@adonisjs/core'
@@ -188,8 +188,8 @@ class SomeService {
 }
 
 /**
- * Same as making a new instance of the class, but
- * will have the benefit of automatic DI
+ * 与创建类的新实例相同，但
+ * 将具有自动 DI 的好处
  */
 const service = await app.container.make(SomeService)
 
@@ -197,11 +197,11 @@ console.log(service instanceof SomeService)
 console.log(service.echo instanceof EchoService)
 ```
 
-You can use the `container.call` method to inject dependencies inside a method. The `container.call` method accepts the following arguments.
+您可以使用 `container.call` 方法在方法内部注入依赖项。`container.call` 方法接受以下参数。
 
-1. An instance of the class.
-2. The name of the method to run on the class instance. The container will resolve the dependencies and pass them to the method.
-3. An optional array of fixed parameters to pass to the method.
+1. 类的实例。
+2. 要在类实例上运行的方法的名称。容器将解析依赖项并将它们传递给方法。
+3. 传递给方法的可选固定参数数组。
 
 ```ts
 class EchoService {}
@@ -215,22 +215,22 @@ class SomeService {
 const service = await app.container.make(SomeService)
 
 /**
- * An instance of Echo class will get passed
- * the run method
+ * Echo 类的实例将被传递给
+ * run 方法
  */
 await app.container.call(service, 'run')
 ```
 
-## Container bindings
+## 容器绑定
 
-Container bindings are one of the primary reasons for the IoC container to exist in AdonisJS. Bindings act as a bridge between the packages you install and your application.
+容器绑定是 AdonisJS 中 IoC 容器存在的主要原因之一。绑定充当您安装的包与应用程序之间的桥梁。
 
-Bindings are essentially a key-value pair, the key is the unique identifier for the binding, and the value is a factory function that returns the value. 
+绑定本质上是一个键值对，键是绑定的唯一标识符，值是返回该值的工厂函数。
 
-- The binding name can be a `string`, a `symbol`, or a class constructor.
-- The factory function can be asynchronous and must return a value.
+- 绑定名称可以是 `string`、`symbol` 或类构造函数。
+- 工厂函数可以是异步的，并且必须返回值。
 
-You may use the `container.bind` method to register a container binding. Following is a straightforward example of registering and resolving bindings from the container.
+您可以使用 `container.bind` 方法注册容器绑定。以下是注册和从容器解析绑定的简单示例。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -249,29 +249,29 @@ const cache = await app.container.make('cache')
 console.log(cache.get('foo')) // returns foo!
 ```
 
-### When to use container bindings?
+### 何时使用容器绑定？
 
-Container bindings are used for specific use cases, like registering singleton services exported by a package or self-constructing class instances when automatic dependency injection is insufficient.
+容器绑定用于特定用例，例如注册包导出的单例服务或在自动依赖注入不足时自行构造类实例。
 
-We recommend you not make your applications unnecessarily complex by registering everything to the container. Instead, look for specific use cases in your application code before reaching for container bindings.
+我们建议您不要通过将所有内容注册到容器来使应用程序变得不必要地复杂。相反，在使用容器绑定之前，请在应用程序代码中寻找特定的用例。
 
-Following are some of the examples which are using container bindings inside the framework packages.
+以下是框架包中使用容器绑定的一些示例。
 
-- [Registering BodyParserMiddleware inside container](https://github.com/adonisjs/core/blob/main/providers/app_provider.ts#L134-L139): Since the middleware class requires configuration stored inside the `config/bodyparser.ts` file, there is no way for automatic dependency injection to work. In this case, we manually construct the middleware class instance by registering it as a binding.
-- [Registering Encryption service as a singleton](https://github.com/adonisjs/core/blob/main/providers/app_provider.ts#L97-L100): The Encryption class requires the `appKey` stored inside the `config/app.ts` file, therefore, we use container binding as a bridge to read the `appKey` from the user application and configure a singleton instance of the Encryption class.
+- [在容器内注册 BodyParserMiddleware](https://github.com/adonisjs/core/blob/main/providers/app_provider.ts#L134-L139)：由于中间件类需要存储在 `config/bodyparser.ts` 文件中的配置，因此无法使用自动依赖注入。在这种情况下，我们通过将其注册为绑定来手动构造中间件类实例。
+- [将 Encryption 服务注册为单例](https://github.com/adonisjs/core/blob/main/providers/app_provider.ts#L97-L100)：Encryption 类需要存储在 `config/app.ts` 文件中的 `appKey`，因此，我们使用容器绑定作为桥梁，从用户应用程序读取 `appKey` 并配置 Encryption 类的单例实例。
 
 
 :::important
 
-The concept of container bindings is not commonly used in the JavaScript ecosystem. Therefore, feel free to [join our Discord community](https://discord.gg/vDcEjq6) to clarify your doubts.
+容器绑定的概念在 JavaScript 生态系统中并不常用。因此，如有疑问，请随时 [加入我们的 Discord 社区](https://discord.gg/vDcEjq6)。
 
 
 :::
 
 
-### Resolving bindings inside the factory function
+### 在工厂函数内解析绑定
 
-You can resolve other bindings from the container within the binding factory function. For example, if the `MyFakeCache` class needs config from the `config/cache.ts` file, you can access it as follows.
+您可以在绑定工厂函数内从容器解析其他绑定。例如，如果 `MyFakeCache` 类需要来自 `config/cache.ts` 文件的配置，您可以按如下方式访问它。
 
 ```ts
 this.app.container.bind('cache', async (resolver) => {
@@ -282,11 +282,11 @@ this.app.container.bind('cache', async (resolver) => {
 })
 ```
 
-### Singletons
+### 单例 (Singletons)
 
-Singletons are bindings for which the factory function is called once, and the return value is cached for the application's lifetime.
+单例是工厂函数仅调用一次且返回值在应用程序生命周期内缓存的绑定。
 
-You can register a singleton binding using the `container.singleton` method.
+您可以使用 `container.singleton` 方法注册单例绑定。
 
 ```ts
 this.app.container.singleton('cache', async (resolver) => {
@@ -297,17 +297,17 @@ this.app.container.singleton('cache', async (resolver) => {
 })
 ```
 
-### Binding values
+### 绑定值 (Binding values)
 
-You can bind values directly to the container using the `container.bindValue` method.
+您可以使用 `container.bindValue` 方法将值直接绑定到容器。
 
 ```ts
 this.app.container.bindValue('cache', new MyFakeCache())
 ```
 
-### Aliases
+### 别名 (Aliases)
 
-You can define aliases for bindings using the `alias` method. The method accepts the alias name as the first parameter and a reference to an existing binding or a class constructor as the alias value.
+您可以使用 `alias` 方法为绑定定义别名。该方法接受别名名称作为第一个参数，并接受对现有绑定或类构造函数的引用作为别名值。
 
 ```ts
 this.app.container.singleton(MyFakeCache, async () => {
@@ -317,11 +317,11 @@ this.app.container.singleton(MyFakeCache, async () => {
 this.app.container.alias('cache', MyFakeCache)
 ```
 
-### Defining static types for bindings
+### 为绑定定义静态类型
 
-You can define the static-type information for binding using [TypeScript declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html). 
+您可以使用 [TypeScript 声明合并](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) 为绑定定义静态类型信息。
 
-The types are defined on the `ContainerBindings` interface as a key-value pair.
+类型定义在 `ContainerBindings` 接口上，作为键值对。
 
 ```ts
 declare module '@adonisjs/core/types' {
@@ -331,20 +331,20 @@ declare module '@adonisjs/core/types' {
 }
 ```
 
-If you create a package, you can write the above code block inside the service provider file.
+如果您创建了一个包，可以将上述代码块写入服务提供者文件中。
 
-In your AdonisJS application, you can write the above code block inside the `types/container.ts` file.
+在您的 AdonisJS 应用程序中，可以将上述代码块写入 `types/container.ts` 文件中。
 
 
-## Creating an abstraction layer
+## 创建抽象层
 
-The container allows you to create an abstraction layer for your application. You can define a binding for an interface and resolve it to a concrete implementation.
+容器允许您为应用程序创建抽象层。您可以为接口定义绑定并将其解析为具体实现。
 
 :::note
-This method is useful when you want to apply Hexagonal Architecture, also known as Port and Adapter principles to your application.
+当您想要将六边形架构（也称为端口和适配器原则）应用于应用程序时，此方法非常有用。
 :::
 
-Since TypeScript interfaces do not exist at runtime, you must use an abstract class constructor for your interface.
+由于 TypeScript 接口在运行时不存在，因此您必须为接口使用抽象类构造函数。
 
 ```ts
 export abstract class PaymentService {
@@ -353,23 +353,23 @@ export abstract class PaymentService {
 }
 ```
 
-Next, you can create a concrete implementation of the `PaymentService` interface.
+接下来，您可以创建 `PaymentService` 接口的具体实现。
 
 ```ts
 import { PaymentService } from '#contracts/payment_service'
 
 export class StripePaymentService implements PaymentService {
   async charge(amount: number) {
-    // Charge the amount using Stripe
+    // 使用 Stripe 收款
   }
 
   async refund(amount: number) {
-    // Refund the amount using Stripe
+    // 使用 Stripe 退款
   }
 }
 ```
 
-Now, you can register the `PaymentService` interface and the `StripePaymentService` concrete implementation inside the container inside your `AppProvider`.
+现在，您可以在 `AppProvider` 内部的容器中注册 `PaymentService` 接口和 `StripePaymentService` 具体实现。
 
 ```ts
 // title: providers/app_provider.ts
@@ -386,7 +386,7 @@ export default class AppProvider {
 }
 ```
 
-Finally, you can resolve the `PaymentService` interface from the container and use it inside your application.
+最后，您可以从容器中解析 `PaymentService` 接口并在应用程序中使用它。
 
 ```ts
 import { PaymentService } from '#contracts/payment_service'
@@ -404,11 +404,11 @@ export default class PaymentController {
 }
 ```
 
-## Swapping implementations during testing
+## 在测试期间交换实现
 
-When you rely on the container to resolve a tree of dependencies, you have less/no control over the classes in that tree. Therefore, mocking/faking those classes can become harder.
+当您依靠容器来解析依赖树时，您对该树中的类控制较少/没有控制。因此，模拟/伪造这些类可能会变得更加困难。
 
-In the following example, the `UsersController.index` method accepts an instance of the `UserService` class, and we use the `@inject` decorator to resolve the dependency and give it to the `index` method.
+在下面的示例中，`UsersController.index` 方法接受 `UserService` 类的一个实例，我们使用 `@inject` 装饰器解析依赖项并将其提供给 `index` 方法。
 
 ```ts
 import UserService from '#services/user_service'
@@ -420,9 +420,9 @@ export default class UsersController {
 }
 ```
 
-Let's say during testing, you do not want to use the actual `UserService` as it makes external HTTP requests. Instead, you want to use a fake implementation.
+假设在测试期间，您不想使用实际的 `UserService`，因为它会发出外部 HTTP 请求。相反，您想使用伪造实现。
 
-But first, look at the code you might write to test the `UsersController`.
+但首先，看看您可能会编写什么代码来测试 `UsersController`。
 
 ```ts
 import UserService from '#services/user_service'
@@ -436,11 +436,11 @@ test('get all users', async ({ client }) => {
 })
 ```
 
-In the above test, we interact with the `UsersController` over an HTTP request and do not have direct control over it.
+在上面的测试中，我们通过 HTTP 请求与 `UsersController` 交互，并没有直接控制它。
 
-The container provides a straightforward API to swap classes with fake implementations. You can define a swap using the `container.swap` method.
+容器提供了一个简单的 API 来用伪造实现交换类。您可以使用 `container.swap` 方法定义交换。
 
-The `container.swap` method accepts the class constructor you want to swap, followed by a factory function to return an alternative implementation.
+`container.swap` 方法接受您要交换的类构造函数，后跟一个返回替代实现的工厂函数。
 
 ```ts
 import UserService from '#services/user_service'
@@ -468,21 +468,21 @@ test('get all users', async ({ client }) => {
 })
 ```
 
-Once a swap has been defined, the container will use it instead of the actual class. You can restore the original implementation using the `container.restore` method.
+一旦定义了交换，容器将使用它而不是实际的类。您可以使用 `container.restore` 方法恢复原始实现。
 
 ```ts
 app.container.restore(UserService)
 
-// Restore UserService and PostService
+// 恢复 UserService 和 PostService
 app.container.restoreAll([UserService, PostService])
 
-// Restore all
+// 恢复全部
 app.container.restoreAll()
 ```
 
-## Contextual dependencies
+## 上下文依赖
 
-Contextual dependencies allow you to define how a dependency should be resolved for a given class. For example, you have two services depending on the Drive Disk class.
+上下文依赖允许您定义如何为给定类解析依赖项。例如，您有两个依赖于 Drive Disk 类的服务。
 
 ```ts
 import { Disk } from '@adonisjs/drive'
@@ -500,9 +500,9 @@ export default class PostService {
 }
 ```
 
-You want the `UserService` to receive a disk instance with the GCS driver and the `PostService` to receive a disk instance with the S3 driver. You can do so using contextual dependencies.
+您希望 `UserService` 接收带有 GCS 驱动程序的磁盘实例，而 `PostService` 接收带有 S3 驱动程序的磁盘实例。您可以使用上下文依赖来实现这一点。
 
-The following code must be written inside a service provider `register` method.
+以下代码必须编写在服务提供者 `register` 方法中。
 
 ```ts
 import { Disk } from '@adonisjs/drive'
@@ -533,11 +533,11 @@ export default class AppProvider {
 }
 ```
 
-## Container hooks
+## 容器钩子
 
-You can use the container's `resolving` hook to modify/extend the return value of the `container.make` method.
+您可以使用容器的 `resolving` 钩子来修改/扩展 `container.make` 方法的返回值。
 
-Usually, you will use hooks inside a service provider when trying to extend a particular binding. For example, the Database provider uses the `resolving` hook to register additional database-driven validation rules.
+通常，在尝试扩展特定绑定时，您将在服务提供者内部使用钩子。例如，Database 提供者使用 `resolving` 钩子来注册额外的数据库驱动验证规则。
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
@@ -555,9 +555,9 @@ export default class DatabaseProvider {
 }
 ```
 
-## Container events
+## 容器事件
 
-The container emits the `container_binding:resolved` event after resolving a binding or constructing a class instance. The `event.binding` property will be a string (binding name) or a class constructor, and the `event.value` property is the resolved value.
+容器在解析绑定或构造类实例后发出 `container_binding:resolved` 事件。`event.binding` 属性将是字符串（绑定名称）或类构造函数，`event.value` 属性是解析的值。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -568,7 +568,7 @@ emitter.on('container_binding:resolved', (event) => {
 })
 ```
 
-## See also
+## 另请参阅
 
-- [The container README file](https://github.com/adonisjs/fold/blob/develop/README.md) covers the container API in the framework agnostic manner.
-- [Why do you need an IoC container?](https://github.com/thetutlage/meta/discussions/4) In this article, the framework's creator shares his reasoning for using the IoC container.
+- [容器 README 文件](https://github.com/adonisjs/fold/blob/develop/README.md) 以框架无关的方式涵盖了容器 API。
+- [为什么需要 IoC 容器？](https://github.com/thetutlage/meta/discussions/4) 在这篇文章中，框架的创建者分享了他使用 IoC 容器的理由。

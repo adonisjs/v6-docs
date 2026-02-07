@@ -1,17 +1,17 @@
 ---
-summary: Learn how to hash values using the AdonisJS hash service.
+summary: 学习如何使用 AdonisJS 哈希服务对值进行哈希处理。
 ---
 
-# Hashing
+# 哈希 (Hashing)
 
-You may hash user passwords in your application using the `hash` service. AdonisJS has first-class support for `bcrypt`, `scrypt`, and `argon2` hashing algorithms and the ability to [add custom drivers](#creating-a-custom-hash-driver).
+你可以使用 `hash` 服务在你的应用中对用户密码进行哈希处理。AdonisJS 对 `bcrypt`、`scrypt` 和 `argon2` 哈希算法提供了一流的支持，并且能够 [添加自定义驱动程序](#creating-a-custom-hash-driver)。
 
-The hashed values are stored in [PHC string format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md). PHC is a deterministic encoding specification for formatting hashes.
+哈希值以 [PHC 字符串格式](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) 存储。PHC 是一种用于格式化哈希的确定性编码规范。
 
 
-## Usage
+## 用法
 
-The `hash.make` method accepts a plain string value (the user password input) and returns a hash output.
+`hash.make` 方法接受一个纯字符串值（用户密码输入）并返回哈希输出。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
@@ -20,21 +20,21 @@ const hash = await hash.make('user_password')
 // $scrypt$n=16384,r=8,p=1$iILKD1gVSx6bqualYqyLBQ$DNzIISdmTQS6sFdQ1tJ3UCZ7Uun4uGHNjj0x8FHOqB0pf2LYsu9Xaj5MFhHg21qBz8l5q/oxpeV+ZkgTAj+OzQ
 ```
 
-You [cannot convert a hash value to plain text](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#hashing-vs-encryption), hashing is a one-way process, and there is no way to retrieve the original value after a hash has been generated.
+你 [不能将哈希值转换为纯文本](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#hashing-vs-encryption)，哈希是一个单向过程，生成哈希后无法检索原始值。
 
-However, hashing provides a way to verify if a given plain text value matches against an existing hash, and you can perform this check using the `hash.verify` method.
+但是，哈希提供了一种验证给定纯文本值是否与现有哈希匹配的方法，你可以使用 `hash.verify` 方法执行此检查。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
 
 if (await hash.verify(existingHash, plainTextValue)) {
-  // password is correct
+  // 密码正确
 }
 ```
 
-## Configuration
+## 配置
 
-The configuration for hashing is stored inside the `config/hash.ts` file. The default driver is set to `scrypt` because scrypt uses the Node.js native crypto module and does not require any third-party packages.
+哈希的配置存储在 `config/hash.ts` 文件中。默认驱动程序设置为 `scrypt`，因为 scrypt 使用 Node.js 原生 crypto 模块，不需要任何第三方包。
 
 ```ts
 // title: config/hash.ts
@@ -47,12 +47,12 @@ export default defineConfig({
     scrypt: drivers.scrypt(),
 
     /**
-     * Uncomment when using argon2
+     * 使用 argon2 时取消注释
        argon: drivers.argon2(),
      */
 
     /**
-     * Uncomment when using bcrypt
+     * 使用 bcrypt 时取消注释
        bcrypt: drivers.bcrypt(),
      */
   }
@@ -61,18 +61,18 @@ export default defineConfig({
 
 ### Argon
 
-Argon is the recommended hashing algorithm to hash user passwords. To use argon with the AdonisJS hash service, you must install the [argon2](https://npmjs.com/argon2) npm package.
+Argon 是推荐用于哈希用户密码的哈希算法。要在 AdonisJS 哈希服务中使用 argon，必须安装 [argon2](https://npmjs.com/argon2) npm 包。
 
 ```sh
 npm i argon2
 ```
 
-We configure the argon driver with secure defaults but feel free to tweak the configuration options per your application requirements. Following is the list of available options.
+我们使用安全默认值配置 argon 驱动程序，但请随意根据你的应用需求调整配置选项。以下是可用选项的列表。
 
 ```ts
 export default defineConfig({
   // highlight-start
-  // Make sure to update the default driver to argon
+  // 确保将默认驱动程序更新为 argon
   default: 'argon',
   // highlight-end
 
@@ -100,11 +100,11 @@ variant
 
 <dd>
 
-The argon hash variant to use.
+要使用的 argon 哈希变体。
 
-- `d` is faster and highly resistant against GPU attacks, which is useful for cryptocurrency
-- `i` is slower and resistant against tradeoff attacks, which is preferred for password hashing and key derivation.
-- `id` *(default)* is a hybrid combination of the above, resistant against GPU and tradeoff attacks.
+- `d` 更快且对 GPU 攻击具有高度抵抗力，这对于加密货币很有用
+- `i` 较慢且对权衡攻击具有抵抗力，这对于密码哈希和密钥派生是首选。
+- `id` *(默认)* 是上述两者的混合组合，可抵抗 GPU 和权衡攻击。
 
 </dd>
 
@@ -116,7 +116,7 @@ version
 
 <dd>
 
-The argon version to use. The available options are `0x10 (1.0)` and `0x13 (1.3)`. The latest version should be used by default.
+要使用的 argon 版本。可用选项为 `0x10 (1.0)` 和 `0x13 (1.3)`。默认情况下应使用最新版本。
 
 </dd>
 
@@ -128,9 +128,9 @@ iterations
 
 <dd>
 
-The `iterations` count increases the hash strength but takes more time to compute. 
+`iterations` 计数增加哈希强度，但也需要更多时间来计算。
 
-The default value is `3`.
+默认值为 `3`。
 
 </dd>
 
@@ -142,9 +142,9 @@ memory
 
 <dd>
 
-The amount of memory to be used for hashing the value. Each parallel thread will have a memory pool of this size. 
+用于哈希值的内存量。每个并行线程将拥有此大小的内存池。
 
-The default value is `65536 (KiB)`.
+默认值为 `65536 (KiB)`。
 
 </dd>
 
@@ -156,9 +156,9 @@ parallelism
 
 <dd>
 
-The number of threads to use for computing the hash. 
+用于计算哈希的线程数。
 
-The default value is `4`.
+默认值为 `4`。
 
 </dd>
 
@@ -170,9 +170,9 @@ saltSize
 
 <dd>
 
-The length of salt (in bytes). Argon generates a cryptographically secure random salt of this size when computing the hash.
+盐的长度（以字节为单位）。Argon 在计算哈希时会生成此大小的加密安全随机盐。
 
-The default and recommended value for password hashing is `16`.
+密码哈希的默认和推荐值为 `16`。
 
 </dd>
 
@@ -184,9 +184,9 @@ hashLength
 
 <dd>
 
-Maximum length for the raw hash (in bytes). The output value will be longer than the mentioned hash length because the raw hash output is further encoded to PHC format.
+原始哈希的最大长度（以字节为单位）。输出值将长于提到的哈希长度，因为原始哈希输出进一步编码为 PHC 格式。
 
-The default value is `32`
+默认值为 `32`
 
 </dd>
 
@@ -194,18 +194,18 @@ The default value is `32`
 
 ### Bcrypt
 
-To use Bcrypt with the AdonisJS hash service, you must install the [bcrypt](http://npmjs.com/bcrypt) npm package.
+要在 AdonisJS 哈希服务中使用 Bcrypt，必须安装 [bcrypt](http://npmjs.com/bcrypt) npm 包。
 
 ```sh
 npm i bcrypt
 ```
 
-Following is the list of available configuration options.
+以下是可用配置选项的列表。
 
 ```ts
 export default defineConfig({
   // highlight-start
-  // Make sure to update the default driver to bcrypt
+  // 确保将默认驱动程序更新为 bcrypt
   default: 'bcrypt',
   // highlight-end
 
@@ -229,9 +229,9 @@ rounds
 
 <dd>
 
-The cost for computing the hash. We recommend reading the [A Note on Rounds](https://github.com/kelektiv/node.bcrypt.js#a-note-on-rounds) section from Bcrypt docs to learn how the `rounds` value has an impact on the time it takes to compute the hash.
+计算哈希的成本。我们建议阅读 Bcrypt 文档中的 [关于 Rounds 的说明](https://github.com/kelektiv/node.bcrypt.js#a-note-on-rounds) 部分，了解 `rounds` 值如何影响计算哈希所需的时间。
 
-The default value is `10`.
+默认值为 `10`。
 
 </dd>
 
@@ -243,9 +243,9 @@ saltSize
 
 <dd>
 
-The length of salt (in bytes). When computing the hash, we generate a cryptographically secure random salt of this size.
+盐的长度（以字节为单位）。计算哈希时，我们会生成此大小的加密安全随机盐。
 
-The default value is `16`.
+默认值为 `16`。
 
 </dd>
 
@@ -257,7 +257,7 @@ version
 
 <dd>
 
-The version for the hashing algorithm. The supported values are `97` and `98`. Using the latest version, i.e., `98` is recommended.
+哈希算法的版本。支持的值为 `97` 和 `98`。建议使用最新版本，即 `98`。
 
 </dd>
 
@@ -265,12 +265,12 @@ The version for the hashing algorithm. The supported values are `97` and `98`. U
 
 ### Scrypt
 
-The scrypt driver uses the Node.js crypto module for computing the password hash. The configuration options are the same as those accepted by the [Node.js `scrypt` method](https://nodejs.org/dist/latest-v19.x/docs/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback).
+scrypt 驱动程序使用 Node.js crypto 模块计算密码哈希。配置选项与 [Node.js `scrypt` 方法](https://nodejs.org/dist/latest-v19.x/docs/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback) 接受的选项相同。
 
 ```ts
 export default defineConfig({
   // highlight-start
-  // Make sure to update the default driver to scrypt
+  // 确保将默认驱动程序更新为 scrypt
   default: 'scrypt',
   // highlight-end
 
@@ -287,13 +287,13 @@ export default defineConfig({
 })
 ```
 
-## Using model hooks to hash password
+## 使用模型钩子哈希密码
 
-Since you will be using the `hash` service to hash user passwords, you may find placing the logic inside the `beforeSave` model hook helpful.
+由于你将使用 `hash` 服务来哈希用户密码，你可能会发现将逻辑放在 `beforeSave` 模型钩子中很有帮助。
 
 :::note
 
-If you are using the `@adonisjs/auth` module, hashing passwords within your model is unnecessary. The `AuthFinder` automatically handles password hashing, ensuring your user credentials are securely processed. Learn more about this process [here](../authentication/verifying_user_credentials.md#hashing-user-password).
+如果你使用的是 `@adonisjs/auth` 模块，则无需在模型中哈希密码。`AuthFinder` 会自动处理密码哈希，确保你的用户凭据得到安全处理。在 [此处](../authentication/verifying_user_credentials.md#hashing-user-password) 了解有关此过程的更多信息。
 
 :::
 
@@ -311,32 +311,32 @@ export default class User extends BaseModel {
 }
 ```
 
-## Switching between drivers
+## 在驱动程序之间切换
 
-If your application uses multiple hashing drivers, you can switch between them using the `hash.use` method. 
+如果你的应用使用多个哈希驱动程序，你可以使用 `hash.use` 方法在它们之间切换。
 
-The `hash.use` method accepts the mapping name from the config file and returns an instance of the matching driver.
+`hash.use` 方法接受配置文件中的映射名称，并返回匹配驱动程序的实例。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
 
-// uses "list.scrypt" mapping from the config file
+// 使用配置文件中的 "list.scrypt" 映射
 await hash.use('scrypt').make('secret')
 
-// uses "list.bcrypt" mapping from the config file
+// 使用配置文件中的 "list.bcrypt" 映射
 await hash.use('bcrypt').make('secret')
 
-// uses "list.argon" mapping from the config file
+// 使用配置文件中的 "list.argon" 映射
 await hash.use('argon').make('secret')
 ```
 
-## Checking if a password needs to be rehashed
+## 检查密码是否需要重新哈希
 
-The latest configuration options are recommended to keep passwords secure, especially when a vulnerability is reported with an older version of the hashing algorithm.
+建议使用最新的配置选项来保持密码安全，尤其是当旧版本的哈希算法报告漏洞时。
 
-After you update the config with the latest options, you can use the `hash.needsReHash` method to check if a password hash uses old options and perform a re-hash.
+使用最新选项更新配置后，你可以使用 `hash.needsReHash` 方法检查密码哈希是否使用旧选项并执行重新哈希。
 
-The check must be performed during user login because that is the only time you can access the plain text password.
+检查必须在用户登录期间执行，因为这是你唯一可以访问纯文本密码的时间。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
@@ -347,21 +347,21 @@ if (await hash.needsReHash(user.password)) {
 }
 ```
 
-You can assign a plain text value to `user.password` if you use model hooks to compute the hash.
+如果你使用模型钩子计算哈希，你可以将纯文本值分配给 `user.password`。
 
 ```ts
 if (await hash.needsReHash(user.password)) {
-  // Let the model hook rehash the password
+  // 让模型钩子重新哈希密码
   user.password = plainTextPassword
   await user.save()
 }
 ```
 
-## Faking hash service during tests
+## 在测试期间伪造哈希服务
 
-Hashing a value is usually a slow process, and it will make your tests slow. Therefore, you might consider faking the hash service using the `hash.fake` method to disable password hashing.
+哈希值通常是一个缓慢的过程，它会使你的测试变慢。因此，你可能会考虑使用 `hash.fake` 方法伪造哈希服务以禁用密码哈希。
 
-We create 20 users using the `UserFactory` in the following example. Since you are using a model hook to hash passwords, it might take 5-7 seconds (depending on the configuration).
+在下面的示例中，我们使用 `UserFactory` 创建 20 个用户。由于你使用模型钩子来哈希密码，这可能需要 5-7 秒（取决于配置）。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
@@ -372,7 +372,7 @@ test('get users list', async ({ client }) => {
 })
 ```
 
-However, once you fake the hash service, the same test will run in order of magnitude faster.
+但是，一旦你伪造了哈希服务，相同的测试将以快几个数量级的速度运行。
 
 ```ts
 import hash from '@adonisjs/core/services/hash'
@@ -391,8 +391,8 @@ test('get users list', async ({ client }) => {
 })
 ```
 
-## Creating a custom hash driver
-A hash driver must implement the [HashDriverContract](https://github.com/adonisjs/hash/blob/main/src/types.ts#L13) interface. Also, the official Hash drivers use [PHC format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) to serialize the hash output for storage. You can check the existing driver's implementation to see how they use the [PHC formatter](https://github.com/adonisjs/hash/blob/main/src/drivers/bcrypt.ts) to make and verify hashes.
+## 创建自定义哈希驱动程序
+哈希驱动程序必须实现 [HashDriverContract](https://github.com/adonisjs/hash/blob/main/src/types.ts#L13) 接口。此外，官方哈希驱动程序使用 [PHC 格式](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) 序列化哈希输出以进行存储。你可以检查现有驱动程序的实现，看看它们如何使用 [PHC 格式化程序](https://github.com/adonisjs/hash/blob/main/src/drivers/bcrypt.ts) 来生成和验证哈希。
 
 ```ts
 import {
@@ -401,34 +401,32 @@ import {
 } from '@adonisjs/core/types/hash'
 
 /**
- * Config accepted by the hash driver
+ * 哈希驱动程序接受的配置
  */
 export type PbkdfConfig = {
 }
 
 /**
- * Driver implementation
+ * 驱动程序实现
  */
 export class Pbkdf2Driver implements HashDriverContract {
   constructor(public config: PbkdfConfig) {
   }
 
   /**
-   * Check if the hash value is formatted as per
-   * the hashing algorithm.
+   * 检查哈希值是否按照哈希算法格式化。
    */
   isValidHash(value: string): boolean {
   }
 
   /**
-   * Convert raw value to Hash
+   * 将原始值转换为哈希
    */
   async make(value: string): Promise<string> {
   }
 
   /**
-   * Verify if the plain value matches the provided
-   * hash
+   * 验证纯文本值是否与提供的哈希匹配
    */
   async verify(
     hashedValue: string,
@@ -437,16 +435,14 @@ export class Pbkdf2Driver implements HashDriverContract {
   }
 
   /**
-   * Check if the hash needs to be re-hashed because
-   * the config parameters have changed
+   * 检查是否需要重新哈希，因为配置参数已更改
    */
   needsReHash(value: string): boolean {
   }
 }
 
 /**
- * Factory function to reference the driver
- * inside the config file.
+ * 在配置文件中引用驱动程序的工厂函数。
  */
 export function pbkdf2Driver (config: PbkdfConfig): ManagerDriverFactory {
   return () => {
@@ -455,17 +451,17 @@ export function pbkdf2Driver (config: PbkdfConfig): ManagerDriverFactory {
 }
 ```
 
-In the above code example, we export the following values.
+在上面的代码示例中，我们导出了以下值。
 
-- `PbkdfConfig`: TypeScript type for the configuration you want to accept.
+- `PbkdfConfig`: 你想要接受的配置的 TypeScript 类型。
 
-- `Pbkdf2Driver`: Driver's implementation. It must adhere to the `HashDriverContract` interface.
+- `Pbkdf2Driver`: 驱动程序的实现。它必须遵守 `HashDriverContract` 接口。
 
-- `pbkdf2Driver`: Finally, a factory function to lazily create an instance of the driver.
+- `pbkdf2Driver`: 最后，一个用于延迟创建驱动程序实例的工厂函数。
 
-### Using the driver
+### 使用驱动程序
 
-Once the implementation is completed, you can reference the driver inside the config file using the `pbkdf2Driver` factory function.
+一旦实现完成，你可以使用 `pbkdf2Driver` 工厂函数在配置文件中引用驱动程序。
 
 ```ts
 // title: config/hash.ts
@@ -475,7 +471,7 @@ import { pbkdf2Driver } from 'my-custom-package'
 export default defineConfig({
   list: {
     pbkdf2: pbkdf2Driver({
-      // config goes here
+      // 配置在这里
     }),
   }
 })

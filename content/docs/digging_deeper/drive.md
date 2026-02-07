@@ -1,49 +1,49 @@
 ---
-summary: Manage user-uploaded files on local filesystem and cloud storage services like S3, GCS, R2 and DigitalOcean spaces. Without any vendor lock-in.
+summary: 管理用户上传到本地文件系统和云存储服务（如 S3、GCS、R2 和 DigitalOcean Spaces）的文件。无任何供应商锁定。
 ---
 
-# Drive
+# 云存储 (Drive)
 
-AdonisJS Drive (`@adonisjs/drive`) is a lightweight wrapper on top of [flydrive.dev](https://flydrive.dev/). FlyDrive is a file storage library for Node.js. It provides a unified API to interact with the local file system and cloud storage solutions like S3, R2, and GCS.
+AdonisJS Drive (`@adonisjs/drive`) 是基于 [flydrive.dev](https://flydrive.dev/) 的轻量级封装。FlyDrive 是一个用于 Node.js 的文件存储库。它提供了一个统一的 API 来与本地文件系统和云存储解决方案（如 S3、R2 和 GCS）进行交互。
 
-Using FlyDrive, you can manage user-uploaded files on various cloud storage services (including the local filesystem) without changing a single line of code.
+使用 FlyDrive，你可以在各种云存储服务（包括本地文件系统）上管理用户上传的文件，而无需更改任何代码。
 
-## Installation
+## 安装
 
-Install and configure the `@adonisjs/drive` package using the following command:
+使用以下命令安装并配置 `@adonisjs/drive` 包：
 
 ```sh
 node ace add @adonisjs/drive
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `@adonisjs/drive` package using the detected package manager.
+1. 使用检测到的包管理器安装 `@adonisjs/drive` 包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
 
    ```ts
    {
      providers: [
-       // ...other providers
+       // ...其他提供者
        () => import('@adonisjs/drive/drive_provider'),
      ]
    }
    ```
 
-3. Creates the `config/drive.ts` file.
+3. 创建 `config/drive.ts` 文件。
 
-4. Defines the environment variables for the selected storage services.
+4. 在 `.env` 文件中定义所选存储服务的环境变量。
 
-5. Installs the required peer dependencies for the selected storage services.
+5. 安装所选存储服务所需的对等依赖项。
 
 :::
 
-## Configuration
+## 配置
 
-The `@adonisjs/drive` package configuration is stored inside the `config/drive.ts` file. You can define config for multiple services within a single config file.
+`@adonisjs/drive` 包的配置存储在 `config/drive.ts` 文件中。你可以在单个配置文件中定义多个服务的配置。
 
-See also: [Config stub](https://github.com/adonisjs/drive/blob/3.x/stubs/config/drive.stub)
+另请参阅：[配置存根 (Config stub)](https://github.com/adonisjs/drive/blob/3.x/stubs/config/drive.stub)
 
 ```ts
 import env from '#start/env'
@@ -55,7 +55,7 @@ const driveConfig = defineConfig({
 
   services: {
     /**
-     * Persist files on the local filesystem
+     * 将文件持久化到本地文件系统
      */
     fs: services.fs({
       location: app.makePath('storage'),
@@ -65,7 +65,7 @@ const driveConfig = defineConfig({
     }),
 
     /**
-     * Persist files on Digital Ocean spaces
+     * 将文件持久化到 Digital Ocean Spaces
      */
     spaces: services.s3({
       credentials: {
@@ -83,19 +83,19 @@ const driveConfig = defineConfig({
 export default driveConfig
 ```
 
-### Environment variables
+### 环境变量
 
-The credentials/settings for the storage services are stored as environment variables within the `.env` file. Make sure to update the values before you can use Drive.
+存储服务的凭据/设置作为环境变量存储在 `.env` 文件中。确保在使用 Drive 之前更新这些值。
 
-Also, the `DRIVE_DISK` environment variable defines the default disk/service for managing files. For example, you may want to use the `fs` disk in development and the `spaces` disk in production.
+此外，`DRIVE_DISK` 环境变量定义了用于管理文件的默认磁盘/服务。例如，你可能希望在开发中使用 `fs` 磁盘，在生产中使用 `spaces` 磁盘。
 
-## Usage
+## 使用
 
-Once you have configured Drive, you can import the `drive` service to interact with its APIs. In the following example, we handle a file upload operation using Drive.
+配置好 Drive 后，你可以导入 `drive` 服务以与其 API 进行交互。在下面的示例中，我们使用 Drive 处理文件上传操作。
 
 :::note
 
-Since the AdonisJS integration is a thin wrapper on top of FlyDrive, you should read the [FlyDrive docs](https://flydrive.dev) to better understand its APIs.
+由于 AdonisJS 集成是 FlyDrive之上的一个薄封装，你应该阅读 [FlyDrive 文档](https://flydrive.dev) 以更好地理解其 API。
 
 :::
 
@@ -106,8 +106,7 @@ import router from '@adonisjs/core/services/router'
 
 router.put('/me', async ({ request, response }) => {
   /**
-   * Step 1: Grab the image from the request and perform basic
-   * validations
+   * 第一步：从请求中获取图像并执行基本验证
    */
   const image = request.file('avatar', {
     size: '2mb',
@@ -118,7 +117,7 @@ router.put('/me', async ({ request, response }) => {
   }
 
   /**
-   * Step 2: Move the image with a unique name using Drive
+   * 第二步：使用 Drive 将图像移动并重命名为唯一名称
    */
   const key = `uploads/${cuid()}.${image.extname}`
   // highlight-start
@@ -126,7 +125,7 @@ router.put('/me', async ({ request, response }) => {
   // highlight-end
 
   /**
-   * Respond with the file's public URL
+   * 响应文件的公共 URL
    */
   return {
     message: 'Image uploaded',
@@ -137,15 +136,15 @@ router.put('/me', async ({ request, response }) => {
 })
 ```
 
-- The Drive package adds the `moveToDisk` method to the [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110). This method moves the file from its `tmpPath` to the configured storage provider.
+- Drive 包向 [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110) 添加了 `moveToDisk` 方法。此方法将文件从其 `tmpPath` 移动到配置的存储提供程序。
 
-- After moving the file, the `meta.url` property will be set on the file object. This property contains the public URL of the file. If your files are private, then you must use the `drive.use().getSignedUrl()` method.
+- 移动文件后，将在文件对象上设置 `meta.url` 属性。此属性包含文件的公共 URL。如果你的文件是私有的，则必须使用 `drive.use().getSignedUrl()` 方法。
 
-## Drive service
+## 云存储服务 (Drive service)
 
-Drive service exported by the `@adonisjs/drive/services/main` path is a singleton instance of the [DriveManager](https://flydrive.dev/docs/drive_manager) class created using the config exported from the `config/drive.ts` file.
+由 `@adonisjs/drive/services/main` 路径导出的 Drive 服务是使用从 `config/drive.ts` 文件导出的配置创建的 [DriveManager](https://flydrive.dev/docs/drive_manager) 类的单例实例。
 
-You can import this service to interact with the DriveManager and the configured file storage services. For example:
+你可以导入此服务以与 DriveManager 和配置的文件存储服务进行交互。例如：
 
 ```ts
 import drive from '@adonisjs/drive/services/main'
@@ -153,24 +152,24 @@ import drive from '@adonisjs/drive/services/main'
 drive instanceof DriveManager // true
 
 /**
- * Returns instance of the default disk
+ * 返回默认磁盘的实例
  */
 const disk = drive.use()
 
 /**
- * Returns instance of a disk named r2
+ * 返回名为 r2 的磁盘实例
  */
 const disk = drive.use('r2')
 
 /**
- * Returns instance of a disk named spaces
+ * 返回名为 spaces 的磁盘实例
  */
 const disk = drive.use('spaces')
 ```
 
-Once you have access to an instance of a Disk, you can use it to manage files.
+一旦你获得了磁盘的实例，你就可以使用它来管理文件。
 
-See also: [Disk API](https://flydrive.dev/docs/disk_api)
+另请参阅：[磁盘 API (Disk API)](https://flydrive.dev/docs/disk_api)
 
 ```ts
 await disk.put(key, value)
@@ -190,11 +189,11 @@ await disk.copyFromFs(source, destination)
 await disk.moveFromFs(source, destination)
 ```
 
-## Local filesystem driver
+## 本地文件系统驱动程序
 
-AdonisJS integration enhances the FlyDrive's local filesystem driver and adds support for URL generation and the ability to serve files using the AdonisJS HTTP server.
+AdonisJS 集成增强了 FlyDrive 的本地文件系统驱动程序，并添加了对 URL 生成的支持以及使用 AdonisJS HTTP 服务器提供文件的能力。
 
-Following is the list of options you may use to configure the filesystem driver.
+以下是你可以用于配置本地文件系统驱动程序的选项列表。
 
 ```ts
 {
@@ -221,7 +220,7 @@ location
 
 <dd>
 
-The `location` property defines the store inside which the files should be stored. This directory should be added to `.gitignore` so that you do not push files uploaded during development to the production server.
+`location` 属性定义了文件应存储在其中的存储位置。此目录应添加到 `.gitignore` 中，以免将开发期间上传的文件推送到生产服务器。
 
 </dd>
 
@@ -233,7 +232,7 @@ visibility
 
 <dd>
 
-The `visibility` property is used to mark files public or private. Private files can only be accessed using signed URLs. [Learn more](https://flydrive.dev/docs/disk_api#getsignedurl)
+`visibility` 属性用于将文件标记为公开或私有。私有文件只能使用签名 URL 访问。[了解更多](https://flydrive.dev/docs/disk_api#getsignedurl)
 
 </dd>
 
@@ -245,7 +244,7 @@ serveFiles
 
 <dd>
 
-The `serveFiles` option auto registers a route to serve the files from the local filesystem. You can view this route using the [list\:routes](../references/commands.md#listroutes) ace command.
+`serveFiles` 选项自动注册一个路由以从本地文件系统提供文件。你可以使用 [list:routes](../references/commands.md#listroutes) ace 命令查看此路由。
 
 </dd>
 
@@ -257,7 +256,7 @@ routeBasePath
 
 <dd>
 
-The `routeBasePath` option defines the base prefix for the route to serve files. Make sure the base prefix is unique.
+`routeBasePath` 选项定义了提供文件的路由的基本前缀。确保基本前缀是唯一的。
 
 </dd>
 
@@ -269,44 +268,46 @@ appUrl
 
 <dd>
 
-You may optionally define the `appUrl` property to create URLs with the complete domain name of your application. Otherwise relative URLs will be created.
+你可以选择性地定义 `appUrl` 属性，以创建包含应用程序完整域名的 URL。否则将创建相对 URL。
 
 </dd>
 
 
 </dl>
 
-## Edge helpers
-Within the Edge templates, you may use one of the following helper methods to generate URLs. Both the methods are async, so make sure to `await` them.
+## Edge 辅助函数
+
+在 Edge 模板中，你可以使用以下辅助方法之一来生成 URL。这两个方法都是异步的，所以请确保 `await` 它们。
 
 ```edge
 <img src="{{ await driveUrl(user.avatar) }}" />
 
-<!-- Generate URL for a named disk -->
+<!-- 生成命名磁盘的 URL -->
 <img src="{{ await driveUrl(user.avatar, 's3') }}" />
 <img src="{{ await driveUrl(user.avatar, 'r2') }}" />
 ```
 
 ```edge
 <a href="{{ await driveSignedUrl(invoice.key) }}">
-  Download Invoice
+  下载发票
 </a>
 
-<!-- Generate URL for a named disk -->
+<!-- 生成命名磁盘的 URL -->
 <a href="{{ await driveSignedUrl(invoice.key, 's3') }}">
-  Download Invoice
+  下载发票
 </a>
 
-<!-- Generate URL with signed options -->
+<!-- 生成带有签名选项的 URL -->
 <a href="{{ await driveSignedUrl(invoice.key, {
   expiresIn: '30 mins',
 }) }}">
-  Download Invoice
+  下载发票
 </a>
 ```
 
-## MultipartFile helper
-Drive extends the Bodyparser [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110) class and adds the `moveToDisk` method. This method copies the file from its `tmpPath` to the configured storage provider.
+## MultipartFile 辅助函数
+
+Drive 扩展了 Bodyparser [MultipartFile](https://github.com/adonisjs/drive/blob/develop/providers/drive_provider.ts#L110) 类并添加了 `moveToDisk` 方法。此方法将文件从其 `tmpPath` 复制到配置的存储提供程序。
 
 ```ts
 const image = request.file('image')!
@@ -314,39 +315,39 @@ const image = request.file('image')!
 const key = 'user-1-avatar.png'
 
 /**
- * Move file to the default disk
+ * 将文件移动到默认磁盘
  */
 await image.moveToDisk(key)
 
 /**
- * Move file to a named disk
+ * 将文件移动到命名磁盘
  */
 await image.moveToDisk(key, 's3')
 
 /**
- * Define additional properties during the
- * move operation
+ * 在移动操作期间定义其他属性
  */
 await image.moveToDisk(key, 's3', {
   contentType: 'image/png',
 })
 
 /**
- * Write file by first reading it as a buffer. You may use this
- * option when your cloud storage provider results in broken
- * files with the "stream" option
+ * 先将文件读取为 buffer 再写入。
+ * 当你的云存储提供商在使用 "stream" 选项时导致文件损坏时，
+ * 你可以使用此选项。
  */
 await image.moveToDisk(key, 's3', {
   moveAs: 'buffer'
 })
 ```
 
-## Faking disks during tests
-The fakes API of Drive can be used during testing to prevent interacting with a remote storage. In the fakes mode, the `drive.use()` method will return a fake disk (backed by local filesystem) and all files will be written inside the `./tmp/drive-fakes` directory of your application root.
+## 测试中的模拟磁盘
 
-These files are deleted automatically after you restore a fake using the `drive.restore` method.
+Drive 的 fakes API 可用于测试期间，以防止与远程存储进行交互。在 fakes 模式下，`drive.use()` 方法将返回一个假磁盘（由本地文件系统支持），并且所有文件都将写入应用程序根目录下的 `./tmp/drive-fakes` 目录中。
 
-See also: [FlyDrive fakes documentation](https://flydrive.dev/docs/drive_manager#using-fakes)
+在使用 `drive.restore` 方法恢复 fake 后，这些文件将自动删除。
+
+另请参阅：[FlyDrive fakes 文档](https://flydrive.dev/docs/drive_manager#using-fakes)
 
 ```ts
 // title: tests/functional/users/update.spec.ts
@@ -357,25 +358,23 @@ import fileGenerator from '@poppinss/file-generator'
 test.group('Users | update', () => {
   test('should be able to update my avatar', async ({ client, cleanup }) => {
     /**
-     * Fake the "spaces" disk and restore the fake
-     * after the test finishes
+     * 模拟 "spaces" 磁盘并在测试结束后恢复 fake
      */
     const fakeDisk = drive.fake('spaces')
     cleanup(() => drive.restore('spaces'))
 
     /**
-     * Create user to perform the login and update
+     * 创建用户以执行登录和更新
      */
     const user = await UserFactory.create()
 
     /**
-     * Generate a fake in-memory png file with size of
-     * 1mb
+     * 生成一个大小为 1mb 的假内存 png 文件
      */
     const { contents, mime, name } = await fileGenerator.generatePng('1mb')
 
     /**
-     * Make put request and send the file
+     * 发出 put 请求并发送文件
      */
     await client
       .put('me')
@@ -386,7 +385,7 @@ test.group('Users | update', () => {
       .loginAs(user)
 
     /**
-     * Assert the file exists
+     * 断言文件存在
      */
     fakeDisk.assertExists(user.avatar)
   })

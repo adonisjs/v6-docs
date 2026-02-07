@@ -1,63 +1,64 @@
 ---
-summary: Learn how AdonisJS boots your application and what lifecycle hooks you can use to change the application state before it is considered ready.
+summary: 了解 AdonisJS 如何启动您的应用程序，以及在应用程序被认为准备好之前可以使用哪些生命周期钩子来更改应用程序状态。
 ---
 
-# Application lifecycle
+# 应用程序生命周期
 
-In this guide, we will learn how AdonisJS boots your application and what lifecycle hooks you can use to change the application state before it is considered ready.
+在本指南中，我们将了解 AdonisJS 如何启动您的应用程序，以及在应用程序被认为准备好之前可以使用哪些生命周期钩子来更改应用程序状态。
 
-The lifecycle of an application depends upon the environment in which it is running. For example, a long-lived process started to serve HTTP requests is managed differently from a short-lived ace command.
+应用程序的生命周期取决于它运行的环境。例如，启动用于服务 HTTP 请求的长运行进程的管理方式与短运行的 ace 命令不同。
 
-So, let's understand the application lifecycle for every supported environment.
+因此，让我们了解每个受支持环境的应用程序生命周期。
 
-## How an AdonisJS application gets started
-An AdonisJS application has multiple entry points, and each entry point boots the application in a specific environment. The following entrypoint files are stored inside the `bin` directory.
+## AdonisJS 应用程序如何启动
 
-- The `bin/server.ts` entry point boots the AdonisJS application to handle HTTP requests. When you run the `node ace serve` command, behind the scenes we run this file as a child process.
-- The `bin/console.ts` entry point boots the AdonisJS application to handle CLI commands. This file uses [Ace](../ace/introduction.md) under the hood.
-- The `bin/test.ts` entrypoint boots the AdonisJS application to run tests using Japa.
+AdonisJS 应用程序有多个入口点，每个入口点都在特定的环境中启动应用程序。以下入口点文件存储在 `bin` 目录中。
 
-If you open any of these files, you will find us using the [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/main.ts#L23) module to wire things up and then start the application.
+- `bin/server.ts` 入口点启动 AdonisJS 应用程序以处理 HTTP 请求。当您运行 `node ace serve` 命令时，我们在幕后作为子进程运行此文件。
+- `bin/console.ts` 入口点启动 AdonisJS 应用程序以处理 CLI 命令。此文件在底层使用 [Ace](../ace/introduction.md)。
+- `bin/test.ts` 入口点启动 AdonisJS 应用程序以使用 Japa 运行测试。
 
-The Ignitor module encapsulates the logic of starting an AdonisJS application. Under the hood, it performs the following actions.
+如果您打开这些文件中的任何一个，您会发现我们使用 [Ignitor](https://github.com/adonisjs/core/blob/main/src/ignitor/main.ts#L23) 模块来连接各个部分，然后启动应用程序。
 
-- Create an instance of the [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) class.
-- Initiate/boot the application.
-- Perform the main action to start the application. For example, in the case of an HTTP server, the `main` action involves starting the HTTP server. Whereas, in the case of tests, the `main` action involves running the tests.
+Ignitor 模块封装了启动 AdonisJS 应用程序的逻辑。在底层，它执行以下操作。
 
-The [Ignitor codebase](https://github.com/adonisjs/core/tree/main/src/ignitor) is relatively straightforward, so browse the source code to understand it better.
+- 创建 [Application](https://github.com/adonisjs/application/blob/main/src/application.ts) 类的一个实例。
+- 初始化/启动应用程序。
+- 执行主要操作以启动应用程序。例如，在 HTTP 服务器的情况下，`main` 操作涉及启动 HTTP 服务器。而在测试的情况下，`main` 操作涉及运行测试。
 
-## The boot phase
+[Ignitor 代码库](https://github.com/adonisjs/core/tree/main/src/ignitor) 相对简单，因此请浏览源代码以更好地理解它。
 
-The boot phase remains the same for all the environments except the `console` environment. In the `console` environment, the executed command decides whether to boot the application.
+## 启动阶段 (Boot phase)
 
-You can only use the container bindings and services once the application is booted.
+除了 `console` 环境外，所有环境的启动阶段都保持相同。在 `console` 环境中，执行的命令决定是否启动应用程序。
+
+只有在应用程序启动后，您才能使用容器绑定和服务。
 
 ![](./boot_phase_flow_chart.png)
 
-## The start phase
+## 开始阶段 (Start phase)
 
-The start phase varies between all the environments. Also, the execution flow is further divided into the following sub-phases
+开始阶段在所有环境之间有所不同。此外，执行流程进一步分为以下子阶段
 
-- The `pre-start` phase refers to the actions performed before starting the app. 
+- `pre-start` 阶段是指在启动应用程序之前执行的操作。
 
-- The `post-start` phase refers to the actions performed after starting the app. In the case of an HTTP server, the actions will be executed after the HTTP server is ready to accept new connections.
+- `post-start` 阶段是指在启动应用程序之后执行的操作。在 HTTP 服务器的情况下，这些操作将在 HTTP 服务器准备好接受新连接之后执行。
 
 ![](./start_phase_flow_chart.png)
 
-### During the web environment
+### 在 Web 环境中
 
-In the web environment, a long-lived HTTP connection is created to listen for incoming requests, and the application stays in the `ready` state until the server crashes or the process receives a signal to shut down.
+在 Web 环境中，创建一个长运行的 HTTP 连接来监听传入请求，并且应用程序保持在 `ready` 状态，直到服务器崩溃或进程收到关闭信号。
 
-### During the test environment
+### 在测试环境中
 
-The **pre-start** and the **post-start** actions are executed in the test environment. After that, we import the test files and execute the tests.
+在测试环境中执行 **pre-start** 和 **post-start** 操作。之后，我们导入测试文件并执行测试。
 
-### During the console environment
+### 在控制台环境中
 
-In the `console` environment, the executed command decides whether to start the application.
+在 `console` 环境中，执行的命令决定是否启动应用程序。
 
-A command can start the application by enabling the `options.startApp` flag. As a result, the **pre-start** and the **post-start** actions will run before the command's `run` method.
+命令可以通过启用 `options.startApp` 标志来启动应用程序。因此，**pre-start** 和 **post-start** 操作将在命令的 `run` 方法之前运行。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -73,33 +74,33 @@ export default class GreetCommand extends BaseCommand {
 }
 ```
 
-## The termination phase
+## 终止阶段 (Termination phase)
 
-The termination of the application varies greatly between short-lived and long-lived processes. 
+应用程序的终止在短运行进程和长运行进程之间差异很大。
 
-A short-lived command or the test process begins the termination after the main operation ends.
+短运行命令或测试进程在主操作结束后开始终止。
 
-A long-lived HTTP server process waits for exit signals like `SIGTERM` to begin the termination process.
+长运行的 HTTP 服务器进程等待退出信号（如 `SIGTERM`）以开始终止过程。
 
 ![](./termination_phase_flow_chart.png)
 
-### Responding to process signals
+### 响应进程信号
 
-In all the environments, we begin a graceful shutdown process when the application receives a `SIGTERM` signal. If you have started your application using [pm2](https://pm2.keymetrics.io/docs/usage/signals-clean-restart/), the graceful shutdown will happen after receiving the `SIGINT` event.
+在所有环境中，当应用程序收到 `SIGTERM` 信号时，我们开始优雅的关闭过程。如果您使用 [pm2](https://pm2.keymetrics.io/docs/usage/signals-clean-restart/) 启动了应用程序，则优雅关闭将在收到 `SIGINT` 事件后发生。
 
-### During the web environment
+### 在 Web 环境中
 
-In the web environment, the application keeps running until the underlying HTTP server crashes with an error. In that case, we begin terminating the app.
+在 Web 环境中，应用程序保持运行，直到底层 HTTP 服务器因错误崩溃。在这种情况下，我们开始终止应用程序。
 
-### During the test environment
+### 在测试环境中
 
-The graceful termination begins after all the tests have been executed.
+在所有测试执行完毕后，开始优雅终止。
 
-### During the console environment
+### 在控制台环境中
 
-In the `console` environment, the termination of the app depends on the executed command.
+在 `console` 环境中，应用程序的终止取决于执行的命令。
 
-The app will terminate as soon as the command is executed unless the `options.staysAlive` flag is enabled, and in this case, the command should explicitly terminate the app.
+除非启用了 `options.staysAlive` 标志，否则应用程序将在命令执行后立即终止，在这种情况下，命令应显式终止应用程序。
 
 ```ts
 import { BaseCommand } from '@adonisjs/core/ace'
@@ -113,23 +114,23 @@ export default class GreetCommand extends BaseCommand {
   async run() {
     await runSomeProcess()
     
-    // Terminate the process
+    // 终止进程
     await this.terminate()
   }
 }
 ```
 
-## Lifecycle hooks
+## 生命周期钩子
 
-Lifecycle hooks allow you to hook into the application bootstrap process and perform actions as the app goes through different states.
+生命周期钩子允许您挂钩到应用程序引导过程，并在应用程序经过不同状态时执行操作。
 
-You can listen for hooks using the service provider classes or define them inline on the application class.
+您可以使用服务提供者类监听钩子，或在应用程序类上内联定义它们。
 
-### Inline callbacks
+### 内联回调
 
-You should register lifecycle hooks as soon as an application instance is created. 
+您应该在创建应用程序实例后立即注册生命周期钩子。
 
-The entry point files `bin/server.ts`, `bin/console.ts`, and `bin/test.ts` creates a fresh application instance for different environments, and you can register inline callbacks within these files.
+入口点文件 `bin/server.ts`、`bin/console.ts` 和 `bin/test.ts` 为不同环境创建新的应用程序实例，您可以在这些文件中注册内联回调。
 
 ```ts
 const app = new Application(new URL('../', import.meta.url))
@@ -152,23 +153,23 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
   })
 ```
 
-- `initiating`: The hook actions are called before the application moves to the initiated state. The `adonisrc.ts` file is parsed after executing the `initiating` hooks.
+- `initiating`: 钩子操作在应用程序进入初始化状态之前调用。`adonisrc.ts` 文件在执行 `initiating` 钩子之后被解析。
 
-- `booting`: The hook actions are called before booting the app. The config files are imported after executing `booting` hooks.
+- `booting`: 钩子操作在启动应用程序之前调用。配置文件在执行 `booting` 钩子之后被导入。
 
-- `booted`: The hook actions are invoked after all the service providers have been registered and booted.
+- `booted`: 钩子操作在所有服务提供者注册并启动之后调用。
 
-- `starting`: The hook actions are invoked before importing the preload files.
+- `starting`: 钩子操作在导入预加载文件之前调用。
 
-- `ready`: The hook actions are invoked after the application is ready.
+- `ready`: 钩子操作在应用程序准备好之后调用。
 
-- `terminating`: The hook actions are invoked once the graceful exit process begins. For example, this hook can close database connections or end open streams.
+- `terminating`: 钩子操作在优雅退出过程开始后调用。例如，此钩子可以关闭数据库连接或结束打开的流。
 
-### Using service providers
+### 使用服务提供者
 
-Services providers define the lifecycle hooks as methods in the provider class. We recommend using service providers over inline callbacks, as they keep everything neatly organized.
+服务提供者将生命周期钩子定义为提供者类中的方法。我们建议使用服务提供者而不是内联回调，因为它们使一切井井有条。
 
-Following is the list of available lifecycle methods.
+以下是可用生命周期方法的列表。
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
@@ -193,12 +194,12 @@ export default class AppProvider {
 }
 ```
 
-- `register`: The register method registers bindings within the container. This method is synchronous by design.
+- `register`: register 方法在容器内注册绑定。此方法在设计上是同步的。
 
-- `boot`: The boot method is used to boot or initialize the bindings you have registered inside the container.
+- `boot`: boot 方法用于启动或初始化您在容器内注册的绑定。
 
-- `start`: The start method runs just before the `ready` method. It allows you to perform actions that the `ready` hook actions might need.
+- `start`: start 方法在 `ready` 方法之前运行。它允许您执行 `ready` 钩子操作可能需要的操作。
 
-- `ready`: The ready method runs after the application is considered ready.
+- `ready`: ready 方法在应用程序被认为准备好之后运行。
 
-- `shutdown`: The shutdown method is invoked when the application begins the graceful shutdown. You can use this method to close database connections, or end opened streams.
+- `shutdown`: shutdown 方法在应用程序开始优雅关闭时调用。您可以使用此方法关闭数据库连接或结束打开的流。

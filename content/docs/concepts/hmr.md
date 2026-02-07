@@ -1,40 +1,42 @@
 ---
-summary: Update your AdonisJS application without restarting the process using hot module replacement (HMR).
+summary: 使用热模块替换 (HMR) 更新您的 AdonisJS 应用程序，而无需重新启动进程。
 ---
 
-# Hot module replacement
+# 热模块替换 (Hot module replacement)
 
-Hot module replacement (HMR) refers to the process of reloading JavaScript modules after modification without restarting the entire process. HMR usually results in a faster feedback loop since, after a file change, you do not have to wait for the whole of the process to restart.
+热模块替换 (HMR) 是指在修改后重新加载 JavaScript 模块，而无需重新启动整个进程。HMR 通常会带来更快的反馈循环，因为在文件更改后，您不必等待整个进程重新启动。
 
-The term HMR has been used for many years now in the frontend ecosystem, where tools like Vite can hot-reload modules and apply changes to a webpage while maintaining its existing state.
+HMR 这个术语在前端生态系统中已经使用了很多年，像 Vite 这样的工具可以热重载模块并将更改应用于网页，同时保持其现有状态。
 
-However, the HMR performed by AdonisJS is a lot simpler and vastly differs from tools like Vite or Webpack. Our goal with HMR is to offer faster reloads, and that's it.
+然而，AdonisJS 执行的 HMR 要简单得多，并且与 Vite 或 Webpack 等工具截然不同。我们使用 HMR 的目标是提供更快的重载，仅此而已。
 
-## Key concepts
+## 关键概念
 
-### No updates are propagated to the browser
+### 没有更新传播到浏览器
 
-Since AdonisJS is a backend framework, we are not in charge of maintaining the state of a frontend application or applying CSS to a web page. Therefore, our HMR integration cannot talk to your frontend app and reconcile its state.
+由于 AdonisJS 是一个后端框架，我们不负责维护前端应用程序的状态或将 CSS 应用于网页。因此，我们的 HMR 集成无法与您的前端应用程序对话并协调其状态。
 
-In fact, not every AdonisJS application is a browser-rendered web app. Many use AdonisJS for creating pure JSON APIs, and they can also benefit from our HMR integration.
+事实上，并非每个 AdonisJS 应用程序都是浏览器渲染的 Web 应用程序。许多人使用 AdonisJS 创建纯 JSON API，他们也可以从我们的 HMR 集成中受益。
 
-### Works only with dynamic imports
-Most HMR tools use code transformations to inject additional code into the compiled output. At AdonisJS, we are not a big fan of transpilers and always strive to embrace the platform as it is. Therefore, our approach to HMR uses [Node.js loader hooks](https://nodejs.org/api/module.html#customization-hooks) and works only with dynamic imports.
+### 仅适用于动态导入
 
-**The good news is that all the critical parts of your AdonisJS application are dynamically imported by default**. For example, Controllers, middleware, and event listeners are all dynamically imported, and hence, you can leverage HMR from today without changing a single line of code in your app.
+大多数 HMR 工具使用代码转换将额外的代码注入到编译后的输出中。在 AdonisJS，我们不太喜欢转译器，并始终努力拥抱平台原样。因此，我们的 HMR 方法使用 [Node.js 加载器钩子](https://nodejs.org/api/module.html#customization-hooks) 并且仅适用于动态导入。
 
-It is worth mentioning that the imports of a dynamically imported module can be at the top level. For example, a controller (which is dynamically imported in the routes file) can have top-level imports for validators, TSX files, models, and services, and they all benefit from HMR.
+**好消息是，您的 AdonisJS 应用程序的所有关键部分默认都是动态导入的**。例如，控制器、中间件和事件监听器都是动态导入的，因此，您从今天开始就可以利用 HMR，而无需更改应用程序中的任何一行代码。
 
-## Usage
-All official starter kits have been updated to use HMR by default. However, if you have an existing application, you can configure HMR as follows.
+值得一提的是，动态导入模块的导入可以在顶层进行。例如，控制器（在路由文件中动态导入）可以具有验证器、TSX 文件、模型和服务的顶层导入，它们都受益于 HMR。
 
-Install the [hot-hook](https://github.com/Julien-R44/hot-hook) npm package as a development dependency. The AdonisJS core team has created this package, which can also be used outside of an AdonisJS application.
+## 用法
+
+所有官方入门套件都已更新为默认使用 HMR。但是，如果您有一个现有的应用程序，则可以按如下方式配置 HMR。
+
+安装 [hot-hook](https://github.com/Julien-R44/hot-hook) npm 包作为开发依赖项。AdonisJS 核心团队创建了这个包，它也可以在 AdonisJS 应用程序之外使用。
 
 ```sh
 npm i -D hot-hook
 ```
 
-Next, copy-paste the following configuration to the `package.json` file. The `boundaries` property accepts an array of glob patterns that must be considered for HMR.
+接下来，将以下配置复制并粘贴到 `package.json` 文件中。`boundaries` 属性接受一个 glob 模式数组，这些模式必须被考虑用于 HMR。
 
 ```json
 {
@@ -47,13 +49,13 @@ Next, copy-paste the following configuration to the `package.json` file. The `bo
 }
 ```
 
-After the configuration, you can start the development server with the `--hmr` flag.
+配置完成后，您可以使用 `--hmr` 标志启动开发服务器。
 
 ```sh
 node ace serve --hmr
 ```
 
-Also, you might want to update the `dev` script within the `package.json` file to use this new flag.
+此外，您可能希望更新 `package.json` 文件中的 `dev` 脚本以使用此新标志。
 
 ```json
 {
@@ -63,34 +65,36 @@ Also, you might want to update the `dev` script within the `package.json` file t
 }
 ```
 
-## Full reloads vs HMR
+## 完全重载 vs HMR
 
 :::note
 
-This section explains the underlying workings of `hot-hook`. Feel free to skip it if you are not in the mood to read extended technical theory 🤓
+本节解释了 `hot-hook` 的底层工作原理。如果您没有心情阅读扩展的技术理论，请随意跳过它 🤓
 
-Or, go through the [README file](https://github.com/Julien-R44/hot-hook) of the package if you want an even deeper explanation.
+或者，如果您想要更深入的解释，请浏览该包的 [README 文件](https://github.com/Julien-R44/hot-hook)。
 
 :::
 
-Let's understand when AdonisJS will perform a complete reload (restarting the process) and when it will hot reload the module.
+让我们了解 AdonisJS 何时执行完全重载（重新启动进程）以及何时热重载模块。
 
-### Creating a dependency tree
-When using the `--hmr` flag, AdonisJS will use `hot-hook` to create a dependency tree of your application starting from the `bin/server.ts` file and will watch all the files that are part of this dependency tree.
+### 创建依赖树
 
-It means that if you create a TypeScript file in your application source code but never import it anywhere in your app, this file will not trigger any reload. It will be ignored as if the file does not exist.
+当使用 `--hmr` 标志时，AdonisJS 将使用 `hot-hook` 创建应用程序的依赖树，从 `bin/server.ts` 文件开始，并将监视属于此依赖树的所有文件。
 
-### Identifying boundaries
-Next, `hot-hook` will use the `boundaries` array from the configuration to identify the files that qualify for HMR. 
+这意味着，如果您在应用程序源代码中创建一个 TypeScript 文件，但从未在应用程序中的任何位置导入它，则此文件将不会触发任何重载。它将被忽略，就好像该文件不存在一样。
 
-As a rule of thumb, you should never register config files, service providers, or preload files as boundaries. This is because these files usually result in some side-effect that will re-occur if we reload them without clearing the side-effects. Here are some examples:
+### 识别边界
 
-- The `config/database.ts` file establishes a connection with the database. Hot reloading this file means closing the existing connection and re-creating it. The same can be achieved by restarting the entire process without adding any additional complexity.
+接下来，`hot-hook` 将使用配置中的 `boundaries` 数组来识别符合 HMR 条件的文件。
 
-- The `start/routes.ts` file is used to register the routes. Hot reloading this file means removing existing routes registered with the framework and re-registering them. Again, restarting the process is simple.
+根据经验，您不应将配置文件、服务提供者或预加载文件注册为边界。这是因为这些文件通常会导致一些副作用，如果我们重载它们而不清除副作用，这些副作用将会再次发生。以下是一些示例：
 
-In other words, we can say that the modules imported/executed during an HTTP request should be part of HMR boundaries, and modules needed to boot the application should not be.
+- `config/database.ts` 文件建立与数据库的连接。热重载此文件意味着关闭现有连接并重新创建它。通过重新启动整个进程也可以实现同样的效果，而无需增加任何额外的复杂性。
 
-### Performing reloads
-Once `hot-hook` has identified the boundaries, it will perform HMR for dynamically imported modules that are part of the boundary and restart the process for the rest of the files.
+- `start/routes.ts` 文件用于注册路由。热重载此文件意味着删除向框架注册的现有路由并重新注册它们。同样，重新启动进程很简单。
 
+换句话说，我们可以说在 HTTP 请求期间导入/执行的模块应该是 HMR 边界的一部分，而启动应用程序所需的模块不应该是。
+
+### 执行重载
+
+一旦 `hot-hook` 识别出边界，它将对属于边界的动态导入模块执行 HMR，并对其余文件重新启动进程。

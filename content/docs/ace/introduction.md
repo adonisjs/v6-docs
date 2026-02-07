@@ -1,34 +1,34 @@
 ---
-summary: Ace is a command line framework used by AdonisJS to create and run console commands.
+summary: Ace 是 AdonisJS 使用的命令行框架，用于创建和运行控制台命令。
 ---
 
 
-# Introduction
+# 介绍
 
-Ace is a command line framework used by AdonisJS to create and run console commands. The entry point file for Ace is stored in the root of your project, and you can execute it as follows.
+Ace 是 AdonisJS 使用的命令行框架，用于创建和运行控制台命令。Ace 的入口文件存储在项目的根目录中，你可以按如下方式执行它。
 
 ```sh
 node ace
 ```
 
-Since the `node` binary cannot run the TypeScript source code directly, we have to keep the ace file in pure JavaScript and use the `.js` extension.
+由于 `node` 二进制文件不能直接运行 TypeScript 源代码，因此我们必须将 ace 文件保持为纯 JavaScript 并使用 `.js` 扩展名。
 
-Under the hood, the `ace.js` file registers TS Node as an [ESM module loader hook](https://nodejs.org/api/module.html#customization-hooks) to execute the TypeScript code and imports the `bin/console.ts` file.
+在底层，`ace.js` 文件注册 TS Node 作为 [ESM 模块加载器钩子](https://nodejs.org/api/module.html#customization-hooks) 来执行 TypeScript 代码并导入 `bin/console.ts` 文件。
 
-## Help and list commands
+## 帮助和列表命令
 
-You can view the list of available commands by running the ace entry point file without any arguments or using the `list` command.
+你可以通过运行不带任何参数的 ace 入口文件或使用 `list` 命令来查看可用命令列表。
 
 ```sh
 node ace
 
-# Same as above
+# 与上面相同
 node ace list
 ```
 
 ![](./ace_help_screen.jpeg)
 
-You can view help for a single command by typing the command name with the `--help` flag.
+你可以通过键入命令名称并带上 `--help` 标志来查看单个命令的帮助。
 
 ```sh
 node ace make:controller --help
@@ -36,26 +36,26 @@ node ace make:controller --help
 
 :::note
 
-The output of the help screen is formatted as per the [docopt](http://docopt.org/) standard.
+帮助屏幕的输出格式符合 [docopt](http://docopt.org/) 标准。
 
 :::
 
 
-## Enabling/disabling colors
+## 启用/禁用颜色
 
-Ace detects the CLI environment in which it is running and disables the colorful output if the terminal does not support colors. However, you can manually enable or disable colors using the `--ansi` flag.
+Ace 会检测其运行的 CLI 环境，如果终端不支持颜色，则禁用彩色输出。但是，你可以使用 `--ansi` 标志手动启用或禁用颜色。
 
 ```sh
-# Disable colors
+# 禁用颜色
 node ace list --no-ansi
 
-# Force enable colors
+# 强制启用颜色
 node ace list --ansi
 ```
 
-## Creating command aliases
+## 创建命令别名
 
-Command aliases provide a convenience layer to define aliases for commonly used commands. For example, if you often create singular resourceful controllers, you may create an alias for it inside the `adonisrc.ts` file.
+命令别名为常用命令定义别名提供了一个便利层。例如，如果你经常创建单数形式的资源控制器，你可以在 `adonisrc.ts` 文件中为它创建一个别名。
 
 ```ts
 {
@@ -65,35 +65,35 @@ Command aliases provide a convenience layer to define aliases for commonly used 
 }
 ```
 
-Once the alias is defined, you can use the alias to run the command.
+定义别名后，你可以使用别名来运行命令。
 
 ```sh
 node ace resource admin
 ```
 
-### How alias expansion works?
+### 别名展开是如何工作的？
 
-- Every time you run a command, Ace will check for aliases inside the `commandsAliases` object. 
-- If an alias exists, the first segment (before the space) will be used to look up the command.
-- If a command exists, the rest of the alias value segments will be appended to the command name.
+- 每次运行命令时，Ace 都会在 `commandsAliases` 对象中检查别名。
+- 如果别名存在，则第一个部分（空格之前）将用于查找命令。
+- 如果命令存在，则别名值的其余部分将附加到命令名称后。
 
-    For example, if you run the following command
+    例如，如果你运行以下命令
 
     ```sh
     node ace resource admin --help
     ```
     
-    It will be expanded to
-    
+    它将被展开为
+
     ```sh
     make:controller --resource --singular admin --help
     ```
 
-## Running commands programmatically
+## 以编程方式运行命令
 
-You can use the `ace` service to execute commands programmatically. The ace service is available after the application has been booted.
+你可以使用 `ace` 服务以编程方式执行命令。ace 服务在应用程序启动后可用。
 
-The `ace.exec` method accepts the command name as the first parameter and an array of command line arguments as the second parameter. For example:
+`ace.exec` 方法接受命令名称作为第一个参数，并接受命令行参数数组作为第二个参数。例如：
 
 ```ts
 import ace from '@adonisjs/core/services/ace'
@@ -108,13 +108,13 @@ console.log(command.result)
 console.log(command.error)
 ```
 
-You may use the `ace.hasCommand` method to check if a command exists before executing it.
+你可以使用 `ace.hasCommand` 方法在执行命令之前检查命令是否存在。
 
 ```ts
 import ace from '@adonisjs/core/services/ace'
 
 /**
- * Boot method will load commands (if not already loaded)
+ * Boot 方法将加载命令（如果尚未加载）
  */
 await ace.boot()
 

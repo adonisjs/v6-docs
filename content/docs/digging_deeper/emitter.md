@@ -1,26 +1,26 @@
 ---
-summary: Inbuilt event emitter created on top of emittery. Dispatches events asynchronously and fixes many common issues with the Node.js default Event emitter.
+summary: 基于 emittery 构建的内置事件发射器。异步分发事件，并修复了 Node.js 默认事件发射器的许多常见问题。
 ---
 
-# Event Emitter
+# 事件发射器 (Event Emitter)
 
-AdonisJS has an inbuilt event emitter created on top of [emittery](https://github.com/sindresorhus/emittery). Emittery dispatches events asynchronously and [fixes many common issues](https://github.com/sindresorhus/emittery#how-is-this-different-than-the-built-in-eventemitter-in-nodejs) with the Node.js default Event emitter.
+AdonisJS 有一个内置的事件发射器，它是基于 [emittery](https://github.com/sindresorhus/emittery) 构建的。Emittery 异步分发事件，并 [修复了 Node.js 默认事件发射器的许多常见问题](https://github.com/sindresorhus/emittery#how-is-this-different-than-the-built-in-eventemitter-in-nodejs)。
 
-AdonisJS further enhances emittery with additional features.
+AdonisJS 进一步增强了 emittery 的功能：
 
-- Provide static type safety by defining a list of events and their associated data types.
-- Support for class-based events and listeners. Moving listeners to dedicated files keep your codebase tidy and easy to test.
-- Ability to fake events during tests.
+- 通过定义事件列表及其相关数据类型，提供静态类型安全。
+- 支持基于类的事件和监听器。将监听器移动到专用文件可以保持代码库整洁且易于测试。
+- 能够在测试期间模拟事件。
 
-## Basic usage
+## 基本用法
 
-The event listeners are defined inside the `start/events.ts` file. You may create this file using the `make:preload` ace command.
+事件监听器定义在 `start/events.ts` 文件中。你可以使用 `make:preload` ace 命令创建此文件。
 
 ```sh
 node ace make:preload events
 ```
 
-You must use the `emitter.on` to listen to an event. The method accepts the event's name as the first argument and the listener as the second argument.
+你必须使用 `emitter.on` 来监听事件。该方法接受事件名称作为第一个参数，监听器作为第二个参数。
 
 ```ts
 // title: start/events.ts
@@ -31,7 +31,7 @@ emitter.on('user:registered', function (user) {
 })
 ```
 
-Once you have defined the event listener, you can emit the `user:registered` event using the `emitter.emit` method. It takes the event name as the first argument and the event data as the second argument.
+一旦定义了事件监听器，就可以使用 `emitter.emit` 方法触发 `user:registered` 事件。它接受事件名称作为第一个参数，事件数据作为第二个参数。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -44,7 +44,7 @@ export default class UsersController {
 }
 ```
 
-You may use the `emitter.once` to listen to an event once.
+你可以使用 `emitter.once` 来一次性监听事件。
 
 ```ts
 emitter.once('user:registered', function (user) {
@@ -52,20 +52,17 @@ emitter.once('user:registered', function (user) {
 })
 ```
 
-## Making events type-safe
+## 使事件类型安全
 
-AdonisJS makes it mandatory to define static types for every event you want to emit within your application. The types are registered within the `types/events.ts` file.
+AdonisJS 强制要求为你想要在应用程序中触发的每个事件定义静态类型。这些类型注册在 `types/events.ts` 文件中。
 
-In the following example, we register the `User` model as the data type for the `user:registered` event.
-
+在下面的示例中，我们将 `User` 模型注册为 `user:registered` 事件的数据类型。
 
 :::note
 
-If you find defining types for every event cumbersome, you may switch to [class-based events](#class-based-events).
-
+如果你觉得为每个事件定义类型很繁琐，你可以切换到 [基于类的事件](#class-based-events)。
 
 :::
-
 
 ```ts
 import User from '#models/User'
@@ -77,29 +74,29 @@ declare module '@adonisjs/core/types' {
 }
 ```
 
-## Class-based listeners
+## 基于类的监听器
 
-Like HTTP controllers, listener classes offer an abstraction layer to move inline event listeners inside dedicated files. Listener classes are stored inside the `app/listeners` directory and you may create a new listener using the `make:listener` command.
+像 HTTP 控制器一样，监听器类提供了一个抽象层，可以将内联事件监听器移动到专用文件中。监听器类存储在 `app/listeners` 目录中，你可以使用 `make:listener` 命令创建一个新的监听器。
 
-See also: [Make listener command](../references/commands.md#makelistener)
+另请参阅：[Make listener 命令](../references/commands.md#makelistener)
 
 ```sh
 node ace make:listener sendVerificationEmail
 ```
 
-The listener file is scaffolded with the `class` declaration and `handle` method. In this class, you can define additional methods to listen to multiple events (if needed).
+监听器文件是用 `class` 声明和 `handle` 方法生成的。在这个类中，你可以定义其他方法来监听多个事件（如果需要）。
 
 ```ts
 import User from '#models/user'
 
 export default class SendVerificationEmail {
   handle(user: User) {
-    // Send email
+    // 发送邮件
   }
 }
 ```
 
-As the final step, you must bind the listener class to an event within the `start/events.ts` file. You may import the listener using the `#listeners` alias. The aliases are defined using the [subpath imports feature of Node.js](../getting_started/folder_structure.md#the-sub-path-imports).
+最后一步，你必须在 `start/events.ts` 文件中将监听器类绑定到事件。你可以使用 `#listeners` 别名导入监听器。别名是使用 [Node.js 的子路径导入功能](../getting_started/folder_structure.md#the-sub-path-imports) 定义的。
 
 ```ts
 // title: start/events.ts
@@ -109,9 +106,9 @@ import SendVerificationEmail from '#listeners/send_verification_email'
 emitter.on('user:registered', [SendVerificationEmail, 'handle'])
 ```
 
-### Lazy-loading listeners
+### 懒加载监听器
 
-It is recommended to lazy load listeners to speed up the application boot phase. Lazy loading is as simple as moving the import statement behind a function and using dynamic imports.
+建议懒加载监听器以加快应用程序启动阶段。懒加载就像将导入语句移到函数后面并使用动态导入一样简单。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -125,21 +122,20 @@ const SendVerificationEmail = () => import('#listeners/send_verification_email')
 emitter.on('user:registered', [SendVerificationEmail, 'handle'])
 ```
 
-### Dependency injection
+### 依赖注入
 
 :::warning
 
-You cannot inject the `HttpContext` inside a listener class. Because events are processed asynchronously, the listener might run after the HTTP request is finished.
-
+你不能在监听器类中注入 `HttpContext`。因为事件是异步处理的，监听器可能会在 HTTP 请求完成后运行。
 
 :::
 
-The listener classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the class constructor or the method which handles the event.
+监听器类使用 [IoC 容器](../concepts/dependency_injection.md) 实例化；因此，你可以在类构造函数或处理事件的方法中对依赖项进行类型提示。
 
-In the following example, we type-hint the `TokensService` as a constructor argument. When invoking this listener, the IoC container will inject an instance of the `TokensService` class.
+在下面的示例中，我们将 `TokensService` 类型提示为构造函数参数。调用此监听器时，IoC 容器将注入 `TokensService` 类的实例。
 
 ```ts
-// title: Constructor injection
+// title: 构造函数注入
 import { inject } from '@adonisjs/core'
 import TokensService from '#services/tokens_service'
 
@@ -153,10 +149,10 @@ export default class SendVerificationEmail {
 }
 ```
 
-In the following example, we inject the `TokensService` inside the handle method. However, do remember, the first argument will always be the event payload.
+在下面的示例中，我们在 handle 方法中注入 `TokensService`。但是，请记住，第一个参数始终是事件负载。
 
 ```ts
-// title: Method injection
+// title: 方法注入
 import { inject } from '@adonisjs/core'
 import TokensService from '#services/tokens_service'
 import UserRegistered from '#events/user_registered'
@@ -169,25 +165,25 @@ export default class SendVerificationEmail {
 }
 ```
 
-## Class-based events
+## 基于类的事件
 
-An event is a combination of the event identifier (usually a string-based event name) and the associated data. For example:
+事件是事件标识符（通常是基于字符串的事件名称）和相关数据的组合。例如：
 
-- `user:registered` is the event identifier (aka the event name).
-- An instance of the User model is the event data.
+- `user:registered` 是事件标识符（即事件名称）。
+- User 模型的实例是事件数据。
 
-Class-based events encapsulate the event identifier and the event data within the same class. The class constructor serves as the identifier, and an instance of the class holds the event data.
+基于类的事件将事件标识符和事件数据封装在同一个类中。类构造函数充当标识符，类的实例保存事件数据。
 
-You may create an event class using the `make:event` command.
+你可以使用 `make:event` 命令创建一个事件类。
 
-See also: [Make event command](../references/commands.md#makeevent)
+另请参阅：[Make event 命令](../references/commands.md#makeevent)
 
 ```sh
 node ace make:event UserRegistered
 ```
 
-The event class has no behavior. Instead, it is a data container for the event. You may accept event data via the class constructor and make it available as an instance property.
- 
+事件类没有行为。相反，它是事件的数据容器。你可以通过类构造函数接受事件数据，并将其作为实例属性提供。
+
 ```ts
 // title: app/events/user_registered.ts
 import { BaseEvent } from '@adonisjs/core/events'
@@ -200,9 +196,9 @@ export default class UserRegistered extends BaseEvent {
 }
 ```
 
-### Listening to class-based events
+### 监听基于类的事件
 
-You may attach listeners for class-based events using the `emitter.on` method. The first argument is the event class reference, followed by the listener.
+你可以使用 `emitter.on` 方法为基于类的事件附加监听器。第一个参数是事件类引用，后跟监听器。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -213,7 +209,7 @@ emitter.on(UserRegistered, function (event) {
 })
 ```
 
-In the following example, we use both class-based events and listeners.
+在下面的示例中，我们要同时使用基于类的事件和监听器。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -224,9 +220,9 @@ const SendVerificationEmail = () => import('#listeners/send_verification_email')
 emitter.on(UserRegistered, [SendVerificationEmail])
 ```
 
-### Emitting class-based events
+### 触发基于类的事件
 
-You may emit a class-based event using the `static dispatch` method. The `dispatch` method takes arguments accepted by the event class constructor.
+你可以使用 `static dispatch` 方法触发基于类的事件。`dispatch` 方法接受事件类构造函数接受的参数。
 
 ```ts
 import User from '#models/user'
@@ -237,18 +233,18 @@ export default class UsersController {
     const user = await User.create(data)
     
     /**
-     * Dispatch/emit the event
+     * 分发/触发事件
      */
     UserRegistered.dispatch(user)
   }
 }
 ```
 
-## Simplifying events listening experience
+## 简化事件监听体验
 
-If you decide to use class-based events and listeners, you may use the `emitter.listen` method to simplify the process of binding listeners. 
+如果你决定使用基于类的事件和监听器，你可以使用 `emitter.listen` 方法来简化绑定监听器的过程。
 
-The `emitter.listen` method accepts the event class as the first argument and an array of class-based listeners as the second argument. In addition, the registered listener must have a `handle` method to handle the event.
+`emitter.listen` 方法接受事件类作为第一个参数，并将基于类的监听器数组作为第二个参数。此外，注册的监听器必须具有处理事件的 `handle` 方法。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -261,10 +257,11 @@ emitter.listen(UserRegistered, [
 ])
 ```
 
-## Handling errors
-By default, the exceptions raised by the listeners will result in [unhandledRejection](https://nodejs.org/api/process.html#event-unhandledrejection). Therefore, it is recommended to self capture and handle the error using the `emitter.onError` method.
+## 处理错误
 
-The `emitter.onError` method accepts a callback which receives the event name, error, and event data.
+默认情况下，监听器引发的异常将导致 [unhandledRejection](https://nodejs.org/api/process.html#event-unhandledrejection)。因此，建议使用 `emitter.onError` 方法自行捕获和处理错误。
+
+`emitter.onError` 方法接受一个回调，该回调接收事件名称、错误和事件数据。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -273,9 +270,9 @@ emitter.onError((event, error, eventData) => {
 })
 ```
 
-## Listening to all events
+## 监听所有事件
 
-You can listen to all the events using the `emitter.onAny` method. The method accepts the listener callback as the only parameter.
+你可以使用 `emitter.onAny` 方法监听所有事件。该方法接受监听器回调作为唯一参数。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -286,36 +283,36 @@ emitter.onAny((name, event) => {
 })
 ```
 
-## Unsubscribing from events
+## 取消订阅事件
 
-The `emitter.on` method returns an unsubscribe function you may call to remove the event listener subscription.
+`emitter.on` 方法返回一个取消订阅函数，你可以调用该函数来删除事件监听器订阅。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
 
 const unsubscribe = emitter.on('user:registered', () => {})
 
-// Remove the listener
+// 删除监听器
 unsubscribe()
 ```
 
-You may also use the `emitter.off` method to remove the event listener subscription. The method accepts the event name/class as the first argument and a reference to the listener as the second argument.
+你还可以使用 `emitter.off` 方法删除事件监听器订阅。该方法接受事件名称/类作为第一个参数，并将对监听器的引用作为第二个参数。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
 
 function sendEmail () {}
 
-// Listen for event
+// 监听事件
 emitter.on('user:registered', sendEmail)
 
-// Remove listener
+// 删除监听器
 emitter.off('user:registered', sendEmail)
 ```
 
 ### emitter.offAny
 
-The `emitter.offAny` removes a wildcard listener, listening for all the events.
+`emitter.offAny` 删除监听所有事件的通配符监听器。
 
 ```ts
 emitter.offAny(callback)
@@ -323,34 +320,35 @@ emitter.offAny(callback)
 
 ### emitter.clearListeners
 
-The `emitter.clearListeners` method removes all the listeners for a given event.
+`emitter.clearListeners` 方法删除给定事件的所有监听器。
 
 ```ts
-//String-based event
+// 基于字符串的事件
 emitter.clearListeners('user:registered')
 
-//Class-based event
+// 基于类的事件
 emitter.clearListeners(UserRegistered)
 ```
 
 ### emitter.clearAllListeners
 
-The `emitter.clearAllListeners` method removes all the listeners for all the events.
+`emitter.clearAllListeners` 方法删除所有事件的所有监听器。
 
 ```ts
 emitter.clearAllListeners()
 ```
 
-## List of available events
-Please check the [events reference guide](../references/events.md) to view the list of available events.
+## 可用事件列表
 
-## Faking events during tests
+请查看 [事件参考指南](../references/events.md) 以查看可用事件列表。
 
-Event listeners are often used for performing side effects after a given action. For example: Send an email to a newly registered user, or send a notification after an order status update.
+## 测试中的模拟事件
 
-When writing tests, you might want to avoid sending emails to the user created during the test.
+事件监听器通常用于在给定操作后执行副作用。例如：向新注册的用户发送电子邮件，或在订单状态更新后发送通知。
 
-You may disable event listeners by faking the event emitter. In the following example, we call `emitter.fake` before making an HTTP request to signup a user. After the request, we use the `events.assertEmitted` method to ensure that the `SignupController` emits a specific event.
+编写测试时，你可能希望避免向测试期间创建的用户发送电子邮件。
+
+你可以通过模拟 (faking) 事件发射器来禁用事件监听器。在下面的示例中，我们在发出 HTTP 请求注册用户之前调用 `emitter.fake`。请求之后，我们使用 `events.assertEmitted` 方法确保 `SignupController` 触发了特定事件。
 
 ```ts
 import emitter from '@adonisjs/core/services/emitter'
@@ -374,33 +372,34 @@ test.group('User signup', () => {
   })
   
   // highlight-start
-  // Assert the event was emitted
+  // 断言事件已触发
   events.assertEmitted(UserRegistered)
   // highlight-end
 })
 ```
 
-- The `event.fake` method returns an instance of the [EventBuffer](https://github.com/adonisjs/events/blob/main/src/events_buffer.ts) class, and you may use it for assertions and finding emitted events.
-- The `emitter.restore` method restores the fake. After restoring the fake, the events will be emitted normally.
+- `event.fake` 方法返回 [EventBuffer](https://github.com/adonisjs/events/blob/main/src/events_buffer.ts) 类的实例，你可以使用它进行断言和查找触发的事件。
+- `emitter.restore` 方法恢复 fake。恢复 fake 后，事件将正常触发。
 
-### Faking specific events
+### 模拟特定事件
 
-The `emitter.fake` method fakes all the events if you invoke the method without any arguments. If you want to fake a specific event, pass the event name or the class as the first argument.
+如果你在没有任何参数的情况下调用 `emitter.fake` 方法，它将模拟所有事件。如果你想模拟特定事件，请将事件名称或类作为第一个参数传递。
 
 ```ts
-// Fakes only the user:registered event
+// 仅模拟 user:registered 事件
 emitter.fake('user:registered')
 
-// Fake multiple events
+// 模拟多个事件
 emitter.fake([UserRegistered, OrderUpdated])
 ```
 
-Calling the `emitter.fake` method multiple times will remove the old fakes.
+多次调用 `emitter.fake` 方法将删除旧的 fakes。
 
-### Events assertions
-You may use `assertEmitted`, `assertNotEmitted`, `assertNoneEmitted` and the `assertEmittedCount` methods to write assertions for faked events.
+### 事件断言
 
-The `assertEmitted` and `assertNotEmitted` methods accepts either the event name or the class constructor as the first argument and an optional finder function that must return a boolean to mark the event as emitted.
+你可以使用 `assertEmitted`、`assertNotEmitted`、`assertNoneEmitted` 和 `assertEmittedCount` 方法为模拟事件编写断言。
+
+`assertEmitted` 和 `assertNotEmitted` 方法接受事件名称或类构造函数作为第一个参数，以及一个可选的查找器函数（必须返回布尔值以将事件标记为已触发）。
 
 ```ts
 const events = emitter.fake()
@@ -410,21 +409,21 @@ events.assertNotEmitted(OrderUpdated)
 ```
 
 ```ts
-// title: With a callback
+// title: 使用回调
 events.assertEmitted(OrderUpdated, ({ data }) => {
   /**
-   * Only consider the event as emitted, if
-   * the orderId matches
+   * 仅当 orderId 匹配时
+   * 才认为事件已触发
    */
   return data.order.id === orderId
 })
 ```
 
 ```ts
-// title: Asserting events count
-// Assert count of a specific event
+// title: 断言事件计数
+// 断言特定事件的计数
 events.assertEmittedCount(OrderUpdated, 1)
 
-// Assert no events were emitted
+// 断言没有触发任何事件
 events.assertNoneEmitted()
 ```

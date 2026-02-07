@@ -1,12 +1,12 @@
 ---
-summary: Learn about HTTP controllers in AdonisJS and how to organize route handlers inside dedicated files.
+summary: 了解 AdonisJS 中的 HTTP 控制器，以及如何在专用文件中组织路由处理程序。
 ---
 
-# Controllers
+# 控制器
 
-HTTP controllers offer an abstraction layer to organize the route handlers inside dedicated files. Instead of expressing all the request handling logic within the routes file, you move it to controller classes.
+HTTP 控制器提供了一个抽象层，用于将路由处理程序组织在专用的文件中。你不再需要在路由文件中编写所有的请求处理逻辑，而是将其移动到控制器类中。
 
-The controllers are stored within the `./app/controllers` directory, representing each controller as a plain JavaScript class. You may create a new controller by running the following command.
+控制器存储在 `./app/controllers` 目录下，每个控制器都是一个普通的 JavaScript 类。你可以通过运行以下命令来创建一个新的控制器。
 
 See also: [Make controller command](../references/commands.md#makecontroller)
 
@@ -14,7 +14,7 @@ See also: [Make controller command](../references/commands.md#makecontroller)
 node ace make:controller users
 ```
 
-A newly created controller is scaffolded with the `class` declaration, and you may manually create methods inside it. For this example, let's create an `index` method and return an array of users.
+新创建的控制器使用 `class` 声明进行脚手架搭建，你可以手动在其中创建方法。在这个例子中，让我们创建一个 `index` 方法并返回一个用户数组。
 
 ```ts
 // title: app/controllers/users_controller.ts  
@@ -34,7 +34,7 @@ export default class UsersController {
 }
 ```
 
-Finally, let's bind this controller to a route. We will import the controller using the `#controllers` alias. The aliases are defined using [subpath imports feature of Node.js](../getting_started/folder_structure.md#the-sub-path-imports).
+最后，让我们将这个控制器绑定到一个路由。我们将使用 `#controllers` 别名导入控制器。别名是使用 [Node.js 的子路径导入功能](../getting_started/folder_structure.md#the-sub-path-imports) 定义的。
 
 ```ts
 // title: start/routes.ts
@@ -44,36 +44,36 @@ const UsersController = () => import('#controllers/users_controller')
 router.get('users', [UsersController, 'index'])
 ```
 
-As you might have noticed, we do not create an instance of the controller class and instead pass it directly to the route. Doing so allows AdonisJS to:
+正如你可能注意到的，我们没有创建控制器类的实例，而是将其直接传递给路由。这样做允许 AdonisJS：
 
-- Create a fresh instance of the controller for each request.
-- And also construct the class using the [IoC container](../concepts/dependency_injection.md), which allows you to leverage automatic dependency injection.
+- 为每个请求创建一个新的控制器实例。
+- 并且使用 [IoC 容器](../concepts/dependency_injection.md) 构造类，这允许你利用自动依赖注入。
 
-You can also notice that we are lazy-loading the controller using a function.
+你还可以注意到我们使用函数懒加载控制器。
 
 :::warning
 
-Lazy-loading controllers are needed when you are using [HMR](../concepts/hmr.md).
+当使用 [HMR](../concepts/hmr.md) 时，需要懒加载控制器。
 
 :::
 
-As your codebase grows, you will notice it starts impacting the boot time of your application. A common reason for that is importing all controllers inside the routes file.
+随着代码库的增长，你会注意到它开始影响应用程序的启动时间。一个常见的原因是在路由文件中导入了所有的控制器。
 
-Since controllers handle HTTP requests, they often import other modules like models, validators, or third-party packages. As a result, your routes file becomes this central point of importing the entire codebase.
+由于控制器处理 HTTP 请求，它们通常会导入其他模块，如模型、验证器或第三方包。结果，你的路由文件变成了导入整个代码库的中心点。
 
-Lazy-loading is as simple as moving the import statement behind a function and using dynamic imports.
+懒加载非常简单，只需将导入语句移动到函数后面并使用动态导入即可。
 
 :::tip
 
-You can use our [ESLint plugin](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin) to enforce and automatically convert standard controller imports to lazy dynamic imports.
+你可以使用我们的 [ESLint 插件](https://github.com/adonisjs/tooling-config/tree/main/packages/eslint-plugin) 来强制并自动将标准控制器导入转换为懒加载动态导入。
 
 :::
 
-### Using magic strings
+### 使用魔法字符串
 
-Another way of lazy loading the controllers is to reference the controller and its method as a string. We call it a magic string because the string itself has no meaning, and it's just the router uses it to look up the controller and imports it behind the scenes.
+懒加载控制器的另一种方法是将控制器及其方法引用为字符串。我们称之为魔法字符串，因为字符串本身没有意义，只是路由器使用它来查找控制器并在后台导入它。
 
-In the following example, we do not have any import statements within the routes file, and we bind the controller import path + method as a string to the route.
+在下面的例子中，我们在路由文件中没有任何导入语句，我们将控制器导入路径 + 方法作为字符串绑定到路由。
 
 ```ts
 // title: start/routes.ts
@@ -82,15 +82,15 @@ import router from '@adonisjs/core/services/router'
 router.get('users', '#controllers/users_controller.index')
 ```
 
-The only downside of magic strings is they are not type-safe. If you make a typo in the import path, your editor will not give you any feedback.
+魔法字符串唯一的缺点是它们不是类型安全的。如果你在导入路径中拼写错误，编辑器不会给你任何反馈。
 
-On the upside, magic strings can clean up all the visual clutter inside your routes file because of the import statements.
+从好的方面来说，魔法字符串可以清除路由文件中由于导入语句而产生的所有视觉混乱。
 
-Using magic strings is subjective, and you can decide if you want to use them personally or as a team.
+使用魔法字符串是主观的，你可以决定是否要在个人或团队中使用它们。
 
-## Single action controllers
+## 单动作控制器
 
-AdonisJS provides a way to define a single action controller. It's an effective way to wrap up functionality into clearly named classes. To accomplish this, you need to define a handle method inside the controller.
+AdonisJS 提供了一种定义单动作控制器的方法。这是一种将功能封装到命名清晰的类中的有效方法。要实现这一点，你需要由于在控制器内部定义一个 `handle` 方法。
 
 ```ts
 // title: app/controllers/register_newsletter_subscription_controller.ts
@@ -101,16 +101,16 @@ export default class RegisterNewsletterSubscriptionController {
 }
 ```
 
-Then, you can reference the controller on the route with the following.
+然后，你可以使用以下方式在路由上引用控制器。
 
 ```ts
 // title: start/routes.ts
 router.post('newsletter/subscriptions', [RegisterNewsletterSubscriptionController])
 ```
 
-## HTTP context
+## HTTP 上下文
 
-The controller methods receive an instance of the [HttpContext](../concepts/http_context.md) class as the first argument. 
+控制器方法接收 [HttpContext](../concepts/http_context.md) 类的实例作为第一个参数。
 
 ```ts
 // title: app/controllers/users_controller.ts
@@ -123,11 +123,11 @@ export default class UsersController {
 }
 ```
 
-## Dependency injection
+## 依赖注入
 
-The controller classes are instantiated using the [IoC container](../concepts/dependency_injection.md); therefore, you can type-hint dependencies inside the controller constructor or a controller method.
+控制器类是使用 [IoC 容器](../concepts/dependency_injection.md) 实例化的；因此，你可以在控制器构造函数或控制器方法中对依赖项进行类型提示。
 
-Given you have a `UserService` class, you can inject an instance of it inside the controller as follows.
+假设你有一个 `UserService` 类，你可以如下所示在控制器中注入它的实例。
 
 ```ts
 // title: app/services/user_service.ts
@@ -155,11 +155,11 @@ export default class UsersController {
 }
 ```
 
-### Method injection
+### 方法注入
 
-You can inject an instance of `UserService` directly inside the controller method using [method injection](../concepts/dependency_injection.md#using-method-injection). In this case, you must apply the `@inject` decorator on the method name.
+你可以使用 [方法注入](../concepts/dependency_injection.md#using-method-injection) 直接在控制器方法内部注入 `UserService` 的实例。在这种情况下，你必须在方法名上应用 `@inject` 装饰器。
 
-The first parameter passed to the controller method is always the [`HttpContext`](../concepts/http_context.md). Therefore, you must type-hint the `UserService` as the second parameter.
+传递给控制器方法的第一个参数始终是 [`HttpContext`](../concepts/http_context.md)。因此，你必须将 `UserService` 类型提示为第二个参数。
 
 ```ts
 // title: app/controllers/users_controller.ts
@@ -176,11 +176,11 @@ export default class UsersController {
 }
 ```
 
-### Tree of dependencies
+### 依赖树
 
-Automatic resolution of dependencies is not only limited to the controller. Any class injected inside the controller can also type-hint dependencies, and the IoC container will construct the tree of dependencies for you.
+依赖项的自动解析不仅限于控制器。在控制器内部注入的任何类也可以对依赖项进行类型提示，IoC 容器将为你构建依赖树。
 
-For example, let's modify the `UserService` class to accept an instance of the [HttpContext](../concepts/http_context.md) as a constructor dependency.
+例如，让我们修改 `UserService` 类以接受 [HttpContext](../concepts/http_context.md) 的实例作为构造函数依赖项。
 
 ```ts
 // title: app/services/user_service.ts
@@ -200,15 +200,15 @@ export class UserService {
 }
 ```
 
-After this change, the `UserService` will automatically receive an instance of the `HttpContext` class. Also, no changes are required in the controller.
+更改后，`UserService` 将自动接收 `HttpContext` 类的实例。此外，控制器中不需要任何更改。
 
-## Resource-driven controllers
+## 资源驱动控制器
 
-For conventional [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) applications, a controller should only be designed to manage a single resource. A resource is usually an entity in your application like a **User resource** or a **Post resource**.
+对于传统的 [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) 应用程序，控制器应仅设计为管理单个资源。资源通常是应用程序中的实体，如 **User resource** 或 **Post resource**。
 
-Let's take the example of a Post resource and define the endpoints to handle its CRUD operations. We will start by creating a controller first.
+让我们以 Post 资源为例，定义处理其 CRUD 操作的端点。我们将首先创建一个控制器。
 
-You may create a controller for a resource using the `make:controller` ace command. The `--resource` flag scaffolds the controller with the following methods.
+你可以使用 `make:controller` ace 命令为资源创建控制器。`--resource` 标志使用以下方法为控制器搭建脚手架。
 
 ```sh
 node ace make:controller posts --resource
@@ -261,7 +261,7 @@ export default class PostsController {
 }
 ```
 
-Next, let's bind the `PostsController` to a resourceful route using the `router.resource` method. The method accepts the resource name as the first argument and the controller reference as the second argument.
+接下来，让我们使用 `router.resource` 方法将 `PostsController` 绑定到资源路由。该方法接受资源名称作为第一个参数，控制器引用作为第二个参数。
 
 ```ts
 // title: start/routes.ts
@@ -271,15 +271,15 @@ const PostsController = () => import('#controllers/posts_controller')
 router.resource('posts', PostsController)
 ```
 
-Following is the list of routes registered by the `resource` method. You can view this list by running `node ace list:routes` command.
+以下是 `resource` 方法注册的路由列表。你可以通过运行 `node ace list:routes` 命令查看此列表。
 
 ![](./post_resource_routes_list.png)
 
-### Nested resources
+### 嵌套资源
 
-Nested resources can be created by specifying the parent and the child resource name separated using the dot `.` notation.
+可以通过使用点 `.` 符号分隔父资源名称和子资源名称来创建嵌套资源。
 
-In the following example, we create routes for the `comments` resource nested under the `posts` resource.
+在下面的例子中，我们在 `posts` 资源下为 `comments` 资源创建路由。
 
 ```ts
 router.resource('posts.comments', CommentsController)
@@ -287,16 +287,16 @@ router.resource('posts.comments', CommentsController)
 
 ![](./post_comments_resource_routes_list.png)
 
-### Shallow resources
+### 浅层资源
 
-When using nested resources, the routes for the child resource are always prefixed with the parent resource name and its id. For example:
+当使用嵌套资源时，子资源的路由始终以父资源名称及其 ID 为前缀。例如：
 
-- The `/posts/:post_id/comments` route displays a list of all the comments for a given post.
-- And, the `/posts/:post_id/comments/:id` route displays a single comment by its id.
+- `/posts/:post_id/comments` 路由显示给定帖子的所有评论列表。
+- 而 `/posts/:post_id/comments/:id` 路由通过其 ID 显示单个评论。
 
-The existence of `/posts/:post_id` in the second route is irrelevant, as you can look up the comment by its id.
+第二个路由中 `/posts/:post_id` 的存在是无关紧要的，因为你可以通过其 ID 查找评论。
 
-A shallow resource registers its routes by keeping the URL structure flat (wherever possible). This time, let's register the `posts.comments` as a shallow resource.
+浅层资源通过保持 URL 结构扁平（尽可能）来注册其路由。这一次，让我们将 `posts.comments` 注册为浅层资源。
 
 ```ts
 router.shallowResource('posts.comments', CommentsController)
@@ -304,9 +304,9 @@ router.shallowResource('posts.comments', CommentsController)
 
 ![](./shallow_routes_list.png)
 
-### Naming resource routes
+### 命名资源路由
 
-The routes created using the `router.resource` method are named after the resource name and the controller action. First, we convert the resource name to snake case and concatenate the action name using the dot `.` separator.
+使用 `router.resource` 方法创建的路由以资源名称和控制器操作命名。首先，我们将资源名称转换为蛇形命名（snake_case），并使用点 `.` 分隔符连接操作名称。
 
 | Resource         | Action name | Route name               |
 |------------------|-------------|--------------------------|
@@ -314,36 +314,36 @@ The routes created using the `router.resource` method are named after the resour
 | userPhotos       | index       | `user_photos.index`      |
 | group-attributes | show        | `group_attributes.index` |
 
-You can rename the prefix for all the routes using the `resource.as` method. In the following example, we rename the `group_attributes.index` route name to `attributes.index`.
+你可以使用 `resource.as` 方法重命名所有路由的前缀。在下面的例子中，我们将 `group_attributes.index` 路由名称重命名为 `attributes.index`。
 
 ```ts
 // title: start/routes.ts
 router.resource('group-attributes', GroupAttributesController).as('attributes')
 ```
 
-The prefix given to the `resource.as` method is transformed to snake\_ case. If you want, you can turn off the transformation, as shown below.
+赋予 `resource.as` 方法的前缀将转换为 snake\_ case。如果你愿意，可以关闭转换，如下所示。
 
 ```ts
 // title: start/routes.ts
 router.resource('group-attributes', GroupAttributesController).as('groupAttributes', false)
 ```
 
-### Registering API only routes
+### 仅注册 API 路由
 
-When creating an API server, the forms to create and update a resource are rendered by a front-end client or a mobile app. Therefore, creating routes for these endpoints is redundant.
+当创建 API 服务器时，创建和更新资源的表单由前端客户端或移动应用程序呈现。因此，为这些端点创建路由是多余的。
 
-You can use the `resource.apiOnly` method to remove the `create` and the `edit` routes. As a result, only five routes will be created.
+你可以使用 `resource.apiOnly` 方法删除 `create` 和 `edit` 路由。结果，只会创建五个路由。
 
 ```ts
 // title: start/routes.ts
 router.resource('posts', PostsController).apiOnly()
 ```
 
-### Registering only specific routes
+### 仅注册特定路由
 
-To register only specific routes, you may use the `resource.only` or the `resource.except` methods.
+要仅注册特定路由，可以使用 `resource.only` 或 `resource.except` 方法。
 
-The `resource.only` method accepts an array of action names and removes all other routes except those mentioned. In the following example, only the routes for the `index`, `store`, and `destroy` actions will be registered.
+`resource.only` 方法接受操作名称数组，并删除除提到的路由之外的所有其他路由。在下面的例子中，只会注册 `index`、`store` 和 `destroy` 操作的路由。
 
 ```ts
 // title: start/routes.ts
@@ -352,7 +352,7 @@ router
   .only(['index', 'store', 'destroy'])
 ```
 
-The `resource.except` method is the opposite of the `only` method, registering all the routes except the mentioned one's.
+`resource.except` 方法与 `only` 方法相反，注册除提到的路由之外的所有路由。
 
 ```ts
 // title: start/routes.ts
@@ -361,11 +361,11 @@ router
   .except(['destroy'])
 ```
 
-### Renaming resource params
+### 重命名资源参数
 
-The routes generated by the `router.resource` method use `id` for the param name. For example, `GET /posts/:id` to view a single post, and `DELETE /post/:id` to delete the post.
+`router.resource` 方法生成的路由使用 `id` 作为参数名称。例如，`GET /posts/:id` 查看单个帖子，`DELETE /post/:id` 删除帖子。
 
-You can rename the param from `id` to something else using the `resource.params` method.
+你可以使用 `resource.params` 方法将参数从 `id` 重命名为其他名称。
 
 ```ts
 // title: start/routes.ts
@@ -374,7 +374,7 @@ router
   .params({ posts: 'post' })
 ```
 
-The above change will generate the following routes _(showing partial list)_.
+上述更改将生成以下路由 _（显示部分列表）_。
 
 | HTTP method | Route               | Controller method |
 |-------------|---------------------|-------------------|
@@ -383,7 +383,7 @@ The above change will generate the following routes _(showing partial list)_.
 | PUT         | `/posts/:post`      | update            |
 | DELETE      | `/posts/:post`      | destroy           |
 
-You can also rename params when using nested resources.
+你还在使用嵌套资源时重命名参数。
 
 ```ts
 // title: start/routes.ts
@@ -395,8 +395,8 @@ router
   })
 ```
 
-### Assigning middleware to resource routes
-You may assign middleware to routes register by a resource using the `resource.use` method. The method accepts an array of action names and the middleware to assign to them. For example:
+### 为资源路由分配中间件
+你可以使用 `resource.use` 方法将中间件分配给资源注册的路由。该方法接受操作名称数组和要分配给它们的中间件。例如：
 
 ```ts
 // title: start/routes.ts
@@ -411,7 +411,7 @@ router
   )
 ```
 
-You may use the wildcard (*) keyword to assign a middleware to all the routes.
+你可以使用通配符 (*) 关键字将中间件分配给所有路由。
 
 ```ts
 // title: start/routes.ts
@@ -420,7 +420,7 @@ router
   .use('*', middleware.auth())
 ```
 
-Finally, you may call the `.use` method multiple times to assign multiple middleware. For example:
+最后，你可以多次调用 `.use` 方法来分配多个中间件。例如：
 
 ```ts
 // title: start/routes.ts
@@ -435,3 +435,4 @@ router
     middleware.someMiddleware()
   )
 ```
+

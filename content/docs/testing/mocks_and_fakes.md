@@ -1,29 +1,29 @@
 ---
-summary: Learn how to mock or fake dependencies during testing in AdonisJS.
+summary: 学习如何在 AdonisJS 测试期间模拟或伪造依赖项。
 ---
 
-# Mocks and Fakes
+# 模拟与伪造 (Mocks and Fakes)
 
-When testing your applications, you might want to mock or fake specific dependencies to prevent actual implementations from running. For example, you wish to refrain from emailing your customers when running tests and neither call third-party services like a payment gateway.
+在测试应用程序时，你可能希望模拟或伪造特定的依赖项，以防止运行实际的实现。例如，你希望在运行测试时避免向客户发送电子邮件，也不调用第三方服务（如支付网关）。
 
-AdonisJS offers a few different APIs and recommendations using which you can fake, mock, or stub a dependency.
+AdonisJS 提供了一些不同的 API 和建议，你可以使用它们来伪造、模拟或存根依赖项。
 
-## Using the fakes API
+## 使用 Fakes API
 
-Fakes are objects with working implementations explicitly created for testing. For example, The mailer module of AdonisJS has a fake implementation that you can use during testing to collect outgoing emails in memory and write assertions for them.
+Fakes 是专为测试而创建的具有工作实现的对像。例如，AdonisJS 的 mailer 模块有一个 fake 实现，你可以在测试期间使用它在内存中收集传出的电子邮件并对其进行断言。
 
-We provide fake implementations for the following container services. The fakes API is documented alongside the module documentation.
+我们为以下容器服务提供 fake 实现。Fakes API 与模块文档一起记录。
 
 - [Emitter fake](../digging_deeper/emitter.md#faking-events-during-tests)
 - [Hash fake](../security/hashing.md#faking-hash-service-during-tests)
 - [Fake mailer](../digging_deeper/mail.md#fake-mailer)
 - [Drive fake](../digging_deeper/drive.md#faking-disks)
 
-## Dependency injection and fakes
+## 依赖注入与 Fakes
 
-If you use dependency injection in your application or use the [container to create class instances](../concepts/dependency_injection.md), you can provide a fake implementation for a class using the `container.swap` method.
+如果你在应用程序中使用依赖注入或使用 [容器创建类实例](../concepts/dependency_injection.md)，则可以使用 `container.swap` 方法为类提供 fake 实现。
 
-In the following example, we inject `UserService` to the `UsersController`.
+在下面的示例中，我们将 `UserService` 注入到 `UsersController` 中。
 
 ```ts
 import UserService from '#services/user_service'
@@ -35,7 +35,7 @@ export default class UsersController {
 }
 ```
 
-During testing, we can provide an alternate/fake implementation of the `UserService` class as follows.
+在测试期间，我们可以如下提供 `UserService` 类的替代/伪造实现。
 
 ```ts
 import UserService from '#services/user_service'
@@ -64,7 +64,7 @@ test('get all users', async () => {
 })
 ```
 
-Once the test has been completed, you must restore the fake using the `container.restore` method.
+测试完成后，必须使用 `container.restore` 方法恢复 fake。
 
 ```ts
 app.container.restore(UserService)
@@ -76,20 +76,20 @@ app.container.restoreAll([UserService, PostService])
 app.container.restoreAll()
 ```
 
-## Mocks and stubs using Sinon.js
+## 使用 Sinon.js 进行模拟和存根
 
-[Sinon](https://sinonjs.org/#get-started) is a mature, time-tested mocking library in the Node.js ecosystem. If you use mocks and stubs regularly, we recommend using Sinon, as it works great with TypeScript.
+[Sinon](https://sinonjs.org/#get-started) 是 Node.js 生态系统中成熟且经过时间考验的模拟库。如果你经常使用 mocks 和 stubs，我们建议使用 Sinon，因为它与 TypeScript 配合得很好。
 
-## Mocking network requests
+## 模拟网络请求
 
-If your application makes outgoing HTTP requests to third-party services, you can use [nock](https://github.com/nock/nock) during testing to mock the network requests.
+如果你的应用程序向第三方服务发出传出 HTTP 请求，则可以在测试期间使用 [nock](https://github.com/nock/nock) 来模拟网络请求。
 
-Since nock intercepts all outgoing requests from the [Node.js HTTP module](https://nodejs.org/dist/latest-v20.x/docs/api/http.html#class-httpclientrequest), it works with almost every third-party library like `got`, `axios` and so on.
+由于 nock 拦截来自 [Node.js HTTP 模块](https://nodejs.org/dist/latest-v20.x/docs/api/http.html#class-httpclientrequest) 的所有传出请求，因此它几乎适用于所有第三方库，如 `got`、`axios` 等。
 
-## Freezing time
-You may use the [timekeeper](https://www.npmjs.com/package/timekeeper) package to freeze or travel time when writing tests. The timekeeper packages works by mocking the `Date` class.
+## 冻结时间
+在编写测试时，你可以使用 [timekeeper](https://www.npmjs.com/package/timekeeper) 包来冻结或穿越时间。timekeeper 包通过模拟 `Date` 类来工作。
 
-In the following example, we encapsulate the API of `timekeeper` inside a [Japa Test resource](https://japa.dev/docs/test-resources).
+在下面的示例中，我们将 `timekeeper` 的 API 封装在 [Japa 测试资源](https://japa.dev/docs/test-resources) 中。
 
 ```ts
 import { getActiveTest } from '@japa/runner'
@@ -113,7 +113,7 @@ export function timeTravel(secondsToTravel: number) {
 }
 ```
 
-You may use the `timeTravel` method inside your tests as follows.
+你可以在测试中如下使用 `timeTravel` 方法。
 
 ```ts
 import { timeTravel } from '#test_helpers'

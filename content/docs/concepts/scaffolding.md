@@ -1,48 +1,53 @@
 ---
-summary: Scaffold source files from templates and update TypeScript source code using codemods in AdonisJS
+summary: 从模板生成源文件并使用 AdonisJS 中的 codemods 更新 TypeScript 源代码
 ---
 
-# Scaffolding and codemods
+# 脚手架和 codemods
 
-Scaffolding refers to the process of generating source files from static templates (aka stubs), and codemods refer to updating the TypeScript source code by parsing the AST.
+脚手架（Scaffolding）是指从静态模板（即 stubs）生成源文件的过程，而 codemods 是指通过解析 AST 来更新 TypeScript 源代码。
 
-AdonisJS uses both to speed up the repetitive tasks of creating new files and configuring packages. In this guide, we will go through the building blocks of Scaffolding and cover the codemods API you can use within Ace commands.
+AdonisJS 使用这两者来加速创建新文件和配置包的重复任务。在本指南中，我们将介绍脚手架的构建块，并介绍可以在 Ace 命令中使用的 codemods API。
 
-## Building blocks
+## 构建块
 
 ### Stubs
-Stubs refers to the templates, that are used to create source files on a given action. For example, The `make:controller` command uses the [controller stub](https://github.com/adonisjs/core/blob/main/stubs/make/controller/main.stub) to create a controller file inside the host project.
 
-### Generators
-Generators enforce a naming convention and generate file, class, or method names based on the pre-defined conventions.
+Stubs 是指模板，用于在给定操作上创建源文件。例如，`make:controller` 命令使用[控制器 stub](https://github.com/adonisjs/core/blob/main/stubs/make/controller/main.stub) 在宿主项目中创建控制器文件。
 
-For example, the controller stubs use the [controllerName](https://github.com/adonisjs/application/blob/main/src/generators.ts#L122) and [controllerFileName](https://github.com/adonisjs/application/blob/main/src/generators.ts#L139) generators to create a controller. 
+### 生成器
 
-Since generators are defined as an object, you can override the existing methods to tweak the conventions. We learn more about that later in this guide.
+生成器（Generators）强制执行命名约定，并根据预定义的约定生成文件、类或方法名称。
+
+例如，控制器 stubs 使用 [controllerName](https://github.com/adonisjs/application/blob/main/src/generators.ts#L122) 和 [controllerFileName](https://github.com/adonisjs/application/blob/main/src/generators.ts#L139) 生成器来创建控制器。
+
+由于生成器被定义为对象，因此你可以覆盖现有方法来调整约定。我们将在本指南后面了解更多相关信息。
 
 ### Codemods
-The codemods API comes from the [@adonisjs/assembler](https://github.com/adonisjs/assembler/blob/main/src/code_transformer/main.ts) package, and it uses [ts-morph](https://github.com/dsherret/ts-morph) under the hood.
 
-Since `@adonisjs/assembler` is a development dependency, `ts-morph` does not bloat your project dependencies in production. Also, it means, the codemods APIs are not available in production.
+Codemods API 来自 [@adonisjs/assembler](https://github.com/adonisjs/assembler/blob/main/src/code_transformer/main.ts) 包，它在底层使用 [ts-morph](https://github.com/dsherret/ts-morph)。
 
-The codemods API exposed by AdonisJS are very specific to accomplish high-level tasks like **add a provider to the `.adonisrc.ts` file**, or **register a middleware inside the `start/kernel.ts`** file. Also, these APIs rely on the default naming conventions, so if you make drastic changes to your project, you will not be able to run codemods.
+由于 `@adonisjs/assembler` 是开发依赖项，因此 `ts-morph` 不会在生产环境中增加项目依赖项。这也意味着，codemods API 在生产环境中不可用。
 
-### Configure command
-The configure command is used to configure an AdonisJS package. Under the hood, this command imports the main entry point file and executes the `configure` method exported by the mentioned package.
+AdonisJS 暴露的 codemods API 非常具体，用于完成高级任务，例如**向 `.adonisrc.ts` 文件添加提供者**，或**在 `start/kernel.ts` 文件中注册中间件**。此外，这些 API 依赖于默认的命名约定，因此如果你对项目进行了大幅更改，你将无法运行 codemods。
 
-The package's `configure` method receives an instance of the [Configure command](https://github.com/adonisjs/core/blob/main/commands/configure.ts), and therefore, it can access the stubs and codemods API from the command instance directly.
+### Configure 命令
 
-## Using stubs
-Most of the time, you will use stubs within an Ace command or inside the `configure` method of a package you have created. You can initialize the codemods module in both cases via the Ace command's `createCodemods` method. 
+Configure 命令用于配置 AdonisJS 包。在底层，此命令导入主入口点文件并执行所提及包导出的 `configure` 方法。
 
-The `codemods.makeUsingStub` method creates a source file from a stub template. It accepts the following arguments:
+包的 `configure` 方法接收 [Configure 命令](https://github.com/adonisjs/core/blob/main/commands/configure.ts)的实例，因此，它可以直接从命令实例访问 stubs 和 codemods API。
 
-- The URL to the root of the directory where stubs are stored.
-- Relative path from the `STUBS_ROOT` directory to the stub file (including extension).
-- And the data object to share with the stub.
+## 使用 stubs
+
+大多数时候，你将在 Ace 命令中使用 stubs，或者在你创建的包的 `configure` 方法中使用。你可以通过 Ace 命令的 `createCodemods` 方法在这两种情况下初始化 codemods 模块。
+
+`codemods.makeUsingStub` 方法从 stub 模板创建源文件。它接受以下参数：
+
+- 存储 stubs 的目录的根 URL。
+- 从 `STUBS_ROOT` 目录到 stub 文件（包括扩展名）的相对路径。
+- 以及要与 stub 共享的数据对象。
 
 ```ts
-// title: Inside a command
+// title: 在命令内部
 import { BaseCommand } from '@adonisjs/core/ace'
 
 const STUBS_ROOT = new URL('./stubs', import.meta.url)
@@ -57,16 +62,17 @@ export default class MakeApiResource extends BaseCommand {
 }
 ```
 
-### Stubs templating
-We use [Tempura](https://github.com/lukeed/tempura) template engine to process the stubs with runtime data. Tempura is a super lightweight handlebars-style template engine for JavaScript.
+### Stubs 模板
+
+我们使用 [Tempura](https://github.com/lukeed/tempura) 模板引擎来处理带有运行时数据的 stubs。Tempura 是一个超轻量级的 handlebars 风格的 JavaScript 模板引擎。
 
 :::tip
 
-Since Tempura's syntax is compatible with handlebars, you can set your code editors to use handlebar syntax highlighting with `.stub` files.
+由于 Tempura 的语法与 handlebars 兼容，你可以将代码编辑器设置为对 `.stub` 文件使用 handlebars 语法高亮显示。
 
 :::
 
-In the following example, we create a stub that outputs a JavaScript class. It uses the double curly braces to evaluate runtime values.
+在以下示例中，我们创建一个输出 JavaScript 类的 stub。它使用双花括号来评估运行时值。
 
 ```handlebars
 export default class {{ modelName }}Resource {
@@ -76,11 +82,11 @@ export default class {{ modelName }}Resource {
 }
 ```
 
-### Using generators
+### 使用生成器
 
-If you execute the above stub right now, it will fail because we have not provided the `modelName` and `modelReference` data properties.
+如果你现在执行上面的 stub，它将失败，因为我们没有提供 `modelName` 和 `modelReference` 数据属性。
 
-We recommend computing these properties within the stub using inline variables. This way, the host application can [eject the stub](#ejecting-stubs) and modify the variables.
+我们建议使用内联变量在 stub 中计算这些属性。这样，宿主应用程序可以[弹出 stub](#ejecting-stubs) 并修改变量。
 
 ```js
 // insert-start
@@ -96,10 +102,11 @@ export default class {{ modelName }}Resource {
 }
 ```
 
-### Output destination
-Finally, we have to specify the destination path of the file that will be created using the stub. Once again, we specify the destination path within the stub file, as it allows the host application to [eject the stub](#ejecting-stubs) and customize its output destination.
+### 输出目标
 
-The destination path is defined using the `exports` function. The function accepts an object and exports it as the output state of the stub. Later, the codemods API uses this object to create the file at the mentioned location.
+最后，我们必须指定使用 stub 创建的文件的目标路径。我们再次在 stub 文件中指定目标路径，因为它允许宿主应用程序[弹出 stub](#ejecting-stubs) 并自定义其输出目标。
+
+目标路径使用 `exports` 函数定义。该函数接受一个对象并将其导出为 stub 的输出状态。稍后，codemods API 使用此对象在指定位置创建文件。
 
 ```js
 {{#var entity = generators.createEntity('user')}}
@@ -120,8 +127,9 @@ export default class {{ modelName }}Resource {
 }
 ```
 
-### Accepting entity name via command
-Right now, we have hardcoded the entity name as `user` within the stub. However, you should accept it as a command argument and share it with the stub as the template state.
+### 通过命令接受实体名称
+
+现在，我们在 stub 中硬编码了实体名称为 `user`。但是，你应该接受它作为命令参数，并将其作为模板状态与 stub 共享。
 
 ```ts
 import { BaseCommand, args } from '@adonisjs/core/ace'
@@ -167,28 +175,30 @@ export default class {{ modelName }}Resource {
 }
 ```
 
-### Global variables
-The following global variables are always shared with a stub.
+### 全局变量
 
-| Variable       | Description                                                                                                                                                         |
-|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `app`          | Reference to an instance of the [application class](./application.md).                                                                                                |
-| `generators`   | Reference to the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts).                                                          |
-| `randomString` | Reference to the [randomString](../references/helpers.md#random) helper function.                                                                               |
-| `string`       | A function to create a [string builder](../references/helpers.md#string-builder) instance. You can use the string builder to apply transformations on a string. |
-| `flags`        | The command-line flags are defined when running the ace command.                                                                                                    |
+以下全局变量始终与 stub 共享。
+
+| 变量 | 描述 |
+|---|---|
+| `app` | [application 类](./application.md)实例的引用。 |
+| `generators` | [generators 模块](https://github.com/adonisjs/application/blob/main/src/generators.ts)的引用。 |
+| `randomString` | [randomString](../references/helpers.md#random) 辅助函数的引用。 |
+| `string` | 创建 [string builder](../references/helpers.md#string-builder) 实例的函数。你可以使用 string builder 对字符串应用转换。 |
+| `flags` | 运行 ace 命令时定义的命令行标志。 |
 
 
-## Ejecting stubs
-You can eject/copy stubs inside an AdonisJS application using the `node ace eject` command. The eject command accepts a path to the original stub file or its parent directory and copies the templates inside the `stubs` directory of your project's root.
+## 弹出 stubs
 
-In the following example, we will copy the `make/controller/main.stub` file from the `@adonisjs/core` package.
+你可以使用 `node ace eject` 命令在 AdonisJS 应用程序中弹出/复制 stubs。eject 命令接受原始 stub 文件或其父目录的路径，并将模板复制到项目根目录下的 `stubs` 目录中。
+
+在以下示例中，我们将从 `@adonisjs/core` 包中复制 `make/controller/main.stub` 文件。
 
 ```sh
 node ace eject make/controller/main.stub
 ```
 
-If you open the stub file, it will have the following contents.
+如果你打开 stub 文件，它将包含以下内容。
 
 ```js
 {{#var controllerName = generators.controllerName(entity.name)}}
@@ -204,15 +214,15 @@ export default class {{ controllerName }} {
 }
 ```
 
-- In the first two lines, we use the [generators module](https://github.com/adonisjs/application/blob/main/src/generators.ts) to generate the controller class name and the controller file name.
-- From lines 3-7, we [define the destination path](#using-cli-flags-to-customize-stub-output-destination)customizing-the-destination-path) for the controller file using the `exports` function.
-- Finally, we define the contents of the scaffolded controller.
+- 在前两行中，我们使用 [generators 模块](https://github.com/adonisjs/application/blob/main/src/generators.ts)生成控制器类名和控制器文件名。
+- 从第 3 行到第 7 行，我们使用 `exports` 函数[定义控制器文件的目标路径](#using-cli-flags-to-customize-stub-output-destination)。
+- 最后，我们定义了脚手架控制器的内容。
 
-Feel free to modify the stub. Next time, the changes will be picked when you run the `make:controller` command.
+随意修改 stub。下次运行 `make:controller` 命令时，将采用这些更改。
 
-### Ejecting directories
+### 弹出目录
 
-You may eject an entire directory of stubs using the `eject` command. Pass the path to the directory, and the command will copy the whole directory.
+你可以使用 `eject` 命令弹出一个包含 stubs 的整个目录。传递目录的路径，该命令将复制整个目录。
 
 ```sh
 # Publish all the make stubs
@@ -222,10 +232,10 @@ node ace eject make
 node ace eject make/controller
 ```
 
-### Using CLI flags to customize stub output destination
-All scaffolding commands share the CLI flags (including unsupported ones) with the stub templates. Therefore, you can use them to create custom workflows or change the output destination.
+### 使用 CLI 标志自定义 stub 输出目标
+所有脚手架命令都与 stub 模板共享 CLI 标志（包括不支持的标志）。因此，你可以使用它们来创建自定义工作流或更改输出目标。
 
-In the following example, we use the `--feature` flag to create a controller inside the mentioned features directory.
+在下面的示例中，我们使用 `--feature` 标志在提到的 features 目录中创建一个控制器。
 
 ```sh
 node ace make:controller invoice --feature=billing
@@ -254,24 +264,24 @@ export default class {{ controllerName }} {
 }
 ```
 
-### Ejecting stubs from other packages
+### 从其他包弹出 stubs
 
-By default, the `eject` command copies templates from the `@adonisjs/core` package. However, you may copy stubs from other packages using the `--pkg` flag.
+默认情况下，`eject` 命令从 `@adonisjs/core` 包复制模板。但是，你可以使用 `--pkg` 标志从其他包复制 stubs。
 
 ```sh
 node ace eject make/migration/main.stub --pkg=@adonisjs/lucid
 ```
 
-### How do you find which stubs to copy?
-You can find a package's stubs by visiting its GitHub repo. We store all the stubs at the root level of the package inside the `stubs` directory.
+### 如何找到要复制的 stubs？
+你可以通过访问其 GitHub 仓库找到包的 stubs。我们将所有 stubs 存储在包根目录下的 `stubs` 目录中。
 
-## Stubs execution flow
-Here's a visual representation of how we find and execute stubs via the `makeUsingStub` method.
+## Stubs 执行流程
+这是我们通过 `makeUsingStub` 方法查找和执行 stubs 的可视化表示。
 
 ![](./scaffolding_workflow.png)
 
 ## Codemods API
-The codemods API is powered by [ts-morph](https://github.com/dsherret/ts-morph) and is only available during development. You can lazily instantiate the codemods module using the `command.createCodemods` method. The `createCodemods` method returns an instance of the [Codemods](https://github.com/adonisjs/core/blob/main/modules/ace/codemods.ts) class.
+Codemods API 由 [ts-morph](https://github.com/dsherret/ts-morph) 提供支持，仅在开发期间可用。你可以使用 `command.createCodemods` 方法延迟实例化 codemods 模块。`createCodemods` 方法返回 [Codemods](https://github.com/adonisjs/core/blob/main/modules/ace/codemods.ts) 类的一个实例。
 
 ```ts
 import type Configure from '@adonisjs/core/commands/configure'
@@ -282,12 +292,12 @@ export async function configure(command: ConfigureCommand) {
 ```
 
 ### defineEnvValidations
-Define validation rules for environment variables. The method accepts a key-value pair of variables. The `key` is the env variable name, and the `value` is the validation expression as a string.
+定义环境变量的验证规则。该方法接受键值对变量。`key` 是环境变量名，`value` 是作为字符串的验证表达式。
 
 :::note
-This codemod expects the `start/env.ts` file to exist and must have the `export default await Env.create` method call.
+此 codemod 期望 `start/env.ts` 文件存在，并且必须具有 `export default await Env.create` 方法调用。
 
-Also, the codemod does not overwrite the existing validation rule for a given environment variable. This is done to respect in-app modifications.
+此外，codemod 不会覆盖给定环境变量的现有验证规则。这样做是为了尊重应用程序内的修改。
 :::
 
 ```ts
@@ -321,7 +331,7 @@ export default await Env.create(new URL('../', import.meta.url), {
 ```
 
 ### defineEnvVariables
-Add one or multiple new environment variables to the `.env` and `.env.example` files. The method accepts a key-value pair of variables.
+向 `.env` 和 `.env.example` 文件添加一个或多个新环境变量。该方法接受键值对变量。
 
 ```ts
 const codemods = await command.createCodemods()
@@ -337,7 +347,7 @@ try {
 }
 ```
 
-Sometimes you may want to **not** insert the variable value in the `.env.example` file. You can do so by using the `omitFromExample` option.
+有时你可能希望 **不** 在 `.env.example` 文件中插入变量值。你可以使用 `omitFromExample` 选项来实现。
 
 ```ts
 const codemods = await command.createCodemods()
@@ -349,15 +359,15 @@ await codemods.defineEnvVariables({
 })
 ```
 
-The above code will insert `MY_NEW_VARIABLE=SOME_VALUE` in the `.env` file and `MY_NEW_VARIABLE=` in the `.env.example` file.
+上面的代码将在 `.env` 文件中插入 `MY_NEW_VARIABLE=SOME_VALUE`，并在 `.env.example` 文件中插入 `MY_NEW_VARIABLE=`。
 
 ### registerMiddleware
-Register AdonisJS middleware to one of the known middleware stacks. The method accepts the middleware stack and an array of middleware to register.
+将 AdonisJS 中间件注册到已知的中间件堆栈之一。该方法接受中间件堆栈和要注册的中间件数组。
 
-The middleware stack could be one of `server | router | named`.
+中间件堆栈可以是 `server | router | named` 之一。
 
 :::note
-This codemod expects the `start/kernel.ts` file to exist and must have a function call for the middleware stack for which you are trying to register a middleware.
+此 codemod 期望 `start/kernel.ts` 文件存在，并且必须具有你要为其注册中间件的中间件堆栈的函数调用。
 :::
 
 ```ts
@@ -384,7 +394,7 @@ router.use([
 ])
 ```
 
-You may define named middleware as follows.
+你可以按如下方式定义命名中间件。
 
 ```ts
 const codemods = await command.createCodemods()
@@ -403,10 +413,10 @@ try {
 ```
 
 ### updateRcFile
-Register `providers`, `commands`, define `metaFiles` and `commandAliases` to the `adonisrc.ts` file.
+在 `adonisrc.ts` 文件中注册 `providers`、`commands`，定义 `metaFiles` 和 `commandAliases`。
 
 :::note
-This codemod expects the `adonisrc.ts` file to exist and must have an `export default defineConfig` function call.
+此 codemod 期望 `adonisrc.ts` 文件存在，并且必须具有 `export default defineConfig` 函数调用。
 :::
 
 ```ts
@@ -443,10 +453,10 @@ export default defineConfig({
 ```
 
 ### registerJapaPlugin
-Register a Japa plugin to the `tests/bootstrap.ts` file.
+将 Japa 插件注册到 `tests/bootstrap.ts` 文件。
 
 :::note
-This codemod expects the `tests/bootstrap.ts` file to exist and must have the `export const plugins: Config['plugins']` export.
+此 codemod 期望 `tests/bootstrap.ts` 文件存在，并且必须具有 `export const plugins: Config['plugins']` 导出。
 :::
 
 ```ts
@@ -485,10 +495,10 @@ export const plugins: Config['plugins'] = [
 ```
 
 ### registerPolicies
-Register AdonisJS bouncer policies to the list of `policies` object exported from the `app/policies/main.ts` file.
+将 AdonisJS bouncer 策略注册到 `app/policies/main.ts` 文件导出的 `policies` 对象列表中。
 
 :::note
-This codemod expects the `app/policies/main.ts` file to exist and must export a `policies` object from it.
+此 codemod 期望 `app/policies/main.ts` 文件存在，并且必须从中导出 `policies` 对象。
 :::
 
 ```ts
@@ -516,10 +526,10 @@ export const policies = {
 
 ### registerVitePlugin
 
-Register a Vite plugin to the `vite.config.ts` file.
+将 Vite 插件注册到 `vite.config.ts` 文件。
 
 :::note
-This codemod expects the `vite.config.ts` file to exist and must have the `export default defineConfig` function call.
+此 codemod 期望 `vite.config.ts` 文件存在，并且必须具有 `export default defineConfig` 函数调用。
 :::
 
 ```ts
@@ -555,7 +565,7 @@ export default defineConfig({
 
 ### installPackages
 
-Install one or multiple packages using the detected package manager in the user's project.
+使用用户项目中检测到的包管理器安装一个或多个包。
 
 ```ts
 const codemods = await command.createCodemods()
@@ -573,7 +583,7 @@ try {
 
 ### getTsMorphProject
 
-The `getTsMorphProject` method returns an instance of `ts-morph`. This can be useful when you want to perform custom file transformations that are not covered by the Codemods API.
+`getTsMorphProject` 方法返回 `ts-morph` 的实例。当你想要执行 Codemods API 未涵盖的自定义文件转换时，这非常有用。
 
 ```ts
 const project = await codemods.getTsMorphProject()
@@ -581,4 +591,4 @@ const project = await codemods.getTsMorphProject()
 project.getSourceFileOrThrow('start/routes.ts')
 ```
 
-Make sure to read the [ts-morph documentation](https://ts-morph.com/) to know more about the available APIs.
+请务必阅读 [ts-morph 文档](https://ts-morph.com/) 以了解有关可用 API 的更多信息。

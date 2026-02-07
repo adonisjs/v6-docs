@@ -1,41 +1,41 @@
 ---
-summary: Learn how to implement CORS in AdonisJS to protect your application..
+summary: 了解如何在 AdonisJS 中实现 CORS 以保护你的应用。
 ---
 
-# CORS
+# 跨域资源共享 (CORS)
 
-[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) helps you protect your application from malicious requests triggered using scripts in a browser environment. 
+[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) 帮助你保护你的应用免受在浏览器环境中使用脚本触发的恶意请求。
 
-For example, if an AJAX or a fetch request is sent to your server from a different domain, the browser will block that request with a CORS error and expect you to implement a CORS policy if you think the request should be allowed.
+例如，如果从不同的域向你的服务器发送 AJAX 或 fetch 请求，浏览器将使用 CORS 错误阻止该请求，并期望你在认为应该允许该请求时实现 CORS 策略。
 
-In AdonisJS, you can implement the CORS policy using the `@adonisjs/cors` package. The package ships with an HTTP middleware that intercepts incoming requests and responds with correct CORS headers.
+在 AdonisJS 中，你可以使用 `@adonisjs/cors` 包实现 CORS 策略。该包附带一个 HTTP 中间件，用于拦截传入请求并使用正确的 CORS 标头进行响应。
 
-## Installation
+## 安装
 
-Install and configure the package using the following command :
+使用以下命令安装并配置该包：
 
 ```sh
 node ace add @adonisjs/cors
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `@adonisjs/cors` package using the detected package manager.
+1. 使用检测到的包管理器安装 `@adonisjs/cors` 包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
 
     ```ts
     {
       providers: [
-        // ...other providers
+        // ...其他提供者
         () => import('@adonisjs/cors/cors_provider')
       ]
     }
     ```
 
-3. Creates the `config/cors.ts` file. This file contains the configuration settings for CORS.
+3. 创建 `config/cors.ts` 文件。此文件包含 CORS 的配置设置。
 
-4. Registers the following middleware inside the `start/kernel.ts` file.
+4. 在 `start/kernel.ts` 文件中注册以下中间件。
 
     ```ts
     server.use([
@@ -45,9 +45,9 @@ node ace add @adonisjs/cors
 
 :::
 
-## Configuration
+## 配置
 
-The configuration for the CORS middleware is stored inside the `config/cors.ts` file. 
+CORS 中间件的配置存储在 `config/cors.ts` 文件中。
 
 ```ts
 import { defineConfig } from '@adonisjs/cors'
@@ -75,7 +75,7 @@ enabled
 
 <dd>
 
-Turn the middleware on or off temporarily without removing it from the middleware stack.
+暂时开启或关闭中间件，而无需将其从中间件堆栈中移除。
 
 </dd>
 
@@ -87,9 +87,9 @@ origin
 
 <dd>
 
-The `origin` property controls the value for the [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) header.
+`origin` 属性控制 [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) 标头的值。
 
-You can allow the request's current origin by setting the value to `true` or disallow the request's current origin by setting it to `false`.
+你可以通过将值设置为 `true` 来允许请求的当前来源，或者通过将其设置为 `false` 来禁止请求的当前来源。
 
 ```ts
 {
@@ -97,7 +97,7 @@ You can allow the request's current origin by setting the value to `true` or dis
 }
 ```
 
-You may specify a list of hardcoded origins to allow an array of domain names.
+你可以指定一个硬编码的来源列表，以允许一组域名。
 
 ```ts
 {
@@ -105,9 +105,9 @@ You may specify a list of hardcoded origins to allow an array of domain names.
 }
 ```
 
-Use the wildcard expression `*` to allow all the origins. Read the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) to understand how the wildcard expression works.
+使用通配符表达式 `*` 允许所有来源。阅读 [MDN 文档](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) 了解通配符表达式的工作原理。
 
-When the `credentials` property is set to `true`, we will automatically make the wildcard expression behave like a `boolean (true)`. 
+当 `credentials` 属性设置为 `true` 时，我们会自动使通配符表达式的行为像 `boolean (true)` 一样。
 
 ```ts
 {
@@ -115,7 +115,7 @@ When the `credentials` property is set to `true`, we will automatically make the
 }
 ```
 
-You can compute the `origin` value during the HTTP request using a function. For example:
+你可以使用函数在 HTTP 请求期间计算 `origin` 值。例如：
 
 ```ts
 {
@@ -135,7 +135,7 @@ methods
 
 <dd>
 
-The `methods` property controls the method to allow during the preflight request. The [Access-Control-Request-Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Method) header value is checked against the allowed methods.
+`methods` 属性控制在预检请求期间允许的方法。[Access-Control-Request-Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Method) 标头值将根据允许的方法进行检查。
 
 ```sh
 {
@@ -153,9 +153,9 @@ headers
 
 <dd>
 
-The `headers` property controls the request headers to allow during the preflight request. The [Access-Control-Request-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Headers) header value is checked against the headers property.
+`headers` 属性控制在预检请求期间允许的请求标头。[Access-Control-Request-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Headers) 标头值将根据 headers 属性进行检查。
 
-Setting the value to `true` will allow all the headers. Whereas setting the value to `false` will disallow all the headers.
+将值设置为 `true` 将允许所有标头。而将值设置为 `false` 将禁止所有标头。
 
 ```ts
 {
@@ -163,7 +163,7 @@ Setting the value to `true` will allow all the headers. Whereas setting the valu
 }
 ```
 
-You can specify a list of headers to allow by defining them as an array of strings.
+你可以通过将它们定义为字符串数组来指定允许的标头列表。
 
 ```ts
 {
@@ -175,7 +175,7 @@ You can specify a list of headers to allow by defining them as an array of strin
 }
 ```
 
-You can compute the `headers` config value using a function during the HTTP request. For example:
+你可以在 HTTP 请求期间使用函数计算 `headers` 配置值。例如：
 
 ```ts
 {
@@ -195,7 +195,7 @@ exposeHeaders
 
 <dd>
 
-The `exposeHeaders` property controls the headers to expose via [Access-Control-Expose-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers) header during the preflight request.
+`exposeHeaders` 属性控制在预检请求期间通过 [Access-Control-Expose-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers) 标头公开的标头。
 
 ```ts
 {
@@ -220,7 +220,7 @@ credentials
 
 <dd>
 
-The `credentials` property controls whether to set the [Access-Control-Allow-Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials) header during the preflight request.
+`credentials` 属性控制是否在预检请求期间设置 [Access-Control-Allow-Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials) 标头。
 
 ```ts
 {
@@ -238,10 +238,10 @@ maxAge
 
 <dd>
 
-The `maxAge` property controls the [Access-Control-Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age) response header. The value is in seconds.
+`maxAge` 属性控制 [Access-Control-Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age) 响应标头。值以秒为单位。
 
-- Setting the value to `null` will not set the header.
-- Whereas setting it to `-1 `does set the header but disables the cache.
+- 将值设置为 `null` 将不会设置标头。
+- 而将其设置为 `-1` 会设置标头但禁用缓存。
 
 ```ts
 {
@@ -253,11 +253,11 @@ The `maxAge` property controls the [Access-Control-Max-Age](https://developer.mo
 
 </dl>
 
-## Debugging CORS errors
-Debugging CORS issues is a challenging experience. However, there are no shortcuts other than understanding the rules of CORS and debugging the response headers to ensure everything is in place.
+## 调试 CORS 错误
+调试 CORS 问题是一种具有挑战性的体验。但是，除了理解 CORS 规则并调试响应标头以确保一切就绪之外，没有其他捷径。
 
-Following are some links to the articles you may read to understand better how CORS works.
+以下是一些你可以阅读以更好地了解 CORS 工作原理的文章链接。
 
-- [How to Debug Any CORS Error](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
+- [如何调试任何 CORS 错误](https://httptoolkit.com/blog/how-to-debug-cors-errors/)
 - [Will it CORS?](https://httptoolkit.com/will-it-cors/)
-- [MDN in-depth explanation of CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+- [MDN 对 CORS 的深入解释](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)

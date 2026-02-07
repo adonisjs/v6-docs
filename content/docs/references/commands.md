@@ -1,10 +1,10 @@
 ---
-summary: Learn about the commands shipped with the AdonisJS framework core and official packages.
+summary: 了解随 AdonisJS 框架核心和官方包一起提供的命令。
 ---
 
-# Commands reference
+# 命令参考手册
 
-In this guide, we cover the usage of all the commands shipped with the framework core and the official packages. You may also view the commands help using the `node ace list` command or the `node ace <command-name> --help` command.
+在本指南中，我们将介绍随框架核心和官方包一起提供的所有命令的用法。你也可以使用 `node ace list` 命令或 `node ace <command-name> --help` 命令查看命令帮助。
 
 ```sh
 node ace list
@@ -14,24 +14,24 @@ node ace list
 
 :::note
 
-The output of the help screen is formatted as per the [docopt](http://docopt.org/) standard.
+帮助屏幕的输出格式遵循 [docopt](http://docopt.org/) 标准。
 
 :::
 
 ## serve
-The `serve` uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#dev-server) package to start the AdonisJS application in development environment. You can optionally watch for file changes and restart the HTTP server on every file change.
+`serve` 命令使用 [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#dev-server) 包在开发环境中启动 AdonisJS 应用程序。你可以选择监听文件更改并在每次文件更改时重新启动 HTTP 服务器。
 
 ```sh
 node ace serve --hmr
 ```
 
-The `serve` command starts the development server (via the `bin/server.ts` file) as a child process. If you want to pass [node arguments](https://nodejs.org/api/cli.html#options) to the child process, you can define them before the command name.
+`serve` 命令作为子进程启动开发服务器（通过 `bin/server.ts` 文件）。如果你想向子进程传递 [node 参数](https://nodejs.org/api/cli.html#options)，可以在命令名称之前定义它们。
 
 ```sh
 node ace --no-warnings --inspect serve --hmr
 ```
 
-Following is the list of available options you can pass to the `serve` command. Alternatively, use the `--help` flag to view the command's help.
+以下是可以传递给 `serve` 命令的可用选项列表。或者，使用 `--help` 标志查看命令的帮助。
 
 <dl>
 
@@ -43,7 +43,7 @@ Following is the list of available options you can pass to the `serve` command. 
 
 <dd>
 
-Watch the filesystem and reload the server in HMR mode.
+监听文件系统并以 HMR 模式重新加载服务器。
 
 </dd>
 
@@ -55,7 +55,7 @@ Watch the filesystem and reload the server in HMR mode.
 
 <dd>
 
-Watch the filesystem and always restart the process on file change.
+监听文件系统并在文件更改时始终重新启动进程。
 
 </dd>
 
@@ -67,7 +67,7 @@ Watch the filesystem and always restart the process on file change.
 
 <dd>
 
-Use polling to detect filesystem changes. You might want to use polling when using a Docker container for development.
+使用轮询来检测文件系统更改。在开发中使用 Docker 容器时，你可能想要使用轮询。
 
 </dd>
 
@@ -79,7 +79,7 @@ Use polling to detect filesystem changes. You might want to use polling when usi
 
 <dd>
 
-Clear the terminal after every file change and before displaying the new logs. Use the `--no-clear` flag to retain old logs.
+在每次文件更改后和显示新日志之前清除终端。使用 `--no-clear` 标志保留旧日志。
 
 </dd>
 
@@ -91,7 +91,7 @@ Clear the terminal after every file change and before displaying the new logs. U
 
 <dd>
 
-Start the assets bundle development server alongside the AdonisJS HTTP server. Use the `--no-assets` flag to turn off the assets bundler dev server.
+在 AdonisJS HTTP 服务器旁边启动资源捆绑开发服务器。使用 `--no-assets` 标志关闭资源捆绑器开发服务器。
 
 </dd>
 
@@ -103,7 +103,7 @@ Start the assets bundle development server alongside the AdonisJS HTTP server. U
 
 <dd>
 
-Pass commandline arguments to the asset manager child process. For example, if you use vite, you can define its options as follows.
+将命令行参数传递给资源管理器子进程。例如，如果你使用 vite，你可以按如下方式定义其选项。
 
 ```sh
 node ace serve --hmr --assets-args="--cors --open"
@@ -114,15 +114,15 @@ node ace serve --hmr --assets-args="--cors --open"
 </dl>
 
 ## build
-The `build` command uses the [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#bundler) package to create the production build of your AdonisJS application. The following steps are performed to generate the build.
+`build` 命令使用 [@adonisjs/assembler](https://github.com/adonisjs/assembler?tab=readme-ov-file#bundler) 包创建 AdonisJS 应用程序的生产构建。执行以下步骤以生成构建。
 
-See also: [TypeScript build process](../concepts/typescript_build_process.md).
+另请参阅：[TypeScript 构建过程](../concepts/typescript_build_process.md)。
 
 ```sh
 node ace build
 ```
 
-Following is the list of available options you can pass to the `build` command. Alternatively, use the `--help` flag to view the command's help.
+以下是可以传递给 `build` 命令的可用选项列表。或者，使用 `--help` 标志查看命令的帮助。
 
 <dl>
 
@@ -134,7 +134,7 @@ Following is the list of available options you can pass to the `build` command. 
 
 <dd>
 
-The build command terminates the build process when your project has TypeScript errors. However, you can ignore those errors and finish the build using the `--ignore-ts-errors` flag.
+当你的项目有 TypeScript 错误时，构建命令会终止构建过程。但是，你可以使用 `--ignore-ts-errors` 标志忽略这些错误并完成构建。
 
 </dd>
 
@@ -146,9 +146,9 @@ The build command terminates the build process when your project has TypeScript 
 
 <dd>
 
-The build command copies the `package.json` file alongside the lock file of the package manager your application is using. 
+构建命令会将 `package.json` 文件与你的应用程序使用的包管理器的锁定文件一起复制。
 
-We detect the package manager using the [@antfu/install-pkg](https://github.com/antfu/install-pkg) package. However, you can turn off detection by explicitly providing the package manager's name.
+我们使用 [@antfu/install-pkg](https://github.com/antfu/install-pkg) 包检测包管理器。但是，你可以通过显式提供包管理器的名称来关闭检测。
 
 </dd>
 
@@ -160,7 +160,7 @@ We detect the package manager using the [@antfu/install-pkg](https://github.com/
 
 <dd>
 
-Bundle frontend assets alongside your backend application. Use the `--no-assets` flag to turn off the assets bundler dev server.
+将前端资源与后端应用程序一起捆绑。使用 `--no-assets` 标志关闭资源捆绑器开发服务器。
 
 </dd>
 
@@ -172,7 +172,7 @@ Bundle frontend assets alongside your backend application. Use the `--no-assets`
 
 <dd>
 
-Pass commandline arguments to the asset manager child process. For example, if you use vite, you can define its options as follows.
+将命令行参数传递给资源管理器子进程。例如，如果你使用 vite，你可以按如下方式定义其选项。
 
 ```sh
 node ace build --assets-args="--sourcemap --debug"
@@ -184,19 +184,19 @@ node ace build --assets-args="--sourcemap --debug"
 
 ## add
 
-The `add` command combines the `npm install <package-name>` and `node ace configure` commands. So, instead of running two separate commands, you can install and configure the package in one go using the `add` command.
+`add` 命令结合了 `npm install <package-name>` 和 `node ace configure` 命令。因此，你可以使用 `add` 命令一次性安装并配置包，而不是运行两个单独的命令。
 
-The `add` command will automatically detect the package manager used by your application and use that to install the package. However, you can always opt for a specific package manager using the `--package-manager` CLI flag.
+`add` 命令将自动检测你的应用程序使用的包管理器，并使用它来安装包。但是，你始终可以使用 `--package-manager` CLI 标志选择特定的包管理器。
 
 ```sh
-# Install and configure the @adonisjs/lucid package
+# 安装并配置 @adonisjs/lucid 包
 node ace add @adonisjs/lucid
 
-# Install the package as a development dependency and configure it
+# 将包安装为开发依赖项并进行配置
 node ace add my-dev-package --dev
 ```
 
-If the package can be configured using flags, you can pass them directly to the `add` command. Every unknown flag will be passed down to the `configure` command.
+如果包可以使用标志进行配置，你可以将它们直接传递给 `add` 命令。每个未知标志都将传递给 `configure` 命令。
 
 ```sh
 node ace add @adonisjs/lucid --db=sqlite
@@ -212,7 +212,7 @@ node ace add @adonisjs/lucid --db=sqlite
 
 <dd>
 
-Enable verbose mode to display the package installation and configuration logs.
+启用详细模式以显示包安装和配置日志。
 
 </dd>
 
@@ -224,7 +224,7 @@ Enable verbose mode to display the package installation and configuration logs.
 
 <dd>
 
-Passed down to the `configure` command. Force overwrite files when configuring the package. See the `configure` command for more information.
+传递给 `configure` 命令。在配置包时强制覆盖文件。有关更多信息，请参阅 `configure` 命令。
 
 <dt>
 
@@ -234,7 +234,7 @@ Passed down to the `configure` command. Force overwrite files when configuring t
 
 <dd>
 
-Define the package manager to use for installing the package. The value must be `npm`, `pnpm`, `bun` or `yarn`.
+定义用于安装包的包管理器。该值必须是 `npm`、`pnpm`、`bun` 或 `yarn`。
 
 </dd>
 
@@ -246,14 +246,14 @@ Define the package manager to use for installing the package. The value must be 
 
 <dd>
 
-Install the package as a development dependency.
+将包安装为开发依赖项。
 
 </dd>
 
 </dl>
 
 ## configure
-Configure a package after it has been installed. The command accepts the package name as the first argument.
+在安装包后对其进行配置。该命令接受包名称作为第一个参数。
 
 ```sh
 node ace configure @adonisjs/lucid
@@ -269,7 +269,7 @@ node ace configure @adonisjs/lucid
 
 <dd>
 
-Enable verbose mode to display the package installation logs.
+启用详细模式以显示包安装日志。
 
 </dd>
 
@@ -281,9 +281,9 @@ Enable verbose mode to display the package installation logs.
 
 <dd>
 
-The stubs system of AdonisJS does not overwrite existing files. For example, if you configure the `@adonisjs/lucid` package and your application already has a `config/database.ts` file, the configure process will not overwrite the existing config file.
+AdonisJS 的存根系统不会覆盖现有文件。例如，如果你配置 `@adonisjs/lucid` 包，而你的应用程序已经有一个 `config/database.ts` 文件，则配置过程不会覆盖现有的配置文件。
 
-However, you can force overwrite files using the `--force` flag.
+但是，你可以使用 `--force` 标志强制覆盖文件。
 
 </dd>
 
@@ -291,22 +291,22 @@ However, you can force overwrite files using the `--force` flag.
 
 ## eject
 
-Eject stubs from a given package to your application `stubs` directory. In the following example, we copy the `make/controller` stubs to our application for modification.
+将给定包中的存根弹出到你的应用程序 `stubs` 目录。在以下示例中，我们将 `make/controller` 存根复制到我们的应用程序以进行修改。
 
-See also: [Customizing stubs](../concepts/scaffolding.md#ejecting-stubs)
+另请参阅：[自定义存根](../concepts/scaffolding.md#ejecting-stubs)
 
 ```sh
-# Copy stub from @adonisjs/core package
+# 从 @adonisjs/core 包复制存根
 node ace eject make/controller
 
-# Copy stub from @adonisjs/bouncer package
+# 从 @adonisjs/bouncer 包复制存根
 node ace eject make/policy --pkg=@adonisjs/bouncer
 ```
 
-## generate\:key
-Generate a cryptographically secure random key and write to the `.env` file as the `APP_KEY` environment variable.
+## generate:key
+生成一个加密安全的随机密钥，并将其作为 `APP_KEY` 环境变量写入 `.env` 文件。
 
-See also: [App key](../security/encryption.md)
+另请参阅：[应用密钥](../security/encryption.md)
 
 ```sh
 node ace generate:key
@@ -322,7 +322,7 @@ node ace generate:key
 
 <dd>
 
-Display the key on the terminal instead of writing it to the `.env` file. By default, the key is written to the env file.
+在终端上显示密钥，而不是将其写入 `.env` 文件。默认情况下，密钥写入 env 文件。
 
 </dd>
 
@@ -334,29 +334,29 @@ Display the key on the terminal instead of writing it to the `.env` file. By def
 
 <dd>
 
-The `generate:key` command does not write the key to the `.env` file when running your application in production. However, you can use the `--force` flag to override this behavior.
+在生产环境中运行应用程序时，`generate:key` 命令不会将密钥写入 `.env` 文件。但是，你可以使用 `--force` 标志覆盖此行为。
 
 </dd>
 
 </dl>
 
-## make\:controller
+## make:controller
 
-Create a new HTTP controller class. Controllers are created inside the `app/controllers` directory and use the following naming conventions.
+创建一个新的 HTTP 控制器类。控制器是在 `app/controllers` 目录中创建的，并使用以下命名约定。
 
-- Form: `plural`
-- Suffix: `controller`
-- Class name example: `UsersController`
-- File name example: `users_controller.ts`
+- 形式：`复数`
+- 后缀：`controller`
+- 类名示例：`UsersController`
+- 文件名示例：`users_controller.ts`
 
 ```sh
 node ace make:controller users
 ```
 
-You also generate a controller with custom action names, as shown in the following example.
+你也可以生成带有自定义操作名称的控制器，如下例所示。
 
 ```sh
-# Generates controller with "index", "show", and "store" methods
+# 生成带有 "index"、"show" 和 "store" 方法的控制器
 node ace make:controller users index show store
 ```
 
@@ -370,7 +370,7 @@ node ace make:controller users index show store
 
 <dd>
 
-Force the controller name to be in singular form.
+强制控制器名称为单数形式。
 
 </dd>
 
@@ -382,7 +382,7 @@ Force the controller name to be in singular form.
 
 <dd>
 
-Generate a controller with methods to perform CRUD operations on a resource.
+生成一个带有对资源执行 CRUD 操作的方法的控制器。
 
 </dd>
 
@@ -394,19 +394,19 @@ Generate a controller with methods to perform CRUD operations on a resource.
 
 <dd>
 
-The `--api` flag is similar to the `--resource` flag. However, it does not define the `create` and the `edit` methods since they are used to display forms.
+`--api` 标志类似于 `--resource` 标志。但是，它不定义 `create` 和 `edit` 方法，因为它们用于显示表单。
 
 </dd>
 
 </dl>
 
-## make\:middleware
-Create a new middleware for HTTP requests. Middleware are stored inside the `app/middleware` directory and uses the following naming conventions.
+## make:middleware
+创建一个新的 HTTP 请求中间件。中间件存储在 `app/middleware` 目录中，并使用以下命名约定。
 
-- Form: `singular`
-- Suffix: `middleware`
-- Class name example: `BodyParserMiddleware`
-- File name example: `body_parser_middleware.ts`
+- 形式：`单数`
+- 后缀：`middleware`
+- 类名示例：`BodyParserMiddleware`
+- 文件名示例：`body_parser_middleware.ts`
 
 ```sh
 node ace make:middleware bodyparser
@@ -422,7 +422,7 @@ node ace make:middleware bodyparser
 
 <dd>
 
-Skip the [middleware stack](../basics/middleware.md#middleware-stacks) selection prompt by defining the stack explicitly. The value must be `server`, `named`, or `router`.
+通过显式定义堆栈来跳过 [中间件堆栈](../basics/middleware.md#middleware-stacks) 选择提示。该值必须是 `server`、`named` 或 `router`。
 
 ```sh
 node ace make:middleware bodyparser --stack=router
@@ -432,32 +432,32 @@ node ace make:middleware bodyparser --stack=router
 
 </dl>
 
-## make\:event
-Create a new event class. Events are stored inside the `app/events` directory and use the following naming conventions.
+## make:event
+创建一个新的事件类。事件存储在 `app/events` 目录中，并使用以下命名约定。
 
-- Form: `NA`
-- Suffix: `NA`
-- Class name example: `OrderShipped`
-- File name example: `order_shipped.ts`
-- Recommendation: You must name your events around the lifecycle of an action. For example: `MailSending`, `MailSent`, `RequestCompleted`, and so on.
+- 形式：`不适用`
+- 后缀：`不适用`
+- 类名示例：`OrderShipped`
+- 文件名示例：`order_shipped.ts`
+- 建议：你必须围绕操作的生命周期命名事件。例如：`MailSending`、`MailSent`、`RequestCompleted` 等。
 
 ```sh
 node ace make:event orderShipped
 ```
 
-## make\:validator
-Create a new VineJS validator file. The validators are stored inside the `app/validators` directory, and each file may export multiple validators.
+## make:validator
+创建一个新的 VineJS 验证器文件。验证器存储在 `app/validators` 目录中，每个文件可以导出多个验证器。
 
-- Form: `singular`
-- Suffix: `NA`
-- File name example: `user.ts`
-- Recommendation: You must create validator files around the resources of your application.
+- 形式：`单数`
+- 后缀：`不适用`
+- 文件名示例：`user.ts`
+- 建议：你必须围绕应用程序的资源创建验证器文件。
 
 ```sh
-# A validator for managing a user
+# 用于管理用户的验证器
 node ace make:validator user
 
-# A validator for managing a post
+# 用于管理帖子的验证器
 node ace make:validator post
 ```
 
@@ -471,7 +471,7 @@ node ace make:validator post
 
 <dd>
 
-Create a validator file with pre-defined validators for `create` and `update` actions.
+创建一个带有针对 `create` 和 `update` 操作的预定义验证器的验证器文件。
 
 ```sh
 node ace make:validator post --resource
@@ -481,15 +481,15 @@ node ace make:validator post --resource
 
 </dl>
 
-## make\:listener
+## make:listener
 
-Create a new event listener class. The listener classes are stored inside the `app/listeners` directory and use the following naming conventions.
+创建一个新的事件监听器类。监听器类存储在 `app/listeners` 目录中，并使用以下命名约定。
 
-- Form: `NA`
-- Suffix: `NA`
-- Class name example: `SendShipmentNotification`
-- File name example: `send_shipment_notification.ts`
-- Recommendation: The event listeners must be named after the action they perform. For example, a listener that sends the shipment notification email should be called `SendShipmentNotification`.
+- 形式：`不适用`
+- 后缀：`不适用`
+- 类名示例：`SendShipmentNotification`
+- 文件名示例：`send_shipment_notification.ts`
+- 建议：事件监听器必须以它们执行的操作命名。例如，发送发货通知电子邮件的监听器应称为 `SendShipmentNotification`。
 
 ```sh
 node ace make:listener sendShipmentNotification
@@ -505,7 +505,7 @@ node ace make:listener sendShipmentNotification
 
 <dd>
 
-Generate an event class alongside the event listener.
+生成一个与事件监听器并列的事件类。
 
 ```sh
 node ace make:listener sendShipmentNotification --event=shipment_received
@@ -515,75 +515,75 @@ node ace make:listener sendShipmentNotification --event=shipment_received
 
 </dl>
 
-## make\:service
+## make:service
 
-Create a new service class. Service classes are stored inside the `app/services` directory and use the following naming conventions.
+创建一个新的服务类。服务类存储在 `app/services` 目录中，并使用以下命名约定。
 
 :::note
 
-A service has no pre-defined meaning, and you can use it to extract the business logic inside your application. For example, if your application generates a lot of PDFs, you may create a service called `PdfGeneratorService` and reuse it in multiple places.
+服务没有预定义的含义，你可以使用它来提取应用程序内部的业务逻辑。例如，如果你的应用程序生成大量 PDF，你可以创建一个名为 `PdfGeneratorService` 的服务并在多个地方重用它。
 
 :::
 
-- Form: `singular`
-- Suffix: `service`
-- Class name example: `InvoiceService`
-- File name example: `invoice_service.ts`
+- 形式：`单数`
+- 后缀：`service`
+- 类名示例：`InvoiceService`
+- 文件名示例：`invoice_service.ts`
 
 ```sh
 node ace make:service invoice
 ```
 
-## make\:exception
+## make:exception
 
-Create a new [custom exception class](../basics/exception_handling.md#custom-exceptions). Exceptions are stored inside the `app/exceptions` directory.
+创建一个新的 [自定义异常类](../basics/exception_handling.md#custom-exceptions)。异常存储在 `app/exceptions` 目录中。
 
-- Form: `NA`
-- Suffix: `exception`
-- Class name example: `CommandValidationException`
-- File name example: `command_validation_exception.ts`
+- 形式：`不适用`
+- 后缀：`exception`
+- 类名示例：`CommandValidationException`
+- 文件名示例：`command_validation_exception.ts`
 
 ```sh
 node ace make:exception commandValidation
 ```
 
-## make\:command
+## make:command
 
-Create a new Ace command. By default, the commands are stored inside the `commands` directory at the root of your application.
+创建一个新的 Ace 命令。默认情况下，命令存储在应用程序根目录下的 `commands` 目录中。
 
-Commands from this directory are imported automatically by AdonisJS when you try to execute any Ace command. You may prefix the filename with an `_` to store additional files that are not Ace commands in this directory.
+当你尝试执行任何 Ace 命令时，AdonisJS 会自动导入此目录中的命令。你可以在文件名前加上 `_`，以便在此目录中存储不是 Ace 命令的其他文件。
 
-- Form: `NA`
-- Suffix: `NA`
-- Class name example: `ListRoutes`
-- File name example: `list_routes.ts`
-- Recommendation: Commands must be named after the action they perform. For example, `ListRoutes`, `MakeController`, and `Build`.
+- 形式：`不适用`
+- 后缀：`不适用`
+- 类名示例：`ListRoutes`
+- 文件名示例：`list_routes.ts`
+- 建议：命令必须以它们执行的操作命名。例如，`ListRoutes`、`MakeController` 和 `Build`。
 
 ```sh
 node ace make:command listRoutes
 ```
 
-## make\:view
-Create a new Edge.js template file. The templates are created inside the `resources/views` directory.
+## make:view
+创建一个新的 Edge.js 模板文件。模板是在 `resources/views` 目录中创建的。
 
-- Form: `NA`
-- Suffix: `NA`
-- File name example: `posts/view.edge`
-- Recommendation: You must group templates for a resource inside a subdirectory. For example: `posts/list.edge`, `posts/create.edge`, and so on.
+- 形式：`不适用`
+- 后缀：`不适用`
+- 文件名示例：`posts/view.edge`
+- 建议：你必须将资源的模板分组在子目录中。例如：`posts/list.edge`、`posts/create.edge` 等。
 
 ```sh
 node ace make:view posts/create
 node ace make:view posts/list
 ```
 
-## make\:provider
+## make:provider
 
-Create a [service provider file](../concepts/service_providers.md). Providers are stored inside the `providers` directory at the root of your application and use the following naming conventions.
+创建一个 [服务提供者文件](../concepts/service_providers.md)。提供者存储在应用程序根目录下的 `providers` 目录中，并使用以下命名约定。
 
-- Form: `singular`
-- Suffix: `provider`
-- Class name example: `AppProvider`
-- File name example: `app_provider.ts`
+- 形式：`单数`
+- 后缀：`provider`
+- 类名示例：`AppProvider`
+- 文件名示例：`app_provider.ts`
 
 ```sh
 node ace make:provider app
@@ -600,7 +600,7 @@ node ace make:provider app
 
 <dd>
 
-Define environments in which the provider should get imported. [Learn more about app environments](../concepts/application.md#environment)
+定义应导入提供者的环境。[了解有关应用环境的更多信息](../concepts/application.md#environment)
 
 ```sh
 node ace make:provider app -e=web -e=console
@@ -610,9 +610,9 @@ node ace make:provider app -e=web -e=console
 
 </dl>
 
-## make\:preload
+## make:preload
 
-Create a new [preload file](../concepts/adonisrc_file.md#preloads). Preload files are stored inside the `start` directory.
+创建一个新的 [预加载文件](../concepts/adonisrc_file.md#preloads)。预加载文件存储在 `start` 目录中。
 
 ```sh
 node ace make:preload view
@@ -628,7 +628,7 @@ node ace make:preload view
 
 <dd>
 
-Define environments in which the preload file should get imported. [Learn more about app environments](../concepts/application.md#environment)
+定义应导入预加载文件的环境。[了解有关应用环境的更多信息](../concepts/application.md#environment)
 
 ```sh
 node ace make:preload view app -e=web -e=console
@@ -638,12 +638,12 @@ node ace make:preload view app -e=web -e=console
 
 </dl>
 
-## make\:test
-Create a new test file inside the `tests/<suite>` directory.
+## make:test
+在 `tests/<suite>` 目录中创建一个新的测试文件。
 
-- Form: NA
-- Suffix: `.spec`
-- File name example: `posts/list.spec.ts`, `posts/update.spec.ts`
+- 形式：不适用
+- 后缀：`.spec`
+- 文件名示例：`posts/list.spec.ts`, `posts/update.spec.ts`
 
 ```sh
 node ace make:test --suite=unit
@@ -659,20 +659,20 @@ node ace make:test --suite=unit
 
 <dd>
 
-Define the suite for which you want to create the test file. Otherwise, the command will display a prompt for suite selection.
+定义要为其创建测试文件的套件。否则，该命令将显示套件选择提示。
 
 </dd>
 
 </dl>
 
-## make\:mail
+## make:mail
 
-Create a new mail class inside the `app/mails` directory. The mail classes are suffixed with the `Notification` keyword. However, you may define a custom suffix using the `--intent` CLI flag.
+在 `app/mails` 目录中创建一个新的邮件类。邮件类以后缀 `Notification` 关键字结尾。但是，你可以使用 `--intent` CLI 标志定义自定义后缀。
 
-- Form: NA
-- Suffix: `Intent`
-- Class name example: ShipmentNotification
-- File name example: shipment_notification.ts
+- 形式：不适用
+- 后缀：`Intent`
+- 类名示例：ShipmentNotification
+- 文件名示例：shipment_notification.ts
 
 ```sh
 node ace make:mail shipment
@@ -690,7 +690,7 @@ node ace make:mail shipment
 
 <dd>
 
-Define a custom intent for the mail.
+定义邮件的自定义意图。
 
 ```sh
 node ace make:mail shipment --intent=confirmation
@@ -704,36 +704,36 @@ node ace make:mail storage --intent=warning
 
 </dl>
 
-## make\:policy
+## make:policy
 
-Create a new Bouncer policy class. The policies are stored inside the `app/policies` folder and use the following naming conventions.
+创建一个新的 Bouncer 策略类。策略存储在 `app/policies` 文件夹中，并使用以下命名约定。
 
-- Form: `singular`
-- Suffix: `policy`
-- Class name example: `PostPolicy`
-- File name example: `post_policy.ts`
+- 形式：`单数`
+- 后缀：`policy`
+- 类名示例：`PostPolicy`
+- 文件名示例：`post_policy.ts`
 
 ```sh
 node ace make:policy post
 ```
 
-## inspect\:rcfile
-View the contents of the `adonisrc.ts` file after merging the defaults. You may use this command to inspect the available configuration options and override them per your application requirements.
+## inspect:rcfile
+查看合并默认值后的 `adonisrc.ts` 文件内容。你可以使用此命令检查可用的配置选项，并根据你的应用程序要求覆盖它们。
 
-See also: [AdonisRC file](../concepts/adonisrc_file.md)
+另请参阅：[AdonisRC 文件](../concepts/adonisrc_file.md)
 
 ```sh
 node ace inspect:rcfile
 ```
 
-## list\:routes
-View list of routes registered by your application. This command will boot your AdonisJS application in the `console` environment.
+## list:routes
+查看你的应用程序注册的路由列表。此命令将在 `console` 环境中启动你的 AdonisJS 应用程序。
 
 ```sh
 node ace list:routes
 ```
 
-Also, you can see the routes list from the VSCode activity bar if you are using our [official VSCode extension](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension).
+此外，如果你使用我们的 [官方 VSCode 扩展](https://marketplace.visualstudio.com/items?itemName=jripouteau.adonis-vscode-extension)，你可以从 VSCode 活动栏中查看路由列表。
 
 ![](../basics/vscode_routes_list.png)
 
@@ -747,7 +747,7 @@ Also, you can see the routes list from the VSCode activity bar if you are using 
 
 <dd>
 
-View routes as a JSON string. The output will be an array of object.
+将路由视为 JSON 字符串。输出将是一个对象数组。
 
 </dd>
 
@@ -759,7 +759,7 @@ View routes as a JSON string. The output will be an array of object.
 
 <dd>
 
-View routes inside a CLI table. By default, we display routes inside a compact, pretty list.
+在 CLI 表格中查看路由。默认情况下，我们在紧凑、美观的列表中显示路由。
 
 </dd>
 
@@ -771,7 +771,7 @@ View routes inside a CLI table. By default, we display routes inside a compact, 
 
 <dd>
 
-Filter routes list and include the ones using the mentioned middleware. You may use the `*` keyword to include routes using one or more middleware.
+过滤路由列表并包括使用提到的中间件的路由。你可以使用 `*` 关键字包括使用一个或多个中间件的路由。
 
 </dd>
 
@@ -783,23 +783,23 @@ Filter routes list and include the ones using the mentioned middleware. You may 
 
 <dd>
 
-Filter routes list and include the ones NOT using the mentioned middleware. You may use the `*` keyword to include routes that do not use any middleware.
+过滤路由列表并包括**不**使用提到的中间件的路由。你可以使用 `*` 关键字包括不使用任何中间件的路由。
 
 </dd>
 
 </dl>
 
-## env\:add
+## env:add
 
-The `env:add` command allows you to add a new environment variables to the `.env`, `.env.example` files and will also define the validation rules in the `start/env.ts` file. 
+`env:add` 命令允许你向 `.env`、`.env.example` 文件添加新的环境变量，并将在 `start/env.ts` 文件中定义验证规则。
 
-You can just run the command and it will prompt you for the variable name, value, and validation rules. Or you can pass them as arguments.
+你可以只运行该命令，它会提示你输入变量名称、值和验证规则。或者你可以将它们作为参数传递。
 
 ```sh
-# Will prompt for the variable name, value, and validation rules
+# 将提示输入变量名称、值和验证规则
 node ace env:add
 
-# Define the variable name, value, and validation rule
+# 定义变量名称、值和验证规则
 node ace env:add MY_VARIABLE value --type=string
 ```
 
@@ -813,7 +813,7 @@ node ace env:add MY_VARIABLE value --type=string
 
 <dd>
 
-Define the type of the environment variable. The value must be one of the following: `string`, `boolean`, `number`, `enum`.
+定义环境变量的类型。该值必须是以下之一：`string`、`boolean`、`number`、`enum`。
 
 </dd>
 
@@ -825,7 +825,7 @@ Define the type of the environment variable. The value must be one of the follow
 
 <dd>
 
-Define the allowed values for the environment variable when the type is `enum`. 
+当类型为 `enum` 时定义环境变量的允许值。
 
 ```sh
 node ace env:add MY_VARIABLE foo --type=enum --enum-values=foo --enum-values=bar

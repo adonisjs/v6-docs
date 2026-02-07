@@ -1,16 +1,16 @@
 ---
-summary: Learn how to process user-uploaded files in AdonisJS using the `request.file` method and validate them using the validator.
+summary: 了解如何在 AdonisJS 中使用 `request.file` 方法处理用户上传的文件，并使用验证器对它们进行验证。
 ---
 
-# File uploads
+# 文件上传
 
-AdonisJS has first-class support for processing user-uploaded files sent using the `multipart/form-data` content type. The files are auto-processed using the [bodyparser middleware](../basics/body_parser.md#multipart-parser) and saved inside your operating system's `tmp` directory.
+AdonisJS 对处理使用 `multipart/form-data` 内容类型发送的用户上传文件提供了一流的支持。文件会使用 [BodyParser 中间件](../basics/body_parser.md#multipart-parser) 自动处理，并保存在操作系统的 `tmp` 目录中。
 
-Later, inside your controllers, you may access the files, validate them and move them to a persistent location or a cloud storage service like S3.
+稍后，在控制器中，你可以访问这些文件，验证它们，并将它们移动到持久化位置或像 S3 这样的云存储服务中。
 
-## Access user-uploaded files
+## 访问用户上传的文件
 
-You may access the user-uploaded files using the `request.file` method. The method accepts the field name and returns an instance of [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts).
+你可以使用 `request.file` 方法访问用户上传的文件。该方法接受字段名称并返回一个 [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts) 实例。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -25,7 +25,7 @@ export default class UserAvatarsController {
 }
 ```
 
-If a single input field is used to upload multiple files, you may access them using the `request.files` method. The method accepts the field name and returns an array of `MultipartFile` instances.
+如果使用单个输入字段上传多个文件，你可以使用 `request.files` 方法访问它们。该方法接受字段名称并返回一个 `MultipartFile` 实例数组。
 
 ```ts
 import { HttpContext } from '@adonisjs/core/http'
@@ -43,11 +43,11 @@ export default class InvoicesController {
 }
 ```
 
-## Manually validating files
+## 手动验证文件
 
-You may validate files using the [validator](#using-validator) or define the validation rules via the `request.file` method. 
+你可以使用 [验证器](#using-validator) 验证文件，或者通过 `request.file` 方法定义验证规则。
 
-In the following example, we will define the validation rules inline via the `request.file` method and use the `file.errors` property to access the validation errors.
+在下面的示例中，我们将通过 `request.file` 方法内联定义验证规则，并使用 `file.errors` 属性访问验证错误。
 
 ```ts
 const avatar = request.file('avatar', {
@@ -62,9 +62,9 @@ if (!avatar.isValid) {
 }
 ```
 
-When working with an array of files, you can iterate over files and check if one or more files have failed the validation. 
+处理文件数组时，你可以遍历文件并检查是否有一个或多个文件未通过验证。
 
-The validation options provided to the `request.files` method are applied to all files. In the following example, we expect each file to be under `2mb` and must have one of the allowed file extensions.
+提供给 `request.files` 方法的验证选项适用于所有文件。在下面的示例中，我们期望每个文件都在 `2mb` 以下，并且必须具有允许的文件扩展名之一。
 
 ```ts
 const invoiceDocuments = request.files('documents', {
@@ -73,7 +73,7 @@ const invoiceDocuments = request.files('documents', {
 })
 
 /**
- * Creating a collection of invalid documents
+ * 创建无效文档的集合
  */
 let invalidDocuments = invoiceDocuments.filter((document) => {
   return !document.isValid
@@ -81,7 +81,7 @@ let invalidDocuments = invoiceDocuments.filter((document) => {
 
 if (invalidDocuments.length) {
   /**
-   * Response with the file name and errors next to it
+   * 响应包含文件名及其旁边的错误
    */
   return response.badRequest({
     errors: invalidDocuments.map((document) => {
@@ -92,9 +92,9 @@ if (invalidDocuments.length) {
 }
 ```
 
-## Using validator to validate files
+## 使用验证器验证文件
 
-Instead of validating files manually (as seen in the previous section), you may use the [validator](./validation.md) to validate files as part of the validation pipeline. You do not have to manually check for errors when using the validator; the validation pipeline takes care of that.
+与其手动验证文件（如上一节所示），不如使用 [验证器](./validation.md) 作为验证管道的一部分来验证文件。使用验证器时，你无需手动检查错误；验证管道会处理这些。
 
 ```ts
 // app/validators/user_validator.ts
@@ -127,7 +127,7 @@ export default class UserAvatarsController {
 }
 ```
 
-An array of files can be validated using the `vine.array` type. For example:
+可以使用 `vine.array` 类型验证文件数组。例如：
 
 ```ts
 import vine from '@vinejs/vine'
@@ -146,11 +146,11 @@ export const createInvoiceValidator = vine.compile(
 )
 ```
 
-## Moving files to a persistent location
+## 将文件移动到持久化位置
 
-By default, the user-uploaded files are saved in your operating system's `tmp` directory and may get deleted as your computer cleans up the `tmp` directory.
+默认情况下，用户上传的文件保存在操作系统的 `tmp` 目录中，随着计算机清理 `tmp` 目录，这些文件可能会被删除。
 
-Therefore, it is recommended to store files in a persistent location. You may use the `file.move` to move a file within the same filesystem. The method accepts an absolute path to the directory to move the file.
+因此，建议将文件存储在持久化位置。你可以使用 `file.move` 在同一文件系统内移动文件。该方法接受移动文件的目录的绝对路径。
 
 ```ts
 import app from '@adonisjs/core/services/app'
@@ -162,13 +162,13 @@ const avatar = request.file('avatar', {
 
 // highlight-start
 /**
- * Moving avatar to the "storage/uploads" directory
+ * 将头像移动到 "storage/uploads" 目录
  */
 await avatar.move(app.makePath('storage/uploads'))
 // highlight-end
 ```
 
-It is recommended to provide a unique random name to the moved file. For this, you may use the `cuid` helper.
+建议为移动的文件提供一个唯一的随机名称。为此，你可以使用 `cuid` 辅助函数。
 
 ```ts
 // highlight-start
@@ -183,44 +183,43 @@ await avatar.move(app.makePath('storage/uploads'), {
 })
 ```
 
-Once the file has been moved, you may store its name inside the database for later reference.
+文件移动后，你可以将其名称存储在数据库中以供以后参考。
 
 ```ts
 await avatar.move(app.makePath('uploads'))
 
 /**
- * Dummy code to save the filename as avatar
- * on the user model and persist it to the
- * database.
+ * 示例代码：将文件名作为头像保存在用户模型上
+ * 并持久化到数据库。
  */
 auth.user!.avatar = avatar.fileName!
 await auth.user.save()
 ```
 
-### File properties
+### 文件属性
 
-Following is the list of properties you may access on the [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts) instance.
+以下是你可以在 [MultipartFile](https://github.com/adonisjs/bodyparser/blob/main/src/multipart/file.ts) 实例上访问的属性列表。
 
-| Property     | Description                                                                                                  |
+| 属性 | 描述 |
 |--------------|--------------------------------------------------------------------------------------------------------------|
-| `fieldName`  | The name of the HTML input field.                                                                            |
-| `clientName` | The file name on the user's computer.                                                                        |
-| `size`       | The size of the file in bytes.                                                                               |
-| `extname`    | The file extname                                                                                             |
-| `errors`     | An array of errors associated with a given file.                                                             |
-| `type`       | The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of the file     |
-| `subtype`    | The [mime subtype](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of the file. |
-| `filePath`   | The absolute path to the file after the `move` operation.                                                    |
-| `fileName`   | The file name after the `move` operation.                                                                    |
-| `tmpPath`    | The absolute path to the file inside the `tmp` directory.                                                    |
-| `meta`       | Metadata associated with the file as a key-value pair. The object is empty by default.                       |
-| `validated`  | A boolean to know if the file has been validated.                                                            |
-| `isValid`    | A boolean to know if the file has passed the validation rules.                                               |
-| `hasErrors`  | A boolean to know if one or more errors are associated with a given file.                                    |
+| `fieldName`  | HTML 输入字段的名称。 |
+| `clientName` | 用户计算机上的文件名。 |
+| `size`       | 文件大小（字节）。 |
+| `extname`    | 文件扩展名。 |
+| `errors`     | 与给定文件关联的错误数组。 |
+| `type`       | 文件的 [mime 类型](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)。 |
+| `subtype`    | 文件的 [mime 子类型](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)。 |
+| `filePath`   | `move` 操作后的文件绝对路径。 |
+| `fileName`   | `move` 操作后的文件名。 |
+| `tmpPath`    | `tmp` 目录内文件的绝对路径。 |
+| `meta`       | 与文件关联的元数据键值对。默认情况下对象为空。 |
+| `validated`  | 一个布尔值，用于了解文件是否已验证。 |
+| `isValid`    | 一个布尔值，用于了解文件是否通过了验证规则。 |
+| `hasErrors`  | 一个布尔值，用于了解给定文件是否关联了一个或多个错误。 |
 
-## Serving files
+## 提供文件服务
 
-If you have persisted user-uploaded files in the same filesystem as your application code, you may serve files by creating a route and using the [`response.download`](./response.md#downloading-files) method. 
+如果你已将用户上传的文件持久化在与应用程序代码相同的文件系统中，你可以通过创建路由并使用 [`response.download`](./response.md#downloading-files) 方法来提供文件服务。
 
 ```ts
 import { sep, normalize } from 'node:path'
@@ -242,29 +241,30 @@ router.get('/uploads/*', ({ request, response }) => {
 })
 ```
 
-- We get the file path using the [wildcard route param](./routing.md#wildcard-params) and convert the array into a string.
-- Next, we normalize the path using the Node.js path module.
-- Using the `PATH_TRAVERSAL_REGEX` we protect this route against [path traversal](https://owasp.org/www-community/attacks/Path_Traversal).
-- Finally, we convert the `normalizedPath` to an absolute path inside the `uploads` directory and serve the file using the `response.download` method.
+- 我们使用 [通配符路由参数](./routing.md#wildcard-params) 获取文件路径，并将数组转换为字符串。
+- 接下来，我们使用 Node.js path 模块标准化路径。
+- 使用 `PATH_TRAVERSAL_REGEX`，我们保护此路由免受 [路径遍历](https://owasp.org/www-community/attacks/Path_Traversal) 攻击。
+- 最后，我们将 `normalizedPath` 转换为 `uploads` 目录内的绝对路径，并使用 `response.download` 方法提供文件服务。
 
 
-## Using Drive to upload and serve files
+## 使用 Drive 上传和提供文件服务
 
-Drive is a file system abstraction created by the AdonisJS core team. You may use Drive to manage user-uploaded files and store them inside the local file system or move them to a cloud storage service like S3 or GCS.
+Drive 是 AdonisJS 核心团队创建的文件系统抽象。你可以使用 Drive 管理用户上传的文件，并将它们存储在本地文件系统中，或者移动到像 S3 或 GCS 这样的云存储服务中。
 
-We recommend using Drive over manually uploading and serving files. Drive handles many security concerns like path traversal and offers a unified API across multiple storage providers.
+我们建议使用 Drive 而不是手动上传和提供文件服务。Drive 处理许多安全问题（如路径遍历），并提供跨多个存储提供程序的统一 API。
 
-[Learn more about Drive](../digging_deeper/drive.md)
+[了解更多关于 Drive 的信息](../digging_deeper/drive.md)
 
-## Advanced - Self-processing multipart stream
-You can turn off the automatic processing of multipart requests and self-process the stream for advanced use cases. Open the `config/bodyparser.ts` file and change one of the following options to disable auto-processing.
+## 高级 - 自我处理 multipart 流
+
+你可以关闭 multipart 请求的自动处理，并针对高级用例自我处理流。打开 `config/bodyparser.ts` 文件并更改以下选项之一以禁用自动处理。
 
 ```ts
 {
   multipart: {
     /**
-     * Set to false, if you want to self-process multipart
-     * stream manually for all HTTP requests
+     * 设置为 false，如果你想为所有 HTTP 请求
+     * 手动自我处理 multipart 流
      */
     autoProcess: false
   }
@@ -275,17 +275,17 @@ You can turn off the automatic processing of multipart requests and self-process
 {
   multipart: {
     /**
-     * Define an array of route patterns for which you want
-     * to self process the multipart stream.
+     * 定义一个路由模式数组，你希望对这些路由
+     * 自我处理 multipart 流。
      */
     processManually: ['/assets']
   }
 }
 ```
 
-Once you have disabled the auto-processing, you can use the `request.multipart` object to process individual files.
+一旦你禁用了自动处理，你可以使用 `request.multipart` 对象处理单个文件。
 
-In the following example, we use the `stream.pipeline` method from Node.js to process the multipart readable stream and write it to a file on the disk. However, you can stream this file to some external service like `s3`.
+在下面的示例中，我们使用 Node.js 的 `stream.pipeline` 方法处理 multipart 可读流并将其写入磁盘上的文件。当然，你可以将此文件流式传输到像 `s3` 这样的外部服务。
 
 ```ts
 import { createWriteStream } from 'node:fs'
@@ -296,7 +296,7 @@ import { HttpContext } from '@adonisjs/core/http'
 export default class AssetsController {
   async store({ request }: HttpContext) {
     /**
-     * Step 1: Define a file listener
+     * 步骤 1: 定义文件监听器
      */
     request.multipart.onFile('*', {}, async (part, reporter) => {
       part.pause()
@@ -308,12 +308,12 @@ export default class AssetsController {
     })
 
     /**
-     * Step 2: Process the stream
+     * 步骤 2: 处理流
      */
     await request.multipart.process()
 
     /**
-     * Step 3: Access processed files
+     * 步骤 3: 访问已处理的文件
      */
     return request.allFiles()
   }
@@ -321,21 +321,23 @@ export default class AssetsController {
 ```
 
 
-- The `multipart.onFile` method accepts the input field name for which you want to process the files. You can use the wildcard `*` to process all the files.
+- `multipart.onFile` 方法接受你想要处理文件的输入字段名称。你可以使用通配符 `*` 处理所有文件。
 
-- The `onFile` listener receives the `part` (readable stream) as the first parameter and a `reporter` function as the second parameter.
+- `onFile` 监听器接收 `part`（可读流）作为第一个参数，接收 `reporter` 函数作为第二个参数。
 
-- The `reporter` function is used to track the stream progress so that AdonisJS can provide you access to the processed bytes, file extension, and other meta-data after the stream has been processed.
+- `reporter` 函数用于跟踪流进度，以便 AdonisJS 在流处理完毕后为你提供对已处理字节、文件扩展名和其他元数据的访问权限。
 
-- Finally, you can return an object of properties from the `onFile` listener, and they will be merged with the file object you access using the `request.file` or `request.allFiles()` methods.
+- 最后，你可以从 `onFile` 监听器返回一个属性对象，它们将与你使用 `request.file` 或 `request.allFiles()` 方法访问的文件对象合并。
 
-### Error handling
-You must listen to the `error` event on the `part` object and handle the errors manually. Usually, the stream reader (the writeable stream) will internally listen for this event and abort the write operation.
+### 错误处理
 
-### Validating stream parts
-AdonisJS allows you to validate the stream parts (aka files) even when you process the multipart stream manually. In case of an error, the `error` event is emitted on the `part` object.
+你必须监听 `part` 对象上的 `error` 事件并手动处理错误。通常，流读取器（可写流）将在内部监听此事件并中止写入操作。
 
-The `multipart.onFile` method accepts the validation options as the second parameter. Also, make sure to listen for the `data` event and bind the `reporter` method to it. Otherwise, no validations will occur.
+### 验证流部分
+
+AdonisJS 允许你验证流部分（即文件），即使你在手动处理 multipart 流。如果发生错误，`error` 事件将在 `part` 对象上触发。
+
+`multipart.onFile` 方法接受验证选项作为第二个参数。此外，请确保监听 `data` 事件并将 `reporter` 方法绑定到它。否则，不会进行任何验证。
 
 ```ts
 request.multipart.onFile('*', {
@@ -343,8 +345,7 @@ request.multipart.onFile('*', {
   extnames: ['jpg', 'png', 'jpeg']
 }, async (part, reporter) => {
   /**
-   * The following two lines are required to perform
-   * the stream validation
+   * 以下两行是执行流验证所必需的
    */
   part.pause()
   part.on('data', reporter)

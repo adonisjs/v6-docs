@@ -2,11 +2,11 @@
   "menu": [
     {
       "href": "https://v6-migration.adonisjs.com",
-      "title": "Migration Guide"
+      "title": "迁移指南"
     },
     {
       "href": "https://v5-docs.adonisjs.com",
-      "title": "V5 Documentation"
+      "title": "V5 文档"
     }
   ],
   "links": {
@@ -15,7 +15,7 @@
       "href": "/"
     },
     "github": {
-      "title": "AdonisJS on GitHub",
+      "title": "GitHub 仓库",
       "href": "https://github.com/adonisjs/core"
     }
   },

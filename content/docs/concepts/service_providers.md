@@ -1,20 +1,20 @@
 ---
-summary: Service providers are plain JavaScript classes with lifecycle methods to perform actions during different phases of the application.
+summary: 服务提供者（Service providers）是普通的 JavaScript 类，具有生命周期方法，用于在应用程序的不同阶段执行操作。
 ---
 
-# Service providers
+# 服务提供者
 
-Services providers are plain JavaScript classes with lifecycle methods to perform actions during different phases of the application.
+服务提供者（Services providers）是普通的 JavaScript 类，具有生命周期方法，用于在应用程序的不同阶段执行操作。
 
-A service provider can register [bindings into the container](../concepts/dependency_injection.md#container-bindings), [extend existing bindings](../concepts/dependency_injection.md#container-events), or run actions after the HTTP server starts.
+服务提供者可以[向容器注册绑定](../concepts/dependency_injection.md#container-bindings)、[扩展现有绑定](../concepts/dependency_injection.md#container-events)，或者在 HTTP 服务器启动后运行操作。
 
-Service providers are the entry point to an AdonisJS application with the ability to modify the application state before it is considered ready. **It is mainly used by external packages to hook into the application lifecycle**.
+服务提供者是 AdonisJS 应用程序的入口点，能够在应用程序被认为准备就绪之前修改应用程序状态。**它主要用于外部包挂钩到应用程序生命周期**。
 
 :::note
-If you only want to inject dependencies into one of your classes, you can use the [dependency injection](../concepts/dependency_injection.md) feature.
+如果你只想将依赖项注入到你的类中，可以使用[依赖注入](../concepts/dependency_injection.md)功能。
 :::
 
-The providers are registered inside the `adonisrc.ts` file under the `providers` array. The value is a function to lazily import the service provider
+提供者在 `adonisrc.ts` 文件的 `providers` 数组中注册。其值是一个延迟导入服务提供者的函数。
 
 ```ts
 {
@@ -25,7 +25,7 @@ The providers are registered inside the `adonisrc.ts` file under the `providers`
 }
 ```
 
-By default, a provider is loaded in all the runtime environments. However, you can limit the provider to run in specific environments.
+默认情况下，提供者会在所有运行时环境中加载。但是，你可以限制提供者仅在特定环境中运行。
 
 ```ts
 {
@@ -39,13 +39,13 @@ By default, a provider is loaded in all the runtime environments. However, you c
 }
 ```
 
-## Writing service providers
+## 编写服务提供者
 
-Service providers are stored inside the `providers` directory of your app. Alternatively, you can use the `node ace make:provider app` command.
+服务提供者存储在应用程序的 `providers` 目录中。或者，你可以使用 `node ace make:provider app` 命令。
 
-The provider module must have an `export default` statement returning the provider class. The class constructor receives an instance of the [Application](./application.md) class.
+提供者模块必须有一个 `export default` 语句返回提供者类。该类的构造函数接收 [Application](./application.md) 类的实例。
 
-See also: [Make provider command](../references/commands.md#makeprovider)
+另请参阅：[Make provider 命令](../references/commands.md#makeprovider)
 
 ```ts
 import { ApplicationService } from '@adonisjs/core/types'
@@ -56,7 +56,7 @@ export default class AppProvider {
 }
 ```
 
-Following are the lifecycle methods you can implement to perform different actions.
+以下是你可以实现以执行不同操作的生命周期方法。
 
 ```ts
 export default class AppProvider {
@@ -79,9 +79,9 @@ export default class AppProvider {
 
 ### register
 
-The `register` method is called after an instance of the provider class is created. The `register` method can register bindings within the IoC container. 
+`register` 方法在提供者类的实例创建后调用。`register` 方法可以在 IoC 容器中注册绑定。
 
-The `register` method is synchronous, so you cannot use Promises inside this method.
+`register` 方法是同步的，因此你不能在此方法中使用 Promise。
 
 ```ts
 export default class AppProvider {
@@ -95,20 +95,20 @@ export default class AppProvider {
 
 ### boot
 
-The `boot` method is called after all the bindings have been registered with the IoC container. Inside this method, you can resolve bindings from the container to extend/mutate them.
+`boot` 方法在所有绑定都注册到 IoC 容器后调用。在此方法中，你可以从容器中解析绑定以扩展/修改它们。
 
 ```ts
 export default class AppProvider {
   async boot() {
    const validator = await this.app.container.make('validator')
     
-   // Add custom validation rules
+   // 添加自定义验证规则
    validator.rule('foo', () => {})
   }
 }
 ```
 
-It is a good practice to extend bindings when they are resolved from the container. For example, you can use the `resolving` hook to add custom rules to the validator.
+在从容器解析绑定时扩展绑定是一个好习惯。例如，你可以使用 `resolving` 钩子向验证器添加自定义规则。
 
 ```ts
 async boot() {
@@ -120,28 +120,28 @@ async boot() {
 
 ### start
 
-The `start` method is called after the `boot` and before the `ready ` method. It allows you to perform actions that the `ready` hook actions might need.
+`start` 方法在 `boot` 之后和 `ready` 方法之前调用。它允许你执行 `ready` 钩子操作可能需要的操作。
 
 ### ready
 
-The `ready` method gets called at different stages based on the application's environment.
+`ready` 方法根据应用程序的环境在不同阶段被调用。
 
 <table>
     <tr>
         <td width="100"><code> web </code></td>
-        <td>The <code>ready</code> method is called after the HTTP server has been started and is ready to accept requests.</td>
+        <td><code>ready</code> 方法在 HTTP 服务器启动并准备好接受请求后调用。</td>
     </tr>
     <tr>
         <td width="100"><code>console</code></td>
-        <td>The <code> ready</code> method is called just before the <code>run</code> method of the main command.</td>
+        <td><code>ready</code> 方法在主命令的 <code>run</code> 方法之前调用。</td>
     </tr>
     <tr>
         <td width="100"><code>test</code></td>
-        <td>The <code>ready</code> method is called just before running all the tests. However, the test files are imported before the <code>ready</code> method.</td>
+        <td><code>ready</code> 方法在运行所有测试之前调用。但是，测试文件是在 <code>ready</code> 方法之前导入的。</td>
     </tr>
     <tr>
         <td width="100"><code>repl</code></td>
-        <td>The <code>ready</code> method is called before the REPL prompt is displayed on the terminal.</td>
+        <td><code>ready</code> 方法在终端显示 REPL 提示符之前调用。</td>
     </tr>
 </table>
 
@@ -165,14 +165,14 @@ export default class AppProvider {
 
 ### shutdown
 
-The `shutdown` method is called when AdonisJS is in the middle of gracefully exiting the application.
+`shutdown` 方法在 AdonisJS 正在优雅地退出应用程序时调用。
 
-The event of exiting the application depends upon the environment in which the app is running and how the application process started. Please read the [application lifecycle guide](./application_lifecycle.md) to know more about it.
+退出应用程序的事件取决于应用程序运行的环境以及应用程序进程是如何启动的。请阅读[应用程序生命周期指南](./application_lifecycle.md)以了解更多信息。
 
 ```ts
 export default class AppProvider {
   async shutdown() {
-    // perform the cleanup
+    // 执行清理
   }
 }
 ```

@@ -1,27 +1,26 @@
 ---
-summary: Serve static files from a given directory using the @adonisjs/static package.
+summary: 使用 @adonisjs/static 包从给定目录提供静态文件。
 ---
 
-# Static files server
+# 静态文件服务器 (Static files server)
 
-You can serve static files from a given directory using the `@adonisjs/static` package. The package ships with a middleware that you must register in the [server middleware stack](./middleware.md#server-middleware-stack) to intercept the HTTP requests and serve files.
+你可以使用 `@adonisjs/static` 包从给定目录提供静态文件。该包附带一个中间件，你必须将其注册在 [服务器中间件堆栈](./middleware.md#server-middleware-stack) 中以拦截 HTTP 请求并提供文件。
 
-## Installation
+## 安装
 
-The package comes pre-configured with the `web` starter kit. However, you can install and configure it as follows with other starter kits.
+该包已在 `web` 启动套件中预先配置。但是，你可以使用以下命令在其他启动套件中安装和配置它。
 
-
-Install and configure the package using the following command :
+使用以下命令安装并配置该包：
 
 ```sh
 node ace add @adonisjs/static
 ```
 
-:::disclosure{title="See steps performed by the add command"}
+:::disclosure{title="查看 add 命令执行的步骤"}
 
-1. Installs the `@adonisjs/static` package using the detected package manager.
+1. 使用检测到的包管理器安装 `@adonisjs/static` 包。
 
-2. Registers the following service provider inside the `adonisrc.ts` file.
+2. 在 `adonisrc.ts` 文件中注册以下服务提供者。
 
     ```ts
     {
@@ -32,9 +31,9 @@ node ace add @adonisjs/static
     }
     ```
 
-3. Create the `config/static.ts` file.
+3. 创建 `config/static.ts` 文件。
 
-4. Registers the following middleware inside the `start/kernel.ts` file.
+4. 在 `start/kernel.ts` 文件中注册以下中间件。
 
     ```ts
     server.use([
@@ -44,9 +43,9 @@ node ace add @adonisjs/static
 
 :::
 
-## Configuration
+## 配置
 
-The configuration for the static middleware is stored inside the `config/static.ts` file.
+静态中间件的配置存储在 `config/static.ts` 文件中。
 
 ```ts
 import { defineConfig } from '@adonisjs/static'
@@ -71,7 +70,7 @@ export default staticServerConfig
 
 <dd>
 
-Enable or disable the middleware temporarily without removing it from the middleware stack.
+临时启用或禁用中间件，而不将其从中间件堆栈中移除。
 
 </dd>
 
@@ -83,9 +82,9 @@ Enable or disable the middleware temporarily without removing it from the middle
 
 <dd>
 
-The `Accept-Range` header allows browsers to resume an interrupted file download instead of trying to restart the download. You can disable resumable downloads by setting `acceptsRanges` to `false`.
+`Accept-Range` 标头允许浏览器恢复中断的文件下载，而不是尝试重新开始下载。你可以通过将 `acceptsRanges` 设置为 `false` 来禁用可恢复下载。
 
-Defaults to `true`.
+默认为 `true`。
 
 </dd>
 
@@ -97,7 +96,7 @@ Defaults to `true`.
 
 <dd>
 
-Enable or disable the [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) header. The `immutable` and `maxAge` properties will be ignored when `cacheControl` is disabled.
+启用或禁用 [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) 标头。当 `cacheControl` 被禁用时，`immutable` 和 `maxAge` 属性将被忽略。
 
 
 ```ts
@@ -116,11 +115,11 @@ Enable or disable the [Cache-Control](https://developer.mozilla.org/en-US/docs/W
 
 <dd>
 
-Define how to treat requests for dot files inside the `public` directory. You can set one of the following options.
+定义如何处理对 `public` 目录内的点文件的请求。你可以设置以下选项之一。
 
-- `allow`: Serve the dot-file same as the other files.
-- `deny`: Deny the request with the `403` status code.
-- `ignore`: Pretend the file does not exist and respond with a `404` status code.
+- `allow`: 像其他文件一样提供点文件。
+- `deny`: 使用 `403` 状态码拒绝请求。
+- `ignore`: 假装文件不存在并响应 `404` 状态码。
 
 ```ts
 {
@@ -140,7 +139,7 @@ Define how to treat requests for dot files inside the `public` directory. You ca
 <dd>
 
 
-Enable or disable [etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) generation.
+启用或禁用 [etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) 生成。
 
 ```ts
 {
@@ -159,7 +158,7 @@ Enable or disable [etag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Heade
 <dd>
 
 
-Enable or disable the [Last-Modified](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified) header. The file [stat.mtime](https://nodejs.org/api/fs.html#statsmtime) property is used as the value for the header.
+启用或禁用 [Last-Modified](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified) 标头。文件 [stat.mtime](https://nodejs.org/api/fs.html#statsmtime) 属性用作标头的值。
 
 ```ts
 {
@@ -179,9 +178,9 @@ Enable or disable the [Last-Modified](https://developer.mozilla.org/en-US/docs/W
 <dd>
 
 
-Enable or disable the [immutable](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#immutable) directive for the `Cache-Control` header. By default, the `immutable` property is disabled.
+启用或禁用 `Cache-Control` 标头的 [immutable](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#immutable) 指令。默认情况下，`immutable` 属性被禁用。
 
-If the `immutable` property is enabled, you must define the `maxAge` property to enable caching.
+如果启用了 `immutable` 属性，则必须定义 `maxAge` 属性以启用缓存。
 
 ```ts
 {
@@ -199,7 +198,7 @@ If the `immutable` property is enabled, you must define the `maxAge` property to
 
 <dd>
 
-Define the [max-age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#max-age) directive for the `Cache-Control` header. The value should be either in milliseconds or a time expression string.
+定义 `Cache-Control` 标头的 [max-age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#max-age) 指令。该值应为毫秒数或时间表达式字符串。
 
 ```ts
 {
@@ -217,7 +216,7 @@ Define the [max-age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/C
 
 <dd>
 
-A function that returns an object of headers to set on the response. The function receives the file path as the first argument and the [file stats](https://nodejs.org/api/fs.html#class-fsstats) object as the second argument.
+一个返回要在响应上设置的标头对象的函数。该函数接收文件路径作为第一个参数，并接收 [文件 stats](https://nodejs.org/api/fs.html#class-fsstats) 对象作为第二个参数。
 
 ```ts
 {
@@ -236,16 +235,17 @@ A function that returns an object of headers to set on the response. The functio
 
 </dl>
 
-## Serving static files
+## 提供静态文件
 
-Once the middleware is registered, you may create files inside the `public` directory and access them in the browser using the file path. For example, the `./public/css/style.css` file can be accessed using the `http://localhost:3333/css/style.css` URL.
+注册中间件后，你可以在 `public` 目录中创建文件，并使用文件路径在浏览器中访问它们。例如，可以使用 `http://localhost:3333/css/style.css` URL 访问 `./public/css/style.css` 文件。
 
-The files in the `public` directory are not compiled or built using an assets bundler. If you want to compile frontend assets, you must place them inside the `resources` directory and use the [assets bundler](../basics/vite.md).
+`public` 目录中的文件不会使用资源打包器进行编译或构建。如果你想编译前端资源，必须将它们放在 `resources` 目录中并使用 [资源打包器](../basics/vite.md)。
 
-## Copying static files to production build
-The static files stored inside the `/public` directory are automatically copied to the `build` folder when you run `node ace build` command.
+## 将静态文件复制到生产构建
 
-The rule for copying public files is defined inside the `adonisrc.ts` file.
+当你运行 `node ace build` 命令时，存储在 `/public` 目录中的静态文件会自动复制到 `build` 文件夹中。
+
+复制公共文件的规则在 `adonisrc.ts` 文件中定义。
 
 ```ts
 {

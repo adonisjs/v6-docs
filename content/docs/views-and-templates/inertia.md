@@ -54,7 +54,7 @@ defineProps<{
 ## Installation
 
 :::note
-Are you starting a new project and want to use Inertia? Check out the [Inertia starter kit](https://docs.adonisjs.com/guides/getting-started/installation#inertia-starter-kit).
+Are you starting a new project and want to use Inertia? Check out the [Inertia starter kit](../getting_started/installation.md#inertia-starter-kit).
 :::
 
 Install the package from the npm registry running:
@@ -955,7 +955,7 @@ export default defineConfig({
 
 There are several ways to test your frontend code:
 
-- End-to-end testing. You can use the [Browser Client](https://docs.adonisjs.com/guides/browser-tests), a seamless integration between Japa and Playwright.
+- End-to-end testing. You can use the [Browser Client](./browser-tests), a seamless integration between Japa and Playwright.
 - Unit testing. We recommend using testing tools adapted for the frontend ecosystem, particularly [Vitest](https://vitest.dev).
 
 And finally, you can also test your Inertia endpoints to ensure they return the correct data. For that, we have a few test helpers available in Japa.

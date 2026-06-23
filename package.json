@@ -54,7 +54,7 @@
     "dayjs": "^1.11.12",
     "edge-uikit": "^1.0.0-1",
     "edge.js": "^6.0.2",
-    "undici": "^6.19.7"
+    "undici": "^6.27.0"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"
